@@ -1,33 +1,69 @@
 import * as React from 'react';
-import { VPage, Page } from 'tonva-tools';
+import { VPage, Page, PageItems } from 'tonva-tools';
 import { CSalesTask } from './CSalesTask';
-import { List } from 'tonva-react-form';
+import { List, LMR, EasyDate, FA } from 'tonva-react-form';
 import { observer } from 'mobx-react';
-//import { cCartApp } from 'ui/CCartApp';
+import { tv } from 'tonva-react-uq';
 
 export class VSalesTaskList extends VPage<CSalesTask> {
 
-  async open(param: any) {
+    async open(param: any) {
 
-    this.openPage(this.page, param);
-  }
+    }
 
-  private onScrollBottom = async () => {
+    render(member: any): JSX.Element {
 
-    await this.controller.pageSalesTask.more();
-  }
+        return <this.page />;
+    }
+    private onScrollBottom = async () => {
+
+        //await this.controller.tasks.more();
+    }
+
+    private salesTaskPropItem(caption: string, value: any) {
+        if (value === null || value === undefined) return null;
+        return <>
+            <div className="col-4 col-sm-2 col-lg-4 text-muted pr-0 small">{caption}</div>
+            <div className="col-8 col-sm-4 col-lg-8">{value}</div>
+        </>;
+    }
 
 
-  private renderSalesTask(salesTask: any, index: number) {
-    return <div>测试</div>
-  }
+    private onSalesTaskClick = async (salestask: any) => {
 
-  private page = observer((param: any) => {
+        this.controller.showSalesTaskDetail(salestask);
+    }
 
-    let { pageSalesTask, cApp } = this.controller;
-    let none = <div className="my-3 mx-2 text-warning">抱歉，未找到相关产品，请重新搜索！</div>
-    return <Page onScrollBottom={this.onScrollBottom}>
-      <List before={''} none={none} items={param} item={{ render: this.renderSalesTask }} />
-    </Page>
-  });
+    private onSalesTaskAdd = async (salestask: any) => {
+
+        this.controller.showSalesTaskType(salestask);
+    }
+
+    private renderSalesTask(salesTask: any, index: number) {
+
+        let { description, deadline, createTime, customer, type } = salesTask;
+        let right = <small className="text-muted"><EasyDate date={createTime} /></small>;
+        let divDeadline: any;
+        if (deadline) divDeadline = <small className="text-muted"><EasyDate date={deadline} />: </small>;
+        return <LMR className="px-3 py-2" right={right}>
+            <div className="font-weight-bold">{tv(customer, (v) => <>{v.name}</>)}：{tv(type, (v) => <>{v.name}</>)}</div>
+            <div>{divDeadline}{description}</div>
+        </LMR>
+
+    }
+
+    private page = observer(() => {
+
+        let { tasks: pageSalesTask } = this.controller;
+        let none = <div className="my-3 mx-2 text-warning">抱歉，未找到相关任务！</div>;
+        let add = <div onClick={this.onSalesTaskAdd} className="cursor-pointer px-2 py-1"><FA name="plus" /></div>;
+        let header = <LMR className="px-3 py-2 bg-primary text-white" right={add} >
+            <div >销售任务</div>
+        </LMR>
+        return <Page header={header} onScrollBottom={this.onScrollBottom}>
+            <List before={''} none={none} items={pageSalesTask} item={{ render: this.renderSalesTask, onClick: this.onSalesTaskClick }} />
+        </Page>
+    });
+
 }
+

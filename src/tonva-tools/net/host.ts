@@ -104,7 +104,7 @@ class Host {
         if (isDevelopment === true) {
             if (local === true) return value;
         }
-        return centerHost; 
+        return centerHost;
     }
 
     private getResHost():string {
