@@ -4,6 +4,7 @@ import { CApp, CUq } from 'tonva-react-uq';
 import { CSalesTask } from 'salestask';
 import { consts } from './salestask/consts';
 import { CSalesTaskType } from 'salestask/CSalesTaskType';
+import { CCustomer } from 'customer/CCustomer';
 
 
 export class CSalesTaskApp extends CApp {
@@ -15,6 +16,7 @@ export class CSalesTaskApp extends CApp {
     /** 定义 Conctorlle*/
     cSalesTask: CSalesTask;
     cSalesTaskType: CSalesTaskType;
+    cCustomer: CCustomer;
 
 
     protected async internalStart(param?: any) {
@@ -26,6 +28,7 @@ export class CSalesTaskApp extends CApp {
         /** 初始化 Conctrolle*/
         this.cSalesTask = new CSalesTask(this, undefined);
         this.cSalesTaskType = new CSalesTaskType(this, undefined);
+        this.cCustomer = new CCustomer(this, undefined);
 
         /** 启动销售任务列表*/
         this.cSalesTask.start();

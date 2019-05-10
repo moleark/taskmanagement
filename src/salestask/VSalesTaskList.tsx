@@ -17,23 +17,15 @@ export class VSalesTaskList extends VPage<CSalesTask> {
     }
     private onScrollBottom = async () => {
 
-        //await this.controller.tasks.more();
     }
 
-    private salesTaskPropItem(caption: string, value: any) {
-        if (value === null || value === undefined) return null;
-        return <>
-            <div className="col-4 col-sm-2 col-lg-4 text-muted pr-0 small">{caption}</div>
-            <div className="col-8 col-sm-4 col-lg-8">{value}</div>
-        </>;
-    }
-
-
+    //选择任务
     private onSalesTaskClick = async (salestask: any) => {
 
         this.controller.showSalesTaskDetail(salestask);
     }
 
+    //添加任务
     private onSalesTaskAdd = async (salestask: any) => {
 
         this.controller.showSalesTaskType(salestask);
@@ -49,7 +41,6 @@ export class VSalesTaskList extends VPage<CSalesTask> {
             <div className="font-weight-bold">{tv(customer, (v) => <>{v.name}</>)}：{tv(type, (v) => <>{v.name}</>)}</div>
             <div>{divDeadline}{description}</div>
         </LMR>
-
     }
 
     private page = observer(() => {
