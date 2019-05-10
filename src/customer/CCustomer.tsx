@@ -65,7 +65,6 @@ export class CCustomer extends Controller {
         this.pageCustomer.first({ key: key });
     }
 
-
     selectCustomer = async (customerid: number): Promise<any> => {
 
         let addcustomerId = this.tuidCustomer.boxId(customerid);
