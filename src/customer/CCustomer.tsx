@@ -54,7 +54,6 @@ export class CCustomer extends Controller {
         this.openVPage(VCustomer, param);
     }
 
-
     async searchByKey(key: string) {
 
         //let ret = await this.searchProductQuery.page(param, pageStart, pageSize);
