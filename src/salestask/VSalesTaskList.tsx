@@ -28,18 +28,24 @@ export class VSalesTaskList extends VPage<CSalesTask> {
     //添加任务
     private onSalesTaskAdd = async (salestask: any) => {
 
-        this.controller.showSalesTaskType(salestask);
+        this.controller.showSalesTaskAdd(salestask);
     }
 
     private renderSalesTask(salesTask: any, index: number) {
 
         let { description, deadline, createTime, customer, type } = salesTask;
-        let right = <small className="text-muted"><EasyDate date={createTime} /></small>;
         let divDeadline: any;
-        if (deadline) divDeadline = <small className="text-muted"><EasyDate date={deadline} />: </small>;
+        if (deadline) divDeadline = <div><small className="text-muted">预定：<EasyDate date={deadline} /></small></div>;
+        let right = <div className="text-right">
+            <div><small className="text-muted"><EasyDate date={createTime} /></small></div>
+            {divDeadline}
+        </div>;
         return <LMR className="px-3 py-2" right={right}>
-            <div className="font-weight-bold">{tv(customer, (v) => <>{v.name}</>)}：{tv(type, (v) => <>{v.name}</>)}</div>
-            <div>{divDeadline}{description}</div>
+            <div className="row">
+                <div className="col-sm-4">{tv(type, (v) => <>{v.name}</>)}</div>
+                <div className="col-sm-8 font-weight-bold">{tv(customer, (v) => <>{v.name}</>)}</div>
+            </div>
+            <div>{description}</div>
         </LMR>
     }
 

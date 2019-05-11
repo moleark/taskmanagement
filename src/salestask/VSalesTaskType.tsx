@@ -20,12 +20,18 @@ export class VSalesTaskType extends VPage<CSalesTaskType> {
         </LMR>
     }
 
+    private onClickTaskType = async (model: any) => {
+
+        await this.controller.selectTaskType(model.id);
+        this.closePage();
+    }
+
     private page = observer((product: any) => {
 
-        let { tasktypelist, showSalesTaskAdd } = this.controller;
+        let { tasktypelist, selectTaskType } = this.controller;
         let none = <div className="my-3 mx-2 text-warning">抱歉，未找到相关产品，请重新搜索！</div>;
         return <Page header="选择任务类型" >
-            <List before={''} none={none} items={tasktypelist} item={{ render: this.renderList, onClick: showSalesTaskAdd }} />
+            <List before={''} none={none} items={tasktypelist} item={{ render: this.renderList, onClick: this.onClickTaskType }} />
         </Page>
     })
 }

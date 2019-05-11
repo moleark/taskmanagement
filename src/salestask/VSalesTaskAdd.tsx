@@ -8,8 +8,9 @@ import { tv } from 'tonva-react-uq';
 const schema: Schema = [
     { name: 'id', type: 'id', required: false },
     { name: 'customer', type: 'id', required: true },
+    { name: 'type', type: 'id', required: true },
     { name: 'description', type: 'string', required: true },
-    { name: 'priorty', type: 'date', required: false },
+    { name: 'priorty', type: 'number', required: true },
     { name: 'deadline', type: 'string', required: true },
     //{ name: 'submit', type: 'submit' },
 ];
@@ -27,6 +28,19 @@ export class VSalesTaskAdd extends VPage<CSalesTask> {
 
                     let { obj } = item;
                     if (!obj) return <small className="text-muted">请选择客户</small>;
+                    let { id, name } = obj;
+                    return <>
+                        {name}
+                    </>;
+                }
+            } as UiIdItem,
+            type: {
+                widget: 'id', label: '类型', placeholder: '请选择任务类型',
+                pickId: async (context: Context, name: string, value: number) => await this.controller.pickTaskType(context, name, value),
+                Templet: (item: any) => {
+
+                    let { obj } = item;
+                    if (!obj) return <small className="text-muted">请选择任务类型</small>;
                     let { id, name } = obj;
                     return <>
                         {name}
@@ -53,7 +67,7 @@ export class VSalesTaskAdd extends VPage<CSalesTask> {
 
     private onFormButtonClick = async (name: string, context: Context) => {
         await this.controller.addSalesTask(context.form.data);
-        this.closePage(2);
+        this.closePage(1);
     }
 
     private page = observer((product: any) => {

@@ -11,6 +11,7 @@ import { VSalesTaskComplet } from './VSalesTaskComplet';
 import { VSalesTaskExtension } from './VSalesTaskExtension';
 import { VSalesTaskAdd } from './VSalesTaskAdd';
 import { Data } from 'tonva-tools/local';
+import { VSalesTaskHistory } from './VSalesTaskHistory';
 
 class PageSalesTask extends PageItems<any> {
 
@@ -41,11 +42,13 @@ export class CSalesTask extends Controller {
     cApp: CSalesTaskApp;
     @observable tasks: any[];
     protected completionTaskAction: Action;
+    protected extensionTaskAction: Action;
     protected addTaskAction: Action;
     private taskTuid: TuidMain;
-    private qeuryGettask: Query
     private tuidCustomer: TuidMain;
     private taskTypeTuid: TuidMain;
+    private qeuryGettask: Query;
+    private qeurySearchHistory: Query;
     private taskBook: any;
     //private tasks: [];
 
@@ -59,11 +62,12 @@ export class CSalesTask extends Controller {
         this.taskTypeTuid = cUqSalesTask.tuid("tasktype");
 
         this.taskBook = cUqSalesTask.book("taskbook");
-
         this.completionTaskAction = cUqSalesTask.action('CompletionTask');
+        this.extensionTaskAction = cUqSalesTask.action('ExtensionTask');
         this.addTaskAction = cUqSalesTask.action('AddTask');
 
         this.qeuryGettask = cUqSalesTask.query("Gettask");
+        this.qeurySearchHistory = cUqSalesTask.query("searchhistorytask");
     }
 
     protected async internalStart(param: any) {
@@ -71,11 +75,26 @@ export class CSalesTask extends Controller {
         await this.searchByKey(param);
     }
 
-    async searchByKey(key: string) {
+    searchByKey = async (key: string) => {
 
         let task = await this.qeuryGettask.table({});
         //let task = await this.taskTuid.search(key, 0, 100);
         this.tasks = task;
+    }
+
+    //搜索沟通记录
+    searchSalesTaskHistory = async (customerid: string) => {
+
+        let task = await this.qeurySearchHistory.table({ customerid: customerid });
+        this.tasks = task;
+    }
+    //显示沟通记录
+    showSalesTaskHistory = async (customerid: string) => {
+
+        // let task = await this.searchSalesTaskHistory(customerid);
+        let param = ({ customerid: customerid });
+        let task = await this.qeurySearchHistory.table({ customerid: customerid });
+        this.openVPage(VSalesTaskHistory, task);
     }
 
     render = observer(() => {
@@ -125,12 +144,15 @@ export class CSalesTask extends Controller {
     //延期任务
     async extensionTask(taskid: number, result: string, resulttype: string, date: string) {
 
-        let param = { taskid: taskid, result: "延期任务" };
-        await this.completionTaskAction.submit(param);
+        let param = { taskid: taskid, result: result, deadline: date };
+
+        await this.extensionTaskAction.submit(param);
+        /** 
         //完结任务--前台页面
         let index = this.tasks.findIndex(v => v.id === taskid);
         if (index >= 0) this.tasks.splice(index, 1);
         this.closePage(2);
+        */
     }
 
     //无效任务
@@ -146,7 +168,7 @@ export class CSalesTask extends Controller {
     //显示任务添加页面
     showSalesTaskType = async (model: any) => {
         let { cSalesTaskType } = this.cApp
-        cSalesTaskType.start();// .openVPage(VSalesTaskType, model);
+        cSalesTaskType.start();
     }
 
     //显示任务添加页面
@@ -158,9 +180,9 @@ export class CSalesTask extends Controller {
     //添加任务
     addSalesTask = async (param: any) => {
 
-        let { customer, description, priorty, deadline } = param;
+        let { customer, type, description, priorty, deadline } = param;
         let customerId = customer.id;
-        let typeId = 1;
+        let typeId = type.id;
 
         //添加任务--后台数据
         let model = { id: undefined, description: description, customer: customerId, type: typeId, sourceID: "", sourceType: "", sourceNo: "", priorty: priorty, deadline: deadline };
@@ -187,6 +209,20 @@ export class CSalesTask extends Controller {
         let { cCustomer } = this.cApp
         var customerid = await cCustomer.call<number>();
         return customerid;
+    }
+
+    //调用客户列表页面
+    pickTaskType = async (context: Context, name: string, value: number): Promise<number> => {
+
+        let { cSalesTaskType } = this.cApp
+        var taskTypeId = await cSalesTaskType.call<number>();
+        return taskTypeId;
+    }
+
+    //显示客户明细页面
+    showCustomerDetail = async (customerId: any) => {
+        let { cCustomer } = this.cApp;
+        cCustomer.showCustomerDetail(customerId);
     }
 }
 

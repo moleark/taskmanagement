@@ -34,7 +34,7 @@ export class VCustomer extends VPage<CCustomer> {
         let { customerlist, pageCustomer } = this.controller;
         let none = <div className="my-3 mx-2 text-warning">请搜索客户！</div>;
 
-        let size: any = "md";
+        let size: any = "sm";
 
         return <Page header="选择客户">
             <SearchBox className="px-1 w-100"
