@@ -61,27 +61,32 @@ export class CCustomer extends Controller {
     //查询客户--通过名称
     searchByKey = async (key: string) => {
 
-        //let ret = await this.searchProductQuery.page(param, pageStart, pageSize);
-        //let task = await this.querySearchCustomer.table({ key: "小明" });
-        //let task = await this.tuidCustomer.search(key, 0, 100);
-        //this.customerlist = task;
-
         this.pageCustomer = new PageCustomer(this.querySearchCustomer);
         this.pageCustomer.first({ key: key });
     }
 
     //查询客户--通过ID
     showCustomerDetail = async (customerid: number) => {
-
         let customer = await this.tuidCustomer.load(customerid);
         this.openVPage(VCustomerDetail, customer);
     }
 
+
     //选择客户--给调用页面返回客户id
+    /**
     selectCustomer = async (customerid: number): Promise<any> => {
 
         let addcustomerId = this.tuidCustomer.boxId(customerid);
         this.returnCall(addcustomerId);
+    } 
+    */
+    selectCustomer = async (customer: any): Promise<any> => {
+        this.returnCall(customer);
+        /*
+        let addcustomerId = this.tuidCustomer.boxId(customerid);
+        let { cSalesTaskType } = this.cApp;
+        cSalesTaskType.start(addcustomerId);
+        */
     }
 
     render = observer(() => {

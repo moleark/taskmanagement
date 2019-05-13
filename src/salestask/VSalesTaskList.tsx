@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, PageItems } from 'tonva-tools';
+import { VPage, Page, PageItems, Image } from 'tonva-tools';
 import { CSalesTask } from './CSalesTask';
 import { List, LMR, EasyDate, FA } from 'tonva-react-form';
 import { observer } from 'mobx-react';
@@ -7,18 +7,16 @@ import { tv } from 'tonva-react-uq';
 
 export class VSalesTaskList extends VPage<CSalesTask> {
 
-
     private tasklist: any;
     async open(param: any) {
 
     }
 
     render(member: any): JSX.Element {
-
         return <this.page />;
     }
-    private onScrollBottom = async () => {
 
+    private onScrollBottom = async () => {
     }
 
     //选择任务
@@ -28,18 +26,18 @@ export class VSalesTaskList extends VPage<CSalesTask> {
     }
 
     //添加任务
-    private onSalesTaskAdd = async (salestask: any) => {
-
-        this.controller.showSalesTaskAdd(salestask);
+    private onSalesTaskAdd = async () => {
+        await this.controller.createTask();
     }
 
-    private renderSalesTask(salesTask: any, index: number) {
+    private renderSalesTask = (salesTask: any, index: number) => {
 
-        let { description, deadline, createTime, customer, type } = salesTask;
+        let { description, deadline, createTime, customer, type, typeName } = salesTask;
+        let left = <div className="mr-3">{this.controller.taskIcon(typeName)}</div>;
         let right = <div className="text-right">
             <div><small className="text-muted"><EasyDate date={deadline} /></small></div>
         </div>;
-        return <LMR className="px-3 py-2" right={right}  >
+        return <LMR className="px-3 py-2" left={left} right={right}  >
             <div className="row">
                 <div className="col-sm-8 font-weight-bold">{tv(customer, (v) => <>{v.name}</>)}</div>
                 <div className="col-sm-4">{tv(type, (v) => <>{v.name}</>)}</div>

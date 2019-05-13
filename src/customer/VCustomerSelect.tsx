@@ -25,8 +25,8 @@ export class VCustomerSelect extends VPage<CCustomer> {
 
     private onClickCustomer = async (model: any) => {
 
-        await this.controller.selectCustomer(model.id);
-        this.closePage();
+        await this.controller.selectCustomer(model);
+        this.ceasePage();
     }
 
     private page = observer((customer: any) => {

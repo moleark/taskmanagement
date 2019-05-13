@@ -2,9 +2,11 @@
 import { User, nav } from 'tonva-tools';
 import { CApp, CUq } from 'tonva-react-uq';
 import { CSalesTask } from 'salestask';
-import { consts } from './salestask/consts';
-import { CSalesTaskType } from 'salestask/CSalesTaskType';
+import { consts } from './consts';
+import { CSelectType } from './salestask/selectType';
 import { CCustomer } from 'customer/CCustomer';
+import { CProduct } from 'product/CProduct';
+import { CTaskType } from 'salestask/types/createTaskTypes';
 
 
 export class CSalesTaskApp extends CApp {
@@ -12,27 +14,25 @@ export class CSalesTaskApp extends CApp {
     /** 定义 QU*/
     cUqSalesTask: CUq;
     cUqCustomer: CUq;
-    //cUqProduct: CUq;
+    cUqProduct: CUq;
 
     /** 定义 Conctorlle*/
     cSalesTask: CSalesTask;
-    cSalesTaskType: CSalesTaskType;
     cCustomer: CCustomer;
-    //cProduct: CProduct;
-
+    cProduct: CProduct;
 
     protected async internalStart(param?: any) {
 
         /** 初始化 QU*/
         this.cUqSalesTask = this.getCUq(consts.uqSalesTask);
         this.cUqCustomer = this.getCUq(consts.uqCustomer);
-        //this.cUqProduct = this.getCUq(consts.cuqProduct);
+        this.cUqProduct = this.getCUq(consts.uqProduct);
 
         /** 初始化 Conctrolle*/
-        this.cSalesTask = new CSalesTask(this, undefined);
-        this.cSalesTaskType = new CSalesTaskType(this, undefined);
         this.cCustomer = new CCustomer(this, undefined);
-        //this.cProduct = new CProduct(this, undefined);
+        this.cProduct = new CProduct(this, undefined);
+
+        this.cSalesTask = new CSalesTask(this, undefined);
 
         /** 启动销售任务列表*/
         this.cSalesTask.start();

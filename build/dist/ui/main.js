@@ -7,12 +7,12 @@ var VHome = /** @class */ (function (_super) {
     function VHome() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.render = function (param) {
-            var cSalesTask = _this.controller.cSalesTask;
+            var _a = _this.controller, cSalesTask = _a.cSalesTask, cCustomer = _a.cCustomer, cProduct = _a.cProduct;
             var faceTabs = [
-                { name: 'home', label: '待处理', content: cSalesTask.tab, icon: 'home', notify: undefined /*store.homeCount*/ },
-                { name: 'member', label: '客户', content: cSalesTask.tab, icon: 'vcard' },
-                { name: 'member', label: '产品', content: cSalesTask.tab, icon: 'vcard' },
-                { name: 'member', label: '我的', content: cSalesTask.tab, icon: 'vcard' }
+                { name: 'home', label: '任务', content: cSalesTask.tab, icon: 'home', notify: undefined /*store.homeCount*/ },
+                { name: 'member', label: '客户', content: cCustomer.tab, icon: 'vcard' },
+                { name: 'member', label: '产品', content: cProduct.tab, icon: 'flask' },
+                { name: 'member', label: '我', content: cSalesTask.tab, icon: 'user' }
             ].map(function (v) {
                 var name = v.name, label = v.label, icon = v.icon, content = v.content, notify = v.notify;
                 return {

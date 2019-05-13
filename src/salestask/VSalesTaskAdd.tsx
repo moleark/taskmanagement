@@ -20,7 +20,9 @@ export class VSalesTaskAdd extends VPage<CSalesTask> {
 
     private uiSchema: UiSchema = {
         items: {
+
             id: { visible: false },
+            /** 
             customer: {
                 widget: 'id', label: '客户', placeholder: '请选择客户',
                 pickId: async (context: Context, name: string, value: number) => await this.controller.pickCustomer(context, name, value),
@@ -47,6 +49,7 @@ export class VSalesTaskAdd extends VPage<CSalesTask> {
                     </>;
                 }
             } as UiIdItem,
+            */
             description: { widget: 'text', label: '内容', placeholder: '请填写任务内容' } as UiInputItem,
             priorty: { widget: 'checkbox', label: '重要性', placeholder: '重要性' } as UiCheckItem,
             deadline: { widget: 'date', label: '要求完成时间', placeholder: '要求完成时间' } as UiInputItem,

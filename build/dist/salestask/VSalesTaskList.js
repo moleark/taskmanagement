@@ -29,13 +29,15 @@ var VSalesTaskList = /** @class */ (function (_super) {
         }); };
         _this.page = observer(function () {
             var pageSalesTask = _this.controller.tasks;
+            _this.tasklist = pageSalesTask;
             var none = React.createElement("div", { className: "my-3 mx-2 text-muted" }, "\u65E0\u4EFB\u52A1");
             var add = React.createElement("div", { onClick: _this.onSalesTaskAdd, className: "cursor-pointer px-3 py-1" },
                 React.createElement(FA, { name: "plus" }));
-            var header = React.createElement(LMR, { className: "pl-3 py-2 bg-primary text-white d-flex", right: add },
-                React.createElement("div", { className: "h-100 align-self-center" }, "\u9500\u552E\u52A9\u624B"));
+            var header = React.createElement(LMR, { className: "pl-3 py-2 bg-primary text-white", right: add },
+                React.createElement("div", { className: "d-flex h-100 align-items-center" }, "\u9500\u552E\u52A9\u624B"));
+            var tasksss = [{ name: "今天" }, { name: "明天" }, { name: "一周" }];
             return React.createElement(Page, { header: header, onScrollBottom: _this.onScrollBottom },
-                React.createElement(List, { before: '', none: none, items: pageSalesTask, item: { render: _this.renderSalesTask, onClick: _this.onSalesTaskClick } }));
+                React.createElement(List, { before: '', none: none, items: _this.controller.tasks, item: { render: _this.renderSalesTask, onClick: _this.onSalesTaskClick } }));
         });
         return _this;
     }
@@ -51,14 +53,13 @@ var VSalesTaskList = /** @class */ (function (_super) {
     };
     VSalesTaskList.prototype.renderSalesTask = function (salesTask, index) {
         var description = salesTask.description, deadline = salesTask.deadline, createTime = salesTask.createTime, customer = salesTask.customer, type = salesTask.type;
-        var divDeadline;
         var right = React.createElement("div", { className: "text-right" },
-            React.createElement("div", { className: "col-sm-8 font-weight-bold" }, tv(customer, function (v) { return React.createElement(React.Fragment, null, v.name); })),
             React.createElement("div", null,
                 React.createElement("small", { className: "text-muted" },
-                    React.createElement(EasyDate, { date: createTime }))));
+                    React.createElement(EasyDate, { date: deadline }))));
         return React.createElement(LMR, { className: "px-3 py-2", right: right },
             React.createElement("div", { className: "row" },
+                React.createElement("div", { className: "col-sm-8 font-weight-bold" }, tv(customer, function (v) { return React.createElement(React.Fragment, null, v.name); })),
                 React.createElement("div", { className: "col-sm-4" }, tv(type, function (v) { return React.createElement(React.Fragment, null, v.name); }))),
             React.createElement("div", null, description));
     };

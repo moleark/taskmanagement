@@ -4,11 +4,11 @@ import { PageItems, Controller } from 'tonva-tools';
 import { VSalesTaskList } from './VSalesTaskList';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
-import { VSalesTask } from './VSalesTask';
 import { VSalesTaskComplet } from './VSalesTaskComplet';
 import { VSalesTaskExtension } from './VSalesTaskExtension';
 import { VSalesTaskAdd } from './VSalesTaskAdd';
 import { VSalesTaskHistory } from './VSalesTaskHistory';
+import { createTaskTypes } from 'salestask/createTaskTypes';
 var PageSalesTask = /** @class */ (function (_super) {
     tslib_1.__extends(PageSalesTask, _super);
     function PageSalesTask(searchsalestskQuery) {
@@ -46,6 +46,7 @@ var CSalesTask = /** @class */ (function (_super) {
     //private tasks: [];
     function CSalesTask(cApp, res) {
         var _this = _super.call(this, res) || this;
+        _this.taskTypes = {};
         _this.searchByKey = function (key) { return tslib_1.__awaiter(_this, void 0, void 0, function () {
             var task;
             return tslib_1.__generator(this, function (_a) {
@@ -94,9 +95,9 @@ var CSalesTask = /** @class */ (function (_super) {
             return React.createElement(_this.render, null);
         };
         //显示销售任务明细页面
-        _this.showSalesTaskDetail = function (model) { return tslib_1.__awaiter(_this, void 0, void 0, function () {
+        _this.showSalesTaskDetail = function (task) { return tslib_1.__awaiter(_this, void 0, void 0, function () {
             return tslib_1.__generator(this, function (_a) {
-                this.openVPage(VSalesTask, model);
+                this.getCTaskType(task).showDetail(task);
                 return [2 /*return*/];
             });
         }); };
@@ -169,6 +170,7 @@ var CSalesTask = /** @class */ (function (_super) {
                         customer = param.customer, type = param.type, description = param.description, priorty = param.priorty, deadline = param.deadline;
                         customerId = customer.id;
                         typeId = type.id;
+                        priorty = priorty ? 1 : 0;
                         model = { id: undefined, description: description, customer: customerId, type: typeId, sourceID: "", sourceType: "", sourceNo: "", priorty: priorty, deadline: deadline };
                         return [4 /*yield*/, this.addTaskAction.submit(model)];
                     case 1:
@@ -238,6 +240,7 @@ var CSalesTask = /** @class */ (function (_super) {
         _this.addTaskAction = cUqSalesTask.action('AddTask');
         _this.qeuryGettask = cUqSalesTask.query("Gettask");
         _this.qeurySearchHistory = cUqSalesTask.query("searchhistorytask");
+        _this.taskTypes = createTaskTypes(_this);
         return _this;
     }
     CSalesTask.prototype.internalStart = function (param) {
@@ -251,6 +254,14 @@ var CSalesTask = /** @class */ (function (_super) {
                 }
             });
         });
+    };
+    CSalesTask.prototype.getCTaskType = function (task) {
+        var typeName = task.typeName;
+        var tt = this.taskTypes[typeName];
+        if (tt === undefined) {
+            throw typeName + ' is not defined';
+        }
+        return tt;
     };
     //完结任务
     CSalesTask.prototype.completionTask = function (taskid, result, resulttype) {

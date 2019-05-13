@@ -1,14 +1,15 @@
 import * as React from 'react';
 import { VPage, Page, PageItems } from 'tonva-tools';
 import { observer } from 'mobx-react';
-import { CSalesTaskType } from './CSalesTaskType';
+import { CSelectType } from './CSelectType';
 import { LMR, List } from 'tonva-react-form';
 
-export class VSalesTaskType extends VPage<CSalesTaskType> {
+export class VSelectType extends VPage<CSelectType> {
 
-    async open(salestask: any) {
 
-        this.openPage(this.page, salestask);
+    async open(customer: any) {
+
+        this.openPage(this.page, customer);
     }
 
     private renderList(model: any, index: number) {
@@ -21,12 +22,11 @@ export class VSalesTaskType extends VPage<CSalesTaskType> {
     }
 
     private onClickTaskType = async (model: any) => {
-
-        await this.controller.selectTaskType(model.id);
-        this.closePage();
+        await this.controller.selectTaskType(model);
+        this.ceasePage(1);
     }
 
-    private page = observer((product: any) => {
+    private page = observer((customer: any) => {
 
         let { tasktypelist, selectTaskType } = this.controller;
         let none = <div className="my-3 mx-2 text-warning">抱歉，未找到相关产品，请重新搜索！</div>;

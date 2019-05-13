@@ -9,7 +9,7 @@ export class VSalesTask extends VPage<CSalesTask> {
 
     async open(task: any) {
 
-        let model = await this.controller.lodeSalesTaskDetail(task.id);
+        let model = await this.controller.loadSalesTaskDetail(task.id);
         this.openPage(this.page, model);
 
     }

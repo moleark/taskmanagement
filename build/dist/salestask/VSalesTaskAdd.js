@@ -6,8 +6,8 @@ var schema = [
     { name: 'id', type: 'id', required: false },
     { name: 'customer', type: 'id', required: true },
     { name: 'type', type: 'id', required: true },
-    { name: 'description', type: 'string', required: true },
-    { name: 'priorty', type: 'number', required: true },
+    { name: 'description', type: 'string', required: false },
+    { name: 'priorty', type: 'number', required: false },
     { name: 'deadline', type: 'string', required: true },
 ];
 var VSalesTaskAdd = /** @class */ (function (_super) {
@@ -50,7 +50,7 @@ var VSalesTaskAdd = /** @class */ (function (_super) {
                     }
                 },
                 description: { widget: 'text', label: '内容', placeholder: '请填写任务内容' },
-                priorty: { widget: 'text', label: '重要性', placeholder: '重要性' },
+                priorty: { widget: 'checkbox', label: '重要性', placeholder: '重要性' },
                 deadline: { widget: 'date', label: '要求完成时间', placeholder: '要求完成时间' },
                 submit: { widget: 'button', label: '提交', },
             }
@@ -83,7 +83,7 @@ var VSalesTaskAdd = /** @class */ (function (_super) {
             var footer = React.createElement("button", { type: "button", className: "btn btn-primary w-100", onClick: _this.onAddSalesTask }, "\u4FDD\u5B58");
             return React.createElement(Page, { header: "\u6DFB\u52A0\u4EFB\u52A1", footer: footer },
                 React.createElement("div", { className: "App-container container text-left" },
-                    React.createElement(Form, { ref: function (v) { return _this.form = v; }, className: "my-3", schema: schema, uiSchema: _this.uiSchema, onButtonClick: _this.onFormButtonClick, fieldLabelSize: 3 })));
+                    React.createElement(Form, { ref: function (v) { return _this.form = v; }, className: "my-3", schema: schema, uiSchema: _this.uiSchema, onButtonClick: _this.onFormButtonClick, requiredFlag: false })));
         });
         return _this;
     }

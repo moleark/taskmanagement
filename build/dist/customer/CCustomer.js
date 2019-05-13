@@ -1,8 +1,11 @@
 import * as tslib_1 from "tslib";
+import * as React from 'react';
 import { PageItems, Controller } from 'tonva-tools';
 import { observable } from 'mobx';
-import { VCustomer } from './VCustomer';
+import { VCustomerSelect } from './VCustomerSelect';
 import { VCustomerDetail } from './VCustomerDetail';
+import { observer } from 'mobx-react';
+import { VCustomerList } from './VCustomerList';
 //页面类
 var PageCustomer = /** @class */ (function (_super) {
     tslib_1.__extends(PageCustomer, _super);
@@ -75,6 +78,12 @@ var CCustomer = /** @class */ (function (_super) {
                 return [2 /*return*/];
             });
         }); };
+        _this.render = observer(function () {
+            return _this.renderView(VCustomerList);
+        });
+        _this.tab = function () {
+            return React.createElement(_this.render, null);
+        };
         _this.cApp = cApp;
         var _a = _this.cApp, cUqSalesTask = _a.cUqSalesTask, cUqCustomer = _a.cUqCustomer;
         _this.tuidCustomer = cUqSalesTask.tuid("customer");
@@ -85,7 +94,7 @@ var CCustomer = /** @class */ (function (_super) {
     CCustomer.prototype.internalStart = function (param) {
         return tslib_1.__awaiter(this, void 0, void 0, function () {
             return tslib_1.__generator(this, function (_a) {
-                this.openVPage(VCustomer, param);
+                this.openVPage(VCustomerSelect, param);
                 return [2 /*return*/];
             });
         });

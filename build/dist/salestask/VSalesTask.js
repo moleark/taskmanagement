@@ -82,10 +82,10 @@ var VSalesTask = /** @class */ (function (_super) {
             var buttons = React.createElement("span", null,
                 React.createElement("button", { type: "button", className: "btn btn-primary px-5", onClick: onProcess }, "\u5904\u7406"));
             var rightButton = React.createElement("span", null,
-                React.createElement("button", { type: "button", className: "btn btn-outline-info ml-3", onClick: onPostpond }, "\u5EF6\u671F"),
-                React.createElement("button", { type: "button", className: "btn btn-outline-info ml-3", onClick: onInvalidTaskClick }, "\u65E0\u6548"));
+                React.createElement("button", { type: "button", className: "btn btn-outline-info ml-3", onClick: onPostpond }, "\u63A8\u8FDF"),
+                React.createElement("button", { type: "button", className: "btn btn-outline-info ml-3", onClick: onInvalidTaskClick }, "\u62D2\u7EDD"));
             var footer = React.createElement(LMR, { className: "px-1", left: buttons, right: rightButton });
-            return React.createElement(Page, { header: "\u4EFB\u52A1\u660E\u7EC6", footer: footer },
+            return React.createElement(Page, { header: "\u4EFB\u52A1\u8BE6\u60C5", footer: footer },
                 React.createElement(PropGrid, { rows: rows, values: task }));
         });
         return _this;

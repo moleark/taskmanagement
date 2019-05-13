@@ -4,6 +4,7 @@ import { CSalesTask } from 'salestask';
 import { consts } from './salestask/consts';
 import { CSalesTaskType } from 'salestask/CSalesTaskType';
 import { CCustomer } from 'customer/CCustomer';
+import { CProduct } from 'product/CProduct';
 var CSalesTaskApp = /** @class */ (function (_super) {
     tslib_1.__extends(CSalesTaskApp, _super);
     function CSalesTaskApp() {
@@ -17,10 +18,12 @@ var CSalesTaskApp = /** @class */ (function (_super) {
                         /** 初始化 QU*/
                         this.cUqSalesTask = this.getCUq(consts.uqSalesTask);
                         this.cUqCustomer = this.getCUq(consts.uqCustomer);
+                        this.cUqProduct = this.getCUq(consts.uqProduct);
                         /** 初始化 Conctrolle*/
-                        this.cSalesTask = new CSalesTask(this, undefined);
                         this.cSalesTaskType = new CSalesTaskType(this, undefined);
                         this.cCustomer = new CCustomer(this, undefined);
+                        this.cProduct = new CProduct(this, undefined);
+                        this.cSalesTask = new CSalesTask(this, undefined);
                         /** 启动销售任务列表*/
                         this.cSalesTask.start();
                         /** 启动主程序*/

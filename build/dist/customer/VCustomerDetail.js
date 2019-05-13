@@ -15,6 +15,7 @@ var VCustomerDetail = /** @class */ (function (_super) {
                     component: React.createElement(LMR, { className: "cursor-pointer w-100", right: React.createElement("div", { className: "w-2c text-right" },
                             React.createElement("i", { className: "fa fa-chevron-right" })) }, "\u5317\u4EAC\u5927\u5B66"),
                     label: '单位',
+                    full: false
                 },
                 {
                     type: 'string',
@@ -29,7 +30,7 @@ var VCustomerDetail = /** @class */ (function (_super) {
                 {
                     type: 'string',
                     name: 'gender',
-                    label: '性别'
+                    label: '性别',
                 },
                 {
                     type: 'string',
@@ -47,8 +48,8 @@ var VCustomerDetail = /** @class */ (function (_super) {
                     label: 'TOP单位'
                 }
             ];
-            return React.createElement(Page, { header: "\u5BA2\u6237\u660E\u7EC6" },
-                React.createElement(PropGrid, { rows: rows, values: customer }));
+            return React.createElement(Page, { header: "\u5BA2\u6237\u8BE6\u60C5" },
+                React.createElement(PropGrid, { rows: rows, values: customer, alignValue: "right" }));
         });
         return _this;
     }
