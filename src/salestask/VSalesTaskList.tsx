@@ -7,6 +7,8 @@ import { tv } from 'tonva-react-uq';
 
 export class VSalesTaskList extends VPage<CSalesTask> {
 
+
+    private tasklist: any;
     async open(param: any) {
 
     }
@@ -34,16 +36,13 @@ export class VSalesTaskList extends VPage<CSalesTask> {
     private renderSalesTask(salesTask: any, index: number) {
 
         let { description, deadline, createTime, customer, type } = salesTask;
-        let divDeadline: any;
-        if (deadline) divDeadline = <div><small className="text-muted">预定：<EasyDate date={deadline} /></small></div>;
         let right = <div className="text-right">
-            <div><small className="text-muted"><EasyDate date={createTime} /></small></div>
-            {divDeadline}
+            <div><small className="text-muted"><EasyDate date={deadline} /></small></div>
         </div>;
-        return <LMR className="px-3 py-2" right={right}>
+        return <LMR className="px-3 py-2" right={right}  >
             <div className="row">
-                <div className="col-sm-4">{tv(type, (v) => <>{v.name}</>)}</div>
                 <div className="col-sm-8 font-weight-bold">{tv(customer, (v) => <>{v.name}</>)}</div>
+                <div className="col-sm-4">{tv(type, (v) => <>{v.name}</>)}</div>
             </div>
             <div>{description}</div>
         </LMR>
@@ -52,13 +51,17 @@ export class VSalesTaskList extends VPage<CSalesTask> {
     private page = observer(() => {
 
         let { tasks: pageSalesTask } = this.controller;
-        let none = <div className="my-3 mx-2 text-warning">抱歉，未找到相关任务！</div>;
-        let add = <div onClick={this.onSalesTaskAdd} className="cursor-pointer px-2 py-1"><FA name="plus" /></div>;
-        let header = <LMR className="px-3 py-2 bg-primary text-white" right={add} >
-            <div >销售任务</div>
+        this.tasklist = pageSalesTask;
+
+        let none = <div className="my-3 mx-2 text-muted">无任务</div>;
+        let add = <div onClick={this.onSalesTaskAdd} className="cursor-pointer px-3 py-1"><FA name="plus" /></div>;
+        let header = <LMR className="pl-3 py-2 bg-primary text-white" right={add} >
+            <div className="d-flex h-100 align-items-center">销售助手</div>
         </LMR>
+
+        let tasksss = [{ name: "今天" }, { name: "明天" }, { name: "一周" }];
         return <Page header={header} onScrollBottom={this.onScrollBottom}>
-            <List before={''} none={none} items={pageSalesTask} item={{ render: this.renderSalesTask, onClick: this.onSalesTaskClick }} />
+            <List before={''} none={none} items={this.controller.tasks} item={{ render: this.renderSalesTask, onClick: this.onSalesTaskClick }} />
         </Page>
     });
 

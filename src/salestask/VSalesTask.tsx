@@ -73,14 +73,14 @@ export class VSalesTask extends VPage<CSalesTask> {
             <button type="button" className="btn btn-primary px-5" onClick={onProcess} >处理</button>
         </span>;
         let rightButton = <span>
-            <button type="button" className="btn btn-outline-info ml-3" onClick={onPostpond} >延期</button>
-            <button type="button" className="btn btn-outline-info ml-3" onClick={onInvalidTaskClick} >无效</button>
+            <button type="button" className="btn btn-outline-info ml-3" onClick={onPostpond} >推迟</button>
+            <button type="button" className="btn btn-outline-info ml-3" onClick={onInvalidTaskClick} >拒绝</button>
         </span>;
 
         let footer = <LMR className="px-1" left={buttons} right={rightButton}>
         </LMR>
 
-        return <Page header="任务明细" footer={footer} >
+        return <Page header="任务详情" footer={footer} >
             <PropGrid rows={rows} values={task} />
         </Page >
     })

@@ -10,21 +10,21 @@ import ui from './ui';
 
 class App extends React.Component {
 
-  private onLogined = async () => {
-    await startApp(ui);
-    /*
-    let page = <Page header={false}>
-      <Tabs tabs={faceTabs} />
-    </Page>
-    nav.push(page);
-    */
-    //let b = new B('b');
-    //await b.d();
-    //nav.push(<div>ddd</div>)
-  }
-  public render() {
-    return <NavView onLogined={this.onLogined} notLogined={this.onLogined} />
-  }
+    private onLogined = async () => {
+        await startApp(ui);
+        /*
+        let page = <Page header={false}>
+          <Tabs tabs={faceTabs} />
+        </Page>
+        nav.push(page);
+        */
+        //let b = new B('b');
+        //await b.d();
+        //nav.push(<div>ddd</div>)
+    }
+    public render() {
+        return <NavView onLogined={this.onLogined} notLogined={this.onLogined} />
+    }
 }
 
 export default App;

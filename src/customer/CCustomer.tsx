@@ -4,8 +4,10 @@ import { Query, tv, TuidMain, Action } from 'tonva-react-uq';
 import { PageItems, Controller, nav, Page, Image } from 'tonva-tools';
 import { CSalesTaskApp } from '../CSalesTaskApp';
 import { observable } from 'mobx';
-import { VCustomer } from './VCustomer';
+import { VCustomerSelect } from './VCustomerSelect';
 import { VCustomerDetail } from './VCustomerDetail';
+import { observer } from 'mobx-react';
+import { VCustomerList } from './VCustomerList';
 
 //页面类
 class PageCustomer extends PageItems<any> {
@@ -53,7 +55,7 @@ export class CCustomer extends Controller {
     //初始化
     protected async internalStart(param: any) {
 
-        this.openVPage(VCustomer, param);
+        this.openVPage(VCustomerSelect, param);
     }
 
     //查询客户--通过名称
@@ -82,4 +84,12 @@ export class CCustomer extends Controller {
         this.returnCall(addcustomerId);
     }
 
+    render = observer(() => {
+
+        return this.renderView(VCustomerList);
+    })
+
+    tab = () => {
+        return <this.render />;
+    }
 }

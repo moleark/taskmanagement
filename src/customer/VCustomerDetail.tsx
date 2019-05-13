@@ -23,6 +23,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
                     北京大学
                 </LMR>,
                 label: '单位',
+                full: false
             } as ComponentProp,
             {
                 type: 'string',
@@ -38,7 +39,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
             {
                 type: 'string',
                 name: 'gender',
-                label: '性别'
+                label: '性别',
             } as StringProp,
             {
                 type: 'string',
@@ -57,8 +58,8 @@ export class VCustomerDetail extends VPage<CCustomer> {
             } as StringProp
         ];
 
-        return <Page header="客户明细">
-            <PropGrid rows={rows} values={customer} />
+        return <Page header="客户详情">
+            <PropGrid rows={rows} values={customer} alignValue="right" />
         </Page>
     })
 }

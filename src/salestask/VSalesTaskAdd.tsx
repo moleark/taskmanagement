@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, PageItems, Schema, Form, Context, UiIdItem } from 'tonva-tools';
+import { VPage, Page, PageItems, Schema, Form, Context, UiIdItem, UiCheckItem } from 'tonva-tools';
 import { observer } from 'mobx-react';
 import { CSalesTask } from './CSalesTask';
 import { UiSchema, UiInputItem } from 'tonva-tools/ui/form/uiSchema';
@@ -9,8 +9,8 @@ const schema: Schema = [
     { name: 'id', type: 'id', required: false },
     { name: 'customer', type: 'id', required: true },
     { name: 'type', type: 'id', required: true },
-    { name: 'description', type: 'string', required: true },
-    { name: 'priorty', type: 'number', required: true },
+    { name: 'description', type: 'string', required: false },
+    { name: 'priorty', type: 'number', required: false },
     { name: 'deadline', type: 'string', required: true },
     //{ name: 'submit', type: 'submit' },
 ];
@@ -48,12 +48,11 @@ export class VSalesTaskAdd extends VPage<CSalesTask> {
                 }
             } as UiIdItem,
             description: { widget: 'text', label: '内容', placeholder: '请填写任务内容' } as UiInputItem,
-            priorty: { widget: 'text', label: '重要性', placeholder: '重要性' } as UiInputItem,
+            priorty: { widget: 'checkbox', label: '重要性', placeholder: '重要性' } as UiCheckItem,
             deadline: { widget: 'date', label: '要求完成时间', placeholder: '要求完成时间' } as UiInputItem,
             submit: { widget: 'button', label: '提交', },
         }
     }
-
 
     async open(salestask: any) {
 
@@ -78,7 +77,8 @@ export class VSalesTaskAdd extends VPage<CSalesTask> {
                     schema={schema}
                     uiSchema={this.uiSchema}
                     onButtonClick={this.onFormButtonClick}
-                    fieldLabelSize={3} />
+                    requiredFlag={false}
+                />
             </div>
         </Page >
     })
