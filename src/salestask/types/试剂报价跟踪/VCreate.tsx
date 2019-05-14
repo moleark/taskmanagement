@@ -45,10 +45,11 @@ export class VCreate extends VPage<CTaskType> {
         this.closePage(1);
     }
 
-    private page = observer((product: any) => {
+    private page = observer((param: any) => {
         let footer = <button type="button" className="btn btn-primary w-100" onClick={this.onAddSalesTask}>保存</button>;
         return <Page header={this.controller.caption} footer={footer} >
             <div className="App-container container text-left">
+                {this.controller.renderCreateTop(param)}
                 <Form ref={v => this.form = v} className="my-3"
                     schema={schema}
                     uiSchema={this.uiSchema}

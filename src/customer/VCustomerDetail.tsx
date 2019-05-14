@@ -2,7 +2,7 @@ import * as React from 'react';
 import { VPage, Page, PageItems } from 'tonva-tools';
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
-import { LMR, List, EasyDate, SearchBox, StringProp, ComponentProp, Prop, PropGrid } from 'tonva-react-form';
+import { LMR, List, EasyDate, SearchBox, StringProp, ComponentProp, Prop, PropGrid, FA } from 'tonva-react-form';
 import { tv } from 'tonva-react-uq';
 
 export class VCustomerDetail extends VPage<CCustomer> {
@@ -19,11 +19,10 @@ export class VCustomerDetail extends VPage<CCustomer> {
             {
                 type: 'component',
                 name: 'customer',
-                component: <LMR className="cursor-pointer w-100" right={<div className="w-2c text-right"><i className="fa fa-chevron-right" /></div>}>
-                    北京大学
-                </LMR>,
-                label: '单位',
-                full: false
+                component: <LMR className="cursor-pointer w-100 py-2 mt-2"
+                    left={< div > <small><FA name='university' className='text-info' /></small> &nbsp;北京大学</div>}
+                    right={< div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div >}>
+                </LMR >,
             } as ComponentProp,
             {
                 type: 'string',

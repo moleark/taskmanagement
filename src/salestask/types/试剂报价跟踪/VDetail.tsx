@@ -44,9 +44,15 @@ export class VDetail extends VPage<CTaskType> {
             {
                 type: 'component',
                 name: 'description',
-                component: this.itemrender(task),
-                label: '',
+                component: <LMR className="cursor-pointer w-100 py-2" left={<div> <small><FA name='newspaper-o'> </FA>  </small> &nbsp;&nbsp;描述 </div>}
+                    right={< div > <small className="text-muted"><small></small><EasyDate date={deadline} /></small></div >}>
+                </LMR >
             } as ComponentProp,
+            {
+                type: 'string',
+                name: 'description',
+            } as StringProp,
+
         ];
 
         let buttons = <span>

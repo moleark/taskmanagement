@@ -28,7 +28,7 @@ export class VDetail extends VPage<CTaskType> {
         let right = <div className="text-right">
             <div><small className="text-muted"><small>{divpriorty}</small><EasyDate date={deadline} /></small></div>
         </div>;
-        return <LMR className="cursor-pointer w-100" right={right}>
+        return <LMR className="cursor-pointer w-100" right={right} >
             {description}
         </LMR>;
     }
@@ -45,9 +45,15 @@ export class VDetail extends VPage<CTaskType> {
             {
                 type: 'component',
                 name: 'description',
-                component: this.itemrender(task),
-                label: '内容',
+                component: <LMR className="cursor-pointer w-100 py-2" left={<div> <small><FA name='newspaper-o'> </FA>  </small> &nbsp;&nbsp;描述 </div>}
+                    right={< div > <small className="text-muted"><small></small><EasyDate date={deadline} /></small></div >}>
+                </LMR >
             } as ComponentProp,
+            {
+                type: 'string',
+                name: 'description',
+            } as StringProp,
+
         ];
 
         let buttons = <span>

@@ -18,7 +18,7 @@ export class VSalesTaskExtension extends VPage<CSalesTask> {
     private uiSchema: UiSchema = {
         items: {
             resulttype: { visible: false },
-            result: { widget: 'textarea', label: '结果', placeholder: '请输入处理结果！', rows: 12 } as UiTextAreaItem,
+            result: { widget: 'textarea', label: '原因', placeholder: '请输入处理结果！', rows: 12 } as UiTextAreaItem,
             date: { widget: 'date', label: '日期', placeholder: '请输入日期！' } as UiInputItem,
             submit: { widget: 'button', label: '提交', },
         }

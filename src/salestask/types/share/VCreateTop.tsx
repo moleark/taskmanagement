@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View } from 'tonva-tools';
 import { CTaskType, Task } from '../CTaskType';
-import { PropGrid, Prop, LMR, ComponentProp } from 'tonva-react-form';
+import { PropGrid, Prop, LMR, ComponentProp, FA } from 'tonva-react-form';
 import { tv } from 'tonva-react-uq';
 
 export class VCreateTop extends View<CTaskType> {
@@ -20,20 +20,12 @@ export class VCreateTop extends View<CTaskType> {
                 type: 'component',
                 name: 'customer',
                 component: <LMR className="cursor-pointer w-100" onClick={onClickCustoemr}
+                    left={<div className="mr-2"> <FA name="user" className="text-info mr-2 pt-1 " /> </div>}
                     right={<div className="w-2c text-right"><i className="fa fa-chevron-right" /></div>}>
                     {tv(customer, v => <>{v.name}</>)}
                 </LMR>,
-                label: '客户',
+                label: '',
             } as ComponentProp,
-            {
-                type: 'component',
-                name: 'type',
-                component: <LMR className="cursor-pointer w-100">
-                    {tv(type, v => <>{v.name}</>)}
-                </LMR>,
-                label: '类型',
-            } as ComponentProp,
-
         ];
         return <PropGrid className="my-2" rows={rows} values={task} />;
     }

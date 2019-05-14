@@ -35,7 +35,7 @@ export class VSalesTaskList extends VPage<CSalesTask> {
 
         let { description, deadline, createTime, customer, type, typeName, priorty } = salesTask;
         let cnFlag = classNames({
-            'mr-3': true,
+            'my-1 mr-3': true,
             'text-danger': priorty > 0,
             'text-info': !(priorty > 0)
         })
@@ -50,7 +50,7 @@ export class VSalesTaskList extends VPage<CSalesTask> {
         return <LMR className="px-3 py-2" left={left} right={right}  >
             <div className="row">
                 <div className="col-sm-8 font-weight-bold">{tv(customer, (v) => <>{v.name}</>)}</div>
-                <div className="col-sm-4">{tv(type, (v) => <>{v.name}</>)}</div>
+                <small className="text-muted ml-3">{tv(type, (v) => <>{v.name}</>)}</small>
             </div>
         </LMR>
     }

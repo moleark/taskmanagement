@@ -35,8 +35,8 @@ export class VSalesTaskHistory extends VPage<CSalesTask> {
 
     private page = observer((task: any) => {
 
-        let none = <div className="my-3 mx-2 text-warning">抱歉，未找到相关记录！</div>;
-        return <Page header="客户沟通记录" >
+        let none = <div className="my-3 mx-2 text-warning">无记录！</div>;
+        return <Page header="详情" >
             <List before={''} none={none} items={this.salestask} item={{ render: this.renderSalesTask }} />
         </Page>
     })
