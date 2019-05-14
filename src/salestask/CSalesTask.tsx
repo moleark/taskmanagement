@@ -217,6 +217,8 @@ export class CSalesTask extends Controller {
         let ret = await this.addTaskAction.submit(model);
         model.id = ret.id;
 
+        await this.searchByKey(param);
+        /** 
         //添加任务--前台页面
         this.tasks.unshift({
             id: ret.id,
@@ -229,6 +231,7 @@ export class CSalesTask extends Controller {
             priorty: priorty,
             deadline: deadline
         });
+        */
     }
 
     //显示客户明细页面

@@ -18,17 +18,20 @@ export class VSalesTaskHistory extends VPage<CSalesTask> {
         let { description, deadline, DATE, result, type } = salesTask;
         let right = <div className="text-right">
             <div><small className="text-muted">预定：<EasyDate date={deadline} /></small></div>
-            <div><small className="text-muted">完成：<EasyDate date={DATE} /></small></div>
+            <div><small className="text-muted">完成：</small></div>
         </div>;
-        return <LMR className="px-3 py-2" right={right}>
-            <div className="row">
-                <div className="col-sm-4">{tv(type, (v) => <>{v.name}</>)}</div>
-                <div className="col-sm-8 font-weight-bold">{result}</div>
-            </div>
-            <div>{description}</div>
-        </LMR>
+        return <div className="d-block px-3 py-2">
+            <div><span className="small text-muted"><EasyDate date={DATE} /></span> {description}</div>
+            <div>{result}</div>
+        </div>;
     }
-
+    /*
+    <div className="row">
+    <div className="col-sm-4">{tv(type, (v) => <>{v.name}</>)}</div>
+    <div className="col-sm-8 font-weight-bold">{result}</div>
+</div>
+<div>{description}</div>
+*/
 
     private page = observer((task: any) => {
 

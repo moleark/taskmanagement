@@ -7,8 +7,8 @@ import { CTaskType, Task } from '../CTaskType';
 
 const schema: Schema = [
     { name: 'id', type: 'id', required: false },
-    { name: 'customer', type: 'id', required: true },
-    { name: 'type', type: 'id', required: true },
+    { name: 'customer', type: 'id', required: false },
+    { name: 'type', type: 'id', required: false },
     { name: 'description', type: 'string', required: false },
     { name: 'priorty', type: 'number', required: false },
     { name: 'deadline', type: 'string', required: true },
@@ -21,6 +21,8 @@ export class VCreate extends VPage<CTaskType> {
     private uiSchema: UiSchema = {
         items: {
             id: { visible: false },
+            customer: { visible: false },
+            type: { visible: false },
             description: { widget: 'text', label: '内容', placeholder: '请填写任务内容' } as UiInputItem,
             priorty: { widget: 'checkbox', label: '重要性', placeholder: '重要性' } as UiCheckItem,
             deadline: { widget: 'date', label: '要求完成时间', placeholder: '要求完成时间' } as UiInputItem,

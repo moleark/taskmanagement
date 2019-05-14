@@ -65,7 +65,7 @@ export class VSalesTask extends VPage<CSalesTask> {
                 component: <LMR className="cursor-pointer w-100" onClick={onShowSalesTaskHistory}
                     right={<div className="w-2c text-right"><i className="fa fa-chevron-right" /></div>}>
                 </LMR>,
-                label: '交流记录',
+                label: '执行过程',
             } as ComponentProp,
         ];
 

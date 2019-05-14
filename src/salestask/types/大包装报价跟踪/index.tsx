@@ -6,7 +6,7 @@ import { VDetail } from './VDetail';
 import { VAdd } from './VCreate';
 
 export class 大包装报价跟踪 extends CTaskType {
-    icon = <FA name='car' className="text-info" />;
+    icon = <FA name='flask' />;
     caption = '大包装报价跟踪';
 
     protected internalStart(param?: any): Promise<void> {

@@ -58,15 +58,7 @@ export class VDetail extends VPage<CTaskType> {
                 name: 'deadline',
                 component: <EasyDate date={deadline} />,
                 label: '要求完成日期',
-            } as ComponentProp,
-            {
-                type: 'component',
-                name: 'customer',
-                component: <LMR className="cursor-pointer w-100" onClick={onShowSalesTaskHistory}
-                    right={<div className="w-2c text-right"><i className="fa fa-chevron-right" /></div>}>
-                </LMR>,
-                label: '交流记录',
-            } as ComponentProp,
+            } as ComponentProp
         ];
 
         let buttons = <span>

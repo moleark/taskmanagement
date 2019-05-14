@@ -1,4 +1,5 @@
 import * as React from 'react';
+import classNames from 'classnames';
 import { VPage, Page, PageItems, Image } from 'tonva-tools';
 import { CSalesTask } from './CSalesTask';
 import { List, LMR, EasyDate, FA } from 'tonva-react-form';
@@ -32,8 +33,17 @@ export class VSalesTaskList extends VPage<CSalesTask> {
 
     private renderSalesTask = (salesTask: any, index: number) => {
 
-        let { description, deadline, createTime, customer, type, typeName } = salesTask;
-        let left = <div className="mr-3">{this.controller.taskIcon(typeName)}</div>;
+        let { description, deadline, createTime, customer, type, typeName, priorty } = salesTask;
+        let cnFlag = classNames({
+            'mr-3': true,
+            'text-danger': priorty > 0,
+            'text-info': !(priorty > 0)
+        })
+        var divpriorty: any;
+        //<small>{divpriorty}</small>
+        if (priorty == 1)
+            divpriorty = <FA name='circle' className="text-danger">  </FA>
+        let left = <div className={cnFlag}>{this.controller.taskIcon(typeName)}</div>;
         let right = <div className="text-right">
             <div><small className="text-muted"><EasyDate date={deadline} /></small></div>
         </div>;
@@ -42,7 +52,6 @@ export class VSalesTaskList extends VPage<CSalesTask> {
                 <div className="col-sm-8 font-weight-bold">{tv(customer, (v) => <>{v.name}</>)}</div>
                 <div className="col-sm-4">{tv(type, (v) => <>{v.name}</>)}</div>
             </div>
-            <div>{description}</div>
         </LMR>
     }
 

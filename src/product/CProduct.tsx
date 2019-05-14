@@ -46,6 +46,7 @@ export class CProduct extends Controller {
         this.cApp = cApp;
 
         let { cUqSalesTask, cUqCustomer, cUqProduct } = this.cApp;
+        this.pageProduct = null;
         //let searchProductQuery = cUqProduct.query("searchProduct");
     }
 

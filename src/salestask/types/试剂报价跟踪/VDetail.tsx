@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { VPage, Page, PageItems, TabCaptionComponent, Tabs } from 'tonva-tools';
-import { List, LMR, EasyDate, PropGrid, Prop, StringProp, ComponentProp } from 'tonva-react-form';
+import { List, LMR, EasyDate, PropGrid, Prop, StringProp, ComponentProp, FA } from 'tonva-react-form';
 import { observer } from 'mobx-react';
 import { tv } from 'tonva-react-uq';
 import { CTaskType, Task } from '../CTaskType';
@@ -13,61 +13,39 @@ export class VDetail extends VPage<CTaskType> {
         this.openPage(this.page, model);
 
     }
+    private page = observer((task: any) => {
+        return this.render(task);
+    });
 
-    private page = observer((task: Task) => {
+    itemrender(param: any) {
+
+        let { deadline, description, priorty } = param;
+        var divpriorty: any
+        if (priorty == 1)
+            divpriorty = <FA name='circle' className="text-danger"></FA>
+
+        let right = <div className="text-right">
+            <div><small className="text-muted"><small>{divpriorty}</small><EasyDate date={deadline} /></small></div>
+        </div>;
+        return <LMR className="cursor-pointer w-100" right={right} left="内容" >
+            {description}
+        </LMR>;
+    }
+
+    render(task: any) {
 
         let { showSalesTaskComplet, showSalesTaskExtension, onInvalidTask, showCustomerDetail, showSalesTaskHistory } = this.controller.cSalesTask;
-        let { type, customer, deadline } = task as any;
+        let { deadline, description, priorty } = task;
 
         let onProcess = async () => await showSalesTaskComplet(task);
         let onPostpond = async () => await showSalesTaskExtension(task);
         let onInvalidTaskClick = async () => await onInvalidTask(task);
-        let onClickCustoemr = async () => await showCustomerDetail(customer.id);
-        let onShowSalesTaskHistory = async () => await showSalesTaskHistory(customer.id);
-
         let rows: Prop[] = [
-            /*
             {
                 type: 'component',
-                name: 'customer',
-                component: <LMR className="cursor-pointer w-100" onClick={onClickCustoemr}
-                    right={<div className="w-2c text-right"><i className="fa fa-chevron-right" /></div>}>
-                    {tv(customer, v => <>{v.name}</>)}
-                </LMR>,
-                label: '客户',
-            } as ComponentProp,
-            {
-                type: 'component',
-                name: 'type',
-                component: <LMR className="cursor-pointer w-100">
-                    {tv(type, v => <>{v.name}</>)}
-                </LMR>,
-                label: '类型',
-            } as ComponentProp,
-            */
-            {
-                type: 'string',
                 name: 'description',
-                label: '内容'
-            } as StringProp,
-            {
-                type: 'string',
-                name: 'priorty',
-                label: '重要性'
-            } as StringProp,
-            {
-                type: 'component',
-                name: 'deadline',
-                component: <EasyDate date={deadline} />,
-                label: '要求完成日期',
-            } as ComponentProp,
-            {
-                type: 'component',
-                name: 'customer',
-                component: <LMR className="cursor-pointer w-100" onClick={onShowSalesTaskHistory}
-                    right={<div className="w-2c text-right"><i className="fa fa-chevron-right" /></div>}>
-                </LMR>,
-                label: '交流记录',
+                component: this.itemrender(task),
+                label: '',
             } as ComponentProp,
         ];
 
@@ -86,5 +64,5 @@ export class VDetail extends VPage<CTaskType> {
             {this.controller.renderDetailTop(task)}
             <PropGrid rows={rows} values={task} />
         </Page >
-    })
+    }
 }

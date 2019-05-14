@@ -5,7 +5,7 @@ import { FA } from 'tonva-react-form';
 import { VCreate } from './VCreate';
 
 export class 试剂报价跟踪 extends CTaskType {
-    icon = <FA name='heart-o' className="text-danger" />;
+    icon = <FA name='car' />;
 
     protected internalStart(param?: any): Promise<void> {
         return;

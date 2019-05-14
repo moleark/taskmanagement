@@ -48,7 +48,7 @@ export class VProductList extends VPage<CProduct> {
             <SearchBox className="px-1 w-100  mt-2 mr-2 "
                 size={size}
                 onSearch={(key: string) => this.controller.searchByKey(key)}
-                placeholder="" />
+                placeholder="搜索品名、编号、CAS、MDL等" />
             <List before={''} none={none} items={pageProduct} item={{ render: this.renderProduct, onClick: null }} />
         </Page>
     })

@@ -40,7 +40,6 @@ export class CCustomer extends Controller {
     @observable pageCustomer: PageCustomer;
     private tuidCustomer: TuidMain;
     private querySearchCustomer: Query;
-    @observable customerlist: any;
 
     //构造函数
     constructor(cApp: CSalesTaskApp, res: any) {
@@ -54,7 +53,7 @@ export class CCustomer extends Controller {
 
     //初始化
     protected async internalStart(param: any) {
-
+        this.pageCustomer = null;
         this.openVPage(VCustomerSelect, param);
     }
 
@@ -82,7 +81,7 @@ export class CCustomer extends Controller {
     }
 
     render = observer(() => {
-
+        this.pageCustomer = null;
         return this.renderView(VCustomerList);
     })
 
