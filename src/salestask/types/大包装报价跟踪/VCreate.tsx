@@ -3,12 +3,9 @@ import { VPage, Page, PageItems, Schema, Form, Context, UiIdItem, UiCheckItem } 
 import { observer } from 'mobx-react';
 import { UiSchema, UiInputItem } from 'tonva-tools/ui/form/uiSchema';
 import { tv } from 'tonva-react-uq';
-import { CTaskType } from '../CTaskType';
+import { CTaskType, Task } from '../CTaskType';
 
 const schema: Schema = [
-    { name: 'id', type: 'id', required: false },
-    { name: 'customer', type: 'id', required: false },
-    { name: 'type', type: 'id', required: false },
     { name: 'description', type: 'string', required: false },
     { name: 'priorty', type: 'number', required: false },
     { name: 'deadline', type: 'string', required: true },
@@ -16,11 +13,11 @@ const schema: Schema = [
 ];
 
 export class VAdd extends VPage<CTaskType> {
-    private form: Form;
 
+    private salestask: Task
+    private form: Form;
     private uiSchema: UiSchema = {
         items: {
-            id: { visible: false },
             description: { widget: 'text', label: '内容', placeholder: '请填写任务内容' } as UiInputItem,
             priorty: { widget: 'checkbox', label: '重要性', placeholder: '重要性' } as UiCheckItem,
             deadline: { widget: 'date', label: '要求完成时间', placeholder: '要求完成时间' } as UiInputItem,
@@ -28,9 +25,9 @@ export class VAdd extends VPage<CTaskType> {
         }
     }
 
-    async open(salestask: any) {
-
-        this.openPage(this.page, salestask);
+    async open(task: Task) {
+        this.salestask = task;
+        this.openPage(this.page, task);
     }
 
     private onAddSalesTask = async (model: any) => {
@@ -39,19 +36,19 @@ export class VAdd extends VPage<CTaskType> {
     }
 
     private onFormButtonClick = async (name: string, context: Context) => {
-        await this.controller.cSalesTask.addSalesTask(context.form.data);
+        await this.controller.cSalesTask.addSalesTask(context.form.data, this.salestask);
         this.closePage(1);
     }
 
-    private page = observer((task: any) => {
-        return this.render(task);
+    private page = observer((param: any) => {
+        return this.render(param);
     });
 
-    render(task: any) {
+    render(param: any) {
         let footer = <button type="button" className="btn btn-primary w-100" onClick={this.onAddSalesTask}>保存</button>;
         return <Page header={this.controller.caption} footer={footer} >
             <div className="App-container container text-left">
-                {this.controller.renderCreateTop(task)}
+                {this.controller.renderCreateTop(param)}
                 <Form ref={v => this.form = v} className="my-3"
                     schema={schema}
                     uiSchema={this.uiSchema}

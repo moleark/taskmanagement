@@ -119,8 +119,7 @@ export class CSalesTask extends Controller {
     }
 
     //获取任务类型
-    private getCTaskType(task: Task): CTaskType {
-        let { typeName } = task;
+    private getCTaskType(typeName: string): CTaskType {
         let tt = this.taskTypes[typeName];
         if (tt === undefined) {
             throw typeName + ' is not defined';
@@ -130,7 +129,8 @@ export class CSalesTask extends Controller {
 
     //显示销售任务明细页面
     showSalesTaskDetail = async (task: Task) => {
-        this.getCTaskType(task).showDetail(task);
+
+        this.getCTaskType(task.typeName).showDetail(task);
         //this.openVPage(VSalesTask, task);
     }
 
@@ -184,13 +184,14 @@ export class CSalesTask extends Controller {
     createTask = async () => {
         let customer = await this.selectCustomer();
         let taskType = await this.selectTaskType();
+        let typeName = (taskType as any).name
         let task = {
             id: null,
-            type: 1,
-            typeName: (taskType as any).name,
-            customer: (customer as any).id
+            type: taskType,
+            typeName: typeName,
+            customer: customer
         }
-        this.getCTaskType(task).showCreate(task);
+        this.getCTaskType(typeName).showCreate(task);
     }
 
     //显示查询客户页面
@@ -204,9 +205,10 @@ export class CSalesTask extends Controller {
     }
 
     //添加任务
-    addSalesTask = async (param: any) => {
+    addSalesTask = async (param: any, task: Task) => {
 
-        let { customer, type, description, priorty, deadline } = param;
+        let { description, priorty, deadline } = param;
+        let { customer, type } = task;
         let customerId = customer.id;
         let typeId = type.id;
         priorty = priorty ? 1 : 0;

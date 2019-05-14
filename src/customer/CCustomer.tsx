@@ -65,28 +65,20 @@ export class CCustomer extends Controller {
         this.pageCustomer.first({ key: key });
     }
 
+    //加载客户明细
+    loadCustomerDetail = async (customerid: number) => {
+        return await this.tuidCustomer.load(customerid);
+    }
+
     //查询客户--通过ID
     showCustomerDetail = async (customerid: number) => {
-        let customer = await this.tuidCustomer.load(customerid);
+        let customer = await this.loadCustomerDetail(customerid);
         this.openVPage(VCustomerDetail, customer);
     }
 
-
     //选择客户--给调用页面返回客户id
-    /**
-    selectCustomer = async (customerid: number): Promise<any> => {
-
-        let addcustomerId = this.tuidCustomer.boxId(customerid);
-        this.returnCall(addcustomerId);
-    } 
-    */
     selectCustomer = async (customer: any): Promise<any> => {
         this.returnCall(customer);
-        /*
-        let addcustomerId = this.tuidCustomer.boxId(customerid);
-        let { cSalesTaskType } = this.cApp;
-        cSalesTaskType.start(addcustomerId);
-        */
     }
 
     render = observer(() => {

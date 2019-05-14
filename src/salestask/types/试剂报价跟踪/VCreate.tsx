@@ -3,7 +3,7 @@ import { VPage, Page, PageItems, Schema, Form, Context, UiIdItem, UiCheckItem } 
 import { observer } from 'mobx-react';
 import { UiSchema, UiInputItem } from 'tonva-tools/ui/form/uiSchema';
 import { tv } from 'tonva-react-uq';
-import { CTaskType } from '../CTaskType';
+import { CTaskType, Task } from '../CTaskType';
 
 const schema: Schema = [
     { name: 'id', type: 'id', required: false },
@@ -15,9 +15,9 @@ const schema: Schema = [
     //{ name: 'submit', type: 'submit' },
 ];
 
-export class VAdd extends VPage<CTaskType> {
+export class VCreate extends VPage<CTaskType> {
+    private task: Task;
     private form: Form;
-
     private uiSchema: UiSchema = {
         items: {
             id: { visible: false },
@@ -29,7 +29,7 @@ export class VAdd extends VPage<CTaskType> {
     }
 
     async open(salestask: any) {
-
+        this.task = salestask;
         this.openPage(this.page, salestask);
     }
 
@@ -39,7 +39,7 @@ export class VAdd extends VPage<CTaskType> {
     }
 
     private onFormButtonClick = async (name: string, context: Context) => {
-        await this.controller.cSalesTask.addSalesTask(context.form.data);
+        await this.controller.cSalesTask.addSalesTask(context.form.data, this.task);
         this.closePage(1);
     }
 

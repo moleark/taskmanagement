@@ -5,9 +5,13 @@ import { PropGrid, Prop, LMR, ComponentProp } from 'tonva-react-form';
 import { tv } from 'tonva-react-uq';
 
 export class VCreateTop extends View<CTaskType> {
+
+
     render(task: Task) {
         let { showCustomerDetail } = this.controller.cSalesTask;
         let { type, customer } = task;
+        let { cCustomer } = this.controller.cSalesTask.cApp;
+
 
         let onClickCustoemr = async () => await showCustomerDetail(customer.id);
 

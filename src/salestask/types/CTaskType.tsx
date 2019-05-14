@@ -8,10 +8,11 @@ import { VCreateTop } from './share/VCreateTop';
 
 export interface Task {
     id: number;
-    type: number;
     typeName: string;
+    type: any;
     customer: any;
 }
+
 
 export abstract class CTaskType extends Controller {
     caption: string;

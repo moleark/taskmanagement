@@ -68,7 +68,7 @@ export class VSalesTaskAdd extends VPage<CSalesTask> {
     }
 
     private onFormButtonClick = async (name: string, context: Context) => {
-        await this.controller.addSalesTask(context.form.data);
+        await this.controller.addSalesTask(context.form.data, null);
         this.closePage(1);
     }
 
