@@ -19,7 +19,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
             {
                 type: 'component',
                 name: 'customer',
-                component: <LMR className="cursor-pointer w-100 py-2 mt-2"
+                component: <LMR className="cursor-pointer w-100 py-3"
                     left={< div > <small><FA name='university' className='text-info' /></small> &nbsp;北京大学</div>}
                     right={< div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div >}>
                 </LMR >,
