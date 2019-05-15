@@ -15,7 +15,7 @@ const schema: Schema = [
     //{ name: 'submit', type: 'submit' },
 ];
 
-export class VAdd extends VPage<CTaskType> {
+export class VCreate extends VPage<CTaskType> {
     private form: Form;
 
     private uiSchema: UiSchema = {

@@ -16,6 +16,7 @@ import { CTaskType, createTaskTypes } from 'salestask/types/createTaskTypes';
 import { CSelectType } from './selectType';
 import { Task } from './model';
 import { Tasks } from './model/tasks';
+import { VSalesTaskInvalid } from './VSalesTaskInvalid';
 
 class PageSalesTask extends PageItems<any> {
 
@@ -150,7 +151,7 @@ export class CSalesTask extends Controller {
     async completionTask(task: Task, result: string, resulttype: string) {
 
         //完结任务--后台数据
-        let param = { taskid: task.id, result: result };
+        let param = { taskid: task.id, resulttype: "compl", result: result };
         await this.completionTaskAction.submit(param);
         //完结任务--前台页面
         /*
@@ -175,10 +176,16 @@ export class CSalesTask extends Controller {
         this.tasks.postPone(date, task);
     }
 
-    //无效任务
-    onRefuseTask = async (task: Task) => {
+    //显示拒绝任务页面
+    showSalesTaskInvalid = async (model: Task) => {
 
-        let param = { taskid: task.id, result: "无效任务" };
+        this.openVPage(VSalesTaskInvalid, model);
+    }
+
+    //拒绝任务
+    onInvalidTask = async (task: Task, result: string, resulttype: string) => {
+
+        let param = { taskid: task.id, resulttype: "Inval", result: result };
         await this.completionTaskAction.submit(param);
         /*
         let index = this.tasks.findIndex(v => v.id === model.id);

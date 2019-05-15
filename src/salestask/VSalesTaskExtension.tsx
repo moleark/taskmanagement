@@ -8,8 +8,8 @@ import { Task } from './model';
 
 const schema: Schema = [
     { name: 'resulttype', type: 'string', required: false },
-    { name: 'result', type: 'string', required: true },
     { name: 'date', type: 'date', required: true },
+    { name: 'result', type: 'string', required: false },
 ];
 
 export class VSalesTaskExtension extends VPage<CSalesTask> {
@@ -19,8 +19,8 @@ export class VSalesTaskExtension extends VPage<CSalesTask> {
     private uiSchema: UiSchema = {
         items: {
             resulttype: { visible: false },
-            result: { widget: 'textarea', label: '原因', placeholder: '请输入处理结果！', rows: 12 } as UiTextAreaItem,
             date: { widget: 'date', label: '日期', placeholder: '请输入日期！' } as UiInputItem,
+            result: { widget: 'textarea', label: '原因', placeholder: '请输入处理结果！', rows: 12 } as UiTextAreaItem,
             submit: { widget: 'button', label: '提交', },
         }
     }
@@ -34,18 +34,15 @@ export class VSalesTaskExtension extends VPage<CSalesTask> {
         await this.form.buttonClick("submit");
     }
 
-
     private onFormButtonClick = async (name: string, context: Context) => {
-
         let { result, resulttype, date } = context.form.data;
         await this.controller.extensionTask(this.task, result, resulttype, date);
         this.closePage(2);
     }
 
     private page = observer((product: any) => {
-
         let footer = <button type="button" className="btn btn-primary w-100" onClick={this.onExtensionTask} >完结</button>;
-        return <Page header="延期任务" footer={footer} >
+        return <Page header="推迟" footer={footer} >
             <div className="App-container container text-left">
                 <Form ref={v => this.form = v} className="my-3"
                     schema={schema}

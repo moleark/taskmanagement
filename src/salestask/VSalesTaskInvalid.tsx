@@ -11,7 +11,7 @@ const schema: Schema = [
 ];
 
 
-export class VSalesTaskComplet extends VPage<CSalesTask> {
+export class VSalesTaskInvalid extends VPage<CSalesTask> {
 
     private form: Form;
     private task: Task;
@@ -27,20 +27,20 @@ export class VSalesTaskComplet extends VPage<CSalesTask> {
         this.openPage(this.page, task);
     }
 
-    private onCompletionTask = async (model: any) => {
+    private onInvalidTask = async (model: any) => {
         if (!this.form) return;
         await this.form.buttonClick("submit");
     }
 
     private onFormButtonClick = async (name: string, context: Context) => {
         let { result, resulttype } = context.form.data;
-        await this.controller.completionTask(this.task, result, resulttype);
+        await this.controller.onInvalidTask(this.task, result, resulttype);
         this.closePage(2);
     }
 
     private page = observer((salestask: any) => {
-        let footer = <button type="button" className="btn btn-primary w-100" onClick={this.onCompletionTask} >完结</button>;
-        return <Page header="完结" footer={footer} >
+        let footer = <button type="button" className="btn btn-primary w-100" onClick={this.onInvalidTask} >完结</button>;
+        return <Page header="拒绝" footer={footer} >
             <div className="App-container container text-left">
                 <Form ref={v => this.form = v} className="my-3"
                     schema={schema}

@@ -9,29 +9,12 @@ import { Task } from 'salestask/model';
 export class VDetail extends VPage<CTaskType> {
 
     async open(task: Task) {
-
-        //let model = await this.controller.cSalesTask.loadSalesTaskDetail(task.id);
         this.openPage(this.page, task);
-
     }
+
     private page = observer((task: any) => {
         return this.render(task);
     });
-
-    itemrender(param: any) {
-
-        let { deadline, description, priorty } = param;
-        var divpriorty: any
-        if (priorty == 1)
-            divpriorty = <FA name='circle' className="text-danger"></FA>
-
-        let right = <div className="text-right">
-            <div><small className="text-muted"><small>{divpriorty}</small><EasyDate date={deadline} /></small></div>
-        </div>;
-        return <LMR className="cursor-pointer w-100" right={right} left="内容" >
-            {description}
-        </LMR>;
-    }
 
     render(task: any) {
         let { caption, renderDetailTop, renderActionsBottom } = this.controller;
