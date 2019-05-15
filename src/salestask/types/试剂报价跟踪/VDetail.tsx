@@ -3,14 +3,15 @@ import { VPage, Page, PageItems, TabCaptionComponent, Tabs } from 'tonva-tools';
 import { List, LMR, EasyDate, PropGrid, Prop, StringProp, ComponentProp, FA } from 'tonva-react-form';
 import { observer } from 'mobx-react';
 import { tv } from 'tonva-react-uq';
-import { CTaskType, Task } from '../CTaskType';
+import { CTaskType } from '../CTaskType';
+import { Task } from 'salestask/model';
 
 export class VDetail extends VPage<CTaskType> {
 
-    async open(task: any) {
+    async open(task: Task) {
 
-        let model = await this.controller.cSalesTask.loadSalesTaskDetail(task.id);
-        this.openPage(this.page, model);
+        //let model = await this.controller.cSalesTask.loadSalesTaskDetail(task.id);
+        this.openPage(this.page, task);
 
     }
     private page = observer((task: any) => {

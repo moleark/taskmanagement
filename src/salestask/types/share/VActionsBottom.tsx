@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { View } from 'tonva-tools';
-import { CTaskType, Task } from '../CTaskType';
+import { CTaskType } from '../CTaskType';
 import { PropGrid, Prop, LMR, ComponentProp, FA } from 'tonva-react-form';
 import { tv } from 'tonva-react-uq';
+import { Task } from '../../model';
 
 export class VActionsBottom extends View<CTaskType> {
 
     render(task: Task) {
-        let { showSalesTaskComplet, showSalesTaskExtension, onInvalidTask } = this.controller.cSalesTask;
+        let { showSalesTaskComplet, showSalesTaskExtension, onRefuseTask: onInvalidTask } = this.controller.cSalesTask;
 
         let onProcess = async () => await showSalesTaskComplet(task);
         let onPostpond = async () => await showSalesTaskExtension(task);

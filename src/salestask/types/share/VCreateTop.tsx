@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { View } from 'tonva-tools';
-import { CTaskType, Task } from '../CTaskType';
+import { CTaskType } from '../CTaskType';
 import { PropGrid, Prop, LMR, ComponentProp, FA } from 'tonva-react-form';
 import { tv } from 'tonva-react-uq';
+import { Task } from '../../model';
 
 export class VCreateTop extends View<CTaskType> {
 

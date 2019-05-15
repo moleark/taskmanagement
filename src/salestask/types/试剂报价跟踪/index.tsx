@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { CTaskType, Task } from '../CTaskType';
-import { VDetail } from './VDetail';
 import { FA } from 'tonva-react-form';
+import { CTaskType } from '../CTaskType';
+import { VDetail } from './VDetail';
 import { VCreate } from './VCreate';
+import { Task } from '../../model';
 
 export class 试剂报价跟踪 extends CTaskType {
     icon = <FA name='flask' size="lg" />;

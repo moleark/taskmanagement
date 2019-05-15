@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { CTaskType, Task } from '../CTaskType';
+import { CTaskType } from '../CTaskType';
 import { VPage } from 'tonva-tools';
 import { FA } from 'tonva-react-form';
 import { VDetail } from './VDetail';
 import { VAdd } from './VCreate';
+import { Task } from '../../model';
 
 export class 大包装报价跟踪 extends CTaskType {
 

@@ -4,6 +4,7 @@ import { CSalesTask } from './CSalesTask';
 import { observer } from 'mobx-react';
 import { UiTextAreaItem } from 'tonva-tools/ui/form/uiSchema';
 import { Schema } from 'tonva-tools/ui/form/schema';
+import { Task } from './model';
 
 const schema: Schema = [
     { name: 'resulttype', type: 'string', required: false },
@@ -14,7 +15,7 @@ const schema: Schema = [
 export class VSalesTaskExtension extends VPage<CSalesTask> {
 
     private form: Form;
-    private taskid: number;
+    private task: Task;
     private uiSchema: UiSchema = {
         items: {
             resulttype: { visible: false },
@@ -23,9 +24,9 @@ export class VSalesTaskExtension extends VPage<CSalesTask> {
             submit: { widget: 'button', label: '提交', },
         }
     }
-    async open(salestask: any) {
-        this.taskid = salestask.id;
-        this.openPage(this.page, salestask);
+    async open(task: Task) {
+        this.task = task;
+        this.openPage(this.page, task);
     }
 
     private onExtensionTask = async (model: any) => {
@@ -37,7 +38,7 @@ export class VSalesTaskExtension extends VPage<CSalesTask> {
     private onFormButtonClick = async (name: string, context: Context) => {
 
         let { result, resulttype, date } = context.form.data;
-        await this.controller.extensionTask(this.taskid, result, resulttype, date);
+        await this.controller.extensionTask(this.task, result, resulttype, date);
         this.closePage(2);
     }
 

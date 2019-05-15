@@ -6,16 +6,7 @@ import { tv } from 'tonva-react-uq';
 import { VDetailTop } from './share/VDetailTop';
 import { VCreateTop } from './share/VCreateTop';
 import { VActionsBottom } from './share/VActionsBottom';
-
-export interface Task {
-    id: number;
-    typeName: string;
-    type: any;
-    description: string;
-    deadline: Date;
-    customer: any;
-}
-
+import { Task } from '../model';
 
 export abstract class CTaskType extends Controller {
     caption: string;

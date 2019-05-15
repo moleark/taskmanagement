@@ -57,8 +57,8 @@ export class VSalesTaskList extends VPage<CSalesTask> {
 
     private page = observer(() => {
 
-        let { tasks: pageSalesTask } = this.controller;
-        this.tasklist = pageSalesTask;
+        let { tasks } = this.controller;
+        if (tasks === undefined) return null;
 
         let none = <div className="my-3 mx-2 text-muted">无任务</div>;
         let add = <div onClick={this.onSalesTaskAdd} className="cursor-pointer px-3 py-1"><FA name="plus" /></div>;
@@ -66,9 +66,21 @@ export class VSalesTaskList extends VPage<CSalesTask> {
             <div className="d-flex h-100 align-items-center">销售助手</div>
         </LMR>
 
+        let item = { render: this.renderSalesTask, onClick: this.onSalesTaskClick };
         let tasksss = [{ name: "今天" }, { name: "明天" }, { name: "一周" }];
+        let { tasksNow, dateTasksList } = tasks;
         return <Page header={header} onScrollBottom={this.onScrollBottom}>
-            <List before={''} none={none} items={this.controller.tasks} item={{ render: this.renderSalesTask, onClick: this.onSalesTaskClick }} />
+            {tasksNow.length > 0 && <List before={''} none={none} items={tasksNow} item={item} />}
+            {
+                dateTasksList.map((v, index: number) => {
+                    let { date, list } = v;
+                    if (list.length === 0) return null;
+                    return <React.Fragment key={index}>
+                        <div className="small text-muted pt-3 px-3 pb-2 text-center"><EasyDate date={date} /></div>
+                        <List before={''} none={none} items={list} item={item} />
+                    </React.Fragment>;
+                })
+            }
         </Page>
     });
 

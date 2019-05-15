@@ -3,6 +3,7 @@ import { VPage, Page, Form, Schema, UiSchema, Context, UiTextAreaItem } from 'to
 import { CSalesTask } from './CSalesTask';
 import { observer } from 'mobx-react';
 import { UiIdItem, UiInputItem } from 'tonva-tools/ui/form/uiSchema';
+import { Task } from './model';
 
 const schema: Schema = [
     { name: 'resulttype', type: 'id', required: false },
@@ -13,7 +14,7 @@ const schema: Schema = [
 export class VSalesTaskComplet extends VPage<CSalesTask> {
 
     private form: Form;
-    private taskid: number;
+    private task: Task;
     private uiSchema: UiSchema = {
         items: {
             resulttype: { visible: false },
@@ -21,9 +22,9 @@ export class VSalesTaskComplet extends VPage<CSalesTask> {
             submit: { widget: 'button', label: '提交', },
         }
     }
-    async open(salestask: any) {
-        this.taskid = salestask.id;
-        this.openPage(this.page, salestask);
+    async open(task: Task) {
+        this.task = task;
+        this.openPage(this.page, task);
     }
 
     private onCompletionTask = async (model: any) => {
@@ -34,7 +35,7 @@ export class VSalesTaskComplet extends VPage<CSalesTask> {
     private onFormButtonClick = async (name: string, context: Context) => {
 
         let { result, resulttype } = context.form.data;
-        await this.controller.completionTask(this.taskid, result, resulttype);
+        await this.controller.completionTask(this.task, result, resulttype);
         this.closePage(2);
     }
 

@@ -6,7 +6,7 @@ import { CSalesTaskApp } from '../../CSalesTaskApp';
 import { observable } from 'mobx';
 import { VSelectType } from './VSelectType';
 import { VSalesTaskAdd } from '../VSalesTaskAdd';
-import { Task, CTaskType } from '../types/CTaskType';
+import { CTaskType } from '../types/CTaskType';
 import { createTaskTypes } from '../types/createTaskTypes';
 import { CSalesTask } from '../CSalesTask';
 

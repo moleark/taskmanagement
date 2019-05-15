@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { View } from 'tonva-tools';
-import { CTaskType, Task } from '../CTaskType';
+import { CTaskType } from '../CTaskType';
 import { PropGrid, Prop, LMR, ComponentProp, FA, StringProp, EasyDate } from 'tonva-react-form';
 import { tv } from 'tonva-react-uq';
 import { propTypes } from 'mobx-react';
+import { Task } from '../../model';
 
 export class VDetailTop extends View<CTaskType> {
 

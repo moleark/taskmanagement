@@ -16,12 +16,12 @@ export class VSalesTask extends VPage<CSalesTask> {
 
     private page = observer((task: any) => {
 
-        let { showSalesTaskComplet, showSalesTaskExtension, onInvalidTask, showCustomerDetail, showSalesTaskHistory } = this.controller;
+        let { showSalesTaskComplet, showSalesTaskExtension, onRefuseTask, showCustomerDetail, showSalesTaskHistory } = this.controller;
         let { type, customer, deadline } = task;
 
         let onProcess = async () => await showSalesTaskComplet(task);
         let onPostpond = async () => await showSalesTaskExtension(task);
-        let onInvalidTaskClick = async () => await onInvalidTask(task);
+        let onRefuseClick = async () => await onRefuseTask(task);
         let onClickCustoemr = async () => await showCustomerDetail(customer.id);
         let onShowSalesTaskHistory = async () => await showSalesTaskHistory(customer.id);
 
@@ -74,7 +74,7 @@ export class VSalesTask extends VPage<CSalesTask> {
         </span>;
         let rightButton = <span>
             <button type="button" className="btn btn-outline-info ml-3" onClick={onPostpond} >推迟</button>
-            <button type="button" className="btn btn-outline-info ml-3" onClick={onInvalidTaskClick} >拒绝</button>
+            <button type="button" className="btn btn-outline-info ml-3" onClick={onRefuseClick} >拒绝</button>
         </span>;
 
         let footer = <LMR className="px-1" left={buttons} right={rightButton}>

@@ -16,7 +16,7 @@ export class VDetail extends VPage<CTaskType> {
 
     private page = observer((task: any) => {
 
-        let { showSalesTaskComplet, showSalesTaskExtension, onInvalidTask, showCustomerDetail, showSalesTaskHistory } = this.controller.cSalesTask;
+        let { showSalesTaskComplet, showSalesTaskExtension, onRefuseTask: onInvalidTask, showCustomerDetail, showSalesTaskHistory } = this.controller.cSalesTask;
         let { type, customer, deadline } = task;
 
         let onProcess = async () => await showSalesTaskComplet(task);

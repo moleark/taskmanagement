@@ -4,13 +4,14 @@ import { List, LMR, EasyDate, PropGrid, Prop, StringProp, ComponentProp, FA } fr
 import { observer } from 'mobx-react';
 import { tv } from 'tonva-react-uq';
 import { CTaskType } from '../CTaskType';
+import { Task } from '../../model';
 
 export class VDetail extends VPage<CTaskType> {
 
-    async open(task: any) {
+    async open(task: Task) {
 
-        let model = await this.controller.cSalesTask.loadSalesTaskDetail(task.id);
-        this.openPage(this.page, model);
+        //let model = await this.controller.cSalesTask.loadSalesTaskDetail(task.id);
+        this.openPage(this.page, task);
 
     }
 

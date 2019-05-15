@@ -12,8 +12,10 @@ import { VSalesTaskExtension } from './VSalesTaskExtension';
 import { VSalesTaskAdd } from './VSalesTaskAdd';
 import { Data } from 'tonva-tools/local';
 import { VSalesTaskHistory } from './VSalesTaskHistory';
-import { CTaskType, createTaskTypes, Task } from 'salestask/types/createTaskTypes';
+import { CTaskType, createTaskTypes } from 'salestask/types/createTaskTypes';
 import { CSelectType } from './selectType';
+import { Task } from './model';
+import { Tasks } from './model/tasks';
 
 class PageSalesTask extends PageItems<any> {
 
@@ -46,7 +48,7 @@ export class CSalesTask extends Controller {
 
     private taskTypes: { [type: string]: CTaskType } = {};
 
-    @observable tasks: any[];
+    @observable tasks: Tasks;
     protected completionTaskAction: Action;
     protected extensionTaskAction: Action;
     protected addTaskAction: Action;
@@ -81,32 +83,31 @@ export class CSalesTask extends Controller {
 
     //初始化
     protected async internalStart(param: any) {
-
         await this.searchByKey(param);
     }
 
     //搜索所有未处理任务
     searchByKey = async (key: string) => {
-
-        let task = await this.qeuryGettask.table({});
+        let tasks = await this.qeuryGettask.table({});
         //let task = await this.taskTuid.search(key, 0, 100);
-        this.tasks = task;
+        this.tasks = new Tasks(tasks);
     }
 
+    /*
     //搜索沟通记录
     searchSalesTaskHistory = async (customerid: string) => {
 
         let task = await this.qeurySearchHistory.table({ customerid: customerid });
         this.tasks = task;
-    }
+    }*/
 
     //显示沟通记录
     showSalesTaskHistory = async (customerid: string) => {
 
         // let task = await this.searchSalesTaskHistory(customerid);
         let param = ({ customerid: customerid });
-        let task = await this.qeurySearchHistory.table({ customerid: customerid });
-        this.openVPage(VSalesTaskHistory, task);
+        let tasks = await this.qeurySearchHistory.table({ customerid: customerid });
+        this.openVPage(VSalesTaskHistory, tasks);
     }
 
     //获取类型的图表
@@ -146,37 +147,44 @@ export class CSalesTask extends Controller {
         this.openVPage(VSalesTaskComplet, model);
     }
     //完结任务
-    async completionTask(taskid: number, result: string, resulttype: string) {
+    async completionTask(task: Task, result: string, resulttype: string) {
 
         //完结任务--后台数据
-        let param = { taskid: taskid, result: result };
+        let param = { taskid: task.id, result: result };
         await this.completionTaskAction.submit(param);
         //完结任务--前台页面
+        /*
         let index = this.tasks.findIndex(v => v.id === taskid);
         if (index >= 0) this.tasks.splice(index, 1);
+        */
+        this.tasks.remove(task);
         this.closePage(2);
     }
 
     //显示任务延期页面
-    showSalesTaskExtension = async (model: any) => {
+    showSalesTaskExtension = async (model: Task) => {
 
         this.openVPage(VSalesTaskExtension, model);
     }
 
     //延期任务
-    async extensionTask(taskid: number, result: string, resulttype: string, date: string) {
+    async extensionTask(task: Task, result: string, resulttype: string, date: Date) {
 
-        let param = { taskid: taskid, result: result, deadline: date };
+        let param = { taskid: task.id, result: result, remindDate: date };
         await this.extensionTaskAction.submit(param);
+        this.tasks.postPone(date, task);
     }
 
     //无效任务
-    onInvalidTask = async (model: any) => {
+    onRefuseTask = async (task: Task) => {
 
-        let param = { taskid: model.id, result: "无效任务" };
+        let param = { taskid: task.id, result: "无效任务" };
         await this.completionTaskAction.submit(param);
+        /*
         let index = this.tasks.findIndex(v => v.id === model.id);
         if (index >= 0) this.tasks.splice(index, 1);
+        */
+        this.tasks.remove(task);
         this.closePage(1);
     }
 
@@ -189,8 +197,9 @@ export class CSalesTask extends Controller {
             id: null,
             type: taskType,
             typeName: typeName,
-            description: undefined,
-            deadline: undefined,
+            description: null,
+            remindDate: null,
+            deadline: null,
             customer: customer
         }
         this.getCTaskType(typeName).showCreate(task);
