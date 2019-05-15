@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { NoEmitOnErrorsPlugin } from 'webpack';
 
 export interface EasyDateProps {
     date: Date | string;
@@ -14,7 +15,16 @@ export class EasyDate extends React.Component<EasyDateProps> {
         let nDate = now.getDate();
         let _date = d.getDate(), hour = d.getHours(), minute = d.getMinutes(), month = d.getMonth() + 1;
         let hm = hour + ((minute < 10 ? ':0' : ':') + minute);
-        if (tick < -24 * 3600 * 1000) return d.getFullYear() + '年' + month + '月' + _date + '日 ' + hm;
+        hm = hm == '0:00' ? '' : hm;
+        if (tick < -24 * 3600 * 1000) {
+            if (d.getFullYear() == now.getFullYear()) {
+                return month + '月' + _date + '日 ' + hm;
+            }
+            else {
+                return d.getFullYear() + '年' + month + '月' + _date + '日';
+            }
+
+        }
         if (tick < 24 * 3600 * 1000) {
             return _date !== nDate ?
                 (tick < 0 ? '明天 ' : '昨天 ') + hm

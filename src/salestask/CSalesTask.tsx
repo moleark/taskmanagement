@@ -189,6 +189,8 @@ export class CSalesTask extends Controller {
             id: null,
             type: taskType,
             typeName: typeName,
+            description: undefined,
+            deadline: undefined,
             customer: customer
         }
         this.getCTaskType(typeName).showCreate(task);

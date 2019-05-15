@@ -33,42 +33,9 @@ export class VDetail extends VPage<CTaskType> {
     }
 
     render(task: any) {
-
-        let { showSalesTaskComplet, showSalesTaskExtension, onInvalidTask, showCustomerDetail, showSalesTaskHistory } = this.controller.cSalesTask;
-        let { deadline, description, priorty } = task;
-
-        let onProcess = async () => await showSalesTaskComplet(task);
-        let onPostpond = async () => await showSalesTaskExtension(task);
-        let onInvalidTaskClick = async () => await onInvalidTask(task);
-        let rows: Prop[] = [
-            {
-                type: 'component',
-                name: 'description',
-                component: <LMR className="cursor-pointer w-100 py-2" left={<div> <small><FA name='newspaper-o'> </FA>  </small> &nbsp;&nbsp;描述 </div>}
-                    right={< div > <small className="text-muted"><small></small><EasyDate date={deadline} /></small></div >}>
-                </LMR >
-            } as ComponentProp,
-            {
-                type: 'string',
-                name: 'description',
-            } as StringProp,
-
-        ];
-
-        let buttons = <span>
-            <button type="button" className="btn btn-primary px-4 " onClick={onProcess} >处理</button>
-        </span>;
-        let rightButton = <span>
-            <button type="button" className="btn btn-outline-info ml-2 " onClick={onPostpond} >推迟</button>
-            <button type="button" className="btn btn-outline-info ml-2 " onClick={onInvalidTaskClick} >拒绝</button>
-        </span>;
-
-        let footer = <LMR className="px-1" left={buttons} right={rightButton}>
-        </LMR>
-
-        return <Page header={this.controller.caption} footer={footer} >
-            {this.controller.renderDetailTop(task)}
-            <PropGrid rows={rows} values={task} />
+        let { caption, renderDetailTop, renderActionsBottom } = this.controller;
+        return <Page header={caption} footer={renderActionsBottom(task)} >
+            {renderDetailTop(task)}
         </Page >
     }
 }

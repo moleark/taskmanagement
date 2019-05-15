@@ -7,6 +7,7 @@ import { CSelectType } from './salestask/selectType';
 import { CCustomer } from 'customer/CCustomer';
 import { CProduct } from 'product/CProduct';
 import { CTaskType } from 'salestask/types/createTaskTypes';
+import { CMe } from 'me/CMe';
 
 
 export class CSalesTaskApp extends CApp {
@@ -20,6 +21,7 @@ export class CSalesTaskApp extends CApp {
     cSalesTask: CSalesTask;
     cCustomer: CCustomer;
     cProduct: CProduct;
+    cMe: CMe;
 
     protected async internalStart(param?: any) {
 
@@ -31,8 +33,8 @@ export class CSalesTaskApp extends CApp {
         /** 初始化 Conctrolle*/
         this.cCustomer = new CCustomer(this, undefined);
         this.cProduct = new CProduct(this, undefined);
-
         this.cSalesTask = new CSalesTask(this, undefined);
+        this.cMe = new CMe(this, undefined);
 
         /** 启动销售任务列表*/
         this.cSalesTask.start();

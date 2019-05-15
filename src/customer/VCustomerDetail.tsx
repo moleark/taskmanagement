@@ -57,8 +57,9 @@ export class VCustomerDetail extends VPage<CCustomer> {
             } as StringProp
         ];
 
+
         return <Page header="客户详情">
-            <PropGrid rows={rows} values={customer} alignValue="right" />
+            <PropGrid className="my-2" rows={rows} values={customer} alignValue="right" />
         </Page>
     })
 }
