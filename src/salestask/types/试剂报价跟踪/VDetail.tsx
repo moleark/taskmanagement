@@ -56,11 +56,11 @@ export class VDetail extends VPage<CTaskType> {
         ];
 
         let buttons = <span>
-            <button type="button" className="btn btn-primary px-5" onClick={onProcess} >处理</button>
+            <button type="button" className="btn btn-primary px-4 " onClick={onProcess} >处理</button>
         </span>;
         let rightButton = <span>
-            <button type="button" className="btn btn-outline-info ml-3" onClick={onPostpond} >推迟</button>
-            <button type="button" className="btn btn-outline-info ml-3" onClick={onInvalidTaskClick} >拒绝</button>
+            <button type="button" className="btn btn-outline-info ml-2 " onClick={onPostpond} >推迟</button>
+            <button type="button" className="btn btn-outline-info ml-2 " onClick={onInvalidTaskClick} >拒绝</button>
         </span>;
 
         let footer = <LMR className="px-1" left={buttons} right={rightButton}>

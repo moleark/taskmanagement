@@ -18,25 +18,18 @@ export class VDetailTop extends View<CTaskType> {
             {
                 type: 'component',
                 name: 'customer',
-                component: <LMR className="cursor-pointer w-100" onClick={onClickCustoemr}
+                component: <LMR className="cursor-pointer w-100 pb-3" onClick={onClickCustoemr}
                     left={<div className="mr-2"> <FA name="user" className="text-info mr-2 pt-1 " /> </div>}
                     right={<div className="w-2c text-right"><i className="fa fa-chevron-right" /></div>}>
                     {tv(customer, v => <>{v.name}</>)}
                 </LMR>,
                 label: '',
             } as ComponentProp,
-            /*{
-                type: 'component',
-                name: 'type',
-                component: <LMR className="cursor-pointer w-100" left={<div></div>}>
-                    {tv(type, v => <>{v.name}</>)}
-                </LMR>,
-                label: '',
-            } as ComponentProp,*/
+
             {
                 type: 'component',
                 name: 'customer',
-                component: <LMR className="cursor-pointer w-100 py-2" onClick={onShowSalesTaskHistory}
+                component: <LMR className="cursor-pointer w-100 py-3" onClick={onShowSalesTaskHistory}
                     left={<span><FA className="text-warning" name="hand-o-right" /> &nbsp; 详情</span>}
                     right={<div className="w-2c text-right"><i className="fa fa-chevron-right" /></div>} />,
                 //label: '执行过程',
