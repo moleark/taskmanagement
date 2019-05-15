@@ -2,7 +2,7 @@ import * as React from 'react';
 import { VPage, Page, PageItems } from 'tonva-tools';
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
-import { LMR, List, EasyDate, SearchBox } from 'tonva-react-form';
+import { LMR, List, EasyDate, SearchBox, FA } from 'tonva-react-form';
 
 export class VCustomerSelect extends VPage<CCustomer> {
 
@@ -16,10 +16,10 @@ export class VCustomerSelect extends VPage<CCustomer> {
 
         let { name } = salesTask;
 
-        return <LMR className="px-3 py-2" >
-            <div className="font-weight-bold">{}</div>
+        return <LMR className="px-3 py-2 " left={<FA name='user' className=' my-2 mr-3 text-info' />}>
+            <div className="font-weight-bold"></div>
             <div>{name}</div>
-        </LMR>
+        </LMR >
 
     }
 

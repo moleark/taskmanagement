@@ -25,7 +25,7 @@ export class VCustomerList extends VPage<CCustomer> {
 
         let { name } = salesTask;
 
-        return <LMR className="px-3 py-2" >
+        return <LMR className="px-3 py-2 " left={<FA name='user' className=' my-2 mr-3 text-info' />}>
             <div className="font-weight-bold">{}</div>
             <div>{name}</div>
         </LMR>
