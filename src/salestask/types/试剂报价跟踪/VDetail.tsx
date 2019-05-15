@@ -4,7 +4,7 @@ import { List, LMR, EasyDate, PropGrid, Prop, StringProp, ComponentProp, FA } fr
 import { observer } from 'mobx-react';
 import { tv } from 'tonva-react-uq';
 import { CTaskType } from '../CTaskType';
-import { Task } from 'salestask/model';
+import { Task } from '../../model';
 
 export class VDetail extends VPage<CTaskType> {
 
@@ -16,10 +16,7 @@ export class VDetail extends VPage<CTaskType> {
         return this.render(task);
     });
 
-    render(task: any) {
-        let { caption, renderDetailTop, renderActionsBottom } = this.controller;
-        return <Page header={caption} footer={renderActionsBottom(task)} >
-            {renderDetailTop(task)}
-        </Page >
+    render(task: Task) {
+        return <></>;
     }
 }

@@ -39,13 +39,10 @@ export class VSalesTaskList extends VPage<CSalesTask> {
             'text-danger': priorty > 0,
             'text-info': !(priorty > 0)
         })
-        var divpriorty: any;
-        //<small>{divpriorty}</small>
-        if (priorty == 1)
-            divpriorty = <FA name='circle' className="text-danger">  </FA>
+
         let left = <div className={cnFlag}>{this.controller.taskIcon(typeName)}</div>;
         let right = <div className="text-right">
-            <div><small className="text-muted"><EasyDate date={deadline} /></small></div>
+            <div><small className="text-muted">时限：<EasyDate date={deadline} /></small></div>
         </div>;
         return <LMR className="px-3 py-2" left={left} right={right}  >
             <div className="row">
@@ -67,7 +64,6 @@ export class VSalesTaskList extends VPage<CSalesTask> {
         </LMR>
 
         let item = { render: this.renderSalesTask, onClick: this.onSalesTaskClick };
-        let tasksss = [{ name: "今天" }, { name: "明天" }, { name: "一周" }];
         let { tasksNow, dateTasksList } = tasks;
         return <Page header={header} onScrollBottom={this.onScrollBottom}>
             {tasksNow.length > 0 && <List before={''} none={none} items={tasksNow} item={item} />}

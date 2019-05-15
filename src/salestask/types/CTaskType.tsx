@@ -1,8 +1,6 @@
 import * as React from 'react';
-import { Controller, VPage, Page } from 'tonva-tools';
+import { Controller, Page } from 'tonva-tools';
 import { CSalesTask } from 'salestask';
-import { Prop, LMR, ComponentProp, PropGrid } from 'tonva-react-form';
-import { tv } from 'tonva-react-uq';
 import { VDetailTop } from './share/VDetailTop';
 import { VCreateTop } from './share/VCreateTop';
 import { VActionsBottom } from './share/VActionsBottom';
@@ -13,21 +11,34 @@ export abstract class CTaskType extends Controller {
     cSalesTask: CSalesTask;
 
     async showDetail(task: Task): Promise<void> {
-        //this.openVPage(VTaskDetailShare, task);
-        this.openPage(<Page header={task.typeName}>没有继承哦！</Page>);
-    }
-
-    async showCreate(task: Task): Promise<void> {
-        //this.openVPage(VTaskDetailShare, task);
-        this.openPage(<Page header={task.typeName}>没有继承哦！</Page>);
+        this.openPage(
+            this.renderDetail(task)
+        );
     }
 
     renderDetailTop = (task: Task): JSX.Element => {
         return this.renderView(VDetailTop, task);
     }
 
+    protected renderContent = (task: Task): JSX.Element => {
+        return <>none</>;
+    }
+
     renderActionsBottom = (task: Task): JSX.Element => {
         return this.renderView(VActionsBottom, task);
+    }
+
+    renderDetail = (task: Task): JSX.Element => {
+        let { caption, renderDetailTop, renderActionsBottom } = this;
+        return <Page header={caption} footer={renderActionsBottom(task)} >
+            {renderDetailTop(task)}
+            {this.renderContent(task)}
+        </Page >
+    }
+
+    async showCreate(task: Task): Promise<void> {
+        //this.openVPage(VTaskDetailShare, task);
+        this.openPage(<Page header={task.typeName}>没有继承哦！</Page>);
     }
 
     renderCreateTop = (task: Task): JSX.Element => {

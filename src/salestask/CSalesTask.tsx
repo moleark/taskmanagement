@@ -90,22 +90,11 @@ export class CSalesTask extends Controller {
     //搜索所有未处理任务
     searchByKey = async (key: string) => {
         let tasks = await this.qeuryGettask.table({});
-        //let task = await this.taskTuid.search(key, 0, 100);
         this.tasks = new Tasks(tasks);
     }
 
-    /*
-    //搜索沟通记录
-    searchSalesTaskHistory = async (customerid: string) => {
-
-        let task = await this.qeurySearchHistory.table({ customerid: customerid });
-        this.tasks = task;
-    }*/
-
     //显示沟通记录
     showSalesTaskHistory = async (customerid: string) => {
-
-        // let task = await this.searchSalesTaskHistory(customerid);
         let param = ({ customerid: customerid });
         let tasks = await this.qeurySearchHistory.table({ customerid: customerid });
         this.openVPage(VSalesTaskHistory, tasks);
@@ -131,25 +120,15 @@ export class CSalesTask extends Controller {
 
     //显示销售任务明细页面
     showSalesTaskDetail = async (task: Task) => {
-
         this.getCTaskType(task.typeName).showDetail(task);
-        //this.openVPage(VSalesTask, task);
-    }
-
-    //加载销售任务明细页面数据
-    loadSalesTaskDetail = async (salestaskid: number) => {
-        let salestask = await this.taskTuid.load(salestaskid);
-        return salestask;
     }
 
     //显示任务完结页面
     showSalesTaskComplet = async (model: any) => {
-
         this.openVPage(VSalesTaskComplet, model);
     }
     //完结任务
     async completionTask(task: Task, result: string, resulttype: string) {
-
         //完结任务--后台数据
         let param = { taskid: task.id, resulttype: "compl", result: result };
         await this.completionTaskAction.submit(param);
@@ -164,13 +143,11 @@ export class CSalesTask extends Controller {
 
     //显示任务延期页面
     showSalesTaskExtension = async (model: Task) => {
-
         this.openVPage(VSalesTaskExtension, model);
     }
 
     //延期任务
     async extensionTask(task: Task, result: string, resulttype: string, date: Date) {
-
         let param = { taskid: task.id, result: result, remindDate: date };
         await this.extensionTaskAction.submit(param);
         this.tasks.postPone(date, task);
@@ -178,13 +155,11 @@ export class CSalesTask extends Controller {
 
     //显示拒绝任务页面
     showSalesTaskInvalid = async (model: Task) => {
-
         this.openVPage(VSalesTaskInvalid, model);
     }
 
     //拒绝任务
     onInvalidTask = async (task: Task, result: string, resulttype: string) => {
-
         let param = { taskid: task.id, resulttype: "Inval", result: result };
         await this.completionTaskAction.submit(param);
         /*
@@ -195,10 +170,9 @@ export class CSalesTask extends Controller {
         this.closePage(1);
     }
 
-
     createTask = async () => {
-        let customer = await this.selectCustomer();
         let taskType = await this.selectTaskType();
+        let customer = await this.selectCustomer();
         let typeName = (taskType as any).name
         let task = {
             id: null,
@@ -224,7 +198,6 @@ export class CSalesTask extends Controller {
 
     //添加任务
     addSalesTask = async (param: any, task: Task) => {
-
         let { description, priorty, deadline } = param;
         let { customer, type } = task;
         let customerId = customer.id;
@@ -258,9 +231,7 @@ export class CSalesTask extends Controller {
         cCustomer.showCustomerDetail(customerId);
     }
 
-
     render = observer(() => {
-
         return this.renderView(VSalesTaskList);
     })
 

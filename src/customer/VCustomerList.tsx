@@ -46,10 +46,10 @@ export class VCustomerList extends VPage<CCustomer> {
         let header = <LMR className="pl-3 py-2 bg-primary text-white" right={add} >
             <div className="d-flex h-100 align-items-center">客户</div>
         </LMR>
-        let size: any = "sm";
 
+        let size: any = "md";
         return <Page header={header}>
-            <SearchBox className="px-1 w-100  mt-2 mr-2 "
+            <SearchBox className="px-1 w-100  mt-2 mr-2  "
                 size={size}
                 onSearch={(key: string) => this.controller.searchByKey(key)}
                 placeholder="搜索客户姓名、单位" />

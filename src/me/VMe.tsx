@@ -23,6 +23,14 @@ export class VMe extends VPage<CMe> {
                 type: 'component',
                 name: 'customer',
                 component: <LMR className="cursor-pointer w-100 py-3"
+                    left={< div > <small><FA name='tag' className='text-info' /></small> &nbsp;已完成任务</div>}
+                    right={< div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div >}>
+                </LMR >,
+            } as ComponentProp,
+            {
+                type: 'component',
+                name: 'customer',
+                component: <LMR className="cursor-pointer w-100 py-3"
                     left={< div > <small><FA name='line-chart' className='text-danger' /></small> &nbsp;销量</div>}
                     right={< div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div >}>
                 </LMR >,
@@ -40,14 +48,6 @@ export class VMe extends VPage<CMe> {
                 name: 'customer',
                 component: <LMR className="cursor-pointer w-100 py-3"
                     left={< div > <small><FA name='car' className='text-info' /></small> &nbsp;拜访</div>}
-                    right={< div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div >}>
-                </LMR >,
-            } as ComponentProp,
-            {
-                type: 'component',
-                name: 'customer',
-                component: <LMR className="cursor-pointer w-100 py-3"
-                    left={< div > <small><FA name='tag' className='text-info' /></small> &nbsp;任务完成情况</div>}
                     right={< div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div >}>
                 </LMR >,
             } as ComponentProp,

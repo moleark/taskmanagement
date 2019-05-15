@@ -8,10 +8,7 @@ import { tv } from 'tonva-react-uq';
 export class VSalesTask extends VPage<CSalesTask> {
 
     async open(task: any) {
-
-        let model = await this.controller.loadSalesTaskDetail(task.id);
-        this.openPage(this.page, model);
-
+        this.openPage(this.page, task);
     }
 
     private page = observer((task: any) => {

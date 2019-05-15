@@ -32,9 +32,7 @@ export class VProductList extends VPage<CProduct> {
 
     }
 
-
     private page = observer((customer: any) => {
-
         let { pageProduct } = this.controller;
         let add = <div className="cursor-pointer px-3 py-1"><FA name="plus" /></div>;
         let none = <div className="my-3 mx-2 text-warning">请搜索客户！</div>;
@@ -42,8 +40,7 @@ export class VProductList extends VPage<CProduct> {
         let header = <LMR className="pl-3 py-2 bg-primary text-white" right={add} >
             <div className="d-flex h-100 align-items-center">产品</div>
         </LMR>
-        let size: any = "sm";
-
+        let size: any = "md";
         return <Page header={header}>
             <SearchBox className="px-1 w-100  mt-2 mr-2 "
                 size={size}
