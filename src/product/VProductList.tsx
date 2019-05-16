@@ -54,6 +54,11 @@ export class VProductList extends VPage<CProduct> {
         </div>
     }
 
+    private onScrollBottom = async () => {
+
+        await this.controller.pageProducts.more();
+    }
+
     private page = observer((customer: any) => {
         let { pageProduct } = this.controller;
         let add = <div className="cursor-pointer px-3 py-1"><FA name="plus" /></div>;
@@ -63,7 +68,7 @@ export class VProductList extends VPage<CProduct> {
             <div className="d-flex h-100 align-items-center">产品</div>
         </LMR>
         let size: any = "md";
-        return <Page header={header}>
+        return <Page header={header} onScrollBottom={this.onScrollBottom}>
             <SearchBox className="px-1 w-100  mt-2 mr-2 "
                 size={size}
                 onSearch={(key: string) => this.controller.searchByKey(key)}

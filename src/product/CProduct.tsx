@@ -33,6 +33,7 @@ class PageProduct extends PageItems<any> {
  *
  */
 export class CProduct extends Controller {
+    pageProducts: PageProduct;
 
     cApp: CSalesTaskApp;
     @observable pageProduct: PageProduct;
