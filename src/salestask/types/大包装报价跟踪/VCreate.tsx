@@ -9,7 +9,7 @@ import { Task } from '../../model';
 const schema: Schema = [
     { name: 'description', type: 'string', required: false },
     { name: 'priorty', type: 'number', required: false },
-    { name: 'deadline', type: 'string', required: true },
+    { name: 'deadline', type: 'string', required: false },
     //{ name: 'submit', type: 'submit' },
 ];
 

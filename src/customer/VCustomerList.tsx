@@ -3,13 +3,9 @@ import { VPage, Page, PageItems } from 'tonva-tools';
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
 import { LMR, List, EasyDate, SearchBox, StringProp, ComponentProp, Prop, PropGrid, FA } from 'tonva-react-form';
-import { tv } from 'tonva-react-uq';
-import { observable } from 'mobx';
-
 
 export class VCustomerList extends VPage<CCustomer> {
 
-    @observable tasks: any[];
     async open(customer: any) {
 
         this.openPage(this.page, customer);
@@ -17,7 +13,6 @@ export class VCustomerList extends VPage<CCustomer> {
 
     //每个视图都有一个render方法， 用于自定义页面
     render(member: any): JSX.Element {
-
         return <this.page />;
     }
 

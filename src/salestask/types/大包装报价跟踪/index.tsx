@@ -8,7 +8,7 @@ import { Task } from '../../model';
 
 export class 大包装报价跟踪 extends CTaskType {
 
-    icon = <FA name='flask' size="lg" />;
+    icon = <FA name='flask' size="lg" fixWidth={true} />;
     caption = '大包装报价跟踪';
 
     protected internalStart(param?: any): Promise<void> {

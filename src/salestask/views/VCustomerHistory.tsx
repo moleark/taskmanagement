@@ -17,7 +17,7 @@ export class VCustomerHistory extends VPage<CSalesTask> {
         return <div className="d-block p-3">
             <LMR>
                 <div><small className="text-muted"><EasyDate date={date} /> {tv(status, (v) => v.name)}</small></div>
-                {tv(task, (v) => tv(v.type, (vs) => vs.name))}
+                {tv(task, v => tv(v.type, vs => vs.name))}
             </LMR>
             <small>{result}</small>
         </div >;

@@ -6,7 +6,7 @@ import { VCreate } from './VCreate';
 import { Task } from '../../model';
 
 export class 试剂报价跟踪 extends CTaskType {
-    icon = <FA name='flask' size="lg" />;
+    icon = <FA name='flask' size="lg" fixWidth={true} />;
 
     protected internalStart(param?: any): Promise<void> {
         return;

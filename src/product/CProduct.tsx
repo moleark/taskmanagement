@@ -14,7 +14,7 @@ class PageProduct extends PageItems<any> {
 
     constructor(searchProductQuery: Query) {
         super();
-        this.firstSize = this.pageSize = 10;
+        this.firstSize = this.pageSize = 5;
         this.searchProductQuery = searchProductQuery;
     }
 
@@ -36,7 +36,6 @@ export class CProduct extends Controller {
 
     cApp: CSalesTaskApp;
     @observable pageProduct: PageProduct;
-    private tuidProduct: TuidMain;
     private querySearchProduct: Query;
     @observable customerlist: any;
 
@@ -45,9 +44,8 @@ export class CProduct extends Controller {
         super(res);
         this.cApp = cApp;
 
-        let { cUqSalesTask, cUqCustomer, cUqProduct } = this.cApp;
-        this.pageProduct = null;
-        //let searchProductQuery = cUqProduct.query("searchProduct");
+        let { cUqProduct } = this.cApp;
+        this.querySearchProduct = cUqProduct.query("searchProduct");
     }
 
     //初始化
@@ -60,7 +58,7 @@ export class CProduct extends Controller {
     searchByKey = async (key: string) => {
 
         this.pageProduct = new PageProduct(this.querySearchProduct);
-        this.pageProduct.first({ key: key });
+        this.pageProduct.first({ key: key, salesRegion: 1 });
     }
 
     render = observer(() => {

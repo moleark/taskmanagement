@@ -46,8 +46,8 @@ export class CCustomer extends Controller {
         super(res);
         this.cApp = cApp;
 
-        let { cUqSalesTask, cUqCustomer } = this.cApp;
-        this.tuidCustomer = cUqSalesTask.tuid("customer");
+        let { cUqCustomer } = this.cApp;
+        this.tuidCustomer = cUqCustomer.tuid("customer");
         this.querySearchCustomer = cUqCustomer.query("searchcustomer");
     }
 

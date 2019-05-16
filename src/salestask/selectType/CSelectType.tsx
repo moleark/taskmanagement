@@ -9,6 +9,7 @@ import { VSalesTaskAdd } from '../views/VSalesTaskAdd';
 import { CTaskType } from '../types/CTaskType';
 import { createTaskTypes } from '../types/createTaskTypes';
 import { CSalesTask } from '../CSalesTask';
+import { VAi } from './VAi';
 
 /**
  *
@@ -49,4 +50,8 @@ export class CSelectType extends Controller {
         this.returnCall(type);
     }
 
+
+    aiClick = () => {
+        this.openVPage(VAi);
+    }
 }
