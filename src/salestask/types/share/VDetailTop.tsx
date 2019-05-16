@@ -20,12 +20,11 @@ export class VDetailTop extends View<CTaskType> {
             {
                 type: 'component',
                 name: 'customer',
-                component: <LMR className="cursor-pointer w-100 pb-3" onClick={onClickCustomer}
-                    left={<div className="mr-2"> <FA name="user" className="text-info mr-2 pt-1 " /> </div>}
+                component: <LMR className="w-100 py-3" onClick={onClickCustomer}
+                    left={<div className="mr-2"> <FA name="user" className="text-info mr-2 pt-1" /> </div>}
                     right={<div className="w-2c text-right"><i className="fa fa-chevron-right" /></div>}>
                     {tv(customer, v => <>{v.name}</>)}
                 </LMR>,
-                label: '',
             } as ComponentProp,
             {
                 type: 'component',

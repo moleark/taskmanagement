@@ -3,21 +3,23 @@ import * as _ from 'lodash';
 import { Query, tv, TuidMain, Action } from 'tonva-react-uq';
 import { PageItems, Controller, nav, Page, Image, Context } from 'tonva-tools';
 import { CSalesTaskApp } from '../CSalesTaskApp';
-import { VSalesTaskList } from './VSalesTaskList';
+import { VSalesTaskList } from './views/VSalesTaskList';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
-import { VSalesTask } from './VSalesTask';
-import { VSalesTaskComplet } from './VSalesTaskComplet';
-import { VSalesTaskExtension } from './VSalesTaskExtension';
-import { VSalesTaskAdd } from './VSalesTaskAdd';
+import { VSalesTask } from './views/VSalesTask';
+import { VSalesTaskComplet } from './views/VSalesTaskComplet';
+import { VSalesTaskExtension } from './views/VSalesTaskExtension';
+import { VSalesTaskAdd } from './views/VSalesTaskAdd';
 import { Data } from 'tonva-tools/local';
-import { VTaskHistory } from './VTaskHistory';
+import { VTaskHistory } from './views/VTaskHistory';
 import { CTaskType, createTaskTypes } from 'salestask/types/createTaskTypes';
 import { CSelectType } from './selectType';
 import { Task } from './model';
 import { Tasks } from './model/tasks';
-import { VSalesTaskInvalid } from './VSalesTaskInvalid';
-import { VEmployeeHistory } from './VEmployeeHistory';
+import { VSalesTaskInvalid } from './views/VSalesTaskInvalid';
+import { VEmployeeHistory } from './views/VEmployeeHistory';
+import { async } from 'q';
+import { VCustomerHistory } from './views/VCustomerHistory';
 
 class PageSalesTask extends PageItems<any> {
 
@@ -57,7 +59,7 @@ export class CSalesTask extends Controller {
     private taskTuid: TuidMain;
     private tuidCustomer: TuidMain;
     private taskTypeTuid: TuidMain;
-    private qeuryGettask: Query;
+    private qeurySearchTask: Query;
     private qeurySearchHistory: Query;
     private qeurySearchEmployeeHistory: Query;
     private qeurySearchCustomerHistory: Query;
@@ -79,7 +81,7 @@ export class CSalesTask extends Controller {
         this.extensionTaskAction = cUqSalesTask.action('ExtensionTask');
         this.addTaskAction = cUqSalesTask.action('AddTask');
 
-        this.qeuryGettask = cUqSalesTask.query("searchtask");
+        this.qeurySearchTask = cUqSalesTask.query("searchtask");
         this.qeurySearchHistory = cUqSalesTask.query("searchhistorytask");
         this.qeurySearchEmployeeHistory = cUqSalesTask.query("searchhistorytaskbyemployee");
         this.qeurySearchCustomerHistory = cUqSalesTask.query("searchhistorytaskbycustomer");
@@ -94,8 +96,12 @@ export class CSalesTask extends Controller {
 
     //搜索所有未处理任务
     searchByKey = async (key: string) => {
-        let tasks = await this.qeuryGettask.table({});
+        let tasks = await this.qeurySearchTask.table({});
         this.tasks = new Tasks(tasks);
+    }
+
+    loadTask = async (taskid: number) => {
+        return await this.taskTuid.load(taskid);
     }
 
     //显示任务沟通记录
@@ -103,15 +109,17 @@ export class CSalesTask extends Controller {
         let tasks = await this.qeurySearchHistory.table({ taskid: taskid });
         this.openVPage(VTaskHistory, { tasks: tasks });
     }
+
     //显示员工沟通记录
-    showEmployeeHistory = async (employeeid: number) => {
-        let tasks = await this.qeurySearchCustomerHistory.table({ employeeid: 0 });
-        this.openVPage(VEmployeeHistory, tasks);
+    showEmployeeHistory = async () => {
+        let tasks = await this.qeurySearchEmployeeHistory.table({});
+        this.openVPage(VEmployeeHistory, { tasks: tasks });
     }
+
     //显示客户沟通记录
-    showCustomerHistory = async (taskid: number) => {
-        let tasks = await this.qeurySearchHistory.table({ taskid: taskid });
-        this.openVPage(VTaskHistory, tasks);
+    showCustomerHistory = async (customerid: number) => {
+        let tasks = await this.qeurySearchCustomerHistory.table({ customerid: customerid });
+        this.openVPage(VCustomerHistory, { tasks: tasks });
     }
 
     //获取类型的图表
@@ -134,7 +142,7 @@ export class CSalesTask extends Controller {
 
     //显示销售任务明细页面
     showSalesTaskDetail = async (task: Task) => {
-        this.getCTaskType(task.typeName).showDetail(task);
+        this.getCTaskType(task.typeName).showDetailFromId(task.id);
     }
 
     //显示任务完结页面
@@ -181,7 +189,6 @@ export class CSalesTask extends Controller {
         if (index >= 0) this.tasks.splice(index, 1);
         */
         this.tasks.remove(task);
-        this.closePage(1);
     }
 
     createTask = async () => {

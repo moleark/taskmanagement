@@ -5,7 +5,7 @@ import { PageItems, Controller, nav, Page, Image } from 'tonva-tools';
 import { CSalesTaskApp } from '../../CSalesTaskApp';
 import { observable } from 'mobx';
 import { VSelectType } from './VSelectType';
-import { VSalesTaskAdd } from '../VSalesTaskAdd';
+import { VSalesTaskAdd } from '../views/VSalesTaskAdd';
 import { CTaskType } from '../types/CTaskType';
 import { createTaskTypes } from '../types/createTaskTypes';
 import { CSalesTask } from '../CSalesTask';

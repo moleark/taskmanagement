@@ -33,7 +33,7 @@ export class CSalesTaskApp extends CApp {
         /** 初始化 Conctrolle*/
         this.cCustomer = new CCustomer(this, undefined);
         this.cProduct = new CProduct(this, undefined);
-        this.cSalesTask = new CSalesTask(this, undefined);
+        this.cSalesTask = new CSalesTask(this, this.res);
         this.cMe = new CMe(this, undefined);
 
         /** 启动销售任务列表*/

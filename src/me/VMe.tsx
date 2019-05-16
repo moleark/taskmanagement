@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, PageItems } from 'tonva-tools';
+import { VPage, Page, PageItems, Nav, nav } from 'tonva-tools';
 import { observer } from 'mobx-react';
 import { LMR, List, EasyDate, SearchBox, StringProp, ComponentProp, Prop, PropGrid, FA } from 'tonva-react-form';
 import { tv } from 'tonva-react-uq';
@@ -17,10 +17,9 @@ export class VMe extends VPage<CMe> {
     }
 
     private page = observer((customer: any) => {
-
         let { cSalesTask } = this.controller.cApp
         let { showEmployeeHistory } = cSalesTask;
-        let onshowEmployeeHistory = async () => await showEmployeeHistory(0);
+        let onshowEmployeeHistory = async () => await showEmployeeHistory();
 
         let rows: Prop[] = [
             {

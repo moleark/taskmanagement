@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import { VPage, Page, PageItems, Image } from 'tonva-tools';
-import { CSalesTask } from './CSalesTask';
+import { CSalesTask } from '../CSalesTask';
 import { List, LMR, EasyDate, FA } from 'tonva-react-form';
 import { observer } from 'mobx-react';
 import { tv } from 'tonva-react-uq';
@@ -21,9 +21,8 @@ export class VSalesTaskList extends VPage<CSalesTask> {
     }
 
     //选择任务
-    private onSalesTaskClick = async (salestask: any) => {
-
-        this.controller.showSalesTaskDetail(salestask);
+    private onSalesTaskClick = async (task: any) => {
+        this.controller.showSalesTaskDetail(task);
     }
 
     //添加任务

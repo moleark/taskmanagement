@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { VPage, Page, Form, Schema, UiSchema, Context, UiTextAreaItem } from 'tonva-tools';
-import { CSalesTask } from './CSalesTask';
+import { CSalesTask } from '../CSalesTask';
 import { observer } from 'mobx-react';
 import { UiIdItem, UiInputItem } from 'tonva-tools/ui/form/uiSchema';
-import { Task } from './model';
+import { Task } from '../model';
 
 const schema: Schema = [
     { name: 'resulttype', type: 'id', required: false },
@@ -11,7 +11,7 @@ const schema: Schema = [
 ];
 
 
-export class VSalesTaskInvalid extends VPage<CSalesTask> {
+export class VSalesTaskComplet extends VPage<CSalesTask> {
 
     private form: Form;
     private task: Task;
@@ -27,20 +27,20 @@ export class VSalesTaskInvalid extends VPage<CSalesTask> {
         this.openPage(this.page, task);
     }
 
-    private onInvalidTask = async (model: any) => {
+    private onCompletionTask = async (model: any) => {
         if (!this.form) return;
         await this.form.buttonClick("submit");
     }
 
     private onFormButtonClick = async (name: string, context: Context) => {
         let { result, resulttype } = context.form.data;
-        await this.controller.onInvalidTask(this.task, result, resulttype);
+        await this.controller.completionTask(this.task, result, resulttype);
         this.closePage(2);
     }
 
     private page = observer((salestask: any) => {
-        let footer = <button type="button" className="btn btn-primary w-100" onClick={this.onInvalidTask} >完结</button>;
-        return <Page header="拒绝" footer={footer} >
+        let footer = <button type="button" className="btn btn-primary w-100" onClick={this.onCompletionTask} >完结</button>;
+        return <Page header="完结" footer={footer} >
             <div className="App-container container text-left">
                 <Form ref={v => this.form = v} className="my-3"
                     schema={schema}

@@ -17,8 +17,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
 
         let { cSalesTask } = this.controller.cApp
         let { showCustomerHistory } = cSalesTask;
-        let onshowCustomerHistory = async () => await showCustomerHistory(17);
-
+        let onshowCustomerHistory = async () => await showCustomerHistory(customer.id);
 
         let rows: Prop[] = [
             {

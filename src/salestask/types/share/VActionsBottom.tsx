@@ -19,7 +19,7 @@ export class VActionsBottom extends View<CTaskType> {
                 <button type="button" className="btn btn-primary" onClick={onProcess} >&nbsp;处理&nbsp;</button>
             </div>
             <button type="button" className="btn btn-outline-info ml-2 align-self-center" onClick={onPostpond} >推迟</button>
-            <button type="button" className="btn btn-outline-info ml-2 align-self-center" onClick={onInvalid} >拒绝</button>
+            <button type="button" className="btn btn-outline-info ml-2 align-self-center" onClick={onInvalid} >无效</button>
         </div>;
     }
 }

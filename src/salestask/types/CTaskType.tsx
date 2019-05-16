@@ -9,23 +9,17 @@ import { Task } from '../model';
 export abstract class CTaskType extends Controller {
     caption: string;
     cSalesTask: CSalesTask;
+    icon: any = 'plus';
+
+    async showDetailFromId(taskid: number): Promise<void> {
+        let task = await this.cSalesTask.loadTask(taskid);
+        await this.showDetail(task);
+    }
 
     async showDetail(task: Task): Promise<void> {
         this.openPage(
             this.renderDetail(task)
         );
-    }
-
-    renderDetailTop = (task: Task): JSX.Element => {
-        return this.renderView(VDetailTop, task);
-    }
-
-    protected renderContent = (task: Task): JSX.Element => {
-        return <>none</>;
-    }
-
-    renderActionsBottom = (task: Task): JSX.Element => {
-        return this.renderView(VActionsBottom, task);
     }
 
     renderDetail = (task: Task): JSX.Element => {
@@ -36,14 +30,23 @@ export abstract class CTaskType extends Controller {
         </Page >
     }
 
+    protected renderDetailTop = (task: Task): JSX.Element => {
+        return this.renderView(VDetailTop, task);
+    }
+
+    protected renderContent = (task: Task): JSX.Element => {
+        return <>none</>;
+    }
+
+    protected renderActionsBottom = (task: Task): JSX.Element => {
+        return this.renderView(VActionsBottom, task);
+    }
+
     async showCreate(task: Task): Promise<void> {
-        //this.openVPage(VTaskDetailShare, task);
         this.openPage(<Page header={task.typeName}>没有继承哦！</Page>);
     }
 
     renderCreateTop = (task: Task): JSX.Element => {
         return this.renderView(VCreateTop, task);
     }
-
-    icon: any = 'plus';
 }

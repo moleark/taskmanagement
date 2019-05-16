@@ -1,2 +1,2 @@
 export * from './CSalesTask';
-export * from './VSalesTaskList';
+export * from './views/VSalesTaskList';
