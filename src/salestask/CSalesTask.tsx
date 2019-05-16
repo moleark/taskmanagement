@@ -101,7 +101,7 @@ export class CSalesTask extends Controller {
     //显示任务沟通记录
     showTaskHistory = async (taskid: number) => {
         let tasks = await this.qeurySearchHistory.table({ taskid: taskid });
-        this.openVPage(VTaskHistory, tasks);
+        this.openVPage(VTaskHistory, { tasks: tasks });
     }
     //显示员工沟通记录
     showEmployeeHistory = async (employeeid: number) => {
