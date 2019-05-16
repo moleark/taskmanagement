@@ -56,7 +56,7 @@ export class VProductList extends VPage<CProduct> {
 
     private onScrollBottom = async () => {
 
-        await this.controller.pageProducts.more();
+        await this.controller.pageProduct.more();
     }
 
     private page = observer((customer: any) => {

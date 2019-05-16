@@ -34,7 +34,7 @@ export class VCustomerList extends VPage<CCustomer> {
 
     private page = observer((customer: any) => {
 
-        let { showCustomerDetail, pageCustomer } = this.controller;
+        let { pageCustomer } = this.controller;
         let add = <div className="cursor-pointer px-3 py-1"><FA name="plus" /></div>;
         let none = <div className="my-3 mx-2 text-warning">请搜索客户！</div>;
         <br />

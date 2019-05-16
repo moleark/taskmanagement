@@ -33,7 +33,6 @@ class PageProduct extends PageItems<any> {
  *
  */
 export class CProduct extends Controller {
-    pageProducts: PageProduct;
 
     cApp: CSalesTaskApp;
     @observable pageProduct: PageProduct;
@@ -63,7 +62,7 @@ export class CProduct extends Controller {
     }
 
     render = observer(() => {
-
+        this.pageProduct = null;
         return this.renderView(VProductList);
     })
 
