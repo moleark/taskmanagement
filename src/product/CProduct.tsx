@@ -14,7 +14,7 @@ class PageProduct extends PageItems<any> {
 
     constructor(searchProductQuery: Query) {
         super();
-        this.firstSize = this.pageSize = 5;
+        this.firstSize = this.pageSize = 10;
         this.searchProductQuery = searchProductQuery;
     }
 
