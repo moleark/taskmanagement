@@ -10,10 +10,10 @@ export class VDetailTop extends View<CTaskType> {
 
     render(task: Task) {
 
-        let { showCustomerDetail, showSalesTaskHistory } = this.controller.cSalesTask;
-        let { type, customer, description, deadline } = task;
+        let { showCustomerDetail, showTaskHistory: showSalesTaskHistory } = this.controller.cSalesTask;
+        let { type, customer, description, deadline, id } = task;
 
-        let onShowSalesTaskHistory = async () => await showSalesTaskHistory(customer.id);
+        let onShowSalesTaskHistory = async () => await showSalesTaskHistory(id);
         let onClickCustomer = async () => await showCustomerDetail(customer.id);
 
         let rows: Prop[] = [

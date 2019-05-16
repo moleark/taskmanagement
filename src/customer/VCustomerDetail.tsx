@@ -15,12 +15,25 @@ export class VCustomerDetail extends VPage<CCustomer> {
 
     private page = observer((customer: any) => {
 
+        let { cSalesTask } = this.controller.cApp
+        let { showCustomerHistory } = cSalesTask;
+        let onshowCustomerHistory = async () => await showCustomerHistory(17);
+
+
         let rows: Prop[] = [
             {
                 type: 'component',
                 name: 'customer',
                 component: <LMR className="cursor-pointer w-100 py-3"
                     left={< div > <small><FA name='university' className='text-info' /></small> &nbsp;北京大学</div>}
+                    right={< div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div >}>
+                </LMR >,
+            } as ComponentProp,
+            {
+                type: 'component',
+                name: 'customer',
+                component: <LMR className="cursor-pointer w-100 py-3" onClick={onshowCustomerHistory}
+                    left={< div > <small><FA name='hand-o-right' className='text-info' /></small> &nbsp;沟通记录</div>}
                     right={< div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div >}>
                 </LMR >,
             } as ComponentProp,

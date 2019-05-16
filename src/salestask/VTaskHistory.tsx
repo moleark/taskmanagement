@@ -5,7 +5,7 @@ import { LMR, List, EasyDate } from 'tonva-react-form';
 import { CSalesTask } from './CSalesTask';
 import { tv } from 'tonva-react-uq';
 
-export class VSalesTaskHistory extends VPage<CSalesTask> {
+export class VTaskHistory extends VPage<CSalesTask> {
 
     private salestask: any;
     async open(task: any) {
@@ -13,15 +13,14 @@ export class VSalesTaskHistory extends VPage<CSalesTask> {
         this.openPage(this.page, task);
     }
 
-    private renderSalesTask(salesTask: any, index: number) {
-
-        let { description, deadline, DATE, result, type } = salesTask;
+    private renderSalesTask(taskhistory: any, index: number) {
+        let { date, task, status, principal, resultType, result } = taskhistory;
         let right = <div className="text-right">
-            <div><small className="text-muted">预定：<EasyDate date={deadline} /></small></div>
-            <div><small className="text-muted">完成：</small></div>
+            <div><small className="text-muted"><EasyDate date={date} /></small></div>
         </div>;
         return <div className="d-block px-3 py-2">
-            <div><span className="small text-muted"><EasyDate date={DATE} /></span> {description}</div>
+            <div>{principal}</div>
+            <div>{status}</div>
             <div>{result}</div>
         </div>;
     }

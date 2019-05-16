@@ -18,12 +18,16 @@ export class VMe extends VPage<CMe> {
 
     private page = observer((customer: any) => {
 
+        let { cSalesTask } = this.controller.cApp
+        let { showEmployeeHistory } = cSalesTask;
+        let onshowEmployeeHistory = async () => await showEmployeeHistory(0);
+
         let rows: Prop[] = [
             {
                 type: 'component',
                 name: 'customer',
-                component: <LMR className="cursor-pointer w-100 py-3"
-                    left={< div > <small><FA name='tag' className='text-info' /></small> &nbsp;已完成任务</div>}
+                component: <LMR className="cursor-pointer w-100 py-3" onClick={onshowEmployeeHistory}
+                    left={< div  > <small><FA name='tag' className='text-info' /></small> &nbsp;已完成任务</div>}
                     right={< div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div >}>
                 </LMR >,
             } as ComponentProp,

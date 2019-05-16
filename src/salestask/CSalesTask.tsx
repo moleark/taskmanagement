@@ -11,12 +11,13 @@ import { VSalesTaskComplet } from './VSalesTaskComplet';
 import { VSalesTaskExtension } from './VSalesTaskExtension';
 import { VSalesTaskAdd } from './VSalesTaskAdd';
 import { Data } from 'tonva-tools/local';
-import { VSalesTaskHistory } from './VSalesTaskHistory';
+import { VTaskHistory } from './VTaskHistory';
 import { CTaskType, createTaskTypes } from 'salestask/types/createTaskTypes';
 import { CSelectType } from './selectType';
 import { Task } from './model';
 import { Tasks } from './model/tasks';
 import { VSalesTaskInvalid } from './VSalesTaskInvalid';
+import { VEmployeeHistory } from './VEmployeeHistory';
 
 class PageSalesTask extends PageItems<any> {
 
@@ -58,6 +59,8 @@ export class CSalesTask extends Controller {
     private taskTypeTuid: TuidMain;
     private qeuryGettask: Query;
     private qeurySearchHistory: Query;
+    private qeurySearchEmployeeHistory: Query;
+    private qeurySearchCustomerHistory: Query;
     private taskBook: any;
     //private tasks: [];
 
@@ -76,8 +79,10 @@ export class CSalesTask extends Controller {
         this.extensionTaskAction = cUqSalesTask.action('ExtensionTask');
         this.addTaskAction = cUqSalesTask.action('AddTask');
 
-        this.qeuryGettask = cUqSalesTask.query("Gettask");
+        this.qeuryGettask = cUqSalesTask.query("searchtask");
         this.qeurySearchHistory = cUqSalesTask.query("searchhistorytask");
+        this.qeurySearchEmployeeHistory = cUqSalesTask.query("searchhistorytaskbyemployee");
+        this.qeurySearchCustomerHistory = cUqSalesTask.query("searchhistorytaskbycustomer");
 
         this.taskTypes = createTaskTypes(this);
     }
@@ -93,11 +98,20 @@ export class CSalesTask extends Controller {
         this.tasks = new Tasks(tasks);
     }
 
-    //显示沟通记录
-    showSalesTaskHistory = async (customerid: string) => {
-        let param = ({ customerid: customerid });
-        let tasks = await this.qeurySearchHistory.table({ customerid: customerid });
-        this.openVPage(VSalesTaskHistory, tasks);
+    //显示任务沟通记录
+    showTaskHistory = async (taskid: number) => {
+        let tasks = await this.qeurySearchHistory.table({ taskid: taskid });
+        this.openVPage(VTaskHistory, tasks);
+    }
+    //显示员工沟通记录
+    showEmployeeHistory = async (employeeid: number) => {
+        let tasks = await this.qeurySearchCustomerHistory.table({ employeeid: 0 });
+        this.openVPage(VEmployeeHistory, tasks);
+    }
+    //显示客户沟通记录
+    showCustomerHistory = async (taskid: number) => {
+        let tasks = await this.qeurySearchHistory.table({ taskid: taskid });
+        this.openVPage(VTaskHistory, tasks);
     }
 
     //获取类型的图表
