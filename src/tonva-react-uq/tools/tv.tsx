@@ -4,19 +4,19 @@ import { BoxId, Tuid } from "../entities";
 import { PureJSONContent } from '../controllers';
 import { FA } from 'tonva-react-form';
 
-type TvTemplet = (values?: any, x?: any) => JSX.Element;
+type TvTemplet = (values?:any, x?:any) => JSX.Element;
 
 interface Props {
-    tuidValue: number | BoxId,
+    tuidValue: number|BoxId, 
     ui?: TvTemplet,
     x?: any,
-    nullUI?: () => JSX.Element
+    nullUI?: ()=>JSX.Element
 }
 
-function boxIdContent(bi: number | BoxId, ui: TvTemplet, x: any) {
+function boxIdContent(bi: number|BoxId, ui:TvTemplet, x:any) {
     if (typeof bi === 'number') return <>{bi}</>;
-    let { id, _$tuid, _$com } = bi as BoxId;
-    let t: Tuid = _$tuid;
+    let {id, _$tuid, _$com} = bi as BoxId;
+    let t:Tuid = _$tuid;
     if (t === undefined) {
         if (ui !== undefined) return ui(bi, x);
         return PureJSONContent(bi, x);
@@ -26,9 +26,11 @@ function boxIdContent(bi: number | BoxId, ui: TvTemplet, x: any) {
         com = bi._$com = t.getTuidContent();
     }
     let val = t.valueFromId(id);
+    if (val === undefined) {
+        return <>[<FA className="text-danger" name="bug" /> no {t.name} on id={id}]</>;
+    }
     switch (typeof val) {
-        case 'number': val = { id: val }; break;
-        case 'undefined': return <>[<FA className="text-danger" name="bug" /> no {t.name} on id={id}]</>;
+        case 'number': val = {id: val}; break;
     }
     if (ui !== undefined) {
         let ret = ui(val, x);
@@ -38,7 +40,15 @@ function boxIdContent(bi: number | BoxId, ui: TvTemplet, x: any) {
     return React.createElement(com, val);
 }
 
-const Tv = observer(({ tuidValue, ui, x, nullUI }: Props) => {
+const Tv = observer(({tuidValue, ui, x, nullUI}:Props) => {
+    if (tuidValue === undefined) {
+        if (nullUI === undefined) return <>[undefined]</>;
+        return nullUI();
+    }
+    if (tuidValue === null) {
+        if (nullUI === undefined) return <>[null]</>;
+        return nullUI();
+    }
     let ttv = typeof tuidValue;
     switch (ttv) {
         default:
@@ -49,18 +59,13 @@ const Tv = observer(({ tuidValue, ui, x, nullUI }: Props) => {
                 if (ret !== undefined) return ret;
                 return <>{tuidValue}</>;
             }
-        case 'undefined':
-            break;
         case 'object':
-            if (tuidValue !== null) return boxIdContent(tuidValue, ui, x);
-            break;
+            return boxIdContent(tuidValue, ui, x);
         case 'number':
             return <>id...{tuidValue}</>;
     }
-    if (nullUI === undefined) return <>.</>;
-    return nullUI();
 });
 
-export const tv = (tuidValue: number | BoxId, ui?: TvTemplet, x?: any, nullUI?: () => JSX.Element): JSX.Element => {
+export const tv = (tuidValue:number|BoxId, ui?:TvTemplet, x?:any, nullUI?:()=>JSX.Element):JSX.Element => {
     return <Tv tuidValue={tuidValue} ui={ui} x={x} nullUI={nullUI} />;
 };
