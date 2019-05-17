@@ -16,6 +16,10 @@ export class VMe extends VPage<CMe> {
         return <this.page />;
     }
 
+    private logout = () => {
+        nav.showLogout();
+    }
+
     private page = observer((customer: any) => {
         let { cSalesTask } = this.controller.cApp
         let { showEmployeeHistory } = cSalesTask;
@@ -60,7 +64,9 @@ export class VMe extends VPage<CMe> {
         let header = <LMR className="pl-3 pt-2 pb-3 bg-primary text-white" right={right}  >
             我的
         </LMR>
-        return <Page header={header}>
+
+        let footer = <button type="button" className="btn btn-danger w-100" onClick={this.logout} >退出</button>;
+        return <Page header={header} footer={footer}>
             <PropGrid className="my-2" rows={rows} values={customer} alignValue="right" />
         </Page>
     })
