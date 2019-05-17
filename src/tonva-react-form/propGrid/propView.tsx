@@ -1,7 +1,6 @@
-import { ListViewProps } from '../listView';
 import { PropGridProps } from './PropGrid';
 import {
-    PropRow, PropBorder, PropGap, PropContainer,
+    PropRow, PropBorder, PropGap, 
     StringPropRow, NumberPropRow, ListPropRow, ComponentPropRow
 } from './row';
 

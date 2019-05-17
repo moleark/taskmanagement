@@ -39,18 +39,21 @@ export class VCustomerDetail extends VPage<CCustomer> {
             {
                 type: 'string',
                 name: 'no',
-                label: '编号'
+                label: '编号',
+                vAlign: "center",
             } as StringProp,
             {
                 type: 'string',
                 name: 'name',
-                label: '姓名'
+                label: '姓名',
+                vAlign: "stretch",
             } as StringProp,
 
             {
                 type: 'string',
                 name: 'gender',
                 label: '性别',
+                vAlign: "stretch"
             } as StringProp,
             {
                 type: 'string',
@@ -60,12 +63,14 @@ export class VCustomerDetail extends VPage<CCustomer> {
             {
                 type: 'string',
                 name: 'birthday',
-                label: '领域'
+                label: '领域',
+                vAlign: 'center'
             } as StringProp,
             {
                 type: 'string',
                 name: 'birthday',
-                label: 'TOP单位'
+                label: 'TOP单位',
+                vAlign: "stretch",
             } as StringProp
         ];
 
