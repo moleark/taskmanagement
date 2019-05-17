@@ -5,16 +5,20 @@ import { TypeA } from './typeA';
 import { 大包装报价跟踪 } from './大包装报价跟踪';
 import { CTaskType } from './CTaskType';
 import { CSalesTask } from 'salestask';
-
+import { TaskCommonType } from './taskCommonType';
+import { CTaskCommonType } from './common';
+import { common1, common2 } from './commonTypes';
 
 interface CTaskTypeConstructor {
     new(res: any): CTaskType;
 }
 
-const taskTypeConstuctors: { [type: string]: CTaskTypeConstructor } = {
+const taskTypeConstuctors: { [type: string]: CTaskTypeConstructor | TaskCommonType } = {
     typeA: TypeA,
     试剂报价跟踪: 试剂报价跟踪,
     大包装报价跟踪: 大包装报价跟踪,
+    common1: common1,
+    common2: common2
 };
 
 export function createTaskTypes(cSalesTask: CSalesTask): { [type: string]: CTaskType } {
@@ -22,9 +26,16 @@ export function createTaskTypes(cSalesTask: CSalesTask): { [type: string]: CTask
     let ret: { [type: string]: CTaskType } = {};
 
     for (let i in taskTypeConstuctors) {
-        let tt = ret[i] = new taskTypeConstuctors[i](res);
-        tt.cSalesTask = cSalesTask;
-        if (!tt.caption) tt.caption = i;
+        let t = taskTypeConstuctors[i];
+        if (typeof t === 'function') {
+            let tt = ret[i] = new (t as any)(res);
+            tt.cSalesTask = cSalesTask;
+            if (!tt.caption) tt.caption = i;
+        }
+        else {
+            let tt = ret[i] = new CTaskCommonType(t, res);
+            tt.cSalesTask = cSalesTask;
+        }
     }
     return ret;
 }

@@ -5,8 +5,9 @@ import { observer } from 'mobx-react';
 import { tv } from 'tonva-react-uq';
 import { CTaskType } from '../CTaskType';
 import { Task } from '../../model';
+import { CTaskCommonType } from '.';
 
-export class VDetail extends VPage<CTaskType> {
+export class VDetail extends VPage<CTaskCommonType> {
 
     async open(task: Task) {
         this.openPage(this.page, task);
@@ -17,6 +18,6 @@ export class VDetail extends VPage<CTaskType> {
     });
 
     render(task: Task) {
-        return <>大包装试剂可填字段</>;
+        return <>Common: 大包装试剂可填字段ds s asdfas fasfd asf</>;
     }
 }

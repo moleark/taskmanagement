@@ -6,4 +6,10 @@ export interface Task {
     remindDate: Date;
     deadline: Date;
     customer: any;
+    fields?: TaskField[];
+}
+
+export interface TaskField {
+    fieldName: string;
+    value: number;
 }

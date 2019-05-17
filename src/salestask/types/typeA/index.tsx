@@ -7,7 +7,7 @@ export class TypeA extends CTaskType {
         return;
     }
 
-    async showDetail(task: Task): Promise<void> {
+    async showDetailEdit(task: Task): Promise<void> {
         this.openVPage(VDetail, task);
         return;
     }

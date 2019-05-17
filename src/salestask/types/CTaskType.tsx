@@ -13,18 +13,28 @@ export abstract class CTaskType extends Controller {
 
     async showDetailFromId(taskid: number): Promise<void> {
         let task = await this.cSalesTask.loadTask(taskid);
-        await this.showDetail(task);
-    }
-
-    async showDetail(task: Task): Promise<void> {
         this.openPage(
-            this.renderDetail(task)
+            this.renderDetailValues(task)
         );
     }
 
-    renderDetail = (task: Task): JSX.Element => {
+    async showDetailEdit(task: Task): Promise<void> {
+        this.openPage(
+            this.renderDetailEdit(task)
+        );
+    }
+
+    private renderDetailEdit = (task: Task): JSX.Element => {
         let { caption, renderDetailTop, renderActionsBottom } = this;
         return <Page header={caption} footer={renderActionsBottom(task)} >
+            {renderDetailTop(task)}
+            {this.renderContent(task)}
+        </Page >
+    }
+
+    private renderDetailValues = (task: Task): JSX.Element => {
+        let { caption, renderDetailTop } = this;
+        return <Page header={caption}>
             {renderDetailTop(task)}
             {this.renderContent(task)}
         </Page >
@@ -35,7 +45,16 @@ export abstract class CTaskType extends Controller {
     }
 
     protected renderContent = (task: Task): JSX.Element => {
-        return <>none</>;
+        let { fields } = task;
+        if (fields === undefined) return <></>;
+        return <>
+            {fields.map((v, index) => {
+                let { fieldName, value } = v;
+                return <div key={index}>
+                    {fieldName}: {value}
+                </div>
+            })}
+        </>;
     }
 
     protected renderActionsBottom = (task: Task): JSX.Element => {
@@ -43,7 +62,7 @@ export abstract class CTaskType extends Controller {
     }
 
     async showCreate(task: Task): Promise<void> {
-        this.openPage(<Page header={task.typeName}>没有继承哦！</Page>);
+        this.openPage(<Page header={task.typeName}>没有继承showCreate！</Page>);
     }
 
     renderCreateTop = (task: Task): JSX.Element => {

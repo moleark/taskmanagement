@@ -63,8 +63,9 @@ export class CSalesTask extends Controller {
     private qeurySearchHistory: Query;
     private qeurySearchEmployeeHistory: Query;
     private qeurySearchCustomerHistory: Query;
+    private qeurySearchTaskCompletion: Query;
+
     private taskBook: any;
-    //private tasks: [];
 
     constructor(cApp: CSalesTaskApp, res: any) {
         super(res);
@@ -85,6 +86,8 @@ export class CSalesTask extends Controller {
         this.qeurySearchHistory = cUqSalesTask.query("searchhistorytask");
         this.qeurySearchEmployeeHistory = cUqSalesTask.query("searchhistorytaskbyemployee");
         this.qeurySearchCustomerHistory = cUqSalesTask.query("searchhistorytaskbycustomer");
+        this.qeurySearchTaskCompletion = cUqSalesTask.query("searchhistorytaskbycustomer");
+
 
         this.taskTypes = createTaskTypes(this);
     }
@@ -101,9 +104,14 @@ export class CSalesTask extends Controller {
     }
 
     loadTask = async (taskid: number) => {
-        return await this.taskTuid.load(taskid);
+        let task = await this.taskTuid.load(taskid);
+        task.fields = await this.searchTaskCompletion(taskid);
+        return task;
     }
-
+    //搜索处理记录
+    searchTaskCompletion = async (taskid: number) => {
+        return await this.qeurySearchTaskCompletion.table({ taskid: taskid });
+    }
     //显示任务沟通记录
     showTaskHistory = async (taskid: number) => {
         let tasks = await this.qeurySearchHistory.table({ taskid: taskid });
@@ -121,6 +129,7 @@ export class CSalesTask extends Controller {
         let tasks = await this.qeurySearchCustomerHistory.table({ customerid: customerid });
         this.openVPage(VCustomerHistory, { tasks: tasks });
     }
+
 
     //获取类型的图表
     taskIcon(typeName: string) {
@@ -141,18 +150,27 @@ export class CSalesTask extends Controller {
     }
 
     //显示销售任务明细页面
-    showSalesTaskDetail = async (task: Task) => {
-        this.getCTaskType(task.typeName).showDetailFromId(task.id);
+    showTaskDetailEdit = async (task: Task) => {
+        this.getCTaskType(task.typeName).showDetailEdit(task);
     }
 
     //显示任务完结页面
-    showSalesTaskComplet = async (model: any) => {
+    showTaskComplet = async (model: any) => {
         this.openVPage(VSalesTaskComplet, model);
     }
     //完结任务
     async completionTask(task: Task, result: string, resulttype: string) {
         //完结任务--后台数据
-        let param = { taskid: task.id, resulttype: "compl", result: result };
+        let param = {
+            taskid: task.id,
+            resulttype: "compl",
+            result: result,
+            fields: [
+                { fieldName: 'a', value: 1 },
+                { fieldName: 'b', value: 2 },
+                { fieldName: 'a', value: 3 },
+            ]
+        };
         await this.completionTaskAction.submit(param);
         //完结任务--前台页面
         /*
@@ -164,7 +182,7 @@ export class CSalesTask extends Controller {
     }
 
     //显示任务延期页面
-    showSalesTaskExtension = async (model: Task) => {
+    showTaskExtension = async (model: Task) => {
         this.openVPage(VSalesTaskExtension, model);
     }
 
@@ -176,7 +194,7 @@ export class CSalesTask extends Controller {
     }
 
     //显示拒绝任务页面
-    showSalesTaskInvalid = async (model: Task) => {
+    showTaskInvalid = async (model: Task) => {
         this.openVPage(VSalesTaskInvalid, model);
     }
 
@@ -218,7 +236,7 @@ export class CSalesTask extends Controller {
     }
 
     //添加任务
-    addSalesTask = async (param: any, task: Task) => {
+    addTask = async (param: any, task: Task) => {
         let { description, priorty, deadline } = param;
         let { customer, type } = task;
         let customerId = customer.id;

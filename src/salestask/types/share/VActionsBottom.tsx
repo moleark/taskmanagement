@@ -8,7 +8,7 @@ import { Task } from '../../model';
 export class VActionsBottom extends View<CTaskType> {
 
     render(task: Task) {
-        let { showSalesTaskComplet, showSalesTaskExtension, showSalesTaskInvalid } = this.controller.cSalesTask;
+        let { showTaskComplet: showSalesTaskComplet, showTaskExtension: showSalesTaskExtension, showTaskInvalid: showSalesTaskInvalid } = this.controller.cSalesTask;
 
         let onProcess = async () => await showSalesTaskComplet(task);
         let onPostpond = async () => await showSalesTaskExtension(task);

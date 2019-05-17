@@ -35,7 +35,7 @@ export class CSelectType extends Controller {
     //初始化
     protected async internalStart(param: any) {
         this.customerid = param;
-        await this.searchByKey(null);
+        await this.searchByKey('');
         this.openVPage(VSelectType, param);
     }
 

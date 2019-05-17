@@ -37,7 +37,7 @@ export class VEmployeeHistory extends VPage<CSalesTask> {
             deadline: null,
             customer: tasks.customer
         }
-        this.controller.showSalesTaskDetail(task);
+        this.controller.showTaskDetailEdit(task);
     }
 
     private page = observer((tasks: any) => {

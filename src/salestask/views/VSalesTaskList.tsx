@@ -22,7 +22,7 @@ export class VSalesTaskList extends VPage<CSalesTask> {
 
     //选择任务
     private onSalesTaskClick = async (task: any) => {
-        this.controller.showSalesTaskDetail(task);
+        this.controller.showTaskDetailEdit(task);
     }
 
     //添加任务
@@ -41,13 +41,13 @@ export class VSalesTaskList extends VPage<CSalesTask> {
 
         let left = <div className={cnFlag}>{this.controller.taskIcon(typeName)}</div>;
         let right = <div className="text-right">
-            <div><small className="text-muted">时限：<EasyDate date={deadline} /></small></div>
-        </div>;
-        return <LMR className="px-3 py-2" left={left} right={right}  >
-            <div className="row">
-                <div className="col-sm-8 font-weight-bold">{tv(customer, (v) => <>{v.name}</>)}</div>
-                <small className="text-muted ml-3">{tv(type, (v) => <>{v.name}</>)}</small>
-            </div>
+            {deadline && <small className="text-muted">时限：<EasyDate date={deadline} /></small>}
+        </div>
+        return <LMR className="px-3 py-2" left={left}>
+            <LMR className="" right={right}>
+                <div className="font-weight-bold">{tv(customer, (v) => <>{v.name}</>)}</div>
+            </LMR>
+            <div className="text-muted">{tv(type, (v) => <>{v.name}</>)}</div>
         </LMR>
     }
 
