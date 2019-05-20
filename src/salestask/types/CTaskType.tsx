@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Controller, Page } from 'tonva-tools';
+import { Controller, Page } from 'tonva';
 import { CSalesTask } from 'salestask';
 import { VDetailTop } from './share/VDetailTop';
 import { VCreateTop } from './share/VCreateTop';

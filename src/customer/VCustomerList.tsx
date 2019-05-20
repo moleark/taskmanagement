@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { VPage, Page, PageItems } from 'tonva-tools';
+import { VPage, Page, PageItems } from 'tonva';
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
-import { LMR, List, EasyDate, SearchBox, StringProp, ComponentProp, Prop, PropGrid, FA } from 'tonva-react-form';
+import { LMR, List, EasyDate, SearchBox, StringProp, ComponentProp, Prop, PropGrid, FA } from 'tonva';
 
 export class VCustomerList extends VPage<CCustomer> {
 
@@ -35,17 +35,11 @@ export class VCustomerList extends VPage<CCustomer> {
     private page = observer((customer: any) => {
 
         let { pageCustomer } = this.controller;
-        let add = <div className="cursor-pointer px-3 py-1"><FA name="plus" /></div>;
+        let add = <div className="cursor-pointer"><FA name="plus" /></div>;
         let none = <div className="my-3 mx-2 text-warning">请搜索客户！</div>;
-        <br />
-        let header = <LMR className="pl-3 py-2 bg-primary text-white" right={add} >
-            <div className="d-flex h-100 align-items-center">客户</div>
-        </LMR>
-
-        let size: any = "md";
-        return <Page header={header}>
+        return <Page header='客户' right={add} headerClassName='bg-primary py-1 px-3' >
             <SearchBox className="px-1 w-100  mt-2 mr-2  "
-                size={size}
+                size='md'
                 onSearch={(key: string) => this.controller.searchByKey(key)}
                 placeholder="搜索客户姓名、单位" />
 

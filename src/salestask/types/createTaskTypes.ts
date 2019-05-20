@@ -8,6 +8,7 @@ import { CSalesTask } from 'salestask';
 import { TaskCommonType } from './taskCommonType';
 import { CTaskCommonType } from './common';
 import { common1, common2 } from './commonTypes';
+import { common3 } from './commonTypes/common3';
 
 interface CTaskTypeConstructor {
     new(res: any): CTaskType;

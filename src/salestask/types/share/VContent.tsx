@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { View } from 'tonva-tools';
+import { View } from 'tonva';
 import { CTaskType } from '../CTaskType';
-import { PropGrid, Prop, LMR, ComponentProp, FA, StringProp, EasyDate } from 'tonva-react-form';
-import { tv } from 'tonva-react-uq';
+import { PropGrid, Prop, LMR, ComponentProp, FA, StringProp, EasyDate } from 'tonva';
+import { tv } from 'tonva';
 import { Task } from '../../model';
 import { values } from 'mobx';
 

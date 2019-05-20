@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { VPage, Page, PageItems, TabCaptionComponent, Tabs } from 'tonva-tools';
-import { List, LMR, EasyDate, PropGrid, Prop, StringProp, ComponentProp, FA } from 'tonva-react-form';
+import { VPage, Page, PageItems, TabCaptionComponent, Tabs } from 'tonva';
+import { List, LMR, EasyDate, PropGrid, Prop, StringProp, ComponentProp, FA } from 'tonva';
 import { observer } from 'mobx-react';
-import { tv } from 'tonva-react-uq';
+import { tv } from 'tonva';
 import { CTaskType } from '../CTaskType';
 import { Task } from '../../model';
 import { CTaskCommonType } from '.';

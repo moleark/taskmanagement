@@ -1,6 +1,6 @@
 //import * as React from 'react';
-import { User, nav } from 'tonva-tools';
-import { CApp, CUq } from 'tonva-react-uq';
+import { User, nav } from 'tonva';
+import { CApp, CUq } from 'tonva';
 import { CSalesTask } from 'salestask';
 import { consts } from './consts';
 import { CSelectType } from './salestask/selectType';

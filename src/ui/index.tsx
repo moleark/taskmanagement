@@ -1,4 +1,4 @@
-import { AppUI, CApp } from "tonva-react-uq";
+import { AppUI, CApp } from 'tonva';
 import salestaskUI from './salestask';
 import { CSalesTaskApp } from '../CSalesTaskApp';
 import { VHome } from './main';

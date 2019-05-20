@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { VPage, Page, PageItems, TabCaptionComponent, Tabs } from 'tonva-tools';
+import { VPage, Page, PageItems, TabCaptionComponent, Tabs } from 'tonva';
 import { CSalesTask } from '../CSalesTask';
-import { List, LMR, EasyDate, PropGrid, Prop, StringProp, ComponentProp } from 'tonva-react-form';
+import { List, LMR, EasyDate, PropGrid, Prop, StringProp, ComponentProp } from 'tonva';
 import { observer } from 'mobx-react';
-import { tv } from 'tonva-react-uq';
+import { tv } from 'tonva';
 
 export class VSalesTask extends VPage<CSalesTask> {
 

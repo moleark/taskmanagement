@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { VPage, Page, Form, Schema, UiSchema, Context, UiTextAreaItem } from 'tonva-tools';
+import { VPage, Page, Form, Schema, UiSchema, Context, UiTextAreaItem } from 'tonva';
 import { CSalesTask } from '../CSalesTask';
 import { observer } from 'mobx-react';
-import { UiIdItem, UiInputItem } from 'tonva-tools/ui/form/uiSchema';
 import { Task } from '../model';
 
 const schema: Schema = [

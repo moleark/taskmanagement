@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FA } from 'tonva-react-form';
+import { FA } from 'tonva';
 import { CTaskType } from '../CTaskType';
 import { VDetail } from './VDetail';
 import { VCreate } from './VCreate';

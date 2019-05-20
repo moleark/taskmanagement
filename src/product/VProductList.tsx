@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { VPage, Page, PageItems } from 'tonva-tools';
+import { VPage, Page, PageItems } from 'tonva';
 import { observer } from 'mobx-react';
-import { LMR, List, EasyDate, SearchBox, StringProp, ComponentProp, Prop, PropGrid, FA } from 'tonva-react-form';
+import { LMR, List, EasyDate, SearchBox, StringProp, ComponentProp, Prop, PropGrid, FA } from 'tonva';
 import { CProduct } from './CProduct';
-import { tv } from 'tonva-react-uq';
+import { tv } from 'tonva';
 import { ProductImage } from 'tools/productImage';
 
 export class VProductList extends VPage<CProduct> {
@@ -61,16 +61,12 @@ export class VProductList extends VPage<CProduct> {
 
     private page = observer((customer: any) => {
         let { pageProduct } = this.controller;
-        let add = <div className="cursor-pointer px-3 py-1"><FA name="plus" /></div>;
+        let add = <div className="cursor-pointer "><FA name="plus" /></div>;
         let none = <div className="my-3 mx-2 text-warning">未搜索到产品</div>;
-        <br />
-        let header = <LMR className="pl-3 py-2 bg-primary text-white" right={add} >
-            <div className="d-flex h-100 align-items-center">产品</div>
-        </LMR>
-        let size: any = "md";
-        return <Page header={header} onScrollBottom={this.onScrollBottom}>
+
+        return <Page header='产品' onScrollBottom={this.onScrollBottom} right={add} headerClassName='bg-primary py-1 px-3'>
             <SearchBox className="px-1 w-100  mt-2 mr-2 "
-                size={size}
+                size='md'
                 onSearch={(key: string) => this.controller.searchByKey(key)}
                 placeholder="搜索品名、编号、CAS、MDL等" />
             <List before={''} none={none} items={pageProduct} item={{ render: this.renderProduct, onClick: null }} />

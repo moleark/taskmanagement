@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { FA } from 'tonva-react-form';
+import { FA } from 'tonva';
 import { TaskCommonType } from '../taskCommonType';
-import { UiSchema, UiCheckItem, UiInputItem } from 'tonva-tools';
+import { UiSchema, UiCheckItem, UiInputItem } from 'tonva';
 
 export const common1: TaskCommonType = {
     caption: 'Common1',
@@ -10,7 +10,6 @@ export const common1: TaskCommonType = {
         { name: 'description', type: 'string', required: false },
         { name: 'priorty', type: 'number', required: false },
         { name: 'deadline', type: 'string', required: false },
-        //{ name: 'submit', type: 'submit' },
     ],
     uiSchema: {
         items: {

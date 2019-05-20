@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, TabCaptionComponent, Page, Tabs } from 'tonva-tools';
+import { VPage, TabCaptionComponent, Page, Tabs } from 'tonva';
 import { CSalesTaskApp } from 'CSalesTaskApp';
 
 const color = (selected: boolean) => selected === true ? 'text-primary' : 'text-muted';

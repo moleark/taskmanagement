@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { VPage, Page, PageItems } from 'tonva-tools';
+import { VPage, Page, PageItems } from 'tonva';
 import { observer } from 'mobx-react';
 import { CSelectType } from './CSelectType';
-import { LMR, List, FA } from 'tonva-react-form';
+import { LMR, List, FA } from 'tonva';
 import { observable } from 'mobx';
 
 export class VAi extends VPage<CSelectType> {

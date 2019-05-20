@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { VPage, Page, nav } from 'tonva-tools';
+import { VPage, Page, nav } from 'tonva';
 import { observer } from 'mobx-react';
-import { LMR, List, EasyDate, FA } from 'tonva-react-form';
+import { LMR, List, EasyDate, FA } from 'tonva';
 import { CSalesTask } from '../CSalesTask';
-import { tv } from 'tonva-react-uq';
+import { tv } from 'tonva';
 
 export class VEmployeeHistory extends VPage<CSalesTask> {
 

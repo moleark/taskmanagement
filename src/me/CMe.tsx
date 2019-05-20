@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { Query, tv, TuidMain, Action } from 'tonva-react-uq';
-import { PageItems, Controller, nav, Page, Image } from 'tonva-tools';
+import { Query, tv, TuidMain, Action } from 'tonva';
+import { PageItems, Controller, nav, Page, Image } from 'tonva';
 import { CSalesTaskApp } from '../CSalesTaskApp';
 import { observer } from 'mobx-react';
 import { VMe } from './VMe';

@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { VPage, Page, PageItems, Nav, nav } from 'tonva-tools';
+import { VPage, Page, PageItems, Nav, nav } from 'tonva';
 import { observer } from 'mobx-react';
-import { LMR, List, EasyDate, SearchBox, StringProp, ComponentProp, Prop, PropGrid, FA } from 'tonva-react-form';
-import { tv } from 'tonva-react-uq';
+import { LMR, List, EasyDate, SearchBox, StringProp, ComponentProp, Prop, PropGrid, FA } from 'tonva';
+import { tv } from 'tonva';
 import { CMe } from './CMe';
 
 export class VMe extends VPage<CMe> {
@@ -61,12 +61,8 @@ export class VMe extends VPage<CMe> {
         ];
 
         let right = < div className='mr-3' ><FA name='bars' /></div>;
-        let header = <LMR className="pl-3 pt-2 pb-3 bg-primary text-white" right={right}  >
-            我的
-        </LMR>
-
         let footer = <button type="button" className="btn btn-danger w-100" onClick={this.logout} >退出</button>;
-        return <Page header={header} footer={footer}>
+        return <Page header='我的' right={right} footer={footer} headerClassName='bg-primary py-1 px-3'>
             <PropGrid className="my-2" rows={rows} values={customer} alignValue="right" />
         </Page>
     })

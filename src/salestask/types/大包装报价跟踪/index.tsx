@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { CTaskType } from '../CTaskType';
-import { VPage } from 'tonva-tools';
-import { FA } from 'tonva-react-form';
+import { VPage } from 'tonva';
+import { FA } from 'tonva';
 import { VDetail } from './VDetail';
 import { VCreate } from './VCreate';
 import { Task } from '../../model';

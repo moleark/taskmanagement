@@ -1,4 +1,4 @@
-import { Schema, UiSchema } from 'tonva-tools';
+import { Schema, UiSchema } from 'tonva';
 
 export interface TaskCommonType {
     caption: string;

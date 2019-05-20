@@ -1,16 +1,13 @@
 import * as React from 'react';
-import * as _ from 'lodash';
-import { Query, tv, TuidMain, Action } from 'tonva-react-uq';
-import { PageItems, Controller, nav, Page, Image, Context } from 'tonva-tools';
+import _ from 'lodash';
+import { Query, TuidMain, Action } from 'tonva';
+import { PageItems, Controller } from 'tonva';
 import { CSalesTaskApp } from '../CSalesTaskApp';
-import { VSalesTaskList } from './views/VSalesTaskList';
+import { VMain } from './views/VMain';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
-import { VSalesTask } from './views/VSalesTask';
 import { VSalesTaskComplet } from './views/VSalesTaskComplet';
 import { VSalesTaskExtension } from './views/VSalesTaskExtension';
-import { VSalesTaskAdd } from './views/VSalesTaskAdd';
-import { Data } from 'tonva-tools/local';
 import { VTaskHistory } from './views/VTaskHistory';
 import { CTaskType, createTaskTypes } from 'salestask/types/createTaskTypes';
 import { CSelectType } from './selectType';
@@ -18,7 +15,6 @@ import { Task } from './model';
 import { Tasks } from './model/tasks';
 import { VSalesTaskInvalid } from './views/VSalesTaskInvalid';
 import { VEmployeeHistory } from './views/VEmployeeHistory';
-import { async } from 'q';
 import { VCustomerHistory } from './views/VCustomerHistory';
 
 class PageSalesTask extends PageItems<any> {
@@ -275,7 +271,7 @@ export class CSalesTask extends Controller {
     }
 
     render = observer(() => {
-        return this.renderView(VSalesTaskList);
+        return this.renderView(VMain);
     })
 
     tab = () => {

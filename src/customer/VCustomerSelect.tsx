@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { VPage, Page, PageItems } from 'tonva-tools';
+import { VPage, Page, PageItems } from 'tonva';
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
-import { LMR, List, EasyDate, SearchBox, FA } from 'tonva-react-form';
+import { LMR, List, EasyDate, SearchBox, FA } from 'tonva';
 
 export class VCustomerSelect extends VPage<CCustomer> {
 
