@@ -12,10 +12,11 @@ export class 试剂报价跟踪 extends CTaskType {
         return;
     }
 
-    protected renderContent = (task: Task): JSX.Element => {
-        return this.renderView(VDetail, task);
+    /**
+     protected renderContent = (task: Task): JSX.Element => {
+         return this.renderView(VDetail, task);
     }
-
+    */
     async showCreate(task: Task): Promise<void> {
         this.openVPage(VCreate, task);
         return;

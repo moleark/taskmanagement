@@ -26,7 +26,7 @@ export class VEmployeeHistory extends VPage<CSalesTask> {
     }
 
     //选择任务
-    private onSalesTaskClick = async (param: any) => {
+    private onTaskClick = async (param: any) => {
         let tasks = param.task.obj;
         let task = {
             id: tasks.id,
@@ -37,13 +37,13 @@ export class VEmployeeHistory extends VPage<CSalesTask> {
             deadline: null,
             customer: tasks.customer
         }
-        this.controller.showTaskDetailEdit(task);
+        this.controller.showDetailFromId(task);
     }
 
     private page = observer((tasks: any) => {
         let none = <div className="m-3 text-muted small">【无记录】</div>;
         return <Page header="已完成任务" >
-            <List before={''} none={none} items={tasks.tasks} item={{ render: this.renderHistory, onClick: this.onSalesTaskClick }} />
+            <List before={''} none={none} items={tasks.tasks} item={{ render: this.renderHistory, onClick: this.onTaskClick }} />
         </Page>
     })
 }

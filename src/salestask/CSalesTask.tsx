@@ -86,8 +86,7 @@ export class CSalesTask extends Controller {
         this.qeurySearchHistory = cUqSalesTask.query("searchhistorytask");
         this.qeurySearchEmployeeHistory = cUqSalesTask.query("searchhistorytaskbyemployee");
         this.qeurySearchCustomerHistory = cUqSalesTask.query("searchhistorytaskbycustomer");
-        this.qeurySearchTaskCompletion = cUqSalesTask.query("searchhistorytaskbycustomer");
-
+        this.qeurySearchTaskCompletion = cUqSalesTask.query("searchtaskcompletion");
 
         this.taskTypes = createTaskTypes(this);
     }
@@ -152,6 +151,11 @@ export class CSalesTask extends Controller {
     //显示销售任务明细页面
     showTaskDetailEdit = async (task: Task) => {
         this.getCTaskType(task.typeName).showDetailEdit(task);
+    }
+
+    //显示销售任务明细页面
+    showDetailFromId = async (task: Task) => {
+        this.getCTaskType(task.typeName).showDetailFromId(task.id);
     }
 
     //显示任务完结页面

@@ -5,6 +5,7 @@ import { VDetailTop } from './share/VDetailTop';
 import { VCreateTop } from './share/VCreateTop';
 import { VActionsBottom } from './share/VActionsBottom';
 import { Task } from '../model';
+import { VContent } from './share/VContent';
 
 export abstract class CTaskType extends Controller {
     caption: string;
@@ -19,24 +20,25 @@ export abstract class CTaskType extends Controller {
     }
 
     async showDetailEdit(task: Task): Promise<void> {
+        let tasks = await this.cSalesTask.loadTask(task.id);
         this.openPage(
-            this.renderDetailEdit(task)
+            this.renderDetailEdit(tasks)
         );
     }
 
     private renderDetailEdit = (task: Task): JSX.Element => {
-        let { caption, renderDetailTop, renderActionsBottom } = this;
+        let { caption, renderDetailTop, renderActionsBottom, renderContent } = this;
         return <Page header={caption} footer={renderActionsBottom(task)} >
             {renderDetailTop(task)}
-            {this.renderContent(task)}
+            {renderContent(task)}
         </Page >
     }
 
     private renderDetailValues = (task: Task): JSX.Element => {
-        let { caption, renderDetailTop } = this;
+        let { caption, renderDetailTop, renderContent } = this;
         return <Page header={caption}>
             {renderDetailTop(task)}
-            {this.renderContent(task)}
+            {renderContent(task)}
         </Page >
     }
 
@@ -45,16 +47,7 @@ export abstract class CTaskType extends Controller {
     }
 
     protected renderContent = (task: Task): JSX.Element => {
-        let { fields } = task;
-        if (fields === undefined) return <></>;
-        return <>
-            {fields.map((v, index) => {
-                let { fieldName, value } = v;
-                return <div key={index}>
-                    {fieldName}: {value}
-                </div>
-            })}
-        </>;
+        return this.renderView(VContent, task);
     }
 
     protected renderActionsBottom = (task: Task): JSX.Element => {
