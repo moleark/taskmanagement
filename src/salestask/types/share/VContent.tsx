@@ -8,20 +8,16 @@ import { values } from 'mobx';
 
 export class VContent extends View<CTaskType> {
 
-
-
     render(task: Task) {
-
         let { fields } = task;
-
         if (fields === undefined) return <></>;
         return <>
             {fields.map((v, index) => {
                 let { fieldName, value } = v;
 
-                let left = <div className='ml-4'>{fieldName}</div>;
-                let right = <div className='mr-4'>{value}</div>
-                return <LMR className='bg-white row' left={left} right={right}>
+                let left = <div className='mx-3'><FA name='circle' className='small text-info mx-3' ></FA>{fieldName}</div>;
+                return <LMR className='bg-white row' left={left}  >
+                    <div>{value}</div>
                 </LMR>
             })}
         </>;
