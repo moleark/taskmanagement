@@ -6,7 +6,7 @@ import { Task } from '../model';
 
 const schema: Schema = [
     { name: 'resulttype', type: 'id', required: false },
-    { name: 'result', type: 'string', required: true },
+    { name: 'result', type: 'string', required: false },
 ];
 
 
@@ -38,8 +38,8 @@ export class VSalesTaskInvalid extends VPage<CSalesTask> {
     }
 
     private page = observer((salestask: any) => {
-        let footer = <button type="button" className="btn btn-primary w-100" onClick={this.onInvalidTask} >完结</button>;
-        return <Page header="拒绝" footer={footer} >
+        let footer = <button type="button" className="btn btn-primary w-100" onClick={this.onInvalidTask} >取消</button>;
+        return <Page header="取消" footer={footer} headerClassName='bg-primary' >
             <div className="App-container container text-left">
                 <Form ref={v => this.form = v} className="my-3"
                     schema={schema}

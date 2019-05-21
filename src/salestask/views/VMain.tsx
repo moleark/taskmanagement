@@ -5,6 +5,7 @@ import { CSalesTask } from '../CSalesTask';
 import { List, LMR, EasyDate, FA } from 'tonva';
 import { observer } from 'mobx-react';
 import { tv } from 'tonva';
+import { Task } from 'salestask/model';
 
 export class VMain extends VPage<CSalesTask> {
 
@@ -21,7 +22,16 @@ export class VMain extends VPage<CSalesTask> {
     }
 
     //选择任务
-    private onSalesTaskClick = async (task: any) => {
+    private onSalesTaskClick = async (param: any) => {
+        let task = {
+            id: param.id,
+            type: param.type,
+            typeName: param.type.obj.name,
+            description: null,
+            remindDate: null,
+            deadline: null,
+            customer: param.customer
+        }
         this.controller.showTaskDetailEdit(task);
     }
 

@@ -37,7 +37,7 @@ export class VCustomerList extends VPage<CCustomer> {
         let { pageCustomer } = this.controller;
         let add = <div className="cursor-pointer"><FA name="plus" /></div>;
         let none = <div className="my-3 mx-2 text-warning">请搜索客户！</div>;
-        return <Page header='客户' right={add} headerClassName='bg-primary py-1 px-3' >
+        return <Page header='客户' headerClassName='bg-primary py-1 px-3' >
             <SearchBox className="px-1 w-100  mt-2 mr-2  "
                 size='md'
                 onSearch={(key: string) => this.controller.searchByKey(key)}

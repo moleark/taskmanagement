@@ -48,7 +48,7 @@ export class VCreate extends VPage<CTaskType> {
 
     private page = observer((param: any) => {
         let footer = <button type="button" className="btn btn-primary w-100" onClick={this.onAddSalesTask}>保存</button>;
-        return <Page header={this.controller.caption} footer={footer} >
+        return <Page header={this.controller.caption} footer={footer} headerClassName='bg-primary'  >
             <div className="App-container container text-left">
                 {this.controller.renderCreateTop(param)}
                 <Form ref={v => this.form = v} className="my-3"

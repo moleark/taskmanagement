@@ -7,8 +7,8 @@ import { CTaskType } from './CTaskType';
 import { CSalesTask } from 'salestask';
 import { TaskCommonType } from './taskCommonType';
 import { CTaskCommonType } from './common';
-import { common1, common2 } from './commonTypes';
-import { common3 } from './commonTypes/common3';
+import { common1, common2, NonReagent, Reagent } from './commonTypes';
+
 
 interface CTaskTypeConstructor {
     new(res: any): CTaskType;
@@ -16,10 +16,11 @@ interface CTaskTypeConstructor {
 
 const taskTypeConstuctors: { [type: string]: CTaskTypeConstructor | TaskCommonType } = {
     typeA: TypeA,
-    试剂报价跟踪: 试剂报价跟踪,
-    大包装报价跟踪: 大包装报价跟踪,
+    试剂报价跟踪: Reagent,
+    大包装报价跟踪: NonReagent,
     common1: common1,
-    common2: common2
+    common2: common2,
+
 };
 
 export function createTaskTypes(cSalesTask: CSalesTask): { [type: string]: CTaskType } {

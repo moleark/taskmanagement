@@ -5,40 +5,60 @@ import { VDetailTop } from './share/VDetailTop';
 import { VCreateTop } from './share/VCreateTop';
 import { VActionsBottom } from './share/VActionsBottom';
 import { Task } from '../model';
-import { VContent } from './share/VContent';
+import { VDetailContent } from './share/VDetailContent';
+import { VComplet } from './common/VComplet';
 
 export abstract class CTaskType extends Controller {
     caption: string;
     cSalesTask: CSalesTask;
     icon: any = 'plus';
 
+    //显示任务明细--无操作
     async showDetailFromId(taskid: number): Promise<void> {
         let task = await this.cSalesTask.loadTask(taskid);
         this.openPage(
             this.renderDetailValues(task)
         );
     }
-
+    //显示明细--有操作
     async showDetailEdit(task: Task): Promise<void> {
         let tasks = await this.cSalesTask.loadTask(task.id);
         this.openPage(
             this.renderDetailEdit(tasks)
         );
     }
+    //完结任务
+    async showComplet(task: Task): Promise<void> {
+        let tasks = await this.cSalesTask.loadTask(task.id);
+        this.openPage(
+            this.renderComplet(tasks)
+        );
+    }
+
+    private renderComplet = (task: Task): JSX.Element => {
+        let { caption } = this;
+        return <Page header={caption} headerClassName='bg-primary' >
+            {this.renderCompletContent(task)}
+        </Page >
+    }
+
+    private renderCompletContent = (task: Task): JSX.Element => {
+        return this.renderView(VComplet, task);
+    }
 
     private renderDetailEdit = (task: Task): JSX.Element => {
-        let { caption, renderDetailTop, renderActionsBottom, renderContent } = this;
-        return <Page header={caption} footer={renderActionsBottom(task)} >
+        let { caption, renderDetailTop, renderActionsBottom, renderDetailContent } = this;
+        return <Page header={caption} footer={renderActionsBottom(task)} headerClassName='bg-primary'  >
             {renderDetailTop(task)}
-            {renderContent(task)}
+            {renderDetailContent(task)}
         </Page >
     }
 
     private renderDetailValues = (task: Task): JSX.Element => {
-        let { caption, renderDetailTop, renderContent } = this;
-        return <Page header={caption}>
+        let { caption, renderDetailTop, renderDetailContent } = this;
+        return <Page header={caption} headerClassName='bg-primary' >
             {renderDetailTop(task)}
-            {renderContent(task)}
+            {renderDetailContent(task)}
         </Page >
     }
 
@@ -46,14 +66,15 @@ export abstract class CTaskType extends Controller {
         return this.renderView(VDetailTop, task);
     }
 
-    protected renderContent = (task: Task): JSX.Element => {
-        return this.renderView(VContent, task);
+    protected renderDetailContent = (task: Task): JSX.Element => {
+        return this.renderView(VDetailContent, task);
     }
 
     protected renderActionsBottom = (task: Task): JSX.Element => {
         return this.renderView(VActionsBottom, task);
     }
 
+    //创建任务
     async showCreate(task: Task): Promise<void> {
         this.openPage(<Page header={task.typeName}>没有继承showCreate！</Page>);
     }

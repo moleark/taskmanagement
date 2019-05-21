@@ -5,4 +5,6 @@ export interface TaskCommonType {
     icon: any;
     schema: Schema;
     uiSchema: UiSchema;
+    completSchema: Schema;
+    completuiSchema: UiSchema;
 }

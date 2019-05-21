@@ -1,16 +1,52 @@
 import * as React from 'react';
-import { VPage, Page, PageItems, Form, UiSchema, UiInputItem, Context } from 'tonva';
+import { VPage, Page, PageItems, Form, UiSchema, UiInputItem, Context, UiCustom, UiIdItem, UiRadio, Widget } from 'tonva';
 import { CSalesTask } from '../CSalesTask';
 import { observer } from 'mobx-react';
 import { UiTextAreaItem } from 'tonva';
 import { Schema } from 'tonva';
 import { Task } from '../model';
+import { observable } from 'mobx';
 
 const schema: Schema = [
     { name: 'resulttype', type: 'string', required: false },
-    { name: 'date', type: 'date', required: true },
+    { name: 'date', type: 'string', required: true },
     { name: 'result', type: 'string', required: false },
 ];
+
+class SomeDay extends Widget {
+    @observable dateVisible = false;
+    private list = [{ value: 1, title: '明天' }, { value: 2, title: '后天' }];
+
+    private onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+        let val = evt.currentTarget.value;
+        this.dateVisible = val === '0';
+        var day2 = new Date();
+        if (val === '1') {
+            day2.setDate(day2.getDate() + 1);
+            this.setValue(new Date(evt.currentTarget.value));
+        } else if (val === '2') {
+            day2.setDate(day2.getDate() + 2);
+            this.setValue(new Date(evt.currentTarget.value));
+        }
+    }
+
+    private onDateChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+        this.setValue(evt.currentTarget.value);
+    }
+
+    render = () => {
+        return <div className="form-control" style={{ height: 'auto' }}>
+            {this.list.map((v, index) => {
+                return <label className="my-1"><input type="radio" value={v.value} name="a" onChange={this.onChange} /> {v.title} &nbsp; </label>
+            })}
+            <div>
+                <label className="my-1"><input type="radio" value={0} name="a" onChange={this.onChange} /> 日期 &nbsp; </label>
+                {this.dateVisible && <input type="date" defaultValue={(new Date).toDateString()} onChange={this.onDateChange} />}
+            </div>
+        </div>
+    };
+}
+
 
 export class VSalesTaskExtension extends VPage<CSalesTask> {
 
@@ -19,8 +55,12 @@ export class VSalesTaskExtension extends VPage<CSalesTask> {
     private uiSchema: UiSchema = {
         items: {
             resulttype: { visible: false },
-            date: { widget: 'date', label: '日期', placeholder: '请输入日期！' } as UiInputItem,
-            result: { widget: 'textarea', label: '原因', placeholder: '请输入处理结果！', rows: 12 } as UiTextAreaItem,
+            date: {
+                widget: 'custom',
+                label: '提醒日期',
+                WidgetClass: SomeDay,
+            } as UiCustom,
+            result: { widget: 'textarea', label: '备注', placeholder: '请输入处理结果！', rows: 12 } as UiTextAreaItem,
             submit: { widget: 'button', label: '提交', },
         }
     }
@@ -28,6 +68,7 @@ export class VSalesTaskExtension extends VPage<CSalesTask> {
         this.task = task;
         this.openPage(this.page, task);
     }
+
 
     private onExtensionTask = async (model: any) => {
         if (!this.form) return;
@@ -41,8 +82,8 @@ export class VSalesTaskExtension extends VPage<CSalesTask> {
     }
 
     private page = observer((product: any) => {
-        let footer = <button type="button" className="btn btn-primary w-100" onClick={this.onExtensionTask} >完结</button>;
-        return <Page header="推迟" footer={footer} >
+        let footer = <button type="button" className="btn btn-primary w-100" onClick={this.onExtensionTask} >推迟</button>;
+        return <Page header="推迟" footer={footer} headerClassName='bg-primary' >
             <div className="App-container container text-left">
                 <Form ref={v => this.form = v} className="my-3"
                     schema={schema}

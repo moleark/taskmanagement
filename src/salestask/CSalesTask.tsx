@@ -11,7 +11,7 @@ import { VSalesTaskExtension } from './views/VSalesTaskExtension';
 import { VTaskHistory } from './views/VTaskHistory';
 import { CTaskType, createTaskTypes } from 'salestask/types/createTaskTypes';
 import { CSelectType } from './selectType';
-import { Task } from './model';
+import { Task, TaskField } from './model';
 import { Tasks } from './model/tasks';
 import { VSalesTaskInvalid } from './views/VSalesTaskInvalid';
 import { VEmployeeHistory } from './views/VEmployeeHistory';
@@ -125,7 +125,6 @@ export class CSalesTask extends Controller {
         this.openVPage(VCustomerHistory, { tasks: tasks });
     }
 
-
     //获取类型的图表
     taskIcon(typeName: string) {
         let tt = this.taskTypes[typeName];
@@ -155,21 +154,22 @@ export class CSalesTask extends Controller {
     }
 
     //显示任务完结页面
-    showTaskComplet = async (model: any) => {
-        this.openVPage(VSalesTaskComplet, model);
+    showTaskComplet = async (task: Task) => {
+        this.getCTaskType(task.typeName).showComplet(task);
     }
     //完结任务
-    async completionTask(task: Task, result: string, resulttype: string) {
+    async completionTask(task: Task, fieldValues: TaskField[]) {
         //完结任务--后台数据
         let param = {
             taskid: task.id,
             resulttype: "compl",
-            result: result,
-            fields: [
+            result: "完结",
+            fields: fieldValues
+            /*[
                 { fieldName: 'a', value: 1 },
                 { fieldName: 'b', value: 2 },
                 { fieldName: 'a', value: 3 },
-            ]
+            ]*/
         };
         await this.completionTaskAction.submit(param);
         //完结任务--前台页面

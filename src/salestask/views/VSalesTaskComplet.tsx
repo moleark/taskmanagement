@@ -33,13 +33,13 @@ export class VSalesTaskComplet extends VPage<CSalesTask> {
 
     private onFormButtonClick = async (name: string, context: Context) => {
         let { result, resulttype } = context.form.data;
-        await this.controller.completionTask(this.task, result, resulttype);
+        // await this.controller.completionTask(this.task, result, resulttype);
         this.closePage(2);
     }
 
     private page = observer((salestask: any) => {
         let footer = <button type="button" className="btn btn-primary w-100" onClick={this.onCompletionTask} >完结</button>;
-        return <Page header="完结" footer={footer} >
+        return <Page header="完结" footer={footer} headerClassName='bg-primary' >
             <div className="App-container container text-left">
                 <Form ref={v => this.form = v} className="my-3"
                     schema={schema}

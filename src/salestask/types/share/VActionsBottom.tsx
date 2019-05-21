@@ -8,11 +8,19 @@ import { Task } from '../../model';
 export class VActionsBottom extends View<CTaskType> {
 
     render(task: Task) {
-        let { showTaskComplet: showSalesTaskComplet, showTaskExtension: showSalesTaskExtension, showTaskInvalid: showSalesTaskInvalid } = this.controller.cSalesTask;
-
-        let onProcess = async () => await showSalesTaskComplet(task);
-        let onPostpond = async () => await showSalesTaskExtension(task);
-        let onInvalid = async () => await showSalesTaskInvalid(task);
+        let { showTaskComplet, showTaskExtension, showTaskInvalid } = this.controller.cSalesTask;
+        let tasks = {
+            id: task.id,
+            type: task.type,
+            typeName: task.type.obj.name,
+            description: null,
+            remindDate: null,
+            deadline: null,
+            customer: task.customer
+        }
+        let onProcess = async () => await showTaskComplet(tasks);
+        let onPostpond = async () => await showTaskExtension(tasks);
+        let onInvalid = async () => await showTaskInvalid(tasks);
 
         return <div className="d-flex px-1">
             <div className="flex-grow-1 align-self-center justify-content-start">
