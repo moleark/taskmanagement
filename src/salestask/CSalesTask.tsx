@@ -16,6 +16,8 @@ import { Tasks } from './model/tasks';
 import { VSalesTaskInvalid } from './views/VSalesTaskInvalid';
 import { VEmployeeHistory } from './views/VEmployeeHistory';
 import { VCustomerHistory } from './views/VCustomerHistory';
+import { TaskCommonType } from './types/taskCommonType';
+import { CTaskCommonType } from './types/common';
 
 class PageSalesTask extends PageItems<any> {
 
@@ -37,7 +39,6 @@ class PageSalesTask extends PageItems<any> {
         this.pageStart = item === undefined ? 0 : item.id;
     }
 }
-
 /**
  *
  */
@@ -47,7 +48,6 @@ export class CSalesTask extends Controller {
     cSalesTaskType: CSelectType;
 
     private taskTypes: { [type: string]: CTaskType } = {};
-
     @observable tasks: Tasks;
     protected completionTaskAction: Action;
     protected extensionTaskAction: Action;
@@ -135,17 +135,15 @@ export class CSalesTask extends Controller {
     }
 
     //获取任务类型
-    private getCTaskType(typeName: string): CTaskType {
-        let tt = this.taskTypes[typeName];
-        if (tt === undefined) {
-            throw typeName + ' is not defined';
-        }
-        return tt;
+    getCTaskType(typeName: string): CTaskType {
+        return this.taskTypes[typeName];
     }
 
     //显示销售任务明细页面
     showTaskDetailEdit = async (task: Task) => {
-        this.getCTaskType(task.typeName).showDetailEdit(task);
+        let { typeName } = task;
+        let tt = this.getCTaskType(typeName);
+        if (tt !== undefined) tt.showDetailEdit(task);
     }
 
     //显示销售任务明细页面

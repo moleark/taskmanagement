@@ -20,7 +20,6 @@ const taskTypeConstuctors: { [type: string]: CTaskTypeConstructor | TaskCommonTy
     大包装报价跟踪: NonReagent,
     common1: common1,
     common2: common2,
-
 };
 
 export function createTaskTypes(cSalesTask: CSalesTask): { [type: string]: CTaskType } {
