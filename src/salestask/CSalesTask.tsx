@@ -125,7 +125,13 @@ export class CSalesTask extends Controller {
     //获取类型的图表
     taskIcon(typeName: string) {
         let tt = this.taskTypes[typeName];
-        if (tt === undefined) return <FA name='fax' size="lg" fixWidth={true} />;
+        if (tt === undefined) {
+            if (typeName == 'phone') {
+                return <FA name='fax' size="lg" fixWidth={true} />;
+            } else {
+                return <FA name='car' size="lg" fixWidth={true} />;
+            }
+        }
         return tt.icon;
     }
     //获取任务类型
@@ -193,30 +199,7 @@ export class CSalesTask extends Controller {
         this.tasks.remove(task);
     }
 
-    createTask = async () => {
-        this.selectTaskType();
-        /**
-        let taskType: TaskType = await this.selectTaskType();
-        let taskBIZ: any = await this.selectTaskBiz(taskType);
-        let customer = await this.selectCustomer();
-
-        let { obj: biz } = taskBIZ.biz;
-
-        let task = {
-            id: null,
-            type: taskBIZ,
-            typeName: biz.name,
-            description: null,
-            remindDate: null,
-            deadline: null,
-            customer: customer
-        }
-        this.getCTaskType(biz.name).showCreate(task);
-        */
-    }
-
-
-    private selectTaskType = async () => {
+    selectTaskType = async () => {
         //return await this.cSalesTaskType.call();
         await this.cSelectType.start();
     }
@@ -231,7 +214,7 @@ export class CSalesTask extends Controller {
     }
 
     //添加任务
-    addTask = async (param: any, task: Task) => {
+    createTask = async (param: any, task: Task) => {
         let { description, priorty, deadline } = param;
         let { customer, type, biz } = task;
         let customerId = customer.id;
@@ -273,6 +256,27 @@ export class CSalesTask extends Controller {
     tab = () => {
         return <this.render />;
     }
+    /**
+       createTask = async () => {
+          
+           let taskType: TaskType = await this.selectTaskType();
+           let taskBIZ: any = await this.selectTaskBiz(taskType);
+           let customer = await this.selectCustomer();
+   
+           let { obj: biz } = taskBIZ.biz;
+   
+           let task = {
+               id: null,
+               type: taskBIZ,
+               typeName: biz.name,
+               description: null,
+               remindDate: null,
+               deadline: null,
+               customer: customer
+           }
+           this.getCTaskType(biz.name).showCreate(task);
+          
+       } */
 
 }
 

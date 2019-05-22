@@ -39,7 +39,7 @@ export class VCreate extends VPage<CType> {
     }
 
     private onFormButtonClick = async (name: string, context: Context) => {
-        await this.controller.cSalesTask.addTask(context.form.data, null);
+        await this.controller.cSalesTask.createTask(context.form.data, null);
         this.closePage(1);
     }
 

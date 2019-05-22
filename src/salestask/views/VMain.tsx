@@ -37,7 +37,7 @@ export class VMain extends VPage<CSalesTask> {
 
     //添加任务
     private onSalesTaskAdd = async () => {
-        await this.controller.createTask();
+        await this.controller.selectTaskType();
     }
 
     private renderSalesTask = (salesTask: any, index: number) => {
