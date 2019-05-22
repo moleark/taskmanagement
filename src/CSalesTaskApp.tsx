@@ -3,10 +3,10 @@ import { User, nav } from 'tonva';
 import { CApp, CUq } from 'tonva';
 import { CSalesTask } from 'salestask';
 import { consts } from './consts';
-import { CSelectType } from './salestask/selectType';
+import { CSelectType } from './salestask/type';
 import { CCustomer } from 'customer/CCustomer';
 import { CProduct } from 'product/CProduct';
-import { CTaskType } from 'salestask/types/createTaskTypes';
+import { CType } from 'salestask/types/createTypes';
 import { CMe } from 'me/CMe';
 
 

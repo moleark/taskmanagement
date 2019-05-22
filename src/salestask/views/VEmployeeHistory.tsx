@@ -31,7 +31,7 @@ export class VEmployeeHistory extends VPage<CSalesTask> {
         let task = {
             id: tasks.id,
             type: tasks.type,
-            typeName: tasks.type.obj.name,
+            biz: tasks.biz,
             description: null,
             remindDate: null,
             deadline: null,

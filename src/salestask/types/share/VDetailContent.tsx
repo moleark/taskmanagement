@@ -1,17 +1,17 @@
 import * as React from 'react';
 import { View, Widget, UiSelectBase } from 'tonva';
-import { CTaskType } from '../CTaskType';
+import { CType } from '../CType';
 import { LMR, FA } from 'tonva';
 import { Task } from '../../model';
 import { TaskCommonType } from '../taskCommonType';
-import { CTaskCommonType } from '../common';
+import { CCommonType } from '../commontype/CCommonType';
 
-export class VDetailContent extends View<CTaskType> {
+export class VDetailContent extends View<CType> {
 
     render(task: Task): JSX.Element {
-        let model = this.controller.cSalesTask.getCTaskType(task.type.obj.name);
+        let model = this.controller.cSalesTask.getCTaskType(task.biz.obj.name);
 
-        let ss: CTaskCommonType = model as CTaskCommonType;
+        let ss: CCommonType = model as CCommonType;
 
         let { completuiSchema } = ss.taskCommonType;
 

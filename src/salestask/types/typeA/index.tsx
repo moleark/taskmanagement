@@ -1,9 +1,9 @@
-import { CTaskType } from '../CTaskType';
+import { CType } from '../CType';
 import { VDetail } from './VDetail';
 import { Task } from '../../model';
 import { VCreate } from '../大包装报价跟踪/VCreate';
 
-export class TypeA extends CTaskType {
+export class TypeA extends CType {
     protected internalStart(param?: any): Promise<void> {
         return;
     }

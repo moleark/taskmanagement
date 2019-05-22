@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FA } from 'tonva';
+import { FA, toUiSelectItems } from 'tonva';
 import { TaskCommonType } from '../../taskCommonType';
 import { UiSchema, UiInputItem, UiRadio } from 'tonva';
 
@@ -14,7 +14,11 @@ export const NonReagent: TaskCommonType = {
     uiSchema: {
         items: {
             description: { widget: 'text', label: '备注', placeholder: '请填写任务备注' } as UiInputItem,
-            priorty: { widget: 'radio', label: '重要性', defaultValue: 0, list: [{ value: 0, title: '一般' }, { value: 1, title: '重要' }] } as UiRadio,
+            priorty: {
+                widget: 'radio', label: '重要性', defaultValue: 0,
+                list: [{ value: 0, title: '一般' }, { value: 1, title: '重要' }],
+                radioClassName: 'w-min-6c d-inline-block'
+            } as UiRadio,
             deadline: { widget: 'date', label: '完成时间', placeholder: '要求完成时间' } as UiInputItem,
             submit: { widget: 'button', label: '提交', }
         }
@@ -29,14 +33,16 @@ export const NonReagent: TaskCommonType = {
             description: {
                 widget: 'radio', label: '研究领域', placeholder: '研究领域',
                 defaultValue: 1,
+                list: toUiSelectItems(['1:有机化学', '2:生物', '3:甲醇', '4:无机']),
+                radioClassName: 'w-min-6c d-inline-block'
+            } as UiRadio,
+            priorty: {
+                widget: 'radio', label: '状态', defaultValue: 1,
                 list: [
-                    { title: '有机化学', value: 1 },
-                    { title: '生物', value: 2 },
-                    { title: '甲醇', value: 3 },
-                    { title: '无机', value: 4 },
+                    { value: 1, title: '有效' },
+                    { value: 0, title: '无效' }
                 ]
             } as UiRadio,
-            priorty: { widget: 'radio', label: '状态', defaultValue: 1, list: [{ value: 1, title: '有效' }, { value: 0, title: '无效' }] } as UiRadio,
             deadline: {
                 widget: 'radio', label: '研究方向', placeholder: '研究方向', defaultValue: 1,
                 list: [
@@ -45,7 +51,8 @@ export const NonReagent: TaskCommonType = {
                     { title: '大客户3', value: 3 },
                     { title: '大客户4', value: 4 },
                     { title: '大客户5', value: 5 },
-                ]
+                ],
+                radioClassName: 'w-min-6c d-inline-block'
             } as UiRadio,
             submit: { widget: 'button', label: '提交', }
         }

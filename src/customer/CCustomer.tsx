@@ -8,6 +8,7 @@ import { VCustomerSelect } from './VCustomerSelect';
 import { VCustomerDetail } from './VCustomerDetail';
 import { observer } from 'mobx-react';
 import { VCustomerList } from './VCustomerList';
+import { Task } from 'salestask/model';
 
 //页面类
 class PageCustomer extends PageItems<any> {
@@ -40,6 +41,7 @@ export class CCustomer extends Controller {
     @observable pageCustomer: PageCustomer;
     private tuidCustomer: TuidMain;
     private querySearchCustomer: Query;
+    private task: Task;
 
     //构造函数
     constructor(cApp: CSalesTaskApp, res: any) {
@@ -52,9 +54,10 @@ export class CCustomer extends Controller {
     }
 
     //初始化
-    protected async internalStart(param: any) {
+    protected async internalStart(task: Task) {
         this.pageCustomer = null;
-        this.openVPage(VCustomerSelect, param);
+        this.task = task;
+        this.openVPage(VCustomerSelect);
     }
 
     //查询客户--通过名称
@@ -77,6 +80,12 @@ export class CCustomer extends Controller {
 
     //选择客户--给调用页面返回客户id
     selectCustomer = async (customer: any): Promise<any> => {
+        this.task.customer = customer;
+        this.cApp.cSalesTask.getCTaskType(this.task.biz.name).showCreate(this.task);
+    }
+
+    //选择客户--给调用页面返回客户id
+    returnCustomer = async (customer: any): Promise<any> => {
         this.returnCall(customer);
     }
 

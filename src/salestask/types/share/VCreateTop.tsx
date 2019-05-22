@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { View } from 'tonva';
-import { CTaskType } from '../CTaskType';
+import { CType } from '../CType';
 import { PropGrid, Prop, LMR, ComponentProp, FA } from 'tonva';
 import { tv } from 'tonva';
 import { Task } from '../../model';
 
-export class VCreateTop extends View<CTaskType> {
+export class VCreateTop extends View<CType> {
 
     render(task: Task) {
         let { showCustomerDetail } = this.controller.cSalesTask;

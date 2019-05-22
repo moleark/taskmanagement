@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { CTaskType } from '../CTaskType';
+import { CType } from '../CType';
 import { VPage } from 'tonva';
 import { FA } from 'tonva';
 import { VDetail } from './VDetail';
 import { VCreate } from './VCreate';
 import { Task } from '../../model';
 
-export class 大包装报价跟踪 extends CTaskType {
+export class 大包装报价跟踪 extends CType {
 
     icon = <FA name='flask' size="lg" fixWidth={true} />;
     caption = '大包装报价跟踪';

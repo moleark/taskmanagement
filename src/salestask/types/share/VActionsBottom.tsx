@@ -1,18 +1,18 @@
 import * as React from 'react';
 import { View } from 'tonva';
-import { CTaskType } from '../CTaskType';
+import { CType } from '../CType';
 import { PropGrid, Prop, LMR, ComponentProp, FA } from 'tonva';
 import { tv } from 'tonva';
 import { Task } from '../../model';
 
-export class VActionsBottom extends View<CTaskType> {
+export class VActionsBottom extends View<CType> {
 
     render(task: Task) {
         let { showTaskComplet, showTaskExtension, showTaskInvalid } = this.controller.cSalesTask;
         let tasks = {
             id: task.id,
             type: task.type,
-            typeName: task.type.obj.name,
+            biz: task.biz,
             description: null,
             remindDate: null,
             deadline: null,

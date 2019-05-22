@@ -1,23 +1,21 @@
 import * as React from 'react';
 import _ from 'lodash';
-import { Query, TuidMain, Action } from 'tonva';
+import { Query, TuidMain, Action, FA } from 'tonva';
 import { PageItems, Controller } from 'tonva';
 import { CSalesTaskApp } from '../CSalesTaskApp';
 import { VMain } from './views/VMain';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
-import { VSalesTaskComplet } from './views/VSalesTaskComplet';
 import { VSalesTaskExtension } from './views/VSalesTaskExtension';
 import { VTaskHistory } from './views/VTaskHistory';
-import { CTaskType, createTaskTypes } from 'salestask/types/createTaskTypes';
-import { CSelectType } from './selectType';
-import { Task, TaskField } from './model';
+import { CType, createTaskTypes } from 'salestask/types/createTypes';
+import { CSelectType } from './type';
+import { Task, TaskField, TaskType, BizType } from './model';
 import { Tasks } from './model/tasks';
 import { VSalesTaskInvalid } from './views/VSalesTaskInvalid';
 import { VEmployeeHistory } from './views/VEmployeeHistory';
 import { VCustomerHistory } from './views/VCustomerHistory';
-import { TaskCommonType } from './types/taskCommonType';
-import { CTaskCommonType } from './types/common';
+import { CSelectBiz } from './type/CSelectBiz';
 
 class PageSalesTask extends PageItems<any> {
 
@@ -45,9 +43,10 @@ class PageSalesTask extends PageItems<any> {
 export class CSalesTask extends Controller {
 
     cApp: CSalesTaskApp;
-    cSalesTaskType: CSelectType;
+    cSelectType: CSelectType;
+    cSalesTaskBiz: CSelectBiz;
 
-    private taskTypes: { [type: string]: CTaskType } = {};
+    private taskTypes: { [type: string]: CType } = {};
     @observable tasks: Tasks;
     protected completionTaskAction: Action;
     protected extensionTaskAction: Action;
@@ -66,8 +65,9 @@ export class CSalesTask extends Controller {
     constructor(cApp: CSalesTaskApp, res: any) {
         super(res);
         this.cApp = cApp;
+        this.cSelectType = new CSelectType(this, undefined);
+        this.cSalesTaskBiz = new CSelectBiz(this, undefined);
 
-        this.cSalesTaskType = new CSelectType(this, undefined);
         let { cUqSalesTask, cUqCustomer } = this.cApp;
         this.taskTuid = cUqSalesTask.tuid("task");
         this.tuidCustomer = cUqCustomer.tuid('customer');
@@ -112,48 +112,38 @@ export class CSalesTask extends Controller {
         let tasks = await this.qeurySearchHistory.table({ taskid: taskid });
         this.openVPage(VTaskHistory, { tasks: tasks });
     }
-
     //显示员工沟通记录
     showEmployeeHistory = async () => {
         let tasks = await this.qeurySearchEmployeeHistory.table({});
         this.openVPage(VEmployeeHistory, { tasks: tasks });
     }
-
     //显示客户沟通记录
     showCustomerHistory = async (customerid: number) => {
         let tasks = await this.qeurySearchCustomerHistory.table({ customerid: customerid });
         this.openVPage(VCustomerHistory, { tasks: tasks });
     }
-
     //获取类型的图表
     taskIcon(typeName: string) {
         let tt = this.taskTypes[typeName];
-        if (tt === undefined) {
-            throw typeName + ' is not defined';
-        }
+        if (tt === undefined) return <FA name='fax' size="lg" fixWidth={true} />;
         return tt.icon;
     }
-
     //获取任务类型
-    getCTaskType(typeName: string): CTaskType {
+    getCTaskType(typeName: string): CType {
         return this.taskTypes[typeName];
     }
-
     //显示销售任务明细页面
     showTaskDetailEdit = async (task: Task) => {
-        let { typeName } = task;
-        let tt = this.getCTaskType(typeName);
+        let tt = this.getCTaskType(task.biz.obj.name);
         if (tt !== undefined) tt.showDetailEdit(task);
     }
-
     //显示销售任务明细页面
     showDetailFromId = async (task: Task) => {
-        this.getCTaskType(task.typeName).showDetailFromId(task.id);
+        this.getCTaskType(task.biz.obj.name).showDetailFromId(task.id);
     }
-
     //显示任务完结页面
     showTaskComplet = async (task: Task) => {
-        this.getCTaskType(task.typeName).showComplet(task);
+        this.getCTaskType(task.biz.obj.name).showComplet(task);
     }
     //完结任务
     async completionTask(task: Task, fieldValues: TaskField[]) {
@@ -178,24 +168,20 @@ export class CSalesTask extends Controller {
         this.tasks.remove(task);
         this.closePage(2);
     }
-
     //显示任务延期页面
     showTaskExtension = async (model: Task) => {
         this.openVPage(VSalesTaskExtension, model);
     }
-
     //延期任务
     async extensionTask(task: Task, result: string, resulttype: string, date: Date) {
         let param = { taskid: task.id, result: result, remindDate: date };
         await this.extensionTaskAction.submit(param);
         this.tasks.postPone(date, task);
     }
-
     //显示拒绝任务页面
     showTaskInvalid = async (model: Task) => {
         this.openVPage(VSalesTaskInvalid, model);
     }
-
     //拒绝任务
     onInvalidTask = async (task: Task, result: string, resulttype: string) => {
         let param = { taskid: task.id, resulttype: "Inval", result: result };
@@ -208,29 +194,40 @@ export class CSalesTask extends Controller {
     }
 
     createTask = async () => {
-        let taskType = await this.selectTaskType();
+        this.selectTaskType();
+        /**
+        let taskType: TaskType = await this.selectTaskType();
+        let taskBIZ: any = await this.selectTaskBiz(taskType);
         let customer = await this.selectCustomer();
-        let typeName = (taskType as any).name
+
+        let { obj: biz } = taskBIZ.biz;
+
         let task = {
             id: null,
-            type: taskType,
-            typeName: typeName,
+            type: taskBIZ,
+            typeName: biz.name,
             description: null,
             remindDate: null,
             deadline: null,
             customer: customer
         }
-        this.getCTaskType(typeName).showCreate(task);
+        this.getCTaskType(biz.name).showCreate(task);
+        */
     }
 
+
+    private selectTaskType = async () => {
+        //return await this.cSalesTaskType.call();
+        await this.cSelectType.start();
+    }
+
+    private selectTaskBiz = async (taskType: TaskType) => {
+        return await this.cSalesTaskBiz.call(taskType);
+    }
     //显示查询客户页面
     private selectCustomer = async () => {
         let { cCustomer } = this.cApp
         return await cCustomer.call();
-    }
-
-    private selectTaskType = async () => {
-        return await this.cSalesTaskType.call();
     }
 
     //添加任务
@@ -241,7 +238,7 @@ export class CSalesTask extends Controller {
         let typeId = type.id;
         priorty = priorty ? 1 : 0;
         //添加任务--后台数据
-        let model = { id: undefined, description: description, customer: customerId, type: typeId, sourceID: "", sourceType: "", sourceNo: "", priorty: priorty, deadline: deadline };
+        let model = { id: undefined, description: description, customer: customerId, type: typeId, biz: typeId, sourceID: "", sourceType: "", sourceNo: "", priorty: priorty, deadline: deadline };
         let ret = await this.addTaskAction.submit(model);
         model.id = ret.id;
 

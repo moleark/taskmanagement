@@ -3,11 +3,11 @@ import { VPage, Page, PageItems, TabCaptionComponent, Tabs } from 'tonva';
 import { List, LMR, EasyDate, PropGrid, Prop, StringProp, ComponentProp, FA } from 'tonva';
 import { observer } from 'mobx-react';
 import { tv } from 'tonva';
-import { CTaskType } from '../CTaskType';
+import { CType } from '../CType';
 import { Task } from '../../model';
-import { CTaskCommonType } from '.';
+import { CCommonType } from './CCommonType';
 
-export class VDetail extends VPage<CTaskCommonType> {
+export class VDetail extends VPage<CCommonType> {
 
     async open(task: Task) {
         this.openPage(this.page, task);

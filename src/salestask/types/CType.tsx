@@ -6,9 +6,9 @@ import { VCreateTop } from './share/VCreateTop';
 import { VActionsBottom } from './share/VActionsBottom';
 import { Task } from '../model';
 import { VDetailContent } from './share/VDetailContent';
-import { VComplet } from './common/VComplet';
+import { VComplet } from './commonType/VComplet';
 
-export abstract class CTaskType extends Controller {
+export abstract class CType extends Controller {
     caption: string;
     cSalesTask: CSalesTask;
     icon: any = 'plus';
@@ -76,7 +76,7 @@ export abstract class CTaskType extends Controller {
 
     //创建任务
     async showCreate(task: Task): Promise<void> {
-        this.openPage(<Page header={task.typeName}>没有继承showCreate！</Page>);
+        this.openPage(<Page header={task.biz.name}>没有继承showCreate！</Page>);
     }
 
     renderCreateTop = (task: Task): JSX.Element => {

@@ -2,9 +2,9 @@ import * as React from 'react';
 import { VPage, Page, PageItems, Schema, Form, Context, UiIdItem, UiCheckItem } from 'tonva';
 import { observer } from 'mobx-react';
 import { Task } from '../../model';
-import { CTaskCommonType } from '.';
+import { CCommonType } from './CCommonType';
 
-export class VCreate extends VPage<CTaskCommonType> {
+export class VCreate extends VPage<CCommonType> {
 
     private salestask: Task
     private form: Form;
@@ -21,7 +21,7 @@ export class VCreate extends VPage<CTaskCommonType> {
 
     private onFormButtonClick = async (name: string, context: Context) => {
         await this.controller.cSalesTask.addTask(context.form.data, this.salestask);
-        this.closePage(1);
+        this.closePage(3);
     }
 
     private page = observer((param: any) => {

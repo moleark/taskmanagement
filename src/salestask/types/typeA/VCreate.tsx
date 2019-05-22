@@ -3,7 +3,7 @@ import { VPage, Page, PageItems, Schema, Form, Context, UiIdItem, UiCheckItem } 
 import { observer } from 'mobx-react';
 import { UiSchema, UiInputItem } from 'tonva';
 import { tv } from 'tonva';
-import { CTaskType } from '../CTaskType';
+import { CType } from '../CType';
 
 const schema: Schema = [
     { name: 'id', type: 'id', required: false },
@@ -15,7 +15,7 @@ const schema: Schema = [
     //{ name: 'submit', type: 'submit' },
 ];
 
-export class VCreate extends VPage<CTaskType> {
+export class VCreate extends VPage<CType> {
     private form: Form;
 
     private uiSchema: UiSchema = {

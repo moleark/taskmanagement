@@ -26,7 +26,7 @@ export class VMain extends VPage<CSalesTask> {
         let task = {
             id: param.id,
             type: param.type,
-            typeName: param.type.obj.name,
+            biz: param.biz,
             description: null,
             remindDate: null,
             deadline: null,
@@ -42,7 +42,7 @@ export class VMain extends VPage<CSalesTask> {
 
     private renderSalesTask = (salesTask: any, index: number) => {
 
-        let { description, deadline, createTime, customer, type, typeName, priorty } = salesTask;
+        let { description, deadline, biz, customer, type, typeName, priorty } = salesTask;
         let cnFlag = classNames({
             'my-1 mr-3': true,
             'text-danger': priorty > 0,
@@ -57,7 +57,7 @@ export class VMain extends VPage<CSalesTask> {
             <LMR className="" right={right}>
                 <div className="font-weight-bold">{tv(customer, (v) => <>{v.name}</>)}</div>
             </LMR>
-            <div className="text-muted">{tv(type, (v) => <>{v.name}</>)}</div>
+            <div className="text-muted">{tv(biz, (v) => <>{v.description}</>)}</div>
         </LMR>
     }
 

@@ -2,9 +2,9 @@ import * as React from 'react';
 import { VPage, Page, PageItems, Schema, Form, Context, UiIdItem, UiCheckItem } from 'tonva';
 import { observer } from 'mobx-react';
 import { Task } from '../../model';
-import { CTaskCommonType } from '.';
+import { CCommonType } from './CCommonType';
 
-export class VComplet extends VPage<CTaskCommonType> {
+export class VComplet extends VPage<CCommonType> {
 
     private salestask: Task
     private form: Form;

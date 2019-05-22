@@ -14,13 +14,13 @@ export class VSelectType extends VPage<CSelectType> {
         let { description, name } = model;
         let left = <div className='text-info mr-3' >{this.controller.cSalesTask.taskIcon(name)}</div>
         return <LMR className="px-3 py-2" left={left}>
-            <div className="font-weight-bold">{name}</div>
+            <div className="font-weight-bold">{description}</div>
         </LMR>
     }
 
     private onClickTaskType = async (model: any) => {
         await this.controller.selectTaskType(model);
-        this.ceasePage(1);
+        //this.ceasePage(1);
     }
 
     private ai = () => {
@@ -30,7 +30,7 @@ export class VSelectType extends VPage<CSelectType> {
         </LMR>
     }
 
-    private page = observer((customer: any) => {
+    private page = ((customer: any) => {
         let { tasktypelist } = this.controller;
         let none = <div className="my-3 mx-2 text-warning">抱歉，未找到相关产品，请重新搜索！</div>;
         return <Page header="新建任务" headerClassName='bg-primary' >

@@ -1,12 +1,17 @@
 import * as React from 'react';
+import classNames from 'classnames';
 import { View } from 'tonva';
-import { CTaskType } from '../CTaskType';
+import { CType } from '../CType';
 import { PropGrid, Prop, LMR, ComponentProp, FA, StringProp, EasyDate } from 'tonva';
 import { tv } from 'tonva';
 import { propTypes } from 'mobx-react';
 import { Task } from '../../model';
 
-export class VDetailTop extends View<CTaskType> {
+const cnRow = 'w-100 py-3';
+const cnRowCustor = classNames(cnRow, 'cursor-pointer');
+const right = <div className="w-2c text-right"><i className="fa fa-chevron-right" /></div>;
+
+export class VDetailTop extends View<CType> {
 
     render(task: Task) {
 
@@ -20,29 +25,31 @@ export class VDetailTop extends View<CTaskType> {
             {
                 type: 'component',
                 name: 'customer',
-                component: <LMR className="w-100 py-3" onClick={onClickCustomer}
+                component: <LMR className={cnRowCustor} onClick={onClickCustomer}
                     left={<div className="mr-2"> <FA name="user" className="text-info mr-2 pt-1" /> </div>}
-                    right={<div className="w-2c text-right"><i className="fa fa-chevron-right" /></div>}>
+                    right={right}>
                     {tv(customer, v => <>{v.name}</>)}
                 </LMR>,
             } as ComponentProp,
-            {
+        ];
+        if (deadline) {
+            rows.push({
                 type: 'component',
                 name: 'deadline',
-                component: <LMR className="w-100 py-2"
+                component: <LMR className={cnRow}
                     left={<div className="mr-2"> <FA name="clock-o" className="text-info mr-2 pt-1 " /> </div>}>
                     {<EasyDate date={deadline} />}
                 </LMR>,
-            } as ComponentProp,
-            {
-                type: 'component',
-                name: 'customer',
-                component: <LMR className="cursor-pointer w-100 py-3" onClick={onShowSalesTaskHistory}
-                    left={<span><FA className="text-warning" name="hand-o-right" /> &nbsp; 详情</span>}
-                    right={<div className="w-2c text-right"><i className="fa fa-chevron-right" /></div>} />,
-                //label: '执行过程',
-            } as ComponentProp,
-        ];
+            } as ComponentProp);
+        }
+        rows.push({
+            type: 'component',
+            name: 'customer',
+            component: <LMR className={cnRowCustor} onClick={onShowSalesTaskHistory}
+                left={<span><FA className="text-warning" name="hand-o-right" /> &nbsp; 详情</span>}
+                right={right} />,
+            //label: '执行过程',
+        } as ComponentProp);
 
         if (description) {
             rows.push({

@@ -1,15 +1,12 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { Query, tv, TuidMain, Action } from 'tonva';
-import { PageItems, Controller, nav, Page, Image } from 'tonva';
-import { CSalesTaskApp } from '../../CSalesTaskApp';
+import { TuidMain, Controller } from 'tonva';
 import { observable } from 'mobx';
 import { VSelectType } from './VSelectType';
-import { VSalesTaskAdd } from '../views/VSalesTaskAdd';
-import { CTaskType } from '../types/CTaskType';
-import { createTaskTypes } from '../types/createTaskTypes';
 import { CSalesTask } from '../CSalesTask';
 import { VAi } from './VAi';
+import { VSelectBiz } from './VSelectBiz';
+import { TaskType, Task } from 'salestask/model';
 
 /**
  *
@@ -21,6 +18,7 @@ export class CSelectType extends Controller {
     private taskBook: any;
     private tasks: [];
     private customerid: number;
+    private task: Task;
     @observable tasktypelist: any;
 
     //构造函数
@@ -46,10 +44,22 @@ export class CSelectType extends Controller {
     }
 
     //返回添加任务页面
-    selectTaskType = async (type: any): Promise<any> => {
-        this.returnCall(type);
+    selectTaskType = async (type: TaskType) => {
+        this.task = {
+            id: null,
+            type: type,
+            biz: null,
+            description: null,
+            remindDate: null,
+            deadline: null,
+            customer: null
+        }
+        this.cSalesTask.cSalesTaskBiz.start(this.task)
     }
 
+    returnTaskType = async (type: any): Promise<any> => {
+        this.returnCall(type);
+    }
 
     aiClick = () => {
         this.openVPage(VAi);

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CTaskType } from '../CTaskType';
+import { CType } from '../CType';
 import { VPage } from 'tonva';
 import { FA } from 'tonva';
 import { VDetail } from './VDetail';
@@ -8,7 +8,7 @@ import { Task } from '../../model';
 import { TaskCommonType } from '../taskCommonType';
 import { VCreate } from './VCreate';
 
-export class CTaskCommonType extends CTaskType {
+export class CCommonType extends CType {
     taskCommonType: TaskCommonType;
 
     constructor(taskCommonType: TaskCommonType, res: any) {
