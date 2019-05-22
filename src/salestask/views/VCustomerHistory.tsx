@@ -15,11 +15,11 @@ export class VCustomerHistory extends VPage<CSalesTask> {
         let { task, date, status, principal, result } = taskhistory;
         // right={tv(principal)}
         return <div className="d-block p-3">
-            <LMR>
-                <div><small className="text-muted"><EasyDate date={date} /> {tv(status, (v) => v.name)}</small></div>
-                {tv(task, v => tv(v.type, vs => vs.name))}
+            <LMR className='small' left={<small className="text-muted"><EasyDate date={date} /></small>}
+                right={<small>{tv(status, (v) => v.name)}</small>}>
             </LMR>
-            <small>{result}</small>
+            <LMR left={<small>{tv(task, v => tv(v.biz, vs => vs.description))}</small>}
+                right={<small>{tv(task, v => tv(v.type, vs => vs.description))}</small>}></LMR>
         </div >;
     }
 

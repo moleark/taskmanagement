@@ -57,7 +57,9 @@ export class VMain extends VPage<CSalesTask> {
             <LMR className="" right={right}>
                 <div className="font-weight-bold">{tv(customer, (v) => <>{v.name}</>)}</div>
             </LMR>
-            <div className="text-muted">{tv(biz, (v) => <>{v.description}</>)}</div>
+            <LMR className="" right={<div className="text-muted"><small>{tv(type, (v) => <>{v.description}</>)}</small></div>}>
+                <div className="text-muted" ><small>{tv(biz, (v) => <>{v.description}</>)}</small></div>
+            </LMR>
         </LMR>
     }
 

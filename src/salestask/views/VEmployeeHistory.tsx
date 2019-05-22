@@ -12,16 +12,20 @@ export class VEmployeeHistory extends VPage<CSalesTask> {
     }
 
     private renderHistory = (taskhistory: any, index: number) => {
-        let { task, date, status, principal, result } = taskhistory;
+        let { task, date, status, biz, result } = taskhistory;
 
         return <div className="d-block p-3">
             <LMR >
-                <div><small className="text-muted"><EasyDate date={date} /> {tv(status, (v) => v.name)}</small></div>
-                <LMR right={<small>{tv(task, (v) => tv(v.type, (vs) => vs.name))}</small>}
+                <div><small className="text-muted"><EasyDate date={date} /> </small></div>
+                <LMR right={<small>  {tv(status, (v) => v.name)}</small>}
                     left={<div><span><FA name='user' className='mr-3 text-info' ></FA></span>{tv(task, (v) => tv(v.customer, (vs) => vs.name))}</div>} >
                 </LMR>
+                <LMR right={<small>{tv(task, (v) => tv(v.type, (vs) => vs.description || '#'))}</small>}
+                    left={<small>{tv(task, (v) => tv(v.biz, (vs) => vs.description || '#'))}</small>}>
+                </LMR>
+
             </LMR>
-            <small>{result}</small>
+
         </div >;
     }
 

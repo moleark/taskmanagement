@@ -233,12 +233,13 @@ export class CSalesTask extends Controller {
     //添加任务
     addTask = async (param: any, task: Task) => {
         let { description, priorty, deadline } = param;
-        let { customer, type } = task;
+        let { customer, type, biz } = task;
         let customerId = customer.id;
         let typeId = type.id;
+        let bizIds = biz.id;
         priorty = priorty ? 1 : 0;
         //添加任务--后台数据
-        let model = { id: undefined, description: description, customer: customerId, type: typeId, biz: typeId, sourceID: "", sourceType: "", sourceNo: "", priorty: priorty, deadline: deadline };
+        let model = { id: undefined, description: description, customer: customerId, type: typeId, biz: bizIds, sourceID: "", sourceType: "", sourceNo: "", priorty: priorty, deadline: deadline };
         let ret = await this.addTaskAction.submit(model);
         model.id = ret.id;
 

@@ -13,9 +13,10 @@ export class VTaskHistory extends VPage<CSalesTask> {
 
     private renderHistory = (taskhistory: any, index: number) => {
         let { date, status, principal, result } = taskhistory;
+        let right = <small className="text-muted">{principal.id !== nav.user.id && <span className="text-muted small"></span>}{tv(status, (v) => v.name)} </small>;
         return <div className="d-block p-3">
-            <LMR right={principal.id !== nav.user.id && <span className="text-muted small">{tv(principal)}</span>}>
-                <div><small className="text-muted"><EasyDate date={date} /> {tv(status, (v) => v.name)}</small></div>
+            <LMR left={<small className="text-muted">{<EasyDate date={date} />} </small>}
+                right={<small className="text-muted">{right}</small>}>
             </LMR>
             <div>{result}</div>
         </div>;
