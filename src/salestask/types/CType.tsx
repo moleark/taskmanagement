@@ -6,7 +6,7 @@ import { VCreateTop } from './share/VCreateTop';
 import { VActionsBottom } from './share/VActionsBottom';
 import { Task } from '../model';
 import { VDetailContent } from './share/VDetailContent';
-import { VComplet } from './commonType/VComplet';
+import { VFinish } from './commonType/VFinish';
 
 export abstract class CType extends Controller {
     caption: string;
@@ -43,7 +43,7 @@ export abstract class CType extends Controller {
     }
 
     private renderCompletContent = (task: Task): JSX.Element => {
-        return this.renderView(VComplet, task);
+        return this.renderView(VFinish, task);
     }
 
     private renderDetailEdit = (task: Task): JSX.Element => {

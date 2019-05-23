@@ -22,7 +22,6 @@ export const Visit: TaskCommonType = {
     completSchema: [
         { name: 'priorty', type: 'number', required: false },
         { name: 'priortya', type: 'number', required: false },
-        { name: 'description', type: 'string', required: false },
     ],
     completuiSchema: {
         items: {

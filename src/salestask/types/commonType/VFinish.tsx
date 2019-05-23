@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import { Task } from '../../model';
 import { CCommonType } from './CCommonType';
 
-export class VComplet extends VPage<CCommonType> {
+export class VFinish extends VPage<CCommonType> {
 
     private salestask: Task
     private form: Form;
