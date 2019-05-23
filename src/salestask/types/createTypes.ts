@@ -18,6 +18,7 @@ const taskTypeConstuctors: { [type: string]: CTaskTypeConstructor | TaskCommonTy
     typeA: TypeA,
     reagent: Reagent,
     nonreagent: NonReagent,
+    visit: NonReagent,
     common1: common1,
     common2: common2,
 };
