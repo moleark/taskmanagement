@@ -20,14 +20,13 @@ export const Visit: TaskCommonType = {
         }
     } as UiSchema,
     completSchema: [
-        { name: 'description', type: 'string', required: false },
         { name: 'priorty', type: 'number', required: false },
         { name: 'priortya', type: 'number', required: false },
+        { name: 'description', type: 'string', required: false },
     ],
     completuiSchema: {
         items: {
-            description: { widget: 'text', label: '拜访结果', placeholder: '' } as UiInputItem,
-            priorty: { widget: 'radio', label: '评价', defaultValue: 0, list: [{ value: 0, title: '一般' }, { value: 1, title: '很好' }] } as UiRadio,
+            priorty: { widget: 'radio', label: '拜访结果', defaultValue: 0, list: [{ value: 0, title: '一般' }, { value: 1, title: '很好' }] } as UiRadio,
             priortya: { widget: 'radio', label: '重要性', defaultValue: 0, list: [{ value: 0, title: '一般' }, { value: 1, title: '重要' }] } as UiRadio,
             submit: { widget: 'button', label: '提交', }
         }

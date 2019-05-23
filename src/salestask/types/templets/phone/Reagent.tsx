@@ -25,8 +25,8 @@ export const Reagent: TaskCommonType = {
     ],
     completuiSchema: {
         items: {
-            description: { widget: 'text', label: '备注', placeholder: '请填写任务备注' } as UiInputItem,
             priorty: { widget: 'radio', label: '重要性', defaultValue: 0, list: [{ value: 0, title: '一般' }, { value: 1, title: '重要' }] } as UiRadio,
+            description: { widget: 'radio', label: '客户情况', defaultValue: 0, list: [{ value: 0, title: '一般' }, { value: 1, title: '很有钱' }] } as UiRadio,
             submit: { widget: 'button', label: '提交', }
         }
     } as UiSchema
