@@ -32,10 +32,10 @@ export class VSelectType extends VPage<CSelectType> {
 
     private page = ((customer: any) => {
         let { tasktypelist } = this.controller;
-        let none = <div className="my-3 mx-2 text-warning">抱歉，未找到相关产品，请重新搜索！</div>;
+        let none = <div className="my-3 mx-2 text-warning">无任务类型！</div>;
         return <Page header="新建任务" headerClassName='bg-primary' >
             {this.ai()}
-            <List before={''} none={none} items={tasktypelist} item={{ render: this.renderList, onClick: this.onClickTaskType }} />
+            <List none={none} items={tasktypelist} item={{ render: this.renderList, onClick: this.onClickTaskType }} />
         </Page>
     })
 }

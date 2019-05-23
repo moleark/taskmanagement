@@ -41,8 +41,8 @@ export class VComplet extends VPage<CCommonType> {
     render(task: Task) {
         this.salestask = task;
         let { completSchema, completuiSchema } = this.controller.taskCommonType;
-        return <div>
-            <Form ref={v => this.form = v} className="my-3"
+        return <div className="mx-3">
+            <Form ref={v => this.form = v}
                 schema={completSchema}
                 uiSchema={completuiSchema}
                 onButtonClick={this.onFormButtonClick}

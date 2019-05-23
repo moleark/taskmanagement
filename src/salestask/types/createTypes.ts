@@ -7,7 +7,7 @@ import { CType } from './CType';
 import { CSalesTask } from 'salestask';
 import { TaskCommonType } from './taskCommonType';
 import { CCommonType } from './commonType/CCommonType';
-import { common1, common2, NonReagent, Reagent } from './templets';
+import { common1, common2, NonReagent, Reagent, Visit } from './templets';
 
 
 interface CTaskTypeConstructor {
@@ -18,7 +18,7 @@ const taskTypeConstuctors: { [type: string]: CTaskTypeConstructor | TaskCommonTy
     typeA: TypeA,
     reagent: Reagent,
     nonreagent: NonReagent,
-    visit: NonReagent,
+    visit: Visit,
     common1: common1,
     common2: common2,
 };

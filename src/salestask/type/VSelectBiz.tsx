@@ -32,10 +32,10 @@ export class VSelectBiz extends VPage<CSelectBiz> {
 
     private page = () => {
         let { taskType, taskBizs } = this.controller;
-        //let none = <div className="my-3 mx-2 text-warning">抱歉，未找到相关产品，请重新搜索！</div>;
+        let none = <div className="my-3 mx-2 text-warning">正在筹备中</div>;
         return <Page header={taskType.description || taskType.name} headerClassName='bg-primary' >
             {this.ai()}
-            <List items={taskBizs.ret} item={{ render: this.renderItem, onClick: this.onClickTaskBiz }} />
+            <List none={none} items={taskBizs.ret} item={{ render: this.renderItem, onClick: this.onClickTaskBiz }} />
         </Page>
     };
 }
