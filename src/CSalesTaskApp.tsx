@@ -8,6 +8,7 @@ import { CCustomer } from 'customer/CCustomer';
 import { CProduct } from 'product/CProduct';
 import { CType } from 'salestask/types/createTypes';
 import { CMe } from 'me/CMe';
+import { CCommonType } from 'salestask/types/commonType';
 
 
 export class CSalesTaskApp extends CApp {

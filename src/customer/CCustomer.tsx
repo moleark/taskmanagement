@@ -9,6 +9,7 @@ import { VCustomerDetail } from './VCustomerDetail';
 import { observer } from 'mobx-react';
 import { VCustomerList } from './VCustomerList';
 import { Task } from 'salestask/model';
+import { CCommonType } from 'salestask/types/commonType';
 
 //页面类
 class PageCustomer extends PageItems<any> {
@@ -81,7 +82,8 @@ export class CCustomer extends Controller {
     //选择客户--给调用页面返回客户id
     selectCustomer = async (customer: any): Promise<any> => {
         this.task.customer = customer;
-        this.cApp.cSalesTask.getCTaskType(this.task.biz.name).showCreate(this.task);
+        this.cApp.cSalesTask.showCrateCheck(this.task);
+        //this.cApp.cSalesTask.getCTaskType(this.task.biz.name).showCreate(this.task);
     }
 
     //选择客户--给调用页面返回客户id

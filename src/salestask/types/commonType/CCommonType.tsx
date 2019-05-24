@@ -3,6 +3,7 @@ import { CType } from '../CType';
 import { VPage } from 'tonva';
 import { FA } from 'tonva';
 import { VDetail } from './VDetail';
+import { VCreateCheck } from '../../views/VCreateCheck';
 //import { VAdd } from './VCreate';
 import { Task } from '../../model';
 import { TaskCommonType } from '../taskCommonType';
@@ -32,4 +33,9 @@ export class CCommonType extends CType {
         this.openVPage(VCreate, task);
         return;
     }
+    //显示查询客户页面
+    showCrateCheck = async (task: Task) => {
+        this.openVPage(VCreateCheck, task);
+    }
+
 }

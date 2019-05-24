@@ -7,26 +7,20 @@ import { LMR, List, EasyDate, SearchBox, FA } from 'tonva';
 export class VCustomerSelect extends VPage<CCustomer> {
 
     async open(customer: any) {
-
         this.openPage(this.page, customer);
     }
 
-
     private renderCustomer(salesTask: any, index: number) {
-
         let { name } = salesTask;
-
         return <LMR className="px-3 py-2 " left={<FA name='user' className=' my-2 mr-3 text-info' />}>
             <div className="font-weight-bold"></div>
             <div>{name}</div>
         </LMR >
-
     }
 
     private onClickCustomer = async (model: any) => {
-
         await this.controller.selectCustomer(model);
-        this.ceasePage();
+        //this.ceasePage();
     }
 
     private page = observer((customer: any) => {

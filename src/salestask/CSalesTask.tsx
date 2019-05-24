@@ -16,6 +16,7 @@ import { VSalesTaskInvalid } from './views/VSalesTaskInvalid';
 import { VEmployeeHistory } from './views/VEmployeeHistory';
 import { VCustomerHistory } from './views/VCustomerHistory';
 import { CSelectBiz } from './type/CSelectBiz';
+import { VCreateCheck } from './views/VCreateCheck';
 
 class PageSalesTask extends PageItems<any> {
 
@@ -149,7 +150,7 @@ export class CSalesTask extends Controller {
     }
     //显示任务完结页面
     showTaskComplet = async (task: Task) => {
-        this.getCTaskType(task.biz.obj.name).showComplet(task);
+        this.getCTaskType(task.biz.name).showComplet(task);
     }
     //完结任务
     async completionTask(task: Task, fieldValues: TaskField[]) {
@@ -213,6 +214,11 @@ export class CSalesTask extends Controller {
         return await cCustomer.call();
     }
 
+    //显示查询客户页面
+    showCrateCheck = async (task: Task) => {
+        this.openVPage(VCreateCheck, task);
+    }
+
     //添加任务
     createTask = async (param: any, task: Task) => {
         let { description, priorty, deadline } = param;
@@ -242,6 +248,22 @@ export class CSalesTask extends Controller {
         });
         */
     }
+
+    //添加任务
+    finishTask = async (task: Task) => {
+        let { customer, type, biz } = task;
+        let customerId = customer.id;
+        let typeId = type.id;
+        let bizIds = biz.id;
+        let priorty = 0;
+        //添加任务--后台数据
+        let model = { id: undefined, description: "", customer: customerId, type: typeId, biz: bizIds, sourceID: "", sourceType: "", sourceNo: "", priorty: priorty, deadline: "" };
+        let ret = await this.addTaskAction.submit(model);
+        model.id = ret.id;
+        task.id = ret.id;
+        this.showTaskComplet(task);
+    }
+
 
     //显示客户明细页面
     showCustomerDetail = async (customerId: any) => {
