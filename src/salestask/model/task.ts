@@ -4,8 +4,9 @@ export interface Task {
     biz: any;
     description: string;
     remindDate: Date;
-    deadline: Date;
+    deadline?: Date;
     customer: any;
+    priorty?: number
     fields?: TaskField[];
 }
 

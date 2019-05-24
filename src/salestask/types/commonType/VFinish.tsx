@@ -23,9 +23,7 @@ export class VFinish extends VPage<CCommonType> {
     }
 
     private onFormButtonClick = async (name: string, context: Context) => {
-        let { result, resulttype } = context.form.data;
-        let { completSchema, completuiSchema } = this.controller.taskCommonType;
-
+        let { completSchema } = this.controller.taskCommonType;
         let fieldValues = completSchema.map((v, index) => {
             let { name } = v;
             return {
@@ -33,8 +31,8 @@ export class VFinish extends VPage<CCommonType> {
                 value: context.form.data[name]
             };
         })
-
-        await this.controller.cSalesTask.completionTask(this.salestask, fieldValues);
+        this.salestask.fields = fieldValues;
+        await this.controller.cSalesTask.finishTask(this.salestask);
         this.closePage(2);
     }
 

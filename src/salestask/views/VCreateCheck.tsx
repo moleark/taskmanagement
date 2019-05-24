@@ -13,11 +13,14 @@ export class VCreateCheck extends VPage<CSalesTask> {
     }
 
     private onAddTask = async (model: any) => {
+        this.task.description = undefined;
+        this.task.deadline = undefined;
         this.controller.getCTaskType(this.task.biz.name).showCreate(this.task);
     }
 
-    private onFinishTask = async (model: any) => {
-        this.controller.finishTask(this.task);
+    private onFinishTask = async () => {
+        this.task.priorty = 0;
+        await this.controller.createAndFinishTask(this.task);
         this.closePage();
     }
 

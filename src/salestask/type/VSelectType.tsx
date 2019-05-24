@@ -12,7 +12,7 @@ export class VSelectType extends VPage<CSelectType> {
 
     private renderList = (model: any, index: number) => {
         let { description, name } = model;
-        let left = <div className='text-info mr-3' >{this.controller.cSalesTask.taskIcon(name)}</div>
+        let left = <div className='text-info mr-3' >{this.controller.cSalesTask.getTaskIcon(name)}</div>
         return <LMR className="px-3 py-2" left={left}>
             <div className="font-weight-bold">{description}</div>
         </LMR>

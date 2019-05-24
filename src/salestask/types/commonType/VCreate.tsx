@@ -20,6 +20,10 @@ export class VCreate extends VPage<CCommonType> {
     }
 
     private onFormButtonClick = async (name: string, context: Context) => {
+        let { description, priorty, deadline } = context.form.data;
+        this.task.description = description;
+        this.task.priorty = priorty;
+        this.task.deadline = deadline;
         await this.controller.cSalesTask.createTask(context.form.data, this.task);
         this.closePage(5);
     }
@@ -31,8 +35,6 @@ export class VCreate extends VPage<CCommonType> {
     render(param: any) {
         let { schema, uiSchema } = this.controller.taskCommonType;
         let footer = <button type="button" className="btn btn-primary w-100" onClick={this.onAddSalesTask}>保存</button>;
-        //let header = <div>{this.task.type.description}&nbsp;<FA name="chevron-right" className="wx-3" />&nbsp;{this.task.biz.description}</div>;
-
         return <Page header={this.controller.caption} footer={footer} headerClassName='bg-primary' >
             <div className="App-container container text-left">
                 {this.controller.renderCreateTop(param)}

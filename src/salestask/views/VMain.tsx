@@ -37,7 +37,7 @@ export class VMain extends VPage<CSalesTask> {
 
     //添加任务
     private onSalesTaskAdd = async () => {
-        await this.controller.selectTaskType();
+        await this.controller.showSelectTaskType();
     }
 
     private renderSalesTask = (salesTask: any, index: number) => {
@@ -49,7 +49,7 @@ export class VMain extends VPage<CSalesTask> {
             'text-info': !(priorty > 0)
         })
 
-        let left = <div className={cnFlag}>{this.controller.taskIcon(typeName)}</div>;
+        let left = <div className={cnFlag}>{this.controller.getTaskIcon(typeName)}</div>;
         let right = <div className="text-right">
             {deadline && <small className="text-muted">时限：<EasyDate date={deadline} /></small>}
         </div>

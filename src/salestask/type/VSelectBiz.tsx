@@ -11,7 +11,7 @@ export class VSelectBiz extends VPage<CSelectBiz> {
 
     private renderItem = (model: any, index: number) => {
         let { biz, type } = model;
-        let left = <div className='text-info mr-3' >{tv(type, (obj) => this.controller.cSalesTask.taskIcon(obj.name))}</div>
+        let left = <div className='text-info mr-3' >{tv(type, (obj) => this.controller.cSalesTask.getTaskIcon(obj.name))}</div>
         return <LMR className="px-3 py-2" left={left}>
             <div className="font-weight-bold">{tv(biz, obj => obj.description)}</div>
         </LMR>
