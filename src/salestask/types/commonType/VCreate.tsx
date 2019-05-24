@@ -1,16 +1,16 @@
 import * as React from 'react';
-import { VPage, Page, PageItems, Schema, Form, Context, UiIdItem, UiCheckItem } from 'tonva';
+import { VPage, Page, PageItems, Schema, Form, Context, UiIdItem, UiCheckItem, FA } from 'tonva';
 import { observer } from 'mobx-react';
 import { Task } from '../../model';
 import { CCommonType } from './CCommonType';
 
 export class VCreate extends VPage<CCommonType> {
 
-    private salestask: Task
+    private task: Task;
     private form: Form;
 
     async open(task: Task) {
-        this.salestask = task;
+        this.task = task;
         this.openPage(this.page, task);
     }
 
@@ -20,8 +20,8 @@ export class VCreate extends VPage<CCommonType> {
     }
 
     private onFormButtonClick = async (name: string, context: Context) => {
-        await this.controller.cSalesTask.createTask(context.form.data, this.salestask);
-        this.closePage(3);
+        await this.controller.cSalesTask.createTask(context.form.data, this.task);
+        this.closePage(5);
     }
 
     private page = observer((param: any) => {
@@ -31,7 +31,9 @@ export class VCreate extends VPage<CCommonType> {
     render(param: any) {
         let { schema, uiSchema } = this.controller.taskCommonType;
         let footer = <button type="button" className="btn btn-primary w-100" onClick={this.onAddSalesTask}>保存</button>;
-        return <Page header={this.controller.caption} footer={footer} >
+        //let header = <div>{this.task.type.description}&nbsp;<FA name="chevron-right" className="wx-3" />&nbsp;{this.task.biz.description}</div>;
+
+        return <Page header={this.controller.caption} footer={footer} headerClassName='bg-primary' >
             <div className="App-container container text-left">
                 {this.controller.renderCreateTop(param)}
                 <Form ref={v => this.form = v} className="my-3"

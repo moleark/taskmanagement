@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { VPage, Page, PageItems, Schema, Form, Context, UiIdItem, UiCheckItem, LMR, Prop, ComponentProp, FA, tv, PropGrid } from 'tonva';
+import { VPage, Page, LMR, Prop, ComponentProp, FA, tv, PropGrid } from 'tonva';
 import { observer } from 'mobx-react';
 import { Task } from '../model';
-import { CCommonType } from '../types/commonType/CCommonType';
 import { CSalesTask } from 'salestask/CSalesTask';
 
 export class VCreateCheck extends VPage<CSalesTask> {
@@ -26,7 +25,6 @@ export class VCreateCheck extends VPage<CSalesTask> {
         return this.render(param);
     });
 
-
     private itemss = "cursor-pointer my-2 w-100";
     render(task: Task) {
         let { showCustomerDetail } = this.controller.cApp.cSalesTask;
@@ -46,30 +44,22 @@ export class VCreateCheck extends VPage<CSalesTask> {
             {
                 type: 'component',
                 name: 'type',
-                component: <LMR className={this.itemss}
-                    left={<div className="mr-2"> <FA name='circle text-info' ></FA></div>}>
+                component: <LMR className={this.itemss} onClick={onClickCustoemr}
+                    left={<div> <FA name="circle" className="text-info mr-2 pt-1" /> </div>}>
                     {tv(type, v => <>{v.description}</>)}
                 </LMR>,
             } as ComponentProp,
-            {
-                type: 'component',
-                name: 'biz',
-                component: <LMR className={this.itemss}
-                    left={<div className="mr-2"><FA name='circle text-info' ></FA></div>}>
-                    {tv(biz, v => <>{v.description}</>)}
-                </LMR>,
-            } as ComponentProp,
         ];
-        let footer = <div  >
-            <table className="w-100 text-center">
-                <tr>
-                    <td> <button type="button" className="btn btn-primary w-100" onClick={this.onAddTask}>保存</button></td>
-                    <td> <button type="button" className="btn btn-primary w-100" onClick={this.onFinishTask}>处理</button></td>
-                </tr>
-            </table>
+        let footer = <div className="d-flex px-1">
+            <div className="flex-grow-1 align-self-center justify-content-start">
+                <button type="button" className="btn btn-primary" onClick={this.onAddTask} >&nbsp;新建&nbsp;</button>
+            </div>
+            <button type="button" className="btn btn-outline-info ml-2 align-self-center" onClick={this.onFinishTask} >处理</button>
         </div>
 
-        return <Page header="交流记录" footer={footer} >
+        let header = <div>{this.task.biz.description}&nbsp;</div>;
+
+        return <Page header={header} footer={footer} headerClassName='bg-primary'>
             <PropGrid className="my-2" rows={rows} values={task} />
         </Page>
     }
