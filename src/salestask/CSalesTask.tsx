@@ -150,7 +150,8 @@ export class CSalesTask extends Controller {
     }
     //显示任务完结页面
     showTaskComplet = async (task: Task) => {
-        this.getCTaskType(task.biz.name).showComplet(task);
+        let name = task.biz.name ? task.biz.name : task.biz.obj.name;
+        this.getCTaskType(name).showComplet(task);
     }
     //完结任务
     async completionTask(task: Task, fieldValues: TaskField[]) {
