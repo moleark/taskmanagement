@@ -42,14 +42,14 @@ export class VMain extends VPage<CSalesTask> {
 
     private renderSalesTask = (salesTask: any, index: number) => {
 
-        let { description, deadline, biz, customer, type, typeName, priorty } = salesTask;
+        let { bizName, deadline, biz, customer, type, typeName, priorty } = salesTask;
         let cnFlag = classNames({
             'my-1 mr-3': true,
             'text-danger': priorty > 0,
             'text-info': !(priorty > 0)
         })
 
-        let left = <div className={cnFlag}>{this.controller.getTaskIcon(typeName)}</div>;
+        let left = <div className={cnFlag}>{this.controller.getTaskIcon(bizName)}</div>;
         let right = <div className="text-right">
             {deadline && <small className="text-muted">时限：<EasyDate date={deadline} /></small>}
         </div>

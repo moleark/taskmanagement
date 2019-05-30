@@ -6,6 +6,7 @@ import { CSalesTaskApp } from '../CSalesTaskApp';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { VProductList } from './VProductList';
+import { VProductSelect } from './VProductSelect';
 
 //页面类
 class PageProduct extends PageItems<any> {
@@ -50,15 +51,18 @@ export class CProduct extends Controller {
 
     //初始化
     protected async internalStart(param: any) {
-
-        this.openVPage(null, param);
+        this.openVPage(VProductSelect, param);
     }
 
     //查询客户--通过名称
     searchByKey = async (key: string) => {
-
         this.pageProduct = new PageProduct(this.querySearchProduct);
         this.pageProduct.first({ key: key, salesRegion: 1 });
+    }
+
+    //选择客户--给调用页面返回客户id
+    returnProduct = async (product: any): Promise<any> => {
+        this.returnCall(product);
     }
 
     render = observer(() => {

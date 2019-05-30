@@ -10,14 +10,14 @@ import { VSalesTaskExtension } from './views/VSalesTaskExtension';
 import { VTaskHistory } from './views/VTaskHistory';
 import { CType, createTaskTypes } from 'salestask/types/createTypes';
 import { CSelectType } from './type';
-import { Task, TaskField, TaskType, BizType } from './model';
+import { Task, TaskField, TaskType, BizType, CreateProduct } from './model';
 import { Tasks } from './model/tasks';
 import { VSalesTaskInvalid } from './views/VSalesTaskInvalid';
 import { VEmployeeHistory } from './views/VEmployeeHistory';
 import { VCustomerHistory } from './views/VCustomerHistory';
 import { CSelectBiz } from './type/CSelectBiz';
 import { VCreateCheck } from './views/VCreateCheck';
-import { any } from 'prop-types';
+import { VCreateProduct } from './types/commonType/VCreateProduct';
 
 class PageSalesTask extends PageItems<any> {
 
@@ -52,6 +52,7 @@ export class CSalesTask extends Controller {
     @observable tasks: Tasks;
     protected completionTaskAction: Action;
     protected extensionTaskAction: Action;
+    protected createTaskProductAction: Action;
     protected addTaskAction: Action;
     private taskTuid: TuidMain;
     private tuidCustomer: TuidMain;
@@ -79,6 +80,7 @@ export class CSalesTask extends Controller {
         this.completionTaskAction = cUqSalesTask.action('CompletionTask');
         this.extensionTaskAction = cUqSalesTask.action('ExtensionTask');
         this.addTaskAction = cUqSalesTask.action('AddTask');
+        this.createTaskProductAction = cUqSalesTask.action('CreateTaskProduct');
 
         this.qeurySearchTask = cUqSalesTask.query("searchtask");
         this.qeurySearchHistory = cUqSalesTask.query("searchhistorytask");
@@ -182,7 +184,7 @@ export class CSalesTask extends Controller {
         */
     }
 
-    //添加任务
+    //添加并完结任务
     createAndFinishTask = async (task: Task) => {
         let newtask = await this.createTasks(task);
         await this.showTaskComplet(newtask);
@@ -213,6 +215,27 @@ export class CSalesTask extends Controller {
         */
         this.tasks.remove(task);
     }
+
+    //显示选择产品页面
+    showPorductSelect = async (task: Task) => {
+        let { cProduct } = this.cApp;
+        let product = await cProduct.call();
+
+        let createproduct = {
+            task: task,
+            product: product,
+            note: null
+        }
+        this.openVPage(VCreateProduct, createproduct);
+    }
+
+    //添加产品
+    createProduct = async (createProduct: CreateProduct) => {
+        let { product, task, note } = createProduct;
+        note = note ? note : undefined;
+        let param = { taskid: task.id, productid: product.id, note: note };
+        this.createTaskProductAction.submit(param);
+    }
     //处理任务结束------------------------------------------------
 
 
@@ -222,7 +245,7 @@ export class CSalesTask extends Controller {
         //return await this.cSalesTaskType.call();
         await this.cSelectType.start();
     }
-    //显示查询客户页面
+    //显示选择处理方式的页面
     showCrateCheck = async (task: Task) => {
         this.openVPage(VCreateCheck, task);
     }

@@ -8,6 +8,7 @@ import { VCreateCheck } from '../../views/VCreateCheck';
 import { Task } from '../../model';
 import { TaskCommonType } from '../taskCommonType';
 import { VCreate } from './VCreate';
+import { VCreateProduct } from './VCreateProduct';
 
 export class CCommonType extends CType {
     taskCommonType: TaskCommonType;
@@ -33,9 +34,14 @@ export class CCommonType extends CType {
         this.openVPage(VCreate, task);
         return;
     }
+
     //显示查询客户页面
     showCrateCheck = async (task: Task) => {
         this.openVPage(VCreateCheck, task);
     }
 
+    //显示选择产品页面
+    showPorductSelect = async (task: Task) => {
+        await this.cSalesTask.showPorductSelect(task);
+    }
 }
