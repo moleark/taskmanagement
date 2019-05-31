@@ -29,7 +29,9 @@ export class VCustomerHistory extends VPage<CSalesTask> {
         let task = {
             id: tasks.id,
             type: tasks.type,
+            typeName: null,
             biz: tasks.biz,
+            bizName: null,
             description: null,
             remindDate: null,
             deadline: null,

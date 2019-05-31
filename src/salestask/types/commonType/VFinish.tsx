@@ -42,18 +42,16 @@ export class VFinish extends VPage<CCommonType> {
         await this.controller.showPorductSelect(this.task);
     }
 
-    private onShowProduct = async () => {
-        alert('查看');
-    }
-
     render(task: Task) {
         this.task = task;
         let { completSchema, completuiSchema } = this.controller.taskCommonType;
+        let { showProductDetail } = this.controller.cSalesTask;
+        let onShowProduct = async () => await showProductDetail(this.task);
 
         let cssLMR = "bg-white row my-1 py-2";
         return <div className="mx-3">
             <LMR className={cssLMR} right={<div onClick={this.onCreateProduct} className="mr-3"><FA name="plus" /></div>} >
-                <div className="w-100 ml-3">产品列表 <span className="fa-stack">4</span></div>
+                <div className="w-100 ml-3" onClick={onShowProduct} >产品列表 <span className="fa-stack">4</span></div>
             </LMR>
             <LMR className={cssLMR} right={<div onClick={this.onCreateProduct} className="mr-3"><FA name="plus" /></div>} >
                 <div className="w-100 ml-3">包装列表 <span className="fa-stack">4</span></div>

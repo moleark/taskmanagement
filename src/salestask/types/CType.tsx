@@ -7,6 +7,7 @@ import { VActionsBottom } from './share/VActionsBottom';
 import { Task } from '../model';
 import { VDetailContent } from './share/VDetailContent';
 import { VFinish } from './commonType/VFinish';
+import { CCommonType } from './commonType';
 
 export abstract class CType extends Controller {
     caption: string;
@@ -20,6 +21,7 @@ export abstract class CType extends Controller {
             this.renderDetailValues(task)
         );
     }
+
     private renderDetailValues = (task: Task): JSX.Element => {
         let { caption, renderDetailTop, renderDetailContent } = this;
         return <Page header={caption} headerClassName='bg-primary' >
@@ -31,8 +33,9 @@ export abstract class CType extends Controller {
     //显示任务明细--有操作
     async showDetailEdit(task: Task): Promise<void> {
         let tasks = await this.cSalesTask.loadTask(task.id);
+        task.fields = tasks.fields
         this.openPage(
-            this.renderDetailEdit(tasks)
+            this.renderDetailEdit(task)
         );
     }
 
@@ -56,7 +59,6 @@ export abstract class CType extends Controller {
         return this.renderView(VActionsBottom, task);
     }
 
-
     //完结任务
     async showComplet(task: Task): Promise<void> {
         let tasks = await this.cSalesTask.loadTask(task.id);
@@ -79,7 +81,8 @@ export abstract class CType extends Controller {
 
     //创建任务
     async showCreate(task: Task): Promise<void> {
-        this.openPage(<Page header={task.biz.name}>没有继承showCreate！</Page>);
+        await task.biz.assure();
+        this.openPage(<Page header={"biz.name"}>没有继承showCreate！</Page>);
     }
 
     renderCreateTop = (task: Task): JSX.Element => {

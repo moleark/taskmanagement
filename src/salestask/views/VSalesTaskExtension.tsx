@@ -26,7 +26,7 @@ class SomeDay extends Widget {
             this.setValue(new Date(evt.currentTarget.value));
         } else if (val === '2') {
             day2.setDate(day2.getDate() + 2);
-            this.setValue(new Date(evt.currentTarget.value));
+            this.setValue(day2);
         }
     }
 

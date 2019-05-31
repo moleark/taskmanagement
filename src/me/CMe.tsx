@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { Query, tv, TuidMain, Action } from 'tonva';
+import { Query, tv, Tuid, Action } from 'tonva';
 import { PageItems, Controller, nav, Page, Image } from 'tonva';
 import { CSalesTaskApp } from '../CSalesTaskApp';
 import { observer } from 'mobx-react';
@@ -12,7 +12,7 @@ import { VMe } from './VMe';
 export class CMe extends Controller {
 
     cApp: CSalesTaskApp;
-    private tuidCustomer: TuidMain;
+    private tuidCustomer: Tuid;
     private querySearchCustomer: Query;
 
     //构造函数

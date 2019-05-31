@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { TuidMain, Controller } from 'tonva';
+import { Tuid, Controller } from 'tonva';
 import { observable } from 'mobx';
 import { VSelectType } from './VSelectType';
 import { CSalesTask } from '../CSalesTask';
@@ -14,7 +14,7 @@ import { TaskType, Task } from 'salestask/model';
 export class CSelectType extends Controller {
 
     cSalesTask: CSalesTask;
-    private tuidTaskType: TuidMain;
+    private tuidTaskType: Tuid;
     private taskBook: any;
     private tasks: [];
     private customerid: number;
@@ -48,7 +48,9 @@ export class CSelectType extends Controller {
         this.task = {
             id: null,
             type: type,
+            typeName: null,
             biz: null,
+            bizName: null,
             description: null,
             remindDate: null,
             deadline: null,

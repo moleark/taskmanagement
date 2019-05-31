@@ -12,7 +12,9 @@ export class VActionsBottom extends View<CType> {
         let tasks = {
             id: task.id,
             type: task.type,
+            typeName: task.typeName,
             biz: task.biz,
+            bizName: task.bizName,
             description: null,
             remindDate: null,
             deadline: null,

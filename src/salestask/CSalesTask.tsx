@@ -1,6 +1,6 @@
 import * as React from 'react';
 import _ from 'lodash';
-import { Query, TuidMain, Action, FA } from 'tonva';
+import { Query, Tuid, Action, FA } from 'tonva';
 import { PageItems, Controller } from 'tonva';
 import { CSalesTaskApp } from '../CSalesTaskApp';
 import { VMain } from './views/VMain';
@@ -18,6 +18,9 @@ import { VCustomerHistory } from './views/VCustomerHistory';
 import { CSelectBiz } from './type/CSelectBiz';
 import { VCreateCheck } from './views/VCreateCheck';
 import { VCreateProduct } from './types/commonType/VCreateProduct';
+import { async } from 'q';
+import { VProductDetail } from './types/commonType/VProductDetail';
+import { CCommonType } from './types/commonType';
 
 class PageSalesTask extends PageItems<any> {
 
@@ -54,14 +57,15 @@ export class CSalesTask extends Controller {
     protected extensionTaskAction: Action;
     protected createTaskProductAction: Action;
     protected addTaskAction: Action;
-    private taskTuid: TuidMain;
-    private tuidCustomer: TuidMain;
-    private taskTypeTuid: TuidMain;
+    private taskTuid: Tuid;
+    private tuidCustomer: Tuid;
+    private taskTypeTuid: Tuid;
     private qeurySearchTask: Query;
     private qeurySearchHistory: Query;
     private qeurySearchEmployeeHistory: Query;
     private qeurySearchCustomerHistory: Query;
     private qeurySearchTaskCompletion: Query;
+    private qeurySearchTaskProduct: Query;
 
     private taskBook: any;
 
@@ -87,6 +91,7 @@ export class CSalesTask extends Controller {
         this.qeurySearchEmployeeHistory = cUqSalesTask.query("searchhistorytaskbyemployee");
         this.qeurySearchCustomerHistory = cUqSalesTask.query("searchhistorytaskbycustomer");
         this.qeurySearchTaskCompletion = cUqSalesTask.query("searchtaskcompletion");
+        this.qeurySearchTaskProduct = cUqSalesTask.query("SearchTaskProduct");
 
         this.taskTypes = createTaskTypes(this);
     }
@@ -143,23 +148,27 @@ export class CSalesTask extends Controller {
     getCTaskType(typeName: string): CType {
         return this.taskTypes[typeName];
     }
+    //获取任务类型
+    getCommonType(bizName: string): CCommonType {
+        let model = this.getCTaskType(bizName);
+        return model as CCommonType;
+    }
     //搜索结束------------------------------------------------
 
 
     //显示开始------------------------------------------------
     //显示销售任务明细页面
     showTaskDetailEdit = async (task: Task) => {
-        let tt = this.getCTaskType(task.biz.obj.name);
+        let tt = this.getCTaskType(task.bizName);
         if (tt !== undefined) tt.showDetailEdit(task);
     }
     //显示销售任务明细页面
     showDetailFromId = async (task: Task) => {
-        this.getCTaskType(task.biz.obj.name).showDetailFromId(task.id);
+        this.getCTaskType(task.bizName).showDetailFromId(task.id);
     }
     //显示任务完结页面
     showTaskComplet = async (task: Task) => {
-        let name = task.biz.name ? task.biz.name : task.biz.obj.name;
-        this.getCTaskType(name).showComplet(task);
+        this.getCTaskType(task.bizName).showComplet(task);
     }
     //显示结束------------------------------------------------
 
@@ -196,7 +205,10 @@ export class CSalesTask extends Controller {
     }
     //延期任务
     async extensionTask(task: Task, result: string, resulttype: string, date: Date) {
-        let param = { taskid: task.id, result: result, remindDate: date };
+        //let dd = date.getUTCFullYear() + '-' + (date.getMonth() + 1) + '-' + (date.getDay() + 1);
+        //let d = new Date(date.getTime());
+        let d = date.toISOString();
+        let param = { taskid: task.id, result: result, remindDate: d };
         await this.extensionTaskAction.submit(param);
         this.tasks.postPone(date, task);
     }
@@ -236,6 +248,13 @@ export class CSalesTask extends Controller {
         let param = { taskid: task.id, productid: product.id, note: note };
         this.createTaskProductAction.submit(param);
     }
+
+    //显示产品列表
+    showProductDetail = async (task: Task) => {
+        let products = await this.qeurySearchTaskProduct.table({ taskid: task.id });
+        this.openVPage(VProductDetail, products);
+    }
+
     //处理任务结束------------------------------------------------
 
 

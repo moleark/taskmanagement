@@ -9,11 +9,9 @@ import { CCommonType } from '../commontype/CCommonType';
 export class VDetailContent extends View<CType> {
 
     render(task: Task): JSX.Element {
-        let model = this.controller.cSalesTask.getCTaskType(task.biz.obj.name);
 
-        let ss: CCommonType = model as CCommonType;
-
-        let { completuiSchema } = ss.taskCommonType;
+        let model = this.controller.cSalesTask.getCommonType(task.bizName);
+        let { completuiSchema } = model.taskCommonType;
 
         let { fields } = task;
         if (fields === undefined) return <></>;

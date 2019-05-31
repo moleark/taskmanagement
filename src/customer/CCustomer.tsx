@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { Query, tv, TuidMain, Action } from 'tonva';
+import { Query, tv, Tuid, Action } from 'tonva';
 import { PageItems, Controller, nav, Page, Image } from 'tonva';
 import { CSalesTaskApp } from '../CSalesTaskApp';
 import { observable } from 'mobx';
@@ -40,7 +40,7 @@ export class CCustomer extends Controller {
 
     cApp: CSalesTaskApp;
     @observable pageCustomer: PageCustomer;
-    private tuidCustomer: TuidMain;
+    private tuidCustomer: Tuid;
     private querySearchCustomer: Query;
     private task: Task;
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { TuidMain, Controller, Map } from 'tonva';
+import { Tuid, Controller, Map } from 'tonva';
 import { observable } from 'mobx';
 import { CSalesTask } from '../CSalesTask';
 import { VAi } from './VAi';
@@ -14,7 +14,7 @@ export class CSelectBiz extends Controller {
 
     cSalesTask: CSalesTask;
     private mapTaskBiz: Map;
-    taskBizs: any;
+    taskBizs: any[];
     taskType: TaskType;
     private task: Task;
 
@@ -36,7 +36,8 @@ export class CSelectBiz extends Controller {
 
     //搜索任务类型
     private async getBizFromTaskTypeId(taskType: TaskType) {
-        this.taskBizs = await this.mapTaskBiz.query({ type: taskType.id });
+        let ret = await this.mapTaskBiz.query({ type: taskType });
+        this.taskBizs = ret.ret;
     }
 
     //返回添加任务页面

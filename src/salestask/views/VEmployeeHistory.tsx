@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, nav } from 'tonva';
+import { VPage, Page, nav, BoxId } from 'tonva';
 import { observer } from 'mobx-react';
 import { LMR, List, EasyDate, FA } from 'tonva';
 import { CSalesTask } from '../CSalesTask';
@@ -31,11 +31,15 @@ export class VEmployeeHistory extends VPage<CSalesTask> {
 
     //选择任务
     private onTaskClick = async (param: any) => {
-        let tasks = param.task.obj;
+        let tasks = param.task;
+        let { } = param.task;
+
         let task = {
             id: tasks.id,
             type: tasks.type,
+            typeName: null,
             biz: tasks.biz,
+            bizName: null,
             description: null,
             remindDate: null,
             deadline: null,

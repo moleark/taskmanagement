@@ -15,7 +15,7 @@ export class VCreateCheck extends VPage<CSalesTask> {
     private onAddTask = async (model: any) => {
         this.task.description = undefined;
         this.task.deadline = undefined;
-        this.controller.getCTaskType(this.task.biz.name).showCreate(this.task);
+        this.controller.getCTaskType(this.task.bizName).showCreate(this.task);
     }
 
     private onFinishTask = async () => {
@@ -60,7 +60,7 @@ export class VCreateCheck extends VPage<CSalesTask> {
             <button type="button" className="btn btn-outline-info ml-2 align-self-center" onClick={this.onFinishTask} >处理</button>
         </div>
 
-        let header = <div>{this.task.biz.description}&nbsp;</div>;
+        let header = <div>{this.task.description}&nbsp;</div>;
 
         return <Page header={header} footer={footer} headerClassName='bg-primary'>
             <PropGrid className="my-2" rows={rows} values={task} />
