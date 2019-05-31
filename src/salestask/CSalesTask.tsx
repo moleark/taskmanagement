@@ -159,16 +159,16 @@ export class CSalesTask extends Controller {
     //显示开始------------------------------------------------
     //显示销售任务明细页面
     showTaskDetailEdit = async (task: Task) => {
-        let tt = this.getCTaskType(task.bizName);
+        let tt = this.getCTaskType(task.biz.obj.name);
         if (tt !== undefined) tt.showDetailEdit(task);
     }
     //显示销售任务明细页面
     showDetailFromId = async (task: Task) => {
-        this.getCTaskType(task.bizName).showDetailFromId(task.id);
+        this.getCTaskType(task.biz.obj.name).showDetailFromId(task.id);
     }
     //显示任务完结页面
     showTaskComplet = async (task: Task) => {
-        this.getCTaskType(task.bizName).showComplet(task);
+        this.getCTaskType(task.biz.obj.name).showComplet(task);
     }
     //显示结束------------------------------------------------
 
@@ -205,10 +205,8 @@ export class CSalesTask extends Controller {
     }
     //延期任务
     async extensionTask(task: Task, result: string, resulttype: string, date: Date) {
-        //let dd = date.getUTCFullYear() + '-' + (date.getMonth() + 1) + '-' + (date.getDay() + 1);
-        //let d = new Date(date.getTime());
-        let d = date.toISOString();
-        let param = { taskid: task.id, result: result, remindDate: d };
+
+        let param = { taskid: task.id, result: result, remindDate: date };
         await this.extensionTaskAction.submit(param);
         this.tasks.postPone(date, task);
     }

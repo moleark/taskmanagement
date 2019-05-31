@@ -10,7 +10,7 @@ export class VDetailContent extends View<CType> {
 
     render(task: Task): JSX.Element {
 
-        let model = this.controller.cSalesTask.getCommonType(task.bizName);
+        let model = this.controller.cSalesTask.getCommonType(task.biz.obj.name);
         let { completuiSchema } = model.taskCommonType;
 
         let { fields } = task;

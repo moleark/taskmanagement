@@ -23,10 +23,12 @@ class SomeDay extends Widget {
         var day2 = new Date();
         if (val === '1') {
             day2.setDate(day2.getDate() + 1);
-            this.setValue(new Date(evt.currentTarget.value));
+            let ss = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
+            this.setValue(ss);
         } else if (val === '2') {
             day2.setDate(day2.getDate() + 2);
-            this.setValue(day2);
+            let ss = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
+            this.setValue(ss);
         }
     }
 

@@ -48,9 +48,7 @@ export class CSelectType extends Controller {
         this.task = {
             id: null,
             type: type,
-            typeName: null,
             biz: null,
-            bizName: null,
             description: null,
             remindDate: null,
             deadline: null,

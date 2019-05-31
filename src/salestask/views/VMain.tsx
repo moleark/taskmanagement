@@ -26,12 +26,10 @@ export class VMain extends VPage<CSalesTask> {
         let task = {
             id: param.id,
             type: param.type,
-            typeName: param.typeName,
             biz: param.biz,
-            bizName: param.bizName,
-            description: null,
+            description: param.description,
             remindDate: null,
-            deadline: null,
+            deadline: param.deadline,
             customer: param.customer
         }
         this.controller.showTaskDetailEdit(task);

@@ -3,9 +3,7 @@ import { BoxId } from 'tonva';
 export interface Task {
     id: number;
     type: any;
-    typeName: string;
-    biz: BoxId;
-    bizName: string;
+    biz: any;
     description: string;
     remindDate: Date;
     deadline?: Date;
