@@ -1,7 +1,6 @@
 export * from './CType';
 
 import { 试剂报价跟踪 } from './试剂报价跟踪';
-import { TypeA } from './typeA';
 import { 大包装报价跟踪 } from './大包装报价跟踪';
 import { CType } from './CType';
 import { CSalesTask } from 'salestask';
@@ -14,7 +13,6 @@ interface CTaskTypeConstructor {
 }
 
 const taskTypeConstuctors: { [type: string]: CTaskTypeConstructor | TaskCommonType } = {
-    typeA: TypeA,
     reagent: Reagent,
     nonreagent: NonReagent,
     visit: Visit,

@@ -1,15 +1,12 @@
 import * as React from 'react';
-import { VPage, Page, PageItems } from 'tonva';
+import { VPage, Page, List, SearchBox, FA, tv } from 'tonva';
 import { observer } from 'mobx-react';
-import { LMR, List, EasyDate, SearchBox, StringProp, ComponentProp, Prop, PropGrid, FA } from 'tonva';
 import { CProduct } from './CProduct';
-import { tv } from 'tonva';
 import { ProductImage } from 'tools/productImage';
 
 export class VProductSelect extends VPage<CProduct> {
 
     async open(customer: any) {
-
         this.openPage(this.page, customer);
     }
 

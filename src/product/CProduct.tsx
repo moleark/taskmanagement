@@ -51,13 +51,14 @@ export class CProduct extends Controller {
 
     //初始化
     protected async internalStart(param: any) {
+        this.pageProduct = null;
         this.openVPage(VProductSelect, param);
     }
 
     //查询客户--通过名称
     searchByKey = async (key: string) => {
         this.pageProduct = new PageProduct(this.querySearchProduct);
-        this.pageProduct.first({ key: key, salesRegion: 1 });
+        await this.pageProduct.first({ key: key, salesRegion: 1 });
     }
 
     //选择客户--给调用页面返回客户id

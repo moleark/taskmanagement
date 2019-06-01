@@ -25,19 +25,7 @@ export class VCustomerHistory extends VPage<CSalesTask> {
 
     //选择任务
     private onSalesTaskClick = async (param: any) => {
-        let tasks = param.task.obj;
-        let task = {
-            id: tasks.id,
-            type: tasks.type,
-            typeName: null,
-            biz: tasks.biz,
-            bizName: null,
-            description: null,
-            remindDate: null,
-            deadline: null,
-            customer: tasks.customer
-        }
-        this.controller.showTaskDetailEdit(task);
+        this.controller.showTaskDetailEdit(param.task.obj);
     }
 
     private page = observer((tasks: any) => {

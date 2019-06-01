@@ -38,7 +38,6 @@ export class VCreate extends VPage<CType> {
 
     private onFormButtonClick = async (name: string, context: Context) => {
         await this.controller.cSalesTask.createTask(context.form.data, this.salestask);
-        this.closePage(1);
     }
 
     private page = observer((param: any) => {

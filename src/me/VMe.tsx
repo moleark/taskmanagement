@@ -29,7 +29,11 @@ export class VMe extends VPage<CMe> {
     private page = observer((customer: any) => {
         let { cSalesTask } = this.controller.cApp
         let { showEmployeeHistory } = cSalesTask;
+        let { showTeam, showPosition } = this.controller;
+
         let onshowEmployeeHistory = async () => await showEmployeeHistory();
+        let onshowTeam = async () => await showTeam();
+        let onshowPosition = async () => await showPosition();
 
         let rows: Prop[] = [
             {
@@ -40,14 +44,25 @@ export class VMe extends VPage<CMe> {
             {
                 type: 'component',
                 name: 'customer',
-                component: rowCom('line-chart', 'text-danger', '销量', undefined),
+                component: rowCom('line-chart', 'text-danger', '个人业绩', undefined),
+            } as ComponentProp,
+            {
+                type: 'component',
+                name: 'team',
+                component: rowCom('sitemap', 'text-info', '我的团队', onshowTeam),
+            } as ComponentProp,
+            {
+                type: 'component',
+                name: 'position',
+                component: rowCom('barcode', 'text-info', '邀请码', onshowPosition),
             } as ComponentProp,
         ];
 
         let right = < div className='mr-3' ><FA name='bars' /></div>;
-        let footer = <button type="button" className="btn btn-danger w-100" onClick={this.logout} >退出</button>;
-        return <Page header='我的' footer={footer} headerClassName='bg-primary py-1 px-3'>
+        let footer = <button type="button" className="btn btn-danger flex-grow-1 mx-3 my-1" onClick={this.logout} >退出</button>;
+        return <Page header='我的' headerClassName='bg-primary py-1 px-3'>
             <PropGrid className="my-2" rows={rows} values={customer} alignValue="right" />
+            <div className="mt-3 d-flex">{footer}</div>
         </Page>
     })
 }

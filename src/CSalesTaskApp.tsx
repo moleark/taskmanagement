@@ -9,6 +9,7 @@ import { CProduct } from 'product/CProduct';
 import { CType } from 'salestask/types/createTypes';
 import { CMe } from 'me/CMe';
 import { CCommonType } from 'salestask/types/commonType';
+import { CStart } from 'start/CStart';
 
 
 export class CSalesTaskApp extends CApp {
@@ -23,6 +24,7 @@ export class CSalesTaskApp extends CApp {
     cCustomer: CCustomer;
     cProduct: CProduct;
     cMe: CMe;
+    cStart: CStart;
 
     protected async internalStart(param?: any) {
 
@@ -36,9 +38,13 @@ export class CSalesTaskApp extends CApp {
         this.cProduct = new CProduct(this, undefined);
         this.cSalesTask = new CSalesTask(this, this.res);
         this.cMe = new CMe(this, undefined);
+        this.cStart = new CStart(this, undefined);
 
         /** 启动销售任务列表*/
-        this.cSalesTask.start();
+        //this.cSalesTask.start();
+
+        /** 启动邀请码页面 */
+        this.cStart.start();
 
         /** 启动主程序*/
         await super.internalStart(param);

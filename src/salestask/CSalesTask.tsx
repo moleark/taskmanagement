@@ -17,10 +17,13 @@ import { VEmployeeHistory } from './views/VEmployeeHistory';
 import { VCustomerHistory } from './views/VCustomerHistory';
 import { CSelectBiz } from './type/CSelectBiz';
 import { VCreateCheck } from './views/VCreateCheck';
-import { VCreateProduct } from './types/commonType/VCreateProduct';
+import { VCreateProduct } from './views/VCreateProduct';
 import { async } from 'q';
-import { VProductDetail } from './types/commonType/VProductDetail';
+import { VProductDetail } from './views/VProductDetail';
 import { CCommonType } from './types/commonType';
+import { VCreateProject } from './views/VCreateProject';
+import { VProjectDetail } from './views/VProjectDetail';
+import { VCreateProductPack } from './views/VCreateProductPack';
 
 class PageSalesTask extends PageItems<any> {
 
@@ -55,8 +58,9 @@ export class CSalesTask extends Controller {
     @observable tasks: Tasks;
     protected completionTaskAction: Action;
     protected extensionTaskAction: Action;
-    protected createTaskProductAction: Action;
     protected addTaskAction: Action;
+    protected createTaskProductAction: Action;
+    protected createTaskProjectAction: Action;
     private taskTuid: Tuid;
     private tuidCustomer: Tuid;
     private taskTypeTuid: Tuid;
@@ -66,6 +70,7 @@ export class CSalesTask extends Controller {
     private qeurySearchCustomerHistory: Query;
     private qeurySearchTaskCompletion: Query;
     private qeurySearchTaskProduct: Query;
+    private qeurySearchTaskProject: Query;
 
     private taskBook: any;
 
@@ -85,6 +90,7 @@ export class CSalesTask extends Controller {
         this.extensionTaskAction = cUqSalesTask.action('ExtensionTask');
         this.addTaskAction = cUqSalesTask.action('AddTask');
         this.createTaskProductAction = cUqSalesTask.action('CreateTaskProduct');
+        this.createTaskProjectAction = cUqSalesTask.action('CreateTaskProject');
 
         this.qeurySearchTask = cUqSalesTask.query("searchtask");
         this.qeurySearchHistory = cUqSalesTask.query("searchhistorytask");
@@ -92,6 +98,7 @@ export class CSalesTask extends Controller {
         this.qeurySearchCustomerHistory = cUqSalesTask.query("searchhistorytaskbycustomer");
         this.qeurySearchTaskCompletion = cUqSalesTask.query("searchtaskcompletion");
         this.qeurySearchTaskProduct = cUqSalesTask.query("SearchTaskProduct");
+        this.qeurySearchTaskProject = cUqSalesTask.query("SearchTaskProject");
 
         this.taskTypes = createTaskTypes(this);
     }
@@ -129,8 +136,6 @@ export class CSalesTask extends Controller {
     }
     //显示客户沟通记录
     showCustomerHistory = async (customerid: number) => {
-        let tasks = await this.qeurySearchCustomerHistory.table({ customerid: customerid });
-        this.openVPage(VCustomerHistory, { tasks: tasks });
     }
     //获取类型的图表
     getTaskIcon(typeName: string) {
@@ -240,17 +245,67 @@ export class CSalesTask extends Controller {
     }
 
     //添加产品
-    createProduct = async (createProduct: CreateProduct) => {
+    createTaskProduct = async (createProduct: CreateProduct) => {
         let { product, task, note } = createProduct;
         note = note ? note : undefined;
-        let param = { taskid: task.id, productid: product.id, note: note };
+        let param = { taskid: task.id, productid: product.productid, note: note };
         this.createTaskProductAction.submit(param);
     }
 
     //显示产品列表
-    showProductDetail = async (task: Task) => {
+    showTaskProductDetail = async (task: Task) => {
         let products = await this.qeurySearchTaskProduct.table({ taskid: task.id });
-        this.openVPage(VProductDetail, products);
+        /*
+        products.map((v, index) => {
+            await v.product.assure();
+            let aa = v.product;
+            let aaa = 1;
+        })*/
+        await this.openVPage(VProductDetail, products);
+    }
+
+    //添加包装-显示
+    showPorductPackSelect = async (task: Task) => {
+        let { cProduct } = this.cApp;
+        let product = await cProduct.call();
+
+        let createproduct = {
+            task: task,
+            product: product,
+            note: null
+        }
+        this.openVPage(VCreateProductPack, createproduct);
+    }
+
+
+    //添加包装
+    createTaskProjectPack = async (task: Task, note: string) => {
+        let param = { taskid: task.id, note: note };
+        this.createTaskProjectAction.submit(param);
+    }
+
+    //显示包装列表
+    showTaskProjectPackDetail = async (task: Task) => {
+        let projects = await this.qeurySearchTaskProject.table({ taskid: task.id });
+        this.openVPage(VProjectDetail, projects);
+    }
+
+
+    //添加项目-显示
+    showCreateProject = async (task: Task) => {
+        this.openVPage(VCreateProject, task);
+    }
+
+    //添加项目
+    createTaskProject = async (task: Task, note: string) => {
+        let param = { taskid: task.id, note: note };
+        this.createTaskProjectAction.submit(param);
+    }
+
+    //显示项目列表
+    showTaskProjectDetail = async (task: Task) => {
+        let projects = await this.qeurySearchTaskProject.table({ taskid: task.id });
+        this.openVPage(VProjectDetail, projects);
     }
 
     //处理任务结束------------------------------------------------

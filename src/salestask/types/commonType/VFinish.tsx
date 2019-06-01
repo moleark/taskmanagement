@@ -39,25 +39,34 @@ export class VFinish extends VPage<CCommonType> {
     }
 
     private onCreateProduct = async () => {
-        await this.controller.showPorductSelect(this.task);
+        await this.controller.cSalesTask.showPorductSelect(this.task);
+    }
+
+    private onCreateProject = async () => {
+        await this.controller.cSalesTask.showCreateProject(this.task);
+    }
+
+    private onCreateProjectPack = async () => {
+        await this.controller.cSalesTask.showPorductPackSelect(this.task);
     }
 
     render(task: Task) {
         this.task = task;
         let { completSchema, completuiSchema } = this.controller.taskCommonType;
-        let { showProductDetail } = this.controller.cSalesTask;
-        let onShowProduct = async () => await showProductDetail(this.task);
+        let { showTaskProductDetail, showTaskProjectDetail, showPorductPackSelect } = this.controller.cSalesTask;
+        let onShowProduct = async () => await showTaskProductDetail(this.task);
+        let onShowProject = async () => await showTaskProjectDetail(this.task);
 
         let cssLMR = "bg-white row my-1 py-2";
         return <div className="mx-3">
             <LMR className={cssLMR} right={<div onClick={this.onCreateProduct} className="mr-3"><FA name="plus" /></div>} >
                 <div className="w-100 ml-3" onClick={onShowProduct} >产品列表 <span className="fa-stack">4</span></div>
             </LMR>
-            <LMR className={cssLMR} right={<div onClick={this.onCreateProduct} className="mr-3"><FA name="plus" /></div>} >
-                <div className="w-100 ml-3">包装列表 <span className="fa-stack">4</span></div>
+            <LMR className={cssLMR} right={<div onClick={this.onCreateProjectPack} className="mr-3"><FA name="plus" /></div>} >
+                <div className="w-100 ml-3" onClick={onShowProject} >包装列表 <span className="fa-stack">4</span></div>
             </LMR>
-            <LMR className={cssLMR} right={<div onClick={this.onCreateProduct} className="mr-3"><FA name="plus" /></div>} >
-                <div className="w-100 ml-3">项目列表 <span className="fa-stack">4</span></div>
+            <LMR className={cssLMR} right={<div onClick={this.onCreateProject} className="mr-3"><FA name="plus" /></div>} >
+                <div className="w-100 ml-3" onClick={onShowProject} >项目列表 <span className="fa-stack">4</span></div>
             </LMR>
             <Form ref={v => this.form = v}
                 schema={completSchema}
