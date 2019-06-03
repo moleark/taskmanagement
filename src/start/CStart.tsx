@@ -3,7 +3,8 @@ import * as _ from 'lodash';
 import { Query, Controller, Map, Tuid, Action, nav } from 'tonva';
 import { CSalesTaskApp } from '../CSalesTaskApp';
 import { VStart } from './VStart';
-import { VPositionOK } from './VPostionOK';
+import { VOK } from './VOK';
+import { VErrorss } from './VErrorss';
 
 
 /**
@@ -30,6 +31,8 @@ export class CStart extends Controller {
 
     //初始化
     protected async internalStart(param: any) {
+        // await this.openVPage(VPositionOK);
+        // return;
         var isPosition: Boolean;
         isPosition = await this.isPosition();
         if (!isPosition) {
@@ -64,13 +67,15 @@ export class CStart extends Controller {
     //新建识别码
     createPosition = async (param: any) => {
         let position = await this.actionPosition.submit({ invitacode: param.invitacode });
-        if (position.succeed === 1) {
+        let { succeed } = position;
+        if (succeed === 1) {
             this.ceasePage();
             await this.tuidUser.save(this.user.id, this.user);
-            await this.openVPage(VPositionOK);
+            await this.openVPage(VOK, position);
 
-        } else if (position.succeed === -1) {
-            alert("邀请码错误");
+        } else if (succeed === -1) {
+            this.ceasePage();
+            await this.openVPage(VErrorss, position);
         }
         return position;
     }
