@@ -10,7 +10,7 @@ export class VPositionOK extends VPage<CStart> {
 
     private page = (position: any) => {
         return <Page header='ok'>
-            <p>欢迎加入！</p>
+            <p>欢迎加入百灵威！</p>
             <button className="btn btn-primary" onClick={this.controller.startApp}>start</button>
         </Page>
     }

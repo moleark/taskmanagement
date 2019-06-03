@@ -13,8 +13,8 @@ export class CStart extends Controller {
 
     cApp: CSalesTaskApp;
 
+    private tuidUser: Tuid;
     private querySearchPosition: Query;
-
     private actionPosition: Action;
 
     //构造函数
@@ -23,15 +23,13 @@ export class CStart extends Controller {
         this.cApp = cApp;
 
         let { cUqSalesTask, } = this.cApp;
-
+        this.tuidUser = cUqSalesTask.tuid("$user")
         this.querySearchPosition = cUqSalesTask.query("searchposition");
-
         this.actionPosition = cUqSalesTask.action("CreatePosition");
     }
 
     //初始化
     protected async internalStart(param: any) {
-
         var isPosition: Boolean;
         isPosition = await this.isPosition();
         if (!isPosition) {
@@ -68,6 +66,7 @@ export class CStart extends Controller {
         let position = await this.actionPosition.submit({ invitacode: param.invitacode });
         if (position.succeed === 1) {
             this.ceasePage();
+            await this.tuidUser.save(this.user.id, this.user);
             await this.openVPage(VPositionOK);
 
         } else if (position.succeed === -1) {
