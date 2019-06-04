@@ -4,7 +4,8 @@ import { Query, Controller, Map, Tuid, Action, nav } from 'tonva';
 import { CSalesTaskApp } from '../CSalesTaskApp';
 import { VStart } from './VStart';
 import { VOK } from './VOK';
-import { VErrorss } from './VErrorss';
+import { VError } from './VError';
+import { isNumber } from 'util';
 
 
 /**
@@ -66,16 +67,19 @@ export class CStart extends Controller {
 
     //新建识别码
     createPosition = async (param: any) => {
-        let position = await this.actionPosition.submit({ invitacode: param.invitacode });
+        let { invitacode } = param;
+        if (isNaN(invitacode) === true) {
+            await this.openVPage(VError);
+            return;
+        }
+        let position = await this.actionPosition.submit({ invitacode: invitacode });
         let { succeed } = position;
+        this.ceasePage();
         if (succeed === 1) {
-            this.ceasePage();
             await this.tuidUser.save(this.user.id, this.user);
             await this.openVPage(VOK, position);
-
         } else if (succeed === -1) {
-            this.ceasePage();
-            await this.openVPage(VErrorss, position);
+            await this.openVPage(VError, position);
         }
         return position;
     }

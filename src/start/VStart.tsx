@@ -3,6 +3,7 @@ import { VPage, Page, PageItems, Form, UiSchema, UiInputItem, Schema, Context, S
 import { observer } from 'mobx-react';
 import { LMR, List, EasyDate, SearchBox, StringProp, ComponentProp, Prop, PropGrid, FA } from 'tonva';
 import { CStart } from './CStart';
+import { consts } from 'consts';
 
 
 const schema: Schema = [
@@ -37,7 +38,7 @@ export class VStart extends VPage<CStart> {
 
     private onFormButtonClick = async (name: string, context: Context) => {
         await this.controller.createPosition(context.form.data);
-        this.closePage(1);
+
     }
 
     private onEnter = async (name: string, context: Context): Promise<any> => {
@@ -48,7 +49,7 @@ export class VStart extends VPage<CStart> {
 
     private page = observer((position: any) => {
         //let footer = <button type="button" className="btn btn-primary w-100" onClick={this.onCreatePosition}>保存</button>;
-        return <Page header='轻代理' headerClassName='bg-primary py-1'>
+        return <Page header='轻代理' headerClassName={consts.headerClass}>
             <Form ref={v => this.form = v} className="m-3"
                 schema={schema}
                 uiSchema={this.uiSchema}

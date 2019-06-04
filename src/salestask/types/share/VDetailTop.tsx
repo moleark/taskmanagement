@@ -16,12 +16,20 @@ export class VDetailTop extends View<CType> {
     render(task: Task) {
 
         let { showCustomerDetail, showTaskHistory } = this.controller.cSalesTask;
-        let { type, customer, description, deadline, id } = task;
+        let { type, biz, customer, description, deadline, id } = task;
 
         let onShowSalesTaskHistory = async () => await showTaskHistory(id);
         let onClickCustomer = async () => await showCustomerDetail(customer.id);
 
         let rows: Prop[] = [
+            {
+                type: 'component',
+                name: 'type',
+                component: <LMR className={cnRowCustor} onClick={onClickCustomer}
+                    left={<div className="mr-2 "> <FA name="bookmark-o" className="text-info mr-2 pt-1" /> </div>}>
+                    <span className="font-weight-bold mr-3">{tv(type, v => <>{v.description}</>)} </span>  {tv(biz, v => <>{v.description}</>)}
+                </LMR>,
+            } as ComponentProp,
             {
                 type: 'component',
                 name: 'customer',
@@ -31,6 +39,7 @@ export class VDetailTop extends View<CType> {
                     {tv(customer, v => <>{v.name}</>)}
                 </LMR>,
             } as ComponentProp,
+
         ];
         if (deadline) {
             rows.push({
@@ -42,6 +51,7 @@ export class VDetailTop extends View<CType> {
                 </LMR>,
             } as ComponentProp);
         }
+        /** 
         rows.push({
             type: 'component',
             name: 'customer',
@@ -50,7 +60,7 @@ export class VDetailTop extends View<CType> {
                 right={right} />,
             //label: '执行过程',
         } as ComponentProp);
-
+        */
         if (description) {
             rows.push({
                 type: 'component',

@@ -17,7 +17,7 @@ export class VSalesTaskInvalid extends VPage<CSalesTask> {
     private uiSchema: UiSchema = {
         items: {
             resulttype: { visible: false },
-            result: { widget: 'textarea', label: '结果', placeholder: '请输入处理结果！', rows: 12 } as UiTextAreaItem,
+            result: { widget: 'textarea', label: '原因', placeholder: '请输入取消原因！', rows: 12 } as UiTextAreaItem,
             submit: { widget: 'button', label: '提交', },
         }
     }
@@ -38,7 +38,7 @@ export class VSalesTaskInvalid extends VPage<CSalesTask> {
     }
 
     private page = observer((salestask: any) => {
-        let footer = <button type="button" className="btn btn-primary w-100" onClick={this.onInvalidTask} >取消</button>;
+        let footer = <button type="button" className="btn btn-primary w-100" onClick={this.onInvalidTask} >提交</button>;
         return <Page header="取消" footer={footer} headerClassName='bg-primary' >
             <div className="App-container container text-left">
                 <Form ref={v => this.form = v} className="my-3"

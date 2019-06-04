@@ -8,7 +8,7 @@ import { CMe } from './CMe';
 function rowCom(iconName: string, iconColor: string, caption: string, onClick: any) {
     return <LMR className="cursor-pointer w-100 py-3 align-items-center" onClick={onClick}
         left={<FA name={iconName} className={'mr-3 ' + iconColor} fixWidth={true} size="lg" />}
-        right={< div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div >}>{caption}</LMR>;
+        right={<div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div>}>{caption}</LMR>;
 }
 
 export class VMe extends VPage<CMe> {

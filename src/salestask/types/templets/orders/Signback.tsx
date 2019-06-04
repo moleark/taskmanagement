@@ -3,8 +3,8 @@ import { FA } from 'tonva';
 import { TaskCommonType } from '../../taskCommonType';
 import { UiSchema, UiInputItem, UiRadio } from 'tonva';
 
-export const Exhibition: TaskCommonType = {
-    caption: '会展活动',
+export const Signback: TaskCommonType = {
+    caption: '订单催签返',
     icon: <FA name='flask' size="lg" fixWidth={true} />,
     schema: [
         { name: 'priorty', type: 'number', required: false },
@@ -20,13 +20,13 @@ export const Exhibition: TaskCommonType = {
         }
     } as UiSchema,
     completSchema: [
+        { name: 'description', type: 'string', required: false },
         { name: 'priorty', type: 'number', required: false },
-        { name: 'priortya', type: 'number', required: false },
     ],
     completuiSchema: {
         items: {
-            priorty: { widget: 'radio', label: '会展评价', defaultValue: 0, list: [{ value: 0, title: '一般' }, { value: 1, title: '很好' }] } as UiRadio,
-            priortya: { widget: 'radio', label: '重要性', defaultValue: 0, list: [{ value: 0, title: '一般' }, { value: 1, title: '重要' }] } as UiRadio,
+            priorty: { widget: 'radio', label: '重要性', defaultValue: 0, list: [{ value: 0, title: '一般' }, { value: 1, title: '重要' }] } as UiRadio,
+            description: { widget: 'radio', label: '客户情况', defaultValue: 0, list: [{ value: 0, title: '一般' }, { value: 1, title: '很有钱' }] } as UiRadio,
             submit: { widget: 'button', label: '提交', }
         }
     } as UiSchema

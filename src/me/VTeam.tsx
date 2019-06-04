@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, List, LMR, tv } from 'tonva';
+import { VPage, Page, List, LMR, tv, FA } from 'tonva';
 import { CMe } from './CMe';
 
 export class VTeam extends VPage<CMe> {
@@ -12,9 +12,9 @@ export class VTeam extends VPage<CMe> {
 
     private renderItem = (team: any, index: number) => {
         let { parent, children } = team;
-        let p = <div >{tv(parent, v => v.name)}</div>
-        let c = <div >{tv(children, v => v.name)}</div>
-        return <LMR className=" mx-3 " left={p} right={c}></LMR>;
+        return <LMR className="px-3 py-2 " left={<FA name='user' className=' my-2 mr-3 text-info' />}>
+            <div className="font-weight-bold ">{tv(children, v => v.name)}</div>
+        </LMR>
     }
 
     private page = () => {

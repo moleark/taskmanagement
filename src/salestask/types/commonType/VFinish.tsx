@@ -74,7 +74,7 @@ export class VFinish extends VPage<CCommonType> {
                 onButtonClick={this.onFormButtonClick}
                 requiredFlag={false}
             />
-            <button type="button" className="btn btn-primary w-100" onClick={this.onCompletionTask} >完结</button>
+            <button type="button" className="btn btn-primary w-100" onClick={this.onCompletionTask} >提交</button>
         </div >
     }
 }

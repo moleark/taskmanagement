@@ -84,7 +84,7 @@ export class VSalesTaskExtension extends VPage<CSalesTask> {
     }
 
     private page = observer((product: any) => {
-        let footer = <button type="button" className="btn btn-primary w-100" onClick={this.onExtensionTask} >推迟</button>;
+        let footer = <button type="button" className="btn btn-primary w-100" onClick={this.onExtensionTask} >提交</button>;
         return <Page header="推迟" footer={footer} headerClassName='bg-primary' >
             <div className="App-container container text-left">
                 <Form ref={v => this.form = v} className="my-3"

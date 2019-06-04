@@ -3,8 +3,8 @@ import { FA } from 'tonva';
 import { TaskCommonType } from '../../taskCommonType';
 import { UiSchema, UiInputItem, UiRadio } from 'tonva';
 
-export const Visit: TaskCommonType = {
-    caption: '拜访客户',
+export const BagOrderCancel: TaskCommonType = {
+    caption: '大额订单取消',
     icon: <FA name='flask' size="lg" fixWidth={true} />,
     schema: [
         { name: 'priorty', type: 'number', required: false },
