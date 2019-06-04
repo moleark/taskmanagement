@@ -36,7 +36,7 @@ export class VMeDetail extends VPage<CMe> {
     }
 
     private page = () => {
-        return <Page header='邀请码' headerClassName='bg-primary py-1' >
+        return <Page header='个人信息' headerClassName='bg-primary py-1' >
             <Edit schema={this.schema} uiSchema={this.uiSchema}
                 data={this.data}
                 onItemChanged={this.onItemChanged}
