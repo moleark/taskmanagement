@@ -136,6 +136,8 @@ export class CSalesTask extends Controller {
     }
     //显示客户沟通记录
     showCustomerHistory = async (customerid: number) => {
+        let tasks = await this.qeurySearchCustomerHistory.table({ customerid: customerid });
+        this.openVPage(VCustomerHistory, tasks);
     }
     //获取类型的图表
     getTaskIcon(typeName: string) {
@@ -173,7 +175,8 @@ export class CSalesTask extends Controller {
     }
     //显示任务完结页面
     showTaskComplet = async (task: Task) => {
-        this.getCTaskType(task.biz.obj.name).showComplet(task);
+        let name = task.biz.obj ? task.biz.obj.name : task.biz.name;
+        this.getCTaskType(name).showComplet(task);
     }
     //显示结束------------------------------------------------
 

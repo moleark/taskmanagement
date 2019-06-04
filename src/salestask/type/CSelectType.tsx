@@ -44,7 +44,7 @@ export class CSelectType extends Controller {
     }
 
     //返回添加任务页面
-    selectTaskType = async (type: TaskType) => {
+    selectTaskType = async (type: any) => {
         this.task = {
             id: null,
             type: type,

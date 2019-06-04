@@ -6,7 +6,7 @@ import { observer } from 'mobx-react';
 import { VMe } from './VMe';
 import { VTeam } from './VTeam';
 import { async } from 'q';
-import { VPosition } from './VPosition';
+import { VMeDetail } from './VMeDetail';
 
 /**
  *
@@ -17,7 +17,7 @@ export class CMe extends Controller {
     inviteCode: string;
     position: any;
 
-    private tuidCustomer: Tuid;
+    private tuidUser: Tuid;
 
     private qeurySearchTeam: Query;
     private querySearchPosition: Query;
@@ -28,9 +28,9 @@ export class CMe extends Controller {
         this.cApp = cApp;
 
         let { cUqSalesTask } = this.cApp;
+        this.tuidUser = cUqSalesTask.tuid("$user");
         this.querySearchPosition = cUqSalesTask.query("searchposition");
-        this.tuidCustomer = cUqSalesTask.tuid("customer");
-        this.qeurySearchTeam = cUqSalesTask.query("SearchTeam");
+        this.qeurySearchTeam = cUqSalesTask.query("searchteam");
     }
 
     //初始化
@@ -48,28 +48,29 @@ export class CMe extends Controller {
         this.inviteCode = p1 + ' ' + p2;
     }
 
-    //显示我的团队
-    showTeam = async () => {
-        let team = await this.searchTeam();
-        this.openVPage(VTeam, team);
-    }
-
-    //搜索团队
-    searchTeam = async () => {
-        let team = await this.qeurySearchTeam.table({});
-        return team;
-    }
-
     //显示我的邀请码
-    showPosition = async () => {
-        let position = await this.searchPosition();
-        this.openVPage(VPosition, position)
+    showMeDetail = async () => {
+        this.openVPage(VMeDetail)
     }
 
-    //搜索识别码
+    //搜索我的邀请码
     searchPosition = async () => {
         let position = await this.querySearchPosition.table({});
         return position;
+    }
+
+    //显示我的团队
+    showTeam = async () => {
+        let team = await this.searchTeam();
+        let teams = team[0];
+        let a = teams.Assigned;
+        this.openVPage(VTeam, team);
+    }
+
+    //搜索我的团队
+    searchTeam = async () => {
+        let team = await this.qeurySearchTeam.table({});
+        return team;
     }
 
     render = observer(() => {

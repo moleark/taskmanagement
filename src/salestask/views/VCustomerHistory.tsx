@@ -7,8 +7,12 @@ import { tv } from 'tonva';
 
 export class VCustomerHistory extends VPage<CSalesTask> {
 
+    private tasks: any;
     async open(tasks: any) {
-        this.openPage(this.page, tasks);
+        if (tasks.length > 0) {
+            this.tasks = tasks;
+        }
+        this.openPage(this.page);
     }
 
     private renderHistory = (taskhistory: any, index: number) => {
@@ -28,11 +32,11 @@ export class VCustomerHistory extends VPage<CSalesTask> {
         this.controller.showTaskDetailEdit(param.task.obj);
     }
 
-    private page = observer((tasks: any) => {
+    private page = observer(() => {
 
         let none = <div className="m-3 text-muted small">【无记录】</div>;
         return <Page header="交流记录" >
-            <List before={''} none={none} items={tasks.tasks} item={{ render: this.renderHistory, onClick: this.onSalesTaskClick }} />
+            <List before={''} none={none} items={this.tasks} item={{ render: this.renderHistory, onClick: this.onSalesTaskClick }} />
         </Page>
     })
 }

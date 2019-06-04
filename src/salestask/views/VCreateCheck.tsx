@@ -37,6 +37,14 @@ export class VCreateCheck extends VPage<CSalesTask> {
         let rows: Prop[] = [
             {
                 type: 'component',
+                name: 'type',
+                component: <LMR className={this.itemss}
+                    left={<div> <FA name="bookmark-o" className="text-info mr-2 pt-1" /> </div>}>
+                    <span className="font-weight-bold mr-3">{tv(type, v => <>{v.description}</>)} </span>  {tv(biz, v => <>{v.description}</>)}
+                </LMR>,
+            } as ComponentProp,
+            {
+                type: 'component',
                 name: 'customer',
                 component: <LMR className={this.itemss} onClick={onClickCustoemr}
                     left={<div> <FA name="user" className="text-info mr-2 pt-1 " /> </div>}
@@ -44,14 +52,7 @@ export class VCreateCheck extends VPage<CSalesTask> {
                     {tv(customer, v => <>{v.name}</>)}
                 </LMR>,
             } as ComponentProp,
-            {
-                type: 'component',
-                name: 'type',
-                component: <LMR className={this.itemss} onClick={onClickCustoemr}
-                    left={<div> <FA name="circle" className="text-info mr-2 pt-1" /> </div>}>
-                    {tv(type, v => <>{v.description}</>)}
-                </LMR>,
-            } as ComponentProp,
+
         ];
         let footer = <div className="d-flex px-1">
             <div className="flex-grow-1 align-self-center justify-content-start">

@@ -21,7 +21,10 @@ export class VDetailContent extends View<CType> {
                 let { fieldName, value } = v;
                 let { label, list } = completuiSchema.items[fieldName] as UiSelectBase;
                 let left = <div className=''><FA name='caret-right' className='small text-info' fixWidth={true} />{label || fieldName}</div>;
-                let selectItem = list.find(v => v.value === value);
+                var selectItem: any;
+                if (list) {
+                    selectItem = list.find(v => v.value === value);
+                }
                 return <div className='row bg-white py-2' key={index}>
                     <div className="col-4 align-self-center">{left}</div>
                     <div className="col-8">{selectItem ? selectItem.title : value} </div>
