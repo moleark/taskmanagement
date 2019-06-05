@@ -69,7 +69,7 @@ export class VMain extends VPage<CSalesTask> {
         if (tasks === undefined) return null;
 
         let none = <div className="my-3 mx-2 text-muted">无任务</div>;
-        let add = <div onClick={this.onSalesTaskAdd} className="cursor-pointer px-3"><FA name="plus" /></div>;
+        let add = <div onClick={this.onSalesTaskAdd} className="cursor-pointer px-3 py-2"><FA name="plus" /></div>;
 
         let item = { render: this.renderSalesTask, onClick: this.onSalesTaskClick };
         let { tasksNow, dateTasksList } = tasks;

@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { VPage, Page, List, LMR, tv, FA } from 'tonva';
 import { CMe } from './CMe';
+import { CTeam } from './CTeam';
 
-export class VTeam extends VPage<CMe> {
+export class VTeam extends VPage<CTeam> {
 
     private team: any;
     async open(team: any) {
@@ -10,10 +11,24 @@ export class VTeam extends VPage<CMe> {
         this.openPage(this.page);
     }
 
+    private userSpan(name: any, nick: string): JSX.Element {
+        return nick ?
+            <><b>{nick} &nbsp; <small className="muted">{name}</small></b></>
+            : <b>{name}</b>
+    }
+
+
     private renderItem = (team: any, index: number) => {
-        let { parent, children } = team;
-        return <LMR className="px-3 py-2 " left={<FA name='user' className=' my-2 mr-3 text-info' />}>
-            <div className="font-weight-bold ">{tv(children, v => v.name)}</div>
+
+        let { showPeerDetail } = this.controller;
+        let onshowPeerDetail = async () => await showPeerDetail(team);
+
+        let { children } = team;
+        let codes = tv(children, v => v.name);
+        return <LMR className="px-3 py-2 " onClick={onshowPeerDetail}
+            left={<FA name='user' className=' my-2 mr-3 text-info' />}
+            right={<div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div>}>
+            <div className="font-weight-bold ">{this.userSpan(codes, team.assigned)}</div>
         </LMR>
     }
 

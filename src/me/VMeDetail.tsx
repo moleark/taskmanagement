@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, ItemSchema, ImageSchema, StringSchema, UiSchema, UiTextItem, UiImageItem, Edit, nav, userApi } from 'tonva';
+import { VPage, Page, ItemSchema, ImageSchema, StringSchema, UiSchema, UiTextItem, UiImageItem, Edit, nav, userApi, LMR, FA } from 'tonva';
 import { CMe } from './CMe';
 import { observable } from 'mobx';
 
@@ -26,7 +26,6 @@ export class VMeDetail extends VPage<CMe> {
         this.openPage(this.page);
     }
 
-
     private onItemChanged = async (itemSchema: ItemSchema, newValue: any, preValue: any) => {
         let { name } = itemSchema;
         await userApi.userSetProp(name, newValue);
@@ -41,6 +40,10 @@ export class VMeDetail extends VPage<CMe> {
                 data={this.data}
                 onItemChanged={this.onItemChanged}
             />
-        </Page>
+            <LMR className="d-flex px-3 py-2 bg-white align-items-center cursor-pointer"
+                right={this.controller.inviteCode}>
+                邀请码
+            </LMR>
+        </Page >
     }
 }

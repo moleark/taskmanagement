@@ -7,6 +7,7 @@ import { VMe } from './VMe';
 import { VTeam } from './VTeam';
 import { async } from 'q';
 import { VMeDetail } from './VMeDetail';
+import { VTeamDetail } from './VTeamDetail';
 
 /**
  *
@@ -17,9 +18,6 @@ export class CMe extends Controller {
     inviteCode: string;
     position: any;
 
-    private tuidUser: Tuid;
-
-    private qeurySearchTeam: Query;
     private querySearchPosition: Query;
 
     //构造函数
@@ -28,9 +26,7 @@ export class CMe extends Controller {
         this.cApp = cApp;
 
         let { cUqSalesTask } = this.cApp;
-        this.tuidUser = cUqSalesTask.tuid("$user");
         this.querySearchPosition = cUqSalesTask.query("searchposition");
-        this.qeurySearchTeam = cUqSalesTask.query("searchteam");
     }
 
     //初始化
@@ -40,6 +36,7 @@ export class CMe extends Controller {
         this.openVPage(VMe, param);
     }
 
+    //加载邀请码
     load = async () => {
         this.position = await this.querySearchPosition.table({});
         let code = String(this.position[0].code + 100000000);
@@ -48,7 +45,7 @@ export class CMe extends Controller {
         this.inviteCode = p1 + ' ' + p2;
     }
 
-    //显示我的邀请码
+    //显示我的个人信息
     showMeDetail = async () => {
         this.openVPage(VMeDetail)
     }
@@ -61,16 +58,8 @@ export class CMe extends Controller {
 
     //显示我的团队
     showTeam = async () => {
-        let team = await this.searchTeam();
-        let teams = team[0];
-        let a = teams.Assigned;
-        this.openVPage(VTeam, team);
-    }
-
-    //搜索我的团队
-    searchTeam = async () => {
-        let team = await this.qeurySearchTeam.table({});
-        return team;
+        let { cTeam } = this.cApp
+        await cTeam.start();
     }
 
     render = observer(() => {
