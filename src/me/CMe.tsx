@@ -8,6 +8,7 @@ import { VTeam } from './VTeam';
 import { async } from 'q';
 import { VMeDetail } from './VMeDetail';
 import { VTeamDetail } from './VTeamDetail';
+import { VAchievement } from './VAchievement';
 
 /**
  *
@@ -17,8 +18,11 @@ export class CMe extends Controller {
     cApp: CSalesTaskApp;
     inviteCode: string;
     position: any;
+    achievemen: number;
 
     private querySearchPosition: Query;
+    private querySearchAchievement: Query;
+    private querySearchOrderHistory: Query;
 
     //构造函数
     constructor(cApp: CSalesTaskApp, res: any) {
@@ -27,6 +31,8 @@ export class CMe extends Controller {
 
         let { cUqSalesTask } = this.cApp;
         this.querySearchPosition = cUqSalesTask.query("searchposition");
+        this.querySearchAchievement = cUqSalesTask.query("SearchAchievement");
+        this.querySearchOrderHistory = cUqSalesTask.query("SearchOrderHistory");
     }
 
     //初始化
@@ -43,6 +49,7 @@ export class CMe extends Controller {
         let p1 = code.substr(1, 4);
         let p2 = code.substr(5);
         this.inviteCode = p1 + ' ' + p2;
+        await this.searchAchievement(this.user.id);
     }
 
     //显示我的个人信息
@@ -60,6 +67,33 @@ export class CMe extends Controller {
     showTeam = async () => {
         let { cTeam } = this.cApp
         await cTeam.start();
+    }
+
+    //显示业绩
+    showAchievement = async (param: any) => {
+        this.openVPage(VAchievement, param);
+    }
+
+    //搜索业绩
+    searchAchievement = async (userid: number) => {
+        let param = { user: userid };
+        let achievement = await this.querySearchAchievement.table(param);
+        if (achievement.length > 0) {
+            this.achievemen = achievement[0].SaleVolume
+        }
+    }
+
+    //显示订单历史记录
+    showOrderHistory = async (userid: number) => {
+        let list = await this.searchOrderHistory(userid);
+        this.openVPage(VAchievement, list);
+    }
+
+    //订单记录
+    searchOrderHistory = async (userid: number) => {
+        let param = { user: 47 };
+        let list = await this.querySearchOrderHistory.table(param);
+        return list;
     }
 
     render = observer(() => {

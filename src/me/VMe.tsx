@@ -3,10 +3,12 @@ import { observer } from 'mobx-react';
 import { LMR, VPage, nav, Image, ComponentProp, Prop, PropGrid, FA } from 'tonva';
 import { CMe } from './CMe';
 
-function rowCom(iconName: string, iconColor: string, caption: string, onClick: any) {
+function rowCom(iconName: string, iconColor: string, caption: string, value: any, onClick: any) {
     return <LMR className="cursor-pointer w-100 py-2 my-2 align-items-center  " onClick={onClick}
         left={<FA name={iconName} className={'mr-3 ' + iconColor} fixWidth={true} size="lg" />}
-        right={<div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div>}>{caption}</LMR>;
+        right={<div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div>}>
+        {caption}<span className=" ml-3">{value}</span>
+    </LMR>;
 }
 
 export class VMe extends VPage<CMe> {
@@ -53,10 +55,12 @@ export class VMe extends VPage<CMe> {
     private page = observer(() => {
         let { cSalesTask } = this.controller.cApp
         let { showEmployeeHistory } = cSalesTask;
-        let { showTeam } = this.controller;
+        let { showTeam, showOrderHistory, achievemen } = this.controller;
 
         let onshowEmployeeHistory = async () => await showEmployeeHistory();
         let onshowTeam = async () => await showTeam();
+        let onshowOrderHistory = async () => await showOrderHistory(this.user.id);
+
         let rows: Prop[] = [
             {
                 type: 'component',
@@ -64,15 +68,15 @@ export class VMe extends VPage<CMe> {
             } as ComponentProp,
             {
                 type: 'component',
-                component: rowCom('tag', 'text-info', '已完成任务', onshowEmployeeHistory),
+                component: rowCom('tag', 'text-info', '已完成任务', undefined, onshowEmployeeHistory),
             } as ComponentProp,
             {
                 type: 'component',
-                component: rowCom('line-chart', 'text-danger', '个人业绩', undefined),
+                component: rowCom('line-chart', 'text-danger', '个人业绩', achievemen + " ￥", onshowOrderHistory),
             } as ComponentProp,
             {
                 type: 'component',
-                component: rowCom('sitemap', 'text-info', '我的团队', onshowTeam),
+                component: rowCom('sitemap', 'text-info', '我的团队', undefined, onshowTeam),
             } as ComponentProp,
         ];
 
