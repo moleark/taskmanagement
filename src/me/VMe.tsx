@@ -39,16 +39,24 @@ export class VMe extends VPage<CMe> {
 
     private meInfo = observer(() => {
         let { showMeDetail, showMessage } = this.controller;
+        let { cMessage } = this.controller.cApp
+        let count: any = cMessage.count.get();
         let onshowMeDetail = async () => await showMeDetail();
         let onshowMessage = async () => await showMessage();
         let { id, name, nick, icon } = this.user;
+        let pointer, badge;
+        if (count > 0) {
+            pointer = 'cursor-pointer';
+            if (count < 100) badge = <u>{count}</u>;
+            else badge = <u>99+</u>;
+        }
 
         return <LMR className="py-2 cursor-pointer w-100"
             left={<div onClick={onshowMeDetail}> <Image className="w-3c h-3c mr-3" src={icon} /> </div>}
-            right={<div className={classNames('jk-cart ml-1 mr-2', 'cursor-pointer')} onClick={onshowMessage} >
+            right={<div className={classNames('jk-cart ml-1 mr-2', pointer)} onClick={onshowMessage} >
                 <div>
                     <FA className="text-warning fa-1g" name="envelope-o" />
-                    <u>{1}</u>
+                    {badge}
                 </div>
             </div>}>
             <div onClick={onshowMeDetail}>
@@ -59,7 +67,7 @@ export class VMe extends VPage<CMe> {
     });
 
     private page = observer(() => {
-        let { cSalesTask } = this.controller.cApp
+        let { cSalesTask, cMessage } = this.controller.cApp
         let { showEmployeeHistory } = cSalesTask;
         let { showTeam, showOrderHistory, achievemen } = this.controller;
 
