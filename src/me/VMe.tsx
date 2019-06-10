@@ -2,6 +2,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 import { LMR, VPage, nav, Image, ComponentProp, Prop, PropGrid, FA } from 'tonva';
 import { CMe } from './CMe';
+import classNames from 'classnames';
 
 function rowCom(iconName: string, iconColor: string, caption: string, value: any, onClick: any) {
     return <LMR className="cursor-pointer w-100 py-2 my-2 align-items-center  " onClick={onClick}
@@ -40,12 +41,16 @@ export class VMe extends VPage<CMe> {
         let { showMeDetail, showMessage } = this.controller;
         let onshowMeDetail = async () => await showMeDetail();
         let onshowMessage = async () => await showMessage();
-
         let { id, name, nick, icon } = this.user;
 
         return <LMR className="py-2 cursor-pointer w-100"
             left={<div onClick={onshowMeDetail}> <Image className="w-3c h-3c mr-3" src={icon} /> </div>}
-            right={<div className="mx-3 fa-1x" onClick={onshowMessage} ><FA className="text-warning" name="commenting-o" /></ div>}>
+            right={<div className={classNames('jk-cart ml-1 mr-2', 'cursor-pointer')} onClick={onshowMessage} >
+                <div>
+                    <FA className="text-warning fa-2x" name="commenting-o" />
+                    <u>{1}</u>
+                </div>
+            </div>}>
             <div onClick={onshowMeDetail}>
                 <div>{this.userSpan(name, nick)}</div>
                 <div className="small"><span className="text-muted">邀请码:</span> {this.inviteCode}</div>
