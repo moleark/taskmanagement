@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, List, LMR, tv, FA } from 'tonva';
+import { VPage, Page, List, LMR, tv, FA, EasyDate } from 'tonva';
 import { CMessage } from './CMessage';
 
 export class VMessage extends VPage<CMessage> {
@@ -10,16 +10,19 @@ export class VMessage extends VPage<CMessage> {
         this.openPage(this.page);
     }
 
-    private renderItem = (team: any, index: number) => {
-
-        return <LMR className="px-3 py-2 ">
-
-        </LMR>
+    private renderItem = (model: any, index: number) => {
+        let { date, note, peer } = model;
+        let left = <small className="text-muted"><EasyDate date={date} /></small>;
+        let rigth = <small className="text-muted">{tv(peer, v => v.name)}</small>;
+        return <div className="d-block p-3">
+            <LMR left={left} right={rigth}></LMR>
+            <LMR > {note}</LMR>
+        </div>
     }
 
     private page = () => {
-        let none = <div className="my-3 mx-2 text-muted">无消息</div>;
-        return <Page header='消息盒子' headerClassName='bg-primary py-1' >
+        let none = <div className="my-3 mx-2 text-muted"></div>;
+        return <Page header='消息' headerClassName='bg-primary py-1' >
             <List before={''} none={none} items={this.message} item={{ render: this.renderItem }} />
         </Page>
     }

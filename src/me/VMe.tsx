@@ -42,9 +42,10 @@ export class VMe extends VPage<CMe> {
         let onshowMessage = async () => await showMessage();
 
         let { id, name, nick, icon } = this.user;
+
         return <LMR className="py-2 cursor-pointer w-100"
             left={<div onClick={onshowMeDetail}> <Image className="w-3c h-3c mr-3" src={icon} /> </div>}
-            right={<div onClick={onshowMessage} ><FA className="text-warning mt-1 mx-3 fa-2x" name="commenting-o" /></div>}>
+            right={<div className="mx-3 fa-1x" onClick={onshowMessage} ><FA className="text-warning" name="commenting-o" /></ div>}>
             <div onClick={onshowMeDetail}>
                 <div>{this.userSpan(name, nick)}</div>
                 <div className="small"><span className="text-muted">邀请码:</span> {this.inviteCode}</div>

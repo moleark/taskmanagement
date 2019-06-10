@@ -97,7 +97,7 @@ export class CMe extends Controller {
     }
     //显示消息
     showMessage = async () => {
-        this.cApp.cMessage.start();
+        await this.cApp.cMessage.start();
     }
 
 
