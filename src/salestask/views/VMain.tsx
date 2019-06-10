@@ -69,11 +69,11 @@ export class VMain extends VPage<CSalesTask> {
         if (tasks === undefined) return null;
 
         let none = <div className="my-3 mx-2 text-muted">无任务</div>;
-        let add = <div onClick={this.onSalesTaskAdd} className="cursor-pointer px-3 py-2"><FA name="plus" /></div>;
+        let right = <div onClick={this.onSalesTaskAdd} className="cursor-pointer px-3 py-2"><FA name="plus" /></div>;
 
         let item = { render: this.renderSalesTask, onClick: this.onSalesTaskClick };
         let { tasksNow, dateTasksList } = tasks;
-        return <Page header="销售助手" onScrollBottom={this.onScrollBottom} right={add} headerClassName="bg-primary py-1">
+        return <Page header="销售助手" onScrollBottom={this.onScrollBottom} right={right} headerClassName="bg-primary py-1">
             {tasksNow.length > 0 && <List before={''} none={none} items={tasksNow} item={item} />}
             {
                 dateTasksList.map((v, index: number) => {

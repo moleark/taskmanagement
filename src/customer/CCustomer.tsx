@@ -10,6 +10,9 @@ import { observer } from 'mobx-react';
 import { VCustomerList } from './VCustomerList';
 import { Task } from 'salestask/model';
 import { CCommonType } from 'salestask/types/commonType';
+import { VCreateCustomer } from './VCreateCustomer';
+import { async } from 'q';
+import { VCreateCustomerFinish } from './VCreateCustomerFinish';
 
 //页面类
 class PageCustomer extends PageItems<any> {
@@ -44,14 +47,21 @@ export class CCustomer extends Controller {
     private querySearchCustomer: Query;
     private task: Task;
 
+    private tuidMyCustomer: Tuid;
+    private querySearchMyCustomer: Query;
+    private actionCreateMyCustomer: Action;
     //构造函数
     constructor(cApp: CSalesTaskApp, res: any) {
         super(res);
         this.cApp = cApp;
 
-        let { cUqCustomer } = this.cApp;
+        let { cUqCustomer, cUqSalesTask } = this.cApp;
         this.tuidCustomer = cUqCustomer.tuid("customer");
         this.querySearchCustomer = cUqCustomer.query("searchcustomer");
+
+        this.tuidMyCustomer = cUqSalesTask.tuid("mycustomer");
+        this.querySearchMyCustomer = cUqSalesTask.query("searchmycustomer");
+        this.actionCreateMyCustomer = cUqSalesTask.action("CreateMyCustomer");
     }
 
     //初始化
@@ -64,13 +74,13 @@ export class CCustomer extends Controller {
     //查询客户--通过名称
     searchByKey = async (key: string) => {
 
-        this.pageCustomer = new PageCustomer(this.querySearchCustomer);
+        this.pageCustomer = new PageCustomer(this.querySearchMyCustomer);
         this.pageCustomer.first({ key: key });
     }
 
     //加载客户明细
     loadCustomerDetail = async (customerid: number) => {
-        return await this.tuidCustomer.load(customerid);
+        return await this.tuidMyCustomer.load(customerid);
     }
 
     //查询客户--通过ID
@@ -89,6 +99,27 @@ export class CCustomer extends Controller {
     //选择客户--给调用页面返回客户id
     returnCustomer = async (customer: any): Promise<any> => {
         this.returnCall(customer);
+    }
+
+    //显示新建客户页面
+    showCreateCustomer = () => {
+        //this.openVPage(VCreateCustomerFinish);
+        this.openVPage(VCreateCustomer);
+    }
+
+    //新建客户
+    createMyCustomer = async (param: any) => {
+        let par = {
+            no: param.BirthDay + param.Name,
+            name: param.Name,
+            firstName: param.FirstName,
+            lastName: param.LastName,
+            gender: param.Gender,
+            salutation: param.Salutation,
+            birthDay: param.BirthDay
+        }
+        await this.actionCreateMyCustomer.submit(par);
+        this.openVPage(VCreateCustomerFinish);
     }
 
     render = observer(() => {

@@ -24,9 +24,12 @@ export class VCustomerSelect extends VPage<CCustomer> {
     }
 
     private page = observer((customer: any) => {
-        let { pageCustomer } = this.controller;
+        let { pageCustomer, showCreateCustomer } = this.controller;
+        let onshowCreateCustomer = async () => await showCreateCustomer();
+
         let none = <div className="my-3 mx-2 text-warning">请搜索客户！</div>;
-        return <Page header="选择客户" headerClassName='bg-primary'>
+        let right = <div onClick={onshowCreateCustomer} className="cursor-pointer px-3 py-2"><FA name="plus" /></div>;
+        return <Page header="选择客户" headerClassName='bg-primary' right={right}>
             <SearchBox className="px-1 w-100  mt-2 mr-2"
                 size='md'
                 onSearch={(key: string) => this.controller.searchByKey(key)}

@@ -16,14 +16,14 @@ export class VAchievement extends VPage<CMe> {
     private renderItem(model: any, index: number) {
         let { date, customer, product, pack, quantity, price } = model;
         let left = <small className="text-muted"><EasyDate date={date} /><span className="ml-3">{tv(customer, v => v.name)}</span></small>;
-        let right = <small className="text-muted"><div className="px-3 py-2 ">  {quantity} * {price}￥</div></small>;
+        let right = <small className="text-muted"><div className="px-3">  {quantity} * {price}￥</div></small>;
         return <div className="d-block">
             <div>
                 <LMR className="px-3 py-2 " left={left} right={right}></LMR>
             </div>
             <div>
                 {tv(product, v => <div className="px-3 py-2 "><div>{v.description}</div> <div>{v.descriptionC}</div></div>)}
-                {tv(pack, v => <div className="px-3 py-2 "><div>{v.radiox} * {v.radioy}{v.unit}</div></div>)}
+                {tv(pack, v => <div className="px-3 py-2 "><div>{v.radiox} * {v.radioy} {v.unit}</div></div>)}
             </div>
         </div>
     }

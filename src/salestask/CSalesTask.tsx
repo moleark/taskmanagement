@@ -284,7 +284,7 @@ export class CSalesTask extends Controller {
     //添加包装
     createTaskProjectPack = async (task: Task, note: string) => {
         let param = { taskid: task.id, note: note };
-        this.createTaskProjectAction.submit(param);
+        await this.createTaskProjectAction.submit(param);
     }
 
     //显示包装列表
@@ -302,7 +302,7 @@ export class CSalesTask extends Controller {
     //添加项目
     createTaskProject = async (task: Task, note: string) => {
         let param = { taskid: task.id, note: note };
-        this.createTaskProjectAction.submit(param);
+        await this.createTaskProjectAction.submit(param);
     }
 
     //显示项目列表

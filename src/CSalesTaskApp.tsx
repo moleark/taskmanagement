@@ -11,6 +11,7 @@ import { CMe } from 'me/CMe';
 import { CCommonType } from 'salestask/types/commonType';
 import { CStart } from 'start/CStart';
 import { CTeam } from 'me/CTeam';
+import { CMessage } from 'message/CMessage';
 
 
 export class CSalesTaskApp extends CApp {
@@ -27,6 +28,7 @@ export class CSalesTaskApp extends CApp {
     cMe: CMe;
     cTeam: CTeam;
     cStart: CStart;
+    cMessage: CMessage;
 
     protected async internalStart(param?: any) {
 
@@ -42,6 +44,7 @@ export class CSalesTaskApp extends CApp {
         this.cMe = new CMe(this, undefined);
         this.cTeam = new CTeam(this, undefined);
         this.cStart = new CStart(this, undefined);
+        this.cMessage = new CMessage(this, undefined);
 
         /** 启动销售任务列表*/
         //this.cSalesTask.start();

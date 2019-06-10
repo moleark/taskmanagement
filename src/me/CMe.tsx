@@ -95,6 +95,11 @@ export class CMe extends Controller {
         let list = await this.querySearchOrderHistory.table(param);
         return list;
     }
+    //显示消息
+    showMessage = async () => {
+        this.cApp.cMessage.start();
+    }
+
 
     render = observer(() => {
         return this.renderView(VMe);
