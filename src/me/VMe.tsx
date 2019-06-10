@@ -47,7 +47,7 @@ export class VMe extends VPage<CMe> {
             left={<div onClick={onshowMeDetail}> <Image className="w-3c h-3c mr-3" src={icon} /> </div>}
             right={<div className={classNames('jk-cart ml-1 mr-2', 'cursor-pointer')} onClick={onshowMessage} >
                 <div>
-                    <FA className="text-warning fa-2x" name="commenting-o" />
+                    <FA className="text-warning fa-1g" name="envelope-o" />
                     <u>{1}</u>
                 </div>
             </div>}>
