@@ -112,8 +112,8 @@ export class CCustomer extends Controller {
         let par = {
             no: param.BirthDay + param.Name,
             name: param.Name,
-            firstName: param.FirstName,
-            lastName: param.LastName,
+            firstName: "",
+            lastName: "",
             gender: param.Gender,
             salutation: param.Salutation,
             birthDay: param.BirthDay

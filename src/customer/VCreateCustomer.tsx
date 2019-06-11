@@ -8,8 +8,6 @@ import { consts } from 'consts';
 
 const schema: Schema = [
     { name: 'Name', type: 'string', required: true },
-    { name: 'FirstName', type: 'string', required: false },
-    { name: 'LastName', type: 'string', required: false },
     { name: 'Salutation', type: 'string', required: false },
     { name: 'Gender', type: 'number', required: true },
     { name: 'BirthDay', type: 'date', required: false },
@@ -20,17 +18,15 @@ export class VCreateCustomer extends VPage<CCustomer> {
     private form: Form;
     private uiSchema: UiSchema = {
         items: {
-            Name: { widget: 'text', label: 'Name', placeholder: ' ' } as UiInputItem,
-            FirstName: { widget: 'text', label: 'FirstName', placeholder: ' ' } as UiInputItem,
-            LastName: { widget: 'text', label: 'LastName', placeholder: ' ' } as UiInputItem,
-            Salutation: { widget: 'text', label: '称谓', placeholder: ' ' } as UiInputItem,
+            Name: { widget: 'text', label: '姓名', placeholder: '请输入姓名' } as UiInputItem,
+            Salutation: { widget: 'text', label: '称谓', placeholder: '请输入称谓' } as UiInputItem,
             Gender: {
                 widget: 'radio', label: '性别', placeholder: '性别',
                 defaultValue: 1,
                 list: toUiSelectItems(['1:男', '2:女']),
                 radioClassName: 'w-min-6c d-inline-block'
             } as UiRadio,
-            BirthDay: { widget: 'date', label: '生日', placeholder: ' ' } as UiInputItem,
+            BirthDay: { widget: 'date', label: '生日', placeholder: '' } as UiInputItem,
             submit: { widget: 'button', label: '提交', },
         }
     }
