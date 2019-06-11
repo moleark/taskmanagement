@@ -51,7 +51,7 @@ export class VMe extends VPage<CMe> {
             else badge = <u>99+</u>;
         }
 
-        return <LMR className="py-2 cursor-pointer w-100"
+        return <LMR className="py-3 mt-4 cursor-pointer w-100"
             left={<div onClick={onshowMeDetail}> <Image className="w-3c h-3c mr-3" src={icon} /> </div>}
             right={<div className={classNames('jk-cart ml-1 mr-2', pointer)} onClick={onshowMessage} >
                 <div>
@@ -96,7 +96,7 @@ export class VMe extends VPage<CMe> {
 
         let footer = <button type="button" className="btn btn-danger flex-grow-1 mx-3 my-1" onClick={this.logout} ><FA name="sign-out" size="lg" /> 退出</button>;
         return <div>
-            <PropGrid className="my-2" rows={rows} values={null} alignValue="right" />
+            <PropGrid className="" rows={rows} values={null} alignValue="right" />
             <div className="mt-3 d-flex">{footer}</div>
         </div>
     })
