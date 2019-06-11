@@ -3,6 +3,7 @@ import { VPage, Page, PageItems } from 'tonva';
 import { observer } from 'mobx-react';
 import { CSelectType } from './CSelectType';
 import { LMR, List, FA } from 'tonva';
+import { async } from 'q';
 
 export class VSelectType extends VPage<CSelectType> {
 
@@ -24,10 +25,19 @@ export class VSelectType extends VPage<CSelectType> {
     }
 
     private ai = () => {
-        return <LMR className="p-3 bg-white mb-1 cursor-pointer" left={<FA className="text-success mr-3 mt-1" name="android" size="lg" fixWidth={true} />}
-            onClick={this.controller.aiClick}>
-            <div className="font-weight-bold">帮我找找机会</div>
-        </LMR>
+        let { cCustomer } = this.controller.cSalesTask.cApp;
+        let onshowCreateCustomer = async () => await cCustomer.showCreateCustomer();
+
+        return <div>
+            <LMR className="p-3 bg-white mb-1 cursor-pointer" left={<FA className="text-success mr-3 mt-1" name="android" size="lg" fixWidth={true} />}
+                onClick={this.controller.aiClick}>
+                <div className="font-weight-bold">帮我找找机会</div>
+            </LMR>
+            <LMR className="p-3 bg-white mb-1 cursor-pointer" left={<FA className="text-success mr-3 mt-1" name="android" size="lg" fixWidth={true} />}
+                onClick={onshowCreateCustomer}>
+                <div className="font-weight-bold">新建客户</div>
+            </LMR>
+        </div>
     }
 
     private page = ((customer: any) => {
