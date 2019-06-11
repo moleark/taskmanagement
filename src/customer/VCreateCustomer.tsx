@@ -27,7 +27,7 @@ export class VCreateCustomer extends VPage<CCustomer> {
                 radioClassName: 'w-min-6c d-inline-block'
             } as UiRadio,
             BirthDay: { widget: 'date', label: '生日', placeholder: '' } as UiInputItem,
-            submit: { widget: 'button', label: '提交', },
+            submit: { widget: 'button', label: '提交', className: 'btn btn-primary w-8c' },
         }
     }
 
