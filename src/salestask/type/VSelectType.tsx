@@ -33,7 +33,7 @@ export class VSelectType extends VPage<CSelectType> {
                 onClick={this.controller.aiClick}>
                 <div className="font-weight-bold">帮我找找机会</div>
             </LMR>
-            <LMR className="p-3 bg-white mb-1 cursor-pointer" left={<FA className="text-success mr-3 mt-1" name="android" size="lg" fixWidth={true} />}
+            <LMR className="p-3 bg-white mb-1 cursor-pointer" left={<FA className="text-success mr-3 mt-1" name="vcard" size="lg" fixWidth={true} />}
                 onClick={onshowCreateCustomer}>
                 <div className="font-weight-bold">新建客户</div>
             </LMR>

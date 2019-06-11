@@ -45,7 +45,7 @@ export class VCreateCustomer extends VPage<CCustomer> {
 
     private page = observer((param: any) => {
         return <Page header="新建客户" headerClassName={consts.headerClass} >
-            <Form ref={v => this.form = v} className="my-3"
+            <Form ref={v => this.form = v} className="my-3 mx-3"
                 schema={schema}
                 uiSchema={this.uiSchema}
                 onButtonClick={this.onFormButtonClick}
