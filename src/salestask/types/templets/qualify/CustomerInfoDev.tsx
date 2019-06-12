@@ -22,16 +22,24 @@ export const CustomerInfoDev: TaskCommonType = {
         }
     } as UiSchema,
     completSchema: [
-        { name: 'description', type: 'string', required: false },
-        { name: 'priorty', type: 'number', required: false },
-        { name: 'deadline', type: 'string', required: false },
+        { name: 'name', type: 'string', required: true },
+        { name: 'telephone', type: 'number', required: true },
+        { name: 'email', type: 'string', required: false },
+        { name: 'wechat', type: 'string', required: false },
+        { name: 'teacher', type: 'string', required: false },
+        { name: 'potential', type: 'string', required: true },
+        { name: 'research', type: 'string', required: true },
     ],
     completuiSchema: {
         items: {
-            description: { widget: 'text', label: '备注', placeholder: '请填写任务备注' } as UiInputItem,
-            priorty: { widget: 'radio', label: '重要性', defaultValue: 0, list: [{ value: 0, title: '一般' }, { value: 1, title: '重要' }] } as UiRadio,
-            deadline: { widget: 'date', label: '完成时间', placeholder: '要求完成时间' } as UiInputItem,
-            submit: { widget: 'button', label: '提交', }
+            name: { widget: 'text', label: '姓名', placeholder: '请输入姓名' } as UiInputItem,
+            telephone: { widget: 'text', label: '电话', placeholder: '请输入电话' } as UiInputItem,
+            email: { widget: 'text', label: '邮箱', placeholder: '请输入邮箱' } as UiInputItem,
+            wechat: { widget: 'text', label: '微信', placeholder: '请输入微信号' } as UiInputItem,
+            teacher: { widget: 'text', label: '老师', placeholder: '请输入老师' } as UiInputItem,
+            potential: { widget: 'radio', label: '潜力值', defaultValue: 1, list: [{ value: 0, title: '小于10万' }, { value: 1, title: '10万-30万' }, { value: 2, title: '大于30万' }] } as UiRadio,
+            research: { widget: 'radio', label: '研究方向', defaultValue: 1, list: [{ value: 0, title: '有机' }, { value: 1, title: '化学' }, { value: 1, title: '分析' }, { value: 1, title: '材料' }] } as UiRadio,
+            submit: { widget: 'button', label: '提交', },
         }
     } as UiSchema
 }

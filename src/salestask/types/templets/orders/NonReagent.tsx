@@ -24,36 +24,11 @@ export const NonReagent: TaskCommonType = {
         }
     } as UiSchema,
     completSchema: [
-        { name: 'description', type: 'number', required: false },
-        { name: 'priorty', type: 'number', required: false },
-        { name: 'deadline', type: 'number', required: false },
+        { name: 'result', type: 'string', required: false },
     ],
     completuiSchema: {
         items: {
-            description: {
-                widget: 'radio', label: '研究领域', placeholder: '研究领域',
-                defaultValue: 1,
-                list: toUiSelectItems(['1:有机化学', '2:生物', '3:甲醇', '4:无机']),
-                radioClassName: 'w-min-6c d-inline-block'
-            } as UiRadio,
-            priorty: {
-                widget: 'radio', label: '状态', defaultValue: 1,
-                list: [
-                    { value: 1, title: '有效' },
-                    { value: 0, title: '无效' }
-                ]
-            } as UiRadio,
-            deadline: {
-                widget: 'radio', label: '研究方向', placeholder: '研究方向', defaultValue: 1,
-                list: [
-                    { title: '大客户', value: 1 },
-                    { title: '大客户2', value: 2 },
-                    { title: '大客户3', value: 3 },
-                    { title: '大客户4', value: 4 },
-                    { title: '大客户5', value: 5 },
-                ],
-                radioClassName: 'w-min-6c d-inline-block'
-            } as UiRadio,
+            result: { widget: 'radio', label: '丢单原因', defaultValue: 1, list: [{ value: 0, title: '货期' }, { value: 1, title: '价格' }, { value: 1, title: '质量' }, { value: 1, title: '资质' }, { value: 1, title: '发票' }] } as UiRadio,
             submit: { widget: 'button', label: '提交', }
         }
     } as UiSchema

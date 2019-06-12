@@ -20,13 +20,11 @@ export const BagOrder: TaskCommonType = {
         }
     } as UiSchema,
     completSchema: [
-        { name: 'priorty', type: 'number', required: false },
-        { name: 'priortya', type: 'number', required: false },
+        { name: 'result', type: 'string', required: false },
     ],
     completuiSchema: {
         items: {
-            priorty: { widget: 'radio', label: '会展评价', defaultValue: 0, list: [{ value: 0, title: '一般' }, { value: 1, title: '很好' }] } as UiRadio,
-            priortya: { widget: 'radio', label: '重要性', defaultValue: 0, list: [{ value: 0, title: '一般' }, { value: 1, title: '重要' }] } as UiRadio,
+            result: { widget: 'radio', label: '结案', defaultValue: 1, list: [{ value: 0, title: '成功' }, { value: 1, title: '失败' }] } as UiRadio,
             submit: { widget: 'button', label: '提交', }
         }
     } as UiSchema
