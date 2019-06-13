@@ -74,7 +74,7 @@ export class VFinish extends VPage<CCommonType> {
             <LMR className={cssLMR} right={<div onClick={this.onCreateProject} className="mr-3"><FA name="plus" /></div>} >
                 <div className="w-100 ml-3" onClick={onShowProject} >项目列表 <span className="fa-stack"></span></div>
             </LMR>
-            <button type="button" className="btn btn-primary w-100" onClick={this.onCompletionTask} >提交</button>
+            <button type="button" className="btn btn-primary w-100  my-3" onClick={this.onCompletionTask} >提交</button>
         </div >
     }
 }

@@ -29,11 +29,10 @@ export class VCustomerList extends VPage<CCustomer> {
     }
 
     private page = observer((customer: any) => {
-        let { pageCustomer, showCreateCustomer } = this.controller;
+        let { pageCustomer, showSelectCustomerUnit } = this.controller;
+        let onshowSelectCustomerUnit = async () => await showSelectCustomerUnit();
 
-        let onshowCreateCustomer = async () => await showCreateCustomer();
-
-        let right = <div onClick={onshowCreateCustomer} className="cursor-pointer py-2"><FA name="plus" /></div>;
+        let right = <div onClick={onshowSelectCustomerUnit} className="cursor-pointer py-2"><FA name="plus" /></div>;
         let none = <div className="my-3 mx-2 text-warning">未找到客户！</div>;
         return <Page header='客户' headerClassName='bg-primary py-1 px-3' right={right} >
             <SearchBox className="px-1 w-100  mt-2 mr-2  "

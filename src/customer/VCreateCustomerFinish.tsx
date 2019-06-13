@@ -10,7 +10,7 @@ export class VCreateCustomerFinish extends VPage<CCustomer> {
     }
 
     comeBack = () => {
-        this.closePage(2);
+        this.closePage(3);
     }
     private page = observer((customer: any) => {
         return <Page header='新建客户' headerClassName='bg-primary py-1 px-3'>

@@ -26,7 +26,7 @@ export class VSelectType extends VPage<CSelectType> {
 
     private ai = () => {
         let { cCustomer } = this.controller.cSalesTask.cApp;
-        let onshowCreateCustomer = async () => await cCustomer.showCreateCustomer();
+        let onshowCreateCustomer = async () => await cCustomer.showSelectCustomerUnit();
 
         return <div>
             <LMR className="p-3 bg-white mb-1 cursor-pointer" left={<FA className="text-success mr-3 mt-1" name="android" size="lg" fixWidth={true} />}

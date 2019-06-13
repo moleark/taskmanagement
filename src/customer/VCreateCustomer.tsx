@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, PageItems, Schema, Form, UiSchema, UiInputItem, UiCheckItem, Context, UiRadio, toUiSelectItems } from 'tonva';
+import { VPage, Page, PageItems, Schema, Form, UiSchema, UiInputItem, UiCheckItem, Context, UiRadio, toUiSelectItems, LMR, FA, Prop, ComponentProp, PropGrid } from 'tonva';
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
 import { consts } from 'consts';
@@ -15,6 +15,7 @@ const schema: Schema = [
 ];
 
 export class VCreateCustomer extends VPage<CCustomer> {
+    private customerunit: any;
     private form: Form;
     private uiSchema: UiSchema = {
         items: {
@@ -32,15 +33,29 @@ export class VCreateCustomer extends VPage<CCustomer> {
     }
 
     async open(param: any) {
+        this.customerunit = param;
         this.openPage(this.page);
     }
 
     private onFormButtonClick = async (name: string, context: Context) => {
-        await this.controller.createMyCustomer(context.data);
+        await this.controller.createMyCustomer(context.data, this.customerunit);
     }
 
-    private page = observer((param: any) => {
+    private itemss = "cursor-pointer mx-3 my-2 w-100";
+    private page = observer(() => {
+
+        let rows: Prop[] = [
+            {
+                type: 'component',
+                name: 'unit',
+                component: <LMR className={this.itemss}
+                    left={<div> <FA name="university" className="text-info mr-2 pt-1 " /> </div>}>
+                    {this.customerunit.name}
+                </LMR>,
+            } as ComponentProp,
+        ];
         return <Page header="新建客户" headerClassName={consts.headerClass} >
+            <PropGrid className="my-2" rows={rows} values={null} />
             <Form ref={v => this.form = v} className="my-3 mx-3"
                 schema={schema}
                 uiSchema={this.uiSchema}

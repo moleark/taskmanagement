@@ -102,14 +102,22 @@ export class CCustomer extends Controller {
     }
 
     //显示新建客户页面
-    showCreateCustomer = () => {
+    showCreateCustomer = (param: any) => {
         //this.openVPage(VCreateCustomerFinish);
-        this.openVPage(VCreateCustomer);
+        this.openVPage(VCreateCustomer, param);
     }
 
+    //显示选择客户的页面
+    showSelectCustomerUnit = () => {
+        //this.openVPage(VCreateCustomerFinish);
+        this.cApp.cCustomerUnit.start();
+    }
+
+
     //新建客户
-    createMyCustomer = async (param: any) => {
+    createMyCustomer = async (param: any, customerunit: any) => {
         let par = {
+            unit: customerunit.id,
             no: param.BirthDay + param.Name,
             name: param.Name,
             firstName: "",
