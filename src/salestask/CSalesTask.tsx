@@ -143,10 +143,12 @@ export class CSalesTask extends Controller {
     getTaskIcon(typeName: string) {
         let tt = this.taskTypes[typeName];
         if (tt === undefined) {
-            if (typeName == 'phone') {
-                return <FA name='fax' size="lg" fixWidth={true} />;
+            if (typeName == 'qualify') {
+                return <FA name='address-book' size="lg" fixWidth={true} />;
+            } else if (typeName == 'legend') {
+                return <FA name='newspaper-o' size="lg" fixWidth={true} />;
             } else {
-                return <FA name='car' size="lg" fixWidth={true} />;
+                return <FA name='sticky-note' size="lg" fixWidth={true} />;
             }
         }
         return tt.icon;

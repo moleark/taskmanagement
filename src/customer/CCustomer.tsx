@@ -113,7 +113,6 @@ export class CCustomer extends Controller {
         this.cApp.cCustomerUnit.start();
     }
 
-
     //新建客户
     createMyCustomer = async (param: any, customerunit: any) => {
         let par = {
@@ -128,6 +127,12 @@ export class CCustomer extends Controller {
         }
         await this.actionCreateMyCustomer.submit(par);
         this.openVPage(VCreateCustomerFinish);
+    }
+
+    //修改单位信息
+    updateMyCustomer = async (param: any) => {
+        await this.tuidMyCustomer.save(param.id, param);
+        this.closePage();
     }
 
     render = observer(() => {

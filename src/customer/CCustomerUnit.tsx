@@ -8,6 +8,7 @@ import { VCustomerSelect } from './VCustomerSelect';
 import { Task } from 'salestask/model';
 import { VCustomerUnit } from './VCustomerUnit';
 import { VCreateCustomerUnit } from './VCreateCustomerUnit';
+import { VCustomerUnitDetail } from './VCustomerUnitDetail';
 
 //页面类
 class PageUnit extends PageItems<any> {
@@ -39,7 +40,7 @@ export class CCustomerUnit extends Controller {
     cApp: CSalesTaskApp;
     @observable pageUnit: PageUnit;
 
-    private tuidMyCustomer: Tuid;
+    private tuidMyCustomerUnit: Tuid;
     private querySearchMyCustomerunit: Query;
     private actionCreateMyCustomerunit: Action;
     //构造函数
@@ -49,7 +50,7 @@ export class CCustomerUnit extends Controller {
 
         let { cUqCustomer, cUqSalesTask } = this.cApp;
 
-        this.tuidMyCustomer = cUqSalesTask.tuid("mycustomerunit");
+        this.tuidMyCustomerUnit = cUqSalesTask.tuid("mycustomerunit");
         this.querySearchMyCustomerunit = cUqSalesTask.query("searchmycustomerunit");
         this.actionCreateMyCustomerunit = cUqSalesTask.action("CreateMyCustomerunit");
     }
@@ -74,7 +75,7 @@ export class CCustomerUnit extends Controller {
         this.openVPage(VCreateCustomerUnit);
     }
 
-    //新建客户
+    //新建客户单位
     createMyCustomerUnit = async (param: any) => {
         let par = {
             no: param.Name,
@@ -84,8 +85,28 @@ export class CCustomerUnit extends Controller {
         this.closePage();
     }
 
+    //显示单位明细
+    showCustomerUnitDetail = async (param: any) => {
+        let unit = await this.tuidMyCustomerUnit.load(param);
+        this.openVPage(VCustomerUnitDetail, unit);
+    }
+
+    //显示新建客户页面
     showCreateCustomer = async (param: any) => {
         this.cApp.cCustomer.showCreateCustomer(param);
     }
+
+    //显示单位明细
+    showCustomerUnitEdit = async (param: any) => {
+        let unit = await this.tuidMyCustomerUnit.load(param);
+        this.openVPage(VCustomerUnitDetail, unit);
+    }
+
+    //修改单位信息
+    updateMyCustomerUnit = async (param: any) => {
+        await this.tuidMyCustomerUnit.save(param.id, param);
+        this.closePage();
+    }
+
 
 }

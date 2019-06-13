@@ -33,7 +33,7 @@ export class VTeam extends VPage<CTeam> {
     }
 
     private page = () => {
-        let none = <div className="my-3 mx-2 text-muted">无团队</div>;
+        let none = <div className="my-3 mx-2 text-muted">还没有团队哦！马上发展团队吧！！</div>;
         return <Page header='我的团队' headerClassName='bg-primary py-1' >
             <List before={''} none={none} items={this.team} item={{ render: this.renderItem }} />
         </Page>
