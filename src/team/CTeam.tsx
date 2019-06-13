@@ -3,10 +3,10 @@ import * as _ from 'lodash';
 import { Query, Controller, Map, Tuid, Action, nav, loadAppUqs } from 'tonva';
 import { CSalesTaskApp } from '../CSalesTaskApp';
 import { observer } from 'mobx-react';
-import { VMe } from './VMe';
+import { VMe } from '../me/VMe';
 import { VTeam } from './VTeam';
 import { async } from 'q';
-import { VMeDetail } from './VMeDetail';
+import { VMeDetail } from '../me/VMeDetail';
 import { VTeamDetail } from './VTeamDetail';
 
 /**

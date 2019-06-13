@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { VPage, Page, List, LMR, tv, FA } from 'tonva';
-import { CMe } from './CMe';
+import { CMe } from '../me/CMe';
 import { CTeam } from './CTeam';
 
 export class VTeam extends VPage<CTeam> {

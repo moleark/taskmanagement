@@ -10,9 +10,10 @@ import { CType } from 'salestask/types/createTypes';
 import { CMe } from 'me/CMe';
 import { CCommonType } from 'salestask/types/commonType';
 import { CStart } from 'start/CStart';
-import { CTeam } from 'me/CTeam';
+import { CTeam } from 'team/CTeam';
 import { CMessage } from 'message/CMessage';
 import { CCustomerUnit } from 'customer/CCustomerUnit';
+import { CCoupon } from 'coupon/CCoupon';
 
 
 export class CSalesTaskApp extends CApp {
@@ -31,6 +32,7 @@ export class CSalesTaskApp extends CApp {
     cStart: CStart;
     cMessage: CMessage;
     cCustomerUnit: CCustomerUnit;
+    cCoupon: CCoupon;
 
     protected async internalStart(param?: any) {
 
@@ -48,6 +50,7 @@ export class CSalesTaskApp extends CApp {
         this.cStart = new CStart(this, undefined);
         this.cMessage = new CMessage(this, undefined);
         this.cCustomerUnit = new CCustomerUnit(this, undefined);
+        this.cCoupon = new CCoupon(this, undefined);
 
         /** 启动销售任务列表*/
         //this.cSalesTask.start();

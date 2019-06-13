@@ -4,10 +4,10 @@ import { Query, Controller, Map, Tuid, Action, nav, loadAppUqs } from 'tonva';
 import { CSalesTaskApp } from '../CSalesTaskApp';
 import { observer } from 'mobx-react';
 import { VMe } from './VMe';
-import { VTeam } from './VTeam';
+import { VTeam } from '../team/VTeam';
 import { async } from 'q';
 import { VMeDetail } from './VMeDetail';
-import { VTeamDetail } from './VTeamDetail';
+import { VTeamDetail } from '../team/VTeamDetail';
 import { VAchievement } from './VAchievement';
 
 /**

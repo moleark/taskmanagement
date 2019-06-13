@@ -67,13 +67,14 @@ export class VMe extends VPage<CMe> {
     });
 
     private page = observer(() => {
-        let { cSalesTask, cMessage } = this.controller.cApp
+        let { cSalesTask, cMessage, cCoupon } = this.controller.cApp
         let { showEmployeeHistory } = cSalesTask;
         let { showTeam, showOrderHistory, achievemen } = this.controller;
 
         let onshowEmployeeHistory = async () => await showEmployeeHistory();
         let onshowTeam = async () => await showTeam();
         let onshowOrderHistory = async () => await showOrderHistory(this.user.id);
+        let onshowCoupon = async () => await cCoupon.start();
 
         let rows: Prop[] = [
             {
@@ -91,6 +92,10 @@ export class VMe extends VPage<CMe> {
             {
                 type: 'component',
                 component: rowCom('sitemap', 'text-info', '我的团队', undefined, onshowTeam),
+            } as ComponentProp,
+            {
+                type: 'component',
+                component: rowCom('th-large', 'text-warning', '优惠码', undefined, onshowCoupon),
             } as ComponentProp,
         ];
 
