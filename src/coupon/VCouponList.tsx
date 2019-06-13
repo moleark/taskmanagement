@@ -10,14 +10,17 @@ export class VCouponList extends VPage<CCoupon> {
         this.openPage(this.page);
     }
 
-    private renderItem(coupon: any, index: number) {
+    private renderItem = (coupon: any, index: number) => {
+        let { showCouponDetail } = this.controller;
+        let onshowCouponDetail = async () => await showCouponDetail(coupon.id);
+
         let { code, startdate, enddate, type, value } = coupon;
         let aleft = <div><FA name='th-large' className=' my-2 mr-3 text-warning' />{code}</div>;
         let aright = <div className="text-muted"><small><EasyDate date={startdate} /> 起</small></div>;
 
         let bleft = <div><small>{tv(type, v => v.name)}<span className=" mx-3 ">{value}</span></small></div>;
         let bright = <div className="text-muted"><small><EasyDate date={enddate} /> 止</small></div>;
-        return <LMR className="px-3 py-2">
+        return <LMR className="px-3 py-2" onClick={onshowCouponDetail}>
             <LMR className="" left={aleft} right={aright}>
             </LMR>
             <LMR className="" right={bright}
@@ -28,7 +31,6 @@ export class VCouponList extends VPage<CCoupon> {
 
     private page = observer(() => {
         let { pageCoupon, showCreateCoupon } = this.controller;
-
         let onshowCreateCoupon = async () => await showCreateCoupon();
 
         let right = <div onClick={onshowCreateCoupon} className="cursor-pointer py-2"><FA name="plus" /></div>;

@@ -5,6 +5,8 @@ import { CSalesTaskApp } from '../CSalesTaskApp';
 import { VCouponList } from './VCouponList';
 import { observable } from 'mobx';
 import { VCreateCoupon } from './VCreateCoupon';
+import { VCustomerDetail } from 'customer/VCustomerDetail';
+import { VCouponDetail } from './VCouponDetail';
 
 
 
@@ -65,8 +67,9 @@ export class CCoupon extends Controller {
     }
 
     //显示添加优惠码页面
-    showCouponDetail = async () => {
-        this.openVPage(VCreateCoupon);
+    showCouponDetail = async (couponid: any) => {
+        let coupon = await this.tuidCoupon.load(couponid);
+        this.openVPage(VCouponDetail, coupon);
     }
 
     //显示添加优惠码页面
