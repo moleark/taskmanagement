@@ -6,11 +6,9 @@ import { CCoupon } from './CCoupon';
 
 export class VCouponCustomer extends VPage<CCoupon> {
 
-    private customers: any;
     private coupon: any;
     async open(param: any) {
         this.coupon = param;
-        this.customers = await this.controller.searchCouponCustomer(this.coupon.id);
         this.openPage(this.page);
     }
 
@@ -27,13 +25,13 @@ export class VCouponCustomer extends VPage<CCoupon> {
     }
 
     private page = observer(() => {
-        let { showAddCouponCustomer } = this.controller;
+        let { showAddCouponCustomer, customers } = this.controller;
         let onshowAddCouponCustomer = async () => await showAddCouponCustomer(this.coupon);
         let right = <div onClick={onshowAddCouponCustomer} className="cursor-pointer py-2"><FA name="plus" /></div>;
         let none = <div className="my-3 mx-2 text-warning">无客户</div>;
 
         return <Page header='指定客户' headerClassName='bg-primary py-1 px-3' right={right} >
-            <List before={''} none={none} items={this.customers} item={{ render: this.renderItem, onClick: null }} />
+            <List before={''} none={none} items={customers} item={{ render: this.renderItem, onClick: null }} />
         </Page>
     })
 }

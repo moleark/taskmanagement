@@ -7,6 +7,7 @@ import { observable } from 'mobx';
 import { VCreateCoupon } from './VCreateCoupon';
 import { VCouponDetail } from './VCouponDetail';
 import { VCouponCustomer } from './VCouponCustomer';
+import { runInThisContext } from 'vm';
 
 
 
@@ -38,6 +39,7 @@ export class CCoupon extends Controller {
 
     cApp: CSalesTaskApp;
     @observable pageCoupon: PageCoupon;
+    @observable customers: any;
 
     private tuidCoupon: Tuid;
     private querySearchCoupon: Query;
@@ -95,13 +97,14 @@ export class CCoupon extends Controller {
 
     //显示客户
     showCouponCustomer = async (param: any) => {
+        this.searchCouponCustomer(param.id);
         await this.openVPage(VCouponCustomer, param);
     }
     //搜索优惠码客户
     searchCouponCustomer = async (couponid: any) => {
         let param = { coupon: couponid }
         let cust = await this.querySearchCouponCustomer.table(param);
-        return cust;
+        this.customers = cust;
     }
 
     //显示客户
@@ -113,7 +116,12 @@ export class CCoupon extends Controller {
     //添加客户
     addCouponCustomer = async (coupon: any, customer: any) => {
         let param = { coupon: coupon.id, customer: customer.id }
-        this.actionAddCouponCustomer.submit({ param });
+        this.actionAddCouponCustomer.submit(param);
+        this.customers.unshift({
+            coupon: coupon,
+            customer: customer
+        });
+        this.closePage();
     }
 
 }

@@ -20,7 +20,6 @@ export class VCustomerSelectCall extends VPage<CCustomer> {
 
     private onClickCustomer = async (model: any) => {
         await this.controller.returnCustomer(model);
-        this.ceasePage();
     }
 
     private page = observer((customer: any) => {
