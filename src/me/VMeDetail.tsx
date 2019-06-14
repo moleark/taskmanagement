@@ -26,6 +26,11 @@ export class VMeDetail extends VPage<CMe> {
         this.openPage(this.page);
     }
 
+    private logout = () => {
+        nav.showLogout();
+    }
+
+
     private onItemChanged = async (itemSchema: ItemSchema, newValue: any, preValue: any) => {
         let { name } = itemSchema;
         await userApi.userSetProp(name, newValue);
@@ -35,6 +40,7 @@ export class VMeDetail extends VPage<CMe> {
     }
 
     private page = () => {
+        let footer = <button type="button" className="btn btn-danger flex-grow-1 mx-3 my-1" onClick={this.logout} ><FA name="sign-out" size="lg" /> 退出</button>;
         return <Page header='个人信息' headerClassName='bg-primary py-1' >
             <Edit schema={this.schema} uiSchema={this.uiSchema}
                 data={this.data}
@@ -44,6 +50,7 @@ export class VMeDetail extends VPage<CMe> {
                 right={this.controller.inviteCode}>
                 邀请码
             </LMR>
+            <div className="mt-3 d-flex">{footer}</div>
         </Page >
     }
 }

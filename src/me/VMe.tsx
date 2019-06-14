@@ -26,11 +26,6 @@ export class VMe extends VPage<CMe> {
         return <this.page />;
     }
 
-    private logout = () => {
-        nav.showLogout();
-    }
-
-
     private userSpan(name: string, nick: string): JSX.Element {
         return nick ?
             <><b>{nick} &nbsp; <small className="muted">{name}</small></b></>
@@ -99,10 +94,8 @@ export class VMe extends VPage<CMe> {
             } as ComponentProp,
         ];
 
-        let footer = <button type="button" className="btn btn-danger flex-grow-1 mx-3 my-1" onClick={this.logout} ><FA name="sign-out" size="lg" /> 退出</button>;
         return <div>
             <PropGrid className="" rows={rows} values={null} alignValue="right" />
-            <div className="mt-3 d-flex">{footer}</div>
         </div>
     })
 }

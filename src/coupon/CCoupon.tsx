@@ -80,10 +80,9 @@ export class CCoupon extends Controller {
     //添加优惠码
     createCoupon = async (param: any) => {
         let coupon = {
-            startdate: param.startdate,
-            enddate: param.enddate,
-            type: param.type,
-            value: param.value,
+            validitydate: param.validitydate,
+            discount: param.discount,
+            preferential: param.preferential
         }
         await this.actionCreateCoupon.submit(coupon);
         this.closePage();

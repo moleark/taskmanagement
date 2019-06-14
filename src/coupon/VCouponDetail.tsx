@@ -22,34 +22,36 @@ export class VCouponDetail extends VPage<CCoupon> {
     }
 
     private page = observer(() => {
-        let { type, code, value, startdate, enddate, isValid } = this.coupon
+        let { code, validitydate, discount, preferential, isValid } = this.coupon;
+
+        var inviteCode = "";
+        if (code) {
+            code = String(code + 100000000);
+            let p1 = code.substr(1, 4);
+            let p2 = code.substr(5);
+            inviteCode = p1 + ' ' + p2;
+        }
+
         let rows: Prop[] = [
             {
                 type: 'component',
                 name: 'customer',
                 component: <LMR className="cursor-pointer w-100 py-3" left="优惠编号：">
-                    <div className="mx-3">{code}</div>
+                    <div className="mx-3">{inviteCode}</div>
                 </LMR >
             } as ComponentProp,
             {
                 type: 'component',
                 name: 'customer',
-                component: <LMR className="cursor-pointer w-100 py-3" left="优惠类型：">
-                    <div className="mx-3">{tv(type, v => v.name)}</div>
+                component: <LMR className="cursor-pointer w-100 py-3" left="有 效 期 ：">
+                    <div className="mx-3">{<EasyDate date={validitydate} />}</div>
                 </LMR >
             } as ComponentProp,
             {
                 type: 'component',
                 name: 'customer',
                 component: <LMR className="cursor-pointer w-100 py-3" left="优惠力度：">
-                    <div className="mx-3">{value}</div>
-                </LMR >
-            } as ComponentProp,
-            {
-                type: 'component',
-                name: 'customer',
-                component: <LMR className="cursor-pointer w-100 py-3" left="起止日期：">
-                    <div className="mx-3">  {<EasyDate date={startdate} />} - {<EasyDate date={enddate} />}</div>
+                    <div className="mx-3">折扣：{discount} 折  金额：{preferential}￥</div>
                 </LMR >
             } as ComponentProp,
             {
@@ -64,14 +66,6 @@ export class VCouponDetail extends VPage<CCoupon> {
                 name: 'customer',
                 component: <LMR className="cursor-pointer w-100 py-3" onClick={null}
                     left={< div > <small><FA name='hand-o-right' className='text-info' /></small> &nbsp;指定客户</div>}
-                    right={< div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div >}>
-                </LMR >
-            } as ComponentProp,
-            {
-                type: 'component',
-                name: 'customer',
-                component: <LMR className="cursor-pointer w-100 py-3" onClick={null}
-                    left={< div > <small><FA name='hand-o-right' className='text-info' /></small> &nbsp;指定产品</div>}
                     right={< div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div >}>
                 </LMR >
             } as ComponentProp
