@@ -24,8 +24,9 @@ export class VCouponDetail extends VPage<CCoupon> {
 
     private page = observer(() => {
         let { code, validitydate, discount, preferential, isValid } = this.coupon;
-        let { showCouponCustomer } = this.controller;
+        let { showCouponCustomer, invalidCoupon } = this.controller;
         let onshowCouponCustomer = async () => await showCouponCustomer(this.coupon);
+        let oninvalidCoupon = async () => await invalidCoupon(this.coupon);
 
         var inviteCode = "";
         if (code) {
@@ -73,7 +74,7 @@ export class VCouponDetail extends VPage<CCoupon> {
                 </LMR >
             } as ComponentProp
         ];
-        return <Page header="优惠码详情" headerClassName={consts.headerClass} footer={<button type="button" className="btn btn-danger flex-grow-1 mx-3 my-1" >作废</button>}>
+        return <Page header="优惠码详情" headerClassName={consts.headerClass} footer={<button onClick={oninvalidCoupon} type="button" className="btn btn-danger flex-grow-1 mx-3 my-1" >作废</button>}>
             <PropGrid className="my-2" rows={rows} values={this.coupon} alignValue="right" />
         </Page>
     })

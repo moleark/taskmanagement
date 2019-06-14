@@ -94,6 +94,12 @@ export class CCoupon extends Controller {
         this.closePage();
         await this.searchByKey(undefined);
     }
+    //作废优惠码
+    invalidCoupon = async (param: any) => {
+        var coupon = await this.tuidCoupon.load(param.id);
+        coupon.isValid = 2;
+        await this.tuidCoupon.save(coupon.id, coupon);
+    }
 
     //显示客户
     showCouponCustomer = async (param: any) => {
