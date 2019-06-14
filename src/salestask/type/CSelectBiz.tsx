@@ -43,7 +43,8 @@ export class CSelectBiz extends Controller {
     //返回添加任务页面
     selectTaskBiz = async (taskbiz: any) => {
         this.task.biz = taskbiz.biz.obj;
-        this.cSalesTask.cApp.cCustomer.start(this.task)
+        this.cSalesTask.cApp.cCustomer.showSelectCustomer(this.task)
+        //this.cSalesTask.cApp.cCustomer.start(this.task);
     }
 
     //返回添加任务页面

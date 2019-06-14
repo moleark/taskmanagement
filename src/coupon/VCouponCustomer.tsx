@@ -1,0 +1,39 @@
+import * as React from 'react';
+import * as _ from 'lodash';
+import { VPage, Page, LMR, SearchBox, FA, List, EasyDate, tv } from 'tonva';
+import { observer } from 'mobx-react';
+import { CCoupon } from './CCoupon';
+
+export class VCouponCustomer extends VPage<CCoupon> {
+
+    private customers: any;
+    private coupon: any;
+    async open(param: any) {
+        this.coupon = param;
+        this.customers = await this.controller.searchCouponCustomer(this.coupon.id);
+        this.openPage(this.page);
+    }
+
+    private renderItem = (coupon: any, index: number) => {
+        let customer = coupon.customer;
+        return <>
+            {
+                tv(customer, v =>
+
+                    <LMR className="px-3 py-2" left={<div className=" font-weight-bold mx-3">{v.name}</div>} right={<div className="text-muted mx-3"><small>{tv(v.unit, s => s.name)}</small></div>}></LMR >
+                )
+            }
+        </>
+    }
+
+    private page = observer(() => {
+        let { showAddCouponCustomer } = this.controller;
+        let onshowAddCouponCustomer = async () => await showAddCouponCustomer(this.coupon);
+        let right = <div onClick={onshowAddCouponCustomer} className="cursor-pointer py-2"><FA name="plus" /></div>;
+        let none = <div className="my-3 mx-2 text-warning">无客户</div>;
+
+        return <Page header='指定客户' headerClassName='bg-primary py-1 px-3' right={right} >
+            <List before={''} none={none} items={this.customers} item={{ render: this.renderItem, onClick: null }} />
+        </Page>
+    })
+}

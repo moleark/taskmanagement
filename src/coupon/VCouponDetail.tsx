@@ -3,6 +3,7 @@ import { VPage, Page, StringProp, Prop, PropGrid, ComponentProp, tv, LMR, EasyDa
 import { observer } from 'mobx-react';
 import { consts } from 'consts';
 import { CCoupon } from './CCoupon';
+import { async } from 'q';
 
 export class VCouponDetail extends VPage<CCoupon> {
 
@@ -23,6 +24,8 @@ export class VCouponDetail extends VPage<CCoupon> {
 
     private page = observer(() => {
         let { code, validitydate, discount, preferential, isValid } = this.coupon;
+        let { showCouponCustomer } = this.controller;
+        let onshowCouponCustomer = async () => await showCouponCustomer(this.coupon);
 
         var inviteCode = "";
         if (code) {
@@ -64,7 +67,7 @@ export class VCouponDetail extends VPage<CCoupon> {
             {
                 type: 'component',
                 name: 'customer',
-                component: <LMR className="cursor-pointer w-100 py-3" onClick={null}
+                component: <LMR className="cursor-pointer w-100 py-3" onClick={onshowCouponCustomer}
                     left={< div > <small><FA name='hand-o-right' className='text-info' /></small> &nbsp;指定客户</div>}
                     right={< div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div >}>
                 </LMR >

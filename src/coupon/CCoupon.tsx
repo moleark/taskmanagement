@@ -5,8 +5,8 @@ import { CSalesTaskApp } from '../CSalesTaskApp';
 import { VCouponList } from './VCouponList';
 import { observable } from 'mobx';
 import { VCreateCoupon } from './VCreateCoupon';
-import { VCustomerDetail } from 'customer/VCustomerDetail';
 import { VCouponDetail } from './VCouponDetail';
+import { VCouponCustomer } from './VCouponCustomer';
 
 
 
@@ -41,7 +41,9 @@ export class CCoupon extends Controller {
 
     private tuidCoupon: Tuid;
     private querySearchCoupon: Query;
+    private querySearchCouponCustomer: Query;
     private actionCreateCoupon: Action;
+    private actionAddCouponCustomer: Action;
 
     //构造函数
     constructor(cApp: CSalesTaskApp, res: any) {
@@ -51,6 +53,8 @@ export class CCoupon extends Controller {
         this.tuidCoupon = cUqSalesTask.tuid("Coupon");
         this.querySearchCoupon = cUqSalesTask.query("SearchCoupon");
         this.actionCreateCoupon = cUqSalesTask.action("CreateCoupon");
+        this.querySearchCouponCustomer = cUqSalesTask.query("SearchCouponCustomer");
+        this.actionAddCouponCustomer = cUqSalesTask.action("CreateCouponCustomer");
     }
 
     //初始化
@@ -88,4 +92,28 @@ export class CCoupon extends Controller {
         this.closePage();
         await this.searchByKey(undefined);
     }
+
+    //显示客户
+    showCouponCustomer = async (param: any) => {
+        await this.openVPage(VCouponCustomer, param);
+    }
+    //搜索优惠码客户
+    searchCouponCustomer = async (couponid: any) => {
+        let param = { coupon: couponid }
+        let cust = await this.querySearchCouponCustomer.table(param);
+        return cust;
+    }
+
+    //显示客户
+    showAddCouponCustomer = async (coupon: any) => {
+        let { cCustomer } = this.cApp;
+        let cusomter = await cCustomer.call();
+        await this.addCouponCustomer(coupon, cusomter);
+    }
+    //添加客户
+    addCouponCustomer = async (coupon: any, customer: any) => {
+        let param = { coupon: coupon.id, customer: customer.id }
+        this.actionAddCouponCustomer.submit({ param });
+    }
+
 }

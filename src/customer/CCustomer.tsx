@@ -13,6 +13,7 @@ import { CCommonType } from 'salestask/types/commonType';
 import { VCreateCustomer } from './VCreateCustomer';
 import { async } from 'q';
 import { VCreateCustomerFinish } from './VCreateCustomerFinish';
+import { VCustomerSelectCall } from './VCustomerSelectCall';
 
 //页面类
 class PageCustomer extends PageItems<any> {
@@ -68,7 +69,7 @@ export class CCustomer extends Controller {
     protected async internalStart(task: Task) {
         this.pageCustomer = null;
         this.task = task;
-        this.openVPage(VCustomerSelect);
+        this.openVPage(VCustomerSelectCall);
     }
 
     //查询客户--通过名称
@@ -87,6 +88,12 @@ export class CCustomer extends Controller {
     showCustomerDetail = async (customerid: number) => {
         let customer = await this.loadCustomerDetail(customerid);
         this.openVPage(VCustomerDetail, customer);
+    }
+
+    showSelectCustomer = async (task: Task) => {
+        this.pageCustomer = null;
+        this.task = task;
+        this.openVPage(VCustomerSelect);
     }
 
     //选择客户--给调用页面返回客户id
