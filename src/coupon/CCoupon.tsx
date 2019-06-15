@@ -8,6 +8,7 @@ import { VCreateCoupon } from './VCreateCoupon';
 import { VCouponDetail } from './VCouponDetail';
 import { VCouponCustomer } from './VCouponCustomer';
 import { runInThisContext } from 'vm';
+import { VCreateCouponEnd } from './VCreateCouponEnd';
 
 
 
@@ -85,14 +86,26 @@ export class CCoupon extends Controller {
 
     //添加优惠码
     createCoupon = async (param: any) => {
+
+        var customerid: number, discount: any;
+        if (param.customer) {
+            customerid = param.customer.id;
+        } else {
+            customerid = undefined;
+        }
+        if (param.discount == "-1") {
+            discount = undefined;
+        }
+
         let coupon = {
             validitydate: param.validitydate,
             discount: param.discount,
             preferential: param.preferential,
-            customer: param.customer.id
+            customer: customerid
         }
-        await this.actionCreateCoupon.submit(coupon);
-        this.closePage();
+        let couponid = await this.actionCreateCoupon.submit(coupon);
+        let code = couponid.code;
+        this.openVPage(VCreateCouponEnd, code)
     }
     //作废优惠码
     invalidCoupon = async (param: any) => {

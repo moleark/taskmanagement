@@ -23,7 +23,7 @@ export class VCouponDetail extends VPage<CCoupon> {
     }
 
     private page = observer(() => {
-        let { code, validitydate, discount, preferential, isValid } = this.coupon;
+        let { code, validitydate, discount, preferential, isValid, customer } = this.coupon;
         let { invalidCoupon } = this.controller;
         //let onshowCouponCustomer = async () => await showCouponCustomer(this.coupon);
         let oninvalidCoupon = async () => await invalidCoupon(this.coupon);
@@ -57,11 +57,34 @@ export class VCouponDetail extends VPage<CCoupon> {
                 component: <LMR className="cursor-pointer w-100 py-3" left="优惠力度：">
                     <div className="mx-3">折扣：{discount} 折  金额：{preferential}￥</div>
                 </LMR >
-            } as ComponentProp,
+            } as ComponentProp
+        ];
+        if (customer.id != undefined) {
+            rows.push(
+                {
+                    type: 'component',
+                    name: 'customer',
+                    component: <>
+                        {
+                            tv(
+                                customer, v =>
+                                    <LMR className="cursor-pointer w-100 py-3"
+                                        left="指定客户："
+                                        right={<div>{tv(v.unit, s => s.name)}</div>}>
+                                        <div className="mx-3">{v.name}</div>
+                                    </LMR >
+                            )
+                        }
+                    </>
+                } as ComponentProp
+            )
+        }
+
+        rows.push(
             {
                 type: 'component',
                 name: 'customer',
-                component: <LMR className="cursor-pointer w-100 py-3" left="当前状态：">
+                component: <LMR className="cursor-pointer w-100 py-3" left="当前状态：" >
                     <div className="mx-3">  {this.renderisValid(isValid)}</div>
                 </LMR >
             } as ComponentProp,
@@ -79,7 +102,7 @@ export class VCouponDetail extends VPage<CCoupon> {
                     订单ABC
                 </LMR >
             } as ComponentProp
-        ];
+        );
         let footer = <button onClick={oninvalidCoupon} type="submit" className="btn btn-danger flex-grow-1 mx-3 my-1" >作废</button>;
         return <Page header="优惠码详情" headerClassName={consts.headerClass} footer={footer}>
             <PropGrid className="my-2" rows={rows} values={this.coupon} alignValue="right" />
