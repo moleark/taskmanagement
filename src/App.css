@@ -37,10 +37,10 @@
 display: flex;
 align-items: center;
 }
-.jk-cart>div {
+.jk-cart {
 position: relative;
 }
-.jk-cart>div>u {
+.jk-cart>u {
     position: absolute;
     right: -1rem;
     top: 0rem;

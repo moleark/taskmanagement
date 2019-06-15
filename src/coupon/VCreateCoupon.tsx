@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, Schema, Form, UiSchema, UiInputItem, Context, UiRadio, toUiSelectItems, Widget, UiCustom, FA, LMR } from 'tonva';
+import { VPage, Page, Schema, Form, UiSchema, UiInputItem, Context, UiRadio, toUiSelectItems, Widget, UiCustom, FA, LMR, UiIdItem, tv } from 'tonva';
 import { observer } from 'mobx-react';
 import { consts } from 'consts';
 import { CCoupon } from './CCoupon';
@@ -9,13 +9,14 @@ const schema: Schema = [
     { name: 'validitydate', type: 'date', required: true },
     { name: 'discount', type: 'string', required: false },
     { name: 'preferential', type: 'string', required: false },
-    //{ name: 'submit', type: 'submit' },
+    { name: 'customer', type: 'id', required: false },
+    { name: 'submit', type: 'submit' },
 ];
 
 
 class ValidityDate extends Widget {
     @observable dateVisible = false;
-    private list = [{ value: 1, title: '一周' }, { value: 2, title: '两周' }, { value: 3, title: '一月' }];
+    private list = [{ value: 1, title: '一周', name: 'b' }, { value: 2, title: '两周', name: 'b' }];
 
     private onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
         let val = evt.currentTarget.value;
@@ -26,9 +27,6 @@ class ValidityDate extends Widget {
         } else if (val === '2') {
             day2.setDate(day2.getDate() + 14);
         }
-        else if (val === '3') {
-            day2.setDate(day2.getDate() + 30);
-        }
         let ss = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
         this.setValue(ss);
     }
@@ -36,7 +34,7 @@ class ValidityDate extends Widget {
     render = () => {
         return <div className="form-control" style={{ height: 'auto' }}>
             {this.list.map((v, index) => {
-                return <label className="my-1 mx-2"><input type="radio" value={v.value} name="a" onChange={this.onChange} /> {v.title} &nbsp; </label>
+                return <label className="my-1 mx-2"><input type="radio" value={v.value} name={v.name} onChange={this.onChange} /> {v.title} &nbsp; </label>
             })}
         </div>
     };
@@ -44,7 +42,7 @@ class ValidityDate extends Widget {
 
 class Discount extends Widget {
     @observable dateVisible = false;
-    private list = [{ value: 9.5, title: '95折' }, { value: 9, title: '9折' }, { value: 8.5, title: '85折' }, { value: 8, title: ' 8  折  ' }, { value: 7, title: '7折' }, { value: 6, title: '6折' }];
+    private list = [{ value: 9.5, title: '95折', name: 'a' }, { value: 9, title: '9折', name: 'a' }, { value: 8.5, title: '85折', name: 'a' }, { value: 8, title: ' 8  折  ', name: 'a' }, { value: 7, title: '7折', name: 'a' }, { value: 6, title: '6折', name: 'a' }];
 
     private onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
         let val = evt.currentTarget.value;
@@ -65,7 +63,7 @@ class Discount extends Widget {
     render = () => {
         return <div className="form-control" style={{ height: 'auto' }}>
             {this.list.map((v, index) => {
-                return <label className="my-1 mx-2"><input type="radio" value={v.value} name="a" onChange={this.onChange} /> {v.title} &nbsp; </label>
+                return <label className="my-1 mx-2"><input type="radio" value={v.value} name={v.name} onChange={this.onChange} /> {v.title} &nbsp; </label>
             })}
             <div>
                 <label className="my-1 mx-2"><input type="radio" value={-1} name="a" onChange={this.onChange} /> 无 &nbsp;&nbsp;&nbsp;&nbsp; </label>
@@ -91,8 +89,19 @@ export class VCreateCoupon extends VPage<CCoupon> {
                 WidgetClass: Discount,
             } as UiCustom,
 
-            preferential: { widget: 'text', label: '金额', placeholder: '请输入优惠金额' } as UiInputItem,
-            customer: { widget: 'text', label: '客户', placeholder: '', onclick: null } as UiInputItem,
+            preferential: { widget: 'text', label: '优惠金额', placeholder: '请输入优惠金额' } as UiInputItem,
+            customer: {
+                widget: 'id', label: '客户', placeholder: '请选择客户',
+                pickId: async (context: Context, name: string, value: number) => await this.controller.showAddCouponCustomer(context, name, value),
+                Templet: (item: any) => {
+                    let { name, unit } = item;
+                    if (!item) return <small className="text-muted">请选择客户</small>;
+                    return <div>
+                        {name}
+                        <small className=" mx-3" >{tv(unit, (v) => <>{v.name}</>)}</small>
+                    </div>;
+                }
+            } as UiIdItem,
             submit: { widget: 'button', label: '提交', className: 'btn btn-primary w-8c' },
         }
     }
@@ -108,8 +117,6 @@ export class VCreateCoupon extends VPage<CCoupon> {
     private page = observer((param: any) => {
         let { cCoupon } = this.controller.cApp
         let onshowCreateCoupon = async () => await cCoupon.start();
-        let { showAddCouponCustomer, customers } = this.controller;
-        let onshowAddCouponCustomer = async () => await showAddCouponCustomer();
 
         let right = <div onClick={onshowCreateCoupon} className="cursor-pointer py-2 mx-3"><FA name="ellipsis-h" /></div>;
         return <Page header="产生优惠码" headerClassName={consts.headerClass} right={right} >
@@ -119,10 +126,6 @@ export class VCreateCoupon extends VPage<CCoupon> {
                 onButtonClick={this.onFormButtonClick}
                 requiredFlag={false}
             />
-            <LMR className="cursor-pointer w-100 py-3"
-                left={< div > <small><FA name='user' className='text-info' /></small> &nbsp;指定客户</div>}
-                right={< div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div >}>
-            </LMR >
         </Page >
     })
 }

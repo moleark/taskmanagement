@@ -68,17 +68,15 @@ export class VCouponDetail extends VPage<CCoupon> {
             {
                 type: 'component',
                 name: 'customer',
-                component: <LMR className="cursor-pointer w-100 py-3"
-                    left={< div > <small><FA name='hand-o-right' className='text-info' /></small> &nbsp;指定客户</div>}
-                    right={< div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div >}>
+                component: <LMR className="cursor-pointer w-100 py-1"
+                    left={< div>使用情况</div>}>
                 </LMR >
             } as ComponentProp,
             {
                 type: 'component',
                 name: 'customer',
-                component: <LMR className="cursor-pointer w-100 py-3"
-                    left={< div > <small><FA name='hand-o-right' className='text-info' /></small> &nbsp;使用情况</div>}
-                    right={< div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div >}>
+                component: <LMR className="cursor-pointer w-100 py-1">
+                    订单ABC
                 </LMR >
             } as ComponentProp
         ];

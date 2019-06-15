@@ -9,6 +9,7 @@ import { async } from 'q';
 import { VMeDetail } from './VMeDetail';
 import { VTeamDetail } from '../team/VTeamDetail';
 import { VAchievement } from './VAchievement';
+import { VSet } from './VSet';
 
 /**
  *
@@ -99,6 +100,12 @@ export class CMe extends Controller {
     showMessage = async () => {
         await this.cApp.cMessage.start();
     }
+
+    //显示消息
+    showSet = async () => {
+        this.openVPage(VSet)
+    }
+
 
 
     render = observer(() => {

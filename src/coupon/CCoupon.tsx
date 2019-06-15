@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { Query, Controller, Map, Tuid, Action, nav, loadAppUqs, PageItems } from 'tonva';
+import { Query, Controller, Map, Tuid, Action, nav, loadAppUqs, PageItems, Context } from 'tonva';
 import { CSalesTaskApp } from '../CSalesTaskApp';
 import { VCouponList } from './VCouponList';
 import { observable } from 'mobx';
@@ -88,7 +88,8 @@ export class CCoupon extends Controller {
         let coupon = {
             validitydate: param.validitydate,
             discount: param.discount,
-            preferential: param.preferential
+            preferential: param.preferential,
+            customer: param.customer.id
         }
         await this.actionCreateCoupon.submit(coupon);
         this.closePage();
@@ -115,11 +116,12 @@ export class CCoupon extends Controller {
     */
 
     //显示客户
-    showAddCouponCustomer = async () => {
+    showAddCouponCustomer = async (context: Context, name: string, value: number): Promise<any> => {
         let { cCustomer } = this.cApp;
-        this.customers = await cCustomer.call();
-
+        let d = await cCustomer.call();
+        return d;
     }
+
     //添加客户
     addCouponCustomer = async (coupon: any, customer: any) => {
         let param = { coupon: coupon.id, customer: customer.id }

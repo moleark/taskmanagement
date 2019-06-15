@@ -17,7 +17,6 @@ export class VCouponCustomer extends VPage<CCoupon> {
         return <>
             {
                 tv(customer, v =>
-
                     <LMR className="px-3 py-2" left={<div className=" font-weight-bold mx-3">{v.name}</div>} right={<div className="text-muted mx-3"><small>{tv(v.unit, s => s.name)}</small></div>}></LMR >
                 )
             }
@@ -26,11 +25,11 @@ export class VCouponCustomer extends VPage<CCoupon> {
 
     private page = observer(() => {
         let { showAddCouponCustomer, customers } = this.controller;
-        let onshowAddCouponCustomer = async () => await showAddCouponCustomer();
-        let right = <div onClick={onshowAddCouponCustomer} className="cursor-pointer py-2"><FA name="plus" /></div>;
+        //let onshowAddCouponCustomer = async () => await showAddCouponCustomer();
+        //let right = <div onClick={onshowAddCouponCustomer} className="cursor-pointer py-2"><FA name="plus" /></div>;
         let none = <div className="my-3 mx-2 text-warning">无客户</div>;
 
-        return <Page header='指定客户' headerClassName='bg-primary py-1 px-3' right={right} >
+        return <Page header='指定客户' headerClassName='bg-primary py-1 px-3' right={null} >
             <List before={''} none={none} items={customers} item={{ render: this.renderItem, onClick: null }} />
         </Page>
     })

@@ -33,7 +33,7 @@ export class VMe extends VPage<CMe> {
     }
 
     private meInfo = observer(() => {
-        let { showMeDetail, showMessage } = this.controller;
+        let { showMeDetail, showMessage, showSet } = this.controller;
         let { cMessage } = this.controller.cApp
         let count: any = cMessage.count.get();
         let onshowMeDetail = async () => await showMeDetail();
@@ -46,19 +46,21 @@ export class VMe extends VPage<CMe> {
             else badge = <u>99+</u>;
         }
 
-        return <LMR className="py-3 mt-4 cursor-pointer w-100"
-            left={<div onClick={onshowMeDetail}> <Image className="w-3c h-3c mr-3" src={icon} /> </div>}
-            right={<div className={classNames('jk-cart ml-1 mr-2', pointer)} onClick={onshowMessage} >
-                <div>
-                    <FA className="text-primary fa-lg" name="envelope-o" />
+        return <div className="py-2 pt-2 px-3 cursor-pointer w-100 bg-primary text-white">
+            <LMR className="my-2" left="我的" right={<span onClick={showSet}>设置</span>}></LMR>
+            <LMR
+                left={<div onClick={onshowMeDetail}> <Image className="w-3c h-3c mr-3" src={icon} /> </div>}
+                right={<div className={classNames('jk-cart ml-1 mr-2', pointer)} onClick={onshowMessage} >
+
+                    <FA className="text-white fa-lg" name="envelope-o" />
                     {badge}
+                </div>}>
+                <div onClick={onshowMeDetail}>
+                    <div>{this.userSpan(name, nick)}</div>
+                    <div className="small"><span >邀请码:</span> {this.inviteCode}</div>
                 </div>
-            </div>}>
-            <div onClick={onshowMeDetail}>
-                <div>{this.userSpan(name, nick)}</div>
-                <div className="small"><span className="text-muted">邀请码:</span> {this.inviteCode}</div>
-            </div>
-        </LMR>;
+            </LMR>
+        </div>;
     });
 
     private page = observer(() => {
@@ -72,10 +74,6 @@ export class VMe extends VPage<CMe> {
         let onshowCreateCoupon = async () => await cCoupon.showCreateCoupon()
 
         let rows: Prop[] = [
-            {
-                type: 'component',
-                component: <this.meInfo />
-            } as ComponentProp,
             {
                 type: 'component',
                 component: rowCom('tag', 'text-info', '已完成任务', undefined, onshowEmployeeHistory),
@@ -95,6 +93,7 @@ export class VMe extends VPage<CMe> {
         ];
 
         return <div>
+            <this.meInfo />
             <PropGrid className="" rows={rows} values={null} alignValue="right" />
         </div>
     })
