@@ -4,7 +4,7 @@ import { VPage, Page, LMR, SearchBox, FA, List, EasyDate, tv } from 'tonva';
 import { observer } from 'mobx-react';
 import { CCoupon } from './CCoupon';
 
-export class VCouponCustomer extends VPage<CCoupon> {
+export class VCouponUsage extends VPage<CCoupon> {
 
     private coupon: any;
     async open(param: any) {
@@ -28,9 +28,9 @@ export class VCouponCustomer extends VPage<CCoupon> {
         let { showAddCouponCustomer, customers } = this.controller;
         let onshowAddCouponCustomer = async () => await showAddCouponCustomer();
         let right = <div onClick={onshowAddCouponCustomer} className="cursor-pointer py-2"><FA name="plus" /></div>;
-        let none = <div className="my-3 mx-2 text-warning">无客户</div>;
+        let none = <div className="my-3 mx-2 text-warning">未使用</div>;
 
-        return <Page header='指定客户' headerClassName='bg-primary py-1 px-3' right={right} >
+        return <Page header='使用情况' headerClassName='bg-primary py-1 px-3' right={right} >
             <List before={''} none={none} items={customers} item={{ render: this.renderItem, onClick: null }} />
         </Page>
     })

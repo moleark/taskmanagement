@@ -24,8 +24,8 @@ export class VCouponDetail extends VPage<CCoupon> {
 
     private page = observer(() => {
         let { code, validitydate, discount, preferential, isValid } = this.coupon;
-        let { showCouponCustomer, invalidCoupon } = this.controller;
-        let onshowCouponCustomer = async () => await showCouponCustomer(this.coupon);
+        let { invalidCoupon } = this.controller;
+        //let onshowCouponCustomer = async () => await showCouponCustomer(this.coupon);
         let oninvalidCoupon = async () => await invalidCoupon(this.coupon);
 
         var inviteCode = "";
@@ -68,13 +68,22 @@ export class VCouponDetail extends VPage<CCoupon> {
             {
                 type: 'component',
                 name: 'customer',
-                component: <LMR className="cursor-pointer w-100 py-3" onClick={onshowCouponCustomer}
+                component: <LMR className="cursor-pointer w-100 py-3"
                     left={< div > <small><FA name='hand-o-right' className='text-info' /></small> &nbsp;指定客户</div>}
+                    right={< div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div >}>
+                </LMR >
+            } as ComponentProp,
+            {
+                type: 'component',
+                name: 'customer',
+                component: <LMR className="cursor-pointer w-100 py-3"
+                    left={< div > <small><FA name='hand-o-right' className='text-info' /></small> &nbsp;使用情况</div>}
                     right={< div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div >}>
                 </LMR >
             } as ComponentProp
         ];
-        return <Page header="优惠码详情" headerClassName={consts.headerClass} footer={<button onClick={oninvalidCoupon} type="button" className="btn btn-danger flex-grow-1 mx-3 my-1" >作废</button>}>
+        let footer = <button onClick={oninvalidCoupon} type="submit" className="btn btn-danger flex-grow-1 mx-3 my-1" >作废</button>;
+        return <Page header="优惠码详情" headerClassName={consts.headerClass} footer={footer}>
             <PropGrid className="my-2" rows={rows} values={this.coupon} alignValue="right" />
         </Page>
     })

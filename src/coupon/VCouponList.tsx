@@ -42,7 +42,7 @@ export class VCouponList extends VPage<CCoupon> {
 
         let right = <div onClick={onshowCreateCoupon} className="cursor-pointer py-2"><FA name="plus" /></div>;
         let none = <div className="my-3 mx-2 text-warning">还没有优惠码哦！马上添加招揽客户吧！</div>;
-        return <Page header='优惠码' headerClassName='bg-primary py-1 px-3' right={right} >
+        return <Page header='优惠码' headerClassName='bg-primary py-1 px-3' >
             <SearchBox className="px-1 w-100  mt-2 mr-2  "
                 size='md'
                 onSearch={(key: string) => this.controller.searchByKey(key)}

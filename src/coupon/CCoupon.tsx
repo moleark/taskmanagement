@@ -92,7 +92,6 @@ export class CCoupon extends Controller {
         }
         await this.actionCreateCoupon.submit(coupon);
         this.closePage();
-        await this.searchByKey(undefined);
     }
     //作废优惠码
     invalidCoupon = async (param: any) => {
@@ -101,6 +100,7 @@ export class CCoupon extends Controller {
         await this.tuidCoupon.save(coupon.id, coupon);
     }
 
+    /***
     //显示客户
     showCouponCustomer = async (param: any) => {
         this.searchCouponCustomer(param.id);
@@ -112,12 +112,13 @@ export class CCoupon extends Controller {
         let cust = await this.querySearchCouponCustomer.table(param);
         this.customers = cust;
     }
+    */
 
     //显示客户
-    showAddCouponCustomer = async (coupon: any) => {
+    showAddCouponCustomer = async () => {
         let { cCustomer } = this.cApp;
-        let cusomter = await cCustomer.call();
-        await this.addCouponCustomer(coupon, cusomter);
+        this.customers = await cCustomer.call();
+
     }
     //添加客户
     addCouponCustomer = async (coupon: any, customer: any) => {

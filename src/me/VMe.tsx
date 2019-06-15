@@ -69,7 +69,7 @@ export class VMe extends VPage<CMe> {
         let onshowEmployeeHistory = async () => await showEmployeeHistory();
         let onshowTeam = async () => await showTeam();
         let onshowOrderHistory = async () => await showOrderHistory(this.user.id);
-        let onshowCoupon = async () => await cCoupon.start();
+        let onshowCreateCoupon = async () => await cCoupon.showCreateCoupon()
 
         let rows: Prop[] = [
             {
@@ -90,7 +90,7 @@ export class VMe extends VPage<CMe> {
             } as ComponentProp,
             {
                 type: 'component',
-                component: rowCom('th-large', 'text-warning', '优惠码', undefined, onshowCoupon),
+                component: rowCom('th-large', 'text-warning', '优惠码', undefined, onshowCreateCoupon),
             } as ComponentProp,
         ];
 
