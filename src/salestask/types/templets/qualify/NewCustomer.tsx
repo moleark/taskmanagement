@@ -3,7 +3,7 @@ import { FA } from 'tonva';
 import { TaskCommonType } from '../../taskCommonType';
 import { UiSchema, UiCheckItem, UiInputItem, UiRadio } from 'tonva';
 
-export const NewCustomerDev: TaskCommonType = {
+export const NewCustomer: TaskCommonType = {
     caption: '新客服开发',
     icon: <FA name='plus' size="lg" fixWidth={true} />,
     schema: [

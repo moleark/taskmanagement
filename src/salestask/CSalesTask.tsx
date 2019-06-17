@@ -168,8 +168,15 @@ export class CSalesTask extends Controller {
     //显示开始------------------------------------------------
     //显示销售任务明细页面
     showTaskDetailEdit = async (task: Task) => {
-        let tt = this.getCTaskType(task.biz.obj.name);
-        if (tt !== undefined) tt.showDetailEdit(task);
+
+        let name = task.biz.obj ? task.biz.obj.name : task.biz.name;
+        if (name == "newcustomer") {
+            let { cNewCustomer } = this.cApp;
+            cNewCustomer.showFinish(task);
+        } else {
+            let tt = this.getCTaskType(task.biz.obj.name);
+            if (tt !== undefined) tt.showDetailEdit(task);
+        }
     }
     //显示销售任务明细页面
     showDetailFromId = async (task: Task) => {
@@ -178,7 +185,12 @@ export class CSalesTask extends Controller {
     //显示任务完结页面
     showTaskComplet = async (task: Task) => {
         let name = task.biz.obj ? task.biz.obj.name : task.biz.name;
-        this.getCTaskType(name).showComplet(task);
+        if (name == "newcustomer") {
+            let { cNewCustomer } = this.cApp;
+            cNewCustomer.showFinish(task);
+        } else {
+            this.getCTaskType(name).showComplet(task);
+        }
     }
     //显示结束------------------------------------------------
 

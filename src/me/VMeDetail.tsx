@@ -26,11 +26,6 @@ export class VMeDetail extends VPage<CMe> {
         this.openPage(this.page);
     }
 
-    private logout = () => {
-        nav.showLogout();
-    }
-
-
     private onItemChanged = async (itemSchema: ItemSchema, newValue: any, preValue: any) => {
         let { name } = itemSchema;
         await userApi.userSetProp(name, newValue);

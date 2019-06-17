@@ -14,6 +14,7 @@ import { CTeam } from 'team/CTeam';
 import { CMessage } from 'message/CMessage';
 import { CCustomerUnit } from 'customer/CCustomerUnit';
 import { CCoupon } from 'coupon/CCoupon';
+import { CNewCustomer } from 'salestask/types/newcustomer/CNewCustomer';
 
 
 export class CSalesTaskApp extends CApp {
@@ -33,6 +34,7 @@ export class CSalesTaskApp extends CApp {
     cMessage: CMessage;
     cCustomerUnit: CCustomerUnit;
     cCoupon: CCoupon;
+    cNewCustomer: CNewCustomer;
 
     protected async internalStart(param?: any) {
 
@@ -51,6 +53,7 @@ export class CSalesTaskApp extends CApp {
         this.cMessage = new CMessage(this, undefined);
         this.cCustomerUnit = new CCustomerUnit(this, undefined);
         this.cCoupon = new CCoupon(this, undefined);
+        this.cNewCustomer = new CNewCustomer(this, undefined);
 
         /** 启动销售任务列表*/
         //this.cSalesTask.start();

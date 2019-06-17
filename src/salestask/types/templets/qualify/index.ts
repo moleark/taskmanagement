@@ -1,4 +1,4 @@
 export * from './CustomerDev';
-export * from './NewCustomerDev';
+export * from './NewCustomer';
 export * from './CustomerInfoDev';
 export * from './Graduation';

@@ -6,7 +6,7 @@ import { CType } from './CType';
 import { CSalesTask } from 'salestask';
 import { TaskCommonType } from './taskCommonType';
 import { CCommonType } from './commonType/CCommonType';
-import { Marketing, Trial, NonReagent, Reagent, BagOrderCancel, BagOrder, Signback, NotUptoStandard, RepeatPurchase, CustomerDev, CustomerInfoDev, NewCustomerDev, Graduation } from './templets';
+import { Marketing, Trial, NonReagent, Reagent, BagOrderCancel, BagOrder, Signback, NotUptoStandard, RepeatPurchase, CustomerDev, CustomerInfoDev, NewCustomer, Graduation } from './templets';
 
 interface CTaskTypeConstructor {
     new(res: any): CType;
@@ -26,8 +26,9 @@ const taskTypeConstuctors: { [type: string]: CTaskTypeConstructor | TaskCommonTy
 
     customerdev: CustomerDev,
     customerinfodev: CustomerInfoDev,
-    newcustomerdev: NewCustomerDev,
+    newcustomerdev: NewCustomer,
     graduation: Graduation,
+    newcustomer: NewCustomer,
 };
 
 export function createTaskTypes(cSalesTask: CSalesTask): { [type: string]: CType } {
