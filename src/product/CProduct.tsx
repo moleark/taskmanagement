@@ -5,8 +5,9 @@ import { PageItems, Controller, nav, Page, Image } from 'tonva';
 import { CSalesTaskApp } from '../CSalesTaskApp';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { VProductList } from './VProductList';
 import { VProductSelect } from './VProductSelect';
+import { VProductList } from './VProductList';
+import { VProductDetail } from './VProductDetail';
 
 //页面类
 class PageProduct extends PageItems<any> {
@@ -37,6 +38,7 @@ export class CProduct extends Controller {
 
     cApp: CSalesTaskApp;
     @observable pageProduct: PageProduct;
+    private productTuid: Tuid;
     private querySearchProduct: Query;
     @observable customerlist: any;
 
@@ -46,6 +48,7 @@ export class CProduct extends Controller {
         this.cApp = cApp;
 
         let { cUqProduct } = this.cApp;
+        this.productTuid = cUqProduct.tuid('productx');
         this.querySearchProduct = cUqProduct.query("searchProduct");
     }
 
@@ -64,6 +67,12 @@ export class CProduct extends Controller {
     //选择客户--给调用页面返回客户id
     returnProduct = async (product: any): Promise<any> => {
         this.returnCall(product);
+    }
+
+    //显示产品明细
+    showProductDetail = async (param: any): Promise<any> => {
+        let procust = await this.productTuid.load(param.id);
+        this.openVPage(VProductDetail, procust)
     }
 
     render = observer(() => {

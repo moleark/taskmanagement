@@ -5,7 +5,6 @@ import { CSalesTask } from '../CSalesTask';
 import { List, LMR, EasyDate, FA } from 'tonva';
 import { observer } from 'mobx-react';
 import { tv } from 'tonva';
-import { Task } from 'salestask/model';
 
 export class VMain extends VPage<CSalesTask> {
 

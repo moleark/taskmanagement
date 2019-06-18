@@ -5,6 +5,7 @@ import { LMR, List, EasyDate, SearchBox, StringProp, ComponentProp, Prop, PropGr
 import { CProduct } from './CProduct';
 import { tv } from 'tonva';
 import { ProductImage } from 'tools/productImage';
+import { async } from 'q';
 
 export class VProductList extends VPage<CProduct> {
 
@@ -30,8 +31,10 @@ export class VProductList extends VPage<CProduct> {
         </>;
     }
     private renderProduct = (product: any, index: number) => {
+        let { showProductDetail } = this.controller;
         let { brand, description, descriptionC, CAS, purity, molecularFomula, molecularWeight, origin, imageUrl } = product;
-        return <div className="d-block mb-4 px-2">
+        let onshowProductDetail = async () => await showProductDetail(product);
+        return <div className="d-block mb-4 px-2" onClick={onshowProductDetail}>
             <div className="py-2">
                 <div><strong>{description}</strong></div>
                 <div>{descriptionC}</div>
@@ -58,7 +61,8 @@ export class VProductList extends VPage<CProduct> {
         await this.controller.pageProduct.more();
     }
 
-    private page = observer((customer: any) => {
+    private page = observer((product: any) => {
+
         let { pageProduct } = this.controller;
         let add = <div className="cursor-pointer "><FA name="plus" /></div>;
         let none = <div className="my-3 mx-2 text-warning">未搜索到产品</div>;
