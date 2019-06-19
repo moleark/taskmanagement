@@ -24,6 +24,7 @@ import { CCommonType } from './types/commonType';
 import { VCreateProject } from './views/VCreateProject';
 import { VProjectDetail } from './views/VProjectDetail';
 import { VCreateProductPack } from './views/VCreateProductPack';
+import { LoaderProductChemicalWithPrices } from 'product/item';
 
 class PageSalesTask extends PageItems<any> {
 
@@ -56,14 +57,17 @@ export class CSalesTask extends Controller {
 
     private taskTypes: { [type: string]: CType } = {};
     @observable tasks: Tasks;
+    @observable createproduct: CreateProduct;
     protected completionTaskAction: Action;
     protected extensionTaskAction: Action;
     protected addTaskAction: Action;
     protected createTaskProductAction: Action;
+    protected createTaskProductPackAction: Action;
     protected createTaskProjectAction: Action;
     private taskTuid: Tuid;
     private tuidCustomer: Tuid;
-    private taskTypeTuid: Tuid;
+    private tuidTaskType: Tuid;
+    private tuidProduct: Tuid;
     private qeurySearchTask: Query;
     private qeurySearchHistory: Query;
     private qeurySearchEmployeeHistory: Query;
@@ -80,10 +84,11 @@ export class CSalesTask extends Controller {
         this.cSelectType = new CSelectType(this, undefined);
         this.cSalesTaskBiz = new CSelectBiz(this, undefined);
 
-        let { cUqSalesTask, cUqCustomer } = this.cApp;
+        let { cUqSalesTask, cUqCustomer, cUqProduct } = this.cApp;
         this.taskTuid = cUqSalesTask.tuid("task");
         this.tuidCustomer = cUqCustomer.tuid('customer');
-        this.taskTypeTuid = cUqSalesTask.tuid("tasktype");
+        this.tuidTaskType = cUqSalesTask.tuid("tasktype");
+        this.tuidProduct = cUqProduct.tuid('productx');
 
         this.taskBook = cUqSalesTask.book("taskbook");
         this.completionTaskAction = cUqSalesTask.action('CompletionTask');
@@ -91,6 +96,8 @@ export class CSalesTask extends Controller {
         this.addTaskAction = cUqSalesTask.action('AddTask');
         this.createTaskProductAction = cUqSalesTask.action('CreateTaskProduct');
         this.createTaskProjectAction = cUqSalesTask.action('CreateTaskProject');
+        this.createTaskProductPackAction = cUqSalesTask.action('CreateTaskProductPack');
+
 
         this.qeurySearchTask = cUqSalesTask.query("searchtask");
         this.qeurySearchHistory = cUqSalesTask.query("searchhistorytask");
@@ -168,7 +175,6 @@ export class CSalesTask extends Controller {
     //显示开始------------------------------------------------
     //显示销售任务明细页面
     showTaskDetailEdit = async (task: Task) => {
-
         let name = task.biz.obj ? task.biz.obj.name : task.biz.name;
         if (name == "newcustomer") {
             let { cNewCustomer } = this.cApp;
@@ -251,19 +257,24 @@ export class CSalesTask extends Controller {
     //显示选择产品页面
     showPorductSelect = async (task: Task) => {
         let { cProduct } = this.cApp;
-        let product = await cProduct.call();
-
         let createproduct = {
             task: task,
-            product: product,
+            product: null,
+            pack: null,
             note: null
         }
-        this.openVPage(VCreateProduct, createproduct);
+        this.createproduct.task = task;
+        cProduct.showProductSelect(createproduct);
+    }
+    showPorductSelectDetail = async (createproduct: any) => {
+        this.createproduct = createproduct;
+        this.openVPage(VCreateProduct, this.createproduct);
     }
 
     //添加产品
-    createTaskProduct = async (createProduct: CreateProduct) => {
-        let { product, task, note } = createProduct;
+    createTaskProduct = async (createproduct: CreateProduct) => {
+        this.createproduct = createproduct;
+        let { product, task, note } = this.createproduct;
         note = note ? note : undefined;
         let param = { taskid: task.id, productid: product.productid, note: note };
         this.createTaskProductAction.submit(param);
@@ -272,8 +283,7 @@ export class CSalesTask extends Controller {
     //显示产品列表
     showTaskProductDetail = async (task: Task) => {
         let products = await this.qeurySearchTaskProduct.table({ taskid: task.id });
-        /*
-        products.map((v, index) => {
+        /*products.map((v, index) => {
             await v.product.assure();
             let aa = v.product;
             let aaa = 1;
@@ -284,21 +294,31 @@ export class CSalesTask extends Controller {
     //添加包装-显示
     showPorductPackSelect = async (task: Task) => {
         let { cProduct } = this.cApp;
-        let product = await cProduct.call();
-
         let createproduct = {
             task: task,
-            product: product,
+            product: null,
+            pack: null,
             note: null
         }
-        this.openVPage(VCreateProductPack, createproduct);
+        cProduct.showProductPackSelect(createproduct);
+    }
+    showPorductPackSelectDetail = async (createproduct: any) => {
+        this.createproduct = createproduct;
+        //let product = await this.tuidProduct.load(createproduct.product.productid);
+        //createproduct.product.packx = product.packx;
+        //this.openVPage(VCreateProductPack, createproduct);
+        let loader = new LoaderProductChemicalWithPrices(this.cApp);
+        let product = await loader.load(createproduct.product.productid);
+
+        this.openVPage(VCreateProductPack, product)
     }
 
-
     //添加包装
-    createTaskProjectPack = async (task: Task, note: string) => {
-        let param = { taskid: task.id, note: note };
-        await this.createTaskProjectAction.submit(param);
+    createTaskProjectPack = async (createproduct: any) => {
+        this.createproduct = createproduct;
+        let { task, product, note } = this.createproduct;
+        let param = { taskid: task.id, product: product.id, pack: 3299926, note: note };
+        await this.createTaskProductPackAction.submit(param);
     }
 
     //显示包装列表
@@ -306,7 +326,6 @@ export class CSalesTask extends Controller {
         let projects = await this.qeurySearchTaskProject.table({ taskid: task.id });
         this.openVPage(VProjectDetail, projects);
     }
-
 
     //添加项目-显示
     showCreateProject = async (task: Task) => {

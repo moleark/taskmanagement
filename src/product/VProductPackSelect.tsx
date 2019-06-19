@@ -4,10 +4,12 @@ import { observer } from 'mobx-react';
 import { CProduct } from './CProduct';
 import { ProductImage } from 'tools/productImage';
 
-export class VProductSelect extends VPage<CProduct> {
+export class VProductPackSelect extends VPage<CProduct> {
 
-    async open(customer: any) {
-        this.openPage(this.page, customer);
+    private createproduct: any;
+    async open(createproduct: any) {
+        this.createproduct = createproduct;
+        this.openPage(this.page, createproduct);
     }
 
     //每个视图都有一个render方法， 用于自定义页面
@@ -55,17 +57,25 @@ export class VProductSelect extends VPage<CProduct> {
         await this.controller.pageProduct.more();
     }
 
+
+    private onSelectItem = async (product: any) => {
+        let { showPorductPackSelectDetail } = this.controller.cApp.cSalesTask;
+        this.createproduct.product = product;
+        showPorductPackSelectDetail(this.createproduct);
+    }
+
+
     private page = observer((customer: any) => {
         let { pageProduct, returnProduct } = this.controller;
         let add = <div className="cursor-pointer "><FA name="plus" /></div>;
         let none = <div className="my-3 mx-2 text-warning">未搜索到产品</div>;
 
-        return <Page header='添加产品' onScrollBottom={this.onScrollBottom} headerClassName='bg-primary py-1'>
+        return <Page header='选择包装' onScrollBottom={this.onScrollBottom} headerClassName='bg-primary py-1'>
             <SearchBox className="px-1 w-100  mt-2 mr-2 "
                 size='md'
                 onSearch={(key: string) => this.controller.searchByKey(key)}
                 placeholder="搜索品名、编号、CAS、MDL等" />
-            <List before={''} none={none} items={pageProduct} item={{ render: this.renderProduct, onClick: returnProduct }} />
+            <List before={''} none={none} items={pageProduct} item={{ render: this.renderProduct, onClick: this.onSelectItem }} />
         </Page>
     })
 }

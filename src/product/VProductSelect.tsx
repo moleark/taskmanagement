@@ -5,12 +5,14 @@ import { LMR, List, EasyDate, SearchBox, StringProp, ComponentProp, Prop, PropGr
 import { CProduct } from './CProduct';
 import { tv } from 'tonva';
 import { ProductImage } from 'tools/productImage';
+import { async } from 'q';
 
 export class VProductSelect extends VPage<CProduct> {
 
-    async open(customer: any) {
-
-        this.openPage(this.page, customer);
+    private createproduct: any;
+    async open(createproduct: any) {
+        this.createproduct = createproduct;
+        this.openPage(this.page, createproduct);
     }
 
     //每个视图都有一个render方法， 用于自定义页面
@@ -58,8 +60,15 @@ export class VProductSelect extends VPage<CProduct> {
         await this.controller.pageProduct.more();
     }
 
-    private page = observer((customer: any) => {
+    private onSelectItem = async (product: any) => {
+        let { showPorductSelectDetail } = this.controller.cApp.cSalesTask;
+        this.createproduct.product = product;
+        showPorductSelectDetail(this.createproduct);
+    }
+
+    private page = observer((product: any) => {
         let { pageProduct, returnProduct } = this.controller;
+
         let add = <div className="cursor-pointer "><FA name="plus" /></div>;
         let none = <div className="my-3 mx-2 text-warning">未搜索到产品</div>;
 
@@ -68,7 +77,7 @@ export class VProductSelect extends VPage<CProduct> {
                 size='md'
                 onSearch={(key: string) => this.controller.searchByKey(key)}
                 placeholder="搜索品名、编号、CAS、MDL等" />
-            <List before={''} none={none} items={pageProduct} item={{ render: this.renderProduct, onClick: returnProduct }} />
+            <List before={''} none={none} items={pageProduct} item={{ render: this.renderProduct, onClick: this.onSelectItem }} />
         </Page>
     })
 }
