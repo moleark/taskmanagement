@@ -1,21 +1,15 @@
 //import * as React from 'react';
-import { User, nav } from 'tonva';
 import { CApp, CUq } from 'tonva';
 import { CSalesTask } from 'salestask';
 import { consts } from './consts';
-import { CSelectType } from './salestask/type';
 import { CCustomer } from 'customer/CCustomer';
 import { CProduct } from 'product/CProduct';
-import { CType } from 'salestask/types/createTypes';
 import { CMe } from 'me/CMe';
-import { CCommonType } from 'salestask/types/commonType';
 import { CStart } from 'start/CStart';
 import { CTeam } from 'team/CTeam';
 import { CMessage } from 'message/CMessage';
 import { CCustomerUnit } from 'customer/CCustomerUnit';
 import { CCoupon } from 'coupon/CCoupon';
-import { CNewCustomer } from 'salestask/types/newcustomer/CNewCustomer';
-
 
 export class CSalesTaskApp extends CApp {
 
@@ -39,7 +33,6 @@ export class CSalesTaskApp extends CApp {
     cMessage: CMessage;
     cCustomerUnit: CCustomerUnit;
     cCoupon: CCoupon;
-    cNewCustomer: CNewCustomer;
 
     protected async internalStart(param?: any) {
 
@@ -61,7 +54,6 @@ export class CSalesTaskApp extends CApp {
         this.cMessage = new CMessage(this, undefined);
         this.cCustomerUnit = new CCustomerUnit(this, undefined);
         this.cCoupon = new CCoupon(this, undefined);
-        this.cNewCustomer = new CNewCustomer(this, undefined);
 
         let salesRegionTuid = this.cUqCommon.tuid('salesregion');
         this.currentSalesRegion = await salesRegionTuid.load(1);

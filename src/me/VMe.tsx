@@ -76,6 +76,10 @@ export class VMe extends VPage<CMe> {
         let rows: Prop[] = [
             {
                 type: 'component',
+                component: rowCom('th-large', 'text-warning', '优惠码', undefined, onshowCreateCoupon),
+            } as ComponentProp,
+            {
+                type: 'component',
                 component: rowCom('tag', 'text-info', '已完成任务', undefined, onshowEmployeeHistory),
             } as ComponentProp,
             {
@@ -85,10 +89,6 @@ export class VMe extends VPage<CMe> {
             {
                 type: 'component',
                 component: rowCom('sitemap', 'text-info', '我的团队', undefined, onshowTeam),
-            } as ComponentProp,
-            {
-                type: 'component',
-                component: rowCom('th-large', 'text-warning', '优惠码', undefined, onshowCreateCoupon),
             } as ComponentProp,
         ];
 

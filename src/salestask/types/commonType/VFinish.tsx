@@ -53,9 +53,10 @@ export class VFinish extends VPage<CCommonType> {
     render(task: Task) {
         this.task = task;
         let { completSchema, completuiSchema } = this.controller.taskCommonType;
-        let { showTaskProductDetail, showTaskProjectDetail, showPorductPackSelect } = this.controller.cSalesTask;
+        let { showTaskProductDetail, showTaskProjectDetail, showTaskProjectPackDetail } = this.controller.cSalesTask;
         let onShowProduct = async () => await showTaskProductDetail(this.task);
         let onShowProject = async () => await showTaskProjectDetail(this.task);
+        let onshowTaskProjectPackDetail = async () => await showTaskProjectPackDetail(this.task);
 
         let cssLMR = "bg-white row my-1 py-2";
         return <div className="mx-3">
@@ -69,7 +70,7 @@ export class VFinish extends VPage<CCommonType> {
                 <div className="w-100 ml-3" onClick={onShowProduct} >产品列表 <span className="fa-stack"></span></div>
             </LMR>
             <LMR className={cssLMR} right={<div onClick={this.onCreateProjectPack} className="mr-3"><FA name="plus" /></div>} >
-                <div className="w-100 ml-3" onClick={onShowProject} >包装列表 <span className="fa-stack"></span></div>
+                <div className="w-100 ml-3" onClick={onshowTaskProjectPackDetail} >包装列表 <span className="fa-stack"></span></div>
             </LMR>
             <LMR className={cssLMR} right={<div onClick={this.onCreateProject} className="mr-3"><FA name="plus" /></div>} >
                 <div className="w-100 ml-3" onClick={onShowProject} >项目列表 <span className="fa-stack"></span></div>

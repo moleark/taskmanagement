@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as _ from 'lodash';
 import { Tuid, Controller, Map } from 'tonva';
-import { observable } from 'mobx';
 import { CSalesTask } from '../CSalesTask';
 import { VAi } from './VAi';
 import { VSelectBiz } from './VSelectBiz';

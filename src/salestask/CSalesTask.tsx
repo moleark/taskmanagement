@@ -25,6 +25,7 @@ import { VCreateProject } from './views/VCreateProject';
 import { VProjectDetail } from './views/VProjectDetail';
 import { VCreateProductPack } from './views/VCreateProductPack';
 import { LoaderProductChemicalWithPrices } from 'product/item';
+import { VProductPackDetail } from './views/VProductPackDetail';
 
 class PageSalesTask extends PageItems<any> {
 
@@ -75,6 +76,7 @@ export class CSalesTask extends Controller {
     private qeurySearchTaskCompletion: Query;
     private qeurySearchTaskProduct: Query;
     private qeurySearchTaskProject: Query;
+    private qeurySearchTaskProductPack: Query;
 
     private taskBook: any;
 
@@ -106,6 +108,8 @@ export class CSalesTask extends Controller {
         this.qeurySearchTaskCompletion = cUqSalesTask.query("searchtaskcompletion");
         this.qeurySearchTaskProduct = cUqSalesTask.query("SearchTaskProduct");
         this.qeurySearchTaskProject = cUqSalesTask.query("SearchTaskProject");
+        this.qeurySearchTaskProductPack = cUqSalesTask.query("SearchTaskProductPack");
+
 
         this.taskTypes = createTaskTypes(this);
     }
@@ -176,13 +180,8 @@ export class CSalesTask extends Controller {
     //显示销售任务明细页面
     showTaskDetailEdit = async (task: Task) => {
         let name = task.biz.obj ? task.biz.obj.name : task.biz.name;
-        if (name == "newcustomer") {
-            let { cNewCustomer } = this.cApp;
-            cNewCustomer.showFinish(task);
-        } else {
-            let tt = this.getCTaskType(task.biz.obj.name);
-            if (tt !== undefined) tt.showDetailEdit(task);
-        }
+        let tt = this.getCTaskType(task.biz.obj.name);
+        if (tt !== undefined) tt.showDetailEdit(task);
     }
     //显示销售任务明细页面
     showDetailFromId = async (task: Task) => {
@@ -191,12 +190,7 @@ export class CSalesTask extends Controller {
     //显示任务完结页面
     showTaskComplet = async (task: Task) => {
         let name = task.biz.obj ? task.biz.obj.name : task.biz.name;
-        if (name == "newcustomer") {
-            let { cNewCustomer } = this.cApp;
-            cNewCustomer.showFinish(task);
-        } else {
-            this.getCTaskType(name).showComplet(task);
-        }
+        this.getCTaskType(name).showComplet(task);
     }
     //显示结束------------------------------------------------
 
@@ -259,9 +253,9 @@ export class CSalesTask extends Controller {
         let { cProduct } = this.cApp;
         let createproduct = {
             task: task,
-            product: null,
-            pack: null,
-            note: null
+            product: undefined,
+            pack: undefined,
+            note: undefined
         }
         this.createproduct.task = task;
         cProduct.showProductSelect(createproduct);
@@ -296,17 +290,14 @@ export class CSalesTask extends Controller {
         let { cProduct } = this.cApp;
         let createproduct = {
             task: task,
-            product: null,
-            pack: null,
-            note: null
+            product: undefined,
+            pack: undefined,
+            note: undefined
         }
         cProduct.showProductPackSelect(createproduct);
     }
     showPorductPackSelectDetail = async (createproduct: any) => {
         this.createproduct = createproduct;
-        //let product = await this.tuidProduct.load(createproduct.product.productid);
-        //createproduct.product.packx = product.packx;
-        //this.openVPage(VCreateProductPack, createproduct);
         let loader = new LoaderProductChemicalWithPrices(this.cApp);
         let product = await loader.load(createproduct.product.productid);
 
@@ -316,16 +307,24 @@ export class CSalesTask extends Controller {
     //添加包装
     createTaskProjectPack = async (createproduct: any) => {
         this.createproduct = createproduct;
-        let { task, product, note } = this.createproduct;
-        let param = { taskid: task.id, product: product.id, pack: 3299926, note: note };
-        await this.createTaskProductPackAction.submit(param);
+        let { task, product, note, pack } = this.createproduct;
+        let productid = product.productid;
+        let taskid = task.id;
+
+        let promises: PromiseLike<any>[] = [];
+        pack.forEach(v => {
+            promises.push(this.createTaskProductPackAction.submit({ task: taskid, product: productid, pack: v, note: note }));
+        })
+        let results = await Promise.all(promises);
+        this.closePage(2);
     }
 
     //显示包装列表
     showTaskProjectPackDetail = async (task: Task) => {
-        let projects = await this.qeurySearchTaskProject.table({ taskid: task.id });
-        this.openVPage(VProjectDetail, projects);
+        let projects = await this.qeurySearchTaskProductPack.table({ taskid: task.id });
+        this.openVPage(VProductPackDetail, projects);
     }
+
 
     //添加项目-显示
     showCreateProject = async (task: Task) => {

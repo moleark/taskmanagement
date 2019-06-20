@@ -10,8 +10,6 @@ import { VProductList } from './VProductList';
 import { VProductDetail } from './VProductDetail';
 import { LoaderProductChemicalWithPrices } from './item';
 import { ProductImage } from 'tools/productImage';
-import { async } from 'q';
-import { VCreateProduct } from 'salestask/views/VCreateProduct';
 import { VProductPackSelect } from './VProductPackSelect';
 
 //页面类
