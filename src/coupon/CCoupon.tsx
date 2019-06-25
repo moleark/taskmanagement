@@ -47,6 +47,8 @@ export class CCoupon extends Controller {
     private querySearchCouponCustomer: Query;
     private actionCreateCoupon: Action;
     private actionAddCouponCustomer: Action;
+    private actionIsCanUseCoupon: Action;
+
 
     //构造函数
     constructor(cApp: CSalesTaskApp, res: any) {
@@ -55,9 +57,11 @@ export class CCoupon extends Controller {
         let { cUqSalesTask } = this.cApp;
         this.tuidCoupon = cUqSalesTask.tuid("Coupon");
         this.querySearchCoupon = cUqSalesTask.query("SearchCoupon");
-        this.actionCreateCoupon = cUqSalesTask.action("CreateCoupon");
         this.querySearchCouponCustomer = cUqSalesTask.query("SearchCouponCustomer");
+        this.actionCreateCoupon = cUqSalesTask.action("CreateCoupon");
         this.actionAddCouponCustomer = cUqSalesTask.action("CreateCouponCustomer");
+        this.actionIsCanUseCoupon = cUqSalesTask.action("IsCanUseCoupon");
+
     }
 
     //初始化
@@ -65,6 +69,7 @@ export class CCoupon extends Controller {
         this.pageCoupon = null;
         await this.searchByKey(undefined);
         this.openVPage(VCouponList);
+        this.IsCanUseCoupon();
     }
 
     //查询客户--通过名称
@@ -77,6 +82,15 @@ export class CCoupon extends Controller {
     showCouponDetail = async (couponid: any) => {
         let coupon = await this.tuidCoupon.load(couponid);
         this.openVPage(VCouponDetail, coupon);
+    }
+
+    IsCanUseCoupon = async () => {
+
+        let coupon = {
+            code: "00032229",
+            webuser: "47"
+        }
+        this.actionIsCanUseCoupon.submit(coupon);
     }
 
     //显示添加优惠码页面

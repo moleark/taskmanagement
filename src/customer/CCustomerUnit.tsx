@@ -1,10 +1,8 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { Query, tv, Tuid, Action } from 'tonva';
-import { PageItems, Controller, nav, Page, Image } from 'tonva';
+import { Query, PageItems, Controller, Tuid, Action } from 'tonva';
 import { CSalesTaskApp } from '../CSalesTaskApp';
 import { observable } from 'mobx';
-import { VCustomerSelect } from './VCustomerSelect';
 import { Task } from 'salestask/model';
 import { VCustomerUnit } from './VCustomerUnit';
 import { VCreateCustomerUnit } from './VCreateCustomerUnit';
@@ -60,7 +58,6 @@ export class CCustomerUnit extends Controller {
         this.pageUnit = null;
         this.openVPage(VCustomerUnit);
     }
-
 
     //查询客户--通过名称
     searchByKey = async (key: string) => {

@@ -26,13 +26,19 @@ export class VCouponList extends VPage<CCoupon> {
 
         let aleft = <div><FA name='th-large' className=' my-2 mr-3 text-warning' />{inviteCode}</div>;
         let aright = <div className="text-muted"><small>有效期：<EasyDate date={validitydate} /></small></div>;
-
-        let bleft = <div><small>折扣：<span className=" mx-3 ">{discount} 折</span></small></div>;
+        var bcenter: any;
+        var bleft: any;
+        if (discount) {
+            bleft = <div><small>折扣：<span className=" mx-3 ">{discount} 折</span></small></div>;
+        }
+        if (preferential) {
+            bcenter = <div className="text-muted"><small>优惠：<span className="mx-3">￥{preferential}</span></small></div>;
+        }
 
         return <LMR className="px-3 py-2" onClick={onshowCouponDetail}>
             <LMR left={aleft} right={aright}></LMR>
             <LMR left={bleft}>
-                <div className="text-muted"><small>优惠：<span className="mx-3">{preferential}￥</span></small></div>
+                {bcenter}
             </LMR>
         </LMR >
     }
