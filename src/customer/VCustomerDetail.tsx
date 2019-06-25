@@ -53,13 +53,17 @@ export class VCustomerDetail extends VPage<CCustomer> {
 
     private page = observer(() => {
 
-        let { cSalesTask, cCustomerUnit } = this.controller.cApp
+        let { cSalesTask, cCustomerUnit, cCustomer } = this.controller.cApp
         let { showCustomerHistory } = cSalesTask;
         let { id: customerid, unit } = this.customer
         let { showCustomerUnitDetail } = cCustomerUnit;
+        let { showCustomerRelation } = cCustomer;
+
 
         let onshowCustomerHistory = async () => await showCustomerHistory(customerid);
         let onshowCustomerUnitDetail = async () => await showCustomerUnitDetail(unit);
+        let onshowCustomerRelation = async () => await showCustomerRelation(unit);
+
 
         let rows: Prop[] = [
             {
@@ -75,6 +79,14 @@ export class VCustomerDetail extends VPage<CCustomer> {
                 name: 'customer',
                 component: <LMR className="cursor-pointer w-100 py-3" onClick={onshowCustomerHistory}
                     left={< div > <small><FA name='hand-o-right' className='text-info' /></small> &nbsp;沟通记录</div>}
+                    right={< div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div >}>
+                </LMR >,
+            } as ComponentProp,
+            {
+                type: 'component',
+                name: 'customer',
+                component: <LMR className="cursor-pointer w-100 py-3" onClick={onshowCustomerRelation}
+                    left={< div > <small><FA name='share-alt' className='text-info' /></small> &nbsp;关联客户</div>}
                     right={< div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div >}>
                 </LMR >,
             } as ComponentProp,

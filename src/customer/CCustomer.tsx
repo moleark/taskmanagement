@@ -14,6 +14,7 @@ import { VCreateCustomer } from './VCreateCustomer';
 import { async } from 'q';
 import { VCreateCustomerFinish } from './VCreateCustomerFinish';
 import { VCustomerSelectCall } from './VCustomerSelectCall';
+import { VCustomerRelation } from './VCustomerRelation';
 
 //页面类
 class PageCustomer extends PageItems<any> {
@@ -74,7 +75,6 @@ export class CCustomer extends Controller {
 
     //查询客户--通过名称
     searchByKey = async (key: string) => {
-
         this.pageCustomer = new PageCustomer(this.querySearchMyCustomer);
         this.pageCustomer.first({ key: key });
     }
@@ -140,6 +140,11 @@ export class CCustomer extends Controller {
     updateMyCustomer = async (param: any) => {
         await this.tuidMyCustomer.save(param.id, param);
         this.closePage();
+    }
+
+    //显示关联关系
+    showCustomerRelation = async (param: any) => {
+        this.openVPage(VCustomerRelation);
     }
 
     render = observer(() => {

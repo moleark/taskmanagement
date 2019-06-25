@@ -66,11 +66,12 @@ class Discount extends Widget {
                 return <label className="my-1 mx-3"><input type="radio" value={v.value} name={v.name} onChange={this.onChange} /> {v.title} &nbsp; </label>
             })}
             <div>
-                <table><tr>
-                    <td><label className="my-1 mx-3"><input type="radio" value={-1} name="a" onChange={this.onChange} /> 无 &nbsp;&nbsp;&nbsp;</label></td>
-                    <td><label className="my-1 mx-3"><input type="radio" value={0} name="a" onChange={this.onChange} /> 其他 &nbsp;</label></td>
-                    <td>{this.dateVisible && <input type="text" className="col-xs-4 col-sm-4" onChange={this.onDateChange} />}</td>
-                </tr>
+                <table>
+                    <tr>
+                        <td><label className="my-1 mx-3"><input type="radio" value={-1} name="a" onChange={this.onChange} /> 无 &nbsp;&nbsp;&nbsp;</label></td>
+                        <td><label className="my-1 mx-3"><input type="radio" value={0} name="a" onChange={this.onChange} /> 其他 &nbsp;</label></td>
+                        <td>{this.dateVisible && <input type="text" className="col-xs-4 col-sm-4" onChange={this.onDateChange} />}</td>
+                    </tr>
                 </table>
             </div>
         </div>
