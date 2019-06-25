@@ -16,8 +16,8 @@ self.__precacheManifest = [
     "url": "./static/media/logo.ee7cd8ed.svg"
   },
   {
-    "revision": "0d8373a9c724a9b76c22",
-    "url": "./static/js/2.0d8373a9.chunk.js"
+    "revision": "270df57b0dfd2f57dc68",
+    "url": "./static/js/2.270df57b.chunk.js"
   },
   {
     "revision": "78db51a90bc977871ae4",
@@ -36,23 +36,23 @@ self.__precacheManifest = [
     "url": "./static/media/fontawesome-webfont.fee66e71.woff"
   },
   {
-    "revision": "674f50d287a8c48dc19ba404d20fe713",
-    "url": "./static/media/fontawesome-webfont.674f50d2.eot"
-  },
-  {
     "revision": "b06871f281fee6b241d60582ae9369b9",
     "url": "./static/media/fontawesome-webfont.b06871f2.ttf"
+  },
+  {
+    "revision": "674f50d287a8c48dc19ba404d20fe713",
+    "url": "./static/media/fontawesome-webfont.674f50d2.eot"
   },
   {
     "revision": "912ec66d7572ff821749319396470bde",
     "url": "./static/media/fontawesome-webfont.912ec66d.svg"
   },
   {
-    "revision": "0d8373a9c724a9b76c22",
+    "revision": "270df57b0dfd2f57dc68",
     "url": "./static/css/2.23ea5eac.chunk.css"
   },
   {
-    "revision": "024e1ec1073a5d67129a4b5ae57d2e9a",
+    "revision": "8116abee4cdbdfa18143ebf8e692249e",
     "url": "./index.html"
   }
 ];
