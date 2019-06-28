@@ -57,12 +57,12 @@ export class VCustomerDetail extends VPage<CCustomer> {
         let { showCustomerHistory } = cSalesTask;
         let { id: customerid, unit } = this.customer
         let { showCustomerUnitDetail } = cCustomerUnit;
-        let { showCustomerRelation } = cCustomer;
-
+        let { showCustomerSelect } = cCustomer;
+        let { webuser } = this.controller;
 
         let onshowCustomerHistory = async () => await showCustomerHistory(customerid);
         let onshowCustomerUnitDetail = async () => await showCustomerUnitDetail(unit);
-        let onshowCustomerRelation = async () => await showCustomerRelation(unit);
+        let onshowCustomerSelect = async () => await showCustomerSelect(customerid);
 
 
         let rows: Prop[] = [
@@ -85,50 +85,13 @@ export class VCustomerDetail extends VPage<CCustomer> {
             {
                 type: 'component',
                 name: 'customer',
-                component: <LMR className="cursor-pointer w-100 py-3" onClick={onshowCustomerRelation}
-                    left={< div > <small><FA name='share-alt' className='text-info' /></small> &nbsp;关联客户</div>}
+                component: <LMR className="cursor-pointer w-100 py-3" onClick={onshowCustomerSelect}
+                    left={< div > <small><FA name='share-alt' className='text-info' /></small> &nbsp;平台账户</div>}
                     right={< div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div >}>
+                    <div className="px-3"> {tv(webuser, v => v.name)}</div>
                 </LMR >,
-            } as ComponentProp,
-            {
-                type: 'string',
-                name: 'no',
-                label: '编号',
-                vAlign: "center",
-            } as StringProp
-            /****{
-                type: 'string',
-                name: 'name',
-                label: '姓名',
-                vAlign: "stretch",
-            } as StringProp,
-
-            {
-                type: 'string',
-                name: 'gender',
-                label: '性别',
-                vAlign: "stretch"
-            } as StringProp,
-            {
-                type: 'string',
-                name: 'birthday',
-                label: '生日'
-            } as StringProp,
-            {
-                type: 'string',
-                name: 'birthday',
-                label: '领域',
-                vAlign: 'center'
-            } as StringProp,
-            {
-                type: 'string',
-                name: 'birthday',
-                label: 'TOP单位',
-                vAlign: "stretch",
-            } as StringProp
-             */
+            } as ComponentProp
         ];
-
 
         return <Page header="客户详情" headerClassName={consts.headerClass}>
             <PropGrid className="my-2" rows={rows} values={this.customer} alignValue="right" />

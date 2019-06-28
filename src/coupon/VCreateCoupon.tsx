@@ -42,7 +42,7 @@ class ValidityDate extends Widget {
 
 class Discount extends Widget {
     @observable dateVisible = false;
-    private list = [{ value: 9.5, title: '95折', name: 'a' }, { value: 9, title: '9折', name: 'a' }, { value: 8.5, title: '85折', name: 'a' }, { value: 8, title: ' 8  折     ', name: 'a' }, { value: 7, title: '7折', name: 'a' }, { value: 6, title: '6折', name: 'a' }];
+    private list = [{ value: 0.05, title: '95折', name: 'a' }, { value: 0.1, title: '9折', name: 'a' }, { value: 0.15, title: '85折', name: 'a' }, { value: 0.2, title: ' 8  折     ', name: 'a' }, { value: 0.3, title: '7折', name: 'a' }, { value: 0.4, title: '6折', name: 'a' }];
 
     private onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
         let val = evt.currentTarget.value;

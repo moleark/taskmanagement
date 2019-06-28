@@ -17,12 +17,12 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
     private page = observer(() => {
         var inviteCode = "";
         if (this.code) {
-            this.code = String(this.code + 100000000);
-            let p1 = this.code.substr(1, 4);
-            let p2 = this.code.substr(5);
+            this.code = String(this.code);
+            let p1 = this.code.substr(0, 4);
+            let p2 = this.code.substr(4);
             inviteCode = p1 + ' ' + p2;
         }
-        return <Page header='优惠码' headerClassName='bg-primary py-1 px-3'>
+        return <Page header='优惠码' back="none" headerClassName='bg-primary py-1 px-3'>
             <div className="w-100 text-center m-3 text-muted">
                 优惠码已生成，赶快发给客户吧！
             </div>

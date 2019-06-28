@@ -1,13 +1,11 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { Query, Controller, Map, Tuid, Action, nav, loadAppUqs, PageItems, Context } from 'tonva';
+import { Query, Controller, Tuid, Action, nav, loadAppUqs, PageItems, Context } from 'tonva';
 import { CSalesTaskApp } from '../CSalesTaskApp';
 import { VCouponList } from './VCouponList';
 import { observable } from 'mobx';
 import { VCreateCoupon } from './VCreateCoupon';
 import { VCouponDetail } from './VCouponDetail';
-import { VCouponCustomer } from './VCouponCustomer';
-import { runInThisContext } from 'vm';
 import { VCreateCouponEnd } from './VCreateCouponEnd';
 
 
@@ -69,7 +67,6 @@ export class CCoupon extends Controller {
         this.pageCoupon = null;
         await this.searchByKey(undefined);
         this.openVPage(VCouponList);
-        this.IsCanUseCoupon();
     }
 
     //查询客户--通过名称

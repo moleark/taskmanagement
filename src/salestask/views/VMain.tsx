@@ -67,7 +67,7 @@ export class VMain extends VPage<CSalesTask> {
         let { tasks } = this.controller;
         if (tasks === undefined) return null;
 
-        let none = <div className="my-3 mx-2 text-muted">任务已经处理完了哦！ 休息一下！！</div>;
+        let none = <div className="my-3 mx-2" style={{ color: '#888' }}>无任务</div>;
         let right = <div onClick={this.onSalesTaskAdd} className="cursor-pointer px-3 py-2"><FA name="plus" /></div>;
 
         let item = { render: this.renderSalesTask, onClick: this.onSalesTaskClick };

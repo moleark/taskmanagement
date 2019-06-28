@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { Query, tv, Tuid, Action } from 'tonva';
-import { PageItems, Controller, nav, Page, Image } from 'tonva';
+import { PageItems, Controller, Query, Tuid, Action, Map } from 'tonva';
 import { CSalesTaskApp } from '../CSalesTaskApp';
 import { observable } from 'mobx';
 import { VCustomerSelect } from './VCustomerSelect';
@@ -9,15 +8,12 @@ import { VCustomerDetail } from './VCustomerDetail';
 import { observer } from 'mobx-react';
 import { VCustomerList } from './VCustomerList';
 import { Task } from 'salestask/model';
-import { CCommonType } from 'salestask/types/commonType';
 import { VCreateCustomer } from './VCreateCustomer';
-import { async } from 'q';
 import { VCreateCustomerFinish } from './VCreateCustomerFinish';
-import { VCustomerSelectCall } from './VCustomerSelectCall';
-import { VCustomerRelation } from './VCustomerRelation';
+import { VMyCustomerSelectCall } from './VMyCustomerSelectCall';
 
 //页面类
-class PageCustomer extends PageItems<any> {
+class PageMyCustomer extends PageItems<any> {
 
     private searchCustomerQuery: Query;
 
@@ -44,38 +40,37 @@ class PageCustomer extends PageItems<any> {
 export class CCustomer extends Controller {
 
     cApp: CSalesTaskApp;
-    @observable pageCustomer: PageCustomer;
-    private tuidCustomer: Tuid;
-    private querySearchCustomer: Query;
+    @observable pageCustomer: PageMyCustomer;
+    @observable webuser: any;
     private task: Task;
 
     private tuidMyCustomer: Tuid;
     private querySearchMyCustomer: Query;
     private actionCreateMyCustomer: Action;
+
+    private mapWebUserMyCustomerMap: Map;
     //构造函数
     constructor(cApp: CSalesTaskApp, res: any) {
         super(res);
         this.cApp = cApp;
-
-        let { cUqCustomer, cUqSalesTask } = this.cApp;
-        this.tuidCustomer = cUqCustomer.tuid("customer");
-        this.querySearchCustomer = cUqCustomer.query("searchcustomer");
+        let { cUqSalesTask } = this.cApp;
 
         this.tuidMyCustomer = cUqSalesTask.tuid("mycustomer");
         this.querySearchMyCustomer = cUqSalesTask.query("searchmycustomer");
         this.actionCreateMyCustomer = cUqSalesTask.action("CreateMyCustomer");
+        this.mapWebUserMyCustomerMap = cUqSalesTask.map("WebUserMyCustomerMap");
     }
 
     //初始化
     protected async internalStart(task: Task) {
         this.pageCustomer = null;
         this.task = task;
-        this.openVPage(VCustomerSelectCall);
+        this.openVPage(VMyCustomerSelectCall);
     }
 
     //查询客户--通过名称
     searchByKey = async (key: string) => {
-        this.pageCustomer = new PageCustomer(this.querySearchMyCustomer);
+        this.pageCustomer = new PageMyCustomer(this.querySearchMyCustomer);
         this.pageCustomer.first({ key: key });
     }
 
@@ -86,8 +81,10 @@ export class CCustomer extends Controller {
 
     //查询客户--通过ID
     showCustomerDetail = async (customerid: number) => {
+        await this.searchCustomerRelation(customerid);
         let customer = await this.loadCustomerDetail(customerid);
         this.openVPage(VCustomerDetail, customer);
+
     }
 
     showSelectCustomer = async (task: Task) => {
@@ -142,9 +139,23 @@ export class CCustomer extends Controller {
         this.closePage();
     }
 
-    //显示关联关系
-    showCustomerRelation = async (param: any) => {
-        this.openVPage(VCustomerRelation);
+    searchCustomerRelation = async (param: any) => {
+        let aa = { id: param };
+        let relesions = await this.mapWebUserMyCustomerMap.query({ myCustomer: param, webuser: undefined })
+        if (relesions && relesions.ret.length > 0) {
+            this.webuser = relesions.ret[0].webuser;
+        }
+    }
+
+    showCustomerSelect = async (mycustomer: any) => {
+        let { cWebUser } = this.cApp;
+        this.webuser = await cWebUser.call();
+        await this.createWebUserMyCustomerMap(this.webuser.id, mycustomer);
+    }
+
+    createWebUserMyCustomerMap = async (webuser: any, mycustomer: any) => {
+        await this.mapWebUserMyCustomerMap.del({ myCustomer: mycustomer, arr1: [{ webuser: -1 }] });
+        await this.mapWebUserMyCustomerMap.add({ myCustomer: mycustomer, arr1: [{ webuser: webuser }] });
     }
 
     render = observer(() => {

@@ -10,6 +10,7 @@ import { CTeam } from 'team/CTeam';
 import { CMessage } from 'message/CMessage';
 import { CCustomerUnit } from 'customer/CCustomerUnit';
 import { CCoupon } from 'coupon/CCoupon';
+import { CWebUser } from 'customer/CWebUser';
 
 export class CSalesTaskApp extends CApp {
 
@@ -33,6 +34,7 @@ export class CSalesTaskApp extends CApp {
     cMessage: CMessage;
     cCustomerUnit: CCustomerUnit;
     cCoupon: CCoupon;
+    cWebUser: CWebUser;
 
     protected async internalStart(param?: any) {
 
@@ -54,6 +56,7 @@ export class CSalesTaskApp extends CApp {
         this.cMessage = new CMessage(this, undefined);
         this.cCustomerUnit = new CCustomerUnit(this, undefined);
         this.cCoupon = new CCoupon(this, undefined);
+        this.cWebUser = new CWebUser(this, undefined);
 
         let salesRegionTuid = this.cUqCommon.tuid('salesregion');
         this.currentSalesRegion = await salesRegionTuid.load(1);
