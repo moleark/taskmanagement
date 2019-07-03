@@ -67,6 +67,7 @@ export class CCoupon extends Controller {
         this.pageCoupon = null;
         await this.searchByKey(undefined);
         this.openVPage(VCouponList);
+        this.IsCanUseCoupon();
     }
 
     //查询客户--通过名称
@@ -84,10 +85,11 @@ export class CCoupon extends Controller {
     IsCanUseCoupon = async () => {
 
         let coupon = {
-            code: "00032229",
+            code: "36747841",
             webuser: "47"
         }
-        this.actionIsCanUseCoupon.submit(coupon);
+        let aa = await this.actionIsCanUseCoupon.submit(coupon);
+        let bb = aa;
     }
 
     //显示添加优惠码页面

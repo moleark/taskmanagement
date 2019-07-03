@@ -69,6 +69,7 @@ export class LoaderProductChemical extends Loader<MainProductChemical> {
 export class LoaderProductChemicalWithPrices extends Loader<MainSubs<MainProductChemical, ProductPackRow>> {
 
     private priceMap: Map;
+    private agentPriceMap: Map;
     private getInventoryAllocationQuery: Query;
     private getFutureDeliveryTime: Query;
     private getPromotionPackQuery: Query;
@@ -77,6 +78,7 @@ export class LoaderProductChemicalWithPrices extends Loader<MainSubs<MainProduct
 
         let { cUqProduct, cUqWarehouse, cUqPromotion } = this.cApp;
         this.priceMap = cUqProduct.map('pricex');
+        this.agentPriceMap = cUqProduct.map('AgentPrice');
         this.getInventoryAllocationQuery = cUqWarehouse.query("getInventoryAllocation");
         this.getFutureDeliveryTime = cUqProduct.query("getFutureDeliveryTime");
         this.getPromotionPackQuery = cUqPromotion.query("getPromotionPack");
@@ -94,7 +96,9 @@ export class LoaderProductChemicalWithPrices extends Loader<MainSubs<MainProduct
         let { currentSalesRegion, currentLanguage } = this.cApp;
         let { id: currentSalesRegionId } = currentSalesRegion;
         let prices = await this.priceMap.table({ product: productId, salesRegion: currentSalesRegionId });
+        let agents = await this.agentPriceMap.table({ product: productId, salesRegion: currentSalesRegionId });
         data.subs = prices;
+        //data.subs = agentprices;
         let promises: PromiseLike<any>[] = [];
         data.subs.forEach(v => {
             promises.push(this.getInventoryAllocationQuery.table({ product: productId, pack: v.pack, salesRegion: currentSalesRegion }));
@@ -106,10 +110,21 @@ export class LoaderProductChemicalWithPrices extends Loader<MainSubs<MainProduct
         for (let i = 0; i < data.subs.length; i++) {
             data.subs[i].futureDeliveryTimeDescription = fd;
             data.subs[i].inventoryAllocation = results[i * 2];
+            let aa = this.getagentPrices(agents, data.subs[i].pack.id);
+            // data.subs[i].agentPrices = aa;
             let promotion = results[i * 2 + 1];
             let discount = promotion && promotion.discount;
             if (discount)
                 data.subs[i].promotionPrice = Math.round((1 - discount) * data.subs[i].retail);
+        }
+    }
+
+    getagentPrices = async (agents: any[], pack: any) => {
+        for (let i = 0; i < agents.length; i++) {
+            let { pack: packid, agentprice } = agents[i];
+            if (packid = pack) {
+                return agentprice;
+            }
         }
     }
 

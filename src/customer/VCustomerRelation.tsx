@@ -1,9 +1,7 @@
 import * as React from 'react';
-import { VPage, Page, PageItems, Schema, UiSchema, UiInputItem, UiRadio, Edit, ItemSchema, nav } from 'tonva';
+import { VPage, Page, LMR } from 'tonva';
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
-import { LMR, StringProp, ComponentProp, Prop, PropGrid, FA } from 'tonva';
-import { tv } from 'tonva';
 import { consts } from 'consts';
 
 

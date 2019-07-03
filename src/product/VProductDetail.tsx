@@ -7,6 +7,7 @@ import { MainProductChemical } from 'model/product';
 import { ProductPackRow } from './Product';
 import { ViewMainSubs } from 'mainSubs';
 import { MinusPlusWidget } from 'tools/minusPlusWidget';
+import { consts } from 'consts';
 
 const schema: ItemSchema[] = [
     { name: 'pack', type: 'object' } as ObjectSchema,
@@ -58,7 +59,7 @@ export class VProductDetail extends VPage<CProduct> {
     }
 
     private arrTemplet = (item: any) => {
-        let { pack, retail, promotionPrice, inventoryAllocation, futureDeliveryTimeDescription } = item;
+        let { pack, retail, promotionPrice, agentPrices, inventoryAllocation, futureDeliveryTimeDescription } = item;
         let right = null;
         if (retail) {
             let price: number = promotionPrice;
@@ -73,7 +74,13 @@ export class VProductDetail extends VPage<CProduct> {
                 <div className="col-sm-6 pb-2 d-flex justify-content-end align-items-center">
                     <small className="text-muted">{retailUI}</small>&nbsp; &nbsp;
                     <span className="text-danger">￥ <span className="h5">{price}</span></span>
+                    {
+                        agentPrices && <span className="text-danger">￥ <span className="h5">{agentPrices}</span></span>
+
+                    }
+
                 </div>
+
             </div >
         } else {
             right = <small>请询价</small>
@@ -119,7 +126,7 @@ export class VProductDetail extends VPage<CProduct> {
 
         let viewProduct = new ViewMainSubs<MainProductChemical, ProductPackRow>(this.renderProduct, this.renderPack);
         viewProduct.model = product;
-        return <Page header={"产品明细"}>
+        return <Page header={"产品明细"} headerClassName={consts.headerClass}>
             <div className="px-2 py-2 bg-white mb-3">{viewProduct.render()}</div>
         </Page>
     })
