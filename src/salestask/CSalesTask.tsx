@@ -59,7 +59,8 @@ export class CSalesTask extends Controller {
     private taskTypes: { [type: string]: CType } = {};
     @observable tasks: Tasks;
     @observable createproduct: CreateProduct;
-    protected completionTaskAction: Action;
+    protected actionCompletionTask: Action;
+    protected actionCompletionCustomerInfoTask: Action;
     protected extensionTaskAction: Action;
     protected addTaskAction: Action;
     protected createTaskProductAction: Action;
@@ -93,7 +94,10 @@ export class CSalesTask extends Controller {
         this.tuidProduct = cUqProduct.tuid('productx');
 
         this.taskBook = cUqSalesTask.book("taskbook");
-        this.completionTaskAction = cUqSalesTask.action('CompletionTask');
+        this.actionCompletionTask = cUqSalesTask.action('CompletionTask');
+        this.actionCompletionCustomerInfoTask = cUqSalesTask.action('CompletionCustomerInfoTask');
+
+
         this.extensionTaskAction = cUqSalesTask.action('ExtensionTask');
         this.addTaskAction = cUqSalesTask.action('AddTask');
         this.createTaskProductAction = cUqSalesTask.action('CreateTaskProduct');
@@ -199,21 +203,23 @@ export class CSalesTask extends Controller {
     //完结任务
     async finishTask(task: Task) {
         //完结任务--后台数据
+        let { id, fields, type } = task;
         let param = {
-            taskid: task.id,
+            taskid: id,
             resulttype: "compl",
             result: "完结",
-            fields: task.fields
+            fields: fields
         };
-        await this.completionTaskAction.submit(param);
+
+        if (type.obj.name == "qualify") {
+            await this.actionCompletionCustomerInfoTask.submit(param);
+        } else {
+            await this.actionCompletionTask.submit(param);
+        }
         this.tasks.remove(task);
         this.closePage(2);
-        //完结任务--前台页面
-        /*
-        let index = this.tasks.findIndex(v => v.id === taskid);
-        if (index >= 0) this.tasks.splice(index, 1);
-        */
     }
+
 
     //添加并完结任务
     createAndFinishTask = async (task: Task) => {
@@ -240,7 +246,7 @@ export class CSalesTask extends Controller {
     //拒绝任务
     onInvalidTask = async (task: Task, result: string, resulttype: string) => {
         let param = { taskid: task.id, resulttype: "Inval", result: result };
-        await this.completionTaskAction.submit(param);
+        await this.actionCompletionTask.submit(param);
         /*
         let index = this.tasks.findIndex(v => v.id === model.id);
         if (index >= 0) this.tasks.splice(index, 1);
@@ -260,6 +266,7 @@ export class CSalesTask extends Controller {
         this.createproduct.task = task;
         cProduct.showProductSelect(createproduct);
     }
+
     showPorductSelectDetail = async (createproduct: any) => {
         this.createproduct = createproduct;
         this.openVPage(VCreateProduct, this.createproduct);

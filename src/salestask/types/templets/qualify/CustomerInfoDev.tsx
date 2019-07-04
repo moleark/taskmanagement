@@ -22,13 +22,13 @@ export const CustomerInfoDev: TaskCommonType = {
         }
     } as UiSchema,
     completSchema: [
-        { name: 'name', type: 'string', required: true },
-        { name: 'telephone', type: 'number', required: true },
+        { name: 'name', type: 'string', required: false },
+        { name: 'telephone', type: 'number', required: false },
         { name: 'email', type: 'string', required: false },
         { name: 'wechat', type: 'string', required: false },
         { name: 'teacher', type: 'string', required: false },
-        { name: 'potential', type: 'string', required: true },
-        { name: 'research', type: 'string', required: true },
+        { name: 'potential', type: 'string', required: false },
+        { name: 'research', type: 'string', required: false },
     ],
     completuiSchema: {
         items: {

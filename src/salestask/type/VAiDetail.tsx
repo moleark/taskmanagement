@@ -10,12 +10,10 @@ import { CSelectType } from './CSelectType';
 
 const cnRow = 'w-100 py-3';
 const cnRowCustor = classNames(cnRow, 'cursor-pointer');
-const right = <div className="w-2c text-right"><i className="fa fa-chevron-right" /></div>;
 
 export class VAiDetail extends VPage<CSelectType> {
 
     @observable private task: any;
-
 
     async open(task: any) {
         this.task = task;
@@ -28,7 +26,7 @@ export class VAiDetail extends VPage<CSelectType> {
 
     onCreate = () => {
         this.controller.createTask(this.task);
-        this.closePage();
+        this.closePage(3);
     }
 
     private page = observer(() => {
@@ -81,6 +79,7 @@ export class VAiDetail extends VPage<CSelectType> {
         </div>;
 
         return <Page header="任务详细" headerClassName={consts.headerClass}>
+
             <PropGrid className="my-2" rows={rows} values={this.task} />
             <LMR className=" mx-3 " left={left} right={rigth}></LMR>
         </Page>

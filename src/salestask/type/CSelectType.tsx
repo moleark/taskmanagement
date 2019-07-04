@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { Tuid, Controller, Query, PageItems } from 'tonva';
+import { Tuid, Controller, Query, PageItems, Action, Map } from 'tonva';
 import { observable } from 'mobx';
 import { VSelectType } from './VSelectType';
 import { CSalesTask } from '../CSalesTask';
@@ -38,15 +38,18 @@ export class CSelectType extends Controller {
 
     cSalesTask: CSalesTask;
     private tuidTaskType: Tuid;
+    private tuidOrganization: Tuid;
     private querySearchJKTask: Query;
+    private querygetCustomerOrganization: Query;
+    private actionImportTask: Action;
 
     private taskBook: any;
     private tasks: [];
     private customerid: number;
     private task: Task;
     @observable tasktypelist: any;
-
     @observable pageMyJKTask: PageMyJKTask;
+    @observable organization: any;
 
     //构造函数
     constructor(cSalesTask: CSalesTask, res: any) {
@@ -54,9 +57,12 @@ export class CSelectType extends Controller {
         this.cSalesTask = cSalesTask;
         this.pageMyJKTask = null;
 
-        let { cUqSalesTask } = this.cSalesTask.cApp;
+        let { cUqSalesTask, cUqCustomer } = this.cSalesTask.cApp;
         this.tuidTaskType = cUqSalesTask.tuid("tasktype");
+        this.tuidOrganization = cUqSalesTask.tuid("Organization");
         this.querySearchJKTask = cUqSalesTask.query("SearchJKTask");
+        this.querygetCustomerOrganization = cUqCustomer.query("getCustomerOrganization");
+        this.actionImportTask = cUqSalesTask.action("ImportTask");
     }
 
     //初始化
@@ -97,11 +103,25 @@ export class CSelectType extends Controller {
     }
 
     showJkTaskDetail = async (model: any) => {
+        await this.searchCustomerRelation(model.customer.id);
         this.openVPage(VAiDetail, model);
     }
 
     createTask = async (model: any) => {
+        let { id, customer } = model;
+        let { name } = customer.obj;
 
+        await this.actionImportTask.submit({ task: id, customername: name, organization: this.organization.id, organizationName: this.organization.name });
+    }
+
+
+    searchCustomerRelation = async (param: any) => {
+        let aa = { id: param };
+        let relesions = await this.querygetCustomerOrganization.query({ customerId: param })
+        if (relesions && relesions.ret.length > 0) {
+            let org = relesions.ret[0].organization;
+            this.organization = await this.tuidOrganization.load(org);
+        }
     }
 
 }
