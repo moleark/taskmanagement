@@ -5,7 +5,7 @@ import { UiSchema, UiCheckItem, UiInputItem, UiRadio } from 'tonva';
 
 export const Trial: TaskCommonType = {
     caption: '产品试用',
-    icon: <FA name='plus' size="lg" fixWidth={true} />,
+    icon: <FA name='newspaper-o' size="lg" fixWidth={true} />,
     schema: [
         { name: 'description', type: 'string', required: false },
         { name: 'priorty', type: 'number', required: false },

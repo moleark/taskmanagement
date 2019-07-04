@@ -5,7 +5,7 @@ import { UiSchema, UiCheckItem, UiInputItem, UiRadio } from 'tonva';
 
 export const RepeatPurchase: TaskCommonType = {
     caption: '单一产品重复采购',
-    icon: <FA name='plus' size="lg" fixWidth={true} />,
+    icon: <FA name='newspaper-o' size="lg" fixWidth={true} />,
     schema: [
         { name: 'description', type: 'string', required: false },
         { name: 'priorty', type: 'number', required: false },

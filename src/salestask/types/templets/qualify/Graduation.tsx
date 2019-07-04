@@ -5,7 +5,7 @@ import { UiSchema, UiCheckItem, UiInputItem, UiRadio } from 'tonva';
 
 export const Graduation: TaskCommonType = {
     caption: '毕业清洗',
-    icon: <FA name='plus' size="lg" fixWidth={true} />,
+    icon: <FA name='address-book' size="lg" fixWidth={true} />,
     schema: [
         { name: 'description', type: 'string', required: false },
         { name: 'priorty', type: 'number', required: false },

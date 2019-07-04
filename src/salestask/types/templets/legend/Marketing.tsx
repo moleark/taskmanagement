@@ -5,7 +5,7 @@ import { UiSchema, UiCheckItem, UiInputItem } from 'tonva';
 
 export const Marketing: TaskCommonType = {
     caption: '组合营销',
-    icon: <FA name='flask' size="lg" fixWidth={true} />,
+    icon: <FA name='newspaper-o' size="lg" fixWidth={true} />,
     schema: [
         { name: 'description', type: 'string', required: false },
         { name: 'priorty', type: 'number', required: false },

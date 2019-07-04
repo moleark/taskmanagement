@@ -5,7 +5,7 @@ import { UiSchema, UiInputItem, UiRadio } from 'tonva';
 
 export const BagOrder: TaskCommonType = {
     caption: '大额订单跟踪',
-    icon: <FA name='flask' size="lg" fixWidth={true} />,
+    icon: <FA name='newspaper-o' size="lg" fixWidth={true} />,
     schema: [
         { name: 'priorty', type: 'number', required: false },
         { name: 'deadline', type: 'string', required: false },

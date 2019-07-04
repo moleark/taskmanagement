@@ -163,7 +163,7 @@ export class CSalesTask extends Controller {
             } else if (typeName == 'legend') {
                 return <FA name='newspaper-o' size="lg" fixWidth={true} />;
             } else {
-                return <FA name='sticky-note' size="lg" fixWidth={true} />;
+                return <FA name='shopping-bag' size="lg" fixWidth={true} />;
             }
         }
         return tt.icon;

@@ -5,7 +5,7 @@ import { UiSchema, UiInputItem, UiRadio } from 'tonva';
 
 export const Signback: TaskCommonType = {
     caption: '订单催签返',
-    icon: <FA name='flask' size="lg" fixWidth={true} />,
+    icon: <FA name='shopping-bag' size="lg" fixWidth={true} />,
     schema: [
         { name: 'priorty', type: 'number', required: false },
         { name: 'deadline', type: 'string', required: false },
