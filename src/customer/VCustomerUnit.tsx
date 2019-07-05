@@ -28,6 +28,7 @@ export class VCustomerUnit extends VPage<CCustomerUnit> {
         let onshowCreateUnit = async () => await showCreateUnit();
 
         let none = <div className="my-3 mx-2 text-warning">没有搜索到单位！</div>;
+        let text = <div className="my-3 mx-2 text-warning">搜索单位或点击右上角加号新建单位！</div>;
         let right = <div onClick={onshowCreateUnit} className="cursor-pointer px-3 py-2"><FA name="plus" /></div>;
         return <Page header="选择单位" headerClassName='bg-primary' right={right}>
             <SearchBox className="px-1 w-100  mt-2 mr-2"
@@ -35,6 +36,7 @@ export class VCustomerUnit extends VPage<CCustomerUnit> {
                 onSearch={(key: string) => this.controller.searchByKey(key)}
                 placeholder="搜索单位" />
             <List before={''} none={none} items={pageUnit} item={{ render: this.renderItem, onClick: this.onClickRow }} />
+            {(!pageUnit) && text}
         </Page>
     })
 }

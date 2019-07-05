@@ -33,7 +33,9 @@ export class Tasks {
             this.tasksNow.push(task);
             return;
         }
-        let dateTasks = this.dateTasksList.find(v => v.date === remindDate);
+        var dateref: Date;
+        dateref = remindDate;
+        let dateTasks = this.dateTasksList.find(v => v.date === dateref);
         if (dateTasks === undefined) {
             dateTasks = { date: remindDate, list: [task] };
             // 插入到合适的地方
