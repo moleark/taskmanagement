@@ -1,6 +1,6 @@
 import * as React from 'react';
 import _ from 'lodash';
-import { Query, Tuid, Action, FA } from 'tonva';
+import { Query, Tuid, Action, FA, nav } from 'tonva';
 import { PageItems, Controller } from 'tonva';
 import { CSalesTaskApp } from '../CSalesTaskApp';
 import { VMain } from './views/VMain';
@@ -403,8 +403,26 @@ export class CSalesTask extends Controller {
     }
 
     render = observer(() => {
-        return this.renderView(VMain);
+        if (this.isLogined) {
+            return this.renderView(VMain);
+        } else {
+            return <div
+                className="d-flex h-100 flex-column align-items-center justify-content-center">
+                <div className="flex-fill" />
+                <button className="btn btn-success w-20c"
+                    onClick={() => nav.showLogin(this.loginCallback, true)}>
+                    <FA name="sign-out" size="lg" /> 请登录
+            </button>
+                <div className="flex-fill" />
+                <div className="flex-fill" />
+            </div>;
+        }
     })
+
+    private loginCallback = async () => {
+        nav.pop();
+        await this.internalStart(undefined);
+    }
 
     tab = () => {
         return <this.render />;
