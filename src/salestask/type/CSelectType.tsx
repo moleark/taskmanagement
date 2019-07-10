@@ -112,6 +112,7 @@ export class CSelectType extends Controller {
         let { name } = customer.obj;
 
         await this.actionImportTask.submit({ task: id, customername: name, organization: this.organization.id, organizationName: this.organization.name });
+        await this.cSalesTask.searchTaskByKey('');
     }
 
 

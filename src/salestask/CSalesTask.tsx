@@ -97,13 +97,11 @@ export class CSalesTask extends Controller {
         this.actionCompletionTask = cUqSalesTask.action('CompletionTask');
         this.actionCompletionCustomerInfoTask = cUqSalesTask.action('CompletionCustomerInfoTask');
 
-
         this.extensionTaskAction = cUqSalesTask.action('ExtensionTask');
         this.addTaskAction = cUqSalesTask.action('AddTask');
         this.createTaskProductAction = cUqSalesTask.action('CreateTaskProduct');
         this.createTaskProjectAction = cUqSalesTask.action('CreateTaskProject');
         this.createTaskProductPackAction = cUqSalesTask.action('CreateTaskProductPack');
-
 
         this.qeurySearchTask = cUqSalesTask.query("searchtask");
         this.qeurySearchHistory = cUqSalesTask.query("searchhistorytask");
@@ -113,7 +111,6 @@ export class CSalesTask extends Controller {
         this.qeurySearchTaskProduct = cUqSalesTask.query("SearchTaskProduct");
         this.qeurySearchTaskProject = cUqSalesTask.query("SearchTaskProject");
         this.qeurySearchTaskProductPack = cUqSalesTask.query("SearchTaskProductPack");
-
 
         this.taskTypes = createTaskTypes(this);
     }
@@ -257,14 +254,13 @@ export class CSalesTask extends Controller {
     //显示选择产品页面
     showPorductSelect = async (task: Task) => {
         let { cProduct } = this.cApp;
-        let createproduct = {
+        this.createproduct = {
             task: task,
             product: undefined,
             pack: undefined,
             note: undefined
         }
-        this.createproduct.task = task;
-        cProduct.showProductSelect(createproduct);
+        cProduct.showProductSelect(this.createproduct);
     }
 
     showPorductSelectDetail = async (createproduct: any) => {
@@ -396,8 +392,7 @@ export class CSalesTask extends Controller {
             priorty: priorty,
             deadline: deadline
         });
-        */
-
+        **/
     }
     //添加任务结束------------------------------------------------
 
