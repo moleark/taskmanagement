@@ -121,7 +121,7 @@ export class CCustomer extends Controller {
     createMyCustomer = async (param: any, customerunit: any) => {
         let par = {
             unit: customerunit.id,
-            no: param.BirthDay + param.Name,
+            no: undefined,
             name: param.Name,
             firstName: "",
             lastName: "",

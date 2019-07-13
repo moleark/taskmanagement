@@ -75,7 +75,7 @@ export class CCustomerUnit extends Controller {
     //新建客户单位
     createMyCustomerUnit = async (param: any) => {
         let par = {
-            no: param.Name,
+            no: undefined,
             name: param.Name,
         }
         await this.actionCreateMyCustomerunit.submit(par);
