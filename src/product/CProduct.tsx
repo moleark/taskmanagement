@@ -30,7 +30,7 @@ class PageProduct extends PageItems<any> {
     }
 
     protected setPageStart(item: any): any {
-        this.pageStart = item === undefined ? 0 : item.id;
+        this.pageStart = item === undefined ? 0 : item.seq;
     }
 }
 
@@ -79,7 +79,7 @@ export class CProduct extends Controller {
     //显示产品明细
     showProductDetail = async (param: any): Promise<any> => {
         let loader = new LoaderProductChemicalWithPrices(this.cApp);
-        let product = await loader.load(param.productid);
+        let product = await loader.load(param.id);
         //let product = await this.productTuid.load(param.productid)
         this.openVPage(VProductDetail, product)
     }
