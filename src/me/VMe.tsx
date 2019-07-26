@@ -32,13 +32,15 @@ export class VMe extends VPage<CMe> {
             : <b>{name}</b>
     }
 
-    private meInfo = observer(() => {
+    private meInfo() {
+        let { user } = this.controller;
+        if (user === undefined) return null;
+        let { id, name, nick, icon } = user;
         let { showMeDetail, showMessage, showSet } = this.controller;
         let { cMessage } = this.controller.cApp
         let count: any = cMessage.count.get();
         let onshowMeDetail = async () => await showMeDetail();
         let onshowMessage = async () => await showMessage();
-        let { id, name, nick, icon } = this.user;
         let pointer, badge;
         if (count > 0) {
             pointer = 'cursor-pointer';
@@ -61,7 +63,7 @@ export class VMe extends VPage<CMe> {
                 </div>
             </LMR>
         </div>;
-    });
+    }
 
     private page = observer(() => {
         let { cSalesTask, cMessage, cCoupon } = this.controller.cApp
@@ -93,7 +95,7 @@ export class VMe extends VPage<CMe> {
         ];
 
         return <div>
-            <this.meInfo />
+            {this.meInfo()}
             <PropGrid className="" rows={rows} values={null} alignValue="right" />
         </div>
     })

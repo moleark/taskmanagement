@@ -106,9 +106,14 @@ export class CMe extends Controller {
         this.openVPage(VSet)
     }
 
+    /*
     render = observer(() => {
         return this.renderView(VMe);
     })
+    */
+    render = () => {
+        return this.renderView(VMe);
+    }
 
     tab = () => {
         return <this.render />;
