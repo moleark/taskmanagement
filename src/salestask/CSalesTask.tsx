@@ -273,7 +273,7 @@ export class CSalesTask extends Controller {
         this.createproduct = createproduct;
         let { product, task, note } = this.createproduct;
         note = note ? note : undefined;
-        let param = { taskid: task.id, productid: product.productid, note: note };
+        let param = { taskid: task.id, productid: product.id, note: note };
         this.createTaskProductAction.submit(param);
     }
 
@@ -302,7 +302,7 @@ export class CSalesTask extends Controller {
     showPorductPackSelectDetail = async (createproduct: any) => {
         this.createproduct = createproduct;
         let loader = new LoaderProductChemicalWithPrices(this.cApp);
-        let product = await loader.load(createproduct.product.productid);
+        let product = await loader.load(createproduct.product.id);
 
         this.openVPage(VCreateProductPack, product)
     }
@@ -311,7 +311,7 @@ export class CSalesTask extends Controller {
     createTaskProjectPack = async (createproduct: any) => {
         this.createproduct = createproduct;
         let { task, product, note, pack } = this.createproduct;
-        let productid = product.productid;
+        let productid = product.id;
         let taskid = task.id;
 
         let promises: PromiseLike<any>[] = [];
