@@ -136,7 +136,6 @@ export class CCustomer extends Controller {
     //修改单位信息
     updateMyCustomer = async (param: any) => {
         await this.tuidMyCustomer.save(param.id, param);
-        this.closePage();
     }
 
     searchCustomerRelation = async (param: any) => {
