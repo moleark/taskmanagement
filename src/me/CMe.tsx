@@ -23,7 +23,7 @@ export class CMe extends Controller {
 
     private querySearchPosition: Query;
     private querySearchAchievement: Query;
-    private querySearchOrderHistory: Query;
+    private querySearchAchievementHistory: Query;
 
     //构造函数
     constructor(cApp: CSalesTaskApp, res: any) {
@@ -33,7 +33,7 @@ export class CMe extends Controller {
         let { cUqSalesTask } = this.cApp;
         this.querySearchPosition = cUqSalesTask.query("searchposition");
         this.querySearchAchievement = cUqSalesTask.query("SearchAchievement");
-        this.querySearchOrderHistory = cUqSalesTask.query("SearchOrderHistory");
+        this.querySearchAchievementHistory = cUqSalesTask.query("SearchAchievementHistory");
     }
 
     //初始化
@@ -93,7 +93,7 @@ export class CMe extends Controller {
     //订单记录
     searchOrderHistory = async (userid: number) => {
         let param = { user: 47 };
-        let list = await this.querySearchOrderHistory.table(param);
+        let list = await this.querySearchAchievementHistory.table(param);
         return list;
     }
     //显示消息
