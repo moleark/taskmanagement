@@ -34,6 +34,7 @@ export class CStart extends Controller {
     protected async internalStart(param: any) {
         // await this.openVPage(VPositionOK);
         // return;
+        this.user;
         var isPosition: Boolean;
         isPosition = await this.isPosition();
         if (!isPosition) {
