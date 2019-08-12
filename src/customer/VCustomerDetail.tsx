@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { VPage, Page, PageItems, Schema, UiSchema, UiInputItem, UiRadio, Edit, ItemSchema, nav } from 'tonva';
+import { VPage, Page, PageItems, Schema, UiSchema, UiInputItem, UiRadio, Edit, ItemSchema, nav, UiIdItem, Context } from 'tonva';
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
 import { LMR, StringProp, ComponentProp, Prop, PropGrid, FA } from 'tonva';
 import { tv } from 'tonva';
 import { consts } from 'consts';
 import { observable } from 'mobx';
-
 
 const schema: Schema = [
     { name: 'name', type: 'string' },
@@ -16,7 +15,7 @@ const schema: Schema = [
     { name: 'teacher', type: 'string' },
     { name: 'potential', type: 'string' },
     { name: 'research', type: 'string' },
-
+    { name: 'address', type: 'id', required: true },
 ];
 
 export class VCustomerDetail extends VPage<CCustomer> {
@@ -33,6 +32,17 @@ export class VCustomerDetail extends VPage<CCustomer> {
             teacher: { widget: 'text', label: '老师', placeholder: '请输入老师' } as UiInputItem,
             potential: { widget: 'radio', label: '潜力值', defaultValue: 1, list: [{ value: 0, title: '小于10万' }, { value: 1, title: '10万-30万' }, { value: 2, title: '大于30万' }] } as UiRadio,
             research: { widget: 'radio', label: '研究方向', defaultValue: 1, list: [{ value: 0, title: '有机' }, { value: 1, title: '化学' }, { value: 1, title: '分析' }, { value: 1, title: '材料' }] } as UiRadio,
+            address: {
+                widget: 'id', label: '所在地区', placeholder: '所在地区',
+                pickId: async (context: Context, name: string, value: number) => await this.controller.pickAddress(context, name, value),
+                Templet: (item: any) => {
+                    let { obj } = item;
+                    if (!obj) return <small className="text-muted">请选择地区</small>;
+                    return <>
+
+                    </>;
+                }
+            } as UiIdItem,
         }
     }
 
@@ -63,7 +73,6 @@ export class VCustomerDetail extends VPage<CCustomer> {
         let onshowCustomerHistory = async () => await showCustomerHistory(customerid);
         let onshowCustomerUnitDetail = async () => await showCustomerUnitDetail(unit);
         let onshowCustomerSelect = async () => await showCustomerSelect(customerid);
-
 
         let rows: Prop[] = [
             {

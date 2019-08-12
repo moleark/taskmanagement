@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { PageItems, Controller, Query, Tuid, Action, Map } from 'tonva';
+import { PageItems, Controller, Query, Tuid, Action, Map, Context } from 'tonva';
 import { CSalesTaskApp } from '../CSalesTaskApp';
 import { observable } from 'mobx';
 import { VCustomerSelect } from './VCustomerSelect';
@@ -11,6 +11,7 @@ import { Task } from 'salestask/model';
 import { VCreateCustomer } from './VCreateCustomer';
 import { VCreateCustomerFinish } from './VCreateCustomerFinish';
 import { VMyCustomerSelectCall } from './VMyCustomerSelectCall';
+import { CAddress } from './CAddress';
 
 //页面类
 class PageMyCustomer extends PageItems<any> {
@@ -125,7 +126,7 @@ export class CCustomer extends Controller {
             name: param.Name,
             firstName: "",
             lastName: "",
-            gender: param.Gender?1:param.Gender,
+            gender: param.Gender ? 1 : param.Gender,
             salutation: param.Salutation,
             birthDay: param.BirthDay
         }
@@ -155,6 +156,11 @@ export class CCustomer extends Controller {
     createWebUserMyCustomerMap = async (webuser: any, mycustomer: any) => {
         await this.mapWebUserMyCustomerMap.del({ myCustomer: mycustomer, arr1: [{ webuser: -1 }] });
         await this.mapWebUserMyCustomerMap.add({ myCustomer: mycustomer, arr1: [{ webuser: webuser }] });
+    }
+
+    pickAddress = async (context: Context, name: string, value: number): Promise<number> => {
+        let cAddress = new CAddress(this.cApp, undefined);
+        return await cAddress.call<number>();
     }
 
     render = observer(() => {
