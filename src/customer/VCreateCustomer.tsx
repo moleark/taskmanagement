@@ -9,7 +9,7 @@ import { consts } from 'consts';
 const schema: Schema = [
     { name: 'Name', type: 'string', required: true },
     { name: 'Salutation', type: 'string', required: false },
-    { name: 'Gender', type: 'number', required: true },
+    { name: 'Gender', type: 'number', required: false },
     { name: 'BirthDay', type: 'date', required: false },
     { name: 'submit', type: 'submit' },
 ];

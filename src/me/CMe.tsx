@@ -81,18 +81,21 @@ export class CMe extends Controller {
         let achievement = await this.querySearchAchievement.table(param);
         if (achievement.length > 0) {
             this.achievemen = achievement[0].SaleVolume
+        } else {
+            this.achievemen = 0;
         }
     }
 
     //显示订单历史记录
     showOrderHistory = async (userid: number) => {
-        let list = await this.searchOrderHistory(userid);
+        let param = { user: userid };
+        let list = await this.querySearchAchievementHistory.table(param);
         this.openVPage(VAchievement, list);
     }
 
     //订单记录
     searchOrderHistory = async (userid: number) => {
-        let param = { user: 47 };
+        let param = { user: userid };
         let list = await this.querySearchAchievementHistory.table(param);
         return list;
     }

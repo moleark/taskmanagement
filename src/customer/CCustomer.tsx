@@ -125,7 +125,7 @@ export class CCustomer extends Controller {
             name: param.Name,
             firstName: "",
             lastName: "",
-            gender: param.Gender,
+            gender: param.Gender?1:param.Gender,
             salutation: param.Salutation,
             birthDay: param.BirthDay
         }
