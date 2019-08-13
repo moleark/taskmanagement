@@ -15,7 +15,7 @@ const schema: Schema = [
     { name: 'teacher', type: 'string' },
     { name: 'potential', type: 'string' },
     { name: 'research', type: 'string' },
-    { name: 'address', type: 'id', required: true },
+    { name: 'addressString', type: 'string' },
 ];
 
 export class VCustomerDetail extends VPage<CCustomer> {
@@ -30,19 +30,9 @@ export class VCustomerDetail extends VPage<CCustomer> {
             email: { widget: 'text', label: '邮箱', placeholder: '请输入邮箱' } as UiInputItem,
             wechat: { widget: 'text', label: '微信', placeholder: '请输入微信号' } as UiInputItem,
             teacher: { widget: 'text', label: '老师', placeholder: '请输入老师' } as UiInputItem,
+            addressString: { widget: 'text', label: '地址', placeholder: '请输地址' } as UiInputItem,
             potential: { widget: 'radio', label: '潜力值', defaultValue: 1, list: [{ value: 0, title: '小于10万' }, { value: 1, title: '10万-30万' }, { value: 2, title: '大于30万' }] } as UiRadio,
             research: { widget: 'radio', label: '研究方向', defaultValue: 1, list: [{ value: 0, title: '有机' }, { value: 1, title: '化学' }, { value: 1, title: '分析' }, { value: 1, title: '材料' }] } as UiRadio,
-            address: {
-                widget: 'id', label: '所在地区', placeholder: '所在地区',
-                pickId: async (context: Context, name: string, value: number) => await this.controller.pickAddress(context, name, value),
-                Templet: (item: any) => {
-                    let { obj } = item;
-                    if (!obj) return <small className="text-muted">请选择地区</small>;
-                    return <>
-
-                    </>;
-                }
-            } as UiIdItem,
         }
     }
 

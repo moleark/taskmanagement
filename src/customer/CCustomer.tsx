@@ -82,10 +82,8 @@ export class CCustomer extends Controller {
 
     //查询客户--通过ID
     showCustomerDetail = async (customerid: number) => {
-        await this.searchCustomerRelation(customerid);
         let customer = await this.loadCustomerDetail(customerid);
         this.openVPage(VCustomerDetail, customer);
-
     }
 
     showSelectCustomer = async (task: Task) => {
