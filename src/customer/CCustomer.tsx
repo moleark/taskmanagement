@@ -66,6 +66,7 @@ export class CCustomer extends Controller {
     protected async internalStart(task: Task) {
         this.pageCustomer = null;
         this.task = task;
+        this.searchByKey('');
         this.openVPage(VMyCustomerSelectCall);
     }
 
@@ -87,7 +88,7 @@ export class CCustomer extends Controller {
     }
 
     showSelectCustomer = async (task: Task) => {
-        this.pageCustomer = null;
+        this.searchByKey('');
         this.task = task;
         this.openVPage(VCustomerSelect);
     }
