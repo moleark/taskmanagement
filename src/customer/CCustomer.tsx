@@ -162,11 +162,11 @@ export class CCustomer extends Controller {
     }
 
     render = observer(() => {
-        this.pageCustomer = null;
         return this.renderView(VCustomerList);
     })
 
     tab = () => {
+        this.searchByKey('');
         return <this.render />;
     }
 }

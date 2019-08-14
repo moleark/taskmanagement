@@ -48,11 +48,9 @@ export class VCustomerDetail extends VPage<CCustomer> {
         this.customer["birthDay"] = "2019-01-01";
         await this.controller.updateMyCustomer(this.customer);
         nav.saveLocalUser();
-
     }
 
     private page = observer(() => {
-
         let { cSalesTask, cCustomerUnit, cCustomer } = this.controller.cApp
         let { showCustomerHistory } = cSalesTask;
         let { id: customerid, unit } = this.customer
