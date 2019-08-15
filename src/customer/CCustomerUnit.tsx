@@ -7,6 +7,7 @@ import { Task } from 'salestask/model';
 import { VCustomerUnit } from './VCustomerUnit';
 import { VCreateCustomerUnit } from './VCreateCustomerUnit';
 import { VCustomerUnitDetail } from './VCustomerUnitDetail';
+import { VCreateCustomerUnitFinish } from './VCreateCustomerUnitFinish';
 
 //页面类
 class PageUnit extends PageItems<any> {
@@ -78,8 +79,8 @@ export class CCustomerUnit extends Controller {
             no: undefined,
             name: param.Name,
         }
-        await this.actionCreateMyCustomerunit.submit(par);
-        this.closePage();
+        let ref = await this.actionCreateMyCustomerunit.submit(par);
+        this.openVPage(VCreateCustomerUnitFinish, ref);
     }
 
     //显示单位明细

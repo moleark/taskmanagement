@@ -20,7 +20,7 @@ class PageMyCustomer extends PageItems<any> {
 
     constructor(searchCustomerQuery: Query) {
         super();
-        this.firstSize = this.pageSize = 10;
+        this.firstSize = this.pageSize = 15;
         this.searchCustomerQuery = searchCustomerQuery;
     }
 
