@@ -4,7 +4,7 @@ import { TaskCommonType } from '../../taskCommonType';
 import { UiSchema, UiCheckItem, UiInputItem, UiRadio } from 'tonva';
 
 export const CustomerInfoDev: TaskCommonType = {
-    caption: '客服信息开发',
+    caption: '客户信息开发',
     icon: <FA name='address-book' size="lg" fixWidth={true} />,
     schema: [
         { name: 'description', type: 'string', required: false },
