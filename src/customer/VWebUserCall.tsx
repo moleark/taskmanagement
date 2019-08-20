@@ -26,7 +26,7 @@ export class VWebUserCall extends VPage<CWebUser> {
     private page = observer((customer: any) => {
         let { pageWebUser } = this.controller;
         let none = <div className="my-3 mx-2 text-warning">请搜索客户！</div>;
-        return <Page header="选择平台账户" headerClassName='bg-primary'>
+        return <Page header="选择内部客户" headerClassName='bg-primary'>
             <SearchBox className="px-1 w-100  mt-2 mr-2"
                 size='md'
                 onSearch={(key: string) => this.controller.searchByKey(key)}

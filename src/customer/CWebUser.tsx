@@ -1,20 +1,8 @@
-import * as React from 'react';
 import * as _ from 'lodash';
-import { Query, tv, Tuid, Action } from 'tonva';
-import { PageItems, Controller, nav, Page, Image } from 'tonva';
+import { Query, PageItems, Controller, nav, Page, Image } from 'tonva';
 import { CSalesTaskApp } from '../CSalesTaskApp';
 import { observable } from 'mobx';
-import { VCustomerSelect } from './VCustomerSelect';
-import { VCustomerDetail } from './VCustomerDetail';
-import { observer } from 'mobx-react';
-import { VCustomerList } from './VCustomerList';
 import { Task } from 'salestask/model';
-import { CCommonType } from 'salestask/types/commonType';
-import { VCreateCustomer } from './VCreateCustomer';
-import { async } from 'q';
-import { VCreateCustomerFinish } from './VCreateCustomerFinish';
-import { VMyCustomerSelectCall } from './VMyCustomerSelectCall';
-import { VCustomerRelation } from './VCustomerRelation';
 import { VWebUserCall } from './VWebUserCall';
 
 //页面类
@@ -54,8 +42,8 @@ export class CWebUser extends Controller {
         super(res);
         this.cApp = cApp;
 
-        let { cUqSalesTask } = this.cApp;
-        this.querySearchWebUser = cUqSalesTask.query("SearchWebUser");
+        let { cUqCustomer } = this.cApp;
+        this.querySearchWebUser = cUqCustomer.query("searchCustomer");
 
     }
 

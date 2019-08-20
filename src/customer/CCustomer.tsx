@@ -42,14 +42,16 @@ export class CCustomer extends Controller {
 
     cApp: CSalesTaskApp;
     @observable pageCustomer: PageMyCustomer;
-    @observable webuser: any;
+    @observable innerCustomer: any;
     private task: Task;
 
     private tuidMyCustomer: Tuid;
     private querySearchMyCustomer: Query;
+    private querysearchCustomerMyCustomerMap: Query;
     private actionCreateMyCustomer: Action;
+    private actionUpateCustomerMyCustomerMap: Action;
 
-    private mapWebUserMyCustomerMap: Map;
+    private mapCustomerMyCustomerMap: Map;
     //构造函数
     constructor(cApp: CSalesTaskApp, res: any) {
         super(res);
@@ -59,7 +61,10 @@ export class CCustomer extends Controller {
         this.tuidMyCustomer = cUqSalesTask.tuid("mycustomer");
         this.querySearchMyCustomer = cUqSalesTask.query("searchmycustomer");
         this.actionCreateMyCustomer = cUqSalesTask.action("CreateMyCustomer");
-        this.mapWebUserMyCustomerMap = cUqSalesTask.map("WebUserMyCustomerMap");
+        this.mapCustomerMyCustomerMap = cUqSalesTask.map("CustomerMyCustomerMap");
+        this.actionUpateCustomerMyCustomerMap = cUqSalesTask.action("UpateCustomerMyCustomerMap");
+        this.querysearchCustomerMyCustomerMap = cUqSalesTask.query("searchCustomerMyCustomerMap");
+
     }
 
     //初始化
@@ -83,8 +88,12 @@ export class CCustomer extends Controller {
 
     //查询客户--通过ID
     showCustomerDetail = async (customerid: number) => {
-        let customer = await this.loadCustomerDetail(customerid);
-        this.openVPage(VCustomerDetail, customer);
+        let mycustomer = await this.loadCustomerDetail(customerid);
+        let customer = await this.mapCustomerMyCustomerMap.query({ mycustomer: mycustomer.id });
+        if (customer.ret.length > 0) {
+            this.innerCustomer = customer.ret[0].customer;
+        }
+        this.openVPage(VCustomerDetail, mycustomer);
     }
 
     showSelectCustomer = async (task: Task) => {
@@ -97,7 +106,6 @@ export class CCustomer extends Controller {
     selectCustomer = async (customer: any): Promise<any> => {
         this.task.customer = customer;
         this.cApp.cSalesTask.showCrateCheck(this.task);
-        //this.cApp.cSalesTask.getCTaskType(this.task.biz.name).showCreate(this.task);
     }
 
     //选择客户--给调用页面返回客户id
@@ -138,23 +146,14 @@ export class CCustomer extends Controller {
         await this.tuidMyCustomer.save(param.id, param);
     }
 
-    searchCustomerRelation = async (param: any) => {
-        let aa = { id: param };
-        let relesions = await this.mapWebUserMyCustomerMap.query({ myCustomer: param, webuser: undefined })
-        if (relesions && relesions.ret.length > 0) {
-            this.webuser = relesions.ret[0].webuser;
-        }
-    }
-
     showCustomerSelect = async (mycustomer: any) => {
         let { cWebUser } = this.cApp;
-        this.webuser = await cWebUser.call();
-        await this.createWebUserMyCustomerMap(this.webuser.id, mycustomer);
+        this.innerCustomer = await cWebUser.call();
+        await this.createWebUserMyCustomerMap(this.innerCustomer.id, mycustomer);
     }
 
-    createWebUserMyCustomerMap = async (webuser: any, mycustomer: any) => {
-        await this.mapWebUserMyCustomerMap.del({ myCustomer: mycustomer, arr1: [{ webuser: -1 }] });
-        await this.mapWebUserMyCustomerMap.add({ myCustomer: mycustomer, arr1: [{ webuser: webuser }] });
+    createWebUserMyCustomerMap = async (customer: any, mycustomer: any) => {
+        await this.actionUpateCustomerMyCustomerMap.submit({ mycustomer: mycustomer, customer: customer });
     }
 
     pickAddress = async (context: Context, name: string, value: number): Promise<number> => {

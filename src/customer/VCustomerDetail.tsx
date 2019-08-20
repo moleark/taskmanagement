@@ -56,7 +56,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
         let { id: customerid, unit } = this.customer
         let { showCustomerUnitDetail } = cCustomerUnit;
         let { showCustomerSelect } = cCustomer;
-        let { webuser } = this.controller;
+        let { innerCustomer } = this.controller;
 
         let onshowCustomerHistory = async () => await showCustomerHistory(customerid);
         let onshowCustomerUnitDetail = async () => await showCustomerUnitDetail(unit);
@@ -83,9 +83,9 @@ export class VCustomerDetail extends VPage<CCustomer> {
                 type: 'component',
                 name: 'customer',
                 component: <LMR className="cursor-pointer w-100 py-3" onClick={onshowCustomerSelect}
-                    left={< div > <small><FA name='share-alt' className='text-info' /></small> &nbsp;平台账户</div>}
+                    left={< div > <small><FA name='share-alt' className='text-info' /></small> &nbsp;内部客户</div>}
                     right={< div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div >}>
-                    <div className="px-3"> {tv(webuser, v => v.name)}</div>
+                    <div className="px-3"> {tv(innerCustomer, v => v.name)}</div>
                 </LMR >,
             } as ComponentProp
         ];
