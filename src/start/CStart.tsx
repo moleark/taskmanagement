@@ -42,6 +42,7 @@ export class CStart extends Controller {
             await this.openVPage(VStart, param);
         }
         else {
+            //await this.openVPage(VStart, param);
             await this.cApp.cSalesTask.start();
         }
     }
@@ -69,10 +70,12 @@ export class CStart extends Controller {
     //新建识别码
     createPosition = async (param: any) => {
         let { invitacode } = param;
+        invitacode = invitacode.replace(/\s/g, "");;
         if (isNaN(invitacode) === true) {
             await this.openVPage(VError);
             return;
         }
+
         let position = await this.actionPosition.submit({ invitacode: invitacode });
         let { succeed } = position;
         this.ceasePage();
@@ -84,4 +87,5 @@ export class CStart extends Controller {
         }
         return position;
     }
+
 }

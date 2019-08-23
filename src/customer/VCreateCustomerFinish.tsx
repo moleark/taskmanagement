@@ -10,6 +10,7 @@ export class VCreateCustomerFinish extends VPage<CCustomer> {
     }
 
     comeBack = () => {
+        this.controller.searchByKey('');
         this.closePage(3);
     }
     private page = observer((customer: any) => {
@@ -20,7 +21,6 @@ export class VCreateCustomerFinish extends VPage<CCustomer> {
             <div className="w-100 text-center">
                 <label className="text-success" onClick={this.comeBack}> 返回</label>
             </div>
-
         </Page>
     })
 }

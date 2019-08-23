@@ -26,7 +26,7 @@ export class VActionsBottom extends View<CType> {
             <div className="flex-grow-1 align-self-center justify-content-start">
                 <button type="button" className="btn btn-primary" onClick={onProcess} >&nbsp;处理&nbsp;</button>
             </div>
-            <button type="button" className="btn btn-outline-info ml-2 align-self-center" onClick={onPostpond} >推迟</button>
+            <button type="button" className="btn btn-outline-info ml-2 align-self-center" onClick={onPostpond} >延迟</button>
             <button type="button" className="btn btn-outline-info ml-2 align-self-center" onClick={onInvalid} >取消</button>
         </div>;
     }
