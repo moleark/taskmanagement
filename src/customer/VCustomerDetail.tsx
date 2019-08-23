@@ -85,7 +85,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
                 component: <LMR className="cursor-pointer w-100 py-3" onClick={onshowCustomerSelect}
                     left={< div > <small><FA name='share-alt' className='text-info' /></small> &nbsp;内部客户</div>}
                     right={< div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div >}>
-                    <div className="px-3"> {tv(innerCustomer, v => v.name)}</div>
+                    <div className="px-3"> {innerCustomer && tv(innerCustomer, v => v.name)}</div>
                 </LMR >,
             } as ComponentProp
         ];

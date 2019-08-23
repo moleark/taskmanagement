@@ -4,11 +4,18 @@ import { observer } from 'mobx-react';
 import { LMR, List, EasyDate, FA } from 'tonva';
 import { CSalesTask } from '../CSalesTask';
 import { tv } from 'tonva';
+import { consts } from 'consts';
 
 export class VEmployeeHistory extends VPage<CSalesTask> {
 
+    private tasks: any;
     async open(tasks: any) {
-        this.openPage(this.page, tasks);
+        if (tasks.length > 0) {
+            this.tasks = tasks;
+        } else {
+            this.tasks = null;
+        }
+        this.openPage(this.page);
     }
 
     private renderHistory = (taskhistory: any, index: number) => {
@@ -34,10 +41,10 @@ export class VEmployeeHistory extends VPage<CSalesTask> {
         this.controller.showDetailFromId(param.task.obj);
     }
 
-    private page = observer((tasks: any) => {
+    private page = observer(() => {
         let none = <div className="m-3 text-muted small">【无记录】</div>;
-        return <Page header="已完成任务" >
-            <List before={''} none={none} items={tasks.tasks} item={{ render: this.renderHistory, onClick: this.onTaskClick }} />
+        return <Page header="已完成任务" headerClassName={consts.headerClass}>
+            <List before={''} none={none} items={this.tasks} item={{ render: this.renderHistory, onClick: this.onTaskClick }} />
         </Page>
     })
 }

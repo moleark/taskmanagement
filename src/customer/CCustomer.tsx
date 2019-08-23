@@ -92,6 +92,8 @@ export class CCustomer extends Controller {
         let customer = await this.mapCustomerMyCustomerMap.query({ mycustomer: mycustomer.id });
         if (customer.ret.length > 0) {
             this.innerCustomer = customer.ret[0].customer;
+        } else {
+            this.innerCustomer = null;
         }
         this.openVPage(VCustomerDetail, mycustomer);
     }
