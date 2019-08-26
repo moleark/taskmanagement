@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
 import { async } from 'q';
 
-export class VCustomerList extends VPage<CCustomer> {
+export class VCustomerSearch extends VPage<CCustomer> {
 
     async open(customer: any) {
 
@@ -28,21 +28,23 @@ export class VCustomerList extends VPage<CCustomer> {
     }
 
     private page = observer((customer: any) => {
-        let { pageCustomer, showSelectCustomerUnit, showCustomerSearch } = this.controller;
+        let { pageCustomerSearch, showSelectCustomerUnit } = this.controller;
         let onshowSelectCustomerUnit = async () => await showSelectCustomerUnit();
-        let onshowCustomerSearch = async () => await showCustomerSearch();
 
         let right = <div className="cursor-pointer py-2">
-            <span onClick={onshowCustomerSearch} ><FA name="search" className="px-4" /></span>
             <span onClick={onshowSelectCustomerUnit} ><FA name="plus" /></span>
         </div>;
         let none = <div className="my-3 mx-2 text-warning">未找到客户！</div>;
-        return <Page header='客户' onScrollBottom={this.onScrollBottom} headerClassName='bg-primary py-1 px-3' right={right} >
-            <List before={''} none={none} items={pageCustomer} item={{ render: this.renderCustomer, onClick: this.onClickCustomer }} />
+        return <Page header='客户' onScrollBottom={this.onScrollBottom} headerClassName='bg-primary py-1 px-3'  >
+            <SearchBox className="px-1 w-100  mt-2 mr-2  "
+                size='md'
+                onSearch={(key: string) => this.controller.searchCustomerByKey(key)}
+                placeholder="搜索客户姓名、单位" />
+            <List before={''} none={none} items={pageCustomerSearch} item={{ render: this.renderCustomer, onClick: this.onClickCustomer }} />
         </Page>
     })
 
     private onScrollBottom = async () => {
-        await this.controller.pageCustomer.more();
+        await this.controller.pageCustomerSearch.more();
     }
 }

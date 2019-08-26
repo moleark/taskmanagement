@@ -30,9 +30,7 @@ export class VEmployeeHistory extends VPage<CSalesTask> {
                 <LMR right={<small>{tv(task, (v) => tv(v.type, (vs) => vs.description || '#'))}</small>}
                     left={<small>{tv(task, (v) => tv(v.biz, (vs) => vs.description || '#'))}</small>}>
                 </LMR>
-
             </LMR>
-
         </div >;
     }
 

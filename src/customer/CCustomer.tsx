@@ -12,6 +12,7 @@ import { VCreateCustomer } from './VCreateCustomer';
 import { VCreateCustomerFinish } from './VCreateCustomerFinish';
 import { VMyCustomerSelectCall } from './VMyCustomerSelectCall';
 import { CAddress } from './CAddress';
+import { VCustomerSearch } from './VCustomerSearch';
 
 //页面类
 class PageMyCustomer extends PageItems<any> {
@@ -20,7 +21,7 @@ class PageMyCustomer extends PageItems<any> {
 
     constructor(searchCustomerQuery: Query) {
         super();
-        this.firstSize = this.pageSize = 15;
+        this.firstSize = this.pageSize = 11;
         this.searchCustomerQuery = searchCustomerQuery;
     }
 
@@ -35,6 +36,29 @@ class PageMyCustomer extends PageItems<any> {
     }
 }
 
+
+class PageMyCustomerCearch extends PageItems<any> {
+
+    private searchCustomerQuery: Query;
+
+    constructor(searchCustomerQuery: Query) {
+        super();
+        this.firstSize = this.pageSize = 11;
+        this.searchCustomerQuery = searchCustomerQuery;
+    }
+
+    protected async load(param: any, pageStart: any, pageSize: number): Promise<any[]> {
+        if (pageStart === undefined) pageStart = 0;
+        let ret = await this.searchCustomerQuery.page(param, pageStart, pageSize);
+        return ret;
+    }
+
+    protected setPageStart(item: any): any {
+        this.pageStart = item === undefined ? 0 : item.id;
+    }
+}
+
+
 /**
  *
  */
@@ -42,6 +66,7 @@ export class CCustomer extends Controller {
 
     cApp: CSalesTaskApp;
     @observable pageCustomer: PageMyCustomer;
+    @observable pageCustomerSearch: PageMyCustomerCearch;
     @observable innerCustomer: any;
     private task: Task;
 
@@ -81,6 +106,12 @@ export class CCustomer extends Controller {
         this.pageCustomer.first({ key: key });
     }
 
+    //查询客户--通过名称
+    searchCustomerByKey = async (key: string) => {
+        this.pageCustomerSearch = new PageMyCustomerCearch(this.querySearchMyCustomer);
+        this.pageCustomerSearch.first({ key: key });
+    }
+
     //加载客户明细
     loadCustomerDetail = async (customerid: number) => {
         return await this.tuidMyCustomer.load(customerid);
@@ -102,6 +133,12 @@ export class CCustomer extends Controller {
         this.searchByKey('');
         this.task = task;
         this.openVPage(VCustomerSelect);
+    }
+
+    showCustomerSearch = async (): Promise<any> => {
+        //await this.searchCustomerByKey('');
+        this.pageCustomerSearch = null;
+        this.openVPage(VCustomerSearch);
     }
 
     //选择客户--给调用页面返回客户id

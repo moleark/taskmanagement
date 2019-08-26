@@ -28,15 +28,19 @@ export class VSelectType extends VPage<CSelectType> {
         let { cCustomer } = this.controller.cSalesTask.cApp;
         let onshowCreateCustomer = async () => await cCustomer.showSelectCustomerUnit();
 
-        return <div>
+        let searchTask =
             <LMR className="p-3 bg-white mb-1 cursor-pointer" left={<FA className="text-success mr-3 mt-1" name="android" size="lg" fixWidth={true} />}
                 onClick={this.controller.aiClick}>
                 <div className="font-weight-bold">帮我找找机会</div>
-            </LMR>
+            </LMR>;
+        let newCustomer =
             <LMR className="p-3 bg-white mb-1 cursor-pointer" left={<FA className="text-success mr-3 mt-1" name="vcard" size="lg" fixWidth={true} />}
                 onClick={onshowCreateCustomer}>
                 <div className="font-weight-bold">新建客户</div>
-            </LMR>
+            </LMR>;
+        return <div>
+
+            {newCustomer}
         </div>
     }
 

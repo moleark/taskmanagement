@@ -8,6 +8,7 @@ export class VError extends VPage<CStart> {
         await this.openPage(this.page, position);
     }
 
+
     private page = (position: any) => {
         return <Page header="无法通过" back="none" headerClassName={consts.headerClass}>
             <div className="p-5 text-center">

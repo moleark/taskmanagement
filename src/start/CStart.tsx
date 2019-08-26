@@ -6,6 +6,7 @@ import { VStart } from './VStart';
 import { VOK } from './VOK';
 import { VError } from './VError';
 import { isNumber } from 'util';
+import { AgencyClause } from './AgencyClause';
 
 
 /**
@@ -32,19 +33,23 @@ export class CStart extends Controller {
 
     //初始化
     protected async internalStart(param: any) {
-        // await this.openVPage(VPositionOK);
-        // return;
         this.user;
         var isPosition: Boolean;
         isPosition = await this.isPosition();
         if (!isPosition) {
             nav.clear();
-            await this.openVPage(VStart, param);
+            await this.openVPage(AgencyClause, param);
         }
         else {
-            //await this.openVPage(VStart, param);
+            //await this.openVPage(AgencyClause, param);
             await this.cApp.cSalesTask.start();
         }
+    }
+
+    //同意条款
+    onAgreeAgencyClause = async (param: any) => {
+        //await this.cApp.cSalesTask.start();
+        await this.openVPage(VStart, param);
     }
 
     //判断是否有邀请码
