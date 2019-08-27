@@ -44,5 +44,6 @@ export interface ProductPackRow extends PackRow {
     retail: number;
     vipPrice: number;
     promotionPrice: number;
+    agentPrice: number;
     currency: BoxId;
 }

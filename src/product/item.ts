@@ -96,9 +96,8 @@ export class LoaderProductChemicalWithPrices extends Loader<MainSubs<MainProduct
         let { currentSalesRegion, currentLanguage } = this.cApp;
         let { id: currentSalesRegionId } = currentSalesRegion;
         let prices = await this.priceMap.table({ product: productId, salesRegion: currentSalesRegionId });
-        let agents = await this.agentPriceMap.table({ product: productId, salesRegion: currentSalesRegionId });
+        let agentprices = await this.agentPriceMap.table({ product: productId, salesRegion: currentSalesRegionId });
         data.subs = prices;
-        //data.subs = agentprices;
         let promises: PromiseLike<any>[] = [];
         data.subs.forEach(v => {
             promises.push(this.getInventoryAllocationQuery.table({ product: productId, pack: v.pack, salesRegion: currentSalesRegion }));
@@ -110,12 +109,21 @@ export class LoaderProductChemicalWithPrices extends Loader<MainSubs<MainProduct
         for (let i = 0; i < data.subs.length; i++) {
             data.subs[i].futureDeliveryTimeDescription = fd;
             data.subs[i].inventoryAllocation = results[i * 2];
-            let aa = this.getagentPrices(agents, data.subs[i].pack.id);
+            let aa = this.getagentPrices(agentprices, data.subs[i].pack.id);
             // data.subs[i].agentPrices = aa;
             let promotion = results[i * 2 + 1];
             let discount = promotion && promotion.discount;
-            if (discount)
+            if (discount) {
                 data.subs[i].promotionPrice = Math.round((1 - discount) * data.subs[i].retail);
+            }
+
+            for (let j = 0; j < agentprices.length; j++) {
+                let pid = agentprices[j].pack.id;
+                let pidx = data.subs[i].pack.id;
+                if (pidx == pid) {
+                    data.subs[i].agentPrice = agentprices[j].agentPrice;
+                }
+            }
         }
     }
 

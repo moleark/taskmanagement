@@ -13,6 +13,7 @@ const schema: ItemSchema[] = [
     { name: 'pack', type: 'object' } as ObjectSchema,
     { name: 'retail', type: 'number' } as NumSchema,
     { name: 'vipPrice', type: 'number' } as NumSchema,
+    { name: 'agentPrice', type: 'number' } as NumSchema,
     { name: 'promotionPrice', type: 'number' } as NumSchema,
     { name: 'currency', type: 'string' },
 
@@ -59,7 +60,7 @@ export class VProductDetail extends VPage<CProduct> {
     }
 
     private arrTemplet = (item: any) => {
-        let { pack, retail, promotionPrice, agentPrices, inventoryAllocation, futureDeliveryTimeDescription } = item;
+        let { pack, retail, promotionPrice, agentPrice, inventoryAllocation, futureDeliveryTimeDescription } = item;
         let right = null;
         if (retail) {
             let price: number = promotionPrice;
@@ -70,15 +71,13 @@ export class VProductDetail extends VPage<CProduct> {
             else {
                 price = retail;
             }
-            right = <div className="row">
-                <div className="col-sm-6 pb-2 d-flex justify-content-end align-items-center">
+            right = <div className="text-right row">
+                <div >
                     <small className="text-muted">{retailUI}</small>&nbsp; &nbsp;
-                    <span className="text-danger">￥ <span className="h5">{price}</span></span>
+                    <span className="text-danger">￥ <span className="h5">{price}</span> </span>
                     {
-                        agentPrices && <span className="text-danger">￥ <span className="h5">{agentPrices}</span></span>
-
+                        agentPrice && <span className="text-danger"><span className="small" ><span className="small " >￥ <span >{agentPrice}<span className="small text-muted">  &nbsp;代理</span></span></span></span></span>
                     }
-
                 </div>
 
             </div >
@@ -100,11 +99,11 @@ export class VProductDetail extends VPage<CProduct> {
         }
         return <div className="px-2">
             <div className="row">
-                <div className="col-6">
+                <div className="col-5">
                     <div><b>{tv(pack, v => <div>{v.radioy}{v.unit}</div>)}</b></div>
                     <div>{deliveryTimeUI}</div>
                 </div>
-                <div className="col-6">
+                <div className="col-7">
                     {right}
                 </div>
             </div>
