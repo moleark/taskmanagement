@@ -6,7 +6,7 @@ import { VStart } from './VStart';
 import { VOK } from './VOK';
 import { VError } from './VError';
 import { isNumber } from 'util';
-import { AgencyClause } from './AgencyClause';
+import { AgencyClause } from './VAgencyClause';
 
 
 /**
@@ -41,8 +41,8 @@ export class CStart extends Controller {
             await this.openVPage(AgencyClause, param);
         }
         else {
-            //await this.openVPage(AgencyClause, param);
-            await this.cApp.cSalesTask.start();
+            await this.openVPage(AgencyClause, param);
+            //await this.cApp.cSalesTask.start();
         }
     }
 
