@@ -41,8 +41,8 @@ export class CStart extends Controller {
             await this.openVPage(AgencyClause, param);
         }
         else {
-            await this.openVPage(AgencyClause, param);
-            //await this.cApp.cSalesTask.start();
+            //await this.openVPage(AgencyClause, param);
+            await this.cApp.cSalesTask.start();
         }
     }
 
