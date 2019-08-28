@@ -68,11 +68,11 @@ export class VMe extends VPage<CMe> {
     private page = observer(() => {
         let { cSalesTask, cMessage, cCoupon } = this.controller.cApp
         let { showEmployeeHistory } = cSalesTask;
-        let { showTeam, showOrderHistory, achievemen } = this.controller;
+        let { showTeam, showAchievement } = this.controller;
 
         let onshowEmployeeHistory = async () => await showEmployeeHistory();
         let onshowTeam = async () => await showTeam();
-        let onshowOrderHistory = async () => await showOrderHistory(this.user.id);
+        let onshowAchievement = async () => await showAchievement();
         let onshowCreateCoupon = async () => await cCoupon.showCreateCoupon()
 
         let rows: Prop[] = [
@@ -86,7 +86,7 @@ export class VMe extends VPage<CMe> {
             } as ComponentProp,
             {
                 type: 'component',
-                component: rowCom('line-chart', 'text-danger', '个人业绩', achievemen + " ￥", onshowOrderHistory),
+                component: rowCom('line-chart', 'text-danger', '个人业绩', undefined, onshowAchievement),
             } as ComponentProp,
             {
                 type: 'component',

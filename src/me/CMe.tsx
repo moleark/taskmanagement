@@ -10,6 +10,7 @@ import { VMeDetail } from './VMeDetail';
 import { VTeamDetail } from '../team/VTeamDetail';
 import { VAchievement } from './VAchievement';
 import { VSet } from './VSet';
+import { VAchievementDetail } from './VAchievementDetail';
 
 /**
  *
@@ -50,7 +51,6 @@ export class CMe extends Controller {
         let p1 = code.substr(1, 4);
         let p2 = code.substr(5);
         this.inviteCode = p1 + ' ' + p2;
-        await this.searchAchievement(this.user.id);
     }
 
     //显示我的个人信息
@@ -71,34 +71,25 @@ export class CMe extends Controller {
     }
 
     //显示业绩
-    showAchievement = async (param: any) => {
-        this.openVPage(VAchievement, param);
+    showAchievement = async () => {
+        let query = { user: this.user.id };
+        let achievement = await this.querySearchAchievement.table(query);
+        this.openVPage(VAchievement, achievement);
     }
 
-    //搜索业绩
-    searchAchievement = async (userid: number) => {
-        let param = { user: userid };
-        let achievement = await this.querySearchAchievement.table(param);
-        if (achievement.length > 0) {
-            this.achievemen = achievement[0].SaleVolume
-        } else {
-            this.achievemen = 0;
-        }
+    //显示业绩历史记录
+    showAchievementDetail = async (param: any) => {
+        this.openVPage(VAchievementDetail, param);
     }
 
-    //显示订单历史记录
-    showOrderHistory = async (userid: number) => {
-        let param = { user: userid };
-        let list = await this.querySearchAchievementHistory.table(param);
-        this.openVPage(VAchievement, list);
-    }
-
-    //订单记录
-    searchOrderHistory = async (userid: number) => {
-        let param = { user: userid };
+    //搜索业绩历史记录
+    searchAchievementDetail = async (type: number) => {
+        let param = { types: type };
         let list = await this.querySearchAchievementHistory.table(param);
         return list;
     }
+
+
     //显示消息
     showMessage = async () => {
         await this.cApp.cMessage.start();

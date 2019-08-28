@@ -1,34 +1,72 @@
 import * as React from 'react';
-import { VPage, Page, ItemSchema, StringSchema, UiSchema, UiTextItem, Edit, LMR, List, EasyDate, tv } from 'tonva';
-import { observable } from 'mobx';
+import { VPage, Page, LMR, Prop, ComponentProp, FA, PropGrid } from 'tonva';
 import { observer } from 'mobx-react';
 import { consts } from 'consts';
 import { CMe } from './CMe';
+import { async } from 'q';
+
+function rowCom(iconName: string, iconColor: string, caption: string, value: any, onClick: any) {
+    return <LMR className="cursor-pointer w-100 py-2 my-2 align-items-center  " onClick={onClick}
+        left={<FA name={iconName} className={'mr-3 ' + iconColor} fixWidth={true} size="lg" />}
+        right={<div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div>}>
+        {caption}<span className=" ml-3">{value}</span>
+    </LMR>;
+}
+function rowComNone(iconName: string, iconColor: string, caption: string, value: any, onClick: any) {
+    return <LMR className="cursor-pointer w-100 py-2 my-2 align-items-center  " onClick={onClick}
+        left={<FA name={iconName} className={'mr-3 ' + iconColor} fixWidth={true} size="lg" />}
+        right={<div className="w-2c text-right" ></div>}>
+        {caption}<span className=" ml-3">{value}</span>
+    </LMR>;
+}
 
 export class VAchievement extends VPage<CMe> {
+    private salesAmont: number; oneAmont: number; twoAmont: number; threeAmont: number;
 
-    private achievements: any;
     async open(param: any) {
-        this.achievements = param;
+
+        param.forEach(element => {
+            let t = element.Type;
+            if (t == 4) {
+                this.salesAmont = element.SaleVolume;
+            } else if (t == 1) {
+                this.oneAmont = element.SaleVolume;
+            } else if (t == 2) {
+                this.twoAmont = element.SaleVolume;
+            } else if (t == 3) {
+                this.threeAmont = element.SaleVolume;
+            }
+        });
+
         this.openPage(this.page, param);
     }
 
-    private renderItem(model: any, index: number) {
-        let { date, webuser, product, pack, quantity, price } = model;
-        let left = <small className="text-muted"><EasyDate date={date} /><span className="ml-3">{tv(webuser, v => v.name)}</span></small>;
-        let right = <small className="text-muted"><div className="px-3"> {price}￥</div></small>;
-        return <div className="d-block">
-            <div>
-                <LMR className="px-3 py-2 " left={left} right={right}></LMR>
-            </div>
-        </div>
-    }
+    private page = observer((param: any) => {
 
-    private page = observer(() => {
+        let onshowAchievementDetailA = async () => await this.controller.showAchievementDetail("A");
+        let onshowAchievementDetailB = async () => await this.controller.showAchievementDetail("B");
+        let onshowAchievementDetailC = async () => await this.controller.showAchievementDetail("C");
+        let rows: Prop[] = [
+            {
+                type: 'component',
+                component: rowComNone('cny', 'text-warning', '销售金额', this.salesAmont, undefined),
+            } as ComponentProp,
+            {
+                type: 'component',
+                component: rowCom('gg', 'text-info', 'A类绩效', this.oneAmont, onshowAchievementDetailA),
+            } as ComponentProp,
+            {
+                type: 'component',
+                component: rowCom('gg', 'text-danger', 'B类绩效', this.twoAmont, onshowAchievementDetailB),
+            } as ComponentProp,
+            {
+                type: 'component',
+                component: rowCom('gg', 'text-warning', 'C类绩效', this.threeAmont, onshowAchievementDetailC),
+            } as ComponentProp,
+        ];
 
-        let none = <div className="my-3 mx-2 text-warning">无记录</div>;
-        return <Page header="业绩" headerClassName={consts.headerClass}>
-            <List none={none} items={this.achievements} item={{ render: this.renderItem, onClick: null }} />
-        </Page>
+        return <Page header="我的业绩" headerClassName={consts.headerClass} >
+            <PropGrid className="" rows={rows} values={null} alignValue="right" />
+        </Page >
     })
 }
