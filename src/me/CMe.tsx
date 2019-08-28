@@ -25,6 +25,7 @@ export class CMe extends Controller {
     private querySearchPosition: Query;
     private querySearchAchievement: Query;
     private querySearchAchievementHistory: Query;
+    private actionComputeAchievement: Action;
 
     //构造函数
     constructor(cApp: CSalesTaskApp, res: any) {
@@ -35,6 +36,8 @@ export class CMe extends Controller {
         this.querySearchPosition = cUqSalesTask.query("searchposition");
         this.querySearchAchievement = cUqSalesTask.query("SearchAchievement");
         this.querySearchAchievementHistory = cUqSalesTask.query("SearchAchievementHistory");
+        this.actionComputeAchievement = cUqSalesTask.action("ComputeAchievement");
+
     }
 
     //初始化
@@ -42,6 +45,7 @@ export class CMe extends Controller {
         await this.load();
         nav.clear();
         this.openVPage(VMe, param);
+        await this.actionComputeAchievement.submit({});
     }
 
     //加载邀请码

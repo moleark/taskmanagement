@@ -16,8 +16,8 @@ export class VAchievementDetail extends VPage<CMe> {
     }
 
     private renderItem(model: any, index: number) {
-        let { date, webuser, price } = model;
-        let left = <small className="text-muted"><EasyDate date={date} /><span className="ml-3">{tv(webuser, v => v.name)}</span></small>;
+        let { date, mycustomer, price } = model;
+        let left = <small className="text-muted"><EasyDate date={date} /><span className="ml-3">{tv(mycustomer, v => v.name)}</span></small>;
         let right = <small className="text-muted"><div className="px-3"> {price}￥</div></small>;
         return <div className="d-block">
             <div>
