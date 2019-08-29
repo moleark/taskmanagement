@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, LMR, List, EasyDate, tv } from 'tonva';
+import { VPage, Page, LMR, List, EasyDate, tv, FA } from 'tonva';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { CMe } from './CMe';
@@ -17,8 +17,8 @@ export class VAchievementDetail extends VPage<CMe> {
 
     private renderItem(model: any, index: number) {
         let { date, mycustomer, price } = model;
-        let left = <small className="text-muted"><EasyDate date={date} /><span className="ml-3">{tv(mycustomer, v => v.name)}</span></small>;
-        let right = <small className="text-muted"><div className="px-3"> {price}￥</div></small>;
+        let left = <small className="text-muted"><EasyDate date={date} /></small>;
+        let right = <small className="text-muted"><div className="px-3"> {price} <FA name="cny" className="text-warning" /></div></small>;
         return <div className="d-block">
             <div>
                 <LMR className="px-3 py-2 " left={left} right={right}></LMR>

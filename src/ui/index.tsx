@@ -10,6 +10,7 @@ const ui: AppUI = {
     uqs: {
         '百灵威系统工程部/salestask': salestaskUI,
     },
+    version: "1.0"
 }
 
 export default ui;
