@@ -45,7 +45,6 @@ export class CMe extends Controller {
         await this.load();
         nav.clear();
         this.openVPage(VMe, param);
-        await this.actionComputeAchievement.submit({});
     }
 
     //加载邀请码
@@ -76,6 +75,7 @@ export class CMe extends Controller {
 
     //显示业绩
     showAchievement = async () => {
+        await this.actionComputeAchievement.submit({});
         let query = { user: this.user.id };
         let achievement = await this.querySearchAchievement.table(query);
         this.openVPage(VAchievement, achievement);
