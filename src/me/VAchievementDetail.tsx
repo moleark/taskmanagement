@@ -44,18 +44,16 @@ export class VAchievementDetail extends VPage<CMe> {
                     return <List items={this.achievementsB} item={{ render: this.renderItem }} none="无业绩" />
                 },
                 load: async () => {
-                    this.currentState = 'all';
                     this.achievementsB = await this.controller.searchAchievementDetail(2);
                 }
             }, {
                 title: 'C类业绩',
                 isSelected: this.currentState === 'C',
                 content: () => {
-                    return <List items={this.achievementsB} item={{ render: this.renderItem }} none="无业绩" />
+                    return <List items={this.achievementsC} item={{ render: this.renderItem }} none="无业绩" />
                 },
                 load: async () => {
-                    this.currentState = 'all';
-                    this.achievementsB = await this.controller.searchAchievementDetail(3);
+                    this.achievementsC = await this.controller.searchAchievementDetail(3);
                 }
             }
         ];
