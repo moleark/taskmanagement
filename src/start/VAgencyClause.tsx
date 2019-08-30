@@ -19,6 +19,10 @@ export class AgencyClause extends VPage<CStart> {
         nav.showLogout();
     }
 
+    private onShowAgencyClauseDetil = async () => {
+        this.controller.showAgencyClauseDetil();
+    }
+
     private page = (param: any) => {
         return <Page header="温馨提示" back="none" headerClassName={consts.headerClass}>
             <div className="p-5 text-center">
@@ -26,12 +30,12 @@ export class AgencyClause extends VPage<CStart> {
 
                     欢迎使用百灵威轻代理系统！<br />
                     <br />
-                    <span className="px-3" ></span>在您使用百灵威轻代理系统前，请认真阅读《服务条款》，请您在同意并接受全部条款后再开始使用我们的服务。<br />
+                    <span className="px-3" ></span>在您使用百灵威轻代理系统前，请认真阅读 <span className="text-info" onClick={this.onShowAgencyClauseDetil} >《服务条款与隐私政策》</span>，请您在同意并接受全部条款后再开始使用我们的服务。<br />
 
                     <br />
                     请您注意以下两点：<br />
                     <FA name="chevron-right" className="text-info small" />	我们不支持本单位在职人员违反本单位采购规定直接或间接代理本单位向百灵威的采购业务。<br />
-                    <FA name="chevron-right" className="text-info small" />	百灵威保留因代理违反规则而处置收益的权力。<br />
+                    <FA name="chevron-right" className="text-info small" />	百灵威保留因代理违反规则处置其收益的权力。<br />
                 </p>
                 <div>
                     <button className="btn btn-outline-primary w-6c mx-4" onClick={this.onDisagreeAgencyClause} >暂不同意</button>

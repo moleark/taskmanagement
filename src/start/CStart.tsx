@@ -7,6 +7,7 @@ import { VOK } from './VOK';
 import { VError } from './VError';
 import { isNumber } from 'util';
 import { AgencyClause } from './VAgencyClause';
+import { VAgencyClauseDetil } from './VAgencyClauseDetil';
 
 
 /**
@@ -50,6 +51,10 @@ export class CStart extends Controller {
     onAgreeAgencyClause = async (param: any) => {
         //await this.cApp.cSalesTask.start();
         await this.openVPage(VStart, param);
+    }
+
+    showAgencyClauseDetil = () => {
+        this.openVPage(VAgencyClauseDetil);
     }
 
     //判断是否有邀请码
