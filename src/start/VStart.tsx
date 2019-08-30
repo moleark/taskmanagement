@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { VPage, Page, PageItems, Form, UiSchema, UiInputItem, Schema, Context, StringSchema } from 'tonva';
+import { VPage, Page, Form, UiSchema, UiInputItem, Schema, Context, StringSchema } from 'tonva';
 import { observer } from 'mobx-react';
-import { LMR, List, EasyDate, SearchBox, StringProp, ComponentProp, Prop, PropGrid, FA } from 'tonva';
 import { CStart } from './CStart';
 import { consts } from 'consts';
 
