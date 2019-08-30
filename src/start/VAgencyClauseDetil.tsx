@@ -15,7 +15,7 @@ export class VAgencyClauseDetil extends VPage<CStart> {
 
     private page = (param: any) => {
         return <Page header="服务条款与隐私政策" headerClassName={consts.headerClass}>
-            <div className="p-5 text-center">
+            <div className="p-4 text-center">
                 <p className="mb-5 pl-2 text-left ">
                     <span className="text-info" >VS.20190827</span><br />
                     百灵威化学技术有限公司 （以下简称“本公司”）提供。用户在登录本网站后，请仔细阅读本《服务条款与隐私政策》，如您不同意有关条款或本网站对其进行的修改，请停止使用本网站提供的服务。您一旦使用本网站提供的内容，包括但不限于浏览网站信息、下载网站内容、使用网站提供的第三方网站链接等，即视为您已了解并完全同意本《服务条款与隐私政策》中的所有条款。<br />
