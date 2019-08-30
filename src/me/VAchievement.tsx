@@ -21,27 +21,16 @@ function rowComNone(iconName: string, iconColor: string, caption: string, value:
 }
 
 export class VAchievement extends VPage<CMe> {
-    private salesAmont: number; oneAmont: number; twoAmont: number; threeAmont: number;
+    private salesAmont: any;
 
     async open(param: any) {
-
-        param.forEach(element => {
-            let t = element.Type;
-            if (t == 4) {
-                this.salesAmont = element.SaleVolume;
-            } else if (t == 1) {
-                this.oneAmont = element.SaleVolume;
-            } else if (t == 2) {
-                this.twoAmont = element.SaleVolume;
-            } else if (t == 3) {
-                this.threeAmont = element.SaleVolume;
-            }
-        });
+        this.salesAmont = param[0];
 
         this.openPage(this.page, param);
     }
 
     private page = observer((param: any) => {
+        let { oneSaleVolume, twoSaleVolume, threeSaleVolume, oneAchievement, twoAchievement, threeAchievement } = this.salesAmont;
 
         let onshowAchievementDetailA = async () => await this.controller.showAchievementDetail("A");
         let onshowAchievementDetailB = async () => await this.controller.showAchievementDetail("B");
@@ -49,19 +38,19 @@ export class VAchievement extends VPage<CMe> {
         let rows: Prop[] = [
             {
                 type: 'component',
-                component: rowComNone('cny', 'text-warning', '销售金额', this.salesAmont, undefined),
+                component: rowComNone('cny', 'text-warning', '销售金额', oneSaleVolume, undefined),
             } as ComponentProp,
             {
                 type: 'component',
-                component: rowCom('gg', 'text-info', 'A类绩效', this.oneAmont, onshowAchievementDetailA),
+                component: rowCom('gg', 'text-info', 'A类绩效', oneAchievement, onshowAchievementDetailA),
             } as ComponentProp,
             {
                 type: 'component',
-                component: rowCom('gg', 'text-danger', 'B类绩效', this.twoAmont, onshowAchievementDetailB),
+                component: rowCom('gg', 'text-danger', 'B类绩效', twoAchievement, onshowAchievementDetailB),
             } as ComponentProp,
             {
                 type: 'component',
-                component: rowCom('gg', 'text-warning', 'C类绩效', this.threeAmont, onshowAchievementDetailC),
+                component: rowCom('gg', 'text-warning', 'C类绩效', threeAchievement, onshowAchievementDetailC),
             } as ComponentProp,
         ];
 
