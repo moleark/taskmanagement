@@ -39,7 +39,8 @@ export class CStart extends Controller {
         isPosition = await this.isPosition();
         if (!isPosition) {
             nav.clear();
-            await this.openVPage(AgencyClause, param);
+            //await this.openVPage(AgencyClause, param);
+            await this.openVPage(VStart, param);
         }
         else {
             //await this.openVPage(AgencyClause, param);
