@@ -16,7 +16,7 @@ const schema: Schema = [
 
 class ValidityDate extends Widget {
     @observable dateVisible = false;
-    private list = [{ value: 1, title: '一周', name: 'b' }, { value: 2, title: '两周', name: 'b' }];
+    private list = [{ value: 1, title: '    一周', name: 'b' }, { value: 2, title: '两周', name: 'b' }];
 
     private onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
         let val = evt.currentTarget.value;
@@ -34,7 +34,7 @@ class ValidityDate extends Widget {
     render = () => {
         return <div className="form-control" style={{ height: 'auto' }}>
             {this.list.map((v, index) => {
-                return <label className="my-1 mx-2"><input type="radio" value={v.value} name={v.name} onChange={this.onChange} /> {v.title} &nbsp; </label>
+                return <label className="my-1 mx-3"><input type="radio" value={v.value} name={v.name} onChange={this.onChange} /> {v.title} &nbsp; </label>
             })}
         </div>
     };
@@ -42,7 +42,7 @@ class ValidityDate extends Widget {
 
 class Discount extends Widget {
     @observable dateVisible = false;
-    private list = [{ value: 0.05, title: '95折', name: 'a' }, { value: 0.1, title: '9折', name: 'a' }, { value: 0.15, title: '85折', name: 'a' }, { value: 0.2, title: ' 8  折     ', name: 'a' }, { value: 0.3, title: '7折', name: 'a' }, { value: 0.4, title: '6折', name: 'a' }];
+    private list = [{ value: 0.05, title: '95    折    ', name: 'a' }, { value: 0.1, title: '9.0折', name: 'a' }, { value: 0.15, title: '85    折    ', name: 'a' }, { value: 0.2, title: ' 8.0折', name: 'a' }, { value: 0.3, title: '7.0折', name: 'a' }, { value: 0.4, title: '6.0折', name: 'a' }];
 
     private onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
         let val = evt.currentTarget.value;
@@ -68,7 +68,7 @@ class Discount extends Widget {
             <div>
                 <table>
                     <tr>
-                        <td><label className="my-1 mx-3"><input type="radio" value={-1} name="a" onChange={this.onChange} /> 无 &nbsp;&nbsp;&nbsp;</label></td>
+                        <td><label className="my-1 mx-3"><input type="radio" value={-1} name="a" onChange={this.onChange} /> 无 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
                         <td><label className="my-1 mx-3"><input type="radio" value={0} name="a" onChange={this.onChange} /> 其他 &nbsp;</label></td>
                         <td>{this.dateVisible && <input type="text" className="col-xs-4 col-sm-4" onChange={this.onDateChange} />}</td>
                     </tr>
