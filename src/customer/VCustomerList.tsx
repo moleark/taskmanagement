@@ -37,7 +37,8 @@ export class VCustomerList extends VPage<CCustomer> {
             <span onClick={onshowSelectCustomerUnit} ><FA name="plus" /></span>
         </div>;
         let none = <div className="my-3 mx-2 text-warning">未找到客户！</div>;
-        return <Page header='客户' onScrollBottom={this.onScrollBottom} headerClassName='bg-primary py-1 px-3' right={right} >
+        let tit = <span>客户</span>
+        return <Page header={tit} onScrollBottom={this.onScrollBottom} headerClassName='bg-primary py-1 px-3' right={right} >
             <List before={''} none={none} items={pageCustomer} item={{ render: this.renderCustomer, onClick: this.onClickCustomer }} />
         </Page>
     })

@@ -2,6 +2,7 @@ import { AppUI, CApp } from 'tonva';
 import salestaskUI from './salestask';
 import { CSalesTaskApp } from '../CSalesTaskApp';
 import { VHome } from './main';
+import { jnkTop } from './jnkTop';
 
 const ui: AppUI = {
     appName: "百灵威系统工程部/salestask",
@@ -10,7 +11,8 @@ const ui: AppUI = {
     uqs: {
         '百灵威系统工程部/salestask': salestaskUI,
     },
-    version: "1.0"
+    loginTop: jnkTop,
+    version: "1.0.1"
 }
 
 export default ui;
