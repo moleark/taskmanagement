@@ -33,7 +33,7 @@ export class VCustomerList extends VPage<CCustomer> {
         let onshowCustomerSearch = async () => await showCustomerSearch();
 
         let right = <div className="cursor-pointer py-2">
-            <span onClick={onshowCustomerSearch} ><FA name="search" className="px-4" /></span>
+            <span onClick={onshowCustomerSearch} ><FA name="search" /></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <span onClick={onshowSelectCustomerUnit} ><FA name="plus" /></span>
         </div>;
         let none = <div className="my-3 mx-2 text-warning">未找到客户！</div>;

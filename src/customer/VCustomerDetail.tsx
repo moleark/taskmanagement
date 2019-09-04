@@ -45,7 +45,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
         let { name } = itemSchema;
         this.customer[name] = newValue;
         await this.controller.updateMyCustomer(this.customer);
-        nav.saveLocalUser();
+
     }
 
     private page = observer(() => {

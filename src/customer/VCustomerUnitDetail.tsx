@@ -28,9 +28,7 @@ export class VCustomerUnitDetail extends VPage<CCustomerUnit> {
     private onItemChanged = async (itemSchema: ItemSchema, newValue: any, preValue: any) => {
         let { name } = itemSchema;
         this.unit[name] = newValue;
-        this.unit["createTime"] = "2019-01-01";
         await this.controller.updateMyCustomerUnit(this.unit);
-        nav.saveLocalUser();
 
     }
 
