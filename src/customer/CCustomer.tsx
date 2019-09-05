@@ -10,8 +10,8 @@ import { VCustomerList } from './VCustomerList';
 import { Task } from 'salestask/model';
 import { VCreateCustomer } from './VCreateCustomer';
 import { VCreateCustomerFinish } from './VCreateCustomerFinish';
-import { VMyCustomerSelectCall } from './VMyCustomerSelectCall';
-import { CAddress } from './CAddress';
+import { VMyCustomerSelectCall } from './VMyCustomerSelectCall--delete';
+import { CAddress } from '../address/CAddress';
 import { VCustomerSearch } from './VCustomerSearch';
 
 //页面类
@@ -136,7 +136,6 @@ export class CCustomer extends Controller {
     }
 
     showCustomerSearch = async (): Promise<any> => {
-        //await this.searchCustomerByKey('');
         this.pageCustomerSearch = null;
         this.openVPage(VCustomerSearch);
     }
@@ -154,13 +153,11 @@ export class CCustomer extends Controller {
 
     //显示新建客户页面
     showCreateCustomer = (param: any) => {
-        //this.openVPage(VCreateCustomerFinish);
         this.openVPage(VCreateCustomer, param);
     }
 
     //显示选择客户的页面
     showSelectCustomerUnit = () => {
-        //this.openVPage(VCreateCustomerFinish);
         this.cApp.cCustomerUnit.start();
     }
 

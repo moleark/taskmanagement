@@ -6,7 +6,6 @@ import { consts } from 'consts';
 import { observable } from 'mobx';
 
 const schema: Schema = [
-    { name: 'no', type: 'string' },
     { name: 'name', type: 'string' },
 ];
 
@@ -15,7 +14,6 @@ export class VCustomerUnitDetail extends VPage<CCustomerUnit> {
     @observable private unit: any;
     private uiSchema: UiSchema = {
         items: {
-            no: { widget: 'text', label: '单位编码', placeholder: '请输入单位名称' } as UiInputItem,
             name: { widget: 'text', label: '单位名称', placeholder: '请输入单位名称' } as UiInputItem,
         }
     }

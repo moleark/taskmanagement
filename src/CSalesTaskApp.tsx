@@ -8,9 +8,9 @@ import { CMe } from 'me/CMe';
 import { CStart } from 'start/CStart';
 import { CTeam } from 'team/CTeam';
 import { CMessage } from 'message/CMessage';
-import { CCustomerUnit } from 'customer/CCustomerUnit';
+import { CCustomerUnit } from 'customerunit/CCustomerUnit';
 import { CCoupon } from 'coupon/CCoupon';
-import { CWebUser } from 'customer/CWebUser';
+import { CWebUser } from 'webuser/CWebUser';
 
 export class CSalesTaskApp extends CApp {
 
