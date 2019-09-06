@@ -3,6 +3,7 @@ import { VPage, Page, LMR, List, EasyDate, tv, FA } from 'tonva';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { CMe } from './CMe';
+import { consts } from 'consts';
 
 export class VAchievementDetail extends VPage<CMe> {
 
@@ -57,6 +58,6 @@ export class VAchievementDetail extends VPage<CMe> {
                 }
             }
         ];
-        return <Page header="我的业绩" tabs={tabs} tabPosition="top"></Page>
+        return <Page header="我的业绩" tabs={tabs} headerClassName={consts.headerClass} tabPosition="top"></Page>
     })
 }
