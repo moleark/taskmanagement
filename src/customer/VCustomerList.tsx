@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, LMR, List, SearchBox, FA, tv } from 'tonva';
+import { VPage, Page, LMR, List, SearchBox, FA, tv, PropGrid, ComponentProp, Prop } from 'tonva';
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
 import { async } from 'q';
@@ -29,8 +29,10 @@ export class VCustomerList extends VPage<CCustomer> {
 
     private page = observer((customer: any) => {
         let { pageCustomer, showSelectCustomerUnit, showCustomerSearch } = this.controller;
+        let { showCustomerSearchByUnit } = this.controller.cApp.cCustomerUnit;
         let onshowSelectCustomerUnit = async () => await showSelectCustomerUnit();
-        let onshowCustomerSearch = async () => await showCustomerSearch();
+        let onshowCustomerSearch = async () => await showCustomerSearch(null);
+        let onshowCustomerSearchByCustomer = async () => await showCustomerSearchByUnit();
 
         let right = <div className="cursor-pointer py-2">
             <span onClick={onshowCustomerSearch} ><FA name="search" /></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -38,7 +40,20 @@ export class VCustomerList extends VPage<CCustomer> {
         </div>;
         let none = <div className="my-3 mx-2 text-warning">未找到客户！</div>;
         let tit = <span>客户</span>
+
+        let rows: Prop[] = [
+            {
+                type: 'component',
+                name: 'customer',
+                component: <LMR className="cursor-pointer w-100 py-3" onClick={onshowCustomerSearchByCustomer}
+                    left={< div > <small><FA name='university' className='text-info' /></small> &nbsp;客户单位</div>}
+                    right={< div className="w-2c text-right" > <i className="fa fa-chevron-right small" /></div >}>
+                </LMR >,
+            } as ComponentProp
+        ];
+
         return <Page header={tit} onScrollBottom={this.onScrollBottom} headerClassName='bg-primary py-1 px-3' right={right} >
+            <PropGrid className="my-2" rows={rows} values={undefined} alignValue="right" />
             <List before={''} none={none} items={pageCustomer} item={{ render: this.renderCustomer, onClick: this.onClickCustomer }} />
         </Page>
     })

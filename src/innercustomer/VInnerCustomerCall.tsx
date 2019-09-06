@@ -2,9 +2,9 @@ import * as React from 'react';
 import { VPage, Page } from 'tonva';
 import { observer } from 'mobx-react';
 import { LMR, List, EasyDate, SearchBox, FA } from 'tonva';
-import { CWebUser } from './CWebUser';
+import { CInnerCustomer } from './CInnerCustomer';
 
-export class VWebUserCall extends VPage<CWebUser> {
+export class VInnerCustomerCall extends VPage<CInnerCustomer> {
 
     async open(customer: any) {
         this.openPage(this.page, customer);

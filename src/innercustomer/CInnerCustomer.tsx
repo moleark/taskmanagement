@@ -3,7 +3,7 @@ import { Query, PageItems, Controller, nav, Page, Image } from 'tonva';
 import { CSalesTaskApp } from '../CSalesTaskApp';
 import { observable } from 'mobx';
 import { Task } from 'salestask/model';
-import { VWebUserCall } from './VWebUserCall';
+import { VInnerCustomerCall } from './VInnerCustomerCall';
 
 //页面类
 class PageCWebUser extends PageItems<any> {
@@ -30,7 +30,7 @@ class PageCWebUser extends PageItems<any> {
 /**
  *
  */
-export class CWebUser extends Controller {
+export class CInnerCustomer extends Controller {
 
     cApp: CSalesTaskApp;
     @observable pageWebUser: PageCWebUser;
@@ -50,7 +50,7 @@ export class CWebUser extends Controller {
     //初始化
     protected async internalStart(task: Task) {
         this.pageWebUser = null;
-        this.openVPage(VWebUserCall);
+        this.openVPage(VInnerCustomerCall);
     }
 
     //查询客户--通过名称

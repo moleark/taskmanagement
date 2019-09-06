@@ -14,7 +14,7 @@ export class VCustomerRelation extends VPage<CCustomer> {
     }
 
     private page = observer(() => {
-        let { showCustomerSelect } = this.controller;
+        let { showInnerCustomerSelect: showCustomerSelect } = this.controller;
         let { webuser, myCustomer } = this.relesion;
 
         let onshowCustomerSelect = async () => await showCustomerSelect(myCustomer.obj);

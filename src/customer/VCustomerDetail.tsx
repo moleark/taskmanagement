@@ -53,7 +53,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
         let { showCustomerHistory } = cSalesTask;
         let { id: customerid, unit } = this.customer
         let { showCustomerUnitDetail } = cCustomerUnit;
-        let { showCustomerSelect } = cCustomer;
+        let { showInnerCustomerSelect: showCustomerSelect } = cCustomer;
         let { innerCustomer } = this.controller;
 
         let onshowCustomerHistory = async () => await showCustomerHistory(customerid);

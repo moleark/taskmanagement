@@ -13,6 +13,7 @@ import { VCreateCustomerFinish } from './VCreateCustomerFinish';
 import { VMyCustomerSelectCall } from './VMyCustomerSelectCall--delete';
 import { CAddress } from '../address/CAddress';
 import { VCustomerSearch } from './VCustomerSearch';
+import { VCustomerUnitSelect } from 'customerunit/VCustomerUnitSelect';
 
 //页面类
 class PageMyCustomer extends PageItems<any> {
@@ -135,8 +136,12 @@ export class CCustomer extends Controller {
         this.openVPage(VCustomerSelect);
     }
 
-    showCustomerSearch = async (): Promise<any> => {
-        this.pageCustomerSearch = null;
+    showCustomerSearch = async (val: any): Promise<any> => {
+        if (val == null) {
+            this.pageCustomerSearch = null;
+        } else {
+            this.searchCustomerByKey(val);
+        }
         this.openVPage(VCustomerSearch);
     }
 
@@ -182,7 +187,7 @@ export class CCustomer extends Controller {
         await this.tuidMyCustomer.save(param.id, param);
     }
 
-    showCustomerSelect = async (mycustomer: any) => {
+    showInnerCustomerSelect = async (mycustomer: any) => {
         let { cWebUser } = this.cApp;
         this.innerCustomer = await cWebUser.call();
         await this.createWebUserMyCustomerMap(this.innerCustomer.id, mycustomer);

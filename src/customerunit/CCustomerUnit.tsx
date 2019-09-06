@@ -4,7 +4,7 @@ import { Query, PageItems, Controller, Tuid, Action } from 'tonva';
 import { CSalesTaskApp } from '../CSalesTaskApp';
 import { observable } from 'mobx';
 import { Task } from 'salestask/model';
-import { VCustomerUnit } from './VCustomerUnit';
+import { VCustomerUnitSelect } from './VCustomerUnitSelect';
 import { VCreateCustomerUnit } from './VCreateCustomerUnit';
 import { VCustomerUnitDetail } from './VCustomerUnitDetail';
 import { VCreateCustomerUnitFinish } from './VCreateCustomerUnitFinish';
@@ -57,7 +57,15 @@ export class CCustomerUnit extends Controller {
     //初始化
     protected async internalStart(task: Task) {
         this.pageUnit = null;
-        this.openVPage(VCustomerUnit);
+        this.searchByKey('');
+        this.openVPage(VCustomerUnitSelect, 1);
+    }
+
+
+    showCustomerSearchByUnit = async (): Promise<any> => {
+        this.pageUnit = null;
+        this.searchByKey('');
+        this.openVPage(VCustomerUnitSelect, 2);
     }
 
     //查询客户--通过名称
