@@ -25,7 +25,9 @@ export class VAchievement extends VPage<CMe> {
 
     async open(param: any) {
         this.salesAmont = param[0];
-
+        if (this.salesAmont == null) {
+            this.salesAmont = { oneSaleVolume: 0, twoSaleVolume: 0, threeSaleVolume: 0, oneAchievement: 0, twoAchievement: 0, threeAchievement: 0 }
+        }
         this.openPage(this.page, param);
     }
 

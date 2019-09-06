@@ -21,6 +21,7 @@ class App extends React.Component {
         //let b = new B('b');
         //await b.d();
         //nav.push(<div>ddd</div>)
+        nav.setSettings(ui);
     }
     public render() {
         // notLogined={this.onLogined}
