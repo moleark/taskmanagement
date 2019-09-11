@@ -2,7 +2,7 @@ import * as React from 'react';
 import { VPage, Page, PageItems, Schema, Form, UiSchema, UiInputItem, UiCheckItem, Context, UiRadio, toUiSelectItems, LMR, FA, Prop, ComponentProp, PropGrid } from 'tonva';
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
-import { consts } from 'consts';
+import { consts } from '../consts';
 
 
 

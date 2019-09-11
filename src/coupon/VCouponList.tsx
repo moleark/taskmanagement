@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import { VPage, Page, LMR, SearchBox, FA, List, EasyDate, tv } from 'tonva';
 import { observer } from 'mobx-react';
 import { CCoupon } from './CCoupon';
-import { consts } from 'consts';
+import { consts } from '../consts';
 
 export class VCouponList extends VPage<CCoupon> {
 

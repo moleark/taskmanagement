@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { VPage, Page, Schema, Form, UiSchema, UiInputItem, Context, UiRadio, toUiSelectItems, Widget, UiCustom, FA, LMR, UiIdItem, tv } from 'tonva';
 import { observer } from 'mobx-react';
-import { consts } from 'consts';
+import { consts } from '../consts';
 import { CCoupon } from './CCoupon';
 import { observable } from 'mobx';
 

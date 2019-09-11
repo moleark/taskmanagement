@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
 import { LMR, StringProp, ComponentProp, Prop, PropGrid, FA } from 'tonva';
 import { tv } from 'tonva';
-import { consts } from 'consts';
+import { consts } from '../consts';
 import { observable } from 'mobx';
 
 const schema: Schema = [

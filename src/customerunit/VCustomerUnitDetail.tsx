@@ -2,7 +2,7 @@ import * as React from 'react';
 import { VPage, Page, StringProp, Prop, PropGrid, FA, Edit, Schema, UiSchema, UiInputItem, ItemSchema, nav } from 'tonva';
 import { observer } from 'mobx-react';
 import { CCustomerUnit } from './CCustomerUnit';
-import { consts } from 'consts';
+import { consts } from '../consts';
 import { observable } from 'mobx';
 
 const schema: Schema = [

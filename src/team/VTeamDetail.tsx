@@ -2,7 +2,7 @@ import * as React from 'react';
 import { VPage, Page, ItemSchema, StringSchema, UiSchema, UiTextItem, Edit, LMR } from 'tonva';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { consts } from 'consts';
+import { consts } from '../consts';
 import { CTeam } from './CTeam';
 
 export class VTeamDetail extends VPage<CTeam> {

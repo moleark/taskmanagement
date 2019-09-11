@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { VPage, Page, LMR, Prop, ComponentProp, FA, PropGrid } from 'tonva';
 import { observer } from 'mobx-react';
-import { consts } from 'consts';
+import { consts } from '../consts';
 import { CMe } from './CMe';
 import { async } from 'q';
 

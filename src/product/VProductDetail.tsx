@@ -7,7 +7,7 @@ import { MainProductChemical } from 'model/product';
 import { ProductPackRow } from './Product';
 import { ViewMainSubs } from 'mainSubs';
 import { MinusPlusWidget } from 'tools/minusPlusWidget';
-import { consts } from 'consts';
+import { consts } from '../consts';
 
 const schema: ItemSchema[] = [
     { name: 'pack', type: 'object' } as ObjectSchema,

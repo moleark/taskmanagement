@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { VPage, Page, StringProp, Prop, PropGrid, ComponentProp, tv, LMR, EasyDate, FA } from 'tonva';
 import { observer } from 'mobx-react';
-import { consts } from 'consts';
+import { consts } from '../consts';
 import { CCoupon } from './CCoupon';
 import { async } from 'q';
 

@@ -7,7 +7,7 @@ import { ViewMainSubs } from 'mainSubs';
 import { renderBrand } from 'product/CProduct';
 import { ProductPackRow } from 'product/Product';
 import { CSalesTask } from 'salestask/CSalesTask';
-import { consts } from 'consts';
+import { consts } from '../../consts';
 
 const schema: ItemSchema[] = [
     { name: 'pack', type: 'object' } as ObjectSchema,
