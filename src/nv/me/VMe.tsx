@@ -88,7 +88,7 @@ export class VMe extends VPage<CMe> {
         let rows: Prop[] = [
             {
                 type: 'component',
-                component: <LMR className="cursor-pointer w-100 pt-2 align-items-center  ">
+                component: <LMR className="cursor-pointer w-100 pt-1">
                     {
                         <table className="w-100 text-center">
                             <tr>
@@ -154,7 +154,7 @@ export class VMe extends VPage<CMe> {
                                     <div className="text-center" onClick={onshowCreateCoupon}>
                                         <FA name="th-large" className='text-warning' fixWidth={true} size="lg" />
                                         <br />
-                                        <small ><small className="px-1" >优惠码</small></small>
+                                        <small><small>&nbsp;优惠码&nbsp;</small></small>
                                     </div>
                                 </td>
                                 <td className="w-4">
@@ -162,6 +162,11 @@ export class VMe extends VPage<CMe> {
                                         <FA name="tag" className='text-info' fixWidth={true} size="lg" />
                                         <br />
                                         <small ><small >完成任务</small></small>
+                                    </div>
+                                </td>
+                                <td className="w-4">
+                                    <div className="text-center">
+                                        <div className="px-4"></div>
                                     </div>
                                 </td>
                                 <td className="w-4">
