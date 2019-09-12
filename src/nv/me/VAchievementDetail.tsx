@@ -30,7 +30,7 @@ export class VAchievementDetail extends VPage<CMe> {
     private page = observer(() => {
         let tabs = [
             {
-                title: 'A类',
+                title: 'A类收益',
                 content: () => {
                     return <List items={this.achievementsA} item={{ render: this.renderItem }} none="无业绩" />
                 },
@@ -39,7 +39,7 @@ export class VAchievementDetail extends VPage<CMe> {
                     this.achievementsA = await this.controller.searchAchievementDetail(1);
                 }
             }, {
-                title: 'B类',
+                title: 'B类收益',
                 isSelected: this.currentState === 'B',
                 content: () => {
                     return <List items={this.achievementsB} item={{ render: this.renderItem }} none="无业绩" />
@@ -48,7 +48,7 @@ export class VAchievementDetail extends VPage<CMe> {
                     this.achievementsB = await this.controller.searchAchievementDetail(2);
                 }
             }, {
-                title: 'C类',
+                title: 'C类收益',
                 isSelected: this.currentState === 'C',
                 content: () => {
                     return <List items={this.achievementsC} item={{ render: this.renderItem }} none="无业绩" />
