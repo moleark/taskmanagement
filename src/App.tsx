@@ -10,8 +10,8 @@ import { CApp, appConfig } from './nv';
 class App extends React.Component {
 
     private onLogined = async () => {
-      nav.setSettings(appConfig);
-      await start(CApp, appConfig);
+        nav.setSettings(appConfig);
+        await start(CApp, appConfig);
         /*
         let page = <Page header={false}>
           <Tabs tabs={faceTabs} />

@@ -66,35 +66,118 @@ export class VMe extends VPage<CMe> {
     }
 
     private page = observer(() => {
+
         let { cSalesTask, cMessage, cCoupon } = this.controller.cApp
         let { showEmployeeHistory } = cSalesTask;
-        let { showTeam, showAchievement } = this.controller;
+        let { showTeam, showAchievement, achievement } = this.controller;
+
+        let salesAmont: any = achievement[0];
+        if (salesAmont == null) {
+            salesAmont = { oneSaleVolume: 0, twoSaleVolume: 0, threeSaleVolume: 0, oneAchievement: 0, twoAchievement: 0, threeAchievement: 0 }
+        }
+        let { oneSaleVolume, twoSaleVolume, threeSaleVolume, oneAchievement, twoAchievement, threeAchievement } = salesAmont;
 
         let onshowEmployeeHistory = async () => await showEmployeeHistory();
         let onshowTeam = async () => await showTeam();
-        let onshowAchievement = async () => await showAchievement();
         let onshowCreateCoupon = async () => await cCoupon.showCreateCoupon()
+
+        let onshowAchievementDetailA = async () => await this.controller.showAchievementDetail("A");
+        let onshowAchievementDetailB = async () => await this.controller.showAchievementDetail("B");
+        let onshowAchievementDetailC = async () => await this.controller.showAchievementDetail("C");
 
         let rows: Prop[] = [
             {
                 type: 'component',
-                component: rowCom('th-large', 'text-warning', '优惠码', undefined, onshowCreateCoupon),
+                component: <LMR className="cursor-pointer w-100 pt-2 align-items-center  ">
+                    {
+                        <table className="w-100 ">
+                            <tr>
+                                <td className="w-4" onClick={onshowTeam}>
+                                    <div className="text-center" onClick={onshowTeam} >
+                                        <span >1</span><br />
+                                        <small ><small className="px-2" >团队</small></small>
+                                    </div>
+                                </td>
+                                <td className="w-4">
+                                    <div className="text-center" >
+                                        <span >1</span><br />
+                                        <small ><small className="px-3" >客户</small></small>
+                                    </div>
+                                </td>
+                                <td className="w-4">
+                                    <div className="text-center"  >
+                                        <span >1</span><br />
+                                        <small><small >活跃客户</small></small>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    }
+                </LMR >,
             } as ComponentProp,
             {
                 type: 'component',
-                component: rowCom('tag', 'text-info', '已完成任务', undefined, onshowEmployeeHistory),
+                component: <LMR className="cursor-pointer w-100 py-2 my-2 align-items-center  ">
+                    {
+                        <div className="text-center">
+                            <div className="py-4" >
+                                <h1 className="text-danger">{oneAchievement + twoAchievement + threeAchievement}</h1>
+                                <h6><small>累计收益（元）</small></h6>
+                            </div>
+                            <table className="w-100">
+                                <tr>
+                                    <td className="text-danger" onClick={onshowAchievementDetailA}  >
+                                        <strong>{oneAchievement}</strong><br />
+                                        <h6><small>A（元）</small></h6>
+                                    </td>
+                                    <td className="text-warning" onClick={onshowAchievementDetailB} >
+                                        <strong>{twoAchievement}</strong><br />
+                                        <h6><small>B（元）</small></h6>
+                                    </td>
+                                    <td className="text-info" onClick={onshowAchievementDetailC} >
+                                        <strong>{threeAchievement}</strong><br />
+                                        <h6><small>C（元）</small></h6>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    }
+                </LMR >,
             } as ComponentProp,
+
             {
                 type: 'component',
-                component: rowCom('line-chart', 'text-danger', '个人业绩', undefined, onshowAchievement),
-            } as ComponentProp,
-            {
-                type: 'component',
-                component: rowCom('sitemap', 'text-info', '我的团队', undefined, onshowTeam),
+                component: <LMR className="cursor-pointer w-100 py-2 my-2 px-2 align-items-center  ">
+                    {
+                        <table className="w-100 ">
+                            <tr>
+                                <td className="w-4">
+                                    <div className="text-center" onClick={onshowCreateCoupon}>
+                                        <FA name="th-large" className='text-warning' fixWidth={true} size="lg" />
+                                        <br />
+                                        <small ><small className="px-1" >优惠码</small></small>
+                                    </div>
+                                </td>
+                                <td className="w-4">
+                                    <div className="text-center" onClick={onshowEmployeeHistory} >
+                                        <FA name="tag" className='text-info' fixWidth={true} size="lg" />
+                                        <br />
+                                        <small ><small >完成任务</small></small>
+                                    </div>
+                                </td>
+                                <td className="w-4">
+                                    <div className="text-center">
+                                        <div className="px-4"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    }
+                </LMR >,
             } as ComponentProp,
         ];
 
-        return <div>
+        return <div className="bg-white">
             {this.meInfo()}
             <PropGrid className="" rows={rows} values={null} alignValue="right" />
         </div>

@@ -66,7 +66,7 @@ export class CSalesTaskApp extends CApp {
 
         /** 启动销售任务列表*/
         //this.cSalesTask.start();
-
+        
         /** 启动邀请码页面 */
         this.cStart.start();
 

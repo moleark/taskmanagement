@@ -38,7 +38,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
 
     async open(customer: any) {
         this.customer = customer;
-        this.openPage(this.page);
+        this.openPage(this.page, customer);
     }
 
     private onItemChanged = async (itemSchema: ItemSchema, newValue: any, preValue: any) => {
@@ -48,10 +48,10 @@ export class VCustomerDetail extends VPage<CCustomer> {
 
     }
 
-    private page = observer(() => {
+    private page = observer((param: any) => {
         let { cSalesTask, cCustomerUnit, cCustomer } = this.controller.cApp
         let { showCustomerHistory } = cSalesTask;
-        let { id: customerid, IsOccupy, unit } = this.customer
+        let { id: customerid, IsOccupy, unit } = param
         let { showCustomerUnitDetail } = cCustomerUnit;
         let { showInnerCustomerSelect: showCustomerSelect } = cCustomer;
         let { innerCustomer } = this.controller;

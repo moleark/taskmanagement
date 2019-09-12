@@ -33,7 +33,7 @@ export class CApp extends CAppBase {
     cCoupon: CCoupon;
     cWebUser: CInnerCustomer;
 
-    protected newC<T extends CUqBase>(type: IConstructor<T>):T {
+    protected newC<T extends CUqBase>(type: IConstructor<T>): T {
         return new type(this);
     }
 
@@ -58,6 +58,9 @@ export class CApp extends CAppBase {
 
         /** 启动邀请码页面 */
         this.cStart.start();
+
+        /**计算业绩**/
+        //await this.cMe.onComputeAchievement();
 
         /** 启动主程序*/
         //await super.internalStart(param);

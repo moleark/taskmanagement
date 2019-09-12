@@ -9,6 +9,7 @@ import { VMeDetail } from './VMeDetail';
 import { VAchievement } from './VAchievement';
 import { VSet } from './VSet';
 import { VAchievementDetail } from './VAchievementDetail';
+import { observable } from 'mobx';
 
 /**
  *
@@ -16,8 +17,7 @@ import { VAchievementDetail } from './VAchievementDetail';
 export class CMe extends CUqBase {
     inviteCode: string;
     position: any;
-    achievemen: number;
-
+    @observable achievement: any;
     /*
     private querySearchPosition: Query;
     private querySearchAchievement: Query;
@@ -52,6 +52,7 @@ export class CMe extends CUqBase {
         let p1 = code.substr(1, 4);
         let p2 = code.substr(5);
         this.inviteCode = p1 + ' ' + p2;
+        await this.onComputeAchievement();
     }
 
     //显示我的个人信息
@@ -107,11 +108,19 @@ export class CMe extends CUqBase {
         return this.renderView(VMe);
     })
     */
+
+    onComputeAchievement = async () => {
+        await this.uqs.salesTask.ComputeAchievement.submit({});
+        let query = { user: this.user.id };
+        this.achievement = await this.uqs.salesTask.SearchAchievement.table(query);
+    }
+
     render = () => {
         return this.renderView(VMe);
     }
 
     tab = () => {
+
         return <this.render />;
     }
 }
