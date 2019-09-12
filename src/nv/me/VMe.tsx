@@ -90,28 +90,32 @@ export class VMe extends VPage<CMe> {
                 type: 'component',
                 component: <LMR className="cursor-pointer w-100 pt-1">
                     {
-                        <table className="w-100 text-center">
-                            <tr>
-                                <td onClick={onshowTeam}>
-                                    <div className="text-center" onClick={onshowTeam} >
-                                        <div>1</div>
-                                        <h6><small>&nbsp;&nbsp;&nbsp;&nbsp;团队&nbsp;&nbsp;&nbsp;&nbsp;</small></h6>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div className="text-center" >
-                                        <div >1</div>
-                                        <h6><small>&nbsp;&nbsp;&nbsp;&nbsp;客户&nbsp;&nbsp;&nbsp;&nbsp;</small></h6>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div className="text-center"  >
-                                        <div >1</div>
-                                        <h6><small >活跃客户</small></h6>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
+                        <small>
+                            <small>
+                                <table className="w-100 text-center">
+                                    <tr>
+                                        <td onClick={onshowTeam}>
+                                            <div className="text-center" onClick={onshowTeam} >
+                                                <div>1</div>
+                                                <h6><small>&nbsp;&nbsp;&nbsp;&nbsp;团队&nbsp;&nbsp;&nbsp;&nbsp;</small></h6>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div className="text-center" >
+                                                <div >1</div>
+                                                <h6><small>&nbsp;&nbsp;&nbsp;&nbsp;客户&nbsp;&nbsp;&nbsp;&nbsp;</small></h6>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div className="text-center"  >
+                                                <div >1</div>
+                                                <h6><small >活跃客户</small></h6>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </small>
+                        </small>
                     }
                 </LMR >,
             } as ComponentProp,
