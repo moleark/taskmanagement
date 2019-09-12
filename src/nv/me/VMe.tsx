@@ -90,24 +90,24 @@ export class VMe extends VPage<CMe> {
                 type: 'component',
                 component: <LMR className="cursor-pointer w-100 pt-2 align-items-center  ">
                     {
-                        <table className="w-100 ">
+                        <table className="w-100 text-center">
                             <tr>
-                                <td className="w-4" onClick={onshowTeam}>
+                                <td onClick={onshowTeam}>
                                     <div className="text-center" onClick={onshowTeam} >
-                                        <span >1</span><br />
-                                        <small ><small className="px-2" >团队</small></small>
+                                        <div>1</div>
+                                        <h6><small>&nbsp;&nbsp;&nbsp;&nbsp;团队&nbsp;&nbsp;&nbsp;&nbsp;</small></h6>
                                     </div>
                                 </td>
-                                <td className="w-4">
+                                <td>
                                     <div className="text-center" >
-                                        <span >1</span><br />
-                                        <small ><small className="px-3" >客户</small></small>
+                                        <div >1</div>
+                                        <h6><small>&nbsp;&nbsp;&nbsp;&nbsp;客户&nbsp;&nbsp;&nbsp;&nbsp;</small></h6>
                                     </div>
                                 </td>
-                                <td className="w-4">
+                                <td>
                                     <div className="text-center"  >
-                                        <span >1</span><br />
-                                        <small><small >活跃客户</small></small>
+                                        <div >1</div>
+                                        <h6><small >活跃客户</small></h6>
                                     </div>
                                 </td>
                             </tr>
@@ -144,7 +144,6 @@ export class VMe extends VPage<CMe> {
                     }
                 </LMR >,
             } as ComponentProp,
-
             {
                 type: 'component',
                 component: <LMR className="cursor-pointer w-100 py-2 my-2 px-2 align-items-center  ">
