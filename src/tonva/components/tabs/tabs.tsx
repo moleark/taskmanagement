@@ -56,23 +56,22 @@ export const TabCaptionComponent = (label:string, icon:string, color:string) => 
     private contentBack: string;
     private sep: string;
     @observable private selectedTab: Tab;
-    @observable private tabs: Tab[] = [];
+    @observable private tabs: Tab[];
 
     constructor(props: TabsProps) {
         super(props);
         let {size, tabs, tabBack, contentBack, sep, selected} = this.props;
         this.size = size || 'md';
-        this.tabs.push(...tabs.map(v => {
-                let tab = new Tab();
-                tab.name = v.name;
-                tab.selected = false;
-                tab.caption = v.caption;
-                tab.contentBuilder = v.content;
-                tab.notify = v.notify;
-                tab.load = v.load;
-                return tab;
-            }
-        ));
+        this.tabs = tabs.map(v => {
+            let tab = new Tab();
+            tab.name = v.name;
+            tab.selected = false;
+            tab.caption = v.caption;
+            tab.contentBuilder = v.content;
+            tab.notify = v.notify;
+            tab.load = v.load;
+            return tab;
+        });
         this.tabBack = tabBack || 'bg-light';
         this.contentBack = contentBack;
         this.sep = sep || 'border-top border-gray';
