@@ -72,19 +72,19 @@ export class VMe extends VPage<CMe> {
                             <td>
                                 <div className="text-center" >
                                     <div>{teamCount}</div>
-                                    <small><small>  <small><small>&nbsp;&nbsp;&nbsp;&nbsp;团队&nbsp;&nbsp;&nbsp;&nbsp;</small></small></small></small>
+                                    <small><small><small>&nbsp;&nbsp;&nbsp;&nbsp;团队&nbsp;&nbsp;&nbsp;&nbsp;</small></small></small>
                                 </div>
                             </td>
                             <td>
                                 <div className="text-center" >
                                     <div >{customerCount}</div>
-                                    <small><small><small><small>&nbsp;&nbsp;&nbsp;&nbsp;客户&nbsp;&nbsp;&nbsp;&nbsp;</small></small></small></small>
+                                    <small><small><small>&nbsp;&nbsp;&nbsp;&nbsp;客户&nbsp;&nbsp;&nbsp;&nbsp;</small></small></small>
                                 </div>
                             </td>
                             <td>
                                 <div className="text-center"  >
                                     <div >{activeCustomerCount}</div>
-                                    <small><small><small><small >活跃客户</small></small></small></small>
+                                    <small><small><small>活跃客户</small></small></small>
                                 </div>
                             </td>
                         </tr>
@@ -104,7 +104,7 @@ export class VMe extends VPage<CMe> {
         return <div className="toggle rounded text-center text-white" style={{ backgroundColor: '#007bff', marginRight: '-1px', marginBottom: '-1px' }}>
             <div className="py-4" >
                 <h1 className="text-warning">{oneAchievement + twoAchievement + threeAchievement}</h1>
-                <h6><small>累计收益（元）</small></h6>
+                <h6 className="text-warning"><small>累计收益（元）</small></h6>
             </div>
             <table className="w-100">
                 <tr>
