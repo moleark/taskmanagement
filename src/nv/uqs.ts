@@ -111,6 +111,7 @@ export interface UqSalesTask {
     SearchTaskProduct: Query;
     SearchTaskProductPack: Query;
     SearchTaskProject: Query;
+    MyCustomerIsOccupy: Query;
 }
 
 export interface UqMember {

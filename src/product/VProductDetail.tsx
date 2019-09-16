@@ -62,6 +62,7 @@ export class VProductDetail extends VPage<CProduct> {
     private arrTemplet = (item: any) => {
         let { pack, retail, promotionPrice, agentPrice, inventoryAllocation, futureDeliveryTimeDescription } = item;
         let right = null;
+        let agent = null;
         if (retail) {
             let price: number = promotionPrice;
             let retailUI: any;
@@ -75,12 +76,10 @@ export class VProductDetail extends VPage<CProduct> {
                 <div >
                     <small className="text-muted">{retailUI}</small>&nbsp; &nbsp;
                     <span className="text-danger">￥ <span className="h5">{price}</span> </span>
-                    {
-                        agentPrice && <span className="text-danger"><span className="small" ><span className="small " >￥ <span >{agentPrice}<span className="small text-muted">  &nbsp;代理</span></span></span></span></span>
-                    }
                 </div>
-
             </div >
+            agent = agentPrice && <span className="text-danger"><span className="small" ><span className="small " >￥<span >{agentPrice}<span className="small text-muted">  &nbsp;代理</span></span></span></span></span>;
+
         } else {
             right = <small>请询价</small>
         }
@@ -103,7 +102,10 @@ export class VProductDetail extends VPage<CProduct> {
                     <div><b>{tv(pack, v => <div>{v.radioy}{v.unit}</div>)}</b></div>
                     <div>{deliveryTimeUI}</div>
                 </div>
-                <div className="col-7">
+                <div className="col-4">
+                    {right}
+                </div>
+                <div className="col-3">
                     {right}
                 </div>
             </div>

@@ -70,6 +70,7 @@ export class CCustomer extends CUqBase {
     @observable pageCustomer: PageMyCustomer;
     @observable pageCustomerSearch: PageMyCustomerCearch;
     @observable innerCustomer: any;
+    @observable IsOccupy: any;
     private task: Task;
 
     /*
@@ -124,6 +125,10 @@ export class CCustomer extends CUqBase {
     //查询客户--通过ID
     showCustomerDetail = async (customerid: number) => {
         let mycustomer = await this.loadCustomerDetail(customerid);
+
+        let IsOccupy = await this.uqs.salesTask.MyCustomerIsOccupy.query({ mycustomer: mycustomer.id });
+        this.IsOccupy = IsOccupy.ret[0];
+
         let customer = await this.uqs.salesTask.CustomerMyCustomerMap.query({ mycustomer: mycustomer.id });
         if (customer.ret.length > 0) {
             this.innerCustomer = customer.ret[0].customer;

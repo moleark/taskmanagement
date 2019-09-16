@@ -51,10 +51,10 @@ export class VCustomerDetail extends VPage<CCustomer> {
     private page = observer((param: any) => {
         let { cSalesTask, cCustomerUnit, cCustomer } = this.controller.cApp
         let { showCustomerHistory } = cSalesTask;
-        let { id: customerid, IsOccupy, unit } = param
+        let { id: customerid, unit } = param
         let { showCustomerUnitDetail } = cCustomerUnit;
         let { showInnerCustomerSelect: showCustomerSelect } = cCustomer;
-        let { innerCustomer } = this.controller;
+        let { innerCustomer, IsOccupy } = this.controller;
 
         let onshowCustomerHistory = async () => await showCustomerHistory(customerid);
         let onshowCustomerUnitDetail = async () => await showCustomerUnitDetail(unit);
@@ -77,7 +77,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
                     right={< div className="w-2c text-right" > <i className="fa fa-chevron-right small " /></div >}>
                 </LMR >,
             } as ComponentProp,
-            {
+            /**{
                 type: 'component',
                 name: 'customer',
                 component: <LMR className="cursor-pointer w-100 py-3" onClick={onshowCustomerSelect}
@@ -85,12 +85,12 @@ export class VCustomerDetail extends VPage<CCustomer> {
                     right={< div className="w-2c text-right" > <i className="fa fa-chevron-right small" /></div >}>
                     <div className="px-3"> {innerCustomer && tv(innerCustomer, v => v.name)}</div>
                 </LMR >,
-            } as ComponentProp
+            } as ComponentProp**/
         ];
 
         var header: any = <span>客户详情</span>;
-        if (IsOccupy == 1) {
-            header = <span className="text-danger" >客户详情（被占用）</span>;
+        if (IsOccupy.code == 1) {
+            header = <span >客户详情（被占用）</span>;
         }
 
         return <Page header={header} headerClassName={consts.headerClass}>

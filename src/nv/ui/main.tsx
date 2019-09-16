@@ -18,7 +18,7 @@ export class VHome extends VPage<CSalesTaskApp> {
             { name: 'home', label: '任务', content: cSalesTask.tab, icon: 'home', notify: undefined/*store.homeCount*/ },
             { name: 'member', label: '客户', content: cCustomer.tab, icon: 'vcard' },
             { name: 'member', label: '产品', content: cProduct.tab, icon: 'flask' },
-            { name: 'member', label: '我', content: cMe.tab, icon: 'user', load: cMe.load, notify: cMessage.count }
+            { name: 'member', label: '我的', content: cMe.tab, icon: 'user', load: cMe.load, notify: cMessage.count }
         ].map(v => {
             let { name, label, icon, content, notify, load } = v;
             return {

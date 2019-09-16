@@ -6,11 +6,11 @@ import { CApp, appConfig } from './nv';
 //import { faceTabs } from 'facetabs';
 
 //const tonvaApp = "bruce/TestApp";
-
+nav.setSettings(appConfig);
 class App extends React.Component {
 
     private onLogined = async () => {
-        nav.setSettings(appConfig);
+
         await start(CApp, appConfig);
         /*
         let page = <Page header={false}>

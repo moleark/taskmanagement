@@ -61,7 +61,9 @@ export class VProductDetail extends VPage<CProduct> {
 
     private arrTemplet = (item: any) => {
         let { pack, retail, promotionPrice, agentPrice, inventoryAllocation, futureDeliveryTimeDescription } = item;
+
         let right = null;
+        let agent = null;
         if (retail) {
             let price: number = promotionPrice;
             let retailUI: any;
@@ -73,14 +75,12 @@ export class VProductDetail extends VPage<CProduct> {
             }
             right = <div className="text-right row">
                 <div >
-                    <small className="text-muted">{retailUI}</small>&nbsp; &nbsp;
-                    <span className="text-danger">￥ <span className="h5">{price}</span> </span>
-                    {
-                        agentPrice && <span className="text-danger"><span className="small" ><span className="small " >￥ <span >{agentPrice}<span className="small text-muted">  &nbsp;代理</span></span></span></span></span>
-                    }
+                    <span className="text-muted h5">{retailUI}</span>&nbsp; &nbsp;
+                    <span className="text-danger">￥ <span className="h5">{price}</span></span>
                 </div>
-
             </div >
+
+            agent = agentPrice && <span><span className="text-warning small"><span className="small">代</span></span> <span className="text-right h5 text-danger"><span className="small pt-1">￥</span>{agentPrice}</span></span>;
         } else {
             right = <small>请询价</small>
         }
@@ -97,13 +97,17 @@ export class VProductDetail extends VPage<CProduct> {
         } else {
             deliveryTimeUI = <div>{futureDeliveryTimeDescription && '期货: ' + futureDeliveryTimeDescription}</div>
         }
+
         return <div className="px-2">
             <div className="row">
                 <div className="col-5">
-                    <div><b>{tv(pack, v => <div>{v.radioy}{v.unit}</div>)}</b></div>
+                    <div className="h5" ><b>{tv(pack, v => <div>{v.radioy}{v.unit}</div>)}</b></div>
                     <div>{deliveryTimeUI}</div>
                 </div>
-                <div className="col-7">
+                <div className="col-4">
+                    {agent}
+                </div>
+                <div className="col-3">
                     {right}
                 </div>
             </div>
