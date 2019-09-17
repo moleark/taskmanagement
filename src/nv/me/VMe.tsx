@@ -36,15 +36,16 @@ export class VMe extends VPage<CMe> {
     }
 
     private meInfo() {
-        let { user } = this.controller;
+        let { user, showMeDetail, showMessage, showTeam, } = this.controller;
         if (user === undefined) return null;
         let { id, name, nick, icon } = user;
-        let { showMeDetail, showMessage, showTeam } = this.controller;
+        let { showCustomerSearch } = this.controller.cApp.cCustomer;
         let { cMessage } = this.controller.cApp
         let count: any = cMessage.count.get();
         let onshowMeDetail = async () => await showMeDetail();
         let onshowMessage = async () => await showMessage();
         let onshowTeam = async () => await showTeam();
+        let onshowCustomerSearch = async () => await showCustomerSearch();
         let pointer, badge;
         if (count > 0) {
             pointer = 'cursor-pointer';
@@ -72,19 +73,19 @@ export class VMe extends VPage<CMe> {
                         <tbody>
                             <tr>
                                 <td>
-                                    <div className="text-center" onClick={onshowTeam}  >
+                                    <div className="text-center" onClick={onshowTeam}>
                                         <div>{teamCount}</div>
                                         <small>&nbsp;&nbsp;&nbsp;&nbsp;团队&nbsp;&nbsp;&nbsp;&nbsp;</small>
                                     </div>
                                 </td>
                                 <td>
-                                    <div className="text-center">
+                                    <div className="text-center" onClick={onshowCustomerSearch}>
                                         <div >{customerCount}</div>
                                         <small>&nbsp;&nbsp;&nbsp;&nbsp;客户&nbsp;&nbsp;&nbsp;&nbsp;</small>
                                     </div>
                                 </td>
                                 <td>
-                                    <div className="text-center">
+                                    <div className="text-center" onClick={onshowCustomerSearch}>
                                         <div >{activeCustomerCount}</div>
                                         <small>活跃客户</small>
                                     </div>
