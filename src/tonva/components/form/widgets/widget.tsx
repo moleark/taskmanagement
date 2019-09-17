@@ -9,7 +9,7 @@ import { computed, observable, reaction } from 'mobx';
 import { observer } from 'mobx-react';
 
 export abstract class Widget {
-    protected name: string;
+    name: string;
     protected context: Context;
     protected fieldProps:FieldProps;
     protected children: React.ReactNode;
@@ -18,7 +18,7 @@ export abstract class Widget {
     protected defaultValue: any;
     protected value: any;
     protected rules: Rule[];
-    @observable protected errors: string[] = [];
+    @observable errors: string[] = [];
     @observable protected contextErrors: string[] = [];
     @computed protected get hasError():boolean {return (this.errors.length + this.contextErrors.length)>0}
     protected readOnly:boolean;
