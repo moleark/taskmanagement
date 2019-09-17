@@ -9,7 +9,8 @@ import { numberValidation } from 'nv/tools/inputValidations';
 const schema: Schema = [
     { name: 'validitydate', type: 'date', required: true },
     { name: 'discount', type: 'string', required: false },
-    { name: 'preferential', type: 'string', required: false },
+    { name: 'tips', type: 'string', required: false },
+    //{ name: 'preferential', type: 'string', required: false },
     { name: 'customer', type: 'id', required: false },
     { name: 'submit', type: 'submit' },
 ];
@@ -114,8 +115,13 @@ export class VCreateCoupon extends VPage<CCoupon> {
                 label: '折扣',
                 WidgetClass: Discount,
             } as UiCustom,
-
-            preferential: { widget: 'text', label: '优惠金额', placeholder: '请输入优惠金额', rules: numberValidation } as UiInputItem,
+            tips: {
+                label: ' ',
+                Templet: (item: any) => {
+                    return <small className="text-muted">注：优惠码的折扣是最大折扣，具体折扣已实际折扣为准！</small>;
+                }
+            } as UiIdItem,
+            //preferential: { widget: 'text', label: '优惠金额', placeholder: '请输入优惠金额', rules: numberValidation } as UiInputItem,
             customer: {
                 widget: 'id', label: '客户', placeholder: '请选择客户',
                 pickId: async (context: Context, name: string, value: number) => await this.controller.showAddCouponCustomer(context, name, value),
@@ -152,6 +158,7 @@ export class VCreateCoupon extends VPage<CCoupon> {
                 onButtonClick={this.onFormButtonClick}
                 requiredFlag={false}
             />
+
         </Page >
     })
 }

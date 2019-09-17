@@ -79,8 +79,8 @@ export class VProductDetail extends VPage<CProduct> {
                     <span className="text-danger">￥ <span className="h5">{price}</span></span>
                 </div>
             </div >
-            right = price && <span><span className="text-warning small"><strong className="small">目</strong></span> <span className="text-right h5 text-danger"><span className="small pt-1">￥</span>{price}</span></span>;
-            agent = agentPrice && <span><span className="text-warning small"><strong className="small">代</strong></span> <span className="text-right h5 text-danger"><span className="small pt-1">￥</span>{agentPrice}</span></span>;
+            right = price && <div><span className="text-warning small"><strong className="small">牌</strong></span> <span className="text-right h5 text-danger"><span className="small">￥</span>{price}</span></div>;
+            agent = agentPrice && <div><span className="text-warning small"><strong className="small">代</strong></span> <span className="text-right h5 text-danger"><span className="small ">￥</span>{agentPrice}</span></div>;
         } else {
             right = <small>请询价</small>
         }
@@ -104,10 +104,8 @@ export class VProductDetail extends VPage<CProduct> {
                     <div className="h5" ><b>{tv(pack, v => <div>{v.radioy}{v.unit}</div>)}</b></div>
                     <div>{deliveryTimeUI}</div>
                 </div>
-                <div className="col-4">
+                <div className="col-7">
                     {agent}
-                </div>
-                <div className="col-3">
                     {right}
                 </div>
             </div>

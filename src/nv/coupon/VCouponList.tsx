@@ -29,7 +29,10 @@ export class VCouponList extends VPage<CCoupon> {
         var bcenter: any;
         var bleft: any;
         if (discount) {
-            bleft = <div><small>折扣：<span className=" mx-3 ">{discount} 折</span></small></div>;
+            var discountShow: any;
+            discountShow = (1 - discount) * 10;
+
+            bleft = <div><small>折扣：<span className=" mx-3 ">{discountShow.toFixed(1)} 折</span></small></div>;
         }
         if (preferential) {
             bcenter = <div className="text-muted"><small>优惠：<span className="mx-3">￥{preferential}</span></small></div>;

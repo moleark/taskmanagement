@@ -39,11 +39,12 @@ export class VMe extends VPage<CMe> {
         let { user } = this.controller;
         if (user === undefined) return null;
         let { id, name, nick, icon } = user;
-        let { showMeDetail, showMessage, showSet } = this.controller;
+        let { showMeDetail, showMessage, showTeam } = this.controller;
         let { cMessage } = this.controller.cApp
         let count: any = cMessage.count.get();
         let onshowMeDetail = async () => await showMeDetail();
         let onshowMessage = async () => await showMessage();
+        let onshowTeam = async () => await showTeam();
         let pointer, badge;
         if (count > 0) {
             pointer = 'cursor-pointer';
@@ -71,21 +72,21 @@ export class VMe extends VPage<CMe> {
                         <tbody>
                             <tr>
                                 <td>
-                                    <div className="text-center" >
+                                    <div className="text-center" onClick={onshowTeam}  >
                                         <div>{teamCount}</div>
-                                        <small><small><small>&nbsp;&nbsp;&nbsp;&nbsp;团队&nbsp;&nbsp;&nbsp;&nbsp;</small></small></small>
+                                        <small>&nbsp;&nbsp;&nbsp;&nbsp;团队&nbsp;&nbsp;&nbsp;&nbsp;</small>
                                     </div>
                                 </td>
                                 <td>
-                                    <div className="text-center" >
+                                    <div className="text-center">
                                         <div >{customerCount}</div>
-                                        <small><small><small>&nbsp;&nbsp;&nbsp;&nbsp;客户&nbsp;&nbsp;&nbsp;&nbsp;</small></small></small>
+                                        <small>&nbsp;&nbsp;&nbsp;&nbsp;客户&nbsp;&nbsp;&nbsp;&nbsp;</small>
                                     </div>
                                 </td>
                                 <td>
-                                    <div className="text-center"  >
+                                    <div className="text-center">
                                         <div >{activeCustomerCount}</div>
-                                        <small><small><small>活跃客户</small></small></small>
+                                        <small>活跃客户</small>
                                     </div>
                                 </td>
                             </tr>
@@ -130,7 +131,7 @@ export class VMe extends VPage<CMe> {
 
         let { cSalesTask, cMessage, cCoupon } = this.controller.cApp
         let { showEmployeeHistory } = cSalesTask;
-        let { showTeam, showAchievement, achievement, showSet } = this.controller;
+        let { achievement, showSet } = this.controller;
 
         this.salesAmont = achievement[0];
         if (this.salesAmont == null) {
@@ -138,7 +139,6 @@ export class VMe extends VPage<CMe> {
         }
 
         let onshowEmployeeHistory = async () => await showEmployeeHistory();
-        let onshowTeam = async () => await showTeam();
         let onshowCreateCoupon = async () => await cCoupon.showCreateCoupon()
 
         let rows: Prop[] = [
@@ -164,17 +164,15 @@ export class VMe extends VPage<CMe> {
                                         </div>
                                     </td>
                                     <td className="w-4">
-                                        <div className="text-center" onClick={onshowTeam} >
-                                            <FA name="sitemap" className='text-info' fixWidth={true} size="lg" />
-                                            <br />
-                                            <small><small>&nbsp;&nbsp;团队&nbsp;&nbsp;</small></small>
-                                        </div>
-                                    </td>
-                                    <td className="w-4">
                                         <div className="text-center" onClick={showSet} >
                                             <FA name="cog" className='text-info' fixWidth={true} size="lg" />
                                             <br />
                                             <small><small>&nbsp;&nbsp;设置&nbsp;&nbsp;</small></small>
+                                        </div>
+                                    </td>
+                                    <td className="w-4">
+                                        <div className="text-center px-4" >
+                                            <small><small></small></small>
                                         </div>
                                     </td>
                                 </tr>
