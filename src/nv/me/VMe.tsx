@@ -109,7 +109,7 @@ export class VMe extends VPage<CMe> {
                 :
                 <div className="h5"><strong>{achievement}</strong> <span className="h6"><small>元</small></span></div>
             }
-            <div className="h6"><small>{t}类收益</small></div>
+            <div className="h6"><small>{t}</small></div>
         </div>;
 
         return <div className="toggle rounded text-center text-white bg-primary pt-5 pb-3">
@@ -121,9 +121,8 @@ export class VMe extends VPage<CMe> {
                 <h6 className="text-warning"><small>累计收益</small></h6>
             </div>
             <div className="d-flex justify-content-around">
-                {divTag('A', oneAchievement)}
-                {divTag('B', twoAchievement)}
-                {divTag('C', threeAchievement)}
+                {divTag('贷到款', oneAchievement + twoAchievement + threeAchievement)}
+                {divTag('可提现', 0)}
             </div>
         </div>;
     }
