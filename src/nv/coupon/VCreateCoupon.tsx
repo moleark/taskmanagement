@@ -16,7 +16,7 @@ const schema: Schema = [
 
 class ValidityDate extends Widget {
     @observable dateVisible = false;
-    defaultValue: 1;
+    value = 1;
     private list = [
         { value: 1, title: '    一周', name: 'b', checked: true }, 
         { value: 2, title: '两周', name: 'b' }
@@ -50,7 +50,7 @@ class ValidityDate extends Widget {
 
 class Discount extends Widget {
     @observable dateVisible = false;
-    defaultValue = 0.05;
+    value = 0.05;
     private list = [
         { value: 0.05, title: '95    折    ', name: 'a', checked:true }, 
         { value: 0.1, title: '9.0折', name: 'a' }, 
