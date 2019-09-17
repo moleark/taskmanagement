@@ -6,7 +6,7 @@ import {netToken} from '../net/netToken';
 import FetchErrorView from './fetchErrorView';
 import {FetchError} from '../net/fetchError';
 import {appUrl, setAppInFrame, getExHash, getExHashPos} from '../net/appBridge';
-import {LocalData, env } from '../tool';
+import {LocalData, env} from '../tool';
 import {guestApi, logoutApis, setCenterUrl, setCenterToken, WSChannel, appInFrame, host, resUrlFromHost} from '../net';
 import { WsBase, wsBridge } from '../net/wsChannel';
 import { resOptions } from './res';
@@ -372,8 +372,6 @@ export class NavView extends React.Component<Props, NavViewState> {
                     <Loading />
                 </li>;
                 break;
-                //<i className="fa fa-spinner fa-spin fa-3x fa-fw"></i>
-                //<span className="sr-only">Loading...</span>
         }
         if (fetchError)
             elError = <FetchErrorView clearError={this.clearError} {...fetchError} />;

@@ -169,6 +169,21 @@ export abstract class Widget {
 
     protected abstract render():JSX.Element;
 
+    protected renderBody():JSX.Element {
+        let elDiscription;
+        if (this.hasError === false && this.ui) {
+            let {discription, discriptionClassName} = this.ui;
+            if (discriptionClassName === undefined) discriptionClassName = 'small text-muted';
+            elDiscription = <span className={discriptionClassName}>
+                {discription}
+            </span>;
+        }
+        return <>
+            {this.render()}
+            {elDiscription}
+        </>;
+    }
+
     container = observer(():JSX.Element => {
         if (this.visible === false) return null;
         let {form, inNode} = this.context;
@@ -177,7 +192,7 @@ export abstract class Widget {
         if (this.itemSchema.required === true && form.props.requiredFlag !== false) {
             if (label !== null) label = <>{label}&nbsp;<span className="text-danger">*</span></>;
         }
-        return form.FieldContainer(label, this.render());
+        return form.FieldContainer(label, this.renderBody());
     })
 
     protected get label():string {

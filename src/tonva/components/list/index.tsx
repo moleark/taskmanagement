@@ -21,7 +21,7 @@ export interface ListProps {
         onClick?: (item:any)=>void;
         key?: (item:any)=>string|number;
     };
-    compare?:(item:any, selectItem)=>boolean;
+    compare?:(item:any, selectItem:any)=>boolean;
     selectedItems?:any[];
     header?: StaticRow;
     footer?: StaticRow;
@@ -36,6 +36,12 @@ export class List extends React.Component<ListProps> {
     private selectable: Selectable;
     constructor(props:ListProps) {
         super(props);
+        this.buildBase();
+    }
+    _$scroll = (direct: 'top'|'bottom') => {
+        console.log('############### items scroll to ' + direct);
+    }
+    private buildBase() {
         let {item} = this.props;
         let {onClick, onSelect} = item;
         if (onSelect !== undefined)
@@ -45,11 +51,13 @@ export class List extends React.Component<ListProps> {
         else
             this.listBase = new Static(this);
     }
-    _$scroll = (direct: 'top'|'bottom') => {
-        console.log('############### items scroll to ' + direct);
-    }
+    /*
     componentWillUpdate(nextProps:ListProps, nextState, nextContext) {
-        this.listBase.updateProps(nextProps);
+        //this.listBase.updateProps(nextProps);
+    }
+    */
+    componentWillUnmount() {
+        this.listBase.dispose();
     }
     selectAll() {
         if (this.selectable) this.selectable.selectAll();
@@ -62,9 +70,9 @@ export class List extends React.Component<ListProps> {
     }
     render() {
         let {className, header, footer, before, loading, none, item, selectedItems} = this.props;
-        if (before === undefined) before = 'before';
-        if (loading === undefined) loading = 'loading';
-        if (none === undefined) none = 'none';        
+        if (before === undefined) before = '-';
+        if (loading === undefined) loading = () => <i className="fa fa-spinner fa-spin fa-2x fa-fw text-info" />;
+        if (none === undefined) none = 'none';
         //this.listBase.selectedItems = selectedItems;
         let {isPaged, items, loading:isLoading} = this.listBase;
         function staticRow(row:StaticRow, type:string) {
@@ -76,7 +84,7 @@ export class List extends React.Component<ListProps> {
                 case 'object': return <li>{row}</li>
             } 
         }
-        let content:any;
+        let content:any, waitingMore:any;
         if (items === null)
             content = staticRow(before, 'before');
         else if (items === undefined)
@@ -88,9 +96,13 @@ export class List extends React.Component<ListProps> {
                 return this.listBase.render(item, index);
             });
         }
+        if (isLoading === true && items) {
+            waitingMore = staticRow(loading, 'loading');
+        }
         return <ul className={classNames('va-list', className)}>
             {staticRow(header, 'header')}
             {content}
+            {waitingMore}
             {staticRow(footer, 'footer')}
         </ul>;
     }
