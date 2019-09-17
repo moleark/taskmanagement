@@ -3,6 +3,7 @@ import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import { IObservableValue } from 'mobx/lib/internal';
+import '../../css/va-tab.css';
 
 export type TabCaption = (selected:boolean) => JSX.Element;
 
@@ -16,6 +17,7 @@ export interface TabProp {
 
 export interface TabsProps {
     tabs: TabProp[];
+    tabPosition?: 'top' | 'bottom';
     size?: 'sm' | 'lg' | 'md';
     tabBack?: string;
     contentBack?: string;
@@ -32,11 +34,13 @@ class Tab {
     load?: () => Promise<void>;
 
     private _content: JSX.Element;
+    
     get content(): JSX.Element {
         if (this.selected !== true) return this._content;
         if (this._content !== undefined) return this._content;
         return this._content = this.contentBuilder();
     }
+
     async start() {
         if (this._content !== undefined) return;
         if (this.load === undefined) return;
@@ -56,23 +60,22 @@ export const TabCaptionComponent = (label:string, icon:string, color:string) => 
     private contentBack: string;
     private sep: string;
     @observable private selectedTab: Tab;
-    @observable private tabs: Tab[] = [];
+    @observable private tabs: Tab[];
 
     constructor(props: TabsProps) {
         super(props);
         let {size, tabs, tabBack, contentBack, sep, selected} = this.props;
         this.size = size || 'md';
-        this.tabs.push(...tabs.map(v => {
-                let tab = new Tab();
-                tab.name = v.name;
-                tab.selected = false;
-                tab.caption = v.caption;
-                tab.contentBuilder = v.content;
-                tab.notify = v.notify;
-                tab.load = v.load;
-                return tab;
-            }
-        ));
+        this.tabs = tabs.map(v => {
+            let tab = new Tab();
+            tab.name = v.name;
+            tab.selected = false;
+            tab.caption = v.caption;
+            tab.contentBuilder = v.content;
+            tab.notify = v.notify;
+            tab.load = v.load;
+            return tab;
+        });
         this.tabBack = tabBack || 'bg-light';
         this.contentBack = contentBack;
         this.sep = sep || 'border-top border-gray';
@@ -81,6 +84,13 @@ export const TabCaptionComponent = (label:string, icon:string, color:string) => 
         }
         if (this.selectedTab === undefined) this.selectedTab = this.tabs[0];
         this.selectedTab.selected = true;
+    }
+
+    async componentWillMount() {
+        if (this.tabs === undefined) return;
+        if (this.tabs.length === 0) return;
+        let tab = this.tabs[0];
+        await tab.start();
     }
 
     private tabClick = async (tab:Tab) => {
@@ -100,33 +110,40 @@ export const TabCaptionComponent = (label:string, icon:string, color:string) => 
 
     render() {
         let cn = classNames('tab', 'tab-' + this.size);
-        return <div className={cn}>
-            <div className={this.contentBack}>
-                {this.tabs.map((v,index) => {
-                    let style:React.CSSProperties={
-                        display: v.selected===true? undefined : 'none'};
-                    return <div key={index} style={style}>{v.content}</div>;
-                })}
-            </div>
-            <div className={classNames(this.tabBack, this.sep)} style={{height: this.size}}>
-                {this.tabs.map((v,index) => {
-                    let {selected, caption, notify} = v;
-                    let notifyCircle:any;
-                    if (notify !== undefined) {
-                        let num = notify.get();
-                        if (num !== undefined) {
-                            if (num > 0) notifyCircle = <u>{num>99?'99+':num}</u>;
-                            else if (num < 0) notifyCircle = <u className="dot" />;
-                        }
+        let content = <div className={classNames(this.contentBack, 'tab-content')}>
+            {this.tabs.map((v,index) => {
+                let style:React.CSSProperties={
+                    display: v.selected===true? undefined : 'none'};
+                return <div key={index} style={style}>{v.content}</div>;
+            })}
+        </div>;
+
+        let tabs = <div className={classNames(this.tabBack, this.sep, 'tab-tabs')}>
+            {this.tabs.map((v,index) => {
+                let {selected, caption, notify} = v;
+                let notifyCircle:any;
+                if (notify !== undefined) {
+                    let num = notify.get();
+                    if (num !== undefined) {
+                        if (num > 0) notifyCircle = <u>{num>99?'99+':num}</u>;
+                        else if (num < 0) notifyCircle = <u className="dot" />;
                     }
-                    return <div key={index} className="" onClick={()=>this.tabClick(v)}>
-                        <div className="align-self-center">
-                            {notifyCircle}
-                            {caption(selected)}
-                        </div>
+                }
+                return <div key={index} className="" onClick={()=>this.tabClick(v)}>
+                    <div className="align-self-center">
+                        {notifyCircle}
+                        {caption(selected)}
                     </div>
-                })}
-            </div>
+                </div>
+            })}
+        </div>;
+
+        return <div className={cn}>
+            {
+                this.props.tabPosition === 'top'? 
+                    <>{tabs}{content}</> :
+                    <>{content}{tabs}</>
+            }
         </div>
     }
 };

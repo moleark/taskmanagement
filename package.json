@@ -14,7 +14,7 @@
         "fontawesome": "^4.7.2",
         "gh-pages": "^2.0.1",
         "jwt-decode": "^2.2.0",
-        "lodash": "^4.17.11",
+        "lodash": "^4.17.15",
         "mobx": "^5.8.0",
         "mobx-react": "^5.4.3",
         "react": "^16.7.0",
@@ -23,7 +23,8 @@
         "react-scripts-ts": "^4.0.8",
         "reactstrap": "^7.0.2",
         "tonva": "^1.0.55",
-        "tsc": "^1.20150623.0"
+        "tsc": "^1.20150623.0",
+        "tslib": "^1.10.0"
     },
     "scripts": {
         "predeploy": "npm run build",

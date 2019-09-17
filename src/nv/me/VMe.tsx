@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { LMR, VPage, nav, Image, ComponentProp, Prop, PropGrid, FA } from 'tonva';
 import { CMe } from './CMe';
 import classNames from 'classnames';
-import wer from '../../images/wer.jpg';
+//import wer from '../images/wer.jpg';
 
 function rowCom(iconName: string, iconColor: string, caption: string, value: any, onClick: any) {
     return <LMR className="cursor-pointer w-100 py-2 my-2 align-items-center  " onClick={onClick}
@@ -68,6 +68,7 @@ export class VMe extends VPage<CMe> {
             <LMR className="cursor-pointer w-100 pt-1">
                 {
                     <table className="w-100 text-center">
+                        <tbody>
                         <tr>
                             <td>
                                 <div className="text-center" >
@@ -88,6 +89,7 @@ export class VMe extends VPage<CMe> {
                                 </div>
                             </td>
                         </tr>
+                        </tbody>
                     </table>
                 }
             </LMR >
@@ -95,33 +97,56 @@ export class VMe extends VPage<CMe> {
     }
 
     private achievement() {
-
         let onshowAchievementDetailA = async () => await this.controller.showAchievementDetail("A");
         let onshowAchievementDetailB = async () => await this.controller.showAchievementDetail("B");
         let onshowAchievementDetailC = async () => await this.controller.showAchievementDetail("C");
         let { oneAchievement, twoAchievement, threeAchievement } = this.salesAmont;
+        let divTag = (t:string, achievement:number) => <div 
+            className="cursor-pointer" 
+            onClick={async () => await this.controller.showAchievementDetail(t)}>
+                {achievement <= 0.001? 
+                    <div className="h5"> - </div>
+                    :
+                    <div className="h5"><strong>{achievement}</strong> <span className="h6"><small>元</small></span></div>
+                }
+                <div className="h6"><small>{t}类收益</small></div>
+            </div>;
+
         //rounded
-        return <div className="toggle rounded text-center text-white" style={{ backgroundColor: '#007bff', marginRight: '-1px', marginBottom: '-1px' }}>
+        //style={{ backgroundColor: '#007bff', marginRight: '-1px', marginBottom: '-1px' }}
+        /*
+        <table className="w-100">
+            <tbody>
+            <tr>
+                <td className="" onClick={onshowAchievementDetailA}  >
+                    <strong>{oneAchievement}</strong><br />
+                    <h6><small>A（元）</small></h6>
+                </td>
+                <td className="" onClick={onshowAchievementDetailB} >
+                    <strong>{twoAchievement}</strong><br />
+                    <h6><small>B（元）</small></h6>
+                </td>
+                <td className="" onClick={onshowAchievementDetailC} >
+                    <strong>{threeAchievement}</strong><br />
+                    <h6><small>C（元）</small></h6>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        */
+        return <div className="toggle rounded text-center text-white bg-primary pt-5 pb-3">
             <div className="py-4" >
-                <h1 className="text-warning">{oneAchievement + twoAchievement + threeAchievement}</h1>
-                <h6 className="text-warning"><small>累计收益（元）</small></h6>
+                <div className="text-warning">
+                    <span className="h1">{oneAchievement + twoAchievement + threeAchievement}</span>
+                    <small> 元</small>
+                </div>
+                <h6 className="text-warning"><small>累计收益</small></h6>
             </div>
-            <table className="w-100">
-                <tr>
-                    <td className="" onClick={onshowAchievementDetailA}  >
-                        <strong>{oneAchievement}</strong><br />
-                        <h6><small>A（元）</small></h6>
-                    </td>
-                    <td className="" onClick={onshowAchievementDetailB} >
-                        <strong>{twoAchievement}</strong><br />
-                        <h6><small>B（元）</small></h6>
-                    </td>
-                    <td className="" onClick={onshowAchievementDetailC} >
-                        <strong>{threeAchievement}</strong><br />
-                        <h6><small>C（元）</small></h6>
-                    </td>
-                </tr>
-            </table>
+            <div className="d-flex justify-content-around">
+                {divTag('A', oneAchievement)}
+                {divTag('B', twoAchievement)}
+                {divTag('C', threeAchievement)}
+            </div>
         </div>;
     }
 
@@ -142,12 +167,12 @@ export class VMe extends VPage<CMe> {
         let onshowCreateCoupon = async () => await cCoupon.showCreateCoupon()
 
         let rows: Prop[] = [
-
             {
                 type: 'component',
                 component: <LMR className="cursor-pointer w-100 py-2 my-2 ">
                     {
                         <table className="w-100 ">
+                            <tbody>
                             <tr>
                                 <td className="w-4">
                                     <div className="text-center" onClick={onshowCreateCoupon}>
@@ -178,6 +203,7 @@ export class VMe extends VPage<CMe> {
                                     </div>
                                 </td>
                             </tr>
+                            </tbody>
                         </table>
                     }
                 </LMR >,
