@@ -69,26 +69,26 @@ export class VMe extends VPage<CMe> {
                 {
                     <table className="w-100 text-center">
                         <tbody>
-                        <tr>
-                            <td>
-                                <div className="text-center" >
-                                    <div>{teamCount}</div>
-                                    <small><small><small>&nbsp;&nbsp;&nbsp;&nbsp;团队&nbsp;&nbsp;&nbsp;&nbsp;</small></small></small>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="text-center" >
-                                    <div >{customerCount}</div>
-                                    <small><small><small>&nbsp;&nbsp;&nbsp;&nbsp;客户&nbsp;&nbsp;&nbsp;&nbsp;</small></small></small>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="text-center"  >
-                                    <div >{activeCustomerCount}</div>
-                                    <small><small><small>活跃客户</small></small></small>
-                                </div>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    <div className="text-center" >
+                                        <div>{teamCount}</div>
+                                        <small><small><small>&nbsp;&nbsp;&nbsp;&nbsp;团队&nbsp;&nbsp;&nbsp;&nbsp;</small></small></small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div className="text-center" >
+                                        <div >{customerCount}</div>
+                                        <small><small><small>&nbsp;&nbsp;&nbsp;&nbsp;客户&nbsp;&nbsp;&nbsp;&nbsp;</small></small></small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div className="text-center"  >
+                                        <div >{activeCustomerCount}</div>
+                                        <small><small><small>活跃客户</small></small></small>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 }
@@ -97,43 +97,19 @@ export class VMe extends VPage<CMe> {
     }
 
     private achievement() {
-        let onshowAchievementDetailA = async () => await this.controller.showAchievementDetail("A");
-        let onshowAchievementDetailB = async () => await this.controller.showAchievementDetail("B");
-        let onshowAchievementDetailC = async () => await this.controller.showAchievementDetail("C");
-        let { oneAchievement, twoAchievement, threeAchievement } = this.salesAmont;
-        let divTag = (t:string, achievement:number) => <div 
-            className="cursor-pointer" 
-            onClick={async () => await this.controller.showAchievementDetail(t)}>
-                {achievement <= 0.001? 
-                    <div className="h5"> - </div>
-                    :
-                    <div className="h5"><strong>{achievement}</strong> <span className="h6"><small>元</small></span></div>
-                }
-                <div className="h6"><small>{t}类收益</small></div>
-            </div>;
 
-        //rounded
-        //style={{ backgroundColor: '#007bff', marginRight: '-1px', marginBottom: '-1px' }}
-        /*
-        <table className="w-100">
-            <tbody>
-            <tr>
-                <td className="" onClick={onshowAchievementDetailA}  >
-                    <strong>{oneAchievement}</strong><br />
-                    <h6><small>A（元）</small></h6>
-                </td>
-                <td className="" onClick={onshowAchievementDetailB} >
-                    <strong>{twoAchievement}</strong><br />
-                    <h6><small>B（元）</small></h6>
-                </td>
-                <td className="" onClick={onshowAchievementDetailC} >
-                    <strong>{threeAchievement}</strong><br />
-                    <h6><small>C（元）</small></h6>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        */
+        let { oneAchievement, twoAchievement, threeAchievement } = this.salesAmont;
+        let divTag = (t: string, achievement: number) => <div
+            className="cursor-pointer"
+            onClick={async () => await this.controller.showAchievementDetail(t)}>
+            {achievement <= 0.001 ?
+                <div className="h5"> - </div>
+                :
+                <div className="h5"><strong>{achievement}</strong> <span className="h6"><small>元</small></span></div>
+            }
+            <div className="h6"><small>{t}类收益</small></div>
+        </div>;
+
         return <div className="toggle rounded text-center text-white bg-primary pt-5 pb-3">
             <div className="py-4" >
                 <div className="text-warning">
@@ -160,7 +136,6 @@ export class VMe extends VPage<CMe> {
         if (this.salesAmont == null) {
             this.salesAmont = { oneSaleVolume: 0, twoSaleVolume: 0, threeSaleVolume: 0, oneAchievement: 0, twoAchievement: 0, threeAchievement: 0, teamCount: 0, customerCount: 0, activeCustomerCount: 0 }
         }
-        let { oneSaleVolume, twoSaleVolume, threeSaleVolume, oneAchievement, twoAchievement, threeAchievement, teamCount, customerCount, activeCustomerCount } = this.salesAmont;
 
         let onshowEmployeeHistory = async () => await showEmployeeHistory();
         let onshowTeam = async () => await showTeam();
@@ -173,36 +148,36 @@ export class VMe extends VPage<CMe> {
                     {
                         <table className="w-100 ">
                             <tbody>
-                            <tr>
-                                <td className="w-4">
-                                    <div className="text-center" onClick={onshowCreateCoupon}>
-                                        <FA name="th-large" className='text-warning' fixWidth={true} size="lg" />
-                                        <br />
-                                        <small><small>&nbsp;优惠码&nbsp;</small></small>
-                                    </div>
-                                </td>
-                                <td className="w-4">
-                                    <div className="text-center" onClick={onshowEmployeeHistory} >
-                                        <FA name="tag" className='text-info' fixWidth={true} size="lg" />
-                                        <br />
-                                        <small><small >完成任务</small></small>
-                                    </div>
-                                </td>
-                                <td className="w-4">
-                                    <div className="text-center" onClick={onshowTeam} >
-                                        <FA name="sitemap" className='text-info' fixWidth={true} size="lg" />
-                                        <br />
-                                        <small><small>&nbsp;&nbsp;团队&nbsp;&nbsp;</small></small>
-                                    </div>
-                                </td>
-                                <td className="w-4">
-                                    <div className="text-center" onClick={showSet} >
-                                        <FA name="cog" className='text-info' fixWidth={true} size="lg" />
-                                        <br />
-                                        <small><small>&nbsp;&nbsp;设置&nbsp;&nbsp;</small></small>
-                                    </div>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td className="w-4">
+                                        <div className="text-center" onClick={onshowCreateCoupon}>
+                                            <FA name="th-large" className='text-warning' fixWidth={true} size="lg" />
+                                            <br />
+                                            <small><small>&nbsp;优惠码&nbsp;</small></small>
+                                        </div>
+                                    </td>
+                                    <td className="w-4">
+                                        <div className="text-center" onClick={onshowEmployeeHistory} >
+                                            <FA name="tag" className='text-info' fixWidth={true} size="lg" />
+                                            <br />
+                                            <small><small >完成任务</small></small>
+                                        </div>
+                                    </td>
+                                    <td className="w-4">
+                                        <div className="text-center" onClick={onshowTeam} >
+                                            <FA name="sitemap" className='text-info' fixWidth={true} size="lg" />
+                                            <br />
+                                            <small><small>&nbsp;&nbsp;团队&nbsp;&nbsp;</small></small>
+                                        </div>
+                                    </td>
+                                    <td className="w-4">
+                                        <div className="text-center" onClick={showSet} >
+                                            <FA name="cog" className='text-info' fixWidth={true} size="lg" />
+                                            <br />
+                                            <small><small>&nbsp;&nbsp;设置&nbsp;&nbsp;</small></small>
+                                        </div>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     }

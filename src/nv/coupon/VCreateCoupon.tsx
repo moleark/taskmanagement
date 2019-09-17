@@ -51,14 +51,14 @@ class ValidityDate extends Widget {
 
 class Discount extends Widget {
     @observable dateVisible = false;
-    value = 0.05;
+    defultvalue = 0.05;
     private list = [
-        { value: 0.05, title: '95    折    ', name: 'a', checked: true },
-        { value: 0.1, title: '9.0折', name: 'a' },
-        { value: 0.15, title: '85    折    ', name: 'a' },
-        { value: 0.2, title: ' 8.0折', name: 'a' },
-        { value: 0.3, title: '7.0折', name: 'a' },
-        { value: 0.4, title: '6.0折', name: 'a' }
+        { value: 0.05, title: '9.5折', name: 'a', checked: undefined },
+        { value: 0.1, title: '9.0折', name: 'a', checked: undefined },
+        { value: 0.15, title: '8.5折', name: 'a', checked: undefined },
+        { value: 0.2, title: '8.0折', name: 'a', checked: undefined },
+        { value: 0.3, title: '7.0折', name: 'a', checked: undefined },
+        { value: 0.4, title: '6.0折', name: 'a', checked: undefined }
     ];
 
     private onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,8 +82,8 @@ class Discount extends Widget {
             {this.list.map((v, index) => {
                 let { value, name, title, checked } = v;
                 return <label key={index} className="my-1 mx-3">
-                    <input type="radio" value={value} name={name} checked={checked}
-                        onChange={this.onChange} /> {title} &nbsp; </label>
+                    <input type="radio" value={value} name={name} checked={checked} onChange={this.onChange} /> {title} &nbsp;
+                </label>
             })}
             <div>
                 <table>

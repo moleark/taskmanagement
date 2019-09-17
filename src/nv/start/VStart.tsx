@@ -6,7 +6,7 @@ import { consts } from '../consts';
 
 
 const schema: Schema = [
-    { name: 'invitacode', type: 'string', required: true, maxLength: 8 } as StringSchema,
+    { name: 'invitacode', type: 'number', required: true },
     { name: 'submit', type: 'submit' },
 ];
 
