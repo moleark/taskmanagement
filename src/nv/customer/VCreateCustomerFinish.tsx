@@ -18,7 +18,7 @@ export class VCreateCustomerFinish extends VPage<CCustomer> {
     private page = observer(() => {
 
         var show: any;
-        if (this.result == 0) {
+        if (this.result == 1) {
             show = <span className="text-danger" > 客户已被其他轻代理占用，跟踪此客户无法获取绩效！</span>;
         }
         return <Page header='新建客户' headerClassName='bg-primary py-1 px-3'>

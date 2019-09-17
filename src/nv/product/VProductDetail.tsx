@@ -79,8 +79,8 @@ export class VProductDetail extends VPage<CProduct> {
                     <span className="text-danger">￥ <span className="h5">{price}</span></span>
                 </div>
             </div >
-
-            agent = agentPrice && <span><span className="text-warning small"><span className="small">代</span></span> <span className="text-right h5 text-danger"><span className="small pt-1">￥</span>{agentPrice}</span></span>;
+            right = price && <span><span className="text-warning small"><strong className="small">目</strong></span> <span className="text-right h5 text-danger"><span className="small pt-1">￥</span>{price}</span></span>;
+            agent = agentPrice && <span><span className="text-warning small"><strong className="small">代</strong></span> <span className="text-right h5 text-danger"><span className="small pt-1">￥</span>{agentPrice}</span></span>;
         } else {
             right = <small>请询价</small>
         }
