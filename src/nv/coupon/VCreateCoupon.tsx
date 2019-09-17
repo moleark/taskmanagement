@@ -15,11 +15,12 @@ const schema: Schema = [
 
 
 class ValidityDate extends Widget {
+    //protected inputs: {[index:number]: HTMLInputElement} = {};
     @observable dateVisible = false;
     value = 1;
     private list = [
-        { value: 1, title: '    一周', name: 'b', checked: true }, 
-        { value: 2, title: '两周', name: 'b' }
+        { value: 1, title: '    一周' }, 
+        { value: 2, title: '两周' }
     ];
 
     private onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,9 +39,9 @@ class ValidityDate extends Widget {
     render = () => {
         return <div className="form-control" style={{ height: 'auto' }}>
             {this.list.map((v, index) => {
-                let {value, name, title, checked} = v;
+                let {value, title} = v;
                 return <label className="my-1 mx-3" key={index}>
-                    <input type="radio" value={value} name={name} checked={checked}
+                    <input type="radio" value={value} name={this.name} defaultChecked={value===this.value}
                         onChange={this.onChange} /> {title} &nbsp; 
                 </label>
             })}
@@ -52,7 +53,7 @@ class Discount extends Widget {
     @observable dateVisible = false;
     value = 0.05;
     private list = [
-        { value: 0.05, title: '95    折    ', name: 'a', checked:true }, 
+        { value: 0.05, title: '95    折    ', name: 'a' }, 
         { value: 0.1, title: '9.0折', name: 'a' }, 
         { value: 0.15, title: '85    折    ', name: 'a' }, 
         { value: 0.2, title: ' 8.0折', name: 'a' }, 
@@ -79,9 +80,10 @@ class Discount extends Widget {
     render = () => {
         return <div className="form-control" style={{ height: 'auto' }}>
             {this.list.map((v, index) => {
-                let {value, name, title, checked} = v;
+                let {value, name, title} = v;
                 return <label key={index} className="my-1 mx-3">
-                    <input type="radio" value={value} name={name} checked={checked}
+                    <input type="radio" value={value}
+                        name={this.name} defaultChecked={value===this.value}
                         onChange={this.onChange} /> {title} &nbsp; </label>
             })}
             <div>
