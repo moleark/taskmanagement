@@ -1,13 +1,18 @@
 import * as React from 'react';
-import { VPage, Page, LMR, List, EasyDate, tv, FA } from 'tonva';
+import { VPage, Page, LMR, List, EasyDate, tv, FA, TabCaption, TabProp, Tabs } from 'tonva';
 import { observable } from 'mobx';
-import { observer } from 'mobx-react';
+import { observer, Observer } from 'mobx-react';
 import { CMe } from './CMe';
 import { consts } from '../consts';
 
+const color = (selected: boolean) => selected === true ? 'text-primary' : 'text-muted';
+const tabCaption = (caption:string):TabCaption => {
+    return (selected: boolean) => <span className={color(selected)}>{caption}</span>;
+}
+
 export class VAchievementDetail extends VPage<CMe> {
 
-    @observable private achievementsA: any[];
+    @observable private achievementsA: any[] = [];
     @observable private achievementsB: any[];
     @observable private achievementsC: any[];
     private currentState: string;
@@ -27,7 +32,39 @@ export class VAchievementDetail extends VPage<CMe> {
         </div>
     }
 
+    private tabs:TabProp[] = [
+        {
+            name: 'a',
+            caption: tabCaption('A类业绩'),
+            content: () => {
+                return <List items={this.achievementsA} item={{ render: this.renderItem }} none="无业绩" />
+            },
+            load: async () => {
+                this.achievementsA.push(...await this.controller.searchAchievementDetail(1));
+            }
+        }, {
+            name: 'b',
+            caption: tabCaption('B类业绩'),
+            content: () => {
+                return <List items={this.achievementsB} item={{ render: this.renderItem }} none="无业绩" />
+            },
+            load: async () => {
+                this.achievementsB = await this.controller.searchAchievementDetail(2);
+            }
+        }, {
+            name: 'c',
+            caption: tabCaption('C类业绩'),
+            content: () => {
+                return <List items={this.achievementsC} item={{ render: this.renderItem }} none="无业绩" />
+            },
+            load: async () => {
+                this.achievementsC = await this.controller.searchAchievementDetail(3);
+            }
+        }
+    ];
+
     private page = observer(() => {
+        /*
         let tabs = [
             {
                 title: 'A类收益',
@@ -58,6 +95,9 @@ export class VAchievementDetail extends VPage<CMe> {
                 }
             }
         ];
-        return <Page header="我的业绩" tabs={tabs} headerClassName={consts.headerClass} tabPosition="top"></Page>
+        */
+        return <Page header="我的业绩" headerClassName={consts.headerClass}>
+            <Tabs tabs={this.tabs}  tabPosition="top" />
+        </Page>
     })
 }
