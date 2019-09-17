@@ -53,6 +53,7 @@ export class CMe extends CUqBase {
         let p2 = code.substr(5);
         this.inviteCode = p1 + ' ' + p2;
         await this.onComputeAchievement();
+        var a = 1;
     }
 
     //显示我的个人信息

@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import { VPage, Page, Schema, Form, UiSchema, UiInputItem, Context, UiRadio, toUiSelectItems, Widget, UiCustom, FA, LMR, UiIdItem, tv } from 'tonva';
 import { consts } from '../consts';
 import { CCoupon } from './CCoupon';
+import { numberValidation } from 'nv/tools/inputValidations';
 
 const schema: Schema = [
     { name: 'validitydate', type: 'date', required: true },
@@ -18,7 +19,7 @@ class ValidityDate extends Widget {
     @observable dateVisible = false;
     value = 1;
     private list = [
-        { value: 1, title: '    一周', name: 'b', checked: true }, 
+        { value: 1, title: '    一周', name: 'b', checked: true },
         { value: 2, title: '两周', name: 'b' }
     ];
 
@@ -38,10 +39,10 @@ class ValidityDate extends Widget {
     render = () => {
         return <div className="form-control" style={{ height: 'auto' }}>
             {this.list.map((v, index) => {
-                let {value, name, title, checked} = v;
+                let { value, name, title, checked } = v;
                 return <label className="my-1 mx-3" key={index}>
                     <input type="radio" value={value} name={name} checked={checked}
-                        onChange={this.onChange} /> {title} &nbsp; 
+                        onChange={this.onChange} /> {title} &nbsp;
                 </label>
             })}
         </div>
@@ -52,11 +53,11 @@ class Discount extends Widget {
     @observable dateVisible = false;
     value = 0.05;
     private list = [
-        { value: 0.05, title: '95    折    ', name: 'a', checked:true }, 
-        { value: 0.1, title: '9.0折', name: 'a' }, 
-        { value: 0.15, title: '85    折    ', name: 'a' }, 
-        { value: 0.2, title: ' 8.0折', name: 'a' }, 
-        { value: 0.3, title: '7.0折', name: 'a' }, 
+        { value: 0.05, title: '95    折    ', name: 'a', checked: true },
+        { value: 0.1, title: '9.0折', name: 'a' },
+        { value: 0.15, title: '85    折    ', name: 'a' },
+        { value: 0.2, title: ' 8.0折', name: 'a' },
+        { value: 0.3, title: '7.0折', name: 'a' },
         { value: 0.4, title: '6.0折', name: 'a' }
     ];
 
@@ -79,7 +80,7 @@ class Discount extends Widget {
     render = () => {
         return <div className="form-control" style={{ height: 'auto' }}>
             {this.list.map((v, index) => {
-                let {value, name, title, checked} = v;
+                let { value, name, title, checked } = v;
                 return <label key={index} className="my-1 mx-3">
                     <input type="radio" value={value} name={name} checked={checked}
                         onChange={this.onChange} /> {title} &nbsp; </label>
@@ -87,11 +88,11 @@ class Discount extends Widget {
             <div>
                 <table>
                     <tbody>
-                    <tr>
-                        <td><label className="my-1 mx-3"><input type="radio" value={-1} name="a" onChange={this.onChange} /> 无&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
-                        <td><label className="my-1 mx-3"><input type="radio" value={0} name="a" onChange={this.onChange} /> 其他</label></td>
-                        <td>{this.dateVisible && <input type="text" className="col-xs-4 col-sm-4" onChange={this.onDateChange} />}</td>
-                    </tr>
+                        <tr>
+                            <td><label className="my-1 mx-3"><input type="radio" value={-1} name="a" onChange={this.onChange} /> 无&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
+                            <td><label className="my-1 mx-3"><input type="radio" value={0} name="a" onChange={this.onChange} /> 其他</label></td>
+                            <td>{this.dateVisible && <input type="text" className="col-xs-4 col-sm-4" onChange={this.onDateChange} />}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -114,7 +115,7 @@ export class VCreateCoupon extends VPage<CCoupon> {
                 WidgetClass: Discount,
             } as UiCustom,
 
-            preferential: { widget: 'text', label: '优惠金额', placeholder: '请输入优惠金额' } as UiInputItem,
+            preferential: { widget: 'text', label: '优惠金额', placeholder: '请输入优惠金额', rules: numberValidation } as UiInputItem,
             customer: {
                 widget: 'id', label: '客户', placeholder: '请选择客户',
                 pickId: async (context: Context, name: string, value: number) => await this.controller.showAddCouponCustomer(context, name, value),
