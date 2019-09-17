@@ -41,8 +41,8 @@ export class CStart extends CUqBase {
         }
         else {
             //await this.openVPage(AgencyClause, param);
-            //await this.cApp.cSalesTask.start();
-            await this.openVPage(VStart, param);
+            await this.cApp.cSalesTask.start();
+            //await this.openVPage(VStart, param);
         }
     }
 
