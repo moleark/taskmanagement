@@ -95,6 +95,7 @@ class Discount extends Widget {
                     </tbody>
                 </table>
             </div>
+            <div className="small text-muted px-3 py-2">说明：这里是最大折扣，具体折扣以下单时显示为准</div>
         </div>
     };
 }
@@ -112,6 +113,7 @@ export class VCreateCoupon extends VPage<CCoupon> {
                 widget: 'custom',
                 label: '折扣',
                 WidgetClass: Discount,
+                discription: '最小折扣',
             } as UiCustom,
 
             preferential: { widget: 'text', label: '优惠金额', placeholder: '请输入优惠金额' } as UiInputItem,

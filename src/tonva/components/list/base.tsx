@@ -30,7 +30,8 @@ export abstract class ListBase {
         return pageItems.loading;
     }
     get selectedItems():any[] { return; }
-    updateProps(nextProps:any) {}
+    //updateProps(nextProps:any) {}
+    dispose() {};
     abstract render: (item:any, index:number) => JSX.Element;
     protected renderContent(item:any, index:number) {
         let {render} = this.list.props.item;

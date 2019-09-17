@@ -1,3 +1,4 @@
+/*
 import { StatelessComponent } from 'react';
 import { Context } from './context';
 import { FieldRule, ContextRule } from './rules';
@@ -121,3 +122,4 @@ export interface UiGroup extends UiItem {
 export interface UiButton extends UiItem {
     widget: 'button';
 }
+*/

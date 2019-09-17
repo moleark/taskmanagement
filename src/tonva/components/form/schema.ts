@@ -1,3 +1,4 @@
+/*
 export type DataType = 'id' | 'integer' | 'number' | 'string' | 'date' | 'boolean' 
     | 'object' | 'arr' | 'button' | 'submit';
 
@@ -53,3 +54,4 @@ export interface ButtonSchema extends ItemSchema {
 }
 
 export type Schema = ItemSchema[];
+*/
