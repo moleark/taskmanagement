@@ -8,7 +8,7 @@ import { observable } from 'mobx';
 const schema: Schema = [
     { name: 'validitydate', type: 'date', required: true },
     { name: 'discount', type: 'string', required: false },
-    { name: 'preferential', type: 'string', required: false },
+    //{ name: 'preferential', type: 'string', required: false },
     { name: 'customer', type: 'id', required: false },
     { name: 'submit', type: 'submit' },
 ];
@@ -93,7 +93,7 @@ export class VCreateCoupon extends VPage<CCoupon> {
                 WidgetClass: Discount,
             } as UiCustom,
 
-            preferential: { widget: 'text', label: '优惠金额', placeholder: '请输入优惠金额' } as UiInputItem,
+            //preferential: { widget: 'text', label: '优惠金额', placeholder: '请输入优惠金额' } as UiInputItem,
             customer: {
                 widget: 'id', label: '客户', placeholder: '请选择客户',
                 pickId: async (context: Context, name: string, value: number) => await this.controller.showAddCouponCustomer(context, name, value),

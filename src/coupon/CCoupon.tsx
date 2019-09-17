@@ -113,7 +113,7 @@ export class CCoupon extends Controller {
         let coupon = {
             validitydate: param.validitydate,
             discount: param.discount,
-            preferential: param.preferential,
+            preferential: 0,
             mycustomer: customerid
         }
         let couponid = await this.actionCreateCoupon.submit(coupon);

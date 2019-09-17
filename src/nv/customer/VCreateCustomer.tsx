@@ -3,6 +3,7 @@ import { VPage, Page, PageItems, Schema, Form, UiSchema, UiInputItem, UiCheckIte
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
 import { consts } from '../consts';
+import { mobileValidation, nameValidation } from 'nv/tools/inputValidations';
 
 
 
@@ -20,9 +21,9 @@ export class VCreateCustomer extends VPage<CCustomer> {
     private form: Form;
     private uiSchema: UiSchema = {
         items: {
-            Name: { widget: 'text', label: '姓名', placeholder: '请输入姓名' } as UiInputItem,
+            Name: { widget: 'text', label: '姓名', placeholder: '请输入姓名', rules: nameValidation } as UiInputItem,
             Salutation: { widget: 'text', label: '称谓', placeholder: '请输入称谓' } as UiInputItem,
-            telephone: { widget: 'text', label: '电话', placeholder: '请输入电话号码' } as UiInputItem,
+            telephone: { widget: 'text', label: '电话', placeholder: '请输入电话号码', rules: mobileValidation } as UiInputItem,
             Gender: {
                 widget: 'radio', label: '性别', placeholder: '性别',
                 defaultValue: 1,

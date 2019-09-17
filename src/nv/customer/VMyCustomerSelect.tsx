@@ -4,10 +4,12 @@ import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
 import { LMR, List, EasyDate, SearchBox, FA } from 'tonva';
 
-export class VMyCustomerSelectCall extends VPage<CCustomer> {
+export class VMyCustomerSelect extends VPage<CCustomer> {
 
-    async open(customer: any) {
-        this.openPage(this.page, customer);
+    private temp: any;
+    async open(temp: any) {
+        this.temp = temp;
+        this.openPage(this.page);
     }
 
     private renderCustomer(salesTask: any, index: number) {

@@ -4,11 +4,12 @@ import { observer } from 'mobx-react';
 import { VPage, Page, Schema, Form, UiSchema, UiInputItem, Context, UiRadio, toUiSelectItems, Widget, UiCustom, FA, LMR, UiIdItem, tv } from 'tonva';
 import { consts } from '../consts';
 import { CCoupon } from './CCoupon';
+import { numberValidation } from 'nv/tools/inputValidations';
 
 const schema: Schema = [
     { name: 'validitydate', type: 'date', required: true },
     { name: 'discount', type: 'string', required: false },
-    { name: 'preferential', type: 'string', required: false },
+    //{ name: 'preferential', type: 'string', required: false },
     { name: 'customer', type: 'id', required: false },
     { name: 'submit', type: 'submit' },
 ];
@@ -51,7 +52,7 @@ class ValidityDate extends Widget {
 
 class Discount extends Widget {
     @observable dateVisible = false;
-    value = 0.05;
+    defultvalue = 0.05;
     private list = [
         { value: 0.05, title: '95    折    ', name: 'a' }, 
         { value: 0.1, title: '9.0折', name: 'a' }, 
@@ -89,15 +90,15 @@ class Discount extends Widget {
             <div>
                 <table>
                     <tbody>
-                    <tr>
-                        <td><label className="my-1 mx-3"><input type="radio" value={-1} name="a" onChange={this.onChange} /> 无&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
-                        <td><label className="my-1 mx-3"><input type="radio" value={0} name="a" onChange={this.onChange} /> 其他</label></td>
-                        <td>{this.dateVisible && <input type="text" className="col-xs-4 col-sm-4" onChange={this.onDateChange} />}</td>
-                    </tr>
+                        <tr>
+                            <td><label className="my-1 mx-3"><input type="radio" value={-1} name="a" onChange={this.onChange} /> 无&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
+                            <td><label className="my-1 mx-3"><input type="radio" value={0} name="a" onChange={this.onChange} /> 其他</label></td>
+                            <td>{this.dateVisible && <input type="text" className="col-xs-4 col-sm-4" onChange={this.onDateChange} />}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
-            <div className="small text-muted px-3 py-2">说明：这里是最大折扣，具体折扣以下单时显示为准</div>
+            <div className="small text-muted px-3 py-2">说明：折扣表示最大折扣，具体折扣以下单时时为准</div>
         </div>
     };
 }
@@ -115,10 +116,9 @@ export class VCreateCoupon extends VPage<CCoupon> {
                 widget: 'custom',
                 label: '折扣',
                 WidgetClass: Discount,
-                discription: '最小折扣',
+                //discription: '最小折扣',
             } as UiCustom,
-
-            preferential: { widget: 'text', label: '优惠金额', placeholder: '请输入优惠金额' } as UiInputItem,
+            //preferential: { widget: 'text', label: '优惠金额', placeholder: '请输入优惠金额', rules: numberValidation } as UiInputItem,
             customer: {
                 widget: 'id', label: '客户', placeholder: '请选择客户',
                 pickId: async (context: Context, name: string, value: number) => await this.controller.showAddCouponCustomer(context, name, value),
@@ -155,6 +155,7 @@ export class VCreateCoupon extends VPage<CCoupon> {
                 onButtonClick={this.onFormButtonClick}
                 requiredFlag={false}
             />
+
         </Page >
     })
 }

@@ -7,12 +7,13 @@ import { VTeam } from './VTeam';
 import { VMeDetail } from '../me/VMeDetail';
 import { VTeamDetail } from './VTeamDetail';
 import { CUqBase } from '../CBase';
+import { observable } from 'mobx';
 
 /**
  *
  */
 export class CTeam extends CUqBase {
-
+    @observable achievement: any;
     /*
     private qeurySearchTeam: Query;
     private actionSavePeerAssigned: Action;
@@ -42,6 +43,12 @@ export class CTeam extends CUqBase {
 
     //显示粉丝信息
     showPeerDetail = async (team: any) => {
+
+        let query = { user: 47 };
+        let achievement = await this.uqs.salesTask.SearchAchievement.table(query);
+        if (achievement.length > 0) {
+            this.achievement = achievement[0];
+        }
         this.openVPage(VTeamDetail, team);
     }
 

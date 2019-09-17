@@ -13,7 +13,7 @@ import { VCustomerDetail } from './VCustomerDetail';
 import { VCustomerList } from './VCustomerList';
 import { VCreateCustomer } from './VCreateCustomer';
 import { VCreateCustomerFinish } from './VCreateCustomerFinish';
-import { VMyCustomerSelectCall } from './VMyCustomerSelectCall--delete';
+import { VMyCustomerSelect } from './VMyCustomerSelect';
 import { VCustomerSearch } from './VCustomerSearch';
 
 //页面类
@@ -102,7 +102,7 @@ export class CCustomer extends CUqBase {
         this.pageCustomer = null;
         this.task = task;
         this.searchByKey('');
-        this.openVPage(VMyCustomerSelectCall);
+        this.openVPage(VMyCustomerSelect);
     }
 
     //查询客户--通过名称
