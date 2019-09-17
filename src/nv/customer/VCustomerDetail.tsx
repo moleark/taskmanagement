@@ -6,6 +6,7 @@ import { tv } from 'tonva';
 import { LMR, StringProp, ComponentProp, Prop, PropGrid, FA } from 'tonva';
 import { CCustomer } from './CCustomer';
 import { consts } from '../consts';
+import { mobileValidation, nameValidation, emailValidation } from 'nv/tools/inputValidations';
 
 const schema: Schema = [
     { name: 'name', type: 'string' },
@@ -23,11 +24,11 @@ export class VCustomerDetail extends VPage<CCustomer> {
     @observable private customer: any;
     private uiSchema: UiSchema = {
         items: {
-            name: { widget: 'text', label: '姓名', placeholder: '请输入姓名' } as UiInputItem,
-            telephone: { widget: 'text', label: '电话', placeholder: '请输入电话' } as UiInputItem,
+            name: { widget: 'text', label: '姓名', placeholder: '请输入姓名', rules: nameValidation } as UiInputItem,
+            telephone: { widget: 'text', label: '电话', placeholder: '请输入电话', rules: mobileValidation } as UiInputItem,
             gender: { widget: 'radio', label: '潜力值', defaultValue: 1, list: [{ value: 0, title: '男' }, { value: 1, title: '女' }] } as UiRadio,
             birthDay: { widget: 'datetime', label: '生日', placeholder: '请输入生日' } as UiInputItem,
-            email: { widget: 'text', label: '邮箱', placeholder: '请输入邮箱' } as UiInputItem,
+            email: { widget: 'text', label: '邮箱', placeholder: '请输入邮箱', rules: emailValidation } as UiInputItem,
             wechat: { widget: 'text', label: '微信', placeholder: '请输入微信号' } as UiInputItem,
             teacher: { widget: 'text', label: '老师', placeholder: '请输入老师' } as UiInputItem,
             addressString: { widget: 'text', label: '地址', placeholder: '请输地址' } as UiInputItem,
