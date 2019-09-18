@@ -18,7 +18,7 @@ const schema: Schema = [
 class ValidityDate extends Widget {
     //protected inputs: {[index:number]: HTMLInputElement} = {};
     @observable dateVisible = false;
-    value = 1;
+    //value = 1;
     private list = [
         { value: 1, title: '    一周', name: 'b', checked: undefined },
         { value: 2, title: '两周', name: 'b', checked: undefined }
@@ -52,14 +52,14 @@ class ValidityDate extends Widget {
 
 class Discount extends Widget {
     @observable dateVisible = false;
-    defultvalue = 0.05;
+    //value = 0.05;
     private list = [
-        { value: 0.05, title: '95    折    ', name: 'a' },
-        { value: 0.1, title: '9.0折', name: 'a' },
-        { value: 0.15, title: '85    折    ', name: 'a' },
-        { value: 0.2, title: ' 8.0折', name: 'a' },
-        { value: 0.3, title: '7.0折', name: 'a' },
-        { value: 0.4, title: '6.0折', name: 'a' }
+        { value: 0.05, title: '9.5折', name: 'a', checked: undefined },
+        { value: 0.1, title: '9.0折', name: 'a', checked: undefined },
+        { value: 0.15, title: '8.5折', name: 'a', checked: undefined },
+        { value: 0.2, title: '8.0折', name: 'a', checked: undefined },
+        { value: 0.3, title: '7.0折', name: 'a', checked: undefined },
+        { value: 0.4, title: '6.0折', name: 'a', checked: undefined }
     ];
 
     private onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
