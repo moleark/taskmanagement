@@ -17,7 +17,7 @@ import { observable } from 'mobx';
 export class CMe extends CUqBase {
     inviteCode: string;
     position: any;
-    @observable achievement: any;
+    @observable salesAmont: any =  { oneSaleVolume: 0, twoSaleVolume: 0, threeSaleVolume: 0, oneAchievement: 0, twoAchievement: 0, threeAchievement: 0, teamCount: 0, customerCount: 0, activeCustomerCount: 0 };
     /*
     private querySearchPosition: Query;
     private querySearchAchievement: Query;
@@ -52,7 +52,6 @@ export class CMe extends CUqBase {
         let p1 = code.substr(1, 4);
         let p2 = code.substr(5);
         this.inviteCode = p1 + ' ' + p2;
-        await this.onComputeAchievement();
         var a = 1;
     }
 
@@ -113,7 +112,8 @@ export class CMe extends CUqBase {
     onComputeAchievement = async () => {
         await this.uqs.salesTask.ComputeAchievement.submit({});
         let query = { user: this.user.id };
-        this.achievement = await this.uqs.salesTask.SearchAchievement.table(query);
+        this.salesAmont = await this.uqs.salesTask.SearchAchievement.obj(query);
+
     }
 
     render = () => {

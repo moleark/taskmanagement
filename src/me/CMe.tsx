@@ -11,6 +11,7 @@ import { VTeamDetail } from '../team/VTeamDetail';
 import { VAchievement } from './VAchievement';
 import { VSet } from './VSet';
 import { VAchievementDetail } from './VAchievementDetail';
+import { observable } from 'mobx';
 
 /**
  *
@@ -20,7 +21,7 @@ export class CMe extends Controller {
     cApp: CSalesTaskApp;
     inviteCode: string;
     position: any;
-    achievemen: number;
+    @observable achievemen: number;
 
     private querySearchPosition: Query;
     private querySearchAchievement: Query;

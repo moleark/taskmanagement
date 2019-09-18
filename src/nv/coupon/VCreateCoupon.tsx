@@ -19,8 +19,8 @@ class ValidityDate extends Widget {
     @observable dateVisible = false;
     value = 1;
     private list = [
-        { value: 1, title: '    一周', name: 'b', checked: true },
-        { value: 2, title: '两周', name: 'b' }
+        { value: 1, title: '    一周', name: 'b', checked: undefined },
+        { value: 2, title: '两周', name: 'b', checked: undefined }
     ];
 
     private onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {

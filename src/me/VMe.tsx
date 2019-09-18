@@ -20,6 +20,7 @@ export class VMe extends VPage<CMe> {
     }
 
     render(member: any): JSX.Element {
+        this.controller.load();
         let { user, inviteCode } = this.controller;
         this.user = user;
         this.inviteCode = inviteCode;

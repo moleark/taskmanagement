@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import { LMR, VPage, nav, Image, ComponentProp, Prop, PropGrid, FA } from 'tonva';
 import { CMe } from './CMe';
 import classNames from 'classnames';
+import { runInThisContext } from 'vm';
 //import wer from '../images/wer.jpg';
 
 function rowCom(iconName: string, iconColor: string, caption: string, value: any, onClick: any) {
@@ -16,7 +17,7 @@ function rowCom(iconName: string, iconColor: string, caption: string, value: any
 export class VMe extends VPage<CMe> {
     private user: any;
     private inviteCode: any;
-    private salesAmont: any;
+    //private salesAmont: any;
 
     async open() {
         this.openPage(this.page);
@@ -26,6 +27,7 @@ export class VMe extends VPage<CMe> {
         let { user, inviteCode } = this.controller;
         this.user = user;
         this.inviteCode = inviteCode;
+        this.controller.onComputeAchievement();
         return <this.page />;
     }
 
@@ -36,7 +38,7 @@ export class VMe extends VPage<CMe> {
     }
 
     private meInfo() {
-        let { user, showMeDetail, showMessage, showTeam, } = this.controller;
+        let { user, showMeDetail, showMessage, showTeam, salesAmont } = this.controller;
         if (user === undefined) return null;
         let { id, name, nick, icon } = user;
         let { showCustomerSearch } = this.controller.cApp.cCustomer;
@@ -53,7 +55,7 @@ export class VMe extends VPage<CMe> {
             else badge = <u>99+</u>;
         }
 
-        let { teamCount, customerCount, activeCustomerCount } = this.salesAmont;
+        let { teamCount, customerCount, activeCustomerCount } = salesAmont;
         return <div className="toggle cursor-pointer px-2 py-2 w-100"
             style={{ backgroundColor: '#f0f0f0', marginRight: '-1px', marginBottom: '-1px' }}>
             <LMR
@@ -100,7 +102,8 @@ export class VMe extends VPage<CMe> {
 
     private achievement() {
 
-        let { oneAchievement, twoAchievement, threeAchievement } = this.salesAmont;
+        let { salesAmont } = this.controller;
+        let { oneAchievement, twoAchievement, threeAchievement } = salesAmont;
         let divTag = (t: string, achievement: number) => <div
             className="cursor-pointer"
             onClick={async () => await this.controller.showAchievementDetail(t)}>
@@ -131,12 +134,7 @@ export class VMe extends VPage<CMe> {
 
         let { cSalesTask, cMessage, cCoupon } = this.controller.cApp
         let { showEmployeeHistory } = cSalesTask;
-        let { achievement, showSet } = this.controller;
-
-        this.salesAmont = achievement[0];
-        if (this.salesAmont == null) {
-            this.salesAmont = { oneSaleVolume: 0, twoSaleVolume: 0, threeSaleVolume: 0, oneAchievement: 0, twoAchievement: 0, threeAchievement: 0, teamCount: 0, customerCount: 0, activeCustomerCount: 0 }
-        }
+        let { salesAmont, showSet } = this.controller;
 
         let onshowEmployeeHistory = async () => await showEmployeeHistory();
         let onshowCreateCoupon = async () => await cCoupon.showCreateCoupon()
