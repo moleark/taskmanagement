@@ -5,9 +5,9 @@ import { observer, Observer } from 'mobx-react';
 import { CMe } from './CMe';
 import { consts } from '../consts';
 
-const color = (selected: boolean) => selected === true ? 'small text-primary' : 'small text-muted';
+const color = (selected: boolean) => selected === true ? 'text-primary' : 'text-muted';
 const tabCaption = (caption: string, amount: number): TabCaption => {
-    return (selected: boolean) => <div className="w-100 text-center pb-2">
+    return (selected: boolean) => <div className="w-100 small pt-2 text-center">
         <div className={color(selected)}>{caption}</div>
         <div className={color(selected)}>{amount}</div>
     </div>;
@@ -31,7 +31,7 @@ export class VAchievementDetail extends VPage<CMe> {
     }
 
     private renderItem(model: any, index: number) {
-        let { date, mycustomer, Amount, order, status } = model;
+        let { date, Amount, order, status } = model;
         var statusShow: any;
         if (status == 1) {
             statusShow = "待转入";
@@ -42,10 +42,10 @@ export class VAchievementDetail extends VPage<CMe> {
         let amount = <small ><div>{Amount}</div></small>;
         return <div className="d-block">
             <div>
-                <LMR className="px-3 py-2 small" left={<div className="text-muted">收益产生日期</div>} right={data}></LMR>
-                <LMR className="px-3 py-2 small" left={<div className="text-muted">订单号</div>} right={order}></LMR>
-                <LMR className="px-3 py-2 small" left={<div className="text-muted">状态</div>} right={statusShow}></LMR>
-                <LMR className="px-3 py-2 small" left={<div className="text-muted">预估金额</div>} right={amount}></LMR>
+                <LMR className="px-3 pt-2 small" left={<div className="text-muted">收益产生日期</div>} right={data}></LMR>
+                <LMR className="px-3 small" left={<div className="text-muted">订单号</div>} right={order}></LMR>
+                <LMR className="px-3 small" left={<div className="text-muted">状态</div>} right={statusShow}></LMR>
+                <LMR className="px-3 pb-2 small" left={<div className="text-muted">预估金额</div>} right={amount}></LMR>
             </div>
         </div>
     }
@@ -86,38 +86,6 @@ export class VAchievementDetail extends VPage<CMe> {
     ];
 
     private page = observer(() => {
-        /*
-        let tabs = [
-            {
-                title: 'A类收益',
-                content: () => {
-                    return <List items={this.achievementsA} item={{ render: this.renderItem }} none="无业绩" />
-                },
-                isSelected: this.currentState === 'A',
-                load: async () => {
-                    this.achievementsA = await this.controller.searchAchievementDetail(1);
-                }
-            }, {
-                title: 'B类收益',
-                isSelected: this.currentState === 'B',
-                content: () => {
-                    return <List items={this.achievementsB} item={{ render: this.renderItem }} none="无业绩" />
-                },
-                load: async () => {
-                    this.achievementsB = await this.controller.searchAchievementDetail(2);
-                }
-            }, {
-                title: 'C类收益',
-                isSelected: this.currentState === 'C',
-                content: () => {
-                    return <List items={this.achievementsC} item={{ render: this.renderItem }} none="无业绩" />
-                },
-                load: async () => {
-                    this.achievementsC = await this.controller.searchAchievementDetail(3);
-                }
-            }
-        ];
-        */
 
         let tabs: TabProp[] = [
             {
