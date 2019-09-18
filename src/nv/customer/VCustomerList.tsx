@@ -44,7 +44,7 @@ export class VCustomerList extends VPage<CCustomer> {
             <span onClick={onshowCustomerSearch} ><FA name="search" /></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <span onClick={onshowSelectCustomerUnit} ><FA name="plus" /></span>
         </div>;
-        let none = <div className="my-3 mx-2 text-warning">未找到客户！</div>;
+        let none = <div className="my-3 mx-2 text-warning"></div>;
         let tit = <span>客户</span>
 
         let rows: Prop[] = [

@@ -168,11 +168,6 @@ export class VMe extends VPage<CMe> {
                                             <small><small>&nbsp;&nbsp;设置&nbsp;&nbsp;</small></small>
                                         </div>
                                     </td>
-                                    <td className="w-4">
-                                        <div className="text-center px-4" >
-                                            <small><small></small></small>
-                                        </div>
-                                    </td>
                                 </tr>
                             </tbody>
                         </table>
