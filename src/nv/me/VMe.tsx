@@ -77,19 +77,19 @@ export class VMe extends VPage<CMe> {
                                 <td>
                                     <div className="text-center" onClick={onshowTeam}>
                                         <div>{teamCount}</div>
-                                        <small>&nbsp;&nbsp;&nbsp;&nbsp;团队&nbsp;&nbsp;&nbsp;&nbsp;</small>
+                                        <small><small>&nbsp;&nbsp;&nbsp;&nbsp;团队&nbsp;&nbsp;&nbsp;&nbsp;</small></small>
                                     </div>
                                 </td>
                                 <td>
                                     <div className="text-center" onClick={onshowCustomerSearch}>
                                         <div >{customerCount}</div>
-                                        <small>&nbsp;&nbsp;&nbsp;&nbsp;客户&nbsp;&nbsp;&nbsp;&nbsp;</small>
+                                        <small><small>&nbsp;&nbsp;&nbsp;&nbsp;客户&nbsp;&nbsp;&nbsp;&nbsp;</small></small>
                                     </div>
                                 </td>
                                 <td>
                                     <div className="text-center" onClick={onshowCustomerSearch}>
                                         <div >{activeCustomerCount}</div>
-                                        <small>活跃客户</small>
+                                        <small><small>活跃客户</small></small>
                                     </div>
                                 </td>
                             </tr>
@@ -110,21 +110,21 @@ export class VMe extends VPage<CMe> {
             {achievement <= 0.001 ?
                 <div className="h5"> - </div>
                 :
-                <div className="h5"><strong>{achievement}</strong> <span className="h6"><small>元</small></span></div>
+                <div className="h5"><strong>{achievement.toFixed(2)}</strong> <span className="h6"><small>元</small></span></div>
             }
             <div className="h6"><small>{t}</small></div>
         </div>;
 
         return <div className="toggle rounded text-center text-white bg-primary pt-5 pb-3">
             <div className="py-4" >
-                <div className="text-warning">
-                    <span className="h1">{oneAchievement + twoAchievement + threeAchievement}</span>
+                <div className="text-warning" onClick={async () => await this.controller.showAchievementDetail('A')}>
+                    <span className="h1">{(oneAchievement + twoAchievement + threeAchievement).toFixed(2)}</span>
                     <small> 元</small>
                 </div>
                 <h6 className="text-warning"><small>累计收益</small></h6>
             </div>
             <div className="d-flex justify-content-around">
-                {divTag('待到款', oneAchievement + twoAchievement + threeAchievement)}
+                {divTag('待到款', (oneAchievement + twoAchievement + threeAchievement))}
                 {divTag('可提现', 0)}
             </div>
         </div>;

@@ -4,7 +4,6 @@ import { observer } from 'mobx-react';
 import { VPage, Page, Schema, Form, UiSchema, UiInputItem, Context, UiRadio, toUiSelectItems, Widget, UiCustom, FA, LMR, UiIdItem, tv } from 'tonva';
 import { consts } from '../consts';
 import { CCoupon } from './CCoupon';
-import { numberValidation } from 'nv/tools/inputValidations';
 
 const schema: Schema = [
     { name: 'validitydate', type: 'date', required: false },
@@ -91,7 +90,7 @@ class Discount extends Widget {
                 <table>
                     <tbody>
                         <tr>
-                            <td><label className="my-1 mx-3"><input type="radio" value={-1} name="a" onChange={this.onChange} /> 无&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
+                            <td><label className="my-1 mx-3"><input type="radio" value={-1} name="a" onChange={this.onChange} /> 无&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
                             <td><label className="my-1 mx-3"><input type="radio" value={0} name="a" onChange={this.onChange} /> 其他</label></td>
                             <td>{this.dateVisible && <input type="text" className="col-xs-4 col-sm-4" onChange={this.onDateChange} />}</td>
                         </tr>

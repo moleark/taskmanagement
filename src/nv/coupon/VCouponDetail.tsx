@@ -27,13 +27,14 @@ export class VCouponDetail extends VPage<CCoupon> {
         //let onshowCouponCustomer = async () => await showCouponCustomer(this.coupon);
         let oninvalidCoupon = async () => await invalidCoupon(this.coupon);
 
-        var inviteCode = "";
+        var inviteCode: string = "";
         if (code) {
-            code = String(code + 100000000);
-            let p1 = code.substr(1, 4);
-            let p2 = code.substr(5);
+            let p1 = code.substr(0, 4);
+            let p2 = code.substr(4);
             inviteCode = p1 + ' ' + p2;
         }
+        var discountShow: any;
+        discountShow = (1 - discount) * 10;
 
         let rows: Prop[] = [
             {
@@ -54,7 +55,7 @@ export class VCouponDetail extends VPage<CCoupon> {
                 type: 'component',
                 name: 'customer',
                 component: <LMR className="cursor-pointer w-100 py-3" left="优惠力度：">
-                    <div className="mx-3">折扣：{discount} 折  金额：{preferential}￥</div>
+                    <div className="mx-3">折扣：{discountShow.toFixed(1)} 折 </div>
                 </LMR >
             } as ComponentProp
         ];
@@ -67,11 +68,11 @@ export class VCouponDetail extends VPage<CCoupon> {
                         {
                             tv(
                                 customer, v =>
-                                    <LMR className="cursor-pointer w-100 py-3"
-                                        left="指定客户："
-                                        right={<div>{tv(v.unit, s => s.name)}</div>}>
-                                        <div className="mx-3">{v.name}</div>
-                                    </LMR >
+                                <LMR className="cursor-pointer w-100 py-3"
+                                    left="指定客户："
+                                    right={<div>{tv(v.unit, s => s.name)}</div>}>
+                                    <div className="mx-3">{v.name}</div>
+                                </LMR >
                             )
                         }
                     </>
@@ -98,7 +99,6 @@ export class VCouponDetail extends VPage<CCoupon> {
                 type: 'component',
                 name: 'customer',
                 component: <LMR className="cursor-pointer w-100 py-1">
-                    订单ABC
                 </LMR >
             } as ComponentProp
         );

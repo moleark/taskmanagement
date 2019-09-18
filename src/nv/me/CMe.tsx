@@ -17,7 +17,7 @@ import { observable } from 'mobx';
 export class CMe extends CUqBase {
     inviteCode: string;
     position: any;
-    @observable salesAmont: any = { oneSaleVolume: 0, twoSaleVolume: 0, threeSaleVolume: 0, oneAchievement: 0, twoAchievement: 0, threeAchievement: 0, teamCount: 0, customerCount: 0, activeCustomerCount: 0 };
+    @observable salesAmont: any = { oneSaleVolume: 0.00, twoSaleVolume: 0.00, threeSaleVolume: 0.00, oneAchievement: 0.0, twoAchievement: 0.0, threeAchievement: 0.0, teamCount: 0.0, customerCount: 0.0, activeCustomerCount: 0.0 };
     /*
     private querySearchPosition: Query;
     private querySearchAchievement: Query;
@@ -87,6 +87,7 @@ export class CMe extends CUqBase {
 
     //搜索业绩历史记录
     searchAchievementDetail = async (type: number) => {
+        await this.onComputeAchievement();
         let param = { types: type };
         let list = await this.uqs.salesTask.SearchAchievementHistory.table(param);
         return list;
