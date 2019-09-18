@@ -38,8 +38,8 @@ export class VAchievementDetail extends VPage<CMe> {
         } else {
             statusShow = "已转入";
         }
-        let data = <small><EasyDate date={date} /></small>;
-        let amount = <small ><div>{Amount}</div></small>;
+        let data = <EasyDate date={date} />;
+        let amount = <div>{Amount}</div>;
         return <div className="d-block">
             <div>
                 <LMR className="px-3 pt-2 small" left={<div className="text-muted">收益产生日期</div>} right={data}></LMR>
