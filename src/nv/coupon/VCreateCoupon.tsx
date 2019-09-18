@@ -103,6 +103,7 @@ class Discount extends Widget {
 }
 
 export class VCreateCoupon extends VPage<CCoupon> {
+    @observable showTip: boolean = false;
     private form: Form;
     private uiSchema: UiSchema = {
         items: {
@@ -139,7 +140,14 @@ export class VCreateCoupon extends VPage<CCoupon> {
     }
 
     private onFormButtonClick = async (name: string, context: Context) => {
-        await this.controller.createCoupon(context.data);
+
+        let { validitydate, discount } = context.data;
+        if (validitydate == undefined || discount == undefined) {
+            this.showTip = true;
+        } else {
+            await this.controller.createCoupon(context.data);
+            this.showTip = false;
+        }
     }
 
     private page = observer((param: any) => {
@@ -147,14 +155,14 @@ export class VCreateCoupon extends VPage<CCoupon> {
         let onshowCreateCoupon = async () => await cCoupon.start();
 
         let right = <div onClick={onshowCreateCoupon} className="cursor-pointer py-2 mx-3"><FA name="ellipsis-h" /></div>;
+
         return <Page header="产生优惠码" headerClassName={consts.headerClass} right={right} >
             <Form ref={v => this.form = v} className="my-3 mx-3"
                 schema={schema}
                 uiSchema={this.uiSchema}
                 onButtonClick={this.onFormButtonClick}
-                requiredFlag={false}
-            />
-
+                requiredFlag={false} />
+            {this.showTip && < div className="small text-danger mx-4"  >提示：请选择有效期和折扣！</div>}
         </Page >
     })
 }
