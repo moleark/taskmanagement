@@ -124,7 +124,7 @@ export class VMe extends VPage<CMe> {
                 <h6 className="text-warning"><small>累计收益</small></h6>
             </div>
             <div className="d-flex justify-content-around">
-                {divTag('贷到款', oneAchievement + twoAchievement + threeAchievement)}
+                {divTag('待到款', oneAchievement + twoAchievement + threeAchievement)}
                 {divTag('可提现', 0)}
             </div>
         </div>;
