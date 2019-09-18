@@ -7,7 +7,7 @@ import { CCoupon } from './CCoupon';
 import { numberValidation } from 'nv/tools/inputValidations';
 
 const schema: Schema = [
-    { name: 'validitydate', type: 'date', required: true },
+    { name: 'validitydate', type: 'date', required: false },
     { name: 'discount', type: 'string', required: false },
     //{ name: 'preferential', type: 'string', required: false },
     { name: 'customer', type: 'id', required: false },
