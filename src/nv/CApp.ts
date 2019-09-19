@@ -13,7 +13,7 @@ import { CInnerCustomer } from './innercustomer/CInnerCustomer';
 
 import { UQs } from "./uqs";
 import { CUqBase } from "./CBase";
-import { VHome } from './ui';
+import { VHome, GLOABLE } from './ui';
 
 export class CApp extends CAppBase {
     readonly uqs: UQs;
@@ -38,6 +38,10 @@ export class CApp extends CAppBase {
     }
 
     protected async internalStart() {
+
+        this.currentSalesRegion = await this.uqs.common.SalesRegion.load(GLOABLE.SALESREGION_CN);
+        this.currentLanguage = await this.uqs.common.Language.load(GLOABLE.CHINESE);
+
         /** 初始化 Conctrolle*/
         this.cCustomer = this.newC(CCustomer);
         this.cProduct = this.newC(CProduct);
@@ -49,9 +53,6 @@ export class CApp extends CAppBase {
         this.cCustomerUnit = this.newC(CCustomerUnit);
         this.cCoupon = this.newC(CCoupon);
         this.cWebUser = this.newC(CInnerCustomer);
-
-        this.currentSalesRegion = await this.uqs.common.SalesRegion.load(1);
-        this.currentLanguage = await this.uqs.common.Language.load(197);
 
         /** 启动销售任务列表*/
         //this.cSalesTask.start();

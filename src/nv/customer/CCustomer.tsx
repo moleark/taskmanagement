@@ -15,6 +15,7 @@ import { VCreateCustomer } from './VCreateCustomer';
 import { VCreateCustomerFinish } from './VCreateCustomerFinish';
 import { VMyCustomerSelect } from './VMyCustomerSelect';
 import { VCustomerSearch } from './VCustomerSearch';
+import { VCustomerChek } from './VCustomerChek';
 
 //页面类
 class PageMyCustomer extends PageItems<any> {
@@ -201,6 +202,12 @@ export class CCustomer extends CUqBase {
         let { cWebUser } = this.cApp;
         this.innerCustomer = await cWebUser.call();
         await this.createWebUserMyCustomerMap(this.innerCustomer.id, mycustomer);
+    }
+
+    showCustomerCustomerChek = async (mycustomer: any) => {
+
+        let result = await this.uqs.salesTask.MyCustomerIsOccupy.query({ mycustomer: mycustomer.id });
+        this.openVPage(VCustomerChek, result.ret[0]);
     }
 
     createWebUserMyCustomerMap = async (customer: any, mycustomer: any) => {

@@ -12,7 +12,7 @@ const schema: Schema = [
     { name: 'Salutation', type: 'string', required: false },
     { name: 'telephone', type: 'string', required: true },
     { name: 'Gender', type: 'number', required: false },
-    { name: 'BirthDay', type: 'date', required: false },
+    //{ name: 'BirthDay', type: 'date', required: false },
     { name: 'submit', type: 'submit' },
 ];
 
@@ -23,14 +23,14 @@ export class VCreateCustomer extends VPage<CCustomer> {
         items: {
             Name: { widget: 'text', label: '姓名', placeholder: '请输入姓名', rules: nameValidation } as UiInputItem,
             Salutation: { widget: 'text', label: '称谓', placeholder: '请输入称谓' } as UiInputItem,
-            telephone: { widget: 'text', label: '电话', placeholder: '请输入电话号码', rules: mobileValidation } as UiInputItem,
+            telephone: { widget: 'text', label: '手机', placeholder: '请输入手机号码', rules: mobileValidation } as UiInputItem,
             Gender: {
                 widget: 'radio', label: '性别', placeholder: '性别',
                 defaultValue: 1,
                 list: toUiSelectItems(['1:男', '2:女']),
                 radioClassName: 'w-min-6c d-inline-block'
             } as UiRadio,
-            BirthDay: { widget: 'date', label: '生日', placeholder: '' } as UiInputItem,
+            //BirthDay: { widget: 'date', label: '生日', placeholder: '' } as UiInputItem,
             submit: { widget: 'button', label: '提交', className: 'btn btn-primary w-8c' },
         }
     }

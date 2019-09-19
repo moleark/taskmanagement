@@ -52,7 +52,7 @@ export class VCustomerList extends VPage<CCustomer> {
                 type: 'component',
                 name: 'customer',
                 component: <LMR className="cursor-pointer w-100 py-3" onClick={onshowCustomerSearchByCustomer}
-                    left={< div > <small><FA name='university' className='text-info' /></small> &nbsp;客户单位</div>}
+                    left={< div > <small><FA name='university' className='text-info' /></small> &nbsp;按单位筛选</div>}
                     right={< div className="w-2c text-right" > <i className="fa fa-chevron-right small" /></div >}>
                 </LMR >,
             } as ComponentProp

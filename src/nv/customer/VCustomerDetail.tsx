@@ -55,11 +55,12 @@ export class VCustomerDetail extends VPage<CCustomer> {
         let { id: customerid, unit } = param
         let { showCustomerUnitDetail } = cCustomerUnit;
         let { showInnerCustomerSelect: showCustomerSelect } = cCustomer;
-        let { innerCustomer, IsOccupy } = this.controller;
+        let { innerCustomer, IsOccupy, showCustomerCustomerChek } = this.controller;
 
         let onshowCustomerHistory = async () => await showCustomerHistory(customerid);
         let onshowCustomerUnitDetail = async () => await showCustomerUnitDetail(unit);
         let onshowCustomerSelect = async () => await showCustomerSelect(customerid);
+        let onshowCustomerCustomerChek = async () => await showCustomerCustomerChek(this.customer);
 
         let rows: Prop[] = [
             {
@@ -90,11 +91,8 @@ export class VCustomerDetail extends VPage<CCustomer> {
         ];
 
         var header: any = <span>客户详情</span>;
-        if (IsOccupy.code == 1) {
-            header = <span >客户详情（被占用）</span>;
-        }
-
-        return <Page header={header} headerClassName={consts.headerClass}>
+        let footer = <button type="button" className="btn btn-danger flex-grow-1 mx-3 my-1 w-100" onClick={onshowCustomerCustomerChek} >确认是否被绑定</button>;
+        return <Page header={header} headerClassName={consts.headerClass} footer={footer}>
             <PropGrid className="my-2" rows={rows} values={this.customer} alignValue="right" />
             <Edit
                 schema={schema}

@@ -4,7 +4,7 @@ import { TaskCommonType } from '../../taskCommonType';
 import { UiSchema, UiInputItem, UiRadio } from 'tonva';
 
 export const NonReagent: TaskCommonType = {
-    caption: '大包装报价跟踪',
+    caption: '任务',
     icon: <FA name='shopping-bag' size="lg" fixWidth={true} />,
     schema: [
         { name: 'priorty', type: 'number', required: false },

@@ -361,7 +361,28 @@ export class CSalesTask extends CUqBase {
     //显示任务类页面
     showSelectTaskType = async () => {
         //return await this.cSalesTaskType.call();
-        await this.cSelectType.start();
+        //await this.cSelectType.start();
+        let type = {
+            id: 1,
+            name: 'qualify',
+            description: '任务'
+        };
+        let biz = {
+            id: 1,
+            name: 'nonreagent',
+            description: ''
+        };
+
+        let task = {
+            id: null,
+            type: type,
+            biz: biz,
+            description: null,
+            remindDate: null,
+            deadline: null,
+            customer: null
+        }
+        this.cApp.cCustomer.showSelectCustomer(task);
     }
     //显示选择处理方式的页面
     showCrateCheck = async (task: Task) => {

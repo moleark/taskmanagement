@@ -9,7 +9,7 @@ import { Task } from '../../model';
 export class 大包装报价跟踪 extends CType {
 
     icon = <FA name='flask' size="lg" fixWidth={true} />;
-    caption = '大包装报价跟踪';
+    caption = '任务';
 
     protected internalStart(param?: any): Promise<void> {
         return;

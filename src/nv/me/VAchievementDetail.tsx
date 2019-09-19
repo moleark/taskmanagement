@@ -121,7 +121,18 @@ export class VAchievementDetail extends VPage<CMe> {
                 }
             }
         ];
-        return <Page header="我的业绩" headerClassName={consts.headerClass}>
+
+        let A = <div className="text-center">
+            <span className="px-4"></span>
+            <span className=" px-2 py-1 text-primary bg-white rounded small mx-1 btn-outline-white flex-grow-1" >累计收益</span>
+            <span className="px-2 py-1 text-white bg-primary rounded small mx-1 btn-outline-white flex-grow-1 ">&nbsp;待到款&nbsp;</span>
+        </div>;
+        let B = <div className="text-center">
+            <span className="px-4"></span>
+            <span><button type="button" className="btn btn-outline-danger flex-grow-1">累计收益</button></span>
+            <span><button type="button" className="btn btn-outline-danger flex-grow-1">&nbsp;&nbsp;待到款&nbsp;&nbsp;</button></span>
+        </div>;
+        return <Page header={A} headerClassName={consts.headerClass}>
             <Tabs tabs={tabs} tabPosition="top" />
         </Page>
     })

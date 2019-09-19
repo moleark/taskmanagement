@@ -1,5 +1,11 @@
 export { jnkTop } from "./jnkTop";
 export { VHome } from './main';
+
+export const GLOABLE = {
+    CHINA: 44,
+    CHINESE: 196,
+    SALESREGION_CN: 1,
+}
 /*
 
 import { AppUI, CApp } from 'tonva';
