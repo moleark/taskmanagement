@@ -52,12 +52,9 @@ export class VMain extends VPage<CSalesTask> {
         let right = <div className="text-right">
             {deadline && <small className="text-muted">时限：<EasyDate date={deadline} /></small>}
         </div>
-        return <LMR className="px-3 py-2" left={left}>
+        return <LMR className="px-3 py-3" left={left}>
             <LMR className="" right={right}>
                 <div className="font-weight-bold">{tv(customer, (v) => <>{v.name}</>)}</div>
-            </LMR>
-            <LMR className="" right={<div className="text-muted"><small>{tv(type, (v) => <>{v.description}</>)}</small></div>}>
-                <div className="text-muted" ><small>{tv(biz, (v) => <>{v.description}</>)}</small></div>
             </LMR>
         </LMR>
     }

@@ -79,8 +79,8 @@ export class VProductDetail extends VPage<CProduct> {
                     <span className="text-danger">￥ <span className="h5">{price}</span></span>
                 </div>
             </div >
-            right = price && <div><span className="text-warning small"><strong className="small">牌</strong></span> <span className="text-right h5 text-danger"><span className="small">￥</span>{price}</span></div>;
-            agent = agentPrice && <div><span className="text-warning small"><strong className="small">代</strong></span> <span className="text-right h5 text-danger"><span className="small ">￥</span>{agentPrice}</span></div>;
+            right = price && <span><span className="text-warning small"></span> <span className="text-right  text-danger"><span className="small text-warning">￥</span>{price}</span></span>;
+            agent = agentPrice && <span><span className="text-warning small"><strong className="small"> <span className="small">毛利</span> </strong></span> <span className="text-right text-danger">{(price - agentPrice).toFixed(2)}</span></span>;
         } else {
             right = <small>请询价</small>
         }
@@ -105,8 +105,7 @@ export class VProductDetail extends VPage<CProduct> {
                     <div>{deliveryTimeUI}</div>
                 </div>
                 <div className="col-7">
-                    {agent}
-                    {right}
+                    {right}&nbsp;/&nbsp;{agent}
                 </div>
             </div>
         </div>;
