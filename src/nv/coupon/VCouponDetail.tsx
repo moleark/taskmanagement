@@ -13,19 +13,10 @@ export class VCouponDetail extends VPage<CCoupon> {
         this.openPage(this.page);
     }
 
-    private renderisValid(param: any) {
-        if (param == 1) {
-            return "有效";
-        } else {
-            return "无效";
-        }
-    }
+    private oninvalidCoupon = async () => await this.controller.invalidCoupon(this.coupon);
 
     private page = observer(() => {
         let { code, validitydate, discount, preferential, isValid, customer } = this.coupon;
-        let { invalidCoupon } = this.controller;
-        //let onshowCouponCustomer = async () => await showCouponCustomer(this.coupon);
-        let oninvalidCoupon = async () => await invalidCoupon(this.coupon);
 
         var inviteCode: string = "";
         if (code) {
@@ -40,21 +31,21 @@ export class VCouponDetail extends VPage<CCoupon> {
             {
                 type: 'component',
                 name: 'customer',
-                component: <LMR className="cursor-pointer w-100 py-3" left="优惠编号：">
+                component: <LMR className="cursor-pointer w-100 py-3" left="优 惠 码：">
                     <div className="mx-3">{inviteCode}</div>
                 </LMR >
             } as ComponentProp,
             {
                 type: 'component',
                 name: 'customer',
-                component: <LMR className="cursor-pointer w-100 py-3" left="有 效 期 ：">
+                component: <LMR className="cursor-pointer w-100 py-3" left="有 效 期：">
                     <div className="mx-3">{<EasyDate date={validitydate} />}</div>
                 </LMR >
             } as ComponentProp,
             {
                 type: 'component',
                 name: 'customer',
-                component: <LMR className="cursor-pointer w-100 py-3" left="优惠力度：">
+                component: <LMR className="cursor-pointer w-100 py-3" left="优 &nbsp; &nbsp; 惠：">
                     <div className="mx-3">折扣：{discountShow.toFixed(1)} 折 </div>
                 </LMR >
             } as ComponentProp
@@ -84,25 +75,12 @@ export class VCouponDetail extends VPage<CCoupon> {
             {
                 type: 'component',
                 name: 'customer',
-                component: <LMR className="cursor-pointer w-100 py-3" left="当前状态：" >
-                    <div className="mx-3">  {this.renderisValid(isValid)}</div>
+                component: <LMR className="cursor-pointer w-100 py-3" left="状 &nbsp; &nbsp; 态：" >
+                    <div className="mx-3">  {isValid ? '有效' : '无效'}</div>
                 </LMR >
             } as ComponentProp,
-            {
-                type: 'component',
-                name: 'customer',
-                component: <LMR className="cursor-pointer w-100 py-1"
-                    left={< div>使用情况</div>}>
-                </LMR >
-            } as ComponentProp,
-            {
-                type: 'component',
-                name: 'customer',
-                component: <LMR className="cursor-pointer w-100 py-1">
-                </LMR >
-            } as ComponentProp
         );
-        let footer = <button onClick={oninvalidCoupon} type="submit" className="btn btn-danger flex-grow-1 mx-3 my-1" >作废</button>;
+        let footer = <button onClick={this.oninvalidCoupon} type="submit" className="btn btn-danger flex-grow-1 mx-3 my-1">作废</button>;
         return <Page header="优惠码详情" headerClassName={consts.headerClass} footer={footer}>
             <PropGrid className="my-2" rows={rows} values={this.coupon} alignValue="right" />
         </Page>

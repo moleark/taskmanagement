@@ -16,7 +16,7 @@ export class VCouponList extends VPage<CCoupon> {
         let { showCouponDetail } = this.controller;
         let onshowCouponDetail = async () => await showCouponDetail(coupon.id);
         var inviteCode = "";
-        let { code, validitydate, discount, preferential } = coupon;
+        let { code, validitydate, discount, preferential, isValid } = coupon;
         if (code) {
             code = String(code + 100000000);
             let p1 = code.substr(1, 4);
@@ -26,13 +26,12 @@ export class VCouponList extends VPage<CCoupon> {
 
         let aleft = <div><FA name='th-large' className=' my-2 mr-3 text-warning' />{inviteCode}</div>;
         let aright = <div className="text-muted"><small>有效期：<EasyDate date={validitydate} /></small></div>;
-        var bcenter: any;
-        var bleft: any;
-        if (discount) {
-            var discountShow: any;
+        let bcenter: any, bleft: any;
+        if (typeof discount === 'number') {
+            let discountShow: any;
             discountShow = (1 - discount) * 10;
 
-            bleft = <div><small><span className=" mx-3 ">{discountShow.toFixed(1)} 折</span></small></div>;
+            bleft = <div><small><span className=" mx-3 ">{discountShow === 10 ? '无折扣' : <>{discountShow.toFixed(1)} 折</>}</span></small></div>;
         }
         if (preferential) {
             bcenter = <div className="text-muted"><small>优惠：<span className="mx-3">￥{preferential}</span></small></div>;
@@ -40,7 +39,7 @@ export class VCouponList extends VPage<CCoupon> {
 
         return <LMR className="px-3 py-2" onClick={onshowCouponDetail}>
             <LMR left={aleft} right={aright}></LMR>
-            <LMR left={bleft}>
+            <LMR left={bleft} right={<small className="text-muted">{isValid ? '有效' : '无效'}</small>}>
                 {bcenter}
             </LMR>
         </LMR >
@@ -56,7 +55,7 @@ export class VCouponList extends VPage<CCoupon> {
             <SearchBox className="px-1 w-100  mt-2 mr-2  "
                 size='md'
                 onSearch={(key: string) => this.controller.searchByKey(key)}
-                placeholder="搜索优惠编码"
+                placeholder="搜索优惠码"
             />
             <List before={''} none={none} items={pageCoupon} item={{ render: this.renderItem, onClick: null }} />
         </Page>

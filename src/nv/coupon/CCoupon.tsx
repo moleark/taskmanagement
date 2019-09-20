@@ -37,30 +37,6 @@ export class CCoupon extends CUqBase {
     @observable pageCoupon: PageCoupon;
     @observable customers: any;
 
-    /*
-    private tuidCoupon: Tuid;
-    private querySearchCoupon: Query;
-    private querySearchCouponCustomer: Query;
-    private actionCreateCoupon: Action;
-    private actionAddCouponCustomer: Action;
-    private actionIsCanUseCoupon: Action;
-
-
-    //构造函数
-    constructor(cApp: CSalesTaskApp, res: any) {
-        super(res);
-        this.cApp = cApp;
-        let { cUqSalesTask } = this.cApp;
-        this.tuidCoupon = cUqSalesTask.tuid("Coupon");
-        this.querySearchCoupon = cUqSalesTask.query("SearchCoupon");
-        this.querySearchCouponCustomer = cUqSalesTask.query("SearchCouponCustomer");
-        this.actionCreateCoupon = cUqSalesTask.action("CreateCoupon");
-        this.actionAddCouponCustomer = cUqSalesTask.action("CreateCouponCustomer");
-        this.actionIsCanUseCoupon = cUqSalesTask.action("IsCanUseCoupon");
-
-    }
-    */
-
     //初始化
     protected async internalStart() {
         this.pageCoupon = null;
@@ -119,6 +95,7 @@ export class CCoupon extends CUqBase {
         let code = couponid.code;
         this.openVPage(VCreateCouponEnd, code)
     }
+
     //作废优惠码
     invalidCoupon = async (param: any) => {
         let tuidCoupon = this.uqs.salesTask.Coupon;
@@ -158,5 +135,4 @@ export class CCoupon extends CUqBase {
         });
         this.closePage();
     }
-
 }

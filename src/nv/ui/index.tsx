@@ -5,6 +5,7 @@ export const GLOABLE = {
     CHINA: 44,
     CHINESE: 196,
     SALESREGION_CN: 1,
+    TIPDISPLAYTIME: 2000,
 }
 /*
 
