@@ -19,11 +19,15 @@ export class VCreateCustomerFinish extends VPage<CCustomer> {
 
         var show: any;
         if (this.result == 1) {
-            show = <span className="text-danger py-4" > 客户手机号已被绑定！</span>;
+            show = <span className="px-4 py-4" > 根据新建客户所提供的信息，系统认为该客户可能已与其他轻代理绑定，请酌情开发。</span>;
         }
         return <Page header='新建客户' headerClassName='bg-primary py-1 px-3'>
-            <div className="w-100 text-center m-3 text-muted">
-                客户添加成功，请在客户搜索页面查看详情！<br />
+            <div className="w-100  text-center text-muted my-4 px-4">
+                客户添加成功，请在客户搜索页面查看详情！
+                <br />
+                <br />
+            </div>
+            <div className="w-100 text-muted my-4 px-4">
                 {show}
             </div>
             <div className="w-100 text-center">

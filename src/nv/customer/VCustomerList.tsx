@@ -54,13 +54,17 @@ export class VCustomerList extends VPage<CCustomer> {
                 component: <LMR className="cursor-pointer w-100 py-3" onClick={onshowCustomerSearchByCustomer}
                     left={< div > <small><FA name='university' className='text-info' /></small> &nbsp;按单位筛选</div>}
                     right={< div className="w-2c text-right" > <i className="fa fa-chevron-right small" /></div >}>
-                </LMR >,
+                </LMR >
             } as ComponentProp
         ];
 
+        var a = pageCustomer.items;
+
+        var b = a;
+
         return <Page header={tit} onScrollBottom={this.onScrollBottom} headerClassName='bg-primary py-1 px-3' right={right} >
             <PropGrid className="my-2" rows={rows} values={undefined} alignValue="right" />
-            <List before={''} none={none} items={pageCustomer} item={{ render: this.renderCustomer, onClick: this.onClickCustomer }} />
+            {pageCustomer.items && (pageCustomer.items.length > 0) && < List before={''} none={none} items={pageCustomer} item={{ render: this.renderCustomer, onClick: this.onClickCustomer }} />}
         </Page>
     })
 

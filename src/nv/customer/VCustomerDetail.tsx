@@ -91,7 +91,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
         ];
 
         var header: any = <span>客户详情</span>;
-        let footer = <button type="button" className="btn btn-danger flex-grow-1 mx-3 my-1 w-100" onClick={onshowCustomerCustomerChek} >确认是否被绑定</button>;
+        let footer = <button type="button" className="btn btn-danger flex-grow-1 mx-3 my-1 w-100" onClick={onshowCustomerCustomerChek} >查询绑定关系</button>;
         return <Page header={header} headerClassName={consts.headerClass} footer={footer}>
             <PropGrid className="my-2" rows={rows} values={this.customer} alignValue="right" />
             <Edit
