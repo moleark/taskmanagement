@@ -17,6 +17,7 @@ export class VCreate extends VPage<CType> {
 
     private salestask: Task
     private form: Form;
+    private saveType: any = 1;
     private uiSchema: UiSchema = {
         items: {
             description: { widget: 'text', label: '内容', placeholder: '请填写任务内容' } as UiInputItem,
@@ -37,7 +38,11 @@ export class VCreate extends VPage<CType> {
     }
 
     private onFormButtonClick = async (name: string, context: Context) => {
-        await this.controller.cSalesTask.createTask(context.form.data, this.salestask);
+        if (this.saveType == 1) {
+            await this.controller.cSalesTask.createTask(context.form.data, this.salestask);
+        } else {
+            await this.controller.cSalesTask.createTask(context.form.data, this.salestask);
+        }
     }
 
     private page = observer((param: any) => {

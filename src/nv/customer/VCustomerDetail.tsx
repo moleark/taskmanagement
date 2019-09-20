@@ -54,13 +54,11 @@ export class VCustomerDetail extends VPage<CCustomer> {
         let { showCustomerHistory } = cSalesTask;
         let { id: customerid, unit } = param
         let { showCustomerUnitDetail } = cCustomerUnit;
-        let { showInnerCustomerSelect: showCustomerSelect } = cCustomer;
-        let { innerCustomer, IsOccupy, showCustomerCustomerChek } = this.controller;
+        let { IsOccupy, onCustomerCustomerChek } = this.controller;
 
         let onshowCustomerHistory = async () => await showCustomerHistory(customerid);
         let onshowCustomerUnitDetail = async () => await showCustomerUnitDetail(unit);
-        let onshowCustomerSelect = async () => await showCustomerSelect(customerid);
-        let onshowCustomerCustomerChek = async () => await showCustomerCustomerChek(this.customer);
+        let onshowCustomerCustomerChek = async () => await onCustomerCustomerChek(this.customer);
 
         let rows: Prop[] = [
             {
@@ -89,6 +87,9 @@ export class VCustomerDetail extends VPage<CCustomer> {
                 </LMR >,
             } as ComponentProp**/
         ];
+        var chek: any;
+        chek = IsOccupy && <span className="px-4 mt-2 small">该客户可能被绑定</span>;
+        chek = !IsOccupy && <span className="px-4 mt-2 small">可以绑定</span>;
 
         var header: any = <span>客户详情</span>;
         let footer = <button type="button" className="btn btn-danger flex-grow-1 mx-3 my-1 w-100" onClick={onshowCustomerCustomerChek} >查询绑定关系</button>;
@@ -99,6 +100,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
                 uiSchema={this.uiSchema}
                 data={this.customer}
                 onItemChanged={this.onItemChanged} />
+            {chek}
         </Page>
     })
 }

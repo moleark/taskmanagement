@@ -26,6 +26,7 @@ import { VCreateProject } from './views/VCreateProject';
 import { VProjectDetail } from './views/VProjectDetail';
 import { VCreateProductPack } from './views/VCreateProductPack';
 import { VProductPackDetail } from './views/VProductPackDetail';
+import { VCreateTask } from './views/VCreateTask';
 
 class PageSalesTask extends PageItems<any> {
 
@@ -382,7 +383,9 @@ export class CSalesTask extends CUqBase {
             deadline: null,
             customer: null
         }
-        this.cApp.cCustomer.showSelectCustomer(task);
+        //this.cApp.cCustomer.showSelectCustomer(task);
+        this.openVPage(VCreateTask, task);
+
     }
     //显示选择处理方式的页面
     showCrateCheck = async (task: Task) => {

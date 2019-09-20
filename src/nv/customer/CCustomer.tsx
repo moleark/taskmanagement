@@ -61,7 +61,6 @@ class PageMyCustomerCearch extends PageItems<any> {
     }
 }
 
-
 /**
  *
  */
@@ -71,7 +70,7 @@ export class CCustomer extends CUqBase {
     @observable pageCustomer: PageMyCustomer;
     @observable pageCustomerSearch: PageMyCustomerCearch;
     @observable innerCustomer: any;
-    @observable IsOccupy: any;
+    @observable IsOccupy: Boolean;
     private task: Task;
 
     /*
@@ -204,10 +203,14 @@ export class CCustomer extends CUqBase {
         await this.createWebUserMyCustomerMap(this.innerCustomer.id, mycustomer);
     }
 
-    showCustomerCustomerChek = async (mycustomer: any) => {
+    onCustomerCustomerChek = async (mycustomer: any) => {
 
         let result = await this.uqs.salesTask.MyCustomerIsOccupy.query({ mycustomer: mycustomer.id });
-        this.openVPage(VCustomerChek, result.ret[0]);
+        if (result.ret[0] == 1) {
+            this.IsOccupy = true;
+        } else {
+            this.IsOccupy = false;
+        }
     }
 
     createWebUserMyCustomerMap = async (customer: any, mycustomer: any) => {
