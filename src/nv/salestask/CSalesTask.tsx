@@ -145,16 +145,21 @@ export class CSalesTask extends CUqBase {
     searchTaskCompletion = async (taskid: number) => {
         return await this.uqs.salesTask.SearchTaskCompletion.table({ taskid: taskid });
     }
+
     //显示任务沟通记录
     showTaskHistory = async (taskid: number) => {
         let tasks = await this.uqs.salesTask.SearchHistoryTask.table({ taskid: taskid });
         this.openVPage(VTaskHistory, { tasks: tasks });
     }
-    //显示员工沟通记录
-    showEmployeeHistory = async () => {
+
+    /**
+     * "我"的已完成任务
+     */
+    showMyTasksCompleted = async () => {
         let tasks = await this.uqs.salesTask.SearchHistoryTaskByEmployee.table({});
         this.openVPage(VEmployeeHistory, { tasks: tasks });
     }
+
     //显示客户沟通记录
     showCustomerHistory = async (customerid: number) => {
         let tasks = await this.uqs.salesTask.SearchHistoryTaskByCustomer.table({ customerid: customerid });
@@ -411,7 +416,7 @@ export class CSalesTask extends CUqBase {
         let ret = await this.uqs.salesTask.AddTask.submit(model);
         task.id = ret.id;
         return task;
-        /** 
+        /**
         //添加任务--前台页面
         this.tasks.unshift({
             id: ret.id,
@@ -460,4 +465,3 @@ export class CSalesTask extends CUqBase {
         return <this.render />;
     }
 }
-

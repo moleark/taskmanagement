@@ -133,10 +133,10 @@ export class VMe extends VPage<CMe> {
     private page = observer(() => {
 
         let { cSalesTask, cMessage, cCoupon } = this.controller.cApp
-        let { showEmployeeHistory } = cSalesTask;
+        let { showMyTasksCompleted } = cSalesTask;
         let { salesAmont, showSet } = this.controller;
 
-        let onshowEmployeeHistory = async () => await showEmployeeHistory();
+        let onShowMyTasksCompleted = async () => await showMyTasksCompleted();
         let onshowCreateCoupon = async () => await cCoupon.showCreateCoupon()
 
         let rows: Prop[] = [
@@ -155,10 +155,10 @@ export class VMe extends VPage<CMe> {
                                         </div>
                                     </td>
                                     <td className="w-4">
-                                        <div className="text-center" onClick={onshowEmployeeHistory} >
+                                        <div className="text-center" onClick={onShowMyTasksCompleted} >
                                             <FA name="tag" className='text-info' fixWidth={true} size="lg" />
                                             <br />
-                                            <small><small >完成任务</small></small>
+                                            <small><small>完成任务</small></small>
                                         </div>
                                     </td>
                                     <td className="w-4">

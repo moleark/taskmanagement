@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, ItemSchema, StringSchema, UiSchema, UiTextItem, Edit, LMR, FA } from 'tonva';
+import { VPage, Page, ItemSchema, StringSchema, UiSchema, UiTextItem, Edit, LMR, FA, tv } from 'tonva';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { consts } from '../consts';
@@ -38,8 +38,8 @@ export class VTeamDetail extends VPage<CTeam> {
 
         let { achievement } = this.controller;
         let { oneSaleVolume, twoSaleVolume, threeSaleVolume } = achievement;
-        let right = <div className=" h5 px-3"> {oneSaleVolume} <FA name="cny" className="text-warning small" /></div>;
-        return <Page header="粉丝信息" headerClassName={consts.headerClass}>
+        let right = <div className=" h5 px-3"><FA name="cny" className="text-warning small" /> {oneSaleVolume}</div>;
+        return <Page header={tv(this.peer, (v) => v.nick || v.name)} headerClassName={consts.headerClass}>
             <Edit
                 schema={this.schema}
                 uiSchema={this.uiSchema}
