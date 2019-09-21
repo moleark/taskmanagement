@@ -17,7 +17,9 @@ import { VMyCustomerSelect } from './VMyCustomerSelect';
 import { VCustomerSearch } from './VCustomerSearch';
 import { VCustomerChek } from './VCustomerChek';
 
-//页面类
+/**
+ * 用于客户首页
+ */
 class PageMyCustomer extends PageItems<any> {
 
     private searchCustomerQuery: Query;
@@ -39,8 +41,10 @@ class PageMyCustomer extends PageItems<any> {
     }
 }
 
-
-class PageMyCustomerCearch extends PageItems<any> {
+/**
+ * 用于专门的客户搜索界面
+ */
+class PageMyCustomerSearch extends PageItems<any> {
 
     private searchCustomerQuery: Query;
 
@@ -68,34 +72,10 @@ export class CCustomer extends CUqBase {
     cApp: CApp;
 
     @observable pageCustomer: PageMyCustomer;
-    @observable pageCustomerSearch: PageMyCustomerCearch;
+    @observable pageCustomerSearch: PageMyCustomerSearch;
     @observable innerCustomer: any;
     @observable IsOccupy: Boolean;
     private task: Task;
-
-    /*
-    private tuidMyCustomer: Tuid;
-    private querySearchMyCustomer: Query;
-    private querysearchCustomerMyCustomerMap: Query;
-    private actionCreateMyCustomer: Action;
-    private actionUpateCustomerMyCustomerMap: Action;
-
-    private mapCustomerMyCustomerMap: Map;
-    //构造函数
-    constructor(cApp: CSalesTaskApp, res: any) {
-        super(res);
-        this.cApp = cApp;
-        let { cUqSalesTask } = this.cApp;
-
-        this.tuidMyCustomer = cUqSalesTask.tuid("mycustomer");
-        this.querySearchMyCustomer = cUqSalesTask.query("searchmycustomer");
-        this.actionCreateMyCustomer = cUqSalesTask.action("CreateMyCustomer");
-        this.mapCustomerMyCustomerMap = cUqSalesTask.map("CustomerMyCustomerMap");
-        this.actionUpateCustomerMyCustomerMap = cUqSalesTask.action("UpateCustomerMyCustomerMap");
-        this.querysearchCustomerMyCustomerMap = cUqSalesTask.query("searchCustomerMyCustomerMap");
-
-    }
-    */
 
     //初始化
     protected async internalStart(task: Task) {
@@ -105,15 +85,19 @@ export class CCustomer extends CUqBase {
         this.openVPage(VMyCustomerSelect);
     }
 
-    //查询客户--通过名称
+    /**
+     * 查询客户——用在客户首页
+     */
     searchByKey = async (key: string) => {
         this.pageCustomer = new PageMyCustomer(this.uqs.salesTask.searchMyCustomer);
         this.pageCustomer.first({ key: key });
     }
 
-    //查询客户--通过名称
+    /**
+     * 查询客户——用在专门的客户搜索界面——没有必要
+     */
     searchCustomerByKey = async (key: string) => {
-        this.pageCustomerSearch = new PageMyCustomerCearch(this.uqs.salesTask.searchMyCustomer);
+        this.pageCustomerSearch = new PageMyCustomerSearch(this.uqs.salesTask.searchMyCustomer);
         this.pageCustomerSearch.first({ key: key });
     }
 
@@ -138,18 +122,26 @@ export class CCustomer extends CUqBase {
         this.openVPage(VCustomerDetail, mycustomer);
     }
 
+    /**
+     * 搜索客户——用在任务等要需要选择客户的界面？
+     */
     showSelectCustomer = async (task: Task) => {
         this.searchByKey('');
         this.task = task;
         this.openVPage(VCustomerSelect);
     }
 
+    /**
+     * 显示客户搜索界面
+     */
     showCustomerSearch = async (val: any): Promise<any> => {
+        /*
         if (val == null) {
             this.pageCustomerSearch = null;
         } else {
             this.searchCustomerByKey(val);
         }
+        */
         this.openVPage(VCustomerSearch);
     }
 
@@ -170,7 +162,7 @@ export class CCustomer extends CUqBase {
     }
 
     //显示选择客户的页面
-    showSelectCustomerUnit = () => {
+    showSelectOrganization = () => {
         this.cApp.cCustomerUnit.start();
     }
 

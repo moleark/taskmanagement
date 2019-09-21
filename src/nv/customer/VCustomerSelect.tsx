@@ -25,7 +25,7 @@ export class VCustomerSelect extends VPage<CCustomer> {
 
     private page = observer((customer: any) => {
 
-        let { pageCustomer, showSelectCustomerUnit } = this.controller;
+        let { pageCustomer, showSelectOrganization: showSelectCustomerUnit } = this.controller;
         let onshowSelectCustomerUnit = async () => await showSelectCustomerUnit();
 
         let right = <div onClick={onshowSelectCustomerUnit} className="cursor-pointer px-3 py-2"><FA name="plus" /></div>;
@@ -40,6 +40,6 @@ export class VCustomerSelect extends VPage<CCustomer> {
     })
 
     private onScrollBottom = async () => {
-        await this.controller.pageCustomerSearch.more();
+        await this.controller.pageCustomer.more();
     }
 }

@@ -14,7 +14,7 @@ export class VCreateCustomerUnit extends VPage<CCustomerUnit> {
     private uiSchema: UiSchema = {
         items: {
             Name: { widget: 'text', label: '名称', placeholder: '请输入单位名称' } as UiInputItem,
-            submit: { widget: 'button', label: '提交', className: 'btn btn-primary w-8c' },
+            submit: { widget: 'button', label: '确定', className: 'btn btn-primary w-8c' },
         }
     }
 
