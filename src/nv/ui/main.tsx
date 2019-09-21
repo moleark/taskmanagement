@@ -9,7 +9,6 @@ export class VHome extends VPage<CSalesTaskApp> {
     async open(param?: any) {
         this.calcSum();
         this.openPage(this.render);
-
     }
 
     render = (param?: any): JSX.Element => {
@@ -38,5 +37,4 @@ export class VHome extends VPage<CSalesTaskApp> {
     protected calcSum = () => {
         this.count.set(0);
     }
-
 }

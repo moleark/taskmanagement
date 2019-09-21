@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { VPage, Page, PageItems, Schema, Form, UiSchema, UiInputItem, UiCheckItem, Context, UiRadio, toUiSelectItems, LMR, FA, Prop, ComponentProp, PropGrid } from 'tonva';
+import {
+    VPage, Page, Schema, Form, UiSchema, UiInputItem, Context,
+    UiRadio, toUiSelectItems, LMR, FA, tv, BoxId
+} from 'tonva';
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
 import { consts } from '../consts';
 import { mobileValidation, nameValidation } from 'nv/tools/inputValidations';
-
-
 
 const schema: Schema = [
     { name: 'Name', type: 'string', required: true },
@@ -17,7 +18,7 @@ const schema: Schema = [
 ];
 
 export class VCreateCustomer extends VPage<CCustomer> {
-    private customerunit: any;
+    private customerunit: BoxId;
     private form: Form;
     private uiSchema: UiSchema = {
         items: {
@@ -44,21 +45,12 @@ export class VCreateCustomer extends VPage<CCustomer> {
         await this.controller.createMyCustomer(context.data, this.customerunit);
     }
 
-    private itemss = "cursor-pointer mx-3 my-2 w-100";
     private page = observer(() => {
-
-        let rows: Prop[] = [
-            {
-                type: 'component',
-                name: 'unit',
-                component: <LMR className={this.itemss}
-                    left={<div> <FA name="university" className="text-info mr-2 pt-1 " /> </div>}>
-                    {this.customerunit.name}
-                </LMR>,
-            } as ComponentProp,
-        ];
         return <Page header="新建客户" headerClassName={consts.headerClass} >
-            <PropGrid className="my-2" rows={rows} values={null} />
+            <LMR className="cursor-pointer pm-3 py-2 bg-white"
+                left={<div className="pl-3"><FA name="university" className="text-info mr-2 pt-1" /></div>}>
+                {tv(this.customerunit, (v) => v.name)}
+            </LMR>
             <Form ref={v => this.form = v} className="my-3 mx-3"
                 schema={schema}
                 uiSchema={this.uiSchema}

@@ -2,12 +2,11 @@ import * as React from 'react';
 import _ from 'lodash';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { PageItems, Controller, Query, Tuid, Action, Map, Context } from 'tonva';
+import { PageItems, Query, Context } from 'tonva';
 import { CApp } from '../CApp';
 import { CUqBase } from '../CBase';
 import { Task } from '../salestask/model';
 import { CAddress } from '../address/CAddress';
-import { VCustomerUnitSelect } from '../customerunit/VCustomerUnitSelect';
 import { VCustomerSelect } from './VCustomerSelect';
 import { VCustomerDetail } from './VCustomerDetail';
 import { VCustomerList } from './VCustomerList';
@@ -135,13 +134,11 @@ export class CCustomer extends CUqBase {
      * 显示客户搜索界面
      */
     showCustomerSearch = async (val: any): Promise<any> => {
-        /*
         if (val == null) {
             this.pageCustomerSearch = null;
         } else {
             this.searchCustomerByKey(val);
         }
-        */
         this.openVPage(VCustomerSearch);
     }
 
@@ -156,12 +153,16 @@ export class CCustomer extends CUqBase {
         this.returnCall(customer);
     }
 
-    //显示新建客户页面
+    /**
+     * 显示新建客户页面
+     */
     showCreateCustomer = (param: any) => {
         this.openVPage(VCreateCustomer, param);
     }
 
-    //显示选择客户的页面
+    /**
+     * 新建客户时显示选择客户单位的页面
+     */
     showSelectOrganization = () => {
         this.cApp.cCustomerUnit.start();
     }

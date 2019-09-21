@@ -23,7 +23,7 @@ export class VCreateCustomerUnit extends VPage<CCustomerUnit> {
     }
 
     private onFormButtonClick = async (name: string, context: Context) => {
-        await this.controller.createMyCustomerUnit(context.data);
+        await this.controller.createOrganization(context.data);
     }
 
     private page = observer((param: any) => {

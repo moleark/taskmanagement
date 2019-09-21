@@ -42,7 +42,7 @@ export class VCustomerList extends VPage<CCustomer> {
 
         let right = <div className="cursor-pointer py-2">
             <span onClick={onshowCustomerSearch}><FA name="search" className="mr-3" /></span>
-            <span onClick={onShowSelectOrganzation} ><FA name="plus" /></span>
+            <span onClick={onShowSelectOrganzation}><FA name="plus" /></span>
         </div>;
         let none = <div className="my-3 mx-2 text-warning"></div>;
         let rows: Prop[] = [
