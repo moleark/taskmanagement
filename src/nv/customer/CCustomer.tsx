@@ -73,7 +73,6 @@ export class CCustomer extends CUqBase {
     @observable pageCustomer: PageMyCustomer;
     @observable pageCustomerSearch: PageMyCustomerSearch;
     @observable innerCustomer: any;
-    @observable IsOccupy: Boolean;
     private task: Task;
 
     //初始化
@@ -108,9 +107,6 @@ export class CCustomer extends CUqBase {
     //查询客户--通过ID
     showCustomerDetail = async (customerid: number) => {
         let mycustomer = await this.loadCustomerDetail(customerid);
-
-        let IsOccupy = await this.uqs.salesTask.MyCustomerIsOccupy.query({ mycustomer: mycustomer.id });
-        this.IsOccupy = IsOccupy.ret[0];
 
         let customer = await this.uqs.salesTask.CustomerMyCustomerMap.query({ mycustomer: mycustomer.id });
         if (customer.ret.length > 0) {
@@ -196,14 +192,20 @@ export class CCustomer extends CUqBase {
         await this.createWebUserMyCustomerMap(this.innerCustomer.id, mycustomer);
     }
 
-    onCustomerCustomerChek = async (mycustomer: any) => {
 
+    /**
+     * 查询MyCustomer是否可能被其他轻代理绑定
+     */
+    checkBinding = async (mycustomer: any): Promise<boolean> => {
         let result = await this.uqs.salesTask.MyCustomerIsOccupy.query({ mycustomer: mycustomer.id });
+        return result.ret[0] === 1;
+        /*
         if (result.ret[0] == 1) {
             this.IsOccupy = true;
         } else {
             this.IsOccupy = false;
         }
+        */
     }
 
     createWebUserMyCustomerMap = async (customer: any, mycustomer: any) => {

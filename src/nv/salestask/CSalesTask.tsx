@@ -160,11 +160,14 @@ export class CSalesTask extends CUqBase {
         this.openVPage(VEmployeeHistory, { tasks: tasks });
     }
 
-    //显示客户沟通记录
+    /**
+     * 显示客户沟通记录
+     */
     showCustomerHistory = async (customerid: number) => {
         let tasks = await this.uqs.salesTask.SearchHistoryTaskByCustomer.table({ customerid: customerid });
         this.openVPage(VCustomerHistory, tasks);
     }
+
     //获取类型的图表
     getTaskIcon(typeName: string) {
         let tt = this.taskTypes[typeName];

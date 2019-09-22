@@ -27,19 +27,12 @@ export class VCustomerSearch extends VPage<CCustomer> {
     }
 
     private page = observer((customer: any) => {
-        let { pageCustomerSearch, showSelectOrganization } = this.controller;
-        /*
-        let onshowSelectCustomerUnit = async () => await showSelectOrganization();
-
-        let right = <div className="cursor-pointer py-2">
-            <span onClick={onshowSelectCustomerUnit}><FA name="plus" /></span>
-        </div>;
-        */
-        let none = <div className="my-3 mx-2 text-warning"></div>;
-        return <Page header='搜索客户' onScrollBottom={this.onScrollBottom} headerClassName='bg-primary py-1'  >
-            <SearchBox className="px-1 w-100  mt-2 mr-2  "
+        let { pageCustomerSearch } = this.controller;
+        let none = <div className="my-3 mx-2 text-warning">没有找到满足条件的客户</div>;
+        return <Page header='搜索客户' onScrollBottom={this.onScrollBottom} headerClassName='bg-primary py-1'>
+            <SearchBox className="px-1 w-100  mt-2 mr-2"
                 size='md'
-                onSearch={(key: string) => this.controller.searchByKey(key)}
+                onSearch={(key: string) => this.controller.searchCustomerByKey(key)}
                 placeholder="搜索客户姓名、单位" />
             <List before={''} none={none} items={pageCustomerSearch} item={{ render: this.renderCustomer, onClick: this.onClickCustomer }} />
         </Page>
