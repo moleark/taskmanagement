@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, LMR, List, EasyDate, tv, FA, TabCaption, TabProp, Tabs } from 'tonva';
+import { VPage, Page, LMR, List, EasyDate, tv, FA, TabCaption, TabProp, Tabs, Widget, SelectWidget } from 'tonva';
 import { observable } from 'mobx';
 import { observer, Observer } from 'mobx-react';
 import { CMe } from './CMe';
@@ -13,15 +13,40 @@ const tabCaption = (caption: string, amount: number): TabCaption => {
     </div>;
 }
 
+class AchievementTab extends SelectWidget {
+    private list = [
+        { value: 1, title: '总收益', name: 'b', select: true, className: 'mr-1 px-2' },
+        { value: 0, title: '待到款', name: 'b', select: true, className: '' }
+    ];
+
+    private onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+        let val = evt.currentTarget.value;
+        this.setValue(val);
+    }
+
+    render = () => {
+        return <div className="w-100 text-center mr-4">
+            {this.list.map((v, index) => {
+                let { value, title } = v;
+                let className = v.className + ' ' + (value === this.value && 'bg-white text-info');
+                return <div className={className} onChange={this.onChange}>
+                    {title}
+                </div>
+            })}
+        </div>
+    };
+}
+
 export class VAchievementDetail extends VPage<CMe> {
 
     @observable private achievementsA: any[] = [];
     @observable private achievementsB: any[];
     @observable private achievementsC: any[];
-    @observable private status: number = 1;
+    @observable private tab_Status: number = 1;
     private oneAchievement: any;
     private twoAchievement: any;
     private threeAchievement: any;
+    private aa: any;
 
     async open(param: any) {
         this.openPage(this.page);
@@ -52,25 +77,23 @@ export class VAchievementDetail extends VPage<CMe> {
     }
 
     private header() {
-        if (this.status == 1) {
-            return <div className=" mx-4 " onClick={this.onClickHeader} >
-                <span className="mx-4  ">总收益</span>
-                <span className="">待到款</span>
+        let onClickA = () => this.onClickHeader(1);
+        let onClickB = () => this.onClickHeader(0);
+        if (this.tab_Status == 1) {
+            return <div className="w-100 text-center mr-4 ">
+                <span className="bg-white text-info mr-1 px-3 py-2" onClick={onClickA} >总收益</span>
+                <span className="px-3 py-2" onClick={onClickB} >待到款</span>
             </div>;
         } else {
-            return <div className=" mx-4 " onClick={this.onClickHeader} >
-                < span className="mx-4" > 总收益</span >
-                <span>待到款</span>
+            return <div className="w-100 text-center mr-4 ">
+                <span className="mr-1 px-3 py-2" onClick={onClickA}>总收益</span>
+                <span className="bg-white text-info px-3 py-2" onClick={onClickB}>待到款</span>
             </div >;
         }
     }
 
-    private onClickHeader() {
-        if (this.status == 1) {
-            this.status = 0;
-        } else {
-            this.status = 1;
-        }
+    onClickHeader = (status: number) => {
+        this.tab_Status = status;
     }
 
     private page = observer(() => {
@@ -84,7 +107,7 @@ export class VAchievementDetail extends VPage<CMe> {
                 },
                 load: async () => {
                     this.achievementsA = [];
-                    this.achievementsA.push(...await this.controller.searchAchievementDetail(1, this.status));
+                    this.achievementsA.push(...await this.controller.searchAchievementDetail(1, this.tab_Status));
                 }
             }, {
                 name: 'b',
@@ -94,7 +117,7 @@ export class VAchievementDetail extends VPage<CMe> {
                 },
                 load: async () => {
                     this.achievementsB = [];
-                    this.achievementsB.push(...await this.controller.searchAchievementDetail(2, this.status));
+                    this.achievementsB.push(...await this.controller.searchAchievementDetail(2, this.tab_Status));
                 }
             }, {
                 name: 'c',
@@ -104,13 +127,10 @@ export class VAchievementDetail extends VPage<CMe> {
                 },
                 load: async () => {
                     this.achievementsC = [];
-                    this.achievementsC.push(...await this.controller.searchAchievementDetail(3, this.status));
+                    this.achievementsC.push(...await this.controller.searchAchievementDetail(3, this.tab_Status));
                 }
             }
         ];
-        var header = <div>
-
-        </div>
 
         return <Page header={this.header()} headerClassName={consts.headerClass}>
             <Tabs tabs={tabs} tabPosition="top" />
