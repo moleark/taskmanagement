@@ -92,7 +92,7 @@ class Discount extends Widget {
                 <label className="my-1 mx-3"><input type="radio" value={0} name="a" onChange={this.onChange} /> 其他</label>
                 {this.dateVisible && <label className="my-1 mx-3 d-flex"><input type="number" className="form-control w-4c h-2c" onChange={this.onDateChange} /> 折</label>}
             </div>
-            <div className="small text-muted px-3 py-2">说明：折扣表示最大折扣，具体折扣以下单时时为准</div>
+            <div className="small text-muted px-3 py-2">说明：折扣表示可享最大折扣，具体折扣以下单时为准</div>
         </div>
     };
 }

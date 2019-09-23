@@ -8,6 +8,7 @@ import { consts } from '../consts';
 import { CProduct, renderBrand } from './CProduct';
 import { ProductPackRow } from './Product';
 import { ViewMainSubs } from '../mainSubs';
+import { productPropItem } from 'product/CProduct';
 
 const schema: ItemSchema[] = [
     { name: 'pack', type: 'object' } as ObjectSchema,
@@ -39,24 +40,16 @@ export class VProductDetail extends VPage<CProduct> {
                 </div>
                 <div className="col-sm-9">
                     <div className="row">
-                        {this.item('CAS', CAS)}
-                        {this.item('纯度', purity)}
-                        {this.item('分子式', molecularFomula)}
-                        {this.item('分子量', molecularWeight)}
-                        {this.item('产品编号', origin)}
+                        {productPropItem('CAS', CAS)}
+                        {productPropItem('纯度', purity)}
+                        {productPropItem('分子式', molecularFomula)}
+                        {productPropItem('分子量', molecularWeight)}
+                        {productPropItem('产品编号', origin)}
                         {renderBrand(brand)}
                     </div>
                 </div>
             </div>
         </div>
-    }
-
-    private item = (caption: string, value: any) => {
-        if (value === null || value === undefined) return null;
-        return <>
-            <div className="col-4 col-sm-2 text-muted pr-0 small">{caption}</div>
-            <div className="col-8 col-sm-4">{value}</div>
-        </>;
     }
 
     private arrTemplet = (item: any) => {
@@ -73,14 +66,18 @@ export class VProductDetail extends VPage<CProduct> {
             else {
                 price = retail;
             }
-            right = <div className="text-right row">
-                <div >
-                    <span className="text-muted h5">{retailUI}</span>&nbsp; &nbsp;
-                    <span className="text-danger">￥ <span className="h5">{price}</span></span>
+
+
+            right = <div className="row">
+                <div className="col-sm-6 pb-2 d-flex justify-content-end align-items-center">
+                    <small className="text-muted">{retailUI}</small>&nbsp; &nbsp;
+                <span className="text-danger">¥ <span className="h5">{price}</span></span>
                 </div>
+                <div className="col-sm-6 pb-2 d-flex justify-content-end align-items-center"><FormField name="quantity" /></div>
             </div >
+
             right = price && <span><span className="text-warning small"></span> <span className="text-right  text-danger"><span className="small text-warning">￥</span>{price}</span></span>;
-            agent = agentPrice && <span><span className="text-warning small"><strong className="small"> <span className="small">毛利</span> </strong></span> <span className="text-right text-danger">{(price - agentPrice).toFixed(2)}</span></span>;
+            agent = agentPrice && <span>&nbsp;/&nbsp;<span className="text-warning small"><strong className="small"> <span className="small"></span> </strong></span> <span className="text-right text-danger"> <span className="small text-warning">折</span> {((price - agentPrice) / price * 10).toFixed(1)} </span></span>;
         } else {
             right = <small>请询价</small>
         }
@@ -105,7 +102,7 @@ export class VProductDetail extends VPage<CProduct> {
                     <div>{deliveryTimeUI}</div>
                 </div>
                 <div className="col-7">
-                    {right}&nbsp;/&nbsp;{agent}
+                    {right}{agent}
                 </div>
             </div>
         </div>;

@@ -68,7 +68,7 @@ export class VCreateTask extends VPage<CSalesTask> {
         };
 
         let schema: Schema = [
-            { name: 'customer', type: 'id', required: false },
+            { name: 'customer', type: 'id', required: true },
             { name: 'priorty', type: 'string', required: false },
             { name: 'deadline', type: 'date', required: false },
             { name: 'description', type: 'string', required: false },
