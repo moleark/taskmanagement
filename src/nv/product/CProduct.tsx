@@ -2,7 +2,7 @@ import * as React from 'react';
 import _ from 'lodash';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { Query, tv, Tuid, Action } from 'tonva';
+import { Query, tv, Tuid, Action, BoxId } from 'tonva';
 import { PageItems, Controller, nav, Page, Image } from 'tonva';
 import { CApp } from '../CApp';
 import { CUqBase } from '../CBase';
@@ -13,6 +13,7 @@ import { VProductDetail } from './VProductDetail';
 import { LoaderProductChemicalWithPrices } from './item';
 import { VProductPackSelect } from './VProductPackSelect';
 import classNames from 'classnames';
+import { VProductDelivery } from './VProductDelivery';
 
 //页面类
 class PageProduct extends PageItems<any> {
@@ -43,6 +44,11 @@ export class CProduct extends CUqBase {
     cApp: CApp;
     @observable pageProduct: PageProduct;
     @observable customerlist: any;
+
+    @observable inventoryAllocationContainer: { [packId: number]: any[] } = {};
+    @observable futureDeliveryTimeDescriptionContainer: { [productId: number]: string } = {};
+    @observable chemicalInfoContainer: { [productId: number]: any } = {};
+
 
     /*
     private productTuid: Tuid;
@@ -96,6 +102,28 @@ export class CProduct extends CUqBase {
     showProductPackSelect = async (product: any): Promise<any> => {
         this.openVPage(VProductPackSelect, product)
     }
+
+    renderDeliveryTime = (pack: BoxId) => {
+        return this.renderView(VProductDelivery, pack);
+    }
+
+    getInventoryAllocation = async (productId: number, packId: number, salesRegionId: number) => {
+        if (this.inventoryAllocationContainer[packId] === undefined)
+            this.inventoryAllocationContainer[packId] = await this.uqs.warehouse.GetInventoryAllocation.table({ product: productId, pack: packId, salesRegion: this.cApp.currentSalesRegion });
+    }
+
+    getFutureDeliveryTimeDescription = async (productId: number, salesRegionId: number) => {
+        if (this.futureDeliveryTimeDescriptionContainer[productId] === undefined) {
+            let futureDeliveryTime = await this.uqs.product.GetFutureDeliveryTime.table({ product: productId, salesRegion: salesRegionId });
+            if (futureDeliveryTime.length > 0) {
+                let { minValue, maxValue, unit, deliveryTimeDescription } = futureDeliveryTime[0];
+                this.futureDeliveryTimeDescriptionContainer[productId] = minValue + (maxValue > minValue ? '~' + maxValue : '') + ' ' + unit;
+            } else {
+                this.futureDeliveryTimeDescriptionContainer[productId] = null;
+            }
+        }
+    }
+
 
 
     render = observer(() => {

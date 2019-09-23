@@ -2,6 +2,7 @@ export { jnkTop } from "./jnkTop";
 export { VHome } from './main';
 
 /*测式*/
+
 export const GLOABLE = {
     CHINA: 43,
     CHINESE: 197,

@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { VPage, TabCaptionComponent, Page, Tabs, TabProp } from 'tonva';
-import { CSalesTaskApp } from 'CSalesTaskApp';
 import { observable } from 'mobx';
+import { CApp } from 'nv/CApp';
 
 const color = (selected: boolean) => selected === true ? 'text-primary' : 'text-muted';
 
-export class VHome extends VPage<CSalesTaskApp> {
+export class VHome extends VPage<CApp> {
     async open(param?: any) {
         this.calcSum();
         this.openPage(this.render);
