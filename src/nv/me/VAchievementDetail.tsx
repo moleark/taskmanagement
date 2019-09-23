@@ -60,56 +60,36 @@ export class VAchievementDetail extends VPage<CMe> {
                 caption: tabCaption('A类业绩', this.oneAchievement),
                 content: () => {
                     return <List items={this.achievementsA} item={{ render: this.renderItem }} none="无业绩" />
+                },
+                load: async () => {
+                    this.achievementsA = [];
+                    this.achievementsA.push(...await this.controller.searchAchievementDetail(2, 1));
                 }
             }, {
                 name: 'b',
                 caption: tabCaption('B类业绩', this.twoAchievement),
                 content: () => {
                     return <List items={this.achievementsB} item={{ render: this.renderItem }} none="无业绩" />
+                },
+                load: async () => {
+                    this.achievementsB = [];
+                    this.achievementsB.push(...await this.controller.searchAchievementDetail(2, 1));
                 }
             }, {
                 name: 'c',
                 caption: tabCaption('C类业绩', this.threeAchievement),
                 content: () => {
                     return <List items={this.achievementsC} item={{ render: this.renderItem }} none="无业绩" />
-                }
-            }
-        ];
-
-        let tabspar: TabProp[] = [
-            {
-                name: '1',
-                caption: tabCaption('累计收益', this.oneAchievement),
-                content: () => {
-                    return <Tabs tabs={tabs} tabPosition="top" />
                 },
                 load: async () => {
-                    this.achievementsA = [];
-                    this.achievementsA.push(...await this.controller.searchAchievementDetail(2, 1));
-                    this.achievementsB = [];
-                    this.achievementsB.push(...await this.controller.searchAchievementDetail(2, 1));
                     this.achievementsC = [];
                     this.achievementsC.push(...await this.controller.searchAchievementDetail(2, 1));
-                }
-            }, {
-                name: '0',
-                caption: tabCaption('待到款', this.twoAchievement),
-                content: () => {
-                    return <Tabs tabs={tabs} tabPosition="top" />
-                },
-                load: async () => {
-                    this.achievementsA = [];
-                    this.achievementsA.push(...await this.controller.searchAchievementDetail(2, 0));
-                    this.achievementsB = [];
-                    this.achievementsB.push(...await this.controller.searchAchievementDetail(2, 0));
-                    this.achievementsC = [];
-                    this.achievementsC.push(...await this.controller.searchAchievementDetail(2, 0));
                 }
             }
         ];
 
         return <Page headerClassName={consts.headerClass}>
-            <Tabs tabs={tabspar} tabPosition="top" />
+            <Tabs tabs={tabs} tabPosition="top" />
         </Page>
     })
 }

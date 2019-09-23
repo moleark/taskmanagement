@@ -23,18 +23,15 @@ export class CMe extends CUqBase {
     private querySearchAchievement: Query;
     private querySearchAchievementHistory: Query;
     private actionComputeAchievement: Action;
-
     //构造函数
     constructor(cApp: CSalesTaskApp, res: any) {
         super(res);
         this.cApp = cApp;
-
         let { cUqSalesTask } = this.cApp;
         this.querySearchPosition = cUqSalesTask.query("searchposition");
         this.querySearchAchievement = cUqSalesTask.query("SearchAchievement");
         this.querySearchAchievementHistory = cUqSalesTask.query("SearchAchievementHistory");
         this.actionComputeAchievement = cUqSalesTask.action("ComputeAchievement");
-
     }
     */
 

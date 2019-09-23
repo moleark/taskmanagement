@@ -12,6 +12,7 @@ const schema: ItemSchema[] = [
     { name: 'pack', type: 'object' } as ObjectSchema,
     { name: 'retail', type: 'number' } as NumSchema,
     { name: 'vipPrice', type: 'number' } as NumSchema,
+    { name: 'agentPrice', type: 'number' } as NumSchema,
     { name: 'promotionPrice', type: 'number' } as NumSchema,
     { name: 'currency', type: 'string' },
     { name: 'quantity', type: 'number' } as NumSchema,
@@ -52,8 +53,9 @@ export class VProductDetail extends VPage<CProduct> {
     }
 
     private arrTemplet = (item: ProductPackRow) => {
-        let { pack, retail, vipPrice, promotionPrice } = item;
+        let { pack, retail, vipPrice, agentPrice, promotionPrice } = item;
         let right = null;
+        let agent = null;
         if (retail) {
             let price: number = this.minPrice(vipPrice, promotionPrice);
             let retailUI: any;
@@ -67,6 +69,7 @@ export class VProductDetail extends VPage<CProduct> {
                 <div className="col-sm-6 pb-2 d-flex justify-content-end align-items-center">
                     <small className="text-muted">{retailUI}</small>&nbsp; &nbsp;
                     <span className="text-danger">¥ <span className="h5">{price}</span></span>
+                    <span>{agentPrice && <span>&nbsp;/&nbsp;<span className="text-warning small"><strong className="small"> <span className="small">折</span> </strong></span> <span className="text-right text-danger h5">{((price - agentPrice) / price).toFixed(1)}</span></span>}</span>
                 </div>
             </div >
         } else {
@@ -80,7 +83,7 @@ export class VProductDetail extends VPage<CProduct> {
                     <div>{this.controller.renderDeliveryTime(pack)}</div>
                 </div>
                 <div className="col-6">
-                    {right}
+                    {right}{agent}
                 </div>
             </div>
         </div>;

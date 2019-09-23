@@ -57,7 +57,7 @@ export class VCustomerList extends VPage<CCustomer> {
         ];
 
         return <Page header="客户" onScrollBottom={this.onScrollBottom} headerClassName='bg-primary py-1 px-3' right={right} >
-            <PropGrid className="my-2" rows={rows} values={undefined} alignValue="right" />
+
             {pageCustomer && pageCustomer.items && (pageCustomer.items.length > 0) && < List before={''} none={none} items={pageCustomer}
                 item={{ render: this.renderCustomer, onClick: this.onClickCustomer }} />}
         </Page>

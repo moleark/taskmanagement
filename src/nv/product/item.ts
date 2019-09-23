@@ -94,6 +94,7 @@ export class LoaderProductChemicalWithPrices extends Loader<MainSubs<MainProduct
     }
 
     protected async loadToData(productId: any, data: MainSubs<MainProductChemical, ProductPackRow>): Promise<void> {
+        let uqProduct = this.cApp.uqs.product;
         let { customerDiscount, product, promotion } = this.cApp.uqs;
         let productLoader = new LoaderProductWithChemical(this.cApp);
         data.main = await productLoader.load(productId);
@@ -104,6 +105,7 @@ export class LoaderProductChemicalWithPrices extends Loader<MainSubs<MainProduct
 
         let { id: currentSalesRegionId } = currentSalesRegion;
         let prices = await product.PriceX.table({ product: productId, salesRegion: currentSalesRegionId });
+        let agentprices = await uqProduct.AgentPrice.table({ product: productId, salesRegion: 1 });
         data.subs = prices.filter(e => e.discountinued === 0 && e.expireDate > Date.now()).sort((a, b) => a.retail - b.retail).map(element => {
             let ret: any = {};
             ret.pack = element.pack;
@@ -123,10 +125,29 @@ export class LoaderProductChemicalWithPrices extends Loader<MainSubs<MainProduct
         for (let i = 0; i < data.subs.length; i++) {
             let promotion = results[i];
             let discount = promotion && promotion.discount;
+
             if (discount)
                 data.subs[i].promotionPrice = Math.round((1 - discount) * data.subs[i].retail);
+
+            for (let j = 0; j < agentprices.length; j++) {
+                let pid = agentprices[j].pack.id;
+                let pidx = data.subs[i].pack.id;
+                if (pidx == pid) {
+                    data.subs[i].agentPrice = agentprices[j].agentPrice;
+                }
+            }
         }
     }
+
+    getagentPrices = async (agents: any[], pack: any) => {
+        for (let i = 0; i < agents.length; i++) {
+            let { pack: packid, agentprice } = agents[i];
+            if (packid = pack) {
+                return agentprice;
+            }
+        }
+    }
+
 }
 
 /*
