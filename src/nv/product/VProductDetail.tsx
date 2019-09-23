@@ -84,12 +84,16 @@ export class VProductDetail extends VPage<CProduct> {
 
         return <div className="px-2">
             <div className="row">
-                <div className="col-6">
+                <div className="col-5">
                     <div><b>{tv(pack)}</b></div>
-                    <div>{this.controller.renderDeliveryTime(pack)}</div>
                 </div>
-                <div className="col-6">
+                <div className="col-7">
                     {right}
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-12 ">
+                    {this.controller.renderDeliveryTime(pack)}
                 </div>
             </div>
         </div>;

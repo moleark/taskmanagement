@@ -105,7 +105,7 @@ export class LoaderProductChemicalWithPrices extends Loader<MainSubs<MainProduct
 
         let { id: currentSalesRegionId } = currentSalesRegion;
         let prices = await product.PriceX.table({ product: productId, salesRegion: currentSalesRegionId });
-        let agentprices = await uqProduct.AgentPrice.table({ product: productId, salesRegion: currentSalesRegionId });
+        let agentprices = await uqProduct.AgentPrice.table({ product: productId, salesRegion: 1 });
         data.subs = prices.filter(e => e.discountinued === 0 && e.expireDate > Date.now()).sort((a, b) => a.retail - b.retail).map(element => {
             let ret: any = {};
             ret.pack = element.pack;

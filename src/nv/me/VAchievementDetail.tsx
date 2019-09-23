@@ -51,30 +51,36 @@ export class VAchievementDetail extends VPage<CMe> {
         </div>
     }
 
-
     private header() {
-
         if (this.status == 1) {
-            return <div className=" mx-4 ">
-                <span>总收益</span>
-                <span>待到款</span>
-            </div>
+            return <div className=" mx-4 " onClick={this.onClickHeader} >
+                <span className="mx-4  ">总收益</span>
+                <span className="">待到款</span>
+            </div>;
         } else {
-
-            return <div className=" mx-4 ">
-                <span>总收益</span>
+            return <div className=" mx-4 " onClick={this.onClickHeader} >
+                < span className="mx-4" > 总收益</span >
                 <span>待到款</span>
-            </div>
+            </div >;
         }
     }
+
+    private onClickHeader() {
+        if (this.status == 1) {
+            this.status = 0;
+        } else {
+            this.status = 1;
+        }
+    }
+
     private page = observer(() => {
 
         let tabs = [
             {
                 name: 'a',
-                caption: tabCaption('A类业绩', this.oneAchievement),
+                caption: tabCaption('A类收益', this.oneAchievement),
                 content: () => {
-                    return <List items={this.achievementsA} item={{ render: this.renderItem }} none="无业绩" />
+                    return <List items={this.achievementsA} item={{ render: this.renderItem }} none="无收益" />
                 },
                 load: async () => {
                     this.achievementsA = [];
@@ -82,9 +88,9 @@ export class VAchievementDetail extends VPage<CMe> {
                 }
             }, {
                 name: 'b',
-                caption: tabCaption('B类业绩', this.twoAchievement),
+                caption: tabCaption('B类收益', this.twoAchievement),
                 content: () => {
-                    return <List items={this.achievementsB} item={{ render: this.renderItem }} none="无业绩" />
+                    return <List items={this.achievementsB} item={{ render: this.renderItem }} none="无收益" />
                 },
                 load: async () => {
                     this.achievementsB = [];
@@ -92,9 +98,9 @@ export class VAchievementDetail extends VPage<CMe> {
                 }
             }, {
                 name: 'c',
-                caption: tabCaption('C类业绩', this.threeAchievement),
+                caption: tabCaption('C类收益', this.threeAchievement),
                 content: () => {
-                    return <List items={this.achievementsC} item={{ render: this.renderItem }} none="无业绩" />
+                    return <List items={this.achievementsC} item={{ render: this.renderItem }} none="无收益" />
                 },
                 load: async () => {
                     this.achievementsC = [];
