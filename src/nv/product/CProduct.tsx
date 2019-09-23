@@ -12,6 +12,7 @@ import { VProductList } from './VProductList';
 import { VProductDetail } from './VProductDetail';
 import { LoaderProductChemicalWithPrices } from './item';
 import { VProductPackSelect } from './VProductPackSelect';
+import classNames from 'classnames';
 
 //页面类
 class PageProduct extends PageItems<any> {
@@ -112,11 +113,13 @@ export function renderBrand(brand: any) {
     return productPropItem('品牌', brand.name);
 }
 
-export function productPropItem(caption: string, value: any) {
-    if (value === null || value === undefined) return null;
+export function productPropItem(caption: string, value: any, captionClass?: string) {
+    if (value === null || value === undefined || value === '0') return null;
+    let capClass = captionClass ? classNames(captionClass) : classNames("text-muted");
+    let valClass = captionClass ? classNames(captionClass) : "";
     return <>
-        <div className="col-4 col-sm-2 col-lg-4 text-muted pr-0 small">{caption}</div>
-        <div className="col-8 col-sm-4 col-lg-8">{value}</div>
+        <div className={classNames("col-6 col-sm-2 pr-0 small", capClass)}> {caption}</div>
+        <div className={classNames("col-6 col-sm-4", valClass)}>{value}</div>
     </>;
 }
 

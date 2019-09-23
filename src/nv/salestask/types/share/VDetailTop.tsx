@@ -23,14 +23,6 @@ export class VDetailTop extends View<CType> {
         let rows: Prop[] = [
             {
                 type: 'component',
-                name: 'type',
-                component: <LMR className={cnRowCustor}
-                    left={<div className="mr-2 "> <FA name="bookmark-o" className="text-info mr-2 pt-1" /> </div>}>
-                    <span className="font-weight-bold mr-3 my-3">{tv(type, v => <>{v.description}</>)} </span>  {tv(biz, v => <>{v.description}</>)}
-                </LMR>,
-            } as ComponentProp,
-            {
-                type: 'component',
                 name: 'customer',
                 component: <LMR className={cnRowCustor} onClick={onClickCustomer}
                     left={<div className="mr-2"> <FA name="user" className="text-info mr-2 pt-1" /> </div>}
