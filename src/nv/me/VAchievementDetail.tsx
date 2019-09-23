@@ -18,11 +18,10 @@ export class VAchievementDetail extends VPage<CMe> {
     @observable private achievementsA: any[] = [];
     @observable private achievementsB: any[];
     @observable private achievementsC: any[];
-    @observable private parStatus: number = 1;
+    @observable private status: number = 1;
     private oneAchievement: any;
     private twoAchievement: any;
     private threeAchievement: any;
-    private currentState: string;
 
     async open(param: any) {
         this.openPage(this.page);
@@ -52,9 +51,25 @@ export class VAchievementDetail extends VPage<CMe> {
         </div>
     }
 
+
+    private header() {
+
+        if (this.status == 1) {
+            return <div className=" mx-4 ">
+                <span>总收益</span>
+                <span>待到款</span>
+            </div>
+        } else {
+
+            return <div className=" mx-4 ">
+                <span>总收益</span>
+                <span>待到款</span>
+            </div>
+        }
+    }
     private page = observer(() => {
 
-        let tabs: TabProp[] = [
+        let tabs = [
             {
                 name: 'a',
                 caption: tabCaption('A类业绩', this.oneAchievement),
@@ -63,7 +78,7 @@ export class VAchievementDetail extends VPage<CMe> {
                 },
                 load: async () => {
                     this.achievementsA = [];
-                    this.achievementsA.push(...await this.controller.searchAchievementDetail(2, 1));
+                    this.achievementsA.push(...await this.controller.searchAchievementDetail(1, this.status));
                 }
             }, {
                 name: 'b',
@@ -73,7 +88,7 @@ export class VAchievementDetail extends VPage<CMe> {
                 },
                 load: async () => {
                     this.achievementsB = [];
-                    this.achievementsB.push(...await this.controller.searchAchievementDetail(2, 1));
+                    this.achievementsB.push(...await this.controller.searchAchievementDetail(2, this.status));
                 }
             }, {
                 name: 'c',
@@ -83,12 +98,15 @@ export class VAchievementDetail extends VPage<CMe> {
                 },
                 load: async () => {
                     this.achievementsC = [];
-                    this.achievementsC.push(...await this.controller.searchAchievementDetail(2, 1));
+                    this.achievementsC.push(...await this.controller.searchAchievementDetail(3, this.status));
                 }
             }
         ];
+        var header = <div>
 
-        return <Page headerClassName={consts.headerClass}>
+        </div>
+
+        return <Page header={this.header()} headerClassName={consts.headerClass}>
             <Tabs tabs={tabs} tabPosition="top" />
         </Page>
     })
