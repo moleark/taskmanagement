@@ -157,7 +157,7 @@ export class CSalesTask extends CUqBase {
      */
     showMyTasksCompleted = async () => {
         let tasks = await this.uqs.salesTask.SearchHistoryTaskByEmployee.table({});
-        this.openVPage(VEmployeeHistory, { tasks: tasks });
+        this.openVPage(VEmployeeHistory, tasks);
     }
 
     /**

@@ -23,7 +23,7 @@ export class VCreateCustomerFinish extends VPage<CCustomer> {
         }
         return <Page header='新建客户' headerClassName='bg-primary py-1 px-3'>
             <div className="w-100  text-center text-muted my-4 px-4">
-                客户添加成功，请在客户搜索页面查看详情！
+                添加成功，请在客户搜索页面查看详情！
                 <br />
                 <br />
             </div>

@@ -18,9 +18,11 @@ export class VAchievementDetail extends VPage<CMe> {
     @observable private achievementsA: any[] = [];
     @observable private achievementsB: any[];
     @observable private achievementsC: any[];
+    @observable private parStatus: number = 1;
     private oneAchievement: any;
     private twoAchievement: any;
     private threeAchievement: any;
+    private currentState: string;
 
     async open(param: any) {
         this.openPage(this.page);
@@ -50,41 +52,6 @@ export class VAchievementDetail extends VPage<CMe> {
         </div>
     }
 
-    private tabs: TabProp[] = [
-        {
-            name: 'a',
-            caption: tabCaption('A类业绩', this.oneAchievement),
-            content: () => {
-                return <List items={this.achievementsA} item={{ render: this.renderItem }} none="无业绩" />
-            },
-            load: async () => {
-                this.achievementsA = [];
-                this.achievementsA.push(...await this.controller.searchAchievementDetail(1));
-                //this.achievementsA = await this.controller.searchAchievementDetail(1);
-            }
-        }, {
-            name: 'b',
-            caption: tabCaption('B类业绩', this.twoAchievement),
-            content: () => {
-                return <List items={this.achievementsB} item={{ render: this.renderItem }} none="无业绩" />
-            },
-            load: async () => {
-                this.achievementsB = [];
-                this.achievementsB.push(...await this.controller.searchAchievementDetail(2));
-            }
-        }, {
-            name: 'c',
-            caption: tabCaption('C类业绩', this.threeAchievement),
-            content: () => {
-                return <List items={this.achievementsC} item={{ render: this.renderItem }} none="无业绩" />
-            },
-            load: async () => {
-                this.achievementsC = [];
-                this.achievementsC.push(...await this.controller.searchAchievementDetail(3));
-            }
-        }
-    ];
-
     private page = observer(() => {
 
         let tabs: TabProp[] = [
@@ -93,47 +60,56 @@ export class VAchievementDetail extends VPage<CMe> {
                 caption: tabCaption('A类业绩', this.oneAchievement),
                 content: () => {
                     return <List items={this.achievementsA} item={{ render: this.renderItem }} none="无业绩" />
-                },
-                load: async () => {
-                    this.achievementsA = [];
-                    this.achievementsA.push(...await this.controller.searchAchievementDetail(1));
-                    //this.achievementsA = await this.controller.searchAchievementDetail(1);
                 }
             }, {
                 name: 'b',
                 caption: tabCaption('B类业绩', this.twoAchievement),
                 content: () => {
                     return <List items={this.achievementsB} item={{ render: this.renderItem }} none="无业绩" />
-                },
-                load: async () => {
-                    this.achievementsB = [];
-                    this.achievementsB.push(...await this.controller.searchAchievementDetail(2));
                 }
             }, {
                 name: 'c',
                 caption: tabCaption('C类业绩', this.threeAchievement),
                 content: () => {
                     return <List items={this.achievementsC} item={{ render: this.renderItem }} none="无业绩" />
-                },
-                load: async () => {
-                    this.achievementsC = [];
-                    this.achievementsC.push(...await this.controller.searchAchievementDetail(3));
                 }
             }
         ];
 
-        let A = <div className="text-center">
-            <span className="px-4"></span>
-            <span className=" px-2 py-1 text-primary bg-white rounded small mx-1 btn-outline-white flex-grow-1" >累计收益</span>
-            <span className="px-2 py-1 text-white bg-primary rounded small mx-1 btn-outline-white flex-grow-1 ">&nbsp;待到款&nbsp;</span>
-        </div>;
-        let B = <div className="text-center">
-            <span className="px-4"></span>
-            <span><button type="button" className="btn btn-outline-danger flex-grow-1">累计收益</button></span>
-            <span><button type="button" className="btn btn-outline-danger flex-grow-1">&nbsp;&nbsp;待到款&nbsp;&nbsp;</button></span>
-        </div>;
-        return <Page header={A} headerClassName={consts.headerClass}>
-            <Tabs tabs={tabs} tabPosition="top" />
+        let tabspar: TabProp[] = [
+            {
+                name: '1',
+                caption: tabCaption('累计收益', this.oneAchievement),
+                content: () => {
+                    return <Tabs tabs={tabs} tabPosition="top" />
+                },
+                load: async () => {
+                    this.achievementsA = [];
+                    this.achievementsA.push(...await this.controller.searchAchievementDetail(2, 1));
+                    this.achievementsB = [];
+                    this.achievementsB.push(...await this.controller.searchAchievementDetail(2, 1));
+                    this.achievementsC = [];
+                    this.achievementsC.push(...await this.controller.searchAchievementDetail(2, 1));
+                }
+            }, {
+                name: '0',
+                caption: tabCaption('待到款', this.twoAchievement),
+                content: () => {
+                    return <Tabs tabs={tabs} tabPosition="top" />
+                },
+                load: async () => {
+                    this.achievementsA = [];
+                    this.achievementsA.push(...await this.controller.searchAchievementDetail(2, 0));
+                    this.achievementsB = [];
+                    this.achievementsB.push(...await this.controller.searchAchievementDetail(2, 0));
+                    this.achievementsC = [];
+                    this.achievementsC.push(...await this.controller.searchAchievementDetail(2, 0));
+                }
+            }
+        ];
+
+        return <Page headerClassName={consts.headerClass}>
+            <Tabs tabs={tabspar} tabPosition="top" />
         </Page>
     })
 }

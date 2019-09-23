@@ -86,9 +86,9 @@ export class CMe extends CUqBase {
     }
 
     //搜索业绩历史记录
-    searchAchievementDetail = async (type: number) => {
+    searchAchievementDetail = async (type: number, status: number) => {
         await this.onComputeAchievement();
-        let param = { types: type };
+        let param = { types: type, status: status };
         let list = await this.uqs.salesTask.SearchAchievementHistory.table(param);
         return list;
     }
