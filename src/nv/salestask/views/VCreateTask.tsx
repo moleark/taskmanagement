@@ -70,7 +70,9 @@ export class VCreateTask extends VPage<CSalesTask> {
         //{ name: 'submit', type: 'submit' },
     ];
 
+
     private page = observer(() => {
+
 
         return <Page header="添加项目" headerClassName='bg-primary' >
             <div className="mx-3">
@@ -80,8 +82,12 @@ export class VCreateTask extends VPage<CSalesTask> {
                     onButtonClick={this.onFormButtonClick}
                     requiredFlag={false}
                 />
-                <button type="button" className="btn btn-primary w-100 my-4" onClick={this.onAddSalesTask}>添加任务</button>
-                <button type="button" className="btn btn-danger w-100" onClick={this.onCreateAndFinishTask}>处理任务</button>
+                <div className="d-flex px-1">
+                    <div className="flex-grow-1 align-self-center justify-content-start">
+                        <button type="button" className="btn btn-primary" onClick={this.onAddSalesTask} >&nbsp;新建任务&nbsp;</button>
+                    </div>
+                    <button type="button" className="btn btn-outline-info ml-2 align-self-center" onClick={this.onCreateAndFinishTask} >处理任务</button>
+                </div>
             </div>
         </Page >
     });

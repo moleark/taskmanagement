@@ -69,7 +69,7 @@ export class VProductDetail extends VPage<CProduct> {
                 <div className="col-sm-6 pb-2 d-flex justify-content-end align-items-center">
                     <small className="text-muted">{retailUI}</small>&nbsp; &nbsp;
                     <span className="text-danger">¥ <span className="h5">{price}</span></span>
-                    <span>{agentPrice && <span>&nbsp;/&nbsp;<span className="text-warning small"><strong className="small"> <span className="small">折</span> </strong></span> <span className="text-right text-danger h5">{((price - agentPrice) / price).toFixed(1)}</span></span>}</span>
+                    <span>{agentPrice && <span>&nbsp;/&nbsp;<span className="text-warning small"><strong className="small"> <span className="small">折</span> </strong></span> <span className="text-right text-danger h5">{((price - agentPrice) / price * 10).toFixed(1)}</span></span>}</span>
                 </div>
             </div >
         } else {
@@ -78,11 +78,11 @@ export class VProductDetail extends VPage<CProduct> {
 
         return <div className="px-2">
             <div className="row">
-                <div className="col-6">
+                <div className="col-5">
                     <div><b>{tv(pack)}</b></div>
                     <div>{this.controller.renderDeliveryTime(pack)}</div>
                 </div>
-                <div className="col-6">
+                <div className="col-7">
                     {right}{agent}
                 </div>
             </div>
