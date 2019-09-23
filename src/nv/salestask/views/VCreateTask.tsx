@@ -82,11 +82,11 @@ export class VCreateTask extends VPage<CSalesTask> {
                     onButtonClick={this.onFormButtonClick}
                     requiredFlag={false}
                 />
-                <div className="d-flex px-1">
-                    <div className="flex-grow-1 align-self-center justify-content-start">
-                        <button type="button" className="btn btn-primary" onClick={this.onAddSalesTask} >&nbsp;新建任务&nbsp;</button>
+                <div className="d-flex px-1 ">
+                    <div className="flex-grow-1 justify-content-start">
                     </div>
-                    <button type="button" className="btn btn-outline-info ml-2 align-self-center" onClick={this.onCreateAndFinishTask} >处理任务</button>
+                    <button type="button" className="btn btn-outline-info ml-2" onClick={this.onCreateAndFinishTask} >处理任务</button>
+                    <button type="button" className="btn btn-primary mx-2" onClick={this.onAddSalesTask} >新建任务</button>
                 </div>
             </div>
         </Page >
