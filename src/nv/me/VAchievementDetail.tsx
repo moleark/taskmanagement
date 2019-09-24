@@ -105,9 +105,9 @@ export class VAchievementDetail extends VPage<CMe> {
                 content: () => {
                     return <List items={this.achievementsA} item={{ render: this.renderItem }} none="无收益" />
                 },
-                load: async () => {
-                    this.achievementsA = [];
-                    this.achievementsA.push(...await this.controller.searchAchievementDetail(1, this.tab_Status));
+                onShown: async () => {
+                    //this.achievementsA = [];
+                    this.achievementsA = await this.controller.searchAchievementDetail(1, this.tab_Status);
                 }
             }, {
                 name: 'b',
@@ -115,7 +115,7 @@ export class VAchievementDetail extends VPage<CMe> {
                 content: () => {
                     return <List items={this.achievementsB} item={{ render: this.renderItem }} none="无收益" />
                 },
-                load: async () => {
+                onShown: async () => {
                     this.achievementsB = [];
                     this.achievementsB.push(...await this.controller.searchAchievementDetail(2, this.tab_Status));
                 }
@@ -125,7 +125,7 @@ export class VAchievementDetail extends VPage<CMe> {
                 content: () => {
                     return <List items={this.achievementsC} item={{ render: this.renderItem }} none="无收益" />
                 },
-                load: async () => {
+                onShown: async () => {
                     this.achievementsC = [];
                     this.achievementsC.push(...await this.controller.searchAchievementDetail(3, this.tab_Status));
                 }
