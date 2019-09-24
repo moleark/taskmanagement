@@ -8,6 +8,7 @@ import { CCustomer } from './CCustomer';
 import { consts } from '../consts';
 import { mobileValidation, nameValidation, emailValidation } from 'nv/tools/inputValidations';
 import { GLOABLE } from 'nv/ui';
+import { async } from 'q';
 
 export const myCustomerSchema: Schema = [
     { name: 'name', type: 'string', required: true },
@@ -87,10 +88,33 @@ export class VCustomerDetail extends VPage<CCustomer> {
     }
 
     private page = observer((param: any) => {
-        let { cSalesTask, cCustomerUnit, cCustomer } = this.controller.cApp
+        let { cSalesTask } = this.controller.cApp
         let { showCustomerHistory } = cSalesTask;
         let { id: customerid, unit, name, salutation, telephone, gender, birthDay, email, wechat, teacher, addressString, potential, research } = param
-        let { showCustomerUnitDetail } = cCustomerUnit;
+
+
+        var genderShow: any = "男";
+        if (gender == 0) {
+            genderShow = "女";
+        }
+
+        var potentialShow: any = "小于10万";
+        if (gender == 1) {
+            potentialShow = "10万-30万";
+        } else if (gender == 2) {
+            potentialShow = "大于30万";
+        }
+
+        var researchShow: any = "";
+        if (gender == 0) {
+            researchShow = "有机";
+        } else if (gender == 1) {
+            researchShow = "化学";
+        } else if (gender == 2) {
+            researchShow = "分析";
+        } else if (gender == 3) {
+            researchShow = "材料";
+        }
 
         let onshowCustomerHistory = async () => await showCustomerHistory(customerid);
 
@@ -139,7 +163,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
                 name: 'salutation',
                 component: <LMR className="cursor-pointer w-100 py-2"
                     left={<div><small></small>性别</div>}
-                    right={<div className="text-right">{gender}</div >}>
+                    right={<div className="text-right">{genderShow}</div >}>
                 </LMR >,
             } as ComponentProp,
             {
@@ -179,7 +203,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
                 name: 'potential',
                 component: <LMR className="cursor-pointer w-100 py-2"
                     left={<div><small></small>潜力值</div>}
-                    right={<div className="text-right">{potential}</div >}>
+                    right={<div className="text-right">{potentialShow}</div >}>
                 </LMR >,
             } as ComponentProp,
             {
@@ -187,7 +211,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
                 name: 'research',
                 component: <LMR className="cursor-pointer w-100 py-2"
                     left={<div><small></small>研究方向</div>}
-                    right={<div className="text-right">{research}</div >}>
+                    right={<div className="text-right">{researchShow}</div >}>
                 </LMR >,
             } as ComponentProp,
         ];
@@ -201,17 +225,13 @@ export class VCustomerDetail extends VPage<CCustomer> {
         </div>
 
 
-        /*
-          <Edit
-        schema={myCustomerSchema}
-        uiSchema={myCustomerUISchema}
-        data={this.customer}
-        onItemChanged={this.onItemChanged} />
-        */
-
-        return <Page header={header} headerClassName={consts.headerClass} footer={footer}>
+        let { showCustomerEdit } = this.controller;
+        let onshowCustomerEdit = async () => await showCustomerEdit(this.customer);
+        let right = <div className="cursor-pointer py-2" onClick={onshowCustomerEdit}>
+            <span><FA name="pencil" className="mr-3" /></span>
+        </div>;
+        return <Page header={header} headerClassName={consts.headerClass} right={right} footer={footer} >
             <PropGrid className="my-2" rows={rows} values={this.customer} alignValue="right" />
-
-        </Page>
+        </Page >
     })
 }

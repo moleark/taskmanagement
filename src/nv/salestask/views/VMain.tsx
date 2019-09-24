@@ -43,14 +43,14 @@ export class VMain extends VPage<CSalesTask> {
 
         let { bizName, deadline, biz, customer, type, typeName, priorty, description } = salesTask;
         let cnFlag = classNames({
-            'my-1 mr-3': true,
+            'my-1 mr-2': true,
             'text-danger': priorty > 0,
             'text-info': !(priorty > 0)
         })
 
         let left = <div className={cnFlag}>{this.controller.getTaskIcon(bizName)}</div>;
-        let right = <div className="text-right"> {tv(customer, (v) => <>{tv(v.unit)}</>)} </div>
-        return <LMR className="px-3 py-3" left={left}>
+        let right = <div className="text-right"> {tv(customer, (v) => <small>{tv(v.unit)}</small>)} </div>
+        return <LMR className="pl-2 pr-3 py-1" left={left}>
             <LMR className="" right={right}>
                 <div className=" my-1 mr-3 font-weight-bold">{tv(customer)}</div>
             </LMR>

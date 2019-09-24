@@ -15,6 +15,7 @@ import { VCreateCustomerFinish } from './VCreateCustomerFinish';
 import { VMyCustomerSelect } from './VMyCustomerSelect';
 import { VCustomerSearch } from './VCustomerSearch';
 import { VCustomerChek } from './VCustomerChek';
+import { VCustomerEdit } from './VCustomerEdit';
 
 /**
  * 用于客户首页
@@ -124,6 +125,13 @@ export class CCustomer extends CUqBase {
         this.searchByKey('');
         this.task = task;
         this.openVPage(VCustomerSelect);
+    }
+
+    /**
+     * 显示编辑
+    */
+    showCustomerEdit = async (customer: any) => {
+        this.openVPage(VCustomerEdit, customer);
     }
 
     /**
