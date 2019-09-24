@@ -41,9 +41,10 @@ export abstract class CType extends Controller {
 
     private renderDetailEdit = (task: Task): JSX.Element => {
         let { caption, renderDetailTop, renderActionsBottom, renderDetailContent } = this;
-        return <Page header={caption} footer={renderActionsBottom(task)} headerClassName='bg-primary'  >
+        return <Page header={caption} headerClassName='bg-primary'  >
             {renderDetailTop(task)}
             {renderDetailContent(task)}
+            {renderActionsBottom(task)}
         </Page >
     }
 

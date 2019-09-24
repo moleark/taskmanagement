@@ -81,7 +81,7 @@ export class VAchievementDetail extends VPage<CMe> {
         let onClickB = () => this.onClickHeader(0);
         if (this.tab_Status == 1) {
             return <div className="w-100 text-center mr-4 ">
-                <span className="bg-white text-info mr-1 px-3 py-2" onClick={onClickA} >总收益</span>
+                <span className="bg-white text-info mr-1 px-3 py-2" onClick={onClickA} >累计收益</span>
                 <span className="px-3 py-2" onClick={onClickB} >待到款</span>
             </div>;
         } else {

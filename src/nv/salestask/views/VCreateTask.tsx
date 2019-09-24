@@ -74,7 +74,7 @@ export class VCreateTask extends VPage<CSalesTask> {
     private page = observer(() => {
 
 
-        return <Page header="添加项目" headerClassName='bg-primary' >
+        return <Page header="添加任务" headerClassName='bg-primary' >
             <div className="mx-3">
                 <Form ref={v => this.form = v} className="my-3"
                     schema={this.schema}
