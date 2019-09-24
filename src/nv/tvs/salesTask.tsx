@@ -8,6 +8,17 @@ const tvSalestask = (values: any) => {
     </>
 };
 
+const tvUnit = (values: any) => {
+    return <>{values.name}</>;
+}
+
+const tvMyCustomer = (values: any) => {
+    return <>{values.name}</>;
+}
+
+
 export const salesTask = {
-    salesTask: tvSalestask    
+    salesTask: tvSalestask,
+    myCustomerUnit: tvUnit,
+    myCustomer: tvMyCustomer,
 }

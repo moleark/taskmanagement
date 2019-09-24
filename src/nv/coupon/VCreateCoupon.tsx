@@ -50,7 +50,7 @@ class ValidityDate extends Widget {
             {this.list.map((v, index) => {
                 let { value, title } = v;
                 return <label className="my-1 mx-3" key={index}>
-                    <input type="radio" value={value} name={this.name} 
+                    <input type="radio" value={value} name={this.name}
                         defaultChecked={value === this.value} /> {title} &nbsp;
                 </label>
             })}
@@ -104,8 +104,8 @@ class Discount extends Widget {
     };
 }
 
-const oneWeek = new Date(Date.now() + 7*24*3600*1000);
-const twoWeeks = new Date(Date.now() + 7*24*3600*1000);
+const oneWeek = new Date(Date.now() + 7 * 24 * 3600 * 1000);
+const twoWeeks = new Date(Date.now() + 7 * 24 * 3600 * 1000);
 export class VCreateCoupon extends VPage<CCoupon> {
     @observable showTip: boolean = false;
     tip: string = "";
@@ -166,7 +166,7 @@ export class VCreateCoupon extends VPage<CCoupon> {
             setTimeout(() => this.showTip = false, GLOABLE.TIPDISPLAYTIME);
             return;
         }
-        
+
         this.showTip = false;
         data.validitydate = this.validDateFrom(validitydate);
         data.discount = _.round(1 - disc * 0.1, 2);
@@ -174,7 +174,7 @@ export class VCreateCoupon extends VPage<CCoupon> {
     }
 
     private validDateFrom(v: any) {
-        let d:Date;
+        let d: Date;
         switch (v) {
             default: return undefined;
             case 1:
@@ -194,7 +194,7 @@ export class VCreateCoupon extends VPage<CCoupon> {
 
         let right = <div onClick={onshowCreateCoupon} className="cursor-pointer py-2 mx-3"><FA name="ellipsis-h" /></div>;
 
-        return <Page header="产生优惠码" headerClassName={consts.headerClass} right={right} >
+        return <Page header="生成优惠码" headerClassName={consts.headerClass} right={right} >
             <Form ref={v => this.form = v} className="my-3 mx-3"
                 schema={schema}
                 uiSchema={this.uiSchema}

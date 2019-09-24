@@ -41,7 +41,7 @@ export class VMain extends VPage<CSalesTask> {
 
     private renderSalesTask = (salesTask: any, index: number) => {
 
-        let { bizName, deadline, biz, customer, type, typeName, priorty } = salesTask;
+        let { bizName, deadline, biz, customer, type, typeName, priorty, description } = salesTask;
         let cnFlag = classNames({
             'my-1 mr-3': true,
             'text-danger': priorty > 0,
@@ -49,14 +49,15 @@ export class VMain extends VPage<CSalesTask> {
         })
 
         let left = <div className={cnFlag}>{this.controller.getTaskIcon(bizName)}</div>;
-        let right = <div className="text-right">
-            {tv(customer, (v) => <>{v.name}</>)}
-        </div>
+        let right = <div className="text-right"> {tv(customer, (v) => <>{tv(v.unit)}</>)} </div>
         return <LMR className="px-3 py-3" left={left}>
             <LMR className="" right={right}>
-                <div className=" my-1 mr-3 font-weight-bold">{tv(customer, (v) => <>{v.name}</>)}</div>
+                <div className=" my-1 mr-3 font-weight-bold">{tv(customer)}</div>
             </LMR>
-        </LMR>
+            <LMR className="" >
+                <div className=" my-1 mr-3">{description}</div>
+            </LMR>
+        </LMR >
     }
 
     private page = observer(() => {

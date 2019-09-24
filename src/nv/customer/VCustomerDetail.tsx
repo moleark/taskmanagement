@@ -78,21 +78,28 @@ export class VCustomerDetail extends VPage<CCustomer> {
         }, GLOABLE.TIPDISPLAYTIME);
     }
 
+
+    private renderCustomerItem = (name: any, value: any) => {
+        return <LMR className="cursor-pointer w-100 py-2"
+            left={<div><small></small>{name}</div>}
+            right={<div className="w-2c text-right">{value}</div >}>
+        </LMR >;
+    }
+
     private page = observer((param: any) => {
         let { cSalesTask, cCustomerUnit, cCustomer } = this.controller.cApp
         let { showCustomerHistory } = cSalesTask;
-        let { id: customerid, unit } = param
+        let { id: customerid, unit, name, salutation, telephone, gender, birthDay, email, wechat, teacher, addressString, potential, research } = param
         let { showCustomerUnitDetail } = cCustomerUnit;
 
         let onshowCustomerHistory = async () => await showCustomerHistory(customerid);
-        let onshowCustomerUnitDetail = async () => await showCustomerUnitDetail(unit);
 
         let rows: Prop[] = [
             {
                 type: 'component',
                 name: 'customer',
                 component: <LMR className="cursor-pointer w-100 py-3"
-                    left={<div><small><FA name='university' className='text-info mr-2' /></small>{tv(unit, v => v.name)}</div>}>
+                    left={<div><small><FA name='university' className='text-info mr-2' /></small>{tv(unit)}</div>}>
                 </LMR >,
             } as ComponentProp,
             {
@@ -103,15 +110,86 @@ export class VCustomerDetail extends VPage<CCustomer> {
                     right={<div className="w-2c text-right"><i className="fa fa-chevron-right small" /></div >}>
                 </LMR >,
             } as ComponentProp,
-            /**{
+            {
                 type: 'component',
-                name: 'customer',
-                component: <LMR className="cursor-pointer w-100 py-3" onClick={onshowCustomerSelect}
-                    left={< div > <small><FA name='share-alt' className='text-info' /></small> &nbsp;内部客户</div>}
-                    right={< div className="w-2c text-right" > <i className="fa fa-chevron-right small" /></div >}>
-                    <div className="px-3"> {innerCustomer && tv(innerCustomer, v => v.name)}</div>
+                name: 'name',
+                component: <LMR className="cursor-pointer w-100 py-2"
+                    left={<div><small></small>姓名</div>}
+                    right={<div className="text-right">{name}</div >}>
                 </LMR >,
-            } as ComponentProp**/
+            } as ComponentProp,
+            {
+                type: 'component',
+                name: 'salutation',
+                component: <LMR className="cursor-pointer w-100 py-2"
+                    left={<div><small></small>称谓</div>}
+                    right={<div className="text-right">{salutation}</div >}>
+                </LMR >,
+            } as ComponentProp,
+            {
+                type: 'component',
+                name: 'telephone',
+                component: <LMR className="cursor-pointer w-100 py-2"
+                    left={<div><small></small>手机号</div>}
+                    right={<div className="text-right">{telephone}</div >}>
+                </LMR >,
+            } as ComponentProp,
+            {
+                type: 'component',
+                name: 'salutation',
+                component: <LMR className="cursor-pointer w-100 py-2"
+                    left={<div><small></small>性别</div>}
+                    right={<div className="text-right">{gender}</div >}>
+                </LMR >,
+            } as ComponentProp,
+            {
+                type: 'component',
+                name: 'email',
+                component: <LMR className="cursor-pointer w-100 py-2"
+                    left={<div><small></small>Email</div>}
+                    right={<div className="text-right">{email}</div >}>
+                </LMR >,
+            } as ComponentProp,
+            {
+                type: 'component',
+                name: 'wechat',
+                component: <LMR className="cursor-pointer w-100 py-2"
+                    left={<div><small></small>微信</div>}
+                    right={<div className="text-right">{wechat}</div >}>
+                </LMR >,
+            } as ComponentProp,
+            {
+                type: 'component',
+                name: 'teacher',
+                component: <LMR className="cursor-pointer w-100 py-2"
+                    left={<div><small></small>老师</div>}
+                    right={<div className="text-right">{teacher}</div >}>
+                </LMR >,
+            } as ComponentProp,
+            {
+                type: 'component',
+                name: 'addressString',
+                component: <LMR className="cursor-pointer w-100 py-2"
+                    left={<div><small></small>地址</div>}
+                    right={<div className="text-right">{addressString}</div >}>
+                </LMR >,
+            } as ComponentProp,
+            {
+                type: 'component',
+                name: 'potential',
+                component: <LMR className="cursor-pointer w-100 py-2"
+                    left={<div><small></small>潜力值</div>}
+                    right={<div className="text-right">{potential}</div >}>
+                </LMR >,
+            } as ComponentProp,
+            {
+                type: 'component',
+                name: 'research',
+                component: <LMR className="cursor-pointer w-100 py-2"
+                    left={<div><small></small>研究方向</div>}
+                    right={<div className="text-right">{research}</div >}>
+                </LMR >,
+            } as ComponentProp,
         ];
 
         let header: any = <span>{this.customer.name}</span>;
@@ -121,13 +199,19 @@ export class VCustomerDetail extends VPage<CCustomer> {
                 <button type="button" className="btn btn-danger flex-grow-1 mx-3 my-1 w-100" onClick={this.checkBinding}>查询绑定关系</button>
             </div>
         </div>
+
+
+        /*
+          <Edit
+        schema={myCustomerSchema}
+        uiSchema={myCustomerUISchema}
+        data={this.customer}
+        onItemChanged={this.onItemChanged} />
+        */
+
         return <Page header={header} headerClassName={consts.headerClass} footer={footer}>
             <PropGrid className="my-2" rows={rows} values={this.customer} alignValue="right" />
-            <Edit
-                schema={myCustomerSchema}
-                uiSchema={myCustomerUISchema}
-                data={this.customer}
-                onItemChanged={this.onItemChanged} />
+
         </Page>
     })
 }

@@ -30,7 +30,15 @@ export class VDetailTop extends View<CType> {
                     {tv(customer, v => <>{v.name}</>)}
                 </LMR>,
             } as ComponentProp,
-
+            {
+                type: 'component',
+                name: 'phone',
+                component: <LMR className={cnRowCustor} onClick={onClickCustomer}
+                    left={<div className="mr-2"> <FA name="phone" className="text-info mr-2 pt-1" /> </div>}
+                    right={right}>
+                    {tv(customer, v => <>{v.telephone}</>)}
+                </LMR>,
+            } as ComponentProp,
         ];
         if (deadline) {
             rows.push({
