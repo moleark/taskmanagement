@@ -1,23 +1,21 @@
 export { jnkTop } from "./jnkTop";
 export { VHome } from './main';
-/*
 
-import { AppUI, CApp } from 'tonva';
-import salestaskUI from './salestask';
-import { CSalesTaskApp } from '../CSalesTaskApp';
-import { VHome } from './main';
-import { jnkTop } from './jnkTop';
+/*测式*/
 
-const ui: AppUI = {
-    appName: "百灵威系统工程部/salestask",
-    CApp: CSalesTaskApp,
-    main: VHome,
-    uqs: {
-        '百灵威系统工程部/salestask': salestaskUI,
-    },
-    loginTop: jnkTop,
-    version: "1.0.1"
+export const GLOABLE = {
+    CHINA: 43,
+    CHINESE: 197,
+    SALESREGION_CN: 4,
+    TIPDISPLAYTIME: 2000,
 }
 
-export default ui;
+/*正式*/
+/*
+export const GLOABLE = {
+    CHINA: 44,
+    CHINESE: 196,
+    SALESREGION_CN: 1,
+    TIPDISPLAYTIME: 2000,
+}
 */

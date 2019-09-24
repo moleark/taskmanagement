@@ -66,15 +66,6 @@ export class VFinish extends VPage<CCommonType> {
                 onButtonClick={this.onFormButtonClick}
                 requiredFlag={false}
             />
-            <LMR className={cssLMR} right={<div onClick={this.onCreateProduct} className="mr-3"><FA name="plus" /></div>} >
-                <div className="w-100 ml-3" onClick={onShowProduct} >产品列表 <span className="fa-stack"></span></div>
-            </LMR>
-            <LMR className={cssLMR} right={<div onClick={this.onCreateProjectPack} className="mr-3"><FA name="plus" /></div>} >
-                <div className="w-100 ml-3" onClick={onshowTaskProjectPackDetail} >包装列表 <span className="fa-stack"></span></div>
-            </LMR>
-            <LMR className={cssLMR} right={<div onClick={this.onCreateProject} className="mr-3"><FA name="plus" /></div>} >
-                <div className="w-100 ml-3" onClick={onShowProject} >项目列表 <span className="fa-stack"></span></div>
-            </LMR>
             <button type="button" className="btn btn-primary w-100  my-3" onClick={this.onCompletionTask} >提交</button>
         </div >
     }

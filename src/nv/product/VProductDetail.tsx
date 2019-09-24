@@ -3,9 +3,8 @@ import { VPage, Page, LMR, ItemSchema, ObjectSchema, NumSchema, tv, RowContext, 
 import { observer } from 'mobx-react';
 import { ProductImage } from '../tools/productImage';
 import { MainProductChemical } from '../model/product';
-import { MinusPlusWidget } from '../tools/minusPlusWidget';
 import { consts } from '../consts';
-import { CProduct, renderBrand } from './CProduct';
+import { CProduct, renderBrand, productPropItem } from './CProduct';
 import { ProductPackRow } from './Product';
 import { ViewMainSubs } from '../mainSubs';
 
@@ -16,7 +15,9 @@ const schema: ItemSchema[] = [
     { name: 'agentPrice', type: 'number' } as NumSchema,
     { name: 'promotionPrice', type: 'number' } as NumSchema,
     { name: 'currency', type: 'string' },
-
+    { name: 'quantity', type: 'number' } as NumSchema,
+    { name: 'inventoryAllocation', type: 'object' } as ObjectSchema,
+    { name: 'futureDeliveryTimeDescription', type: 'string' }
 ];
 
 export class VProductDetail extends VPage<CProduct> {
@@ -37,13 +38,13 @@ export class VProductDetail extends VPage<CProduct> {
                 <div className="col-sm-3">
                     <ProductImage chemicalId={imageUrl} className="w-100" />
                 </div>
-                <div className="col-sm-9">
-                    <div className="row">
-                        {this.item('CAS', CAS)}
-                        {this.item('纯度', purity)}
-                        {this.item('分子式', molecularFomula)}
-                        {this.item('分子量', molecularWeight)}
-                        {this.item('产品编号', origin)}
+                <div className="col-12 col-sm-9">
+                    <div className="row mx-3">
+                        {productPropItem('CAS', CAS, "font-weight-bold")}
+                        {productPropItem('产品编号', origin, "font-weight-bold")}
+                        {productPropItem('纯度', purity)}
+                        {productPropItem('分子式', molecularFomula)}
+                        {productPropItem('分子量', molecularWeight)}
                         {renderBrand(brand)}
                     </div>
                 </div>
@@ -51,65 +52,56 @@ export class VProductDetail extends VPage<CProduct> {
         </div>
     }
 
-    private item = (caption: string, value: any) => {
-        if (value === null || value === undefined) return null;
-        return <>
-            <div className="col-4 col-sm-2 text-muted pr-0 small">{caption}</div>
-            <div className="col-8 col-sm-4">{value}</div>
-        </>;
-    }
-
-    private arrTemplet = (item: any) => {
-        let { pack, retail, promotionPrice, agentPrice, inventoryAllocation, futureDeliveryTimeDescription } = item;
-
+    private arrTemplet = (item: ProductPackRow) => {
+        let { pack, retail, vipPrice, agentPrice, promotionPrice } = item;
         let right = null;
         let agent = null;
         if (retail) {
-            let price: number = promotionPrice;
+            let price: number = this.minPrice(vipPrice, promotionPrice);
             let retailUI: any;
             if (price) {
-                retailUI = <small className="text-muted"><del>￥{retail}</del></small>;
+                retailUI = <small className="text-muted"><del>¥{retail}</del></small>;
             }
             else {
                 price = retail;
             }
-            right = <div className="text-right row">
-                <div >
-                    <span className="text-muted h5">{retailUI}</span>&nbsp; &nbsp;
-                    <span className="text-danger">￥ <span className="h5">{price}</span></span>
+            if (agentPrice) {
+                agent = <span>{<span>/<span className="text-warning small"><strong className="small"> <span className="small">折</span> </strong></span> <span className="text-right text-danger h5">{((price - agentPrice) / price * 10).toFixed(1)}</span></span>}</span>;
+
+            } else {
+                agent = <span>{<span>/<span className="text-warning small"><strong className="small"> <span className="small">无折扣</span> </strong></span></span>}</span>;
+            }
+            right = <div className="row">
+                <div className="col-sm-6 pb-2 d-flex justify-content-end align-items-center">
+                    <small className="text-muted">{retailUI}</small>&nbsp; &nbsp;
+                    <span className="text-danger">¥ <span className="h5">{price}</span></span>
+                    <span>{agent}</span>
                 </div>
             </div >
-            right = price && <div><span className="text-warning small"><strong className="small">牌</strong></span> <span className="text-right h5 text-danger"><span className="small">￥</span>{price}</span></div>;
-            agent = agentPrice && <div><span className="text-warning small"><strong className="small">代</strong></span> <span className="text-right h5 text-danger"><span className="small ">￥</span>{agentPrice}</span></div>;
         } else {
             right = <small>请询价</small>
-        }
-
-        let deliveryTimeUI = <></>;
-        if (inventoryAllocation && inventoryAllocation.length > 0) {
-            deliveryTimeUI = inventoryAllocation.map((v, index) => {
-                let { warehouse, quantity, deliveryTimeDescription } = v;
-                return <div key={index} className="text-success">
-                    {tv(warehouse, (values: any) => <>{values.name}</>)}: {quantity}
-                    {deliveryTimeDescription}
-                </div>
-            });
-        } else {
-            deliveryTimeUI = <div>{futureDeliveryTimeDescription && '期货: ' + futureDeliveryTimeDescription}</div>
         }
 
         return <div className="px-2">
             <div className="row">
                 <div className="col-5">
-                    <div className="h5" ><b>{tv(pack, v => <div>{v.radioy}{v.unit}</div>)}</b></div>
-                    <div>{deliveryTimeUI}</div>
+                    <div><b>{tv(pack)}</b></div>
                 </div>
                 <div className="col-7">
-                    {agent}
                     {right}
                 </div>
             </div>
+            <div className="row">
+                <div className="col-12 ">
+                    {this.controller.renderDeliveryTime(pack)}
+                </div>
+            </div>
         </div>;
+    }
+
+    private minPrice(vipPrice: any, promotionPrice: any) {
+        if (vipPrice || promotionPrice)
+            return Math.min(typeof (vipPrice) === 'number' ? vipPrice : Infinity, typeof (promotionPrice) === 'number' ? promotionPrice : Infinity);
     }
 
     private uiSchema: UiSchema = {

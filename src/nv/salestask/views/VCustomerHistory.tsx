@@ -10,11 +10,14 @@ export class VCustomerHistory extends VPage<CSalesTask> {
 
     private tasks: any;
     async open(tasks: any) {
+        /*
         if (tasks.length > 0) {
             this.tasks = tasks;
         } else {
             this.tasks = null;
         }
+        */
+        this.tasks = tasks;
         this.openPage(this.page);
     }
 
@@ -38,7 +41,7 @@ export class VCustomerHistory extends VPage<CSalesTask> {
     private page = observer(() => {
 
         let none = <div className="m-3 text-muted small">【无记录】</div>;
-        return <Page header="交流记录" headerClassName={consts.headerClass}>
+        return <Page header="沟通记录" headerClassName={consts.headerClass}>
             <List before={''} none={none} items={this.tasks} item={{ render: this.renderHistory, onClick: this.onSalesTaskClick }} />
         </Page>
     })

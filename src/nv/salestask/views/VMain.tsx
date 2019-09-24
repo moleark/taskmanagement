@@ -52,12 +52,9 @@ export class VMain extends VPage<CSalesTask> {
         let right = <div className="text-right">
             {deadline && <small className="text-muted">时限：<EasyDate date={deadline} /></small>}
         </div>
-        return <LMR className="px-3 py-2" left={left}>
+        return <LMR className="px-3 py-3" left={left}>
             <LMR className="" right={right}>
-                <div className="font-weight-bold">{tv(customer, (v) => <>{v.name}</>)}</div>
-            </LMR>
-            <LMR className="" right={<div className="text-muted"><small>{tv(type, (v) => <>{v.description}</>)}</small></div>}>
-                <div className="text-muted" ><small>{tv(biz, (v) => <>{v.description}</>)}</small></div>
+                <div className=" my-1 mr-3 font-weight-bold">{tv(customer, (v) => <>{v.name}</>)}</div>
             </LMR>
         </LMR>
     }
@@ -69,11 +66,10 @@ export class VMain extends VPage<CSalesTask> {
 
         let none = <div className="my-3 mx-2" style={{ color: '#888' }}>无任务</div>;
         let right = <div onClick={this.onSalesTaskAdd} className="cursor-pointer px-3 py-2"><FA name="plus" /></div>;
-        let left = <div> 销售助手</div>
         let item = { render: this.renderSalesTask, onClick: this.onSalesTaskClick };
         let { tasksNow, dateTasksList } = tasks;
 
-        return <Page header="销售助手" onScrollBottom={this.onScrollBottom} right={right} headerClassName="bg-primary pl-3">
+        return <Page header="任务" onScrollBottom={this.onScrollBottom} right={right} headerClassName="bg-primary pl-3">
             {tasksNow.length == 0 && dateTasksList.length == 0 && none}
             {tasksNow.length > 0 && <List before={''} none={none} items={tasksNow} item={item} />}
             {
@@ -88,6 +84,4 @@ export class VMain extends VPage<CSalesTask> {
             }
         </Page>
     });
-
 }
-

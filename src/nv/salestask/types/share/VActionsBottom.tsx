@@ -23,11 +23,11 @@ export class VActionsBottom extends View<CType> {
         let onInvalid = async () => await showTaskInvalid(tasks);
 
         return <div className="d-flex px-1">
-            <div className="flex-grow-1 align-self-center justify-content-start">
-                <button type="button" className="btn btn-primary" onClick={onProcess} >&nbsp;处理&nbsp;</button>
+            <div className="flex-grow-1 align-self-center justify-content-end">
+                <button type="button" className="btn btn-outline-info ml-2 align-self-center" onClick={onPostpond} >延迟任务</button>
+                <button type="button" className="btn btn-outline-info ml-2 align-self-center" onClick={onInvalid} >取消任务</button>
+                <button type="button" className="btn btn-primary ml-2 align-self-center" onClick={onProcess}>处理任务</button>
             </div>
-            <button type="button" className="btn btn-outline-info ml-2 align-self-center" onClick={onPostpond} >延迟</button>
-            <button type="button" className="btn btn-outline-info ml-2 align-self-center" onClick={onInvalid} >取消</button>
         </div>;
     }
 }

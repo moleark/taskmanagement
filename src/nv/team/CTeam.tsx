@@ -42,14 +42,13 @@ export class CTeam extends CUqBase {
     }
 
     //显示粉丝信息
-    showPeerDetail = async (team: any) => {
-
-        let query = { user: 47 };
+    showPeerDetail = async (teamItem: any) => {
+        let query = { user: teamItem.children.id };
         let achievement = await this.uqs.salesTask.SearchAchievement.table(query);
         if (achievement.length > 0) {
             this.achievement = achievement[0];
         }
-        this.openVPage(VTeamDetail, team);
+        this.openVPage(VTeamDetail, teamItem);
     }
 
     //保存粉丝自定义信息

@@ -17,24 +17,21 @@ import { observable } from 'mobx';
 export class CMe extends CUqBase {
     inviteCode: string;
     position: any;
-    @observable achievement: any;
+    @observable salesAmont: any = { oneSaleVolume: 0.00, twoSaleVolume: 0.00, threeSaleVolume: 0.00, oneAchievement: 0.0, twoAchievement: 0.0, threeAchievement: 0.0, teamCount: 0.0, customerCount: 0.0, activeCustomerCount: 0.0 };
     /*
     private querySearchPosition: Query;
     private querySearchAchievement: Query;
     private querySearchAchievementHistory: Query;
     private actionComputeAchievement: Action;
-
     //构造函数
     constructor(cApp: CSalesTaskApp, res: any) {
         super(res);
         this.cApp = cApp;
-
         let { cUqSalesTask } = this.cApp;
         this.querySearchPosition = cUqSalesTask.query("searchposition");
         this.querySearchAchievement = cUqSalesTask.query("SearchAchievement");
         this.querySearchAchievementHistory = cUqSalesTask.query("SearchAchievementHistory");
         this.actionComputeAchievement = cUqSalesTask.action("ComputeAchievement");
-
     }
     */
 
@@ -52,7 +49,6 @@ export class CMe extends CUqBase {
         let p1 = code.substr(1, 4);
         let p2 = code.substr(5);
         this.inviteCode = p1 + ' ' + p2;
-        await this.onComputeAchievement();
         var a = 1;
     }
 
@@ -87,8 +83,9 @@ export class CMe extends CUqBase {
     }
 
     //搜索业绩历史记录
-    searchAchievementDetail = async (type: number) => {
-        let param = { types: type };
+    searchAchievementDetail = async (type: number, status: number) => {
+        await this.onComputeAchievement();
+        let param = { types: type, status: status };
         let list = await this.uqs.salesTask.SearchAchievementHistory.table(param);
         return list;
     }
@@ -113,7 +110,11 @@ export class CMe extends CUqBase {
     onComputeAchievement = async () => {
         await this.uqs.salesTask.ComputeAchievement.submit({});
         let query = { user: this.user.id };
-        this.achievement = await this.uqs.salesTask.SearchAchievement.table(query);
+
+        let result = await this.uqs.salesTask.SearchAchievement.obj(query);
+        if (result) {
+            this.salesAmont = result;
+        }
     }
 
     render = () => {

@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, List, LMR, tv, FA } from 'tonva';
-import { CMe } from '../me/CMe';
+import { VPage, Page, List, LMR, tv, FA, BoxId } from 'tonva';
 import { CTeam } from './CTeam';
 
 export class VTeam extends VPage<CTeam> {
@@ -11,24 +10,24 @@ export class VTeam extends VPage<CTeam> {
         this.openPage(this.page);
     }
 
-    private userSpan(name: any, nick: string): JSX.Element {
-        return nick ?
-            <><b>{nick} &nbsp; <small className="muted">{name}</small></b></>
-            : <b>{name}</b>
+    private userSpan(displayName: JSX.Element, assigned: string): JSX.Element {
+        return assigned ?
+            <><b>{assigned} &nbsp; <small className="muted">{displayName}</small></b></>
+            : <b>{displayName}</b>
     }
 
 
-    private renderItem = (team: any, index: number) => {
+    private renderItem = (teamItem: any, index: number) => {
 
         let { showPeerDetail } = this.controller;
-        let onshowPeerDetail = async () => await showPeerDetail(team);
+        let onshowPeerDetail = async () => await showPeerDetail(teamItem);
 
-        let { children } = team;
-        let codes = tv(children, v => v.name);
+        let { children } = teamItem;
+        let displayName = tv(children, v => v.nick || v.name);
         return <LMR className="px-3 py-2 " onClick={onshowPeerDetail}
             left={<FA name='user' className=' my-2 mr-3 text-info' />}
             right={<div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div>}>
-            <div className="font-weight-bold ">{this.userSpan(codes, team.assigned)}</div>
+            <div className="font-weight-bold ">{this.userSpan(displayName, teamItem.assigned)}</div>
         </LMR>
     }
 

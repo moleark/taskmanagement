@@ -25,7 +25,7 @@ export class VCreate extends VPage<CCommonType> {
         this.task.priorty = priorty;
         this.task.deadline = deadline;
         await this.controller.cSalesTask.createTask(context.form.data, this.task);
-        this.closePage(5);
+        this.closePage(3);
     }
 
     private page = observer((param: any) => {

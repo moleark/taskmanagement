@@ -2,7 +2,7 @@ import * as React from 'react';
 import _ from 'lodash';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { Query, tv, Tuid, Action } from 'tonva';
+import { Query, tv, Tuid, Action, BoxId } from 'tonva';
 import { PageItems, Controller, nav, Page, Image } from 'tonva';
 import { CApp } from '../CApp';
 import { CUqBase } from '../CBase';
@@ -12,6 +12,8 @@ import { VProductList } from './VProductList';
 import { VProductDetail } from './VProductDetail';
 import { LoaderProductChemicalWithPrices } from './item';
 import { VProductPackSelect } from './VProductPackSelect';
+import classNames from 'classnames';
+import { VProductDelivery } from './VProductDelivery';
 
 //页面类
 class PageProduct extends PageItems<any> {
@@ -42,6 +44,11 @@ export class CProduct extends CUqBase {
     cApp: CApp;
     @observable pageProduct: PageProduct;
     @observable customerlist: any;
+
+    @observable inventoryAllocationContainer: { [packId: number]: any[] } = {};
+    @observable futureDeliveryTimeDescriptionContainer: { [productId: number]: string } = {};
+    @observable chemicalInfoContainer: { [productId: number]: any } = {};
+
 
     /*
     private productTuid: Tuid;
@@ -96,6 +103,28 @@ export class CProduct extends CUqBase {
         this.openVPage(VProductPackSelect, product)
     }
 
+    renderDeliveryTime = (pack: BoxId) => {
+        return this.renderView(VProductDelivery, pack);
+    }
+
+    getInventoryAllocation = async (productId: number, packId: number, salesRegionId: number) => {
+        if (this.inventoryAllocationContainer[packId] === undefined)
+            this.inventoryAllocationContainer[packId] = await this.uqs.warehouse.GetInventoryAllocation.table({ product: productId, pack: packId, salesRegion: this.cApp.currentSalesRegion });
+    }
+
+    getFutureDeliveryTimeDescription = async (productId: number, salesRegionId: number) => {
+        if (this.futureDeliveryTimeDescriptionContainer[productId] === undefined) {
+            let futureDeliveryTime = await this.uqs.product.GetFutureDeliveryTime.table({ product: productId, salesRegion: salesRegionId });
+            if (futureDeliveryTime.length > 0) {
+                let { minValue, maxValue, unit, deliveryTimeDescription } = futureDeliveryTime[0];
+                this.futureDeliveryTimeDescriptionContainer[productId] = minValue + (maxValue > minValue ? '~' + maxValue : '') + ' ' + unit;
+            } else {
+                this.futureDeliveryTimeDescriptionContainer[productId] = null;
+            }
+        }
+    }
+
+
 
     render = observer(() => {
         this.pageProduct = null;
@@ -112,11 +141,13 @@ export function renderBrand(brand: any) {
     return productPropItem('品牌', brand.name);
 }
 
-export function productPropItem(caption: string, value: any) {
-    if (value === null || value === undefined) return null;
+export function productPropItem(caption: string, value: any, captionClass?: string) {
+    if (value === null || value === undefined || value === '0') return null;
+    let capClass = captionClass ? classNames(captionClass) : classNames("text-muted");
+    let valClass = captionClass ? classNames(captionClass) : "";
     return <>
-        <div className="col-4 col-sm-2 col-lg-4 text-muted pr-0 small">{caption}</div>
-        <div className="col-8 col-sm-4 col-lg-8">{value}</div>
+        <div className={classNames("col-6 col-sm-2 pr-0 small", capClass)}> {caption}</div>
+        <div className={classNames("col-6 col-sm-4", valClass)}>{value}</div>
     </>;
 }
 

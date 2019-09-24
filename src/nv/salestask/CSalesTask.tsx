@@ -26,6 +26,7 @@ import { VCreateProject } from './views/VCreateProject';
 import { VProjectDetail } from './views/VProjectDetail';
 import { VCreateProductPack } from './views/VCreateProductPack';
 import { VProductPackDetail } from './views/VProductPackDetail';
+import { VCreateTask } from './views/VCreateTask';
 
 class PageSalesTask extends PageItems<any> {
 
@@ -144,21 +145,29 @@ export class CSalesTask extends CUqBase {
     searchTaskCompletion = async (taskid: number) => {
         return await this.uqs.salesTask.SearchTaskCompletion.table({ taskid: taskid });
     }
+
     //显示任务沟通记录
     showTaskHistory = async (taskid: number) => {
         let tasks = await this.uqs.salesTask.SearchHistoryTask.table({ taskid: taskid });
         this.openVPage(VTaskHistory, { tasks: tasks });
     }
-    //显示员工沟通记录
-    showEmployeeHistory = async () => {
+
+    /**
+     * "我"的已完成任务
+     */
+    showMyTasksCompleted = async () => {
         let tasks = await this.uqs.salesTask.SearchHistoryTaskByEmployee.table({});
-        this.openVPage(VEmployeeHistory, { tasks: tasks });
+        this.openVPage(VEmployeeHistory, tasks);
     }
-    //显示客户沟通记录
+
+    /**
+     * 显示客户沟通记录
+     */
     showCustomerHistory = async (customerid: number) => {
         let tasks = await this.uqs.salesTask.SearchHistoryTaskByCustomer.table({ customerid: customerid });
         this.openVPage(VCustomerHistory, tasks);
     }
+
     //获取类型的图表
     getTaskIcon(typeName: string) {
         let tt = this.taskTypes[typeName];
@@ -361,7 +370,30 @@ export class CSalesTask extends CUqBase {
     //显示任务类页面
     showSelectTaskType = async () => {
         //return await this.cSalesTaskType.call();
-        await this.cSelectType.start();
+        //await this.cSelectType.start();
+        let type = {
+            id: 1,
+            name: 'qualify',
+            description: '任务'
+        };
+        let biz = {
+            id: 1,
+            name: 'nonreagent',
+            description: ''
+        };
+
+        let task = {
+            id: null,
+            type: type,
+            biz: biz,
+            description: null,
+            remindDate: null,
+            deadline: null,
+            customer: null
+        }
+        //this.cApp.cCustomer.showSelectCustomer(task);
+        this.openVPage(VCreateTask, task);
+
     }
     //显示选择处理方式的页面
     showCrateCheck = async (task: Task) => {
@@ -387,7 +419,7 @@ export class CSalesTask extends CUqBase {
         let ret = await this.uqs.salesTask.AddTask.submit(model);
         task.id = ret.id;
         return task;
-        /** 
+        /**
         //添加任务--前台页面
         this.tasks.unshift({
             id: ret.id,
@@ -436,4 +468,3 @@ export class CSalesTask extends CUqBase {
         return <this.render />;
     }
 }
-

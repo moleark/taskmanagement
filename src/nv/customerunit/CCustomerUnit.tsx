@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { Query, PageItems, Controller, Tuid, Action } from 'tonva';
+import { Query, PageItems } from 'tonva';
 import { observable } from 'mobx';
 import { CApp } from '../CApp';
 import { CUqBase } from '../CBase';
@@ -38,23 +38,6 @@ export class CCustomerUnit extends CUqBase {
     cApp: CApp;
     @observable pageUnit: PageUnit;
 
-    /*
-    private tuidMyCustomerUnit: Tuid;
-    private querySearchMyCustomerunit: Query;
-    private actionCreateMyCustomerunit: Action;
-    //构造函数
-    constructor(cApp: CSalesTaskApp, res: any) {
-        super(res);
-        this.cApp = cApp;
-
-        let { cUqCustomer, cUqSalesTask } = this.cApp;
-
-        this.tuidMyCustomerUnit = cUqSalesTask.tuid("mycustomerunit");
-        this.querySearchMyCustomerunit = cUqSalesTask.query("searchmycustomerunit");
-        this.actionCreateMyCustomerunit = cUqSalesTask.action("CreateMyCustomerunit");
-    }
-    */
-
     //初始化
     protected async internalStart(task: Task) {
         this.pageUnit = null;
@@ -76,20 +59,30 @@ export class CCustomerUnit extends CUqBase {
         this.pageUnit.first({ key: key });
     }
 
-    //显示新建单位
-    showCreateUnit = () => {
-        //this.openVPage(VCreateCustomerFinish);
-        this.openVPage(VCreateCustomerUnit);
+    /**
+     * 显示新建单位
+     */
+    showCreateOrganization = async () => {
+        let orgnization = await this.vCall(VCreateCustomerUnit);
+        this.showCreateCustomer(orgnization);
+        // this.openVPage(VCreateCustomerUnit);
     }
 
     //新建客户单位
-    createMyCustomerUnit = async (param: any) => {
+    createOrganization = async (param: any) => {
         let par = {
             no: undefined,
             name: param.Name,
+            user: this.user.id,
+            isvalid: 1,
         }
-        let ref = await this.uqs.salesTask.CreateMyCustomerUnit.submit(par);
-        this.openVPage(VCreateCustomerUnitFinish, ref);
+        let { MyCustomerUnit, CreateMyCustomerUnit } = this.uqs.salesTask;
+        // let organization = await this.uqs.salesTask.CreateMyCustomerUnit.submit(par);
+        // this.openVPage(VCreateCustomerUnitFinish, ref);
+        let organization = await MyCustomerUnit.save(undefined, par);
+        let organizationBox = organization && MyCustomerUnit.boxId(organization.id);
+        this.backPage();
+        this.returnCall(organizationBox);
     }
 
     //显示单位明细
@@ -98,7 +91,9 @@ export class CCustomerUnit extends CUqBase {
         this.openVPage(VCustomerUnitDetail, unit);
     }
 
-    //显示新建客户页面
+    /**
+     * 显示新建客户页面
+     */
     showCreateCustomer = async (param: any) => {
         this.cApp.cCustomer.showCreateCustomer(param);
     }

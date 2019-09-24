@@ -1,36 +1,37 @@
 import * as React from 'react';
-import { VPage, Page, PageItems, Schema, Form, UiSchema, UiInputItem, UiCheckItem, Context, UiRadio, toUiSelectItems, LMR, FA, Prop, ComponentProp, PropGrid } from 'tonva';
+import {
+    VPage, Page, Schema, Form, UiSchema, UiInputItem, Context,
+    UiRadio, toUiSelectItems, LMR, FA, tv, BoxId
+} from 'tonva';
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
 import { consts } from '../consts';
 import { mobileValidation, nameValidation } from 'nv/tools/inputValidations';
-
-
 
 const schema: Schema = [
     { name: 'Name', type: 'string', required: true },
     { name: 'Salutation', type: 'string', required: false },
     { name: 'telephone', type: 'string', required: true },
     { name: 'Gender', type: 'number', required: false },
-    { name: 'BirthDay', type: 'date', required: false },
+    //{ name: 'BirthDay', type: 'date', required: false },
     { name: 'submit', type: 'submit' },
 ];
 
 export class VCreateCustomer extends VPage<CCustomer> {
-    private customerunit: any;
+    private customerunit: BoxId;
     private form: Form;
     private uiSchema: UiSchema = {
         items: {
             Name: { widget: 'text', label: '姓名', placeholder: '请输入姓名', rules: nameValidation } as UiInputItem,
             Salutation: { widget: 'text', label: '称谓', placeholder: '请输入称谓' } as UiInputItem,
-            telephone: { widget: 'text', label: '电话', placeholder: '请输入电话号码', rules: mobileValidation } as UiInputItem,
+            telephone: { widget: 'text', label: '手机号', placeholder: '请输入手机号', rules: mobileValidation } as UiInputItem,
             Gender: {
                 widget: 'radio', label: '性别', placeholder: '性别',
                 defaultValue: 1,
-                list: toUiSelectItems(['1:男', '2:女']),
+                list: toUiSelectItems(['1:男', '0:女']),
                 radioClassName: 'w-min-6c d-inline-block'
             } as UiRadio,
-            BirthDay: { widget: 'date', label: '生日', placeholder: '' } as UiInputItem,
+            //BirthDay: { widget: 'date', label: '生日', placeholder: '' } as UiInputItem,
             submit: { widget: 'button', label: '提交', className: 'btn btn-primary w-8c' },
         }
     }
@@ -44,21 +45,12 @@ export class VCreateCustomer extends VPage<CCustomer> {
         await this.controller.createMyCustomer(context.data, this.customerunit);
     }
 
-    private itemss = "cursor-pointer mx-3 my-2 w-100";
     private page = observer(() => {
-
-        let rows: Prop[] = [
-            {
-                type: 'component',
-                name: 'unit',
-                component: <LMR className={this.itemss}
-                    left={<div> <FA name="university" className="text-info mr-2 pt-1 " /> </div>}>
-                    {this.customerunit.name}
-                </LMR>,
-            } as ComponentProp,
-        ];
         return <Page header="新建客户" headerClassName={consts.headerClass} >
-            <PropGrid className="my-2" rows={rows} values={null} />
+            <LMR className="cursor-pointer pm-3 py-2 bg-white"
+                left={<div className="pl-3"><FA name="university" className="text-info mr-2 pt-1" /></div>}>
+                {tv(this.customerunit, (v) => v.name)}
+            </LMR>
             <Form ref={v => this.form = v} className="my-3 mx-3"
                 schema={schema}
                 uiSchema={this.uiSchema}

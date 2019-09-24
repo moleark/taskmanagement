@@ -19,12 +19,13 @@ export const BagOrder: TaskCommonType = {
             submit: { widget: 'button', label: '提交', }
         }
     } as UiSchema,
+
     completSchema: [
         { name: 'result', type: 'string', required: false },
     ],
     completuiSchema: {
         items: {
-            result: { widget: 'radio', label: '结案', defaultValue: 1, list: [{ value: 0, title: '成功' }, { value: 1, title: '失败' }] } as UiRadio,
+            description: { widget: 'textarea', label: '结果', placeholder: '请填写处理结果', row: 6 } as UiInputItem,
             submit: { widget: 'button', label: '提交', }
         }
     } as UiSchema

@@ -3,6 +3,7 @@ import { Tuid, TuidDiv, Map, Query } from 'tonva';
 import { ProductPackRow } from './Product';
 import { Loader } from '../mainSubs/loader';
 import { MainSubs, MainProductChemical, MainBrand } from '../mainSubs';
+import { LoaderProductChemical } from './productChemical';
 
 export class LoaderBrand extends Loader<MainBrand> {
     //private brandTuid: Tuid;
@@ -25,30 +26,29 @@ export class LoaderBrand extends Loader<MainBrand> {
     }
 }
 
-export class LoaderProductChemical extends Loader<MainProductChemical> {
+export class LoaderProductWithChemical extends Loader<MainProductChemical> {
     /*
     private productTuid: Tuid;
-    private packTuid: TuidDiv;
-    private productChemicalMap: Map;
 
     protected initEntities() {
 
         let { cUqProduct } = this.cApp;
         this.productTuid = cUqProduct.tuid('productx');
-        this.packTuid = this.productTuid.div['packx'];
-        this.productChemicalMap = cUqProduct.map('productChemical');
     }
     */
 
     protected async loadToData(productId: number, data: MainProductChemical): Promise<void> {
 
         let product = await this.cApp.uqs.product.ProductX.load(productId);
+        if (product === undefined)
+            return;
         _.merge(data, product);
 
         let brandLoader = new LoaderBrand(this.cApp);
         data.brand = await brandLoader.load(data.brand.id);
 
-        let productChemical = await this.cApp.uqs.product.ProductChemical.obj({ product: productId });
+        let productChemicalLoader = new LoaderProductChemical(this.cApp);
+        let productChemical: any = await productChemicalLoader.load(productId);
         if (productChemical) {
             let { chemical, purity, CAS, molecularFomula, molecularWeight } = productChemical;
             data.chemical = chemical;
@@ -95,32 +95,39 @@ export class LoaderProductChemicalWithPrices extends Loader<MainSubs<MainProduct
 
     protected async loadToData(productId: any, data: MainSubs<MainProductChemical, ProductPackRow>): Promise<void> {
         let uqProduct = this.cApp.uqs.product;
-        let productLoader = new LoaderProductChemical(this.cApp);
+        let { customerDiscount, product, promotion } = this.cApp.uqs;
+        let productLoader = new LoaderProductWithChemical(this.cApp);
         data.main = await productLoader.load(productId);
 
+        let discount = 0;
         let { currentSalesRegion, currentLanguage } = this.cApp;
+
+
         let { id: currentSalesRegionId } = currentSalesRegion;
-        let prices = await uqProduct.PriceX.table({ product: productId, salesRegion: currentSalesRegionId });
-        let agentprices = await uqProduct.AgentPrice.table({ product: productId, salesRegion: currentSalesRegionId });
-        data.subs = prices;
+        let prices = await product.PriceX.table({ product: productId, salesRegion: currentSalesRegionId });
+        let agentprices = await uqProduct.AgentPrice.table({ product: productId, salesRegion: 1 });
+        data.subs = prices.filter(e => e.discountinued === 0 && e.expireDate > Date.now()).sort((a, b) => a.retail - b.retail).map(element => {
+            let ret: any = {};
+            ret.pack = element.pack;
+            ret.retail = element.retail;
+            if (discount !== 0)
+                ret.vipPrice = Math.round(element.retail * (1 - discount));
+            ret.currency = currentSalesRegion.currency;
+            return ret;
+        });
+
         let promises: PromiseLike<any>[] = [];
         data.subs.forEach(v => {
-            promises.push(this.cApp.uqs.warehouse.GetInventoryAllocation.table({ product: productId, pack: v.pack, salesRegion: currentSalesRegion }));
-            promises.push(this.cApp.uqs.promotion.GetPromotionPack.obj({ product: productId, pack: v.pack, salesRegion: currentSalesRegion, language: currentLanguage }));
+            promises.push(promotion.GetPromotionPack.obj({ product: productId, pack: v.pack, salesRegion: currentSalesRegion, language: currentLanguage }));
         })
         let results = await Promise.all(promises);
 
-        let fd = await this.getFutureDeliveryTimeDescription(productId, currentSalesRegionId);
         for (let i = 0; i < data.subs.length; i++) {
-            data.subs[i].futureDeliveryTimeDescription = fd;
-            data.subs[i].inventoryAllocation = results[i * 2];
-            let aa = this.getagentPrices(agentprices, data.subs[i].pack.id);
-            // data.subs[i].agentPrices = aa;
-            let promotion = results[i * 2 + 1];
+            let promotion = results[i];
             let discount = promotion && promotion.discount;
-            if (discount) {
+
+            if (discount)
                 data.subs[i].promotionPrice = Math.round((1 - discount) * data.subs[i].retail);
-            }
 
             for (let j = 0; j < agentprices.length; j++) {
                 let pid = agentprices[j].pack.id;
@@ -141,11 +148,44 @@ export class LoaderProductChemicalWithPrices extends Loader<MainSubs<MainProduct
         }
     }
 
-    private getFutureDeliveryTimeDescription = async (productId: number, salesRegionId: number) => {
-        let futureDeliveryTime = await this.cApp.uqs.product.GetFutureDeliveryTime.table({ product: productId, salesRegion: salesRegionId });
-        if (futureDeliveryTime.length > 0) {
-            let { minValue, maxValue, unit, deliveryTimeDescription } = futureDeliveryTime[0];
-            return minValue + (maxValue > minValue ? '~' + maxValue : '') + ' ' + unit;
-        }
-    }
 }
+
+/*
+// 拟用 LoaderProduct 替换
+export class ProductService {
+
+private cApp: CCartApp;
+private productTuid: TuidMain;
+private productChemicalMap: Map;
+
+constructor(cApp: CCartApp) {
+    this.cApp = cApp;
+    this.initEntities();
+}
+
+protected initEntities() {
+
+    let { cUqProduct, cUqCustomerDiscount, cUqWarehouse } = this.cApp;
+    this.productTuid = cUqProduct.tuid('productx');
+    this.productChemicalMap = cUqProduct.map('productChemical');
+}
+
+async loadProductChemical(productId: number): Promise<MainProductChemical> {
+
+    let result: MainProductChemical;
+    let product = await this.productTuid.load(productId);
+    result = {...product };
+
+    let productChemical = await this.productChemicalMap.obj({ product: productId });
+    if (productChemical) {
+        let { chemical, purity, CAS, molecularFomula, molecularWeight } = productChemical;
+        result.chemical = chemical;
+        result.purity = purity;
+        result.CAS = CAS;
+        result.molecularFomula = molecularFomula;
+        result.molecularWeight = molecularWeight;
+    }
+    return result;
+}
+}
+*/

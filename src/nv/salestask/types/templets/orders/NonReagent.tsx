@@ -4,7 +4,7 @@ import { TaskCommonType } from '../../taskCommonType';
 import { UiSchema, UiInputItem, UiRadio } from 'tonva';
 
 export const NonReagent: TaskCommonType = {
-    caption: '大包装报价跟踪',
+    caption: '任务',
     icon: <FA name='shopping-bag' size="lg" fixWidth={true} />,
     schema: [
         { name: 'priorty', type: 'number', required: false },
@@ -28,7 +28,7 @@ export const NonReagent: TaskCommonType = {
     ],
     completuiSchema: {
         items: {
-            result: { widget: 'radio', label: '丢单原因', defaultValue: 1, list: [{ value: 0, title: '货期' }, { value: 1, title: '价格' }, { value: 1, title: '质量' }, { value: 1, title: '资质' }, { value: 1, title: '发票' }] } as UiRadio,
+            result: { widget: 'textarea', label: '结果', placeholder: '请填写处理结果', row: 12 } as UiInputItem,
             submit: { widget: 'button', label: '提交', }
         }
     } as UiSchema
