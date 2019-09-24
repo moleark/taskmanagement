@@ -55,7 +55,7 @@ export class VMain extends VPage<CSalesTask> {
                 <div className=" my-1 mr-3 font-weight-bold">{tv(customer)}</div>
             </LMR>
             <LMR className="" >
-                <div className=" my-1 mr-3">{description}</div>
+                <div className=" my-1 mr-3 small" style={subStyle}>{description}</div>
             </LMR>
         </LMR >
     }
@@ -85,4 +85,11 @@ export class VMain extends VPage<CSalesTask> {
             }
         </Page>
     });
+}
+
+export const subStyle: React.CSSProperties = {
+    fontSize: '0.75rem',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
 }

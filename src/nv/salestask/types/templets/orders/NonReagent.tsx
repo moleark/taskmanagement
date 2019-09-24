@@ -5,7 +5,7 @@ import { UiSchema, UiInputItem, UiRadio } from 'tonva';
 
 export const NonReagent: TaskCommonType = {
     caption: '任务',
-    icon: <FA name='paper-plane-o' size="lg" fixWidth={true} />,
+    icon: <FA name='clock-o' size="lg" fixWidth={true} />,
     schema: [
         { name: 'priorty', type: 'number', required: false },
         { name: 'deadline', type: 'string', required: false },

@@ -60,7 +60,7 @@ export class VMe extends VPage<CMe> {
             <LMR
                 left={<div onClick={onshowMeDetail}> <Image className="w-3c h-3c mr-3" src={icon} /> </div>}
                 right={<div className={classNames('jk-cart ml-1 mr-2', pointer)} onClick={onshowMessage} >
-                    <FA className="fa-lg" name="envelope-o" />
+                    <FA className="fa-lg" name="commenting-o" />
                     {badge}
                 </div>}>
                 <div onClick={onshowMeDetail} className="  " >
