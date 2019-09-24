@@ -17,34 +17,41 @@ const schema: Schema = [
     { name: 'submit', type: 'submit' },
 ];
 
-
 class ValidityDate extends Widget {
     @observable dateVisible = false;
     private list = [
-        { value: 1, title: '    一周', name: 'b', checked: undefined },
+        { value: 1, title: '    一周', name: 'b', checked: true },
         { value: 2, title: '两周', name: 'b', checked: undefined }
     ];
 
+    /*
     private onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
         let val = evt.currentTarget.value;
         this.dateVisible = val === '0';
-        var day2 = new Date();
-        if (val === '1') {
-            day2.setDate(day2.getDate() + 7);
-        } else if (val === '2') {
-            day2.setDate(day2.getDate() + 14);
+        //var day2 = new Date();
+        let v:Date;
+        switch (val) {
+            case '1':
+            //day2.setDate(day2.getDate() + 7);
+            v = oneWeek;
+            break;
+            case '2':
+            //day2.setDate(day2.getDate() + 14);
+            v = twoWeeks;
+            break;
         }
-        let ss = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
-        this.setValue(ss);
+        //let ss = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
+        this.setValue(v.toDateString());
     }
+    */
 
     render = () => {
         return <div className="form-control" style={{ height: 'auto' }}>
             {this.list.map((v, index) => {
                 let { value, title } = v;
                 return <label className="my-1 mx-3" key={index}>
-                    <input type="radio" value={value} name={this.name} defaultChecked={value === this.value}
-                        onChange={this.onChange} /> {title} &nbsp;
+                    <input type="radio" value={value} name={this.name} 
+                        defaultChecked={value === this.value} /> {title} &nbsp;
                 </label>
             })}
         </div>
@@ -54,7 +61,7 @@ class ValidityDate extends Widget {
 class Discount extends Widget {
     @observable dateVisible = false;
     private list = [
-        { value: 9.5, title: '9.5折', name: 'a', checked: undefined },
+        { value: 9.5, title: '9.5折', name: 'a', checked: true },
         { value: 9, title: '9.0折', name: 'a', checked: undefined },
         { value: 8.5, title: '8.5折', name: 'a', checked: undefined },
         { value: 8, title: '8.0折', name: 'a', checked: undefined },
@@ -97,6 +104,8 @@ class Discount extends Widget {
     };
 }
 
+const oneWeek = new Date(Date.now() + 7*24*3600*1000);
+const twoWeeks = new Date(Date.now() + 7*24*3600*1000);
 export class VCreateCoupon extends VPage<CCoupon> {
     @observable showTip: boolean = false;
     tip: string = "";
@@ -108,11 +117,13 @@ export class VCreateCoupon extends VPage<CCoupon> {
                 widget: 'custom',
                 label: '有效期',
                 WidgetClass: ValidityDate,
+                defaultValue: 1,
             } as UiCustom,
             discount: {
                 widget: 'custom',
                 label: '折扣',
                 WidgetClass: Discount,
+                defaultValue: 9.5,
                 //discription: '最小折扣',
             } as UiCustom,
             /*
@@ -139,8 +150,8 @@ export class VCreateCoupon extends VPage<CCoupon> {
     }
 
     private onFormButtonClick = async (name: string, context: Context) => {
-
-        let { validitydate, discount } = context.data;
+        let data = _.clone(context.data)
+        let { validitydate, discount } = data;
         if (validitydate == undefined || discount == undefined) {
             this.tip = "提示：请选择有效期和折扣！";
             this.showTip = true;
@@ -153,11 +164,28 @@ export class VCreateCoupon extends VPage<CCoupon> {
             this.tip = "提示：折扣必须是数字，且介于0和10之间！";
             this.showTip = true;
             setTimeout(() => this.showTip = false, GLOABLE.TIPDISPLAYTIME);
-        } else {
-            this.showTip = false;
-            context.data.discount = _.round(1 - disc * 0.1, 2);
-            await this.controller.createCoupon(context.data);
+            return;
         }
+        
+        this.showTip = false;
+        data.validitydate = this.validDateFrom(validitydate);
+        data.discount = _.round(1 - disc * 0.1, 2);
+        await this.controller.createCoupon(data);
+    }
+
+    private validDateFrom(v: any) {
+        let d:Date;
+        switch (v) {
+            default: return undefined;
+            case 1:
+                d = oneWeek;
+                break;
+            case 2:
+                d = twoWeeks;
+                break;
+        }
+        //let ss = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
+        return `${d.getFullYear()}-${(d.getMonth() + 1)}-${d.getDate()}`;
     }
 
     private page = observer((param: any) => {
