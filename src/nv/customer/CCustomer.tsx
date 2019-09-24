@@ -80,7 +80,7 @@ export class CCustomer extends CUqBase {
         this.pageCustomer = null;
         this.task = task;
         this.searchByKey('');
-        this.openVPage(VMyCustomerSelect);
+        this.openVPage(VCustomerSelect);
     }
 
     /**

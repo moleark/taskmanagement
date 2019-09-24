@@ -57,7 +57,7 @@ export class VCreateTask extends VPage<CSalesTask> {
             } as UiIdItem,
             priorty: { widget: 'radio', label: '重要性', defaultValue: 0, list: [{ value: 0, title: '一般' }, { value: 1, title: '重要' }] } as UiRadio,
             deadline: { widget: 'date', label: '完成时间', placeholder: '要求完成时间' } as UiInputItem,
-            description: { widget: 'textarea', label: '备注', placeholder: '请填写任务备注', rows: 6 } as UiInputItem,
+            description: { widget: 'textarea', label: '任务描述', placeholder: '请填写任务描述', rows: 6 } as UiInputItem,
             submit: { widget: 'button', label: '提交' }
         }
     };
@@ -70,7 +70,6 @@ export class VCreateTask extends VPage<CSalesTask> {
         //{ name: 'submit', type: 'submit' },
     ];
 
-
     private page = observer(() => {
 
 
@@ -80,7 +79,7 @@ export class VCreateTask extends VPage<CSalesTask> {
                     schema={this.schema}
                     uiSchema={this.uiSchema}
                     onButtonClick={this.onFormButtonClick}
-                    requiredFlag={false}
+                    requiredFlag={true}
                 />
                 <div className="d-flex px-1 ">
                     <div className="flex-grow-1 justify-content-start">

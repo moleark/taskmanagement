@@ -28,14 +28,14 @@ export class Tasks {
     }
 
     add(task: Task) {
-        let { remindDate } = task;
-        if (!remindDate) {
+        let { deadline } = task;
+        if (!deadline) {
             this.tasksNow.push(task);
             return;
         }
-        let dateTasks = this.dateTasksList.find(v => v.date.getTime() === remindDate.getTime());
+        let dateTasks = this.dateTasksList.find(v => v.date.getTime() === deadline.getTime());
         if (dateTasks === undefined) {
-            dateTasks = { date: remindDate, list: [task] };
+            dateTasks = { date: deadline, list: [task] };
             // 插入到合适的地方
             this.dateTasksList.push(dateTasks);
         }

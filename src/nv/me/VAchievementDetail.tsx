@@ -132,8 +132,8 @@ export class VAchievementDetail extends VPage<CMe> {
             }
         ];
 
-        return <Page header={this.header()} headerClassName={consts.headerClass}>
+        return <Page header={this.header()} headerClassName={consts.headerClass} >
             <Tabs tabs={tabs} tabPosition="top" />
-        </Page>
+        </Page >
     })
 }
