@@ -15,7 +15,7 @@ const tabCaption = (caption: string, amount: number): TabCaption => {
 
 class AchievementTab extends SelectWidget {
     private list = [
-        { value: 1, title: '总收益', name: 'b', select: true, className: 'mr-1 px-2' },
+        { value: 1, title: '累计收益', name: 'b', select: true, className: 'mr-1 px-2' },
         { value: 0, title: '待到款', name: 'b', select: true, className: '' }
     ];
 
@@ -82,12 +82,12 @@ export class VAchievementDetail extends VPage<CMe> {
         if (this.tab_Status == 1) {
             return <div className="w-100 text-center mr-4 ">
                 <span className="bg-white text-info mr-1 px-3 py-2" onClick={onClickA} >累计收益</span>
-                <span className="px-3 py-2" onClick={onClickB} >待到款</span>
+                <span className="px-3 py-2" onClick={onClickB} >&nbsp;待到款&nbsp;</span>
             </div>;
         } else {
             return <div className="w-100 text-center mr-4 ">
-                <span className="mr-1 px-3 py-2" onClick={onClickA}>总收益</span>
-                <span className="bg-white text-info px-3 py-2" onClick={onClickB}>待到款</span>
+                <span className="mr-1 px-3 py-2" onClick={onClickA}>累计收益</span>
+                <span className="bg-white text-info px-3 py-2" onClick={onClickB}>&nbsp;待到款&nbsp;</span>
             </div >;
         }
     }
