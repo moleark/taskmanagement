@@ -21,8 +21,7 @@ export class VMyCustomer extends VPage<CCustomer> {
     }
 
     private onClickCustomer = async (model: any) => {
-        await this.controller.returnCustomer(model);
-        this.closePage();
+        await this.controller.showCustomerDetail(model.id);
     }
 
     private page = observer(() => {
