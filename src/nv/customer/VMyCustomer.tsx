@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
 import { LMR, List, EasyDate, SearchBox, FA } from 'tonva';
 
-export class VMyCustomerSelect extends VPage<CCustomer> {
+export class VMyCustomer extends VPage<CCustomer> {
 
     private temp: any;
     async open(temp: any) {
@@ -25,15 +25,20 @@ export class VMyCustomerSelect extends VPage<CCustomer> {
         this.closePage();
     }
 
-    private page = observer((customer: any) => {
-        let { pageCustomer } = this.controller;
-        let none = <div className="my-3 mx-2 text-warning">请搜索客户！</div>;
-        return <Page header="选择客户" headerClassName='bg-primary'>
-            <SearchBox className="px-1 w-100  mt-2 mr-2"
-                size='md'
-                onSearch={(key: string) => this.controller.searchByKey(key)}
-                placeholder="搜索客户姓名、单位" />
-            <List before={''} none={none} items={pageCustomer} item={{ render: this.renderCustomer, onClick: this.onClickCustomer }} />
+    private page = observer(() => {
+        let { pageMyCustomerActive } = this.controller;
+        let none = <div className="my-3 mx-2 text-warning">【无】</div>;
+        var header = <>客户</>;
+        if (this.temp == 2) {
+            header = <>活跃客户</>;
+        }
+
+        return <Page header={header} headerClassName='bg-primary' onScrollBottom={this.onScrollBottom}  >
+            <List before={''} none={none} items={pageMyCustomerActive} item={{ render: this.renderCustomer, onClick: this.onClickCustomer }} />
         </Page>
     })
+
+    private onScrollBottom = async () => {
+        await this.controller.pageMyCustomerActive.more();
+    }
 }

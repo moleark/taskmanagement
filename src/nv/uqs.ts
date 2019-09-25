@@ -100,6 +100,7 @@ export interface UqSalesTask {
     SearchHistoryTaskByEmployee: Query;
     SearchHistoryTaskByCustomer: Query;
     searchMyCustomer: Query;
+    searchMyCustomerActive: Query;
     searchMyCustomerUnit: Query;
     SearchTeam: Query;
     searchNowMessage: Query;

@@ -3,8 +3,6 @@ import { observer } from 'mobx-react';
 import { LMR, VPage, nav, Image, ComponentProp, Prop, PropGrid, FA } from 'tonva';
 import { CMe } from './CMe';
 import classNames from 'classnames';
-import { runInThisContext } from 'vm';
-//import wer from '../images/wer.jpg';
 
 function rowCom(iconName: string, iconColor: string, caption: string, value: any, onClick: any) {
     return <LMR className="cursor-pointer w-100 py-2 my-2 align-items-center  " onClick={onClick}
@@ -41,13 +39,14 @@ export class VMe extends VPage<CMe> {
         let { user, showMeDetail, showMessage, showTeam, salesAmont } = this.controller;
         if (user === undefined) return null;
         let { id, name, nick, icon } = user;
-        let { showCustomerSearch } = this.controller.cApp.cCustomer;
+        let { showMyCustomer } = this.controller.cApp.cCustomer;
         let { cMessage } = this.controller.cApp
         let count: any = cMessage.count.get();
         let onshowMeDetail = async () => await showMeDetail();
         let onshowMessage = async () => await showMessage();
         let onshowTeam = async () => await showTeam();
-        let onshowCustomerSearch = async () => await showCustomerSearch();
+        let onshowMyCustomer = async () => await showMyCustomer("", 1);
+        let onshowMyCustomerActive = async () => await showMyCustomer("", 2);
         let pointer, badge;
         if (count > 0) {
             pointer = 'cursor-pointer';
@@ -73,11 +72,11 @@ export class VMe extends VPage<CMe> {
                     <div>{teamCount}</div>
                     <small><small>团队</small></small>
                 </div>
-                <div className="col text-center" onClick={onshowCustomerSearch}>
+                <div className="col text-center" onClick={onshowMyCustomer}>
                     <div >{customerCount}</div>
                     <small><small>客户</small></small>
                 </div>
-                <div className="col text-center" onClick={onshowCustomerSearch}>
+                <div className="col text-center" onClick={onshowMyCustomerActive}>
                     <div >{activeCustomerCount}</div>
                     <small><small>活跃客户</small></small>
                 </div>

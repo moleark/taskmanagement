@@ -23,7 +23,7 @@ export class Tasks {
     postPone(date: Date, task: Task) {
         this.remove(task);
         let t = _.clone(task);
-        t.remindDate = date;
+        t.deadline = date;
         this.add(t);
     }
 
@@ -33,7 +33,8 @@ export class Tasks {
             this.tasksNow.push(task);
             return;
         }
-        let dateTasks = this.dateTasksList.find(v => v.date.getTime() === deadline.getTime());
+        let dl = new Date(deadline).getTime();
+        let dateTasks = this.dateTasksList.find(v => v.date.getTime() === dl);
         if (dateTasks === undefined) {
             dateTasks = { date: deadline, list: [task] };
             // 插入到合适的地方
