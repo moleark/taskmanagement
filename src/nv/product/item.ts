@@ -4,6 +4,7 @@ import { ProductPackRow } from './Product';
 import { Loader } from '../mainSubs/loader';
 import { MainSubs, MainProductChemical, MainBrand } from '../mainSubs';
 import { LoaderProductChemical } from './productChemical';
+import { GLOABLE } from 'nv/ui';
 
 export class LoaderBrand extends Loader<MainBrand> {
     //private brandTuid: Tuid;
@@ -105,7 +106,7 @@ export class LoaderProductChemicalWithPrices extends Loader<MainSubs<MainProduct
 
         let { id: currentSalesRegionId } = currentSalesRegion;
         let prices = await product.PriceX.table({ product: productId, salesRegion: currentSalesRegionId });
-        let agentprices = await uqProduct.AgentPrice.table({ product: productId, salesRegion: 1 });
+        let agentprices = await uqProduct.AgentPrice.table({ product: productId, salesRegion: GLOABLE.SALESREGION_CN });
         data.subs = prices.filter(e => e.discountinued === 0 && e.expireDate > Date.now()).sort((a, b) => a.retail - b.retail).map(element => {
             let ret: any = {};
             ret.pack = element.pack;
