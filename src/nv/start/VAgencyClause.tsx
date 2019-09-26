@@ -28,7 +28,7 @@ export class AgencyClause extends VPage<CStart> {
             <div className="p-4 text-center">
                 <p className="mb-5 pl-2 text-left ">
 
-                    欢迎使用百灵威轻代理系统！<br />
+                    欢迎使用百灵威销售助手系统！<br />
                     <br />
                     <span className="px-3" ></span>在您使用百灵威轻代理系统前，请认真阅读 <span className="text-info" onClick={this.onShowAgencyClauseDetil} >《服务条款与隐私政策》</span>，请您在同意并接受全部条款后再开始使用我们的服务。<br />
 
