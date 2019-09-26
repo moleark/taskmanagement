@@ -66,9 +66,17 @@ export class CMe extends CUqBase {
 
     //显示我的团队
     showTeam = async () => {
+        await this.onComputeAchievement();
         let { cTeam } = this.cApp
         await cTeam.start();
     }
+
+    showMyCustomer = async (type: number) => {
+        await this.onComputeAchievement();
+        let { showMyCustomer } = this.cApp.cCustomer;
+        await showMyCustomer("", type);
+    }
+
 
     //显示业绩
     showAchievement = async () => {

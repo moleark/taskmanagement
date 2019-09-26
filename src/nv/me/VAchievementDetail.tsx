@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { VPage, Page, LMR, List, EasyDate, tv, FA, TabCaption, TabProp, Tabs, Widget, SelectWidget } from 'tonva';
 import { observable } from 'mobx';
-import { observer, Observer } from 'mobx-react';
+import { observer } from 'mobx-react';
 import { CMe } from './CMe';
 import { consts } from '../consts';
-import { runInThisContext } from 'vm';
 
 const color = (selected: boolean) => selected === true ? 'text-primary' : 'text-muted';
 const tabCaption = (caption: string, amount: number): TabCaption => {
@@ -12,30 +11,6 @@ const tabCaption = (caption: string, amount: number): TabCaption => {
         <div className={color(selected)}>{caption}</div>
         <div className={color(selected)}>{amount}</div>
     </div>;
-}
-
-class AchievementTab extends SelectWidget {
-    private list = [
-        { value: 1, title: '累计收益', name: 'b', select: true, className: 'mr-1 px-2' },
-        { value: 0, title: '待到款', name: 'b', select: true, className: '' }
-    ];
-
-    private onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-        let val = evt.currentTarget.value;
-        this.setValue(val);
-    }
-
-    render = () => {
-        return <div className="w-100 text-center mr-4">
-            {this.list.map((v, index) => {
-                let { value, title } = v;
-                let className = v.className + ' ' + (value === this.value && 'bg-white text-info');
-                return <div className={className} onChange={this.onChange}>
-                    {title}
-                </div>
-            })}
-        </div>
-    };
 }
 
 export class VAchievementDetail extends VPage<CMe> {
@@ -50,6 +25,7 @@ export class VAchievementDetail extends VPage<CMe> {
     private aa: any;
 
     async open(param: any) {
+        this.tab_Status = param;
         this.openPage(this.page);
         let { oneAchievement, twoAchievement, threeAchievement } = this.controller.salesAmont;
         this.oneAchievement = oneAchievement;
@@ -96,10 +72,6 @@ export class VAchievementDetail extends VPage<CMe> {
         this.tab_Status = status;
     }
 
-    private acontent = () => {
-        return <List items={this.achievementsA} item={{ render: this.renderItem }} none="无收益" />
-    };
-
     private tabs = [
         {
             name: 'a',
@@ -108,9 +80,11 @@ export class VAchievementDetail extends VPage<CMe> {
                 return <List items={this.achievementsA} item={{ render: this.renderItem }} none="无收益" />
             },
             onShown: async () => {
-                let aa = await this.controller.searchAchievementDetail(1, 1);
+                ///let aa = await this.controller.searchAchievementDetail(1, 1);
+                ///this.achievementsA.splice(0);
+                ///this.achievementsA.push(aa);
                 this.achievementsA.splice(0);
-                this.achievementsA.push(aa);
+                this.achievementsA.push(...await this.controller.searchAchievementDetail(1, this.tab_Status));
             }
         }, {
             name: 'b',
@@ -119,9 +93,8 @@ export class VAchievementDetail extends VPage<CMe> {
                 return <List items={this.achievementsB} item={{ render: this.renderItem }} none="无收益" />
             },
             onShown: async () => {
-                let bb = await this.controller.searchAchievementDetail(2, 1);
                 this.achievementsB.splice(0);
-                this.achievementsB.push(bb);
+                this.achievementsB.push(...await this.controller.searchAchievementDetail(2, this.tab_Status));
             }
         }, {
             name: 'c',
@@ -130,15 +103,11 @@ export class VAchievementDetail extends VPage<CMe> {
                 return <List items={this.achievementsC} item={{ render: this.renderItem }} none="无收益" />
             },
             onShown: async () => {
-                let cc = await this.controller.searchAchievementDetail(3, 1);
                 this.achievementsC.splice(0);
-                this.achievementsC.push(cc);
+                this.achievementsC.push(... await this.controller.searchAchievementDetail(3, this.tab_Status));
             }
         }
     ];
-
-
-
 
     private page = observer(() => {
         let a = this.achievementsA;

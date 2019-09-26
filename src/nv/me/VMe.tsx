@@ -12,6 +12,7 @@ function rowCom(iconName: string, iconColor: string, caption: string, value: any
     </LMR>;
 }
 
+
 export class VMe extends VPage<CMe> {
     private user: any;
     private inviteCode: any;
@@ -36,17 +37,16 @@ export class VMe extends VPage<CMe> {
     }
 
     private meInfo() {
-        let { user, showMeDetail, showMessage, showTeam, salesAmont } = this.controller;
+        let { user, showMeDetail, showMessage, showTeam, showMyCustomer, salesAmont } = this.controller;
         if (user === undefined) return null;
         let { id, name, nick, icon } = user;
-        let { showMyCustomer } = this.controller.cApp.cCustomer;
         let { cMessage } = this.controller.cApp
         let count: any = cMessage.count.get();
         let onshowMeDetail = async () => await showMeDetail();
         let onshowMessage = async () => await showMessage();
         let onshowTeam = async () => await showTeam();
-        let onshowMyCustomer = async () => await showMyCustomer("", 1);
-        let onshowMyCustomerActive = async () => await showMyCustomer("", 2);
+        let onshowMyCustomer = async () => await showMyCustomer(1);
+        let onshowMyCustomerActive = async () => await showMyCustomer(2);
         let pointer, badge;
         if (count > 0) {
             pointer = 'cursor-pointer';
@@ -88,28 +88,28 @@ export class VMe extends VPage<CMe> {
 
         let { salesAmont } = this.controller;
         let { oneAchievement, twoAchievement, threeAchievement } = salesAmont;
-        let divTag = (t: string, achievement: number) => <div
+        let divTag = (titel: string, achievement: number, status: number) => <div
             className="cursor-pointer"
-            onClick={async () => await this.controller.showAchievementDetail(t)}>
+            onClick={async () => await this.controller.showAchievementDetail(status)}>
             {achievement <= 0.001 ?
                 <div className="h5"> - </div>
                 :
                 <div className="h5"><strong>{achievement.toFixed(2)}</strong> <span className="h6"><small>元</small></span></div>
             }
-            <div className="h6"><small>{t}</small></div>
+            <div className="h6"><small>{titel}</small></div>
         </div>;
 
         return <div className="rounded text-center text-white bg-primary pt-5 pb-3">
             <div className="py-4 cursor-pointer" >
-                <div className="text-warning" onClick={async () => await this.controller.showAchievementDetail('A')}>
+                <div className="text-warning" onClick={async () => await this.controller.showAchievementDetail(1)}>
                     <span className="h1">{(oneAchievement + twoAchievement + threeAchievement).toFixed(2)}</span>
                     <small> 元</small>
                 </div>
                 <h6 className="text-warning"><small>累计收益</small></h6>
             </div>
             <div className="d-flex justify-content-around">
-                {divTag('待到款', (oneAchievement + twoAchievement + threeAchievement))}
-                {divTag('可提现', 0)}
+                {divTag('待到款', (oneAchievement + twoAchievement + threeAchievement), 2)}
+                {divTag('可提现', 0, 2)}
             </div>
         </div>;
     }
