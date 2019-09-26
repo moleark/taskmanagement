@@ -3,8 +3,6 @@ import { observer } from 'mobx-react';
 import { LMR, VPage, nav, Image, ComponentProp, Prop, PropGrid, FA } from 'tonva';
 import { CMe } from './CMe';
 import classNames from 'classnames';
-import { runInThisContext } from 'vm';
-//import wer from '../images/wer.jpg';
 
 function rowCom(iconName: string, iconColor: string, caption: string, value: any, onClick: any) {
     return <LMR className="cursor-pointer w-100 py-2 my-2 align-items-center  " onClick={onClick}
@@ -13,6 +11,7 @@ function rowCom(iconName: string, iconColor: string, caption: string, value: any
         {caption}<span className=" ml-3">{value}</span>
     </LMR>;
 }
+
 
 export class VMe extends VPage<CMe> {
     private user: any;
@@ -38,16 +37,16 @@ export class VMe extends VPage<CMe> {
     }
 
     private meInfo() {
-        let { user, showMeDetail, showMessage, showTeam, salesAmont } = this.controller;
+        let { user, showMeDetail, showMessage, showTeam, showMyCustomer, salesAmont } = this.controller;
         if (user === undefined) return null;
         let { id, name, nick, icon } = user;
-        let { showCustomerSearch } = this.controller.cApp.cCustomer;
         let { cMessage } = this.controller.cApp
         let count: any = cMessage.count.get();
         let onshowMeDetail = async () => await showMeDetail();
         let onshowMessage = async () => await showMessage();
         let onshowTeam = async () => await showTeam();
-        let onshowCustomerSearch = async () => await showCustomerSearch();
+        let onshowMyCustomer = async () => await showMyCustomer(1);
+        let onshowMyCustomerActive = async () => await showMyCustomer(2);
         let pointer, badge;
         if (count > 0) {
             pointer = 'cursor-pointer';
@@ -60,7 +59,7 @@ export class VMe extends VPage<CMe> {
             <LMR
                 left={<div onClick={onshowMeDetail}> <Image className="w-3c h-3c mr-3" src={icon} /> </div>}
                 right={<div className={classNames('jk-cart ml-1 mr-2', pointer)} onClick={onshowMessage} >
-                    <FA className="fa-lg" name="envelope-o" />
+                    <FA className="fa-lg" name="commenting-o" />
                     {badge}
                 </div>}>
                 <div onClick={onshowMeDetail} className="  " >
@@ -73,11 +72,11 @@ export class VMe extends VPage<CMe> {
                     <div>{teamCount}</div>
                     <small><small>团队</small></small>
                 </div>
-                <div className="col text-center" onClick={onshowCustomerSearch}>
+                <div className="col text-center" onClick={onshowMyCustomer}>
                     <div >{customerCount}</div>
                     <small><small>客户</small></small>
                 </div>
-                <div className="col text-center" onClick={onshowCustomerSearch}>
+                <div className="col text-center" onClick={onshowMyCustomerActive}>
                     <div >{activeCustomerCount}</div>
                     <small><small>活跃客户</small></small>
                 </div>
@@ -89,28 +88,28 @@ export class VMe extends VPage<CMe> {
 
         let { salesAmont } = this.controller;
         let { oneAchievement, twoAchievement, threeAchievement } = salesAmont;
-        let divTag = (t: string, achievement: number) => <div
+        let divTag = (titel: string, achievement: number, status: number) => <div
             className="cursor-pointer"
-            onClick={async () => await this.controller.showAchievementDetail(t)}>
+            onClick={async () => await this.controller.showAchievementDetail(status)}>
             {achievement <= 0.001 ?
                 <div className="h5"> - </div>
                 :
                 <div className="h5"><strong>{achievement.toFixed(2)}</strong> <span className="h6"><small>元</small></span></div>
             }
-            <div className="h6"><small>{t}</small></div>
+            <div className="h6"><small>{titel}</small></div>
         </div>;
 
         return <div className="rounded text-center text-white bg-primary pt-5 pb-3">
             <div className="py-4 cursor-pointer" >
-                <div className="text-warning" onClick={async () => await this.controller.showAchievementDetail('A')}>
+                <div className="text-warning" onClick={async () => await this.controller.showAchievementDetail(1)}>
                     <span className="h1">{(oneAchievement + twoAchievement + threeAchievement).toFixed(2)}</span>
                     <small> 元</small>
                 </div>
                 <h6 className="text-warning"><small>累计收益</small></h6>
             </div>
             <div className="d-flex justify-content-around">
-                {divTag('待到款', (oneAchievement + twoAchievement + threeAchievement))}
-                {divTag('可提现', 0)}
+                {divTag('待到款', (oneAchievement + twoAchievement + threeAchievement), 2)}
+                {divTag('可提现', 0, 2)}
             </div>
         </div>;
     }

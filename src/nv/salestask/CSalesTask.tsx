@@ -248,9 +248,17 @@ export class CSalesTask extends CUqBase {
     //延期任务
     async extensionTask(task: Task, result: string, resulttype: string, date: Date) {
 
-        let param = { taskid: task.id, result: result, remindDate: date };
-        await this.uqs.salesTask.ExtensionTask.submit(param);
+        let t: any = await this.uqs.salesTask.Task.load(task.id);
+        t.deadline = date;
+        await this.uqs.salesTask.Task.save(task.id, t);
+
+        task.deadline = date;
         this.tasks.postPone(date, task);
+        /**
+       let param = { taskid: task.id, result: result, remindDate: date };
+       await this.uqs.salesTask.ExtensionTask.submit(param);
+       this.tasks.postPone(date, task);
+       **/
     }
 
     //显示拒绝任务页面

@@ -31,6 +31,7 @@ export class VMeDetail extends VPage<CMe> {
         await userApi.userSetProp(name, newValue);
         this.data[name] = newValue;
         nav.user[name] = newValue;
+        nav.saveLocalUser();
     }
 
     private page = () => {

@@ -23,19 +23,20 @@ export class Tasks {
     postPone(date: Date, task: Task) {
         this.remove(task);
         let t = _.clone(task);
-        t.remindDate = date;
+        t.deadline = date;
         this.add(t);
     }
 
     add(task: Task) {
-        let { remindDate } = task;
-        if (!remindDate) {
+        let { deadline } = task;
+        if (!deadline) {
             this.tasksNow.push(task);
             return;
         }
-        let dateTasks = this.dateTasksList.find(v => v.date.getTime() === remindDate.getTime());
+        let dl = new Date(deadline).getTime();
+        let dateTasks = this.dateTasksList.find(v => v.date.getTime() === dl);
         if (dateTasks === undefined) {
-            dateTasks = { date: remindDate, list: [task] };
+            dateTasks = { date: deadline, list: [task] };
             // 插入到合适的地方
             this.dateTasksList.push(dateTasks);
         }

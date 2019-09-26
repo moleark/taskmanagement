@@ -41,22 +41,23 @@ export class VMain extends VPage<CSalesTask> {
 
     private renderSalesTask = (salesTask: any, index: number) => {
 
-        let { bizName, deadline, biz, customer, type, typeName, priorty } = salesTask;
+        let { bizName, deadline, biz, customer, type, typeName, priorty, description } = salesTask;
         let cnFlag = classNames({
-            'my-1 mr-3': true,
+            'my-1 mr-2': true,
             'text-danger': priorty > 0,
             'text-info': !(priorty > 0)
         })
 
         let left = <div className={cnFlag}>{this.controller.getTaskIcon(bizName)}</div>;
-        let right = <div className="text-right">
-            {deadline && <small className="text-muted">时限：<EasyDate date={deadline} /></small>}
-        </div>
-        return <LMR className="px-3 py-3" left={left}>
+        let right = <div className="text-right"> {tv(customer, (v) => <small>{tv(v.unit)}</small>)} </div>
+        return <LMR className="pl-2 pr-3 py-1" left={left}>
             <LMR className="" right={right}>
-                <div className=" my-1 mr-3 font-weight-bold">{tv(customer, (v) => <>{v.name}</>)}</div>
+                <div className=" my-1 mr-3 font-weight-bold">{tv(customer)}</div>
             </LMR>
-        </LMR>
+            <LMR className="" >
+                <div className=" my-1 mr-3 small" style={subStyle}>{description}</div>
+            </LMR>
+        </LMR >
     }
 
     private page = observer(() => {
@@ -84,4 +85,11 @@ export class VMain extends VPage<CSalesTask> {
             }
         </Page>
     });
+}
+
+export const subStyle: React.CSSProperties = {
+    fontSize: '0.75rem',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
 }

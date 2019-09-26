@@ -12,9 +12,10 @@ import { VCustomerDetail } from './VCustomerDetail';
 import { VCustomerList } from './VCustomerList';
 import { VCreateCustomer } from './VCreateCustomer';
 import { VCreateCustomerFinish } from './VCreateCustomerFinish';
-import { VMyCustomerSelect } from './VMyCustomerSelect';
 import { VCustomerSearch } from './VCustomerSearch';
 import { VCustomerChek } from './VCustomerChek';
+import { VCustomerEdit } from './VCustomerEdit';
+import { VMyCustomer } from './VMyCustomer';
 
 /**
  * 用于客户首页
@@ -65,6 +66,31 @@ class PageMyCustomerSearch extends PageItems<any> {
 }
 
 /**
+ * 用于专门的活跃客户的搜索
+ */
+class PageMyCustomerActive extends PageItems<any> {
+
+    private searchCustomerQuery: Query;
+
+    constructor(searchCustomerQuery: Query) {
+        super();
+        this.firstSize = this.pageSize = 11;
+        this.searchCustomerQuery = searchCustomerQuery;
+    }
+
+    protected async load(param: any, pageStart: any, pageSize: number): Promise<any[]> {
+        if (pageStart === undefined) pageStart = 0;
+        let ret = await this.searchCustomerQuery.page(param, pageStart, pageSize);
+        return ret;
+    }
+
+    protected setPageStart(item: any): any {
+        this.pageStart = item === undefined ? 0 : item.id;
+    }
+}
+
+
+/**
  *
  */
 export class CCustomer extends CUqBase {
@@ -72,6 +98,7 @@ export class CCustomer extends CUqBase {
 
     @observable pageCustomer: PageMyCustomer;
     @observable pageCustomerSearch: PageMyCustomerSearch;
+    @observable pageMyCustomerActive: PageMyCustomerActive;
     @observable innerCustomer: any;
     private task: Task;
 
@@ -80,7 +107,7 @@ export class CCustomer extends CUqBase {
         this.pageCustomer = null;
         this.task = task;
         this.searchByKey('');
-        this.openVPage(VMyCustomerSelect);
+        this.openVPage(VCustomerSelect);
     }
 
     /**
@@ -97,6 +124,14 @@ export class CCustomer extends CUqBase {
     searchCustomerByKey = async (key: string) => {
         this.pageCustomerSearch = new PageMyCustomerSearch(this.uqs.salesTask.searchMyCustomer);
         this.pageCustomerSearch.first({ key: key });
+    }
+
+    /**
+    * 查询客户——查活跃客户
+    */
+    searchCustomerActiveByKey = async (key: string, type: number) => {
+        this.pageMyCustomerActive = new PageMyCustomerActive(this.uqs.salesTask.searchMyCustomerActive);
+        this.pageMyCustomerActive.first({ key: key, type: type });
     }
 
     //加载客户明细
@@ -127,6 +162,13 @@ export class CCustomer extends CUqBase {
     }
 
     /**
+     * 显示编辑
+    */
+    showCustomerEdit = async (customer: any) => {
+        this.openVPage(VCustomerEdit, customer);
+    }
+
+    /**
      * 显示客户搜索界面
      */
     showCustomerSearch = async (val: any): Promise<any> => {
@@ -136,6 +178,18 @@ export class CCustomer extends CUqBase {
             this.searchCustomerByKey(val);
         }
         this.openVPage(VCustomerSearch);
+    }
+
+    /**
+    * 显示客户搜索界面
+    */
+    showMyCustomer = async (val: any, type: number): Promise<any> => {
+        if (val == null) {
+            this.pageMyCustomerActive = null;
+        } else {
+            this.searchCustomerActiveByKey(val, type);
+        }
+        this.openVPage(VMyCustomer, type);
     }
 
     //选择客户--给调用页面返回客户id
