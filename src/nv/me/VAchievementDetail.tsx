@@ -18,7 +18,7 @@ export class VAchievementDetail extends VPage<CMe> {
     @observable private achievementsA: any[] = [];
     @observable private achievementsB: any[] = [];
     @observable private achievementsC: any[] = [];
-    @observable private tab_Status: number = 1;
+    @observable private tab_Status: number = 0;
     private oneAchievement: any;
     private twoAchievement: any;
     private threeAchievement: any;
@@ -54,9 +54,9 @@ export class VAchievementDetail extends VPage<CMe> {
     }
 
     private header() {
-        let onClickA = () => this.onClickHeader(1);
-        let onClickB = () => this.onClickHeader(0);
-        if (this.tab_Status == 1) {
+        let onClickA = () => this.onClickHeader(0);
+        let onClickB = () => this.onClickHeader(1);
+        if (this.tab_Status == 0) {
             return <div className="w-100 text-center mr-4 cursor-pointer ">
                 <span className="bg-white text-info mr-1 px-3 py-2" onClick={onClickA} >累计收益</span>
                 <span className="px-3 py-2" onClick={onClickB} >&nbsp;待到款&nbsp;</span>
