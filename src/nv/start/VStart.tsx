@@ -49,7 +49,7 @@ export class VStart extends VPage<CStart> {
     private page = observer((position: any) => {
 
         //let footer = <button type="button" className="btn btn-primary w-100" onClick={this.onCreatePosition}>保存</button>;
-        return <Page header='轻代理' headerClassName='bg-primary py-1 px-3' logout={true} back='none' >
+        return <Page header='销售助手' headerClassName='bg-primary py-1 px-3' logout={true} back='none' >
             <Form ref={v => this.form = v} className="m-3"
                 schema={schema}
                 uiSchema={this.uiSchema}

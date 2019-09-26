@@ -19,7 +19,7 @@ export class VAchievementDetail extends VPage<CMe> {
 
     @observable private achievements: any[] = [];
     private type: number = 1;
-    private tab_Status: TabStatus = 1;
+    private tab_Status: TabStatus = TabStatus.sum;
 
     @observable private achievementsA: any[] = [];
     @observable private achievementsB: any[] = [];
