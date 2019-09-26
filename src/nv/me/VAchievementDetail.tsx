@@ -13,24 +13,28 @@ const tabCaption = (caption: string, amount: number): TabCaption => {
     </div>;
 }
 
+export enum TabStatus {sum = 1, pending = 0};
+
 export class VAchievementDetail extends VPage<CMe> {
+
+    @observable private achievements: any[] = [];
+    private type: number = 1;
+    private tab_Status: TabStatus = 1;
 
     @observable private achievementsA: any[] = [];
     @observable private achievementsB: any[] = [];
     @observable private achievementsC: any[] = [];
-    @observable private tab_Status: number = 1;
     private oneAchievement: any;
     private twoAchievement: any;
     private threeAchievement: any;
-    private aa: any;
 
-    async open(param: any) {
+    async open(param: TabStatus) {
         this.tab_Status = param;
-        this.openPage(this.page);
         let { oneAchievement, twoAchievement, threeAchievement } = this.controller.salesAmont;
         this.oneAchievement = oneAchievement;
         this.twoAchievement = twoAchievement;
         this.threeAchievement = threeAchievement;
+        this.openPage(this.page);
     }
 
     private renderItem(model: any, index: number) {
@@ -54,8 +58,8 @@ export class VAchievementDetail extends VPage<CMe> {
     }
 
     private header() {
-        let onClickA = () => this.onClickHeader(1);
-        let onClickB = () => this.onClickHeader(0);
+        let onClickA = () => this.onClickHeader(TabStatus.sum);
+        let onClickB = () => this.onClickHeader(TabStatus.pending);
         if (this.tab_Status == 1) {
             return <div className="w-100 text-center mr-4 cursor-pointer ">
                 <span className="bg-white text-info mr-1 px-3 py-2" onClick={onClickA} >累计收益</span>
@@ -68,51 +72,69 @@ export class VAchievementDetail extends VPage<CMe> {
             </div >;
         }
     }
-    onClickHeader = (status: number) => {
+    onClickHeader = async (status: TabStatus) => {
         this.tab_Status = status;
+        await this.loadAchievements();
     }
 
-    private tabs = [
-        {
-            name: 'a',
-            caption: tabCaption('A类', this.oneAchievement),
-            content: () => {
-                return <List items={this.achievementsA} item={{ render: this.renderItem }} none="无收益" />
-            },
-            onShown: async () => {
-                ///let aa = await this.controller.searchAchievementDetail(1, 1);
-                ///this.achievementsA.splice(0);
-                ///this.achievementsA.push(aa);
-                this.achievementsA.splice(0);
-                this.achievementsA.push(...await this.controller.searchAchievementDetail(1, this.tab_Status));
-            }
-        }, {
-            name: 'b',
-            caption: tabCaption('B类', this.twoAchievement),
-            content: () => {
-                return <List items={this.achievementsB} item={{ render: this.renderItem }} none="无收益" />
-            },
-            onShown: async () => {
-                this.achievementsB.splice(0);
-                this.achievementsB.push(...await this.controller.searchAchievementDetail(2, this.tab_Status));
-            }
-        }, {
-            name: 'c',
-            caption: tabCaption('C类', this.threeAchievement),
-            content: () => {
-                return <List items={this.achievementsC} item={{ render: this.renderItem }} none="无收益" />
-            },
-            onShown: async () => {
-                this.achievementsC.splice(0);
-                this.achievementsC.push(... await this.controller.searchAchievementDetail(3, this.tab_Status));
-            }
-        }
-    ];
+    private tabContent = () => {
+        return <List items={this.achievements} item={{ render: this.renderItem }} none="无收益" />
+    }
+
+    private async loadAchievements() {
+        let achievements = await this.controller.searchAchievementDetail(this.type, this.tab_Status);
+        this.achievements.splice(0);
+        this.achievements.push(...achievements);
+    }
 
     private page = observer(() => {
-        let a = this.achievementsA;
+        //let tab_Status = this.tab_Status;
+        let tabs = [
+            {
+                name: 'a',
+                caption: tabCaption('A类', this.oneAchievement),
+                content: this.tabContent,
+                /*() => {
+                    return <List items={this.achievementsA} item={{ render: this.renderItem }} none="无收益" />
+                },*/
+                onShown: async () => {
+                    this.type = 1;
+                    await this.loadAchievements();
+                    ///let aa = await this.controller.searchAchievementDetail(1, 1);
+                    ///this.achievementsA.splice(0);
+                    ///this.achievementsA.push(aa);
+                    //this.achievementsA.splice(0);
+                    //this.achievementsA.push(...await this.controller.searchAchievementDetail(1, tab_Status));
+                }
+            }, {
+                name: 'b',
+                caption: tabCaption('B类', this.twoAchievement),
+                content: this.tabContent,
+                //content: () => {
+                //   return <List items={this.achievementsB} item={{ render: this.renderItem }} none="无收益" />
+                //},
+                onShown: async () => {this.type = 2;
+                    await this.loadAchievements();
+                    //this.achievementsB.splice(0);
+                    //this.achievementsB.push(...await this.controller.searchAchievementDetail(2, tab_Status));
+                }
+            }, {
+                name: 'c',
+                caption: tabCaption('C类', this.threeAchievement),
+                content: this.tabContent,
+                //content: () => {
+                //    return <List items={this.achievementsC} item={{ render: this.renderItem }} none="无收益" />
+                //},
+                onShown: async () => {this.type = 3;
+                    await this.loadAchievements();
+                    //this.achievementsC.splice(0);
+                    //this.achievementsC.push(... await this.controller.searchAchievementDetail(3, tab_Status));
+                }
+            }
+        ];
+            //let a = this.achievementsA;
         return <Page header={this.header()} headerClassName={consts.headerClass} >
-            <Tabs tabs={this.tabs} tabPosition="top" />
+            <Tabs tabs={tabs} tabPosition="top" />
         </Page >
     })
 }
