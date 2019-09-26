@@ -81,7 +81,7 @@ export class VCouponDetail extends VPage<CCoupon> {
             } as ComponentProp,
         );
         let footer = <button onClick={this.oninvalidCoupon} type="submit" className="btn btn-danger flex-grow-1 mx-3 my-1">作废</button>;
-        return <Page header="优惠码详情" headerClassName={consts.headerClass} footer={footer}>
+        return <Page header="优惠券详情" headerClassName={consts.headerClass} footer={footer}>
             <PropGrid className="my-2" rows={rows} values={this.coupon} alignValue="right" />
         </Page>
     })

@@ -51,7 +51,7 @@ export class CCoupon extends CUqBase {
         this.pageCoupon.first({ key: key });
     }
 
-    //显示添加优惠码页面
+    //显示添加优惠券页面
     showCouponDetail = async (couponid: any) => {
         let coupon = await this.uqs.salesTask.Coupon.load(couponid);
         this.openVPage(VCouponDetail, coupon);
@@ -67,12 +67,12 @@ export class CCoupon extends CUqBase {
         let bb = aa;
     }
 
-    //显示添加优惠码页面
+    //显示添加优惠券页面
     showCreateCoupon = async () => {
         this.openVPage(VCreateCoupon);
     }
 
-    //添加优惠码
+    //添加优惠券
     createCoupon = async (param: any) => {
 
         var customerid: number, discount: any;
@@ -96,7 +96,7 @@ export class CCoupon extends CUqBase {
         this.openVPage(VCreateCouponEnd, code)
     }
 
-    //作废优惠码
+    //作废优惠券
     invalidCoupon = async (param: any) => {
         let tuidCoupon = this.uqs.salesTask.Coupon;
         var coupon = await tuidCoupon.load(param.id);
@@ -110,7 +110,7 @@ export class CCoupon extends CUqBase {
         this.searchCouponCustomer(param.id);
         await this.openVPage(VCouponCustomer, param);
     }
-    //搜索优惠码客户
+    //搜索优惠券客户
     searchCouponCustomer = async (couponid: any) => {
         let param = { coupon: couponid }
         let cust = await this.querySearchCouponCustomer.table(param);

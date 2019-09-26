@@ -22,9 +22,9 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
             let p2 = this.code.substr(4);
             inviteCode = p1 + ' ' + p2;
         }
-        return <Page header='优惠码' back="none" headerClassName='bg-primary py-1 px-3'>
+        return <Page header='优惠券' back="none" headerClassName='bg-primary py-1 px-3'>
             <div className="w-100 text-center m-3 text-muted">
-                优惠码已生成，赶快发给客户吧！
+                优惠券已生成，赶快发给客户吧！
             </div>
             <div className="w-100 text-center m-3 fa-2x text-info">
                 {inviteCode}

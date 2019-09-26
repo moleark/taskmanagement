@@ -131,7 +131,7 @@ export class VMe extends VPage<CMe> {
                 <div className="col text-center" onClick={onshowCreateCoupon}>
                     <FA name="th-large" className='text-warning' fixWidth={true} size="lg" />
                     <br />
-                    <small><small>优惠码</small></small>
+                    <small><small>优惠券</small></small>
                 </div>
                 <div className="col text-center" onClick={onShowMyTasksCompleted} >
                     <FA name="tag" className='text-info' fixWidth={true} size="lg" />

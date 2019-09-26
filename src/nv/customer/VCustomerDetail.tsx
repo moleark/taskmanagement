@@ -98,21 +98,23 @@ export class VCustomerDetail extends VPage<CCustomer> {
             genderShow = "女";
         }
 
-        var potentialShow: any = "小于10万";
-        if (gender == 1) {
+        var potentialShow: any = "【无】";
+        if (potential == 0) {
+            researchShow = "小于10万";
+        } else if (potential == 1) {
             potentialShow = "10万-30万";
-        } else if (gender == 2) {
+        } else if (potential == 2) {
             potentialShow = "大于30万";
         }
 
-        var researchShow: any = "";
-        if (gender == 0) {
+        var researchShow: any = "【无】";
+        if (research == 0) {
             researchShow = "有机";
-        } else if (gender == 1) {
+        } else if (research == 1) {
             researchShow = "化学";
-        } else if (gender == 2) {
+        } else if (research == 2) {
             researchShow = "分析";
-        } else if (gender == 3) {
+        } else if (research == 3) {
             researchShow = "材料";
         }
 

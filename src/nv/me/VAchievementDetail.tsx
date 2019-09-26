@@ -4,6 +4,7 @@ import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { CMe } from './CMe';
 import { consts } from '../consts';
+import { async } from 'q';
 
 const color = (selected: boolean) => selected === true ? 'text-primary' : 'text-muted';
 const tabCaption = (caption: string, amount: number): TabCaption => {
@@ -13,17 +14,15 @@ const tabCaption = (caption: string, amount: number): TabCaption => {
     </div>;
 }
 
-export enum TabStatus {sum = 1, pending = 0};
+export enum TabStatus { sum = 1, pending = 0 };
+export enum TabType { A = 1, B = 2, C = 3 };
 
 export class VAchievementDetail extends VPage<CMe> {
 
     @observable private achievements: any[] = [];
-    private type: number = 1;
-    private tab_Status: TabStatus = TabStatus.sum;
+    @observable private tab_Status: TabStatus = TabStatus.sum;
+    @observable private type: TabType = TabType.A;
 
-    @observable private achievementsA: any[] = [];
-    @observable private achievementsB: any[] = [];
-    @observable private achievementsC: any[] = [];
     private oneAchievement: any;
     private twoAchievement: any;
     private threeAchievement: any;
@@ -57,10 +56,10 @@ export class VAchievementDetail extends VPage<CMe> {
         </div>
     }
 
-    private header() {
+    private header = () => {
         let onClickA = () => this.onClickHeader(TabStatus.sum);
         let onClickB = () => this.onClickHeader(TabStatus.pending);
-        if (this.tab_Status == 1) {
+        if (this.tab_Status == TabStatus.sum) {
             return <div className="w-100 text-center mr-4 cursor-pointer ">
                 <span className="bg-white text-info mr-1 px-3 py-2" onClick={onClickA} >累计收益</span>
                 <span className="px-3 py-2" onClick={onClickB} >&nbsp;待到款&nbsp;</span>
@@ -72,7 +71,8 @@ export class VAchievementDetail extends VPage<CMe> {
             </div >;
         }
     }
-    onClickHeader = async (status: TabStatus) => {
+    private onClickHeader = async (status: TabStatus) => {
+        if (this.tab_Status === status) return;
         this.tab_Status = status;
         await this.loadAchievements();
     }
@@ -98,11 +98,8 @@ export class VAchievementDetail extends VPage<CMe> {
                     return <List items={this.achievementsA} item={{ render: this.renderItem }} none="无收益" />
                 },*/
                 onShown: async () => {
-                    this.type = 1;
+                    this.type = TabType.A;
                     await this.loadAchievements();
-                    ///let aa = await this.controller.searchAchievementDetail(1, 1);
-                    ///this.achievementsA.splice(0);
-                    ///this.achievementsA.push(aa);
                     //this.achievementsA.splice(0);
                     //this.achievementsA.push(...await this.controller.searchAchievementDetail(1, tab_Status));
                 }
@@ -113,7 +110,8 @@ export class VAchievementDetail extends VPage<CMe> {
                 //content: () => {
                 //   return <List items={this.achievementsB} item={{ render: this.renderItem }} none="无收益" />
                 //},
-                onShown: async () => {this.type = 2;
+                onShown: async () => {
+                    this.type = TabType.B;
                     await this.loadAchievements();
                     //this.achievementsB.splice(0);
                     //this.achievementsB.push(...await this.controller.searchAchievementDetail(2, tab_Status));
@@ -125,14 +123,15 @@ export class VAchievementDetail extends VPage<CMe> {
                 //content: () => {
                 //    return <List items={this.achievementsC} item={{ render: this.renderItem }} none="无收益" />
                 //},
-                onShown: async () => {this.type = 3;
+                onShown: async () => {
+                    this.type = TabType.C;
                     await this.loadAchievements();
                     //this.achievementsC.splice(0);
                     //this.achievementsC.push(... await this.controller.searchAchievementDetail(3, tab_Status));
                 }
             }
         ];
-            //let a = this.achievementsA;
+        //let a = this.achievementsA;
         return <Page header={this.header()} headerClassName={consts.headerClass} >
             <Tabs tabs={tabs} tabPosition="top" />
         </Page >
