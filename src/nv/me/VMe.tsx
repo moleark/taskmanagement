@@ -12,6 +12,15 @@ function rowCom(iconName: string, iconColor: string, caption: string, value: any
     </LMR>;
 }
 
+const cssOffset: React.CSSProperties = {
+    position: "absolute",
+    height: "8rem",
+    width: "90%",
+    padding: "1rem 1rem 1rem 1rem",
+    margin: "-2rem 0 0 1rem",
+    backgroundColor: '#f0f0f0'
+};
+
 
 export class VMe extends VPage<CMe> {
     private user: any;
@@ -55,7 +64,7 @@ export class VMe extends VPage<CMe> {
         }
 
         let { teamCount, customerCount, activeCustomerCount } = salesAmont;
-        return <div className="px-2 py-2 cursor-pointer" style={{ backgroundColor: '#f0f0f0' }}>
+        return <div className="px-2 py-2 cursor-pointer" style={cssOffset}>
             <LMR
                 left={<div onClick={onshowMeDetail}> <Image className="w-3c h-3c mr-3" src={icon} /> </div>}
                 right={<div className={classNames('jk-cart ml-1 mr-2', pointer)} onClick={onshowMessage} >
@@ -99,7 +108,7 @@ export class VMe extends VPage<CMe> {
             <div className="h6"><small>{titel}</small></div>
         </div>;
 
-        return <div className="rounded text-center text-white bg-primary pt-5 pb-3">
+        return <div className="rounded text-center text-white bg-primary pt-5 pb-5">
             <div className="py-4 cursor-pointer" >
                 <div className="text-warning" onClick={async () => await this.controller.showAchievementDetail(0)}>
                     <span className="h1">{(oneAchievement + twoAchievement + threeAchievement).toFixed(2)}</span>
@@ -126,7 +135,7 @@ export class VMe extends VPage<CMe> {
         return <div className="bg-white" >
             {this.achievement()}
             {this.meInfo()}
-            <div className=""></div>
+            <div className="" style={{ marginTop: "8rem" }}></div>
             <div className="row p-2 cursor-pointer">
                 <div className="col text-center" onClick={onshowCreateCoupon}>
                     <FA name="th-large" className='text-warning' fixWidth={true} size="lg" />
