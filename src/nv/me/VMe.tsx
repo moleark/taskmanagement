@@ -55,7 +55,8 @@ export class VMe extends VPage<CMe> {
         }
 
         let { teamCount, customerCount, activeCustomerCount } = salesAmont;
-        return <div className="px-2 py-2 cursor-pointer" style={{ backgroundColor: '#f0f0f0' }}>
+        return <div className="px-4 py-4 cursor-pointer" 
+            style={{ backgroundColor: '#f0f0f0', width:'90%', margin: '-2rem auto 2rem auto' }}>
             <LMR
                 left={<div onClick={onshowMeDetail}> <Image className="w-3c h-3c mr-3" src={icon} /> </div>}
                 right={<div className={classNames('jk-cart ml-1 mr-2', pointer)} onClick={onshowMessage} >
@@ -67,7 +68,7 @@ export class VMe extends VPage<CMe> {
                     <div className="small"><span >邀请码:</span> {this.inviteCode}</div>
                 </div>
             </LMR>
-            <div className="row">
+            <div className="row mt-4">
                 <div className="col text-center" onClick={onshowTeam}>
                     <div>{teamCount}</div>
                     <small><small>团队</small></small>
@@ -99,7 +100,7 @@ export class VMe extends VPage<CMe> {
             <div className="h6"><small>{titel}</small></div>
         </div>;
 
-        return <div className="rounded text-center text-white bg-primary pt-5 pb-3">
+        return <div className="rounded text-center text-white bg-primary pt-4 pb-5">
             <div className="py-4 cursor-pointer" >
                 <div className="text-warning" onClick={async () => await this.controller.showAchievementDetail(1)}>
                     <span className="h1">{(oneAchievement + twoAchievement + threeAchievement).toFixed(2)}</span>
@@ -123,7 +124,7 @@ export class VMe extends VPage<CMe> {
         let onShowMyTasksCompleted = async () => await showMyTasksCompleted();
         let onshowCreateCoupon = async () => await cCoupon.showCreateCoupon()
 
-        return <div className="bg-white" >
+        return <div className="bg-white pb-3" >
             {this.achievement()}
             {this.meInfo()}
             <div className=""></div>
