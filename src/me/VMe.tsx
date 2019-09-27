@@ -48,12 +48,9 @@ export class VMe extends VPage<CMe> {
     private meInfo() {
         let { user, showMeDetail, showMessage, showTeam, showMyCustomer, salesAmont } = this.controller;
         if (user === undefined) return null;
-        let { id, name, nick, icon } = user;
+        let { name, nick, icon } = user;
         let { cMessage } = this.controller.cApp
         let count: any = cMessage.count.get();
-        let onshowMeDetail = async () => await showMeDetail();
-        let onshowMessage = async () => await showMessage();
-        let onshowTeam = async () => await showTeam();
         let onshowMyCustomer = async () => await showMyCustomer(1);
         let onshowMyCustomerActive = async () => await showMyCustomer(2);
         let pointer, badge;
@@ -65,20 +62,20 @@ export class VMe extends VPage<CMe> {
 
         let { teamCount, customerCount, activeCustomerCount } = salesAmont;
         return <div className="px-4 py-3 cursor-pointer"
-            style={{ backgroundColor: '#e3e4e6', width: '90%', borderRadius: '5px', margin: '-4rem auto 2rem auto' }}>
+            style={{ backgroundColor: '#ffffff', width: '90%', borderRadius: '5px', margin: '-4rem auto 2rem auto', boxShadow: "2px 2px 5px #333333" }}>
             <LMR
-                left={<div onClick={onshowMeDetail}> <Image className="w-3c h-3c mr-3" src={icon} /> </div>}
-                right={<div className={classNames('jk-cart ml-1 mr-2', pointer)} onClick={onshowMessage} >
+                left={<div onClick={showMeDetail}> <Image className="w-3c h-3c mr-3" src={icon} /> </div>}
+                right={<div className={classNames('jk-cart ml-1 mr-2', pointer)} onClick={showMessage} >
                     <FA className="fa-lg" name="commenting-o" />
                     {badge}
                 </div>}>
                 <div>
-                    <div onClick={onshowMeDetail}>{this.userSpan(name, nick)}</div>
+                    <div onClick={showMeDetail}>{this.userSpan(name, nick)}</div>
                     <div className="small"><span >邀请码:</span><span className="small">{this.inviteCode}<span style={{ border: '1px solid #999999' }} className="px-1 mx-1" onClick={this.copyClick}>复制</span></span ></div>
                 </div>
             </LMR>
             <div className="row mt-2">
-                <div className="col text-center" onClick={onshowTeam}>
+                <div className="col text-center" onClick={showTeam}>
                     <div>{teamCount}</div>
                     <small><small>团队</small></small>
                 </div>
@@ -91,7 +88,7 @@ export class VMe extends VPage<CMe> {
                     <small><small>活跃客户</small></small>
                 </div>
             </div>
-        </div>;
+        </div >;
     }
 
     private achievement() {

@@ -13,19 +13,17 @@ export class VMyCustomer extends VPage<CCustomer> {
     }
 
     private renderCustomer(customer: any, index: number) {
-        let { name, unit, validity } = customer;
+        let onClickCustomer = async () => await this.controller.showCustomerDetail(customer.id);
+        let { name, unit, validity, telephone } = customer;
+        let nameShow = <span className="font-weight-bold" onClick={onClickCustomer}>{name}</span>;
+        let unitShow = <div className="text-muted" onClick={onClickCustomer}><small> {tv(unit, s => s.name)}</small></div>;
+        let date = <span className="small " ><EasyDate date={validity} /></span>
+        let telephoneShow = <span className="small" ><FA name="phone" className="text-success py-1" /><a className="pl-2 text-default" href={"tel:" + telephone} style={{ lineClamp: "none" }} >{telephone}</a></span>
 
-        let left = <span className="font-weight-bold">{name}</span>;
-        let right = <div className="text-muted mr-3 "><small> {tv(unit)}</small></div>;
-        let date = <span className="small mr-3 " ><EasyDate date={validity} /></span>
         return <LMR className="pl-2 pr-3 py-1">
-            <LMR className="px-3 pt-2" left={left} right={right}></LMR>
-            <LMR className="px-3" right={date}></LMR>
+            <LMR className="px-3 pt-2" left={nameShow} right={date}></LMR>
+            <LMR className="px-3" left={unitShow} right={telephoneShow}></LMR>
         </LMR>
-    }
-
-    private onClickCustomer = async (model: any) => {
-        await this.controller.showCustomerDetail(model.id);
     }
 
     private page = observer(() => {
@@ -37,7 +35,7 @@ export class VMyCustomer extends VPage<CCustomer> {
         }
 
         return <Page header={header} headerClassName='bg-primary' onScrollBottom={this.onScrollBottom}  >
-            <List before={''} none={none} items={pageMyCustomerActive} item={{ render: this.renderCustomer, onClick: this.onClickCustomer }} />
+            <List before={''} none={none} items={pageMyCustomerActive} item={{ render: this.renderCustomer }} />
         </Page>
     })
 

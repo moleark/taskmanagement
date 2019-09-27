@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, LMR, List, SearchBox, FA, tv, PropGrid, ComponentProp, Prop, EasyDate } from 'tonva';
+import { VPage, Page, LMR, List, FA, tv, ComponentProp, Prop, EasyDate } from 'tonva';
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
 
@@ -15,10 +15,6 @@ export class VCustomerList extends VPage<CCustomer> {
         return <this.page />;
     }
 
-    private onClickCustomer = async (model: any) => {
-        await this.controller.showCustomerDetail(model.id);
-    }
-
     private renderCustomer = (customer: any, index: number) => {
         let onClickCustomer = async () => await this.controller.showCustomerDetail(customer.id);
 
@@ -26,10 +22,11 @@ export class VCustomerList extends VPage<CCustomer> {
         let nameShow = <span className="font-weight-bold" onClick={onClickCustomer}>{name}</span>;
         let unitShow = <div className="text-muted" onClick={onClickCustomer}><small> {tv(unit, s => s.name)}</small></div>;
         let date = <span className="small " ><EasyDate date={validity} /></span>
-        let telephoneShow = <span className="small" ><FA name="phone" className="text-success py-1" /><a href={"tel:" + telephone} >{telephone}</a></span>
+        let telephoneShow = <span className="small" ><FA name="phone" className="text-success py-1" /><a className="pl-2 text-default" href={"tel:" + telephone} style={{ textDecorationLine: "none" }} >{telephone}</a></span>
+
         return <LMR className="pl-2 pr-3 py-1">
-            <LMR className="px-3 pt-2" left={nameShow} right={telephoneShow}></LMR>
-            <LMR className="px-3" left={unitShow} right={date}></LMR>
+            <LMR className="px-3 pt-2" left={nameShow} right={date}></LMR>
+            <LMR className="px-3" left={unitShow} right={telephoneShow}></LMR>
         </LMR>
     }
 
