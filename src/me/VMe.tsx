@@ -1,22 +1,18 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { LMR, VPage, nav, Image, ComponentProp, Prop, PropGrid, FA } from 'tonva';
+import { LMR, VPage, Image, FA } from 'tonva';
 import { CMe } from './CMe';
 import classNames from 'classnames';
 import copy from 'copy-to-clipboard';
-import { GLOABLE } from 'ui';
 import { observable } from 'mobx';
 
 function rowCom(iconName: string, iconColor: string, caption: string, value: any, onClick: any) {
-    return <LMR className="cursor-pointer w-100 py-2 my-2 align-items-center  " onClick={onClick}
+    return <LMR className="cursor-pointer w-100 py-2 my-2 align-items-center" onClick={onClick}
         left={<FA name={iconName} className={'mr-3 ' + iconColor} fixWidth={true} size="lg" />}
         right={<div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div>}>
         {caption}<span className=" ml-3">{value}</span>
     </LMR>;
 }
-
-
-
 
 export class VMe extends VPage<CMe> {
     private user: any;
@@ -71,7 +67,7 @@ export class VMe extends VPage<CMe> {
                 </div>}>
                 <div>
                     <div onClick={showMeDetail}>{this.userSpan(name, nick)}</div>
-                    <div className="small"><span >邀请码:</span><span className="small">{this.inviteCode}<span style={{ border: '1px solid #999999' }} className="px-1 mx-1" onClick={this.copyClick}>复制</span></span ></div>
+                    <div className="small"><span className="px-1" >邀请码  :</span><span>{this.inviteCode}<span style={{ border: '1px solid #999999' }} className="px-1 mx-1" onClick={this.copyClick}>复制</span></span ></div>
                 </div>
             </LMR>
             <div className="row mt-2">
@@ -84,7 +80,7 @@ export class VMe extends VPage<CMe> {
                     <small><small>客户</small></small>
                 </div>
                 <div className="col text-center" onClick={onshowMyCustomerActive}>
-                    <div >{activeCustomerCount}</div>
+                    <div>{activeCustomerCount}</div >
                     <small><small>活跃客户</small></small>
                 </div>
             </div>
@@ -107,7 +103,6 @@ export class VMe extends VPage<CMe> {
         </div>;
 
         return <div className="text-center text-white bg-primary pt-4 pb-5" style={{ borderRadius: '0  0 5rem 5rem', margin: ' 0 -2rem 0 -2rem ' }}>
-
             <div className="py-4 cursor-pointer" >
                 <div className="text-warning" onClick={async () => await this.controller.showAchievementDetail(0)}>
                     <span className="h1">{(oneAchievement + twoAchievement + threeAchievement).toFixed(2)}</span>
@@ -125,9 +120,9 @@ export class VMe extends VPage<CMe> {
 
     private page = observer(() => {
 
-        let { cSalesTask, cMessage, cCoupon } = this.controller.cApp
+        let { cSalesTask, cCoupon } = this.controller.cApp
         let { showMyTasksCompleted } = cSalesTask;
-        let { salesAmont, showSet } = this.controller;
+        let { showSet } = this.controller;
 
         let onShowMyTasksCompleted = async () => await showMyTasksCompleted();
         let onshowCreateCoupon = async () => await cCoupon.showCreateCoupon()

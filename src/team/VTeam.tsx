@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, List, LMR, tv, FA, BoxId } from 'tonva';
+import { VPage, Page, List, LMR, tv, Image, FA, BoxId } from 'tonva';
 import { CTeam } from './CTeam';
 
 export class VTeam extends VPage<CTeam> {
@@ -24,11 +24,13 @@ export class VTeam extends VPage<CTeam> {
 
         let { children, volume, assigned } = teamItem;
         let displayName = tv(children, v => v.nick || v.name);
+        let icon: any = tv(children, v => v.icon);
+        //left = {< div > <Image className="w-3c h-3c mr-3" src={icon} /> </div >}
         return <LMR className="px-3 py-2 " onClick={onshowPeerDetail}
-            left={<FA name='user' className=' my-2 mr-3 text-info' />}
+            left={<div> <FA className="text-info px-2" name="user" /></div >}
             right={volume && <div className="w-2c mr-3 text-right" >￥{volume}</div>}>
             <div className="font-weight-bold ">{this.userSpan(displayName, assigned)}</div>
-        </LMR>
+        </LMR >
     }
 
     private page = () => {
