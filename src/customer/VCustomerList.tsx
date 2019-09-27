@@ -21,11 +21,13 @@ export class VCustomerList extends VPage<CCustomer> {
         let { name, unit, validity, telephone } = customer;
         let nameShow = <span className="font-weight-bold" onClick={onClickCustomer}>{name}</span>;
         let unitShow = <div className="text-muted" onClick={onClickCustomer}><small> {tv(unit, s => s.name)}</small></div>;
-        let date = <span className="small " ><EasyDate date={validity} /></span>
+        let date = <span className="small"><EasyDate date={validity} /></span>
         let telephoneShow = <span className="small" ><FA name="phone" className="text-success py-1" /><a className="pl-2 text-default" href={"tel:" + telephone} style={{ textDecorationLine: "none" }} >{telephone}</a></span>
 
         return <LMR className="pl-2 pr-3 py-1">
-            <LMR className="px-3 pt-2" left={nameShow} right={date}></LMR>
+            <LMR className="px-3 pt-2" left={nameShow} right={date}>
+                <div className="w-100" onClick={onClickCustomer}>&nbsp;  </div>
+            </LMR>
             <LMR className="px-3" left={unitShow} right={telephoneShow}></LMR>
         </LMR>
     }

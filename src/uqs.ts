@@ -113,6 +113,7 @@ export interface UqSalesTask {
     SearchTaskProductPack: Query;
     SearchTaskProject: Query;
     MyCustomerIsOccupy: Query;
+    Relation: Map;
 }
 
 export interface UqMember {

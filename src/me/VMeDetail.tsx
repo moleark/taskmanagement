@@ -17,7 +17,7 @@ export class VMeDetail extends VPage<CMe> {
     }
 
     @observable private data: any;
-    async open(position: any) {
+    async open(param: any) {
         let { nick, icon } = nav.user;
         this.data = {
             nick: nick,
@@ -44,6 +44,10 @@ export class VMeDetail extends VPage<CMe> {
             <LMR className="d-flex px-3 py-2 bg-white align-items-center cursor-pointer"
                 right={this.controller.inviteCode}>
                 邀请码
+            </LMR>
+            <LMR className="d-flex px-3 py-2 bg-white align-items-center cursor-pointer"
+                right={this.controller.inviteCode}>
+                上线
             </LMR>
         </Page >
     }

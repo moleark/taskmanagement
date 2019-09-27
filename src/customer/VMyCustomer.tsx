@@ -12,7 +12,7 @@ export class VMyCustomer extends VPage<CCustomer> {
         this.openPage(this.page);
     }
 
-    private renderCustomer(customer: any, index: number) {
+    private renderCustomer = (customer: any, index: number) => {
         let onClickCustomer = async () => await this.controller.showCustomerDetail(customer.id);
         let { name, unit, validity, telephone } = customer;
         let nameShow = <span className="font-weight-bold" onClick={onClickCustomer}>{name}</span>;
@@ -21,7 +21,9 @@ export class VMyCustomer extends VPage<CCustomer> {
         let telephoneShow = <span className="small" ><FA name="phone" className="text-success py-1" /><a className="pl-2 text-default" href={"tel:" + telephone} style={{ lineClamp: "none" }} >{telephone}</a></span>
 
         return <LMR className="pl-2 pr-3 py-1">
-            <LMR className="px-3 pt-2" left={nameShow} right={date}></LMR>
+            <LMR className="px-3 pt-2" left={nameShow} right={date}>
+                <div className="w-100" onClick={onClickCustomer}>&nbsp;  </div>
+            </LMR>
             <LMR className="px-3" left={unitShow} right={telephoneShow}></LMR>
         </LMR>
     }
