@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, PageItems } from 'tonva';
+import { VPage, Page, PageItems, tv } from 'tonva';
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
 import { LMR, List, EasyDate, SearchBox, FA } from 'tonva';
@@ -12,12 +12,16 @@ export class VMyCustomer extends VPage<CCustomer> {
         this.openPage(this.page);
     }
 
-    private renderCustomer(salesTask: any, index: number) {
-        let { name } = salesTask;
-        return <LMR className="px-3 py-2 " left={<FA name='user' className=' my-2 mr-3 text-info' />}>
-            <div className="font-weight-bold"></div>
-            <div>{name}</div>
-        </LMR >
+    private renderCustomer(customer: any, index: number) {
+        let { name, unit, validity } = customer;
+
+        let left = <span className="font-weight-bold">{name}</span>;
+        let right = <div className="text-muted mr-3 "><small> {tv(unit)}</small></div>;
+        let date = <span className="small mr-3 " ><EasyDate date={validity} /></span>
+        return <LMR className="pl-2 pr-3 py-1">
+            <LMR className="px-3 pt-2" left={left} right={right}></LMR>
+            <LMR className="px-3" right={date}></LMR>
+        </LMR>
     }
 
     private onClickCustomer = async (model: any) => {

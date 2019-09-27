@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, LMR, List, SearchBox, FA, tv, PropGrid, ComponentProp, Prop } from 'tonva';
+import { VPage, Page, LMR, List, SearchBox, FA, tv, PropGrid, ComponentProp, Prop, EasyDate } from 'tonva';
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
 
@@ -16,17 +16,15 @@ export class VCustomerList extends VPage<CCustomer> {
     }
 
     private renderCustomer(customer: any, index: number) {
-        let { name, unit, IsOccupy } = customer;
+        let { name, unit, validity } = customer;
 
-        let occupy: any
-        if (IsOccupy == 1) {
-            occupy = <FA name='user' className=' my-2 mr-3 text-danger' />
-        } else {
-            occupy = <FA name='user' className=' my-2 mr-3 text-info' />
-        }
-        let left = <div>{occupy}<span className="font-weight-bold">{name}</span></div>;
-        let right = <div className="text-muted  my-2 mr-3 "><small> {tv(unit, s => s.name)}</small></div>;
-        return <LMR className="px-3 py-2 " left={left} right={right}></LMR>
+        let left = <span className="font-weight-bold">{name}</span>;
+        let right = <div className="text-muted mr-3 "><small> {tv(unit, s => s.name)}</small></div>;
+        let date = <span className="small mr-3 " ><EasyDate date={validity} /></span>
+        return <LMR className="pl-2 pr-3 py-1">
+            <LMR className="px-3 pt-2" left={left} right={right}></LMR>
+            <LMR className="px-3" right={date}></LMR>
+        </LMR>
     }
 
     private onClickCustomer = async (model: any) => {

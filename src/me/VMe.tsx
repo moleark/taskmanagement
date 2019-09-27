@@ -26,7 +26,6 @@ const cssOffset: React.CSSProperties = {
 export class VMe extends VPage<CMe> {
     private user: any;
     private inviteCode: any;
-    //private salesAmont: any;
 
     async open() {
         this.openPage(this.page);
@@ -70,7 +69,7 @@ export class VMe extends VPage<CMe> {
 
         let { teamCount, customerCount, activeCustomerCount } = salesAmont;
         return <div className="px-4 py-3 cursor-pointer"
-            style={{ backgroundColor: '#e3e4e6', width: '90%', margin: '-4rem auto 2rem auto' }}>
+            style={{ backgroundColor: '#e3e4e6', width: '90%', borderRadius: '5px', margin: '-4rem auto 2rem auto' }}>
             <LMR
                 left={<div onClick={onshowMeDetail}> <Image className="w-3c h-3c mr-3" src={icon} /> </div>}
                 right={<div className={classNames('jk-cart ml-1 mr-2', pointer)} onClick={onshowMessage} >
