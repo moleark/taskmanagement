@@ -22,12 +22,12 @@ export class VTeam extends VPage<CTeam> {
         let { showPeerDetail } = this.controller;
         let onshowPeerDetail = async () => await showPeerDetail(teamItem);
 
-        let { children } = teamItem;
+        let { children, volume, assigned } = teamItem;
         let displayName = tv(children, v => v.nick || v.name);
         return <LMR className="px-3 py-2 " onClick={onshowPeerDetail}
             left={<FA name='user' className=' my-2 mr-3 text-info' />}
-            right={<div className="w-2c text-right" > <i className="fa fa-chevron-right" /></div>}>
-            <div className="font-weight-bold ">{this.userSpan(displayName, teamItem.assigned)}</div>
+            right={volume && <div className="w-2c mr-3 text-right" >￥{volume}</div>}>
+            <div className="font-weight-bold ">{this.userSpan(displayName, assigned)}</div>
         </LMR>
     }
 

@@ -15,20 +15,22 @@ export class VCustomerList extends VPage<CCustomer> {
         return <this.page />;
     }
 
-    private renderCustomer(customer: any, index: number) {
-        let { name, unit, validity } = customer;
-
-        let left = <span className="font-weight-bold">{name}</span>;
-        let right = <div className="text-muted mr-3 "><small> {tv(unit, s => s.name)}</small></div>;
-        let date = <span className="small mr-3 " ><EasyDate date={validity} /></span>
-        return <LMR className="pl-2 pr-3 py-1">
-            <LMR className="px-3 pt-2" left={left} right={right}></LMR>
-            <LMR className="px-3" right={date}></LMR>
-        </LMR>
-    }
-
     private onClickCustomer = async (model: any) => {
         await this.controller.showCustomerDetail(model.id);
+    }
+
+    private renderCustomer = (customer: any, index: number) => {
+        let onClickCustomer = async () => await this.controller.showCustomerDetail(customer.id);
+
+        let { name, unit, validity, telephone } = customer;
+        let nameShow = <span className="font-weight-bold" onClick={onClickCustomer}>{name}</span>;
+        let unitShow = <div className="text-muted" onClick={onClickCustomer}><small> {tv(unit, s => s.name)}</small></div>;
+        let date = <span className="small " ><EasyDate date={validity} /></span>
+        let telephoneShow = <span className="small" >  <FA name="phone" className="text-success py-1" /><a href="tel:">{telephone}</a></span>
+        return <LMR className="pl-2 pr-3 py-1">
+            <LMR className="px-3 pt-2" left={nameShow} right={telephoneShow}></LMR>
+            <LMR className="px-3" left={unitShow} right={date}></LMR>
+        </LMR>
     }
 
     private page = observer((customer: any) => {
@@ -55,9 +57,8 @@ export class VCustomerList extends VPage<CCustomer> {
         ];
 
         return <Page header="客户" onScrollBottom={this.onScrollBottom} headerClassName='bg-primary py-1 px-3' right={right} >
-
             {pageCustomer && pageCustomer.items && (pageCustomer.items.length > 0) && < List before={''} none={none} items={pageCustomer}
-                item={{ render: this.renderCustomer, onClick: this.onClickCustomer }} />}
+                item={{ render: this.renderCustomer }} />}
         </Page>
     })
 

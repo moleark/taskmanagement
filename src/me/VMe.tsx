@@ -4,6 +4,8 @@ import { LMR, VPage, nav, Image, ComponentProp, Prop, PropGrid, FA } from 'tonva
 import { CMe } from './CMe';
 import classNames from 'classnames';
 import copy from 'copy-to-clipboard';
+import { GLOABLE } from 'ui';
+import { observable } from 'mobx';
 
 function rowCom(iconName: string, iconColor: string, caption: string, value: any, onClick: any) {
     return <LMR className="cursor-pointer w-100 py-2 my-2 align-items-center  " onClick={onClick}
@@ -13,19 +15,13 @@ function rowCom(iconName: string, iconColor: string, caption: string, value: any
     </LMR>;
 }
 
-const cssOffset: React.CSSProperties = {
-    position: "absolute",
-    height: "8rem",
-    width: "90%",
-    padding: "1rem 1rem 1rem 1rem",
-    margin: "-2rem 0 0 1rem",
-    backgroundColor: '#f0f0f0'
-};
+
 
 
 export class VMe extends VPage<CMe> {
     private user: any;
     private inviteCode: any;
+    @observable bindTip: any = "";
 
     async open() {
         this.openPage(this.page);
@@ -46,7 +42,7 @@ export class VMe extends VPage<CMe> {
     }
 
     copyClick = (e) => {
-        copy(e.target.parentNode.childNodes[0].data)
+        copy(e.target.parentNode.childNodes[0].data);
     }
 
     private meInfo() {

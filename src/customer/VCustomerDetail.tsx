@@ -226,7 +226,6 @@ export class VCustomerDetail extends VPage<CCustomer> {
             </div>
         </div>
 
-
         let { showCustomerEdit } = this.controller;
         let onshowCustomerEdit = async () => await showCustomerEdit(this.customer);
         let right = <div className="cursor-pointer py-2" onClick={onshowCustomerEdit}>
