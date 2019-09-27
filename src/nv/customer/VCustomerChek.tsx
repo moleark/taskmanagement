@@ -18,9 +18,9 @@ export class VCustomerChek extends VPage<CCustomer> {
 
         var show: any;
         if (this.result == 1) {
-            show = <span className="px-4">根据所查客户基本信息，系统认为该客户可能已与其他轻代理绑定。</span>;
+            show = <span className="px-4">根据所查客户基本信息，系统认为该客户可能已与其他销售绑定。</span>;
         } else {
-            show = <span className="px-4">根据所查客户基本信息，系统未发现该客户与其他轻代理的绑定关系。</span>;
+            show = <span className="px-4">根据所查客户基本信息，系统未发现该客户与其他销售的绑定关系。</span>;
         }
         return <Page header='新建客户' headerClassName='bg-primary py-1'>
             <div className="w-100  text-muted my-4 px-4">

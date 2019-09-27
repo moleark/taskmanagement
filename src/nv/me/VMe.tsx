@@ -102,15 +102,15 @@ export class VMe extends VPage<CMe> {
 
         return <div className="rounded text-center text-white bg-primary pt-4 pb-5">
             <div className="py-4 cursor-pointer" >
-                <div className="text-warning" onClick={async () => await this.controller.showAchievementDetail(1)}>
+                <div className="text-warning" onClick={async () => await this.controller.showAchievementDetail(0)}>
                     <span className="h1">{(oneAchievement + twoAchievement + threeAchievement).toFixed(2)}</span>
                     <small> 元</small>
                 </div>
                 <h6 className="text-warning"><small>累计收益</small></h6>
             </div>
             <div className="d-flex justify-content-around">
-                {divTag('待到款', (oneAchievement + twoAchievement + threeAchievement), 2)}
-                {divTag('可提现', 0, 2)}
+                {divTag('待到款', (oneAchievement + twoAchievement + threeAchievement), 1)}
+                {divTag('可提现', 0, 1)}
             </div>
         </div>;
     }
