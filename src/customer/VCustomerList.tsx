@@ -26,7 +26,7 @@ export class VCustomerList extends VPage<CCustomer> {
         let nameShow = <span className="font-weight-bold" onClick={onClickCustomer}>{name}</span>;
         let unitShow = <div className="text-muted" onClick={onClickCustomer}><small> {tv(unit, s => s.name)}</small></div>;
         let date = <span className="small " ><EasyDate date={validity} /></span>
-        let telephoneShow = <span className="small" >  <FA name="phone" className="text-success py-1" /><a href="tel:">{telephone}</a></span>
+        let telephoneShow = <span className="small" ><FA name="phone" className="text-success py-1" /><a href={"tel:" + telephone} >{telephone}</a></span>
         return <LMR className="pl-2 pr-3 py-1">
             <LMR className="px-3 pt-2" left={nameShow} right={telephoneShow}></LMR>
             <LMR className="px-3" left={unitShow} right={date}></LMR>
