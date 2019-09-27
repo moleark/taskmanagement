@@ -3,7 +3,7 @@ import { VPage, Page, ItemSchema, ImageSchema, StringSchema, UiSchema, UiTextIte
 import { CMe } from './CMe';
 import { observable } from 'mobx';
 import { consts } from '../consts';
-import { appConfig } from 'nv';
+import { appConfig } from 'index';
 
 export class VSet extends VPage<CMe> {
 

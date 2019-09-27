@@ -6,8 +6,8 @@ import { tv } from 'tonva';
 import { LMR, StringProp, ComponentProp, Prop, PropGrid, FA } from 'tonva';
 import { CCustomer } from './CCustomer';
 import { consts } from '../consts';
-import { mobileValidation, nameValidation, emailValidation } from 'nv/tools/inputValidations';
-import { GLOABLE } from 'nv/ui';
+import { mobileValidation, nameValidation, emailValidation } from 'tools/inputValidations';
+import { GLOABLE } from 'ui';
 import { async } from 'q';
 
 export const myCustomerSchema: Schema = [

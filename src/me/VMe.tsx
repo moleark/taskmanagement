@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import { LMR, VPage, nav, Image, ComponentProp, Prop, PropGrid, FA } from 'tonva';
 import { CMe } from './CMe';
 import classNames from 'classnames';
+import copy from 'copy-to-clipboard';
 
 function rowCom(iconName: string, iconColor: string, caption: string, value: any, onClick: any) {
     return <LMR className="cursor-pointer w-100 py-2 my-2 align-items-center  " onClick={onClick}
@@ -45,6 +46,10 @@ export class VMe extends VPage<CMe> {
             : <b>{name}</b>
     }
 
+    copyClick = (e) => {
+        copy(e.target.parentNode.childNodes[0].data)
+    }
+
     private meInfo() {
         let { user, showMeDetail, showMessage, showTeam, showMyCustomer, salesAmont } = this.controller;
         if (user === undefined) return null;
@@ -64,21 +69,20 @@ export class VMe extends VPage<CMe> {
         }
 
         let { teamCount, customerCount, activeCustomerCount } = salesAmont;
-        return <div className="px-4 py-4 cursor-pointer" 
-            style={{ backgroundColor: '#f0f0f0', width:'90%', margin: '-2rem auto 2rem auto' }}>
-
+        return <div className="px-4 py-3 cursor-pointer"
+            style={{ backgroundColor: '#e3e4e6', width: '90%', margin: '-4rem auto 2rem auto' }}>
             <LMR
                 left={<div onClick={onshowMeDetail}> <Image className="w-3c h-3c mr-3" src={icon} /> </div>}
                 right={<div className={classNames('jk-cart ml-1 mr-2', pointer)} onClick={onshowMessage} >
                     <FA className="fa-lg" name="commenting-o" />
                     {badge}
                 </div>}>
-                <div onClick={onshowMeDetail} className="  " >
-                    <div>{this.userSpan(name, nick)}</div>
-                    <div className="small"><span >邀请码:</span> {this.inviteCode}</div>
+                <div>
+                    <div onClick={onshowMeDetail}>{this.userSpan(name, nick)}</div>
+                    <div className="small"><span >邀请码:</span><span className="small">{this.inviteCode}<span style={{ border: '1px solid #999999' }} className="px-1 mx-1" onClick={this.copyClick}>复制</span></span ></div>
                 </div>
             </LMR>
-            <div className="row mt-4">
+            <div className="row mt-2">
                 <div className="col text-center" onClick={onshowTeam}>
                     <div>{teamCount}</div>
                     <small><small>团队</small></small>
@@ -110,7 +114,7 @@ export class VMe extends VPage<CMe> {
             <div className="h6"><small>{titel}</small></div>
         </div>;
 
-        return <div className="rounded text-center text-white bg-primary pt-4 pb-5">
+        return <div className="text-center text-white bg-primary pt-4 pb-5" style={{ borderRadius: '0  0 5rem 5rem', margin: ' 0 -2rem 0 -2rem ' }}>
 
             <div className="py-4 cursor-pointer" >
                 <div className="text-warning" onClick={async () => await this.controller.showAchievementDetail(0)}>
@@ -118,12 +122,13 @@ export class VMe extends VPage<CMe> {
                     <small> 元</small>
                 </div>
                 <h6 className="text-warning"><small>累计收益</small></h6>
-            </div>
+            </div >
             <div className="d-flex justify-content-around">
                 {divTag('待到款', (oneAchievement + twoAchievement + threeAchievement), 1)}
                 {divTag('可提现', 0, 1)}
             </div>
-        </div>;
+            <div className="my-4"></div>
+        </div >;
     }
 
     private page = observer(() => {
@@ -138,7 +143,7 @@ export class VMe extends VPage<CMe> {
         return <div className="bg-white pb-3" >
             {this.achievement()}
             {this.meInfo()}
-            <div className="" style={{ marginTop: "8rem" }}></div>
+            <div className="text-left h6 mx-4"> <strong>我的服务</strong></div>
             <div className="row p-2 cursor-pointer">
                 <div className="col text-center" onClick={onshowCreateCoupon}>
                     <FA name="th-large" className='text-warning' fixWidth={true} size="lg" />

@@ -5,7 +5,7 @@ import { observer } from 'mobx-react';
 import { VPage, Page, Schema, Form, UiSchema, UiInputItem, Context, UiRadio, toUiSelectItems, Widget, UiCustom, FA, LMR, UiIdItem, tv } from 'tonva';
 import { consts } from '../consts';
 import { CCoupon } from './CCoupon';
-import { GLOABLE } from 'nv/ui';
+import { GLOABLE } from 'ui';
 
 const schema: Schema = [
     { name: 'validitydate', type: 'date', required: false },

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { VPage, TabCaptionComponent, Page, Tabs, TabProp } from 'tonva';
 import { observable } from 'mobx';
-import { CApp } from 'nv/CApp';
+import { CApp } from 'CApp';
 
 const color = (selected: boolean) => selected === true ? 'text-primary' : 'text-muted';
 

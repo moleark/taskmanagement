@@ -4,7 +4,7 @@ import { ProductPackRow } from './Product';
 import { Loader } from '../mainSubs/loader';
 import { MainSubs, MainProductChemical, MainBrand } from '../mainSubs';
 import { LoaderProductChemical } from './productChemical';
-import { GLOABLE } from 'nv/ui';
+import { GLOABLE } from 'ui';
 
 export class LoaderBrand extends Loader<MainBrand> {
     //private brandTuid: Tuid;

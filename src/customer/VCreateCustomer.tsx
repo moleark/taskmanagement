@@ -6,7 +6,7 @@ import {
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
 import { consts } from '../consts';
-import { mobileValidation, nameValidation } from 'nv/tools/inputValidations';
+import { mobileValidation, nameValidation } from 'tools/inputValidations';
 
 const schema: Schema = [
     { name: 'Name', type: 'string', required: true },

@@ -2,7 +2,8 @@
 import * as React from 'react';
 import './App.css';
 import { start, NavView, nav } from 'tonva';
-import { CApp, appConfig } from './nv';
+import { appConfig } from 'index';
+import { CApp } from 'CApp';
 //import { faceTabs } from 'facetabs';
 
 //const tonvaApp = "bruce/TestApp";
