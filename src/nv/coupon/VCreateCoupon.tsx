@@ -194,7 +194,7 @@ export class VCreateCoupon extends VPage<CCoupon> {
 
         let right = <div onClick={onshowCreateCoupon} className="cursor-pointer py-2 mx-3"><FA name="ellipsis-h" /></div>;
 
-        return <Page header="生成优惠码" headerClassName={consts.headerClass} right={right} >
+        return <Page header="生成优惠券" headerClassName={consts.headerClass} right={right} >
             <Form ref={v => this.form = v} className="my-3 mx-3"
                 schema={schema}
                 uiSchema={this.uiSchema}
