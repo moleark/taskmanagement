@@ -5,6 +5,7 @@ import { CMe } from './CMe';
 import classNames from 'classnames';
 import copy from 'copy-to-clipboard';
 import { observable } from 'mobx';
+import { GLOABLE } from 'ui';
 
 function rowCom(iconName: string, iconColor: string, caption: string, value: any, onClick: any) {
     return <LMR className="cursor-pointer w-100 py-2 my-2 align-items-center" onClick={onClick}
@@ -17,7 +18,7 @@ function rowCom(iconName: string, iconColor: string, caption: string, value: any
 export class VMe extends VPage<CMe> {
     private user: any;
     private inviteCode: any;
-    @observable bindTip: any = "";
+    @observable showTips: any = "none"
 
     async open() {
         this.openPage(this.page);
@@ -39,6 +40,10 @@ export class VMe extends VPage<CMe> {
 
     copyClick = (e) => {
         copy(e.target.parentNode.childNodes[0].data);
+        this.showTips = "";
+        setTimeout(() => {
+            this.showTips = "none";
+        }, GLOABLE.TIPDISPLAYTIME);
     }
 
     private meInfo() {
@@ -88,7 +93,6 @@ export class VMe extends VPage<CMe> {
     }
 
     private achievement() {
-
         let { salesAmont } = this.controller;
         let { oneAchievement, twoAchievement, threeAchievement } = salesAmont;
         let divTag = (titel: string, achievement: number, status: number) => <div
@@ -115,7 +119,7 @@ export class VMe extends VPage<CMe> {
                 {divTag('可提现', 0, 1)}
             </div>
             <div className="my-4"></div>
-        </div >;
+        </div>;
     }
 
     private page = observer(() => {
@@ -130,6 +134,9 @@ export class VMe extends VPage<CMe> {
         return <div className="bg-white pb-3" >
             {this.achievement()}
             {this.meInfo()}
+
+            <div><div className="text-center small px-2" style={{ width: '28%', margin: '-19px auto 0 auto', borderRadius: '3px', backgroundColor: '#eeeeee', display: this.showTips }}>已复制到剪切板</div></div>
+
             <div className="text-left h6 mx-4"> <strong>我的服务</strong></div>
             <div className="row p-2 cursor-pointer">
                 <div className="col text-center" onClick={onshowCreateCoupon}>

@@ -114,6 +114,7 @@ export interface UqSalesTask {
     SearchTaskProject: Query;
     MyCustomerIsOccupy: Query;
     Relation: Map;
+    searchNewMyCustomer: Query;
 }
 
 export interface UqMember {

@@ -100,6 +100,7 @@ export class CCustomer extends CUqBase {
     @observable pageCustomerSearch: PageMyCustomerSearch;
     @observable pageMyCustomerActive: PageMyCustomerActive;
     @observable innerCustomer: any;
+    @observable newMyCustomerList: any[];
     private task: Task;
 
     //初始化
@@ -107,6 +108,7 @@ export class CCustomer extends CUqBase {
         this.pageCustomer = null;
         this.task = task;
         this.searchByKey('');
+        this.searchNewMyCustomer();
         this.openVPage(VCustomerSelect);
     }
 
@@ -133,6 +135,19 @@ export class CCustomer extends CUqBase {
         this.pageMyCustomerActive = new PageMyCustomerActive(this.uqs.salesTask.searchMyCustomerActive);
         this.pageMyCustomerActive.first({ key: key, type: type });
     }
+
+    /**
+     * 查询我的新客户
+    */
+    searchNewMyCustomer = async () => {
+        let list = await this.uqs.salesTask.searchNewMyCustomer.query({});
+        if (list.ret.length > 0) {
+            this.newMyCustomerList = list.ret;
+        }
+        let a = 1;
+    }
+
+
 
     //加载客户明细
     loadCustomerDetail = async (customerid: number) => {
@@ -246,20 +261,12 @@ export class CCustomer extends CUqBase {
         await this.createWebUserMyCustomerMap(this.innerCustomer.id, mycustomer);
     }
 
-
     /**
      * 查询MyCustomer是否可能被其他轻代理绑定
      */
     checkBinding = async (mycustomer: any): Promise<boolean> => {
         let result = await this.uqs.salesTask.MyCustomerIsOccupy.query({ mycustomer: mycustomer.id });
         return result.ret[0] === 1;
-        /*
-        if (result.ret[0] == 1) {
-            this.IsOccupy = true;
-        } else {
-            this.IsOccupy = false;
-        }
-        */
     }
 
     createWebUserMyCustomerMap = async (customer: any, mycustomer: any) => {
@@ -277,6 +284,7 @@ export class CCustomer extends CUqBase {
 
     tab = () => {
         this.searchByKey('');
+        this.searchNewMyCustomer();
         return <this.render />;
     }
 }

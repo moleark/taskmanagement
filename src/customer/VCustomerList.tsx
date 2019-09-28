@@ -32,8 +32,20 @@ export class VCustomerList extends VPage<CCustomer> {
         </LMR>
     }
 
+
+    private renderNewCustomer = (model: any, index: number) => {
+
+        let { sales, customer, webuser, createTime } = model;
+        let left: any = <span>{tv(customer, v => v.name)}</span>;
+        let right: any = <span>{tv(customer, v => v.name)}</span>;
+        return <LMR className="pl-2 pr-3 py-1">
+            <LMR className="px-3 py-2" left={left} right={<div className="small text-warning">新客户</div>}>
+            </LMR>
+        </LMR >
+    }
+
     private page = observer((customer: any) => {
-        let { pageCustomer, showSelectOrganization, showCustomerSearch } = this.controller;
+        let { pageCustomer, showSelectOrganization, showCustomerSearch, newMyCustomerList } = this.controller;
         let { showCustomerSearchByUnit } = this.controller.cApp.cCustomerUnit;
         let onShowSelectOrganzation = async () => await showSelectOrganization();
         let onshowCustomerSearch = async () => await showCustomerSearch(null);
@@ -56,8 +68,12 @@ export class VCustomerList extends VPage<CCustomer> {
         ];
 
         return <Page header="客户" onScrollBottom={this.onScrollBottom} headerClassName='bg-primary py-1 px-3' right={right} >
-            {pageCustomer && pageCustomer.items && (pageCustomer.items.length > 0) && < List before={''} none={none} items={pageCustomer}
-                item={{ render: this.renderCustomer }} />}
+
+            {newMyCustomerList && newMyCustomerList.length > 0 && <List className="py-2" before={''} none={none} items={newMyCustomerList} item={{ render: this.renderNewCustomer }} />}
+            {
+                pageCustomer && pageCustomer.items && (pageCustomer.items.length > 0) &&
+                <List before={''} none={none} items={pageCustomer} item={{ render: this.renderCustomer }} />
+            }
         </Page>
     })
 
