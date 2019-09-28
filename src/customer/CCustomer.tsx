@@ -17,6 +17,8 @@ import { VCustomerChek } from './VCustomerChek';
 import { VCustomerEdit } from './VCustomerEdit';
 import { VMyCustomer } from './VMyCustomer';
 import { VCustomerRelation } from './VCustomerRelation';
+import { async } from 'q';
+import { timingSafeEqual } from 'crypto';
 
 /**
  * 用于客户首页
@@ -150,9 +152,20 @@ export class CCustomer extends CUqBase {
      * 显示新客户信息
     */
     showNewMyCustomerDetil = (model: any) => {
-
         this.openVPage(VCustomerRelation, model)
     }
+
+    /**
+     * 关联客户
+    */
+    onRelationCustomer = async (model: any, ) => {
+        let mycustomer = await this.cApp.cCustomer.call();
+        let { customer, webuser } = model;
+        await this.uqs.salesTask.UpateCustomerMyCustomerMap.submit({ mycustomer: mycustomer, customer: customer, webuser: webuser });
+        await this.searchByKey('');
+        await this.searchNewMyCustomer();
+    }
+
 
     //加载客户明细
     loadCustomerDetail = async (customerid: number) => {
@@ -162,7 +175,6 @@ export class CCustomer extends CUqBase {
     //查询客户--通过ID
     showCustomerDetail = async (customerid: number) => {
         let mycustomer = await this.loadCustomerDetail(customerid);
-
         let customer = await this.uqs.salesTask.CustomerMyCustomerMap.query({ mycustomer: mycustomer.id });
         if (customer.ret.length > 0) {
             this.innerCustomer = customer.ret[0].customer;
@@ -260,22 +272,12 @@ export class CCustomer extends CUqBase {
         await this.uqs.salesTask.MyCustomer.save(param.id, param);
     }
 
-    showInnerCustomerSelect = async (mycustomer: any) => {
-        let { cWebUser } = this.cApp;
-        this.innerCustomer = await cWebUser.call();
-        await this.createWebUserMyCustomerMap(this.innerCustomer.id, mycustomer);
-    }
-
     /**
      * 查询MyCustomer是否可能被其他轻代理绑定
      */
     checkBinding = async (mycustomer: any): Promise<boolean> => {
         let result = await this.uqs.salesTask.MyCustomerIsOccupy.query({ mycustomer: mycustomer.id });
         return result.ret[0] === 1;
-    }
-
-    createWebUserMyCustomerMap = async (customer: any, mycustomer: any) => {
-        await this.uqs.salesTask.UpateCustomerMyCustomerMap.submit({ mycustomer: mycustomer, customer: customer });
     }
 
     pickAddress = async (context: Context, name: string, value: number): Promise<number> => {

@@ -55,7 +55,6 @@ export class CMe extends CUqBase {
 
     //显示我的个人信息
     showMeDetail = async () => {
-        let p = await this.uqs.salesTask.Relation.query({ parent: '', arr1: { children: 47 } });
         this.openVPage(VMeDetail)
     }
 

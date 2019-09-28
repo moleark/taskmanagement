@@ -14,7 +14,7 @@ const tabCaption = (caption: string, amount: number): TabCaption => {
     </div>;
 }
 
-export enum TabStatus { sum = 1, pending = 0 };
+export enum TabStatus { sum = 0, pending = 1 };
 export enum TabType { A = 1, B = 2, C = 3 };
 
 export class VAchievementDetail extends VPage<CMe> {

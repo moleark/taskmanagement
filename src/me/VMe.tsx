@@ -106,7 +106,7 @@ export class VMe extends VPage<CMe> {
             <div className="h6"><small>{titel}</small></div>
         </div>;
 
-        return <div className="text-center text-white bg-primary pt-4 pb-5" style={{ borderRadius: '0  0 5rem 5rem', margin: ' 0 -2rem 0 -2rem ' }}>
+        return <div className="text-center text-white bg-primary pt-1 pb-5" style={{ borderRadius: '0  0 5rem 5rem', margin: ' 0 -2rem 0 -2rem ' }}>
             <div className="py-4 cursor-pointer" >
                 <div className="text-warning" onClick={async () => await this.controller.showAchievementDetail(0)}>
                     <span className="h1">{(oneAchievement + twoAchievement + threeAchievement).toFixed(2)}</span>
@@ -131,7 +131,7 @@ export class VMe extends VPage<CMe> {
         let onShowMyTasksCompleted = async () => await showMyTasksCompleted();
         let onshowCreateCoupon = async () => await cCoupon.showCreateCoupon()
 
-        return <div className="bg-white pb-3" >
+        return <div className="bg-white" >
             {this.achievement()}
             {this.meInfo()}
 
