@@ -7,20 +7,25 @@ import { consts } from '../consts';
 
 export class VCustomerRelation extends VPage<CCustomer> {
 
-    private relesion: any;
-    async open(relesion: any) {
-        this.relesion = relesion;
+    private model: any;
+    async open(model: any) {
+        this.model = model;
         this.openPage(this.page);
     }
 
     private page = observer(() => {
         let { showInnerCustomerSelect: showCustomerSelect } = this.controller;
-        let { webuser, myCustomer } = this.relesion;
+        let { webuser, myCustomer } = this.model;
 
         let onshowCustomerSelect = async () => await showCustomerSelect(myCustomer.obj);
         let { name } = webuser.obj;
-        let footer = <button type="button" className="btn btn-primary flex-grow-1 mx-3 my-1 w-100" onClick={onshowCustomerSelect}>修改</button>;
-        return <Page header="平台账户" headerClassName={consts.headerClass} footer={footer}>
+        let footer = <div className="d-flex px-1">
+            <div className="flex-grow-1 align-self-center justify-content-end">
+                <button type="button" className="btn btn-outline-info ml-2 align-self-center">关联客户</button>
+                <button type="button" className="btn btn-primary ml-2 align-self-center">新建客户</button>
+            </div>
+        </div>;;
+        return <Page header="新客户" headerClassName={consts.headerClass} footer={footer} >
             <LMR className="cursor-pointer w-100 py-3 px-3" left="账户" right={name}></LMR>
         </Page>
     })

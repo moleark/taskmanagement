@@ -16,6 +16,7 @@ import { VCustomerSearch } from './VCustomerSearch';
 import { VCustomerChek } from './VCustomerChek';
 import { VCustomerEdit } from './VCustomerEdit';
 import { VMyCustomer } from './VMyCustomer';
+import { VCustomerRelation } from './VCustomerRelation';
 
 /**
  * 用于客户首页
@@ -89,7 +90,6 @@ class PageMyCustomerActive extends PageItems<any> {
     }
 }
 
-
 /**
  *
  */
@@ -146,8 +146,13 @@ export class CCustomer extends CUqBase {
         }
         let a = 1;
     }
+    /**
+     * 显示新客户信息
+    */
+    showNewMyCustomerDetil = (model: any) => {
 
-
+        this.openVPage(VCustomerRelation, model)
+    }
 
     //加载客户明细
     loadCustomerDetail = async (customerid: number) => {

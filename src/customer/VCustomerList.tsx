@@ -34,11 +34,11 @@ export class VCustomerList extends VPage<CCustomer> {
 
 
     private renderNewCustomer = (model: any, index: number) => {
-
+        let { showNewMyCustomerDetil } = this.controller;
+        let onClik = () => showNewMyCustomerDetil(model);
         let { sales, customer, webuser, createTime } = model;
         let left: any = <span>{tv(customer, v => v.name)}</span>;
-        let right: any = <span>{tv(customer, v => v.name)}</span>;
-        return <LMR className="pl-2 pr-3 py-1">
+        return <LMR className="pl-2 pr-3 py-1" onClick={onClik}>
             <LMR className="px-3 py-2" left={left} right={<div className="small text-warning">新客户</div>}>
             </LMR>
         </LMR >
