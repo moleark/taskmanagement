@@ -19,6 +19,7 @@ import { VMyCustomer } from './VMyCustomer';
 import { VCustomerRelation } from './VCustomerRelation';
 import { async } from 'q';
 import { timingSafeEqual } from 'crypto';
+import { VCreateNewCustomer } from './VCreateNewCustomer';
 
 /**
  * 用于客户首页
@@ -166,6 +167,9 @@ export class CCustomer extends CUqBase {
         await this.searchNewMyCustomer();
     }
 
+    showCreateNewCustomer = async (model: number) => {
+        this.openVPage(VCreateNewCustomer, model);
+    }
 
     //加载客户明细
     loadCustomerDetail = async (customerid: number) => {

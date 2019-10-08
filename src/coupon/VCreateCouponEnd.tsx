@@ -42,7 +42,7 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
             </div>
             <div className="w-100 text-center">
                 <label className="text-success cursor-pointer" onClick={this.comeBack}>返回</label>
-                <div><div className="text-center small px-2" style={{ width: '28%', margin: '20px auto 0 auto', borderRadius: '3px', backgroundColor: '#dddddd', display: this.showTips }}>已复制到剪切板</div></div>
+                <div className="text-center text-white small px-2" style={{ width: '28%', margin: '27px auto 0 auto', padding: '4px', borderRadius: '3px', backgroundColor: '#505050', display: this.showTips }}>已复制到剪切板</div>
             </div>
         </Page>
     })

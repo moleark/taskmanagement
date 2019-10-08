@@ -27,7 +27,7 @@ export class VSet extends VPage<CMe> {
             ''
         ];
 
-        let footer = <button type="button" className="btn btn-outline-danger flex-grow-1 mx-3 my-1 w-100" onClick={this.logout} ><FA name="sign-out" size="lg" /> 退出</button>;
+        let footer = <button type="button" className="btn btn-danger flex-grow-1 mx-3 my-1 w-100" onClick={this.logout} ><FA name="sign-out" size="lg" /> 退出</button>;
         return <Page header='设置' headerClassName={consts.headerClass} footer={footer}>
             <PropGrid rows={rows} values={{}} />
         </Page >

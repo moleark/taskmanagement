@@ -63,7 +63,7 @@ export class VMe extends VPage<CMe> {
 
         let { teamCount, customerCount, activeCustomerCount } = salesAmont;
         return <div className="px-4 py-3 cursor-pointer"
-            style={{ backgroundColor: '#ffffff', width: '90%', borderRadius: '5px', margin: '-4rem auto 2rem auto', boxShadow: "2px 2px 5px #333333" }}>
+            style={{ backgroundColor: '#f9f9f9', width: '90%', borderRadius: '8px', margin: '-4rem auto 2rem auto', boxShadow: "2px 2px 15px #333333" }}>
             <LMR
                 left={<div onClick={showMeDetail}> <Image className="w-3c h-3c mr-3" src={icon} /> </div>}
                 right={<div className={classNames('jk-cart ml-1 mr-2', pointer)} onClick={showMessage} >
@@ -135,7 +135,7 @@ export class VMe extends VPage<CMe> {
             {this.achievement()}
             {this.meInfo()}
 
-            <div><div className="text-center small px-2" style={{ width: '28%', margin: '-19px auto 0 auto', borderRadius: '3px', backgroundColor: '#eeeeee', display: this.showTips }}>已复制到剪切板</div></div>
+            <div className="text-center text-white small px-2" style={{ width: '28%', margin: '-27px auto 0 auto', padding: '4px', borderRadius: '3px', backgroundColor: '#505050', display: this.showTips }}>已复制到剪切板</div>
 
             <div className="text-left h6 mx-4"> <strong>我的服务</strong></div>
             <div className="row p-2 cursor-pointer">
