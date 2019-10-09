@@ -1,36 +1,61 @@
 {
-  "name": "taskmanagement",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@types/jest": "24.0.18",
-    "@types/node": "12.7.11",
-    "@types/react": "16.9.5",
-    "@types/react-dom": "16.9.1",
-    "react": "^16.10.2",
-    "react-dom": "^16.10.2",
-    "react-scripts": "3.2.0",
-    "typescript": "3.6.3"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+    "name": "taskmanagement",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@babel/core": "^7.4.4",
+        "@types/classnames": "^2.2.6",
+        "@types/jest": "24.0.18",
+        "@types/lodash": "^4.14.119",
+        "@types/node": "12.7.11",
+        "@types/react": "16.9.5",
+        "@types/react-dom": "16.9.1",
+        "@types/react-loadable": "^5.4.3",
+        "bootstrap": "^4.3.1",
+        "classnames": "^2.2.6",
+        "copy-to-clipboard": "^3.2.0",
+        "font-awesome": "^4.7.0",
+        "fontawesome": "^4.7.2",
+        "gh-pages": "^2.0.1",
+        "jwt-decode": "^2.2.0",
+        "lodash": "^4.17.15",
+        "mobx": "^5.8.0",
+        "mobx-react": "^5.4.3",
+        "react": "^16.10.2",
+        "react-dom": "^16.10.2",
+        "react-loadable": "^5.5.0",
+        "react-scripts": "3.2.0",
+        "tonva": "^1.0.91",
+        "tsc": "^1.20150623.0",
+        "tslib": "^1.10.0",
+        "typescript": "3.6.3"
+    },
+    "scripts": {
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d build",
+        "start": "set PORT=7766 && react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test --env=jsdom",
+        "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+        "extends": "react-app",
+        "rules": {
+            "no-undef": "off",
+            "no-restricted-globals": "off",
+            "no-unused-vars": "off"
+        }
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    }
 }
