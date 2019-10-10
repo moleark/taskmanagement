@@ -21,7 +21,9 @@
         "baseUrl": "src/",
         "strictNullChecks": false,
         "experimentalDecorators": true,
-        "noImplicitAny": false
+        "noImplicitAny": false,
+        "outDir": "build/dist",
+        "rootDir": "src"
     },
     "include": [
         "src"
