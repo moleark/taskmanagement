@@ -52,7 +52,6 @@ export class VFinish extends VPage<CCommonType> {
     render(task: Task) {
         this.task = task;
         let { completSchema, completuiSchema } = this.controller.taskCommonType;
-
         return <div className="mx-3">
             <Form ref={v => this.form = v}
                 schema={completSchema}

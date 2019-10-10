@@ -18,7 +18,7 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
     comeBack = () => {
         this.closePage(2);
     }
-    copyClick = (e:any) => {
+    copyClick = (e: any) => {
         copy(e.target.parentNode.childNodes[0].innerHTML)
         this.showTips = "";
         setTimeout(() => {

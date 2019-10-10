@@ -3,7 +3,7 @@ import { VPage, Page, UiSchema, UiInputItem, Schema, Form, Context } from 'tonva
 import { observer } from 'mobx-react';
 import { CreateProduct, Task } from '../model';
 import { CSalesTask } from '../CSalesTask';
- 
+
 
 const schema: Schema = [
     { name: 'note', type: 'string', required: false },
