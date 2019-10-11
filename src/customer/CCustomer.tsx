@@ -276,7 +276,7 @@ export class CCustomer extends CUqBase {
      */
     checkBinding = async (mycustomer: any): Promise<boolean> => {
         let result = await this.uqs.salesTask.MyCustomerIsOccupy.query({ mycustomer: mycustomer.id });
-        return result.ret[0] === 1;
+        return result.ret[0].code === 1;
     }
 
     pickAddress = async (context: Context, name: string, value: number): Promise<number> => {

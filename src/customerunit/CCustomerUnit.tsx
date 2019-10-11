@@ -67,16 +67,26 @@ export class CCustomerUnit extends CUqBase {
 
     //新建客户单位
     createOrganization = async (param: any) => {
+        /*
         let par = {
             no: undefined as any,
             name: param.Name,
             user: this.user.id,
             isvalid: 1,
         }
-
         let { MyCustomerUnit, CreateMyCustomerUnit } = this.uqs.salesTask;
         let organization = await MyCustomerUnit.save(undefined, par);
         let organizationBox = organization && MyCustomerUnit.boxId(organization.id);
+        */
+
+        let par = {
+            no: undefined as any,
+            name: param.Name
+        }
+        let { MyCustomerUnit, CreateMyCustomerUnit } = this.uqs.salesTask;
+        let organization = await CreateMyCustomerUnit.submit(par);
+        let organizationBox = organization && MyCustomerUnit.boxId(organization.id);
+
         this.backPage();
         this.returnCall(organizationBox);
     }
