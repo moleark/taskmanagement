@@ -18,11 +18,11 @@ export class VCustomerList extends VPage<CCustomer> {
     private renderCustomer = (customer: any, index: number) => {
         let onClickCustomer = async () => await this.controller.showCustomerDetail(customer.id);
 
-        let { name, unit, validity, telephone } = customer;
+        let { name, unit, validity, telephone, mobile } = customer;
         let nameShow = <span className="font-weight-bold" onClick={onClickCustomer}>{name}</span>;
         let unitShow = <div className="text-muted" onClick={onClickCustomer}><small> {tv(unit, s => s.name)}</small></div>;
         let date = <span className="small"><EasyDate date={validity} /></span>
-        let telephoneShow = <span className="small" ><FA name="phone" className="text-success py-1" /><a className="pl-2 text-default" href={"tel:" + telephone} style={{ textDecorationLine: "none" }} >{telephone}</a></span>
+        let telephoneShow = mobile && <span className="small" ><FA name="phone" className="text-success py-1" /><a className="pl-2 text-default" href={"tel:" + mobile} style={{ textDecorationLine: "none" }} >{mobile}</a></span>
 
         return <LMR className="pl-2 pr-3 py-1">
             <LMR className="px-3 pt-2" left={nameShow} right={date}>

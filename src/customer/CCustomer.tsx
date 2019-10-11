@@ -253,13 +253,13 @@ export class CCustomer extends CUqBase {
         let par = {
             unit: customerunit.id,
             no: undefined as any,
-            name: param.Name,
+            name: param.name,
             firstName: "",
             lastName: "",
+            gender: param.gender ? 1 : param.gender,
+            salutation: param.salutation,
             telephone: param.telephone,
-            gender: param.Gender ? 1 : param.Gender,
-            salutation: param.Salutation,
-            birthDay: param.BirthDay
+            mobile: param.mobile
         }
         let ret = await this.uqs.salesTask.CreateMyCustomer.submit(par);
         let { code } = ret;

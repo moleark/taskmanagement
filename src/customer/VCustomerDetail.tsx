@@ -93,8 +93,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
     private page = observer((param: any) => {
         let { cSalesTask } = this.controller.cApp
         let { showCustomerHistory } = cSalesTask;
-        let { id: customerid, unit, name, salutation, telephone, gender, email, wechat, teacher, addressString, potential, research } = param
-
+        let { id: customerid, unit, name, salutation, telephone, gender, email, wechat, teacher, addressString, potential, research, mobile } = param
 
         var genderShow: any = "男";
         if (gender == 0) {
@@ -153,6 +152,14 @@ export class VCustomerDetail extends VPage<CCustomer> {
                 name: 'telephone',
                 component: <LMR className="cursor-pointer w-100 py-2"
                     left={<div><small></small>手机号</div>}
+                    right={<div className="text-right">{mobile}</div >}>
+                </LMR >,
+            } as ComponentProp,
+            {
+                type: 'component',
+                name: 'telephone',
+                component: <LMR className="cursor-pointer w-100 py-2"
+                    left={<div><small></small>固话</div>}
                     right={<div className="text-right">{telephone}</div >}>
                 </LMR >,
             } as ComponentProp,
