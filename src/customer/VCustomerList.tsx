@@ -18,7 +18,7 @@ export class VCustomerList extends VPage<CCustomer> {
     private renderCustomer = (customer: any, index: number) => {
         let onClickCustomer = async () => await this.controller.showCustomerDetail(customer.id);
 
-        let { name, unit, validity, telephone, mobile } = customer;
+        let { name, unit, validity, mobile } = customer;
         let nameShow = <span className="font-weight-bold" onClick={onClickCustomer}>{name}</span>;
         let unitShow = <div className="text-muted" onClick={onClickCustomer}><small> {tv(unit, s => s.name)}</small></div>;
         let date = <span className="small"><EasyDate date={validity} /></span>
@@ -46,7 +46,7 @@ export class VCustomerList extends VPage<CCustomer> {
 
     private page = observer((customer: any) => {
         let { pageCustomer, showSelectOrganization, showCustomerSearch, newMyCustomerList } = this.controller;
-        let onShowSelectOrganzation = async () => await showSelectOrganization();
+        let onShowSelectOrganzation = async () => await showSelectOrganization(1);
         let onshowCustomerSearch = async () => await showCustomerSearch(null);
 
         let right = <div className="cursor-pointer py-2">

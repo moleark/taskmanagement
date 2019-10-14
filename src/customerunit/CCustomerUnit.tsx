@@ -1,7 +1,6 @@
 import { Query, PageItems } from 'tonva';
 import { observable } from 'mobx';
 import { CUqBase } from '../CBase';
-import { Task } from '../salestask/model';
 import { VCustomerUnitSelect } from './VCustomerUnitSelect';
 import { VCreateCustomerUnit } from './VCreateCustomerUnit';
 import { VCustomerUnitDetail } from './VCustomerUnitDetail';
@@ -36,22 +35,14 @@ export class CCustomerUnit extends CUqBase {
     @observable pageUnit: PageUnit;
 
     //初始化
-    protected async internalStart(task: Task) {
+    protected async internalStart(type: any) {
         this.pageUnit = null;
         this.searchByKey('');
-        this.openVPage(VCustomerUnitSelect, 1);
-    }
-
-
-    showCustomerSearchByUnit = async (): Promise<any> => {
-        this.pageUnit = null;
-        this.searchByKey('');
-        this.openVPage(VCustomerUnitSelect, 2);
+        this.openVPage(VCustomerUnitSelect, type);
     }
 
     //查询客户--通过名称
     searchByKey = async (key: string) => {
-
         this.pageUnit = new PageUnit(this.uqs.salesTask.searchMyCustomerUnit);
         this.pageUnit.first({ key: key });
     }
@@ -59,28 +50,19 @@ export class CCustomerUnit extends CUqBase {
     /**
      * 显示新建单位
      */
-    showCreateOrganization = async () => {
+    showCreateOrganization = async (type: any) => {
         let orgnization = await this.vCall(VCreateCustomerUnit);
-        this.showCreateCustomer(orgnization);
-        // this.openVPage(VCreateCustomerUnit);
+        if (type === 1) {
+            this.showCreateCustomer(orgnization);
+        } else {
+            this.pageUnit = null;
+            this.searchByKey('');
+        }
     }
 
     //新建客户单位
     createOrganization = async (param: any) => {
-        /*
         let par = {
-            no: undefined as any,
-            name: param.Name,
-            user: this.user.id,
-            isvalid: 1,
-        }
-        let { MyCustomerUnit, CreateMyCustomerUnit } = this.uqs.salesTask;
-        let organization = await MyCustomerUnit.save(undefined, par);
-        let organizationBox = organization && MyCustomerUnit.boxId(organization.id);
-        */
-
-        let par = {
-            no: undefined as any,
             name: param.Name
         }
         let { MyCustomerUnit, CreateMyCustomerUnit } = this.uqs.salesTask;
@@ -114,6 +96,11 @@ export class CCustomerUnit extends CUqBase {
     updateMyCustomerUnit = async (param: any) => {
         await this.uqs.salesTask.MyCustomerUnit.save(param.id, param);
         this.closePage();
+    }
+
+    //选择客户--给调用页面返回客户id
+    returnCustomerUnit = async (customerunit: any): Promise<any> => {
+        this.returnCall(customerunit);
     }
 
 

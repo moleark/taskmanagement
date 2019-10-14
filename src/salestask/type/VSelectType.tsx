@@ -22,7 +22,7 @@ export class VSelectType extends VPage<CSelectType> {
 
     private ai = () => {
         let { cCustomer } = this.controller.cApp;
-        let onshowCreateCustomer = async () => await cCustomer.showSelectOrganization();
+        let onshowCreateCustomer = async () => await cCustomer.showSelectOrganization(1);
         let newCustomer =
             <LMR className="p-3 bg-white mb-1 cursor-pointer" left={<FA className="text-success mr-3 mt-1" name="vcard" size="lg" fixWidth={true} />}
                 onClick={onshowCreateCustomer}>

@@ -162,10 +162,6 @@ export class CCustomer extends CUqBase {
         await this.searchNewMyCustomer();
     }
 
-    showCreateNewCustomer = async (model: number) => {
-        this.openVPage(VCreateNewCustomer, model);
-    }
-
     //加载客户明细
     loadCustomerDetail = async (customerid: number) => {
         return await this.uqs.salesTask.MyCustomer.load(customerid);
@@ -235,17 +231,17 @@ export class CCustomer extends CUqBase {
     }
 
     /**
+     * 新建客户时显示选择客户单位的页面
+     */
+    showSelectOrganization = (type: any) => {
+        this.cApp.cCustomerUnit.start(type);
+    }
+
+    /**
      * 显示新建客户页面
      */
     showCreateCustomer = (param: any) => {
         this.openVPage(VCreateCustomer, param);
-    }
-
-    /**
-     * 新建客户时显示选择客户单位的页面
-     */
-    showSelectOrganization = () => {
-        this.cApp.cCustomerUnit.start();
     }
 
     //新建客户
@@ -259,7 +255,36 @@ export class CCustomer extends CUqBase {
             gender: param.gender ? 1 : param.gender,
             salutation: param.salutation,
             telephone: param.telephone,
-            mobile: param.mobile
+            mobile: param.mobile,
+            newcustomerid: 0
+        }
+        let ret = await this.uqs.salesTask.CreateMyCustomer.submit(par);
+        let { code } = ret;
+        this.openVPage(VCreateCustomerFinish, code);
+    }
+
+    showCreateNewCustomer = async (model: any) => {
+
+        let unit = await this.cApp.cCustomerUnit.call(2);
+        let par = {
+            unit: unit,
+            customer: model.customer
+        }
+        this.openVPage(VCreateNewCustomer, par);
+    }
+
+    createNewCustomer = async (model: any, customerunit: any, newcustomer: number) => {
+        let par = {
+            unit: customerunit.id,
+            no: undefined as any,
+            name: model.name,
+            firstName: "",
+            lastName: "",
+            gender: model.gender ? 1 : model.gender,
+            salutation: model.salutation,
+            telephone: model.telephone,
+            mobile: model.mobile,
+            newcustomerid: newcustomer
         }
         let ret = await this.uqs.salesTask.CreateMyCustomer.submit(par);
         let { code } = ret;

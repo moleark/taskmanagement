@@ -25,7 +25,7 @@ export class VCustomerSelect extends VPage<CCustomer> {
     private page = observer((customer: any) => {
 
         let { pageCustomer, showSelectOrganization: showSelectCustomerUnit } = this.controller;
-        let onshowSelectCustomerUnit = async () => await showSelectCustomerUnit();
+        let onshowSelectCustomerUnit = async () => await showSelectCustomerUnit(1);
 
         let right = <div onClick={onshowSelectCustomerUnit} className="cursor-pointer px-3 py-2"><FA name="plus" /></div>;
         let none = <div className="my-3 mx-2 text-warning">请搜索客户！</div>;

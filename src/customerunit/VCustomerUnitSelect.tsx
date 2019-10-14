@@ -23,17 +23,17 @@ export class VCustomerUnitSelect extends VPage<CCustomerUnit> {
     private onClickRow = async (model: any) => {
         if (this.type === 1) {
             await this.controller.showCreateCustomer(model.id);
-        } else {
-            await this.controller.cApp.cCustomer.showCustomerSearch(model.name);
+        } else if (this.type === 2) {
+            await this.controller.returnCustomerUnit(model);
         }
     }
 
     private page = observer(() => {
         let { pageUnit, showCreateOrganization } = this.controller;
-        let onshowCreateUnit = async () => await showCreateOrganization();
+        let onshowCreateUnit = async () => await showCreateOrganization(this.type);
 
         let none, text, right;
-        if (this.type === 1) {
+        if (this.type === 1 || this.type === 2) {
             none = <div className="my-3 mx-2 text-warning">
                 还没有创建过客户单位，请先<span className="text-primary" onClick={onshowCreateUnit}>创建单位！</span>
             </div>;

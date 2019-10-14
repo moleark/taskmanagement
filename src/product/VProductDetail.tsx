@@ -56,6 +56,7 @@ export class VProductDetail extends VPage<CProduct> {
         let { pack, retail, vipPrice, agentPrice, promotionPrice } = item;
         let right = null;
         let agent = null;
+
         if (retail) {
             let price: number = this.minPrice(vipPrice, promotionPrice);
             let retailUI: any;
@@ -66,8 +67,21 @@ export class VProductDetail extends VPage<CProduct> {
                 price = retail;
             }
             if (agentPrice) {
+                /*
+                let profitdiscount = ((price - agentPrice) * 0.5).toFixed(2);
+                let profit = <span>
+                    <span className="small ml-2">
+                        <strong className="small" > <span className="small">赚</span> </strong>
+                    </span>
+                    <span className="text-right">{profitdiscount}</span>
+                </span>;
+                */
                 let discount = ((1 - ((price - agentPrice) / price)) * 10).toFixed(1);
-                agent = <span>{<span>/<span className="text-warning small"><strong className="small"> <span className="small">折</span> </strong></span> <span className="text-right text-danger h5">{discount}</span></span>}</span>;
+                agent = <span>
+                    <span className="small ml-2">
+                        <strong className="small"><span className="small">{discount}折</span></strong>
+                    </span>
+                </span>;
 
             } else {
                 agent = <span>{<span>/<span className="text-warning small"><strong className="small"> <span className="small">无折扣</span> </strong></span></span>}</span>;
@@ -75,24 +89,24 @@ export class VProductDetail extends VPage<CProduct> {
             right = <div className="row">
                 <div className="col-sm-6 pb-2 d-flex justify-content-end align-items-center">
                     <small className="text-muted">{retailUI}</small>&nbsp; &nbsp;
-                    <span className="text-danger">¥ <span className="h5">{price}</span></span>
-                    <span>{agent}</span>
+                    <span className="text-danger">¥ <span className="h5 pb-2">{price}</span></span>
+                    <span> <span className="h5">{agent}</span></span>
                 </div>
             </div >
         } else {
             right = <small>请询价</small>
         }
 
-        return <div className="px-2">
-            <div className="row">
-                <div className="col-5">
+        return <div className="px-4">
+            <div className="row px-2">
+                <div className="col-5 ">
                     <div><b>{tv(pack)}</b></div>
                 </div>
                 <div className="col-7">
                     {right}
                 </div>
             </div>
-            <div className="row">
+            <div className="row px-2">
                 <div className="col-12 ">
                     {this.controller.renderDeliveryTime(pack)}
                 </div>
