@@ -300,8 +300,24 @@ export class CCustomer extends CUqBase {
      * 查询MyCustomer是否可能被其他轻代理绑定
      */
     checkBinding = async (mycustomer: any): Promise<boolean> => {
-        let result = await this.uqs.salesTask.MyCustomerIsOccupy.query({ mycustomer: mycustomer.id });
-        return result.ret[0].code === 1;
+        var customerlis = await this.uqs.customer.getCustomerByKey.query({ key: mycustomer.mobile });
+        let param = {
+            customerList: customerlis.ret.map((v: any) => {
+                return {
+                    customer: v.customer
+                }
+            })
+        };
+        var counts: number = 0;
+        let { ret } = customerlis;
+        for (var i = 0; i < ret.length; i++) {
+            let cust = await this.uqs.salesTask.MyCustomerIsOccupy.query(ret[i]);
+            if (cust.ret.length > 0) {
+                counts++;
+            }
+        };
+
+        return !(counts === 0);
     }
 
     pickAddress = async (context: Context, name: string, value: number): Promise<number> => {

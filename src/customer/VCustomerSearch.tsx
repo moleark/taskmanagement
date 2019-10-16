@@ -27,8 +27,11 @@ export class VCustomerSearch extends VPage<CCustomer> {
     }
 
     private page = observer((customer: any) => {
-        let { pageCustomerSearch } = this.controller;
-        let none = <div className="my-3 mx-2 text-warning">没有找到满足条件的客户</div>;
+        let { pageCustomerSearch, showSelectOrganization } = this.controller;
+        let onShowSelectOrganzation = async () => await showSelectOrganization(1);
+        let none = <div className="my-3 mx-2 text-warning">
+            还没有这个客户，是否<span className="text-primary" onClick={onShowSelectOrganzation}  >创建客户！</span>
+        </div>;
         return <Page header='搜索客户' onScrollBottom={this.onScrollBottom} headerClassName='bg-primary py-1'>
             <SearchBox className="px-1 w-100  mt-2 mr-2"
                 size='md'

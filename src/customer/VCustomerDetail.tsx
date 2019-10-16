@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { VPage, Page, Schema, UiSchema, UiInputItem, UiRadio, ItemSchema, tv, LMR, ComponentProp, Prop, PropGrid, FA } from 'tonva';
+import { VPage, Page, Schema, UiSchema, UiInputItem, UiRadio, tv, LMR, ComponentProp, Prop, PropGrid, FA } from 'tonva';
 import { CCustomer } from './CCustomer';
 import { consts } from '../consts';
 import { mobileValidation, nameValidation, emailValidation } from 'tools/inputValidations';
@@ -48,6 +48,19 @@ const potentialText: { [v: number]: string } = {
     2: "大于30万",
 };
 
+const researchText: { [v: number]: string } = {
+    0: "有机",
+    1: "化学",
+    2: "分析",
+    3: "材料",
+};
+
+const genderText: { [v: number]: string } = {
+    0: "女",
+    1: "男",
+
+};
+
 export class VCustomerDetail extends VPage<CCustomer> {
 
     @observable private customer: any;
@@ -57,12 +70,6 @@ export class VCustomerDetail extends VPage<CCustomer> {
     async open(customer: any) {
         this.customer = customer;
         this.openPage(this.page, customer);
-    }
-
-    private onItemChanged = async (itemSchema: ItemSchema, newValue: any, preValue: any) => {
-        let { name } = itemSchema;
-        this.customer[name] = newValue;
-        await this.controller.updateMyCustomer(this.customer);
     }
 
     private checkBinding = async () => {
@@ -82,37 +89,14 @@ export class VCustomerDetail extends VPage<CCustomer> {
         }, GLOABLE.TIPDISPLAYTIME);
     }
 
-
-    private renderCustomerItem = (name: any, value: any) => {
-        return <LMR className="cursor-pointer w-100 py-2"
-            left={<div><small></small>{name}</div>}
-            right={<div className="w-2c text-right">{value}</div >}>
-        </LMR >;
-    }
-
     private page = observer((param: any) => {
         let { cSalesTask } = this.controller.cApp
         let { showCustomerHistory } = cSalesTask;
         let { id: customerid, unit, name, salutation, telephone, gender, email, wechat, teacher, addressString, potential, research, mobile } = param
 
-        var genderShow: any = "男";
-        if (gender == 0) {
-            genderShow = "女";
-        }
-
+        var genderShow = gender === undefined ? "" : genderText[genderShow];
         var potentialShow = potential === undefined ? "【无】" : potentialText[potentialShow];
-
-        var researchShow: any = "【无】";
-        if (research == 0) {
-            researchShow = "有机";
-        } else if (research == 1) {
-            researchShow = "化学";
-        } else if (research == 2) {
-            researchShow = "分析";
-        } else if (research == 3) {
-            researchShow = "材料";
-        }
-
+        var researchShow = research === undefined ? "【无】" : researchText[researchShow];
         let onshowCustomerHistory = async () => await showCustomerHistory(customerid);
 
         let rows: Prop[] = [
@@ -149,7 +133,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
             } as ComponentProp,
             {
                 type: 'component',
-                name: 'telephone',
+                name: 'mobile',
                 component: <LMR className="cursor-pointer w-100 py-2"
                     left={<div><small></small>手机号</div>}
                     right={<div className="text-right">{mobile}</div >}>

@@ -49,6 +49,7 @@ export interface UqCustomer {
     CustomerContacts: Map;
     CustomerSetting: Map;
     SearchWebUser: Query;
+    getCustomerByKey: Query;
 }
 
 export interface UqCustomerDiscount {
