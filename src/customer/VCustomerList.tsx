@@ -55,7 +55,7 @@ export class VCustomerList extends VPage<CCustomer> {
         </div>;
         let none = <div className="my-3 mx-2 text-warning"></div>;
 
-        return <Page header="客户" onScrollBottom={this.onScrollBottom} headerClassName='bg-primary py-1 px-3' right={right} >
+        return <Page header="客户" onScrollBottom={this.onScrollBottom} headerClassName='bg-primary py-1' right={right} >
 
             {newMyCustomerList && newMyCustomerList.length > 0 && <List className="py-2" before={''} none={none} items={newMyCustomerList} item={{ render: this.renderNewCustomer }} />}
             {

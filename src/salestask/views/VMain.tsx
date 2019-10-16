@@ -70,7 +70,7 @@ export class VMain extends VPage<CSalesTask> {
         let item = { render: this.renderSalesTask, onClick: this.onSalesTaskClick };
         let { tasksNow, dateTasksList } = tasks;
 
-        return <Page header="任务" onScrollBottom={this.onScrollBottom} right={right} headerClassName="bg-primary pl-3">
+        return <Page header="任务" onScrollBottom={this.onScrollBottom} right={right} headerClassName="bg-primary">
             {tasksNow.length === 0 && dateTasksList.length === 0 && none}
             {tasksNow.length > 0 && <List before={''} none={none} items={tasksNow} item={item} />}
             {

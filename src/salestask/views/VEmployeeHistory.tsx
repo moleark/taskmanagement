@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { VPage, Page, LMR, List, EasyDate, FA, tv } from 'tonva';
+import classNames from 'classnames';
+import { VPage, Page, LMR, List, tv } from 'tonva';
 import { observer } from 'mobx-react';
 import { CSalesTask } from '../CSalesTask';
 import { consts } from '../../consts';
@@ -14,20 +15,25 @@ export class VEmployeeHistory extends VPage<CSalesTask> {
         this.openPage(this.page);
     }
 
-    private renderHistory = (taskhistory: any, index: number) => {
-        let { task, date, status, biz, result } = taskhistory;
+    private renderSalesTask = (salesTask: any, index: number) => {
 
-        return <div className="d-block p-3">
-            <LMR >
-                <div><small className="text-muted"><EasyDate date={date} /> </small></div>
-                <LMR right={<small>  {tv(status, (v) => v.name)}</small>}
-                    left={<div><span><FA name='user' className='mr-3 text-info' ></FA></span>{tv(task, (v) => tv(v.customer, (vs) => vs.name))}</div>} >
-                </LMR>
-                <LMR right={<small>{tv(task, (v) => tv(v.type, (vs) => vs.description || '#'))}</small>}
-                    left={<small>{tv(task, (v) => tv(v.biz, (vs) => vs.description || '#'))}</small>}>
-                </LMR>
+        let { bizName, customer, priorty, description } = salesTask;
+        let cnFlag = classNames({
+            'my-1 mr-2': true,
+            'text-danger': priorty > 0,
+            'text-info': !(priorty > 0)
+        })
+
+        let left = <div className={cnFlag}>{this.controller.getTaskIcon(bizName)}</div>;
+        let right = <div className="text-right"> {tv(customer, (v) => <small>{tv(v.unit)}</small>)} </div>
+        return <LMR className="pl-2 pr-3 py-1" left={left}>
+            <LMR className="" right={right}>
+                <div className=" my-1 mr-3 font-weight-bold">{tv(customer)}</div>
             </LMR>
-        </div >;
+            <LMR className="" >
+                <div className=" my-1 mr-3 small" style={subStyle}>{description}</div>
+            </LMR>
+        </LMR >
     }
 
     //选择任务
@@ -38,7 +44,15 @@ export class VEmployeeHistory extends VPage<CSalesTask> {
     private page = observer(() => {
         let none = <div className="m-3 text-muted small">【暂无已完成的任务！】</div>;
         return <Page header="已完成任务" headerClassName={consts.headerClass}>
-            <List before={''} none={none} items={this.tasks} item={{ render: this.renderHistory, onClick: this.onTaskClick }} />
+            <List before={''} none={none} items={this.tasks} item={{ render: this.renderSalesTask, onClick: this.onTaskClick }} />
         </Page>
     })
+}
+
+
+export const subStyle: React.CSSProperties = {
+    fontSize: '0.75rem',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
 }
