@@ -1,4 +1,5 @@
 (function () {
+
     var plusReady = function (callback) {
         if (window.plus) {
             callback();
@@ -6,6 +7,7 @@
             document.addEventListener('plusready', callback);
         }
     }
+
     var shareServices = {};
     var init = function () {
         plus.share.getServices(function (services) {
@@ -112,6 +114,8 @@
             openSystem(msg, callback);
         }
     };
+
     plusReady(init);
+
     window.plusShare = open;
 })();
