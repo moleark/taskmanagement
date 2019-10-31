@@ -115,7 +115,16 @@
         }
     };
 
+
+    // 保存图片到相册中  
+    function savePicture() {
+        plus.gallery.save("_doc/a.jpg", function () {
+            alert("保存图片到相册成功");
+        });
+    }
+
     plusReady(init);
 
     window.plusShare = open;
+    window.savePicture = savePicture;
 })();
