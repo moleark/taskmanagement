@@ -118,7 +118,7 @@
 
     // 保存图片到相册中  
     function savePicture() {
-        plus.gallery.save("/storage/emulated/_doc/a.jpg", function () {
+        plus.gallery.save("/storage/emulated/nihao/a.jpg", function () {
             alert("保存图片到相册成功");
         });
     }
