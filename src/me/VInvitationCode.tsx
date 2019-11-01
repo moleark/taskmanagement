@@ -22,11 +22,13 @@ export class VInvitationCode extends VPage<CMe> {
         //var qr = document.getElementById('qrid');
         //let image = await scaleToImage_text(qr);
         //5+ 原生分享  
-        // @ts-ignore  屏蔽错误  
+
+        console.log(url);
+        // @ts-ignore  屏蔽错误 
         window.plusShare({
             title: "邀请码",//应用名字  
-            content: "分享具体内容",
-            herf: url,
+            content: "可通过邀请码加入轻代理",
+            href: url,//分享出去后，点击跳转地址 
             //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片
             thumbs: ["https://agent.jkchemical.com/logonew.png"] //分享缩略图  
         }, function (result) {
