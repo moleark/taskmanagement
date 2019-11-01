@@ -4,8 +4,8 @@ import { VStart } from './VStart';
 import { VOK } from './VOK';
 import { VError } from './VError';
 import { VAgencyClauseDetil } from './VAgencyClauseDetil';
-
-
+import { VConfirm } from './VConfirm';
+import * as qs from 'querystringify';
 /**
  *
  */
@@ -18,29 +18,48 @@ export class CStart extends CUqBase {
         isPosition = await this.isPosition();
         if (!isPosition) {
             nav.clear();
-            //await this.openVPage(AgencyClause, param);
-            await this.openVPage(VStart, param);
+            let query = this.getQueryParam();
+            if (query.code) {
+                let position = await this.uqs.salesTask.SearchPosition.table({ position: query.code });
+                if (position.length > 0) {
+                    await this.openVPage(VConfirm, position[0]);
+                    //await this.openVPage(VStart, param);
+                } else {
+                    await this.openVPage(VStart, param);
+                }
+            } else {
+                await this.openVPage(VStart, param);
+            }
         }
         else {
-            //await this.openVPage(AgencyClause, param);
             await this.cApp.cSalesTask.start();
-            //await this.openVPage(VStart, param);
         }
     }
 
-    //同意条款
-    onAgreeAgencyClause = async (param: any) => {
-        //await this.cApp.cSalesTask.start();
-        await this.openVPage(VStart, param);
+    //显示合同条款
+    getQueryParam = () => {
+        let { location } = document;
+        let { search } = location;
+        let result: any = "";
+        if (search) {
+            result = qs.parse(search.toLowerCase());
+        }
+        return result;
     }
 
+    //显示合同条款
     showAgencyClauseDetil = () => {
         this.openVPage(VAgencyClauseDetil);
     }
 
+    //同意条款
+    onAgreeAgencyClause = async (param: any) => {
+        await this.openVPage(VStart, param);
+    }
+
     //判断是否有邀请码
     isPosition = async () => {
-        let position = await this.searchPosition();
+        let position = await this.uqs.salesTask.SearchPosition.table({ position: undefined });
         if (position && position.length > 0) {
             return true;
         } else {
@@ -48,20 +67,10 @@ export class CStart extends CUqBase {
         }
     }
 
-    //搜索识别码
-    searchPosition = async () => {
-        let position = await this.uqs.salesTask.SearchPosition.table({});
-        return position;
-    }
-
-    startApp = async () => {
-        await this.cApp.start();
-    }
-
     //新建识别码
     createPosition = async (param: any) => {
         let { invitacode } = param;
-        invitacode = invitacode.replace(/\s/g, "");;
+        invitacode = invitacode.replace(/\s/g, "");
         if (isNaN(invitacode) === true) {
             await this.openVPage(VError);
             return;
@@ -77,6 +86,11 @@ export class CStart extends CUqBase {
             await this.openVPage(VError, position);
         }
         return position;
+    }
+
+    //开启APP
+    startApp = async () => {
+        await this.cApp.start();
     }
 
 }

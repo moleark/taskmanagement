@@ -7,10 +7,8 @@ import { VAchievement } from './VAchievement';
 import { VSet } from './VSet';
 import { VAchievementDetail } from './VAchievementDetail';
 import { observable } from 'mobx';
+import { VInvitationCode } from './VInvitationCode';
 
-/**
- *
- */
 export class CMe extends CUqBase {
     inviteCode: string;
     position: any;
@@ -26,11 +24,9 @@ export class CMe extends CUqBase {
     //加载邀请码
     load = async () => {
         await nav.loadMe();
-        this.position = await this.uqs.salesTask.SearchPosition.table({});
+        this.position = await this.uqs.salesTask.SearchPosition.table({ position: undefined });
         let code = String(this.position[0].code + 100000000);
-        let p1 = code.substr(1, 4);
-        let p2 = code.substr(5);
-        this.inviteCode = p1 + ' ' + p2;
+        this.inviteCode = code;
     }
 
     //显示我的个人信息
@@ -57,7 +53,6 @@ export class CMe extends CUqBase {
         await showMyCustomer("", type);
     }
 
-
     //显示业绩
     showAchievement = async () => {
         await this.uqs.salesTask.ComputeAchievement.submit({});
@@ -79,7 +74,6 @@ export class CMe extends CUqBase {
         return list;
     }
 
-
     //显示消息
     showMessage = async () => {
         await this.cApp.cMessage.start();
@@ -90,11 +84,9 @@ export class CMe extends CUqBase {
         this.openVPage(VSet)
     }
 
-    /*
-    render = observer(() => {
-        return this.renderView(VMe);
-    })
-    */
+    showInvitationCode = async (param: string) => {
+        this.openVPage(VInvitationCode, param);
+    }
 
     onComputeAchievement = async () => {
         await this.uqs.salesTask.ComputeAchievement.submit({});

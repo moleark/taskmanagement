@@ -22,16 +22,15 @@ export class VCustomerList extends VPage<CCustomer> {
         let nameShow = <span className="font-weight-bold" onClick={onClickCustomer}>{name}</span>;
         let unitShow = <div className="text-muted" onClick={onClickCustomer}><small> {tv(unit, s => s.name)}</small></div>;
         let date = <span className="small"><EasyDate date={validity} /></span>
-        let telephoneShow = mobile && <span className="small" ><FA name="phone" className="text-success py-1" /><a className="pl-2 text-default" href={"tel:" + mobile} style={{ textDecorationLine: "none" }} >{mobile}</a></span>
+        let telephoneShow = mobile && <span className="small" ><a className="text-default" href={"tel:" + mobile} style={{ textDecorationLine: "none" }} ><FA name="phone" className="text-success px-1" />{mobile}</a></span>
 
-        return <LMR className="pl-2 pr-3 py-1">
-            <LMR className="px-3 pt-2" left={nameShow} right={date}>
+        return <LMR className="px-2 py-1">
+            <LMR className="px-1 pt-2" left={nameShow} right={telephoneShow}>
                 <div className="w-100" onClick={onClickCustomer}>&nbsp;  </div>
             </LMR>
-            <LMR className="px-3" left={unitShow} right={telephoneShow}></LMR>
+            <LMR className="px-1" left={unitShow} right={date}></LMR>
         </LMR>
     }
-
 
     private renderNewCustomer = (model: any, index: number) => {
         let { showNewMyCustomerDetil } = this.controller;
@@ -39,7 +38,7 @@ export class VCustomerList extends VPage<CCustomer> {
         let { customer } = model;
         let left: any = <span>{tv(customer, v => v.name)}</span>;
         return <LMR className="pl-2 pr-3 py-1" onClick={onClik}>
-            <LMR className="px-3 py-2" left={left} right={<div className="small text-warning">新客户</div>}>
+            <LMR className="py-2" left={left} right={<div className="small text-warning">新客户</div>}>
             </LMR>
         </LMR >
     }
@@ -49,9 +48,9 @@ export class VCustomerList extends VPage<CCustomer> {
         let onShowSelectOrganzation = async () => await showSelectOrganization(1);
         let onshowCustomerSearch = async () => await showCustomerSearch(null);
 
-        let right = <div className="cursor-pointer py-2">
-            <span onClick={onshowCustomerSearch}><FA name="search" className="mr-3" /></span>
-            <span onClick={onShowSelectOrganzation}><FA name="plus" /></span>
+        let right = <div className="cursor-pointer py-1">
+            <span onClick={onshowCustomerSearch}><FA name="search  px-3" /></span>
+            <span onClick={onShowSelectOrganzation}><FA name="plus px-3" /></span>
         </div>;
         let none = <div className="my-3 mx-2 text-warning"></div>;
 

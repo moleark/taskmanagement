@@ -19,7 +19,7 @@ export class VCustomerSearch extends VPage<CCustomer> {
         let { name, unit } = customer;
         let left = <div><FA name='user' className=' my-2 mr-3 text-info' /> <span className="font-weight-bold">{name}</span></div>
         let right = <div className="text-muted  my-2 mr-3 "><small> {tv(unit, s => s.name)}</small></div>;
-        return <LMR className="px-3 py-2 " left={left} right={right}></LMR>
+        return <LMR className="px-3 py-2" left={left} right={right}></LMR>
     }
 
     private onClickCustomer = async (model: any) => {

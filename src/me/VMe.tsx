@@ -9,6 +9,7 @@ import { GLOABLE } from 'ui';
 /* eslint-disable */
 export class VMe extends VPage<CMe> {
     private user: any;
+    private inviteCodeShow: any;
     private inviteCode: any;
     @observable showTips: any = "none"
 
@@ -19,7 +20,10 @@ export class VMe extends VPage<CMe> {
     render(member: any): JSX.Element {
         let { user, inviteCode } = this.controller;
         this.user = user;
-        this.inviteCode = inviteCode;
+        this.inviteCode = inviteCode.substr(1, 9);
+        let p1 = inviteCode.substr(1, 4);
+        let p2 = inviteCode.substr(5);
+        this.inviteCodeShow = p1 + ' ' + p2;
         this.controller.onComputeAchievement();
         return <this.page />;
     }
@@ -39,13 +43,14 @@ export class VMe extends VPage<CMe> {
     }
 
     private meInfo() {
-        let { user, showMeDetail, showMessage, showTeam, showMyCustomer, salesAmont } = this.controller;
+        let { user, showMeDetail, showMessage, showTeam, showMyCustomer, salesAmont, showInvitationCode } = this.controller;
         if (user === undefined) return null;
         let { name, nick, icon } = user;
         let { cMessage } = this.controller.cApp
         let count: any = cMessage.count.get();
         let onshowMyCustomer = async () => await showMyCustomer(1);
         let onshowMyCustomerActive = async () => await showMyCustomer(2);
+        let onshowInvitationCode = async () => await showInvitationCode(this.inviteCode);
         let pointer, badge;
         if (count > 0) {
             pointer = 'cursor-pointer';
@@ -53,15 +58,20 @@ export class VMe extends VPage<CMe> {
             else badge = <u>99+</u>;
         }
 
+        let aright = < div className={classNames('jk-cart ml-1 mr-2', pointer)} onClick={showMessage} >
+            <FA className="fa-lg" name="commenting-o" />
+            {badge}
+        </div >
+
+
         let { teamCount, customerCount, activeCustomerCount } = salesAmont;
         return <div className="px-4 py-3 cursor-pointer"
             style={{ backgroundColor: '#f9f9f9', width: '90%', borderRadius: '8px', margin: '-4rem auto 2rem auto', boxShadow: "2px 2px 15px #333333" }}>
             <LMR
                 left={<div onClick={showMeDetail}> <Image className="w-3c h-3c mr-3" src={icon} /> </div>}
-                right={<div className={classNames('jk-cart ml-1 mr-2', pointer)} onClick={showMessage} >
-                    <FA className="fa-lg" name="commenting-o" />
-                    {badge}
-                </div>}>
+                right={<span onClick={onshowInvitationCode} >
+                    <FA className="h2" name="qrcode" />
+                </span >}>
                 <div>
                     <div onClick={showMeDetail}>{this.userSpan(name, nick)}</div>
                     <div className="small"><span className="px-1" >邀请码  :</span><span>{this.inviteCode}<span style={{ border: '1px solid #999999' }} className="px-1 mx-1" onClick={this.copyClick}>复制</span></span ></div>
@@ -99,8 +109,8 @@ export class VMe extends VPage<CMe> {
         </div>;
 
         return <div className="text-center text-white bg-primary pt-1 pb-5" style={{ borderRadius: '0  0 5rem 5rem', margin: ' 0 -2rem 0 -2rem ' }}>
-            <div className="py-4 cursor-pointer" >
-                <div className="text-warning" onClick={async () => await this.controller.showAchievementDetail(0)}>
+            <div className="pb-2 pt-4 cursor-pointer" >
+                <div className="text-warning pt-4" onClick={async () => await this.controller.showAchievementDetail(0)}>
                     <span className="h1">{(oneAchievement + twoAchievement + threeAchievement).toFixed(2)}</span>
                     <small> 元</small>
                 </div>
@@ -122,7 +132,6 @@ export class VMe extends VPage<CMe> {
 
         let onShowMyTasksCompleted = async () => await showMyTasksCompleted();
         let onshowCreateCoupon = async () => await cCoupon.showCreateCoupon()
-
         return <div className="bg-white" >
             {this.achievement()}
             {this.meInfo()}

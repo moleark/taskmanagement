@@ -19,7 +19,6 @@ export class VStart extends VPage<CStart> {
     }
 
     async open(position: any) {
-
         this.openPage(this.page, position);
     }
 

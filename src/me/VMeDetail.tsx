@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, ItemSchema, ImageSchema, StringSchema, UiSchema, UiTextItem, UiImageItem, Edit, nav, userApi, LMR } from 'tonva';
+import { VPage, Page, ItemSchema, ImageSchema, StringSchema, UiSchema, UiTextItem, UiImageItem, Edit, nav, userApi, LMR, FA } from 'tonva';
 import { CMe } from './CMe';
 import { observable } from 'mobx';
 
@@ -36,18 +36,20 @@ export class VMeDetail extends VPage<CMe> {
 
     private page = () => {
 
+        let { inviteCode, showInvitationCode } = this.controller;
+
+        let onshowInvitationCode = async () => await showInvitationCode(inviteCode);
+        let right = <div onClick={onshowInvitationCode} >
+            <FA className="fa-lg" name="qrcode" />
+        </div>
         return <Page header='个人信息' headerClassName='bg-primary py-1' >
             <Edit schema={this.schema} uiSchema={this.uiSchema}
                 data={this.data}
                 onItemChanged={this.onItemChanged}
             />
             <LMR className="d-flex px-3 py-2 bg-white align-items-center cursor-pointer"
-                right={this.controller.inviteCode}>
+                right={right}>
                 邀请码
-            </LMR>
-            <LMR className="d-flex px-3 py-2 bg-white align-items-center cursor-pointer"
-                right={this.controller.inviteCode}>
-                上线
             </LMR>
         </Page >
     }

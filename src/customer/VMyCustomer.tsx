@@ -14,17 +14,18 @@ export class VMyCustomer extends VPage<CCustomer> {
 
     private renderCustomer = (customer: any, index: number) => {
         let onClickCustomer = async () => await this.controller.showCustomerDetail(customer.id);
-        let { name, unit, validity, telephone } = customer;
+
+        let { name, unit, validity, mobile } = customer;
         let nameShow = <span className="font-weight-bold" onClick={onClickCustomer}>{name}</span>;
         let unitShow = <div className="text-muted" onClick={onClickCustomer}><small> {tv(unit, s => s.name)}</small></div>;
-        let date = <span className="small " ><EasyDate date={validity} /></span>
-        let telephoneShow = <span className="small" ><FA name="phone" className="text-success py-1" /><a className="pl-2 text-default" href={"tel:" + telephone} style={{ lineClamp: "none" }} >{telephone}</a></span>
+        let date = <span className="small"><EasyDate date={validity} /></span>
+        let telephoneShow = mobile && <span className="small" ><a className="text-default" href={"tel:" + mobile} style={{ textDecorationLine: "none" }} ><FA name="phone" className="text-success px-1" />{mobile}</a></span>
 
-        return <LMR className="pl-2 pr-3 py-1">
-            <LMR className="px-3 pt-2" left={nameShow} right={date}>
+        return <LMR className="px-2 py-1">
+            <LMR className="px-1 pt-2" left={nameShow} right={telephoneShow}>
                 <div className="w-100" onClick={onClickCustomer}>&nbsp;  </div>
             </LMR>
-            <LMR className="px-3" left={unitShow} right={telephoneShow}></LMR>
+            <LMR className="px-1" left={unitShow} right={date}></LMR>
         </LMR>
     }
 
