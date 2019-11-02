@@ -5,6 +5,7 @@ import { VCouponList } from './VCouponList';
 import { VCreateCoupon } from './VCreateCoupon';
 import { VCouponDetail } from './VCouponDetail';
 import { VCreateCouponEnd } from './VCreateCouponEnd';
+import { VCreatePackCouponEnd } from './VCreatePackCouponEnd';
 
 //页面类
 /* eslint-disable */
@@ -56,32 +57,41 @@ export class CCoupon extends CUqBase {
     }
 
     //显示添加优惠券页面
-    showCreateCoupon = async () => {
-        this.openVPage(VCreateCoupon);
+    showCreateCoupon = async (param: any) => {
+        this.openVPage(VCreateCoupon, param);
     }
 
     //添加优惠券
-    createCoupon = async (param: any) => {
+    createCoupon = async (data: any, param: any) => {
 
-        var customerid: number, discount: any;
-        if (param.customer) {
-            customerid = param.customer.id;
+        var customerid: number;
+        if (data.customer) {
+            customerid = data.customer.id;
         } else {
             customerid = undefined;
         }
-        if (param.discount == "-1") {
-            discount = undefined;
-        }
 
         let coupon = {
-            validitydate: param.validitydate,
-            discount: param.discount,
+            validitydate: data.validitydate,
+            discount: data.discount,
             preferential: 0,
             mycustomer: customerid
         }
         let couponid = await this.uqs.salesTask.CreateCoupon.submit(coupon);
         let code = couponid.code;
-        this.openVPage(VCreateCouponEnd, code)
+
+        if (param) {
+            param.code = code;
+            param.discount = data.discount;
+            let { pack } = param;
+            if (pack === "packge") {
+                this.openVPage(VCreatePackCouponEnd, param)
+            } else {
+                this.openVPage(VCreatePackCouponEnd, param)
+            }
+        } else {
+            this.openVPage(VCreateCouponEnd, param)
+        }
     }
 
     //作废优惠券
@@ -91,20 +101,6 @@ export class CCoupon extends CUqBase {
         coupon.isValid = 2;
         await tuidCoupon.save(coupon.id, coupon);
     }
-
-    /***
-    //显示客户
-    showCouponCustomer = async (param: any) => {
-        this.searchCouponCustomer(param.id);
-        await this.openVPage(VCouponCustomer, param);
-    }
-    //搜索优惠券客户
-    searchCouponCustomer = async (couponid: any) => {
-        let param = { coupon: couponid }
-        let cust = await this.querySearchCouponCustomer.table(param);
-        this.customers = cust;
-    }
-    */
 
     //显示客户
     showAddCouponCustomer = async (context: Context, name: string, value: number): Promise<any> => {

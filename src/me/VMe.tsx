@@ -131,7 +131,7 @@ export class VMe extends VPage<CMe> {
         let { showSet } = this.controller;
 
         let onShowMyTasksCompleted = async () => await showMyTasksCompleted();
-        let onshowCreateCoupon = async () => await cCoupon.showCreateCoupon()
+        let onshowCreateCoupon = async () => await cCoupon.showCreateCoupon(undefined)
         return <div className="bg-white" >
             {this.achievement()}
             {this.meInfo()}

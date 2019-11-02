@@ -10,10 +10,6 @@ import { GLOABLE } from 'ui';
 const schema: Schema = [
     { name: 'validitydate', type: 'date', required: false },
     { name: 'discount', type: 'string', required: false },
-    /*
-    { name: 'preferential', type: 'string', required: false },
-    { name: 'customer', type: 'id', required: false },
-    */
     { name: 'submit', type: 'submit' },
 ];
 
@@ -23,27 +19,6 @@ class ValidityDate extends Widget {
         { value: 1, title: '    一周', name: 'b', checked: true },
         { value: 2, title: '两周', name: 'b', checked: undefined }
     ];
-
-    /*
-    private onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-        let val = evt.currentTarget.value;
-        this.dateVisible = val === '0';
-        //var day2 = new Date();
-        let v:Date;
-        switch (val) {
-            case '1':
-            //day2.setDate(day2.getDate() + 7);
-            v = oneWeek;
-            break;
-            case '2':
-            //day2.setDate(day2.getDate() + 14);
-            v = twoWeeks;
-            break;
-        }
-        //let ss = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
-        this.setValue(v.toDateString());
-    }
-    */
 
     render = () => {
         return <div className="form-control" style={{ height: 'auto' }}>
@@ -78,7 +53,6 @@ class Discount extends Widget {
     private onDateChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
         let value = parseInt(evt.currentTarget.value);
         if (value < 10) {
-            //let as = evt.target.value;
             this.setValue(evt.currentTarget.value);
         } else {
             this.setValue(0);
@@ -110,7 +84,6 @@ export class VCreateCoupon extends VPage<CCoupon> {
     @observable showTip: boolean = false;
     tip: string = "";
 
-    private form: Form;
     private uiSchema: UiSchema = {
         items: {
             validitydate: {
@@ -124,28 +97,14 @@ export class VCreateCoupon extends VPage<CCoupon> {
                 label: '折扣',
                 WidgetClass: Discount,
                 defaultValue: 9.5,
-                //discription: '最小折扣',
             } as UiCustom,
-            /*
-            preferential: { widget: 'text', label: '优惠金额', placeholder: '请输入优惠金额', rules: numberValidation } as UiInputItem,
-            customer: {
-                widget: 'id', label: '客户', placeholder: '请选择客户',
-                pickId: async (context: Context, name: string, value: number) => await this.controller.showAddCouponCustomer(context, name, value),
-                Templet: (item: any) => {
-                    let { name, unit } = item;
-                    if (!item) return <small className="text-muted">请选择客户</small>;
-                    return <div>
-                        {name}
-                        <small className=" mx-3" >{tv(unit, (v) => <>{v.name}</>)}</small>
-                    </div>;
-                }
-            } as UiIdItem,
-            */
             submit: { widget: 'button', label: '提交', className: 'btn btn-primary w-8c' },
         }
     }
 
+    createParam: any;
     async open(param: any) {
+        this.createParam = param;
         this.openPage(this.page);
     }
 
@@ -170,7 +129,9 @@ export class VCreateCoupon extends VPage<CCoupon> {
         this.showTip = false;
         data.validitydate = this.validDateFrom(validitydate);
         data.discount = _.round(1 - disc * 0.1, 2);
-        await this.controller.createCoupon(data);
+
+
+        await this.controller.createCoupon(data, this.createParam);
     }
 
     private validDateFrom(v: any) {
@@ -184,18 +145,18 @@ export class VCreateCoupon extends VPage<CCoupon> {
                 d = twoWeeks;
                 break;
         }
-        //let ss = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
         return `${d.getFullYear()}-${(d.getMonth() + 1)}-${d.getDate()}`;
     }
 
     private page = observer((param: any) => {
+
         let { cCoupon } = this.controller.cApp
         let onshowCreateCoupon = async () => await cCoupon.start();
 
         let right = <div onClick={onshowCreateCoupon} className="cursor-pointer py-2 mx-3"><FA name="ellipsis-h" /></div>;
 
         return <Page header="生成优惠券" headerClassName={consts.headerClass} right={right} >
-            <Form ref={v => this.form = v} className="my-3 mx-3"
+            <Form className="my-3 mx-3"
                 schema={schema}
                 uiSchema={this.uiSchema}
                 onButtonClick={this.onFormButtonClick}

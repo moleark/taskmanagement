@@ -16,6 +16,7 @@ export const appConfig: AppConfig = {
 
 export const setting = {
     url: "http://agent.jkchemical.com",
+    carturl: "http://shop.jkchemical.com",
     logo: logo,
     pageHeaderCss: 'bg-primary py-1'
 }

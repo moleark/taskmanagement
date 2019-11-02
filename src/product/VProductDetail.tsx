@@ -21,10 +21,10 @@ const schema: ItemSchema[] = [
 ];
 
 export class VProductDetail extends VPage<CProduct> {
-    private product: MainProductChemical;
 
+    product: any;
     async open(product: any) {
-        this.product = product.main;
+        this.product = product;
         this.openPage(this.page, product);
     }
 
@@ -58,6 +58,7 @@ export class VProductDetail extends VPage<CProduct> {
         let agent = null;
 
         if (retail) {
+
             let price: number = this.minPrice(vipPrice, promotionPrice);
             let retailUI: any;
             if (price) {
@@ -66,36 +67,32 @@ export class VProductDetail extends VPage<CProduct> {
             else {
                 price = retail;
             }
+
             if (agentPrice) {
-                /*
-                let profitdiscount = ((price - agentPrice) * 0.5).toFixed(2);
-                let profit = <span>
-                    <span className="small ml-2">
-                        <strong className="small" > <span className="small">赚</span> </strong>
-                    </span>
-                    <span className="text-right">{profitdiscount}</span>
-                </span>;
-                */
+
                 let discount = ((1 - ((price - agentPrice) / price)) * 10).toFixed(1);
                 agent = <span>
                     <span className="small ml-2">
                         <strong className="small"><span className="small">{discount}折</span></strong>
                     </span>
                 </span>;
-
             } else {
                 agent = <span>{<span>/<span className="text-warning small"><strong className="small"> <span className="small">无折扣</span> </strong></span></span>}</span>;
             }
+
             right = <div className="row">
                 <div className="col-sm-6 pb-2 d-flex justify-content-end align-items-center">
                     <small className="text-muted">{retailUI}</small>&nbsp; &nbsp;
                     <span className="text-danger">¥ <span className="h5 pb-2">{price}</span></span>
                     <span> <span className="h5">{agent}</span></span>
                 </div>
-            </div >
+            </div>;
         } else {
             right = <small>请询价</small>
         }
+
+        let param = { type: "packge", pack: pack, product: this.product, code: undefined };
+        let onSharePackge = async () => await this.controller.cApp.cCoupon.showCreateCoupon(param);
 
         return <div className="px-4">
             <div className="row px-2">
@@ -106,9 +103,13 @@ export class VProductDetail extends VPage<CProduct> {
                     {right}
                 </div>
             </div>
-            <div className="row px-2">
-                <div className="col-12 ">
+            <div className="row">
+                <div className=" col-4">
                     {this.controller.renderDeliveryTime(pack)}
+                </div>
+                <div className="col-8 text-right">
+                    <button type="button" onClick={onSharePackge} style={{ borderRadius: '2rem', boxShadow: "2px 2px 6px #333333" }} className="btn btn-primary btn-sm  mx-1">直接分享</button>
+                    <button type="button" style={{ borderRadius: '2rem', boxShadow: "2px 2px 6px #333333" }} className="btn btn-primary btn-sm  ">组单分享</button>
                 </div>
             </div>
         </div>;

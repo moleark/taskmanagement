@@ -67,7 +67,6 @@ export class CProduct extends CUqBase {
     showProductDetail = async (param: any): Promise<any> => {
         let loader = new LoaderProductChemicalWithPrices(this.cApp);
         let product = await loader.load(param.id);
-        //let product = await this.productTuid.load(param.productid)
         this.openVPage(VProductDetail, product)
     }
 
@@ -81,15 +80,16 @@ export class CProduct extends CUqBase {
         this.openVPage(VProductPackSelect, product)
     }
 
+    //显示货期
     renderDeliveryTime = (pack: BoxId) => {
         return this.renderView(VProductDelivery, pack);
     }
-
+    //货期库存信息
     getInventoryAllocation = async (productId: number, packId: number, salesRegionId: number) => {
         if (this.inventoryAllocationContainer[packId] === undefined)
             this.inventoryAllocationContainer[packId] = await this.uqs.warehouse.GetInventoryAllocation.table({ product: productId, pack: packId, salesRegion: this.cApp.currentSalesRegion });
     }
-
+    //交货期说明
     getFutureDeliveryTimeDescription = async (productId: number, salesRegionId: number) => {
         if (this.futureDeliveryTimeDescriptionContainer[productId] === undefined) {
             let futureDeliveryTime = await this.uqs.product.GetFutureDeliveryTime.table({ product: productId, salesRegion: salesRegionId });
@@ -101,8 +101,6 @@ export class CProduct extends CUqBase {
             }
         }
     }
-
-
 
     render = observer(() => {
         this.pageProduct = null;
