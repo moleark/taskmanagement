@@ -3,6 +3,7 @@ import { VPage, Page, UiSchema, UiInputItem, Schema, Form, Context } from 'tonva
 import { observer } from 'mobx-react';
 import { CreateProduct, Task } from '../model';
 import { CSalesTask } from '../CSalesTask';
+import { setting } from 'appConfig';
 
 
 const schema: Schema = [
@@ -40,7 +41,7 @@ export class VCreateProject extends VPage<CSalesTask> {
     }
 
     render(param: CreateProduct) {
-        return <Page header="添加项目" footer={null} headerClassName='bg-primary'>
+        return <Page header="添加项目" footer={null} headerClassName={setting.pageHeaderCss}>
             <div className="mx-3">
                 <Form ref={v => this.form = v}
                     schema={schema}

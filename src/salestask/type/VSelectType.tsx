@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { VPage, Page, LMR, List, FA } from 'tonva';
 import { CSelectType } from './CSelectType';
+import { setting } from 'appConfig';
+
 
 export class VSelectType extends VPage<CSelectType> {
 
@@ -37,7 +39,7 @@ export class VSelectType extends VPage<CSelectType> {
     private page = ((customer: any) => {
         let { tasktypelist } = this.controller;
         let none = <div className="my-3 mx-2 text-warning">无任务类型！</div>;
-        return <Page header="新建任务" headerClassName='bg-primary' >
+        return <Page header="新建任务" headerClassName={setting.pageHeaderCss} >
             {this.ai()}
             <List none={none} items={tasktypelist} item={{ render: this.renderList, onClick: this.onClickTaskType }} />
         </Page>

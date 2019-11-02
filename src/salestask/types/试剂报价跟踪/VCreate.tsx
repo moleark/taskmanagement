@@ -2,7 +2,7 @@ import * as React from 'react';
 import { VPage, Page, PageItems, Schema, Form, Context, UiIdItem, UiCheckItem } from 'tonva';
 import { observer } from 'mobx-react';
 import { UiSchema, UiInputItem } from 'tonva';
-import { tv } from 'tonva';
+import { setting } from 'appConfig';
 import { CType } from '../CType';
 import { Task } from '../../model';
 
@@ -48,7 +48,7 @@ export class VCreate extends VPage<CType> {
 
     private page = observer((param: any) => {
         let footer = <button type="button" className="btn btn-primary w-100" onClick={this.onAddSalesTask}>保存</button>;
-        return <Page header={this.controller.caption} footer={footer} headerClassName='bg-primary'  >
+        return <Page header={this.controller.caption} footer={footer} headerClassName={setting.pageHeaderCss}  >
             <div className="App-container container text-left">
                 {this.controller.renderCreateTop(param)}
                 <Form ref={v => this.form = v} className="my-3"

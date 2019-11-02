@@ -4,6 +4,8 @@ import { observer } from 'mobx-react';
 import { ProductImage } from '../../tools/productImage';
 import { CreateProduct } from '../model';
 import { CSalesTask } from '../CSalesTask';
+import { setting } from 'appConfig';
+
 
 const schema: Schema = [
     { name: 'note', type: 'string', required: false },
@@ -79,7 +81,7 @@ export class VCreateProduct extends VPage<CSalesTask> {
     }
 
     render(param: CreateProduct) {
-        return <Page header="添加产品" footer={null} headerClassName='bg-primary'>
+        return <Page header="添加产品" footer={null} headerClassName={setting.pageHeaderCss}>
             <div className="mx-3">
                 {this.productItem(param)}
                 <Form ref={v => this.form = v}

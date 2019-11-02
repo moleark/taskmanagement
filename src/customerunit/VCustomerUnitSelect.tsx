@@ -3,6 +3,8 @@ import { observer } from 'mobx-react';
 import { VPage, Page } from 'tonva';
 import { LMR, List, SearchBox, FA } from 'tonva';
 import { CCustomerUnit } from './CCustomerUnit';
+import { setting } from 'appConfig';
+
 
 export class VCustomerUnitSelect extends VPage<CCustomerUnit> {
 
@@ -43,7 +45,7 @@ export class VCustomerUnitSelect extends VPage<CCustomerUnit> {
             text = "";
             none = <div className="my-3 mx-2 text-warning">你还没有创建单位，无法根据单位搜索！</div>;
         }
-        return <Page header="选择单位" onScrollBottom={this.onScrollBottom} headerClassName='bg-primary' right={right}>
+        return <Page header="选择单位" onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss} right={right}>
             <SearchBox className="px-1 w-100 mt-2 mr-2"
                 size='md'
                 onSearch={(key: string) => this.controller.searchByKey(key)}

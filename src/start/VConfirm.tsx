@@ -38,7 +38,7 @@ export class VConfirm extends VPage<CStart> {
         let footer = <div className="d-block">
             <button type="button" className="btn btn-primary w-100" onClick={onCreatePosition}>确认</button>
         </div>
-        return <Page header='关联邀请人' headerClassName='bg-primary py-1' logout={true} back='none' footer={footer} >
+        return <Page header='邀请人' headerClassName={setting.pageHeaderCss} logout={true} back='none' footer={footer} >
             {this.meInfoa(position)}
         </Page>
 

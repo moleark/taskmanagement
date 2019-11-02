@@ -2,6 +2,7 @@ import * as React from 'react';
 import { VPage, Page, LMR, List, FA, tv, EasyDate } from 'tonva';
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
+import { setting } from 'appConfig';
 
 export class VCustomerList extends VPage<CCustomer> {
 
@@ -54,7 +55,7 @@ export class VCustomerList extends VPage<CCustomer> {
         </div>;
         let none = <div className="my-3 mx-2 text-warning"></div>;
 
-        return <Page header="客户" onScrollBottom={this.onScrollBottom} headerClassName='bg-primary py-1' right={right} >
+        return <Page header="客户" onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss} right={right} >
 
             {newMyCustomerList && newMyCustomerList.length > 0 && <List className="py-2" before={''} none={none} items={newMyCustomerList} item={{ render: this.renderNewCustomer }} />}
             {

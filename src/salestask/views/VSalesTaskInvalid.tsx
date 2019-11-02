@@ -3,6 +3,8 @@ import { VPage, Page, Form, Schema, UiSchema, Context, UiTextAreaItem } from 'to
 import { CSalesTask } from '../CSalesTask';
 import { observer } from 'mobx-react';
 import { Task } from '../model';
+import { setting } from 'appConfig';
+
 
 const schema: Schema = [
     { name: 'resulttype', type: 'id', required: false },
@@ -39,7 +41,7 @@ export class VSalesTaskInvalid extends VPage<CSalesTask> {
 
     private page = observer((salestask: any) => {
         let footer = <button type="button" className="btn btn-primary w-100" onClick={this.onInvalidTask} >提交</button>;
-        return <Page header="取消" footer={footer} headerClassName='bg-primary' >
+        return <Page header="取消" footer={footer} headerClassName={setting.pageHeaderCss} >
             <div className="App-container container text-left">
                 <Form ref={v => this.form = v} className="my-3"
                     schema={schema}

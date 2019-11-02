@@ -2,6 +2,7 @@ import * as React from 'react';
 import { VPage, Page, Form, UiSchema, UiInputItem, Schema, Context } from 'tonva';
 import { observer } from 'mobx-react';
 import { CStart } from './CStart';
+import { setting } from 'appConfig';
 
 const schema: Schema = [
     { name: 'invitacode', type: 'number', required: true },
@@ -46,7 +47,7 @@ export class VStart extends VPage<CStart> {
     private page = observer((position: any) => {
 
         //let footer = <button type="button" className="btn btn-primary w-100" onClick={this.onCreatePosition}>保存</button>;
-        return <Page header='销售助手' headerClassName='bg-primary py-1 px-3' logout={true} back='none' >
+        return <Page header='销售助手' headerClassName={setting.pageHeaderCss} logout={true}>
             <Form ref={v => this.form = v} className="m-3"
                 schema={schema}
                 uiSchema={this.uiSchema}

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { VPage, Page } from 'tonva';
 import { observer } from 'mobx-react';
 import { CCustomerUnit } from './CCustomerUnit';
+import { setting } from 'appConfig';
 
 export class VCreateCustomerUnitFinish extends VPage<CCustomerUnit> {
 
@@ -28,7 +29,7 @@ export class VCreateCustomerUnitFinish extends VPage<CCustomerUnit> {
     }
 
     private page = observer((param: any) => {
-        return <Page header='新建单位' headerClassName='bg-primary py-1 px-3'>
+        return <Page header='新建单位' headerClassName={setting.pageHeaderCss}>
             <div className="w-100 text-center m-3 text-muted">
                 {this.showresult(param)}
             </div>

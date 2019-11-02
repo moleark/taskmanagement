@@ -3,9 +3,10 @@ import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { VPage, Page, Schema, UiSchema, UiInputItem, UiRadio, tv, LMR, ComponentProp, Prop, PropGrid, FA } from 'tonva';
 import { CCustomer } from './CCustomer';
-import { consts } from '../consts';
 import { mobileValidation, nameValidation, emailValidation } from 'tools/inputValidations';
 import { GLOABLE } from 'ui';
+import { setting } from 'appConfig';
+
 /* eslint-disable */
 export const myCustomerSchema: Schema = [
     { name: 'name', type: 'string', required: true },
@@ -215,10 +216,10 @@ export class VCustomerDetail extends VPage<CCustomer> {
 
         let { showCustomerEdit } = this.controller;
         let onshowCustomerEdit = async () => await showCustomerEdit(this.customer);
-        let right = <div className="cursor-pointer py-2" onClick={onshowCustomerEdit}>
+        let right = <div className="cursor-pointer" onClick={onshowCustomerEdit}>
             <span><FA name="pencil" className="mr-3" /></span>
         </div>;
-        return <Page header={header} headerClassName={consts.headerClass} right={right} footer={footer} >
+        return <Page header={header} headerClassName={setting.pageHeaderCss} right={right} footer={footer} >
             <PropGrid className="my-2" rows={rows} values={this.customer} alignValue="right" />
         </Page >
     })

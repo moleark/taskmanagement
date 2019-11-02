@@ -26,7 +26,7 @@ export class VProjectDetail extends VPage<CSalesTask> {
     render() {
 
         let none = <div className="my-3 mx-2 text-muted">无项目</div>;
-        return <Page header="项目详情" headerClassName="bg-primary py-1">
+        return <Page header="项目详情" headerClassName="bg-primary">
             < List before={''} none={none} items={this.projects} item={{ render: this.renderItem }} />
         </Page >
     }

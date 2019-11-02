@@ -3,6 +3,7 @@ import { VPage, Page, UiSchema, UiInputItem, Schema, Form, Context, tv, UiIdItem
 import { observer } from 'mobx-react';
 import { Task } from '../model';
 import { CSalesTask } from '../CSalesTask';
+import { setting } from 'appConfig';
 
 export class VCreateTask extends VPage<CSalesTask> {
 
@@ -73,7 +74,7 @@ export class VCreateTask extends VPage<CSalesTask> {
     private page = observer(() => {
 
 
-        return <Page header="添加任务" headerClassName='bg-primary' >
+        return <Page header="添加任务" headerClassName={setting.pageHeaderCss} >
             <div className="mx-3">
                 <Form ref={v => this.form = v} className="my-3"
                     schema={this.schema}

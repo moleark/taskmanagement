@@ -3,6 +3,8 @@ import { VPage, Page, List, SearchBox, tv } from 'tonva';
 import { observer } from 'mobx-react';
 import { ProductImage } from '../tools/productImage';
 import { CProduct } from './CProduct';
+import { setting } from 'appConfig';
+
 
 export class VProductSelect extends VPage<CProduct> {
 
@@ -67,7 +69,7 @@ export class VProductSelect extends VPage<CProduct> {
         let { pageProduct } = this.controller;
         let none = <div className="my-3 mx-2 text-warning">未搜索到产品</div>;
 
-        return <Page header='添加产品' onScrollBottom={this.onScrollBottom} headerClassName='bg-primary py-1'>
+        return <Page header='添加产品' onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss}>
             <SearchBox className="px-1 w-100  mt-2 mr-2 "
                 size='md'
                 onSearch={(key: string) => this.controller.searchByKey(key)}

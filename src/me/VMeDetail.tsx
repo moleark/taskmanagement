@@ -2,6 +2,7 @@ import * as React from 'react';
 import { VPage, Page, ItemSchema, ImageSchema, StringSchema, UiSchema, UiTextItem, UiImageItem, Edit, nav, userApi, LMR, FA } from 'tonva';
 import { CMe } from './CMe';
 import { observable } from 'mobx';
+import { setting } from 'appConfig';
 
 export class VMeDetail extends VPage<CMe> {
 
@@ -42,7 +43,7 @@ export class VMeDetail extends VPage<CMe> {
         let right = <div onClick={onshowInvitationCode} >
             <FA className="fa-lg" name="qrcode" />
         </div>
-        return <Page header='个人信息' headerClassName='bg-primary py-1' >
+        return <Page header='个人信息' headerClassName={setting.pageHeaderCss} >
             <Edit schema={this.schema} uiSchema={this.uiSchema}
                 data={this.data}
                 onItemChanged={this.onItemChanged}

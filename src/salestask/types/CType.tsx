@@ -7,6 +7,8 @@ import { VActionsBottom } from './share/VActionsBottom';
 import { Task } from '../model';
 import { VDetailContent } from './share/VDetailContent';
 import { VFinish } from './commonType/VFinish';
+import { setting } from 'appConfig';
+
 /* eslint-disable */
 export abstract class CType extends Controller {
     caption: string;
@@ -23,7 +25,7 @@ export abstract class CType extends Controller {
 
     private renderDetailValues = (task: Task): JSX.Element => {
         let { caption, renderDetailTop, renderDetailContent } = this;
-        return <Page header={caption} headerClassName='bg-primary' >
+        return <Page header={caption} headerClassName={setting.pageHeaderCss} >
             {renderDetailTop(task)}
             {renderDetailContent(task)}
         </Page >
@@ -40,7 +42,7 @@ export abstract class CType extends Controller {
 
     private renderDetailEdit = (task: Task): JSX.Element => {
         let { caption, renderDetailTop, renderActionsBottom, renderDetailContent } = this;
-        return <Page header={caption} headerClassName='bg-primary' footer={renderActionsBottom(task)}>
+        return <Page header={caption} headerClassName={setting.pageHeaderCss} footer={renderActionsBottom(task)}>
             {renderDetailTop(task)}
             {renderDetailContent(task)}
 
@@ -69,7 +71,7 @@ export abstract class CType extends Controller {
 
     private renderComplet = (task: Task): JSX.Element => {
         let { caption } = this;
-        return <Page header={caption} headerClassName='bg-primary' >
+        return <Page header={caption} headerClassName={setting.pageHeaderCss} >
             {this.renderCompletContent(task)}
         </Page >
     }

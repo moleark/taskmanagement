@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { VPage, Page, PageItems, Schema, Form, Context, UiIdItem, UiCheckItem, FA } from 'tonva';
+import { VPage, Page } from 'tonva';
 import { observer } from 'mobx-react';
 import { Task } from '../../model';
 import { CCommonType } from './CCommonType';
+import { setting } from 'appConfig';
 
 export class VCreateEnd extends VPage<CCommonType> {
 
@@ -22,7 +23,7 @@ export class VCreateEnd extends VPage<CCommonType> {
     render(param: any) {
         let { schema, uiSchema } = this.controller.taskCommonType;
         let footer = <button type="button" className="btn btn-primary w-100" onClick={this.onAddSalesTask}>保存</button>;
-        return <Page header={this.controller.caption} footer={footer} headerClassName='bg-primary'>
+        return <Page header={this.controller.caption} footer={footer} headerClassName={setting.pageHeaderCss}>
             <div>任务已完结，5秒内返回主页面</div>
             <button type="button" className="btn btn-primary w-100" onClick={this.onAddSalesTask}>返回</button>
         </Page >

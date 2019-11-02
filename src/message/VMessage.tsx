@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { VPage, Page, List, LMR, tv, EasyDate } from 'tonva';
 import { CMessage } from './CMessage';
+import { setting } from 'appConfig';
+
 
 export class VMessage extends VPage<CMessage> {
 
@@ -22,7 +24,7 @@ export class VMessage extends VPage<CMessage> {
 
     private page = () => {
         let none = <div className="my-3 mx-2 text-muted"></div>;
-        return <Page header='消息' headerClassName='bg-primary py-1' >
+        return <Page header='消息' headerClassName={setting.pageHeaderCss} >
             <List before={''} none={none} items={this.message} item={{ render: this.renderItem }} />
         </Page>
     }

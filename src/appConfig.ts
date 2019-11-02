@@ -16,5 +16,6 @@ export const appConfig: AppConfig = {
 
 export const setting = {
     url: "http://agent.jkchemical.com",
-    logo: logo
+    logo: logo,
+    pageHeaderCss: 'bg-primary py-1'
 }

@@ -4,6 +4,9 @@ import { CSalesTask } from '../CSalesTask';
 import { observer } from 'mobx-react';
 import { Task } from '../model';
 import { observable } from 'mobx';
+import { setting } from 'appConfig';
+
+
 /* eslint-disable */
 const schema: Schema = [
     { name: 'resulttype', type: 'string', required: false },
@@ -83,7 +86,7 @@ export class VSalesTaskExtension extends VPage<CSalesTask> {
 
     private page = observer((product: any) => {
         let footer = <button type="button" className="btn btn-primary w-100" onClick={this.onExtensionTask} >提交</button>;
-        return <Page header="延迟" footer={footer} headerClassName='bg-primary' >
+        return <Page header="延迟" footer={footer} headerClassName={setting.pageHeaderCss} >
             <div className="App-container container text-left">
                 <Form ref={v => this.form = v} className="my-3"
                     schema={schema}
