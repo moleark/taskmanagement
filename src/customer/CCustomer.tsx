@@ -312,8 +312,10 @@ export class CCustomer extends CUqBase {
         var counts: number = 0;
         let { ret } = customerlis;
         for (var i = 0; i < ret.length; i++) {
-            let cust = await this.uqs.salesTask.MyCustomerIsOccupy.query(ret[i]);
-            if (cust.ret.length > 0) {
+            let { customer } = ret[i];
+            let cust = await this.uqs.salesTask.MyCustomerIsOccupy.query(customer.id);
+            let result = cust.ret[0].code
+            if (result === 1) {
                 counts++;
             }
         };

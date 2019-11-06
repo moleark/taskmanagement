@@ -14,8 +14,19 @@ export class VSet extends VPage<CMe> {
         nav.showLogout();
     }
 
+
+    private changePassword = async () => {
+        await nav.changePassword();
+    }
     private page = () => {
         let rows: Prop[] = [
+            '',
+            {
+                type: 'component',
+                component: <IconText iconClass="text-info mr-2" icon="key" text="修改密码" />,
+                onClick: this.changePassword
+            },
+            '',
             {
                 type: 'component',
                 component: <div className="w-100 d-flex justify-content-between">

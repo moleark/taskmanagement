@@ -38,7 +38,7 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
                 content: content,
                 href: url,//分享出去后，点击跳转地址 
                 //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片
-                thumbs: ["https://agent.jkchemical.com/logonew.png"] //分享缩略图  
+                thumbs: ["https://agent.jkchemical.com/logo.png"] //分享缩略图  
             }, function (result) {
                 //分享回调  
             });

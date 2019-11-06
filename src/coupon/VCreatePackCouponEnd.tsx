@@ -22,14 +22,14 @@ export class VCreatePackCouponEnd extends VPage<CCoupon> {
 
     async open(param: any) {
         this.inviteParam = param;
-        let { code, pack } = param;
+        let { code, product } = param;
         if (code) {
             code = String(code);
             let p1 = code.substr(0, 4);
             let p2 = code.substr(4);
             this.inviteCode = p1 + ' ' + p2;
         }
-        this.url = setting.carturl + "?type=coupon&code=" + code + "&pack=" + pack.id;
+        this.url = setting.carturl + "?type=coupon&code=" + code + "&product=" + product.id;
         this.openPage(this.page, param);
 
     }
@@ -80,9 +80,8 @@ export class VCreatePackCouponEnd extends VPage<CCoupon> {
     }
 
     private renderPack = (item: ProductPackRow) => {
-        let { code, pack, discount } = this.inviteParam;
-        if (item.pack.id !== pack.id)
-            return <></>
+        /**
+        let { discount } = this.inviteParam;
 
         let onshare = () => this.share(this.url);
 
@@ -113,6 +112,42 @@ export class VCreatePackCouponEnd extends VPage<CCoupon> {
                 {share}
             </div>
         </>;
+        */
+        return <>  </>;
+    }
+
+
+    private showShare = () => {
+        let { discount } = this.inviteParam;
+
+        let onshare = () => this.share(this.url);
+
+        let share: any;
+        if (navigator.userAgent.indexOf("Html5Plus") > -1) {
+            share = <button className="btn btn-info" onClick={onshare} >点击分享</button>;
+        }
+
+        let priceui = <div className="pt-4 mt-4 d-flex align-items-end justify-content-end text-danger">
+            <div><span className="h4">{(1 - discount).toFixed(2)}</span> </div>
+        </div>;
+
+        let qrcode = <div className="d-flex flex-grow-1">
+            <div className="text-center">
+                <div>{this.inviteCode}</div>
+                <QRCode value={this.url} size={100} fgColor="#000000" />
+            </div>
+        </div>;
+
+        return <>
+            <div className="sep-product-select py-4" style={{ margin: '0 auto' }} />
+            <div className="d-flex px-4">
+                {qrcode}
+                {priceui}
+            </div>
+            <div className="text-center mt-5">
+                {share}
+            </div>
+        </>;
     }
 
     share = async (url: any) => {
@@ -124,7 +159,7 @@ export class VCreatePackCouponEnd extends VPage<CCoupon> {
                 content: content,
                 href: url,//分享出去后，点击跳转地址 
                 //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片
-                thumbs: ["https://agent.jkchemical.com/logonew.png"] //分享缩略图  
+                thumbs: ["https://agent.jkchemical.com/logo.png"] //分享缩略图  
             }, function (result) {
                 //分享回调  
             });
@@ -138,6 +173,7 @@ export class VCreatePackCouponEnd extends VPage<CCoupon> {
         return <Page header='优惠券' back="none" headerClassName={setting.pageHeaderCss}>
             <div className="bg-white" style={{ height: '100%' }} >
                 <div className="px-2 py-2" >{viewProduct.render()}</div>
+                {this.showShare()}
             </div>
         </Page>
     })

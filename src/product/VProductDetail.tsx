@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, ItemSchema, ObjectSchema, NumSchema, tv, UiSchema, Form, RowContext, BoxId, UiCustom, FormField } from 'tonva';
+import { VPage, Page, ItemSchema, ObjectSchema, NumSchema, tv, UiSchema, Form, BoxId } from 'tonva';
 import { observer } from 'mobx-react';
 import { ProductImage } from '../tools/productImage';
 import { MainProductChemical } from '../model/product';
@@ -7,8 +7,6 @@ import { consts } from '../consts';
 import { CProduct, renderBrand, productPropItem } from './CProduct';
 import { ProductPackRow } from './Product';
 import { ViewMainSubs } from '../mainSubs';
-import { MinusPlusWidget } from 'tools/minusPlusWidget';
-import { async } from 'q';
 
 const schema: ItemSchema[] = [
     { name: 'pack', type: 'object' } as ObjectSchema,
@@ -105,10 +103,6 @@ export class VProductDetail extends VPage<CProduct> {
             right = <small>请询价</small>
         }
 
-        let param = { type: "packge", pack: pack, product: this.product, code: undefined };
-        let onSharePackge = async () => await this.controller.cApp.cCoupon.showCreateCoupon(param);
-        let onAddPack = async () => await this.onAddPack(item, "", "");
-
         return <div className="px-4">
             <div className="row px-2">
                 <div className="col-5 ">
@@ -118,15 +112,9 @@ export class VProductDetail extends VPage<CProduct> {
                     {right}
                 </div>
             </div>
-            <div className="row">
-                <div className=" col-4">
-                    {this.controller.renderDeliveryTime(pack)}
-                </div>
-                <div className="col-8 text-right">
-                    <button type="button" onClick={onSharePackge} style={{ borderRadius: '2rem', boxShadow: "2px 2px 6px #333333" }} className="btn btn-primary btn-sm  mx-1">直接分享</button>
-                    <button type="button" onClick={onAddPack} name="quantity" style={{ borderRadius: '2rem', boxShadow: "2px 2px 6px #333333" }} className="btn btn-primary btn-sm  ">组单分享</button>
-                </div>
-            </div>
+
+            {this.controller.renderDeliveryTime(pack)}
+
         </div>;
     }
 
@@ -149,9 +137,16 @@ export class VProductDetail extends VPage<CProduct> {
 
     private page = observer((product: any) => {
 
+        let param = { type: "product", product: this.product, code: undefined };
+        let onShareProduct = async () => await this.controller.cApp.cCoupon.showCreateCoupon(param);
+        let footer = <div className="d-block">
+            <div className="w-100  justify-content-end" >
+                <button type="button" className="btn btn-primary mx-1 my-1 " onClick={onShareProduct}>直接分享</button>
+            </div>
+        </div>
         let viewProduct = new ViewMainSubs<MainProductChemical, ProductPackRow>(this.renderProduct, this.renderPack);
         viewProduct.model = product;
-        return <Page header={"产品明细"} headerClassName={consts.headerClass}>
+        return <Page header={"产品明细"} headerClassName={consts.headerClass} footer={footer}>
             <div className="px-2 py-2 bg-white mb-3">{viewProduct.render()}</div>
         </Page>
     })

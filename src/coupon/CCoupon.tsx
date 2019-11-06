@@ -83,8 +83,8 @@ export class CCoupon extends CUqBase {
         if (param) {
             param.code = code;
             param.discount = data.discount;
-            let { pack } = param;
-            if (pack === "packge") {
+            let { type } = param;
+            if (type === "product") {
                 this.openVPage(VCreatePackCouponEnd, param)
             } else {
                 this.openVPage(VCreatePackCouponEnd, param)

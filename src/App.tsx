@@ -6,7 +6,7 @@ import { appConfig } from './appConfig';
 import { CApp } from './CApp';
 //import { faceTabs } from 'facetabs';
 
-//const tonvaApp = "bruce/TestApp";
+
 nav.setSettings(appConfig);
 class App extends React.Component {
 
@@ -27,7 +27,9 @@ class App extends React.Component {
         // notLogined={this.onLogined}
         return <NavView onLogined={this.onLogined} />
     }
+
 }
+
 
 export default App;
 

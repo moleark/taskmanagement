@@ -430,16 +430,14 @@ export class CSalesTask extends CUqBase {
         if (this.isLogined) {
             return this.renderView(VMain);
         } else {
-            return <div
-                className="d-flex h-100 flex-column align-items-center justify-content-center">
+            return <div className="d-flex h-100 flex-column align-items-center justify-content-center" >
                 <div className="flex-fill" />
-                <button className="btn btn-success w-20c"
-                    onClick={() => nav.showLogin(this.loginCallback, true)}>
+                <button className="btn btn-success w-20c" onClick={() => nav.showLogin(this.loginCallback, true)}>
                     <FA name="sign-out" size="lg" /> 请登录
-            </button>
+                </button>
                 <div className="flex-fill" />
                 <div className="flex-fill" />
-            </div>;
+            </div >;
         }
     })
 
