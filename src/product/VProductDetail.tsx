@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, ItemSchema, ObjectSchema, NumSchema, tv, UiSchema, Form } from 'tonva';
+import { VPage, Page, ItemSchema, ObjectSchema, NumSchema, tv, UiSchema, Form, RowContext, BoxId, UiCustom, FormField } from 'tonva';
 import { observer } from 'mobx-react';
 import { ProductImage } from '../tools/productImage';
 import { MainProductChemical } from '../model/product';
@@ -7,6 +7,8 @@ import { consts } from '../consts';
 import { CProduct, renderBrand, productPropItem } from './CProduct';
 import { ProductPackRow } from './Product';
 import { ViewMainSubs } from '../mainSubs';
+import { MinusPlusWidget } from 'tools/minusPlusWidget';
+import { async } from 'q';
 
 const schema: ItemSchema[] = [
     { name: 'pack', type: 'object' } as ObjectSchema,
@@ -21,10 +23,12 @@ const schema: ItemSchema[] = [
 ];
 
 export class VProductDetail extends VPage<CProduct> {
+    private productBox: BoxId;
 
     product: any;
     async open(product: any) {
         this.product = product;
+        this.productBox = product;
         this.openPage(this.page, product);
     }
 
@@ -51,6 +55,16 @@ export class VProductDetail extends VPage<CProduct> {
             </div>
         </div>
     }
+
+    private onAddPack = async (data: any, value: any, prev: any) => {
+        let { pack, retail, vipPrice, promotionPrice, currency } = data;
+        let price = this.minPrice(vipPrice, promotionPrice) || retail;
+        let { cApp } = this.controller;
+        let { cart } = cApp;
+        await cart.add(this.productBox, pack, 1, price, currency);
+    }
+
+
 
     private arrTemplet = (item: ProductPackRow) => {
         let { pack, retail, vipPrice, agentPrice, promotionPrice } = item;
@@ -93,6 +107,7 @@ export class VProductDetail extends VPage<CProduct> {
 
         let param = { type: "packge", pack: pack, product: this.product, code: undefined };
         let onSharePackge = async () => await this.controller.cApp.cCoupon.showCreateCoupon(param);
+        let onAddPack = async () => await this.onAddPack(item, "", "");
 
         return <div className="px-4">
             <div className="row px-2">
@@ -109,7 +124,7 @@ export class VProductDetail extends VPage<CProduct> {
                 </div>
                 <div className="col-8 text-right">
                     <button type="button" onClick={onSharePackge} style={{ borderRadius: '2rem', boxShadow: "2px 2px 6px #333333" }} className="btn btn-primary btn-sm  mx-1">直接分享</button>
-                    <button type="button" style={{ borderRadius: '2rem', boxShadow: "2px 2px 6px #333333" }} className="btn btn-primary btn-sm  ">组单分享</button>
+                    <button type="button" onClick={onAddPack} name="quantity" style={{ borderRadius: '2rem', boxShadow: "2px 2px 6px #333333" }} className="btn btn-primary btn-sm  ">组单分享</button>
                 </div>
             </div>
         </div>;
@@ -125,6 +140,7 @@ export class VProductDetail extends VPage<CProduct> {
     };
 
     private renderPack = (pack: ProductPackRow) => {
+
         return <>
             <div className="sep-product-select" />
             <Form className="my-3" schema={schema} uiSchema={this.uiSchema} formData={pack} />

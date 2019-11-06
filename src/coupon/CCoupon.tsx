@@ -90,7 +90,7 @@ export class CCoupon extends CUqBase {
                 this.openVPage(VCreatePackCouponEnd, param)
             }
         } else {
-            this.openVPage(VCreateCouponEnd, param)
+            this.openVPage(VCreateCouponEnd, code)
         }
     }
 

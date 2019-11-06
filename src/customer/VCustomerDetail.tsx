@@ -6,6 +6,7 @@ import { CCustomer } from './CCustomer';
 import { mobileValidation, nameValidation, emailValidation } from 'tools/inputValidations';
 import { GLOABLE } from 'ui';
 import { setting } from 'appConfig';
+import { async } from 'q';
 
 /* eslint-disable */
 export const myCustomerSchema: Schema = [
@@ -206,19 +207,21 @@ export class VCustomerDetail extends VPage<CCustomer> {
             } as ComponentProp,
         ];
 
-        let header: any = <span>{this.customer.name}</span>;
-        let footer = <div className="d-block">
-            {this.bindTip}
-            <div>
-                <button type="button" className="btn btn-danger flex-grow-1 mx-3 my-1 w-100" onClick={this.checkBinding}>查询绑定关系</button>
-            </div>
-        </div>
-
+        let { cancelCustomer } = this.controller;
         let { showCustomerEdit } = this.controller;
         let onshowCustomerEdit = async () => await showCustomerEdit(this.customer);
+        let oncancelCustomer = async () => await cancelCustomer(this.customer);
         let right = <div className="cursor-pointer" onClick={onshowCustomerEdit}>
             <span><FA name="pencil" className="mr-3" /></span>
         </div>;
+        let header: any = <span>{this.customer.name}</span>;
+        let footer = <div className="d-block">
+            {this.bindTip}
+            <div className="w-100  justify-content-end" >
+                <button type="button" className="btn btn-primary mx-1 my-1 " onClick={this.checkBinding}>查询绑定</button>
+                <button type="button" className="btn btn-primary mx-1 my-1  " onClick={oncancelCustomer}>作废客户</button>
+            </div>
+        </div>
         return <Page header={header} headerClassName={setting.pageHeaderCss} right={right} footer={footer} >
             <PropGrid className="my-2" rows={rows} values={this.customer} alignValue="right" />
         </Page >

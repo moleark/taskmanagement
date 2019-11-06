@@ -18,5 +18,6 @@ export const setting = {
     url: "http://agent.jkchemical.com",
     carturl: "http://shop.jkchemical.com",
     logo: logo,
-    pageHeaderCss: 'bg-primary py-1'
+    pageHeaderCss: 'bg-primary py-1',
+    isInnerSales: false
 }

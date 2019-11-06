@@ -18,17 +18,11 @@ export class VCreatePackCouponEnd extends VPage<CCoupon> {
     @observable showTips: any = "none"
     inviteCode: string;
     url: string;
-    code: string;
-    product: any;
-    pack: any;
-    discount: number;
-    async open(param: any) {
+    inviteParam: any;
 
-        let { code, pack, product, discount } = param;
-        this.code = code;
-        this.pack = pack;
-        this.discount = discount;
-        this.product = product;
+    async open(param: any) {
+        this.inviteParam = param;
+        let { code, pack } = param;
         if (code) {
             code = String(code);
             let p1 = code.substr(0, 4);
@@ -39,9 +33,11 @@ export class VCreatePackCouponEnd extends VPage<CCoupon> {
         this.openPage(this.page, param);
 
     }
+
     comeBack = () => {
         this.closePage(2);
     }
+
     copyClick = (e: any) => {
         copy(e.target.parentNode.childNodes[0].innerHTML)
         this.showTips = "";
@@ -84,14 +80,20 @@ export class VCreatePackCouponEnd extends VPage<CCoupon> {
     }
 
     private renderPack = (item: ProductPackRow) => {
-        if (item.pack.id != this.pack.id)
+        let { code, pack, discount } = this.inviteParam;
+        if (item.pack.id !== pack.id)
             return <></>
-        let share: any;
+
         let onshare = () => this.share(this.url);
+
+        let share: any;
+        if (navigator.userAgent.indexOf("Html5Plus") > -1) {
+            share = <button className="btn btn-info" onClick={onshare} >点击分享</button>;
+        }
 
         let { retail } = item;
         let priceui = <div className="pt-4 mt-4 d-flex align-items-end justify-content-end text-danger">
-            <div><small>¥</small> <span className="h4">{(retail * (1 - this.discount)).toFixed(2)}</span> <del className="text-muted small"> ¥ {retail} </del></div>
+            <div><small>¥</small> <span className="h4">{(retail * (1 - discount)).toFixed(2)}</span> <del className="text-muted small"> ¥ {retail} </del></div>
         </div>;
 
         let qrcode = <div className="d-flex flex-grow-1">
@@ -108,13 +110,13 @@ export class VCreatePackCouponEnd extends VPage<CCoupon> {
                 {priceui}
             </div>
             <div className="text-center mt-5">
-                <button className="btn btn-info" onClick={onshare} >点击分享</button>
+                {share}
             </div>
         </>;
     }
 
     share = async (url: any) => {
-        let content = " 通过此券最高可以享受" + ((1 - this.discount) * 100) + "折优惠哦！";
+        let content = " 通过此券最高可以享受" + ((1 - this.inviteParam.discount) * 100) + "折优惠哦！";
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
             // @ts-ignore  屏蔽错误 
             window.plusShare({
@@ -132,7 +134,7 @@ export class VCreatePackCouponEnd extends VPage<CCoupon> {
     private page = observer((param: any) => {
 
         let viewProduct = new ViewMainSubs<MainProductChemical, ProductPackRow>(this.renderProduct, this.renderPack);
-        viewProduct.model = this.product;
+        viewProduct.model = this.inviteParam.product;
         return <Page header='优惠券' back="none" headerClassName={setting.pageHeaderCss}>
             <div className="bg-white" style={{ height: '100%' }} >
                 <div className="px-2 py-2" >{viewProduct.render()}</div>

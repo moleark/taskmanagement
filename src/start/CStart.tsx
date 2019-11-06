@@ -6,6 +6,7 @@ import { VError } from './VError';
 import { VAgencyClauseDetil } from './VAgencyClauseDetil';
 import { VConfirm } from './VConfirm';
 import * as qs from 'querystringify';
+import { setting } from 'appConfig';
 /**
  *
  */
@@ -13,6 +14,7 @@ export class CStart extends CUqBase {
 
     //初始化
     protected async internalStart(param: any) {
+        this.getIsInnerSales();
         //this.user;
         var isPosition: Boolean;
         isPosition = await this.isPosition();
@@ -33,6 +35,14 @@ export class CStart extends CUqBase {
         }
         else {
             await this.cApp.cSalesTask.start();
+        }
+    }
+
+    //判断是否为内部销售
+    getIsInnerSales = async () => {
+        let reult = await this.cApp.uqs.salesTask.WebUserEmployeeMap.query({ webuser: this.user.id });
+        if (reult.ret.length > 0) {
+            setting.isInnerSales = true;
         }
     }
 

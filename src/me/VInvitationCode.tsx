@@ -19,8 +19,6 @@ export class VInvitationCode extends VPage<CMe> {
     share = async (url: any) => {
         let { user } = this.controller;
         let { name, nick } = user;
-        //var qr = document.getElementById('qrid');
-        //let image = await scaleToImage_text(qr);
         //5+ 原生分享  
         let content = (nick ? nick : name) + " 邀请您加入销售助手！";
 
@@ -50,10 +48,9 @@ export class VInvitationCode extends VPage<CMe> {
             </div>;
         }
 
-
         return <Page header='邀请码' headerClassName={setting.pageHeaderCss}>
             <div id="qrid" className="text-center" style={{ width: 'auto', height: '85%' }}  >
-                <Image src={setting.logo} className="mt-4" style={{ width: 'auto', height: '50%', margin: '2rem auto, 0 auto' }} />
+                <Image src={setting.logo} className="mt-4" style={{ width: 'auto', height: '40%', margin: '2rem auto, 0 auto' }} />
                 <div>
                     < QRCode style={{ margin: '2rem 0 0 0' }}
                         value={url}  //value参数为生成二维码的链接

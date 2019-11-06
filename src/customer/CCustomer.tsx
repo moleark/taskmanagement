@@ -263,6 +263,14 @@ export class CCustomer extends CUqBase {
         this.openVPage(VCreateCustomerFinish, code);
     }
 
+    //作废客户
+    cancelCustomer = async (customer: any) => {
+        this.closePage();
+        customer.isValid = 0;
+        await this.uqs.salesTask.MyCustomer.save(customer.id, customer);
+        await this.searchByKey("");
+    }
+
     showCreateNewCustomer = async (model: any) => {
 
         let unit = await this.cApp.cCustomerUnit.call(2);
@@ -301,13 +309,6 @@ export class CCustomer extends CUqBase {
      */
     checkBinding = async (mycustomer: any): Promise<boolean> => {
         var customerlis = await this.uqs.customer.getCustomerByKey.query({ key: mycustomer.mobile });
-        let param = {
-            customerList: customerlis.ret.map((v: any) => {
-                return {
-                    customer: v.customer
-                }
-            })
-        };
         var counts: number = 0;
         let { ret } = customerlis;
         for (var i = 0; i < ret.length; i++) {
@@ -316,7 +317,6 @@ export class CCustomer extends CUqBase {
                 counts++;
             }
         };
-
         return !(counts === 0);
     }
 

@@ -6,6 +6,7 @@ import { VPage, Page, Schema, Form, UiSchema, Context, Widget, UiCustom, FA } fr
 import { consts } from '../consts';
 import { CCoupon } from './CCoupon';
 import { GLOABLE } from 'ui';
+import { setting } from 'appConfig';
 
 const schema: Schema = [
     { name: 'validitydate', type: 'date', required: false },
@@ -154,8 +155,8 @@ export class VCreateCoupon extends VPage<CCoupon> {
         let onshowCreateCoupon = async () => await cCoupon.start();
 
         let right = <div onClick={onshowCreateCoupon} className="cursor-pointer py-2 mx-3"><FA name="ellipsis-h" /></div>;
-
-        return <Page header="生成优惠券" headerClassName={consts.headerClass} right={right} >
+        let header = setting.isInnerSales ? "生成积分码" : "生成优惠券";
+        return <Page header={header} headerClassName={consts.headerClass} right={right} >
             <Form className="my-3 mx-3"
                 schema={schema}
                 uiSchema={this.uiSchema}

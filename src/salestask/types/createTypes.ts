@@ -30,6 +30,7 @@ const taskTypeConstuctors: { [type: string]: CTaskTypeConstructor | TaskCommonTy
 };
 
 export function createTaskTypes(cSalesTask: CSalesTask): { [type: string]: CType } {
+
     let res: any = undefined;
     let ret: { [type: string]: CType } = {};
 

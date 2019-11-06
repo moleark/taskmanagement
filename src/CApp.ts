@@ -13,10 +13,13 @@ import { CInnerCustomer } from './innercustomer/CInnerCustomer';
 import { UQs } from "./uqs";
 import { CUqBase } from "./CBase";
 import { VHome, GLOABLE } from './ui';
+import { CCart } from "cart";
+import { Cart } from "cart/Cart";
 
 export class CApp extends CAppBase {
     get uqs(): UQs { return this._uqs };
 
+    cart: Cart;
     currentSalesRegion: any;
     currentLanguage: any;
 
@@ -31,6 +34,7 @@ export class CApp extends CAppBase {
     cCustomerUnit: CCustomerUnit;
     cCoupon: CCoupon;
     cWebUser: CInnerCustomer;
+    cCart: CCart;
 
     protected newC<T extends CUqBase>(type: IConstructor<T>): T {
         return new type(this);
@@ -52,7 +56,7 @@ export class CApp extends CAppBase {
         this.cCustomerUnit = this.newC(CCustomerUnit);
         this.cCoupon = this.newC(CCoupon);
         this.cWebUser = this.newC(CInnerCustomer);
-
+        this.cCart = this.newC(CCart); // new CCart(this, undefined);
         /** 启动销售任务列表*/
         //this.cSalesTask.start();
 
