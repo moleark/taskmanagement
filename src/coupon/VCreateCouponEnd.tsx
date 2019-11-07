@@ -59,9 +59,7 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
         let share = <div className="text-center" style={{ width: 'auto', height: '10%' }} >
         </div>;
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
-            share = <div className="text-center" style={{ width: 'auto', height: '10%' }} >
-                <button type="button" id="share" className="btn text-info mx-3 my-1" onClick={onshare} >分享</button>
-            </div>;
+            share = <span className="text-info cursor-info mx-2" onClick={onshare} >返回</span>;
         }
 
         let header = setting.isInnerSales ? "积分券" : "优惠券";
@@ -76,17 +74,19 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
                     />
                     <div>
                         <span className="w-100 text-center m-3 text-info">{inviteCode} </span>
-                    </div> <span style={{ border: '1px solid #999999' }} onClick={this.copyClick} className="small px-1 text cursor-pointer">复制</span>
+                    </div>
                 </div>
             </div>
             <div className="w-100 text-center">
 
             </div>
             <div className="w-100 text-center">
-                <label className="text-success cursor-info" onClick={this.comeBack}>返回</label>
+                <span className="text-info cursor-info mx-2" onClick={this.copyClick}>复制</span>
+                <span className="text-info cursor-info mx-2" onClick={this.comeBack} >返回</span>
+                {share}
                 <div className="text-center text-white small px-2" style={{ width: '28%', margin: '27px auto 0 auto', padding: '4px', borderRadius: '3px', backgroundColor: '#505050', display: this.showTips }}>已复制到剪切板</div>
             </div>
-            {share}
+
         </Page>
     })
 }

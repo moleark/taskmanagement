@@ -17,6 +17,7 @@ export const appConfig: AppConfig = {
 export const setting = {
     url: "http://agent.jkchemical.com",
     carturl: "http://shop.jkchemical.com",
+    downloadAppurl: "http://agent.jkchemical.com/download/jk-agent.apk",
     logo: logo,
     pageHeaderCss: 'bg-primary py-1',
     isInnerSales: false

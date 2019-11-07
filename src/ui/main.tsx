@@ -13,7 +13,7 @@ export class VHome extends VPage<CApp> {
     }
 
     opensrc = () => {
-        window.open("https://agent.jkchemical.com/download/agent.apk");
+        window.open(setting.downloadAppurl);
     }
 
     render = (param?: any): JSX.Element => {
@@ -57,11 +57,11 @@ export class VHome extends VPage<CApp> {
         let header: any = false;
         if (!browser.versions.html5Plus && browser.versions.android) {
             header = <div className="w-100 mx-3 d-flex justify-content-between">
-                <div className="">
+                <div>
                     <Image src={setting.logo} style={{ width: "25px", height: "25px" }} ></Image>
                     <span className="small mx-2" >销售助手APP</span>
                 </div >
-                <div className="">  <a onClick={this.opensrc} className="small">立即打开</a></div>
+                <div>  <a download onClick={this.opensrc} className="small">立即打开</a></div>
             </div >;
         }
 

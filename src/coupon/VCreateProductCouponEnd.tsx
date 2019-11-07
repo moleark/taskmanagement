@@ -128,7 +128,9 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
         }
 
         let priceui = <div className="pt-4 mt-4 d-flex align-items-end justify-content-end text-danger">
-            <div><span className="h2">{((1 - discount) * 100).toFixed(2)}折</span> </div>
+            <div>
+                {setting.isInnerSales ? <span className="h5">使用积分码可享受双倍积分</span> : <span className="h2">{((1 - discount) * 100).toFixed(1)}折</span>}
+            </div>
         </div>;
 
         let qrcode = <div className="d-flex flex-grow-1">
@@ -151,11 +153,18 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
     }
 
     share = async (url: any) => {
-        let content = " 通过此券最高可以享受" + ((1 - this.inviteParam.discount) * 100) + "折优惠哦！";
+        let content = "", title = "";
+        if (setting.isInnerSales) {
+            content = "使用积分码可享受双倍积分哦！";
+            title = "积分码";
+        } else {
+            content = " 通过此券最高可以享受" + ((1 - this.inviteParam.discount) * 100) + "折优惠哦！";
+            title = "专享折扣券";
+        }
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
             // @ts-ignore  屏蔽错误 
             window.plusShare({
-                title: "专享折扣券",//应用名字  
+                title: title,//应用名字  
                 content: content,
                 href: url,//分享出去后，点击跳转地址 
                 //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片
@@ -170,7 +179,9 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
 
         let viewProduct = new ViewMainSubs<MainProductChemical, ProductPackRow>(this.renderProduct, this.renderPack);
         viewProduct.model = this.inviteParam.product;
-        return <Page header='优惠券' back="none" headerClassName={setting.pageHeaderCss}>
+
+        let header = setting.isInnerSales ? "积分券" : "优惠券";
+        return <Page header={header} back="none" headerClassName={setting.pageHeaderCss}>
             <div className="bg-white" style={{ height: '100%' }} >
                 <div className="px-2 py-2" >{viewProduct.render()}</div>
                 {this.showShare()}
