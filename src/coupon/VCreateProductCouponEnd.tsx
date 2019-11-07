@@ -12,7 +12,7 @@ import { ProductPackRow } from 'model/product';
 import { ProductImage } from 'tools/productImage';
 import { renderBrand } from 'product/CProduct';
 
-export class VCreatePackCouponEnd extends VPage<CCoupon> {
+export class VCreateProductCouponEnd extends VPage<CCoupon> {
 
 
     @observable showTips: any = "none"
@@ -128,7 +128,7 @@ export class VCreatePackCouponEnd extends VPage<CCoupon> {
         }
 
         let priceui = <div className="pt-4 mt-4 d-flex align-items-end justify-content-end text-danger">
-            <div><span className="h4">{(1 - discount).toFixed(2)}</span> </div>
+            <div><span className="h2">{((1 - discount) * 100).toFixed(2)}折</span> </div>
         </div>;
 
         let qrcode = <div className="d-flex flex-grow-1">

@@ -65,6 +65,7 @@ export class VProductDetail extends VPage<CProduct> {
 
 
     private arrTemplet = (item: ProductPackRow) => {
+
         let { pack, retail, vipPrice, agentPrice, promotionPrice } = item;
         let right = null;
         let agent = null;
@@ -137,7 +138,7 @@ export class VProductDetail extends VPage<CProduct> {
 
     private page = observer((product: any) => {
 
-        let param = { type: "product", product: this.product, code: undefined };
+        let param = { type: "product", product: this.product };
         let onShareProduct = async () => await this.controller.cApp.cCoupon.showCreateCoupon(param);
         let footer = <div className="d-block">
             <div className="w-100  justify-content-end" >

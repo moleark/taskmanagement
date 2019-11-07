@@ -2,7 +2,7 @@ import * as React from 'react';
 import _ from 'lodash';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { VPage, Page, Schema, Form, UiSchema, Context, Widget, UiCustom, FA } from 'tonva';
+import { VPage, Page, Schema, Form, UiSchema, Context, Widget, UiCustom, FA, UiInputItem, UiItem } from 'tonva';
 import { consts } from '../consts';
 import { CCoupon } from './CCoupon';
 import { GLOABLE } from 'ui';
@@ -11,6 +11,7 @@ import { setting } from 'appConfig';
 const schema: Schema = [
     { name: 'validitydate', type: 'date', required: false },
     { name: 'discount', type: 'string', required: false },
+    { name: 'type', type: 'string', required: false },
     { name: 'submit', type: 'submit' },
 ];
 
@@ -81,7 +82,9 @@ class Discount extends Widget {
 
 const oneWeek = new Date(Date.now() + 7 * 24 * 3600 * 1000);
 const twoWeeks = new Date(Date.now() + 7 * 24 * 3600 * 1000);
+
 export class VCreateCoupon extends VPage<CCoupon> {
+
     @observable showTip: boolean = false;
     tip: string = "";
 
@@ -97,15 +100,17 @@ export class VCreateCoupon extends VPage<CCoupon> {
                 widget: 'custom',
                 label: '折扣',
                 WidgetClass: Discount,
-                defaultValue: 9.5,
+                defaultValue: setting.isInnerSales ? 1 : 9.5,
+                visible: setting.isInnerSales ? false : true
             } as UiCustom,
+            type: { widget: 'text', label: '类型', placeholder: '请填写任务备注', visible: false } as UiItem,
             submit: { widget: 'button', label: '提交', className: 'btn btn-primary w-8c' },
         }
     }
 
-    createParam: any;
+    productParam: any;
     async open(param: any) {
-        this.createParam = param;
+        this.productParam = param;
         this.openPage(this.page);
     }
 
@@ -130,9 +135,9 @@ export class VCreateCoupon extends VPage<CCoupon> {
         this.showTip = false;
         data.validitydate = this.validDateFrom(validitydate);
         data.discount = _.round(1 - disc * 0.1, 2);
+        data.type = setting.isInnerSales ? "credits" : "coupon" //内部销售创建的是优惠
 
-
-        await this.controller.createCoupon(data, this.createParam);
+        await this.controller.createCoupon(data, this.productParam);
     }
 
     private validDateFrom(v: any) {

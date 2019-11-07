@@ -20,10 +20,10 @@ export class VCustomerList extends VPage<CCustomer> {
         let onClickCustomer = async () => await this.controller.showCustomerDetail(customer.id);
 
         let { name, unit, validity, mobile } = customer;
-        let nameShow = <span className="font-weight-bold" onClick={onClickCustomer}>{name}</span>;
-        let unitShow = <div className="text-muted" onClick={onClickCustomer}><small> {tv(unit, s => s.name)}</small></div>;
-        let date = <span className="small"><EasyDate date={validity} /></span>
-        let telephoneShow = mobile && <span className="small" ><a className="text-default" href={"tel:" + mobile} style={{ textDecorationLine: "none" }} ><FA name="phone" className="text-success px-1" />{mobile}</a></span>
+        let nameShow = <div className="cursor-pointer font-weight-bold" onClick={onClickCustomer}>{name}</div>;
+        let unitShow = <div className=" cursor-pointer text-muted" onClick={onClickCustomer}><small> {tv(unit, s => s.name)}</small></div>;
+        let date = <div className=" cursor-pointer small"><EasyDate date={validity} /></div>
+        let telephoneShow = mobile && <div className="small" ><a className="text-default" href={"tel:" + mobile} style={{ textDecorationLine: "none" }} ><FA name="phone" className="text-success px-1" />{mobile}</a></div>
 
         return <LMR className="px-2 py-1">
             <LMR className="px-1 pt-2" left={nameShow} right={telephoneShow}>
@@ -37,7 +37,7 @@ export class VCustomerList extends VPage<CCustomer> {
         let { showNewMyCustomerDetil } = this.controller;
         let onClik = () => showNewMyCustomerDetil(model);
         let { customer } = model;
-        let left: any = <span>{tv(customer, v => v.name)}</span>;
+        let left: any = <div>{tv(customer, v => v.name)}</div>;
         return <LMR className="pl-2 pr-3 py-1" onClick={onClik}>
             <LMR className="py-2" left={left} right={<div className="small text-warning">新客户</div>}>
             </LMR>

@@ -11,9 +11,9 @@ import { mobileValidation, nameValidation, emailValidation } from 'tools/inputVa
 export const myCustomerSchema: Schema = [
     { name: 'name', type: 'string', required: true },
     { name: 'salutation', type: 'string' },
+    { name: 'gender', type: 'number' },
     { name: 'mobile', type: 'number' },
     { name: 'telephone', type: 'number' },
-    { name: 'gender', type: 'number' },
     { name: 'email', type: 'string' },
     { name: 'wechat', type: 'string' },
     { name: 'potential', type: 'string' },
@@ -25,9 +25,9 @@ export const myCustomerUISchema: UiSchema = {
     items: {
         name: { widget: 'text', label: '姓名', placeholder: '请输入姓名', rules: nameValidation } as UiInputItem,
         salutation: { widget: 'text', label: '称谓', placeholder: '请输入称谓' } as UiInputItem,
+        gender: { widget: 'radio', label: '性别', list: [{ value: '1', title: '男' }, { value: '0', title: '女' }] } as UiRadio,
         mobile: { widget: 'text', label: '手机号', placeholder: '请输入手机号', rules: mobileValidation } as UiInputItem,
         telephone: { widget: 'text', label: '固话', placeholder: '请输入固话' } as UiInputItem,
-        gender: { widget: 'radio', label: '性别', list: [{ value: '1', title: '男' }, { value: '0', title: '女' }] } as UiRadio,
         birthDay: { widget: 'datetime', label: '生日', placeholder: '请输入生日' } as UiInputItem,
         email: { widget: 'text', label: 'Email', placeholder: '请输入Email', rules: emailValidation } as UiInputItem,
         wechat: { widget: 'text', label: '微信', placeholder: '请输入微信号' } as UiInputItem,

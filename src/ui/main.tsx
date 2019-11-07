@@ -53,14 +53,15 @@ export class VHome extends VPage<CApp> {
                 };
             }()
         };
+
         let header: any = false;
         if (!browser.versions.html5Plus && browser.versions.android) {
-            header = <div className="w-100 mx-3 d-flex flex-row">
-                <div className="d-flex flex-wrap align-self-start">
+            header = <div className="w-100 mx-3 d-flex justify-content-between">
+                <div className="">
                     <Image src={setting.logo} style={{ width: "25px", height: "25px" }} ></Image>
                     <span className="small mx-2" >销售助手APP</span>
                 </div >
-                <div className=" d-flex flex-wrap align-self-end">  <a onClick={this.opensrc} className="small">立即打开</a></div>
+                <div className="">  <a onClick={this.opensrc} className="small">立即打开</a></div>
             </div >;
         }
 
