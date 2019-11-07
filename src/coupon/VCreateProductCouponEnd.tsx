@@ -129,7 +129,7 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
 
         let priceui = <div className="pt-4 mt-4 d-flex align-items-end justify-content-end text-danger">
             <div>
-                {setting.isInnerSales ? <span className="h5">使用积分码可享受双倍积分</span> : <span className="h2">{((1 - discount) * 100).toFixed(1)}折</span>}
+                {setting.isInnerSales ? <span className="x1">使用积分码可享受双倍积分</span> : <span className="h2">{((1 - discount) * 100).toFixed(1)}折</span>}
             </div>
         </div>;
 
@@ -156,9 +156,9 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
         let content = "", title = "";
         if (setting.isInnerSales) {
             content = "使用积分码可享受双倍积分哦！";
-            title = "积分码";
+            title = "专享积分码";
         } else {
-            content = " 通过此券最高可以享受" + ((1 - this.inviteParam.discount) * 100) + "折优惠哦！";
+            content = "通过此券最高可以享受" + ((1 - this.inviteParam.discount) * 100) + "折优惠哦！";
             title = "专享折扣券";
         }
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {

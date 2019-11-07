@@ -36,7 +36,7 @@ export class VAchievementDetail extends VPage<CMe> {
     }
 
     private renderItem(model: any, index: number) {
-        let { date, Amount, order, status } = model;
+        let { date, Amount, order, orderno, status } = model;
         var statusShow: any;
         if (status === 1) {
             statusShow = "待转入";
@@ -48,7 +48,7 @@ export class VAchievementDetail extends VPage<CMe> {
         return <div className="d-block">
             <div>
                 <LMR className="px-3 pt-2 small" left={<div className="text-muted">收益产生日期</div>} right={data}></LMR>
-                <LMR className="px-3 small" left={<div className="text-muted">订单号</div>} right={order}></LMR>
+                <LMR className="px-3 small" left={<div className="text-muted">订单号</div>} right={orderno}></LMR>
                 <LMR className="px-3 small" left={<div className="text-muted">状态</div>} right={statusShow}></LMR>
                 <LMR className="px-3 pb-2 small" left={<div className="text-muted">预估金额</div>} right={amount}></LMR>
             </div>
@@ -56,6 +56,7 @@ export class VAchievementDetail extends VPage<CMe> {
     }
 
     private header = () => {
+
         let onClickA = () => this.onClickHeader(TabStatus.sum);
         let onClickB = () => this.onClickHeader(TabStatus.pending);
         if (this.tab_Status === TabStatus.sum) {
@@ -70,6 +71,7 @@ export class VAchievementDetail extends VPage<CMe> {
             </div >;
         }
     }
+
     private onClickHeader = async (status: TabStatus) => {
         if (this.tab_Status === status) return;
         this.tab_Status = status;
@@ -87,50 +89,35 @@ export class VAchievementDetail extends VPage<CMe> {
     }
 
     private page = observer(() => {
-        //let tab_Status = this.tab_Status;
+
         let tabs = [
             {
                 name: 'a',
                 caption: tabCaption('A类', this.oneAchievement),
                 content: this.tabContent,
-                /*() => {
-                    return <List items={this.achievementsA} item={{ render: this.renderItem }} none="无收益" />
-                },*/
                 onShown: async () => {
                     this.type = TabType.A;
                     await this.loadAchievements();
-                    //this.achievementsA.splice(0);
-                    //this.achievementsA.push(...await this.controller.searchAchievementDetail(1, tab_Status));
                 }
             }, {
                 name: 'b',
                 caption: tabCaption('B类', this.twoAchievement),
                 content: this.tabContent,
-                //content: () => {
-                //   return <List items={this.achievementsB} item={{ render: this.renderItem }} none="无收益" />
-                //},
                 onShown: async () => {
                     this.type = TabType.B;
                     await this.loadAchievements();
-                    //this.achievementsB.splice(0);
-                    //this.achievementsB.push(...await this.controller.searchAchievementDetail(2, tab_Status));
                 }
             }, {
                 name: 'c',
                 caption: tabCaption('C类', this.threeAchievement),
                 content: this.tabContent,
-                //content: () => {
-                //    return <List items={this.achievementsC} item={{ render: this.renderItem }} none="无收益" />
-                //},
                 onShown: async () => {
                     this.type = TabType.C;
                     await this.loadAchievements();
-                    //this.achievementsC.splice(0);
-                    //this.achievementsC.push(... await this.controller.searchAchievementDetail(3, tab_Status));
                 }
             }
         ];
-        //let a = this.achievementsA;
+
         return <Page header={this.header()} headerClassName={consts.headerClass} >
             <Tabs tabs={tabs} tabPosition="top" />
         </Page >
