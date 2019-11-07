@@ -59,7 +59,7 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
         let share = <div className="text-center" style={{ width: 'auto', height: '10%' }} >
         </div>;
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
-            share = <span className="text-info cursor-info mx-2" onClick={onshare} >返回</span>;
+            share = <span className="text-info cursor-info mx-2" onClick={onshare} >分享</span>;
         }
 
         let header = setting.isInnerSales ? "积分券" : "优惠券";

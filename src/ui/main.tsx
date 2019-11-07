@@ -56,7 +56,7 @@ export class VHome extends VPage<CApp> {
 
         let header: any = false;
         if (!browser.versions.html5Plus && browser.versions.android) {
-            header = <div className="w-100 mx-3 d-flex justify-content-between">
+            header = <div className="w-100 mx-3 d-flex  justify-content-between">
                 <div>
                     <Image src={setting.logo} style={{ width: "25px", height: "25px" }} ></Image>
                     <span className="small mx-2" >销售助手APP</span>
@@ -65,7 +65,7 @@ export class VHome extends VPage<CApp> {
             </div >;
         }
 
-        return <Page header={header} headerClassName={setting.pageHeaderCss}>
+        return <Page header={header} headerClassName={"bg-info"}>
             <Tabs tabs={faceTabs} />
         </Page >;
     }
