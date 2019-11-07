@@ -6,7 +6,6 @@ import { CCustomer } from './CCustomer';
 import { mobileValidation, nameValidation, emailValidation } from 'tools/inputValidations';
 import { GLOABLE } from 'ui';
 import { setting } from 'appConfig';
-import { async } from 'q';
 
 /* eslint-disable */
 export const myCustomerSchema: Schema = [

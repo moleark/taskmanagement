@@ -36,7 +36,7 @@ export class VAchievementDetail extends VPage<CMe> {
     }
 
     private renderItem(model: any, index: number) {
-        let { date, Amount, order, orderno, status } = model;
+        let { date, amount, orderno, status } = model;
         var statusShow: any;
         if (status === 1) {
             statusShow = "待转入";
@@ -44,7 +44,6 @@ export class VAchievementDetail extends VPage<CMe> {
             statusShow = "已转入";
         }
         let data = <EasyDate date={date} />;
-        let amount = <div>{Amount}</div>;
         return <div className="d-block">
             <div>
                 <LMR className="px-3 pt-2 small" left={<div className="text-muted">收益产生日期</div>} right={data}></LMR>

@@ -6,7 +6,6 @@ import { VCreateCoupon } from './VCreateCoupon';
 import { VCouponDetail } from './VCouponDetail';
 import { VCreateCouponEnd } from './VCreateCouponEnd';
 import { VCreateProductCouponEnd } from './VCreateProductCouponEnd';
-import { setting } from 'appConfig';
 
 //页面类
 /* eslint-disable */
