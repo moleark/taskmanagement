@@ -20,14 +20,14 @@ export class VCustomerList extends VPage<CCustomer> {
         let onClickCustomer = async () => await this.controller.showCustomerDetail(customer.id);
 
         let { name, unit, validity, mobile } = customer;
-        let nameShow = <div className="cursor-pointer font-weight-bold" onClick={onClickCustomer}>{name}</div>;
+        let nameShow = <div className="cursor-pointer font-weight-bold w-100" onClick={onClickCustomer}>{name}</div>;
         let unitShow = <div className=" cursor-pointer text-muted" onClick={onClickCustomer}><small> {tv(unit, s => s.name)}</small></div>;
         let date = <div className=" cursor-pointer small"><EasyDate date={validity} /></div>
         let telephoneShow = mobile && <div className="small" ><a className="text-default" href={"tel:" + mobile} style={{ textDecorationLine: "none" }} ><FA name="phone" className="text-success px-1" />{mobile}</a></div>
 
         return <LMR className="px-2 py-1">
             <LMR className="px-1 pt-2" left={nameShow} right={telephoneShow}>
-                <div className="w-100" onClick={onClickCustomer}>&nbsp;  </div>
+                <div className="cursor-pointer w-100" onClick={onClickCustomer}>&nbsp;  </div>
             </LMR>
             <LMR className="px-1" left={unitShow} right={date}></LMR>
         </LMR>
