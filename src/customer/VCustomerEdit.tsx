@@ -2,8 +2,6 @@ import * as React from 'react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { VPage, Page, Schema, UiSchema, UiInputItem, UiRadio, Edit, ItemSchema } from 'tonva';
-//import { tv } from 'tonva';
-//import { LMR, StringProp, ComponentProp, Prop, PropGrid, FA } from 'tonva';
 import { CCustomer } from './CCustomer';
 import { consts } from '../consts';
 import { mobileValidation, nameValidation, emailValidation } from 'tools/inputValidations';
@@ -62,10 +60,18 @@ export class VCustomerEdit extends VPage<CCustomer> {
     }
 
     private page = observer((param: any) => {
-        //let { cSalesTask, cCustomerUnit, cCustomer } = this.controller.cApp
+        /**
+        let { cancelCustomer } = this.controller;
+        let oncancelCustomer = async () => await cancelCustomer(this.customer);
+        let footer = <div className="d-block">
+             {this.bindTip}
+             <div className="w-100  justify-content-end" >
+                 <button type="button" className="btn btn-primary mx-1 my-1  " onClick={oncancelCustomer}>作废客户</button>
+             </div>
+         </div>
+        **/
         let header: any = <span>{this.customer.name}</span>;
-
-        return <Page header={header} headerClassName={consts.headerClass}  >
+        return <Page header={header} headerClassName={consts.headerClass}>
             <Edit
                 schema={myCustomerSchema}
                 uiSchema={myCustomerUISchema}

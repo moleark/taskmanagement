@@ -7,7 +7,6 @@ import copy from 'copy-to-clipboard';
 import { observable } from 'mobx';
 import { GLOABLE } from 'ui';
 import { setting } from 'appConfig';
-import { setFlagsFromString } from 'v8';
 /* eslint-disable */
 export class VMe extends VPage<CMe> {
     private user: any;
@@ -49,7 +48,7 @@ export class VMe extends VPage<CMe> {
         let { teamCount, customerCount, activeCustomerCount } = salesAmont;
         let onshowMyCustomer = async () => await showMyCustomer(1);
         let onshowMyCustomerActive = async () => await showMyCustomer(2);
-        if (setting.isInnerSales) {
+        if (setting.salse.isInner) {
             return <div className="row mt-2">
                 <div className="col text-center" onClick={onshowMyCustomer}>
                     <div >{customerCount}</div>
@@ -101,12 +100,12 @@ export class VMe extends VPage<CMe> {
             style={{ backgroundColor: '#f9f9f9', width: '90%', borderRadius: '8px', margin: '-4rem auto 2rem auto', boxShadow: "2px 2px 15px #333333" }}>
             <LMR
                 left={<div onClick={showMeDetail}> <Image className="w-3c h-3c mr-3" src={icon} /> </div>}
-                right={setting.isInnerSales ? <span></span> : <span onClick={onshowInvitationCode} >
+                right={setting.salse.isInner ? <span></span> : <span onClick={onshowInvitationCode} >
                     <FA className="h2" name="qrcode" />
                 </span >}>
                 <div>
                     <div onClick={showMeDetail}>{this.userSpan(name, nick)}</div>
-                    {setting.isInnerSales ? <></> : <div className="small"><span className="px-1" >邀请码  :</span><span>{this.inviteCode}<span style={{ border: '1px solid #999999' }} className="px-1 mx-1" onClick={this.copyClick}>复制</span></span ></div>}
+                    {setting.salse.isInner ? <></> : <div className="small"><span className="px-1" >邀请码  :</span><span>{this.inviteCode}<span style={{ border: '1px solid #999999' }} className="px-1 mx-1" onClick={this.copyClick}>复制</span></span ></div>}
                 </div>
                 {this.teamSpan()}
             </LMR>
@@ -157,7 +156,7 @@ export class VMe extends VPage<CMe> {
                 <div className="col text-center" onClick={onshowCreateCoupon}>
                     <FA name="th-large" className='text-warning' fixWidth={true} size="lg" />
                     <br />
-                    <small><small>{setting.isInnerSales ? "积分码" : "优惠券"}</small></small>
+                    <small><small>{setting.salse.couponHeader}</small></small>
                 </div>
                 <div className="col text-center" onClick={onShowMyTasksCompleted} >
                     <FA name="clock-o" className='text-info' fixWidth={true} size="lg" />

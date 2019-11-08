@@ -219,10 +219,8 @@ export class VCustomerDetail extends VPage<CCustomer> {
         } as ComponentProp
         );
 
-        let { cancelCustomer } = this.controller;
         let { showCustomerEdit } = this.controller;
         let onshowCustomerEdit = async () => await showCustomerEdit(this.customer);
-        let oncancelCustomer = async () => await cancelCustomer(this.customer);
         let right = <div className="cursor-pointer" onClick={onshowCustomerEdit}>
             <span><FA name="pencil" className="mr-3" /></span>
         </div>;
@@ -231,7 +229,6 @@ export class VCustomerDetail extends VPage<CCustomer> {
             {this.bindTip}
             <div className="w-100  justify-content-end" >
                 <button type="button" className="btn btn-primary mx-1 my-1 " onClick={this.checkBinding}>查询绑定</button>
-                <button type="button" className="btn btn-primary mx-1 my-1  " onClick={oncancelCustomer}>作废客户</button>
             </div>
         </div>
         return <Page header={header} headerClassName={setting.pageHeaderCss} right={right} footer={footer} >

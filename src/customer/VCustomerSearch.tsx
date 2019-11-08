@@ -7,7 +7,6 @@ import { setting } from 'appConfig';
 export class VCustomerSearch extends VPage<CCustomer> {
 
     async open(customer: any) {
-
         this.openPage(this.page, customer);
     }
 
@@ -16,10 +15,12 @@ export class VCustomerSearch extends VPage<CCustomer> {
         return <this.page />;
     }
 
-    private renderCustomer(customer: any, index: number) {
+    private renderCustomer = (customer: any, index: number) => {
+        let binded = this.controller.checkBinding(customer);
+
         let { name, unit } = customer;
         let left = <div><FA name='user' className=' my-2 mr-3 text-info' /> <span className="font-weight-bold">{name}</span></div>
-        let right = <div className="text-muted  my-2 mr-3 "><small> {tv(unit, s => s.name)}</small></div>;
+        let right = <div className="text-muted  my-2 mr-3 "><small> {binded ? tv(unit, s => s.name) : tv(unit, s => s.id)}</small></div>;
         return <LMR className="px-3 py-2" left={left} right={right}></LMR>
     }
 
@@ -29,6 +30,7 @@ export class VCustomerSearch extends VPage<CCustomer> {
 
     private page = observer((customer: any) => {
         let { pageCustomerSearch, showSelectOrganization } = this.controller;
+
         let onShowSelectOrganzation = async () => await showSelectOrganization(1);
         let none = <div className="my-3 mx-2 text-warning">
             还没有这个客户，是否<span className="text-primary" onClick={onShowSelectOrganzation}  >创建客户！</span>

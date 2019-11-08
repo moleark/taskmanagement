@@ -30,15 +30,15 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
     }
 
     share = async (url: any) => {
-        let content = " 通过此券最高可以享两倍积分优惠哦！";
+
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
             // @ts-ignore  屏蔽错误 
             window.plusShare({
-                title: "专享折扣券",//应用名字  
-                content: content,
+                title: setting.salse.shareTitle,//应用名字  
+                content: setting.salse.shareContent,
                 href: url,//分享出去后，点击跳转地址 
                 //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片
-                thumbs: ["https://agent.jkchemical.com/logo.png"] //分享缩略图  
+                thumbs: [setting.sharelogo] //分享缩略图  
             }, function (result) {
                 //分享回调  
             });
@@ -62,7 +62,7 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
             share = <span className="text-info cursor-info mx-2" onClick={onshare} >分享</span>;
         }
 
-        let header = setting.isInnerSales ? "积分券" : "优惠券";
+        let header = setting.salse.couponHeader;
         return <Page header={header} back="none" headerClassName={setting.pageHeaderCss}>
             <div id="qrid" className="text-center" style={{ width: 'auto', height: '85%' }}  >
                 <Image src={setting.logo} className="mt-4" style={{ width: 'auto', height: '40%', margin: '2rem auto, 0 auto' }} />
@@ -86,7 +86,6 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
                 {share}
                 <div className="text-center text-white small px-2" style={{ width: '28%', margin: '27px auto 0 auto', padding: '4px', borderRadius: '3px', backgroundColor: '#505050', display: this.showTips }}>已复制到剪切板</div>
             </div>
-
         </Page>
     })
 }

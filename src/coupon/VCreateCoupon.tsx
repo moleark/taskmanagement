@@ -100,8 +100,8 @@ export class VCreateCoupon extends VPage<CCoupon> {
                 widget: 'custom',
                 label: '折扣',
                 WidgetClass: Discount,
-                defaultValue: setting.isInnerSales ? 1 : 9.5,
-                visible: setting.isInnerSales ? false : true
+                defaultValue: setting.salse.couponDefaultValue,
+                visible: setting.salse.isInner ? false : true
             } as UiCustom,
             type: { widget: 'text', label: '类型', placeholder: '请填写任务备注', visible: false } as UiItem,
             submit: { widget: 'button', label: '提交', className: 'btn btn-primary w-8c' },
@@ -135,7 +135,7 @@ export class VCreateCoupon extends VPage<CCoupon> {
         this.showTip = false;
         data.validitydate = this.validDateFrom(validitydate);
         data.discount = _.round(1 - disc * 0.1, 2);
-        data.type = setting.isInnerSales ? "credits" : "coupon" //内部销售创建的是优惠
+        data.type = setting.salse.couponType;
 
         await this.controller.createCoupon(data, this.productParam);
     }
@@ -160,7 +160,7 @@ export class VCreateCoupon extends VPage<CCoupon> {
         let onshowCreateCoupon = async () => await cCoupon.start();
 
         let right = <div onClick={onshowCreateCoupon} className="cursor-pointer py-2 mx-3"><FA name="ellipsis-h" /></div>;
-        let header = setting.isInnerSales ? "生成积分码" : "生成优惠券";
+        let header = setting.salse.couponHeader
         return <Page header={header} headerClassName={consts.headerClass} right={right} >
             <Form className="my-3 mx-3"
                 schema={schema}

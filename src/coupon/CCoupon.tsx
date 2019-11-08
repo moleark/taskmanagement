@@ -62,7 +62,7 @@ export class CCoupon extends CUqBase {
     }
 
     //添加优惠券
-    createCoupon = async (data: any, productParam: any) => {
+    createCoupon = async (data: any, param: any) => {
 
         let { type, validitydate, discount } = data;
         let coupon = {
@@ -73,15 +73,17 @@ export class CCoupon extends CUqBase {
         let couponid = await this.uqs.salesTask.CreateCoupon.submit(coupon);
         let code = couponid.code;
 
-        if (productParam) {
-            productParam.code = code;
-            productParam.discount = data.discount;
-            productParam.type = data.type;
+        let couponParam: any[];
+        couponParam
+        if (param) {
+            param.code = code;
+            param.discount = data.discount;
+            param.type = data.type;
 
             if (type === "product") {
-                this.openVPage(VCreateProductCouponEnd, productParam)
+                this.openVPage(VCreateProductCouponEnd, param)
             } else {
-                this.openVPage(VCreateProductCouponEnd, productParam)
+                this.openVPage(VCreateProductCouponEnd, param)
             }
         } else {
             this.openVPage(VCreateCouponEnd, code)

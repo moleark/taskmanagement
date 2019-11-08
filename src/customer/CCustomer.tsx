@@ -265,7 +265,7 @@ export class CCustomer extends CUqBase {
 
     //作废客户
     cancelCustomer = async (customer: any) => {
-        this.closePage();
+        this.closePage(2);
         customer.isValid = 0;
         await this.uqs.salesTask.MyCustomer.save(customer.id, customer);
         await this.searchByKey("");
