@@ -48,7 +48,7 @@ export class VMe extends VPage<CMe> {
         let { teamCount, customerCount, activeCustomerCount } = salesAmont;
         let onshowMyCustomer = async () => await showMyCustomer(1);
         let onshowMyCustomerActive = async () => await showMyCustomer(2);
-        if (setting.salse.isInner) {
+        if (setting.sales.isInner) {
             return <div className="row mt-2">
                 <div className="col text-center" onClick={onshowMyCustomer}>
                     <div >{customerCount}</div>
@@ -100,12 +100,12 @@ export class VMe extends VPage<CMe> {
             style={{ backgroundColor: '#f9f9f9', width: '90%', borderRadius: '8px', margin: '-4rem auto 2rem auto', boxShadow: "2px 2px 15px #333333" }}>
             <LMR
                 left={<div onClick={showMeDetail}> <Image className="w-3c h-3c mr-3" src={icon} /> </div>}
-                right={setting.salse.isInner ? <span></span> : <span onClick={onshowInvitationCode} >
+                right={setting.sales.isInner ? <span></span> : <span onClick={onshowInvitationCode} >
                     <FA className="h2" name="qrcode" />
                 </span >}>
                 <div>
                     <div onClick={showMeDetail}>{this.userSpan(name, nick)}</div>
-                    {setting.salse.isInner ? <></> : <div className="small"><span className="px-1" >邀请码  :</span><span>{this.inviteCode}<span style={{ border: '1px solid #999999' }} className="px-1 mx-1" onClick={this.copyClick}>复制</span></span ></div>}
+                    {setting.sales.isInner ? <></> : <div className="small"><span className="px-1" >邀请码  :</span><span>{this.inviteCode}<span style={{ border: '1px solid #999999' }} className="px-1 mx-1" onClick={this.copyClick}>复制</span></span ></div>}
                 </div>
                 {this.teamSpan()}
             </LMR>
@@ -148,7 +148,9 @@ export class VMe extends VPage<CMe> {
         let { showMyTasksCompleted } = cSalesTask;
         let { showSet } = this.controller;
         let onShowMyTasksCompleted = async () => await showMyTasksCompleted();
-        let onshowCreateCoupon = async () => await cCoupon.showCreateCoupon(undefined)
+
+        let param = { paramtype: "coupon", product: undefined };
+        let onshowCreateCoupon = async () => await cCoupon.showCreateCoupon(param)
 
         return <>
             <div className="text-left h6 mx-4"> <strong>我的服务</strong></div>
@@ -156,7 +158,7 @@ export class VMe extends VPage<CMe> {
                 <div className="col text-center" onClick={onshowCreateCoupon}>
                     <FA name="th-large" className='text-warning' fixWidth={true} size="lg" />
                     <br />
-                    <small><small>{setting.salse.couponHeader}</small></small>
+                    <small><small>{setting.sales.couponHeader}</small></small>
                 </div>
                 <div className="col text-center" onClick={onShowMyTasksCompleted} >
                     <FA name="clock-o" className='text-info' fixWidth={true} size="lg" />

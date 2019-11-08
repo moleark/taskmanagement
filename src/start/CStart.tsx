@@ -43,10 +43,10 @@ export class CStart extends CUqBase {
         let reult = await this.cApp.uqs.salesTask.WebUserEmployeeMap.query({ webuser: this.user.id });
         if (reult.ret.length > 0) {
             let sales = new InnerSales();
-            setting.salse = new InnerSales();
+            setting.sales = new InnerSales();
         } else {
             let sales = new AgentSales();
-            setting.salse = new AgentSales();
+            setting.sales = new AgentSales();
         }
     }
 

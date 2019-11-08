@@ -2,7 +2,7 @@ import * as React from 'react';
 import _ from 'lodash';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { VPage, Page, Schema, Form, UiSchema, Context, Widget, UiCustom, FA, UiItem } from 'tonva';
+import { VPage, Page, Schema, Form, UiSchema, Context, Widget, UiCustom, FA } from 'tonva';
 import { consts } from '../consts';
 import { CCoupon } from './CCoupon';
 import { GLOABLE } from 'ui';
@@ -11,7 +11,6 @@ import { setting } from 'appConfig';
 const schema: Schema = [
     { name: 'validitydate', type: 'date', required: false },
     { name: 'discount', type: 'string', required: false },
-    { name: 'type', type: 'string', required: false },
     { name: 'submit', type: 'submit' },
 ];
 
@@ -100,10 +99,9 @@ export class VCreateCoupon extends VPage<CCoupon> {
                 widget: 'custom',
                 label: '折扣',
                 WidgetClass: Discount,
-                defaultValue: setting.salse.couponDefaultValue,
-                visible: setting.salse.isInner ? false : true
+                defaultValue: setting.sales.couponDefaultValue,
+                visible: setting.sales.isInner ? false : true
             } as UiCustom,
-            type: { widget: 'text', label: '类型', placeholder: '请填写任务备注', visible: false } as UiItem,
             submit: { widget: 'button', label: '提交', className: 'btn btn-primary w-8c' },
         }
     }
@@ -135,7 +133,6 @@ export class VCreateCoupon extends VPage<CCoupon> {
         this.showTip = false;
         data.validitydate = this.validDateFrom(validitydate);
         data.discount = _.round(1 - disc * 0.1, 2);
-        data.type = setting.salse.couponType;
 
         await this.controller.createCoupon(data, this.productParam);
     }
@@ -160,7 +157,7 @@ export class VCreateCoupon extends VPage<CCoupon> {
         let onshowCreateCoupon = async () => await cCoupon.start();
 
         let right = <div onClick={onshowCreateCoupon} className="cursor-pointer py-2 mx-3"><FA name="ellipsis-h" /></div>;
-        let header = setting.salse.couponHeader
+        let header = setting.sales.couponHeader
         return <Page header={header} headerClassName={consts.headerClass} right={right} >
             <Form className="my-3 mx-3"
                 schema={schema}

@@ -59,7 +59,7 @@ export class VHome extends VPage<CApp> {
             header = <div className="w-100 mx-3 d-flex  justify-content-between">
                 <div>
                     <Image src={setting.logo} style={{ width: "25px", height: "25px" }} ></Image>
-                    <span className="small mx-2" >销售助手APP</span>
+                    <span className="small mx-2" >{setting.appName}APP</span>
                 </div >
                 <div>  <a download onClick={this.opensrc} className="small">立即打开</a></div>
             </div >;

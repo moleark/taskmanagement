@@ -29,7 +29,7 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
             let p2 = code.substr(4);
             this.inviteCode = p1 + ' ' + p2;
         }
-        this.url = setting.carturl + "?type=coupon&code=" + code + "&product=" + product.id;
+        this.url = setting.sales.shareUrl(code, product);
         this.openPage(this.page, param);
 
     }
@@ -129,7 +129,7 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
 
         let priceui = <div className="pt-4 mt-4 d-flex align-items-end justify-content-end text-danger">
             <div>
-                {setting.salse.shareContent(discount)}
+                {setting.sales.shareContent(discount)}
             </div>
         </div>;
 
@@ -155,10 +155,12 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
     share = async (url: any) => {
 
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
+
+            let { paramtype, discount } = this.inviteParam;
             // @ts-ignore  屏蔽错误 
             window.plusShare({
-                title: setting.salse.shareTitle,//应用名字  
-                content: setting.salse.shareContent,
+                title: setting.sales.shareTitle(paramtype),//应用名字  
+                content: setting.sales.shareContent(discount),
                 href: url,//分享出去后，点击跳转地址 
                 //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片
                 thumbs: [setting.sharelogo] //分享缩略图  
@@ -173,7 +175,7 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
         let viewProduct = new ViewMainSubs<MainProductChemical, ProductPackRow>(this.renderProduct, this.renderPack);
         viewProduct.model = this.inviteParam.product;
 
-        return <Page header={<div>{setting.salse.couponHeader}</div>} back="none" headerClassName={setting.pageHeaderCss}>
+        return <Page header={setting.sales.couponHeader} back="none" headerClassName={setting.pageHeaderCss}>
             <div className="bg-white" style={{ height: '100%' }} >
                 <div className="px-2 py-2" >{viewProduct.render()}</div>
                 {this.showShare()}

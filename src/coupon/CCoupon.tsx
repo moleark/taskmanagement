@@ -6,6 +6,7 @@ import { VCreateCoupon } from './VCreateCoupon';
 import { VCouponDetail } from './VCouponDetail';
 import { VCreateCouponEnd } from './VCreateCouponEnd';
 import { VCreateProductCouponEnd } from './VCreateProductCouponEnd';
+import { setting } from 'appConfig';
 
 //页面类
 /* eslint-disable */
@@ -64,29 +65,23 @@ export class CCoupon extends CUqBase {
     //添加优惠券
     createCoupon = async (data: any, param: any) => {
 
-        let { type, validitydate, discount } = data;
-        let coupon = {
+        let { validitydate, discount } = data;
+        let couponparam: any = {
             validitydate: validitydate,
             discount: discount,
-            types: type,
+            types: setting.sales.couponType
         }
-        let couponid = await this.uqs.salesTask.CreateCoupon.submit(coupon);
+        let couponid = await this.uqs.salesTask.CreateCoupon.submit(couponparam);
         let code = couponid.code;
 
-        let couponParam: any[];
-        couponParam
-        if (param) {
-            param.code = code;
-            param.discount = data.discount;
-            param.type = data.type;
+        couponparam.code = code;
+        couponparam.paramtype = param.paramtype;
+        couponparam.product = param.product;
 
-            if (type === "product") {
-                this.openVPage(VCreateProductCouponEnd, param)
-            } else {
-                this.openVPage(VCreateProductCouponEnd, param)
-            }
+        if (couponparam.paramtype === "product") {
+            this.openVPage(VCreateProductCouponEnd, couponparam)
         } else {
-            this.openVPage(VCreateCouponEnd, code)
+            this.openVPage(VCreateCouponEnd, couponparam)
         }
     }
 

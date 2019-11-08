@@ -20,7 +20,7 @@ export class VInvitationCode extends VPage<CMe> {
         let { user } = this.controller;
         let { name, nick } = user;
         //5+ 原生分享  
-        let content = (nick ? nick : name) + " 邀请您加入销售助手！";
+        let content = (nick ? nick : name) + " 邀请您加入" + setting.appName + "！";
 
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
             // @ts-ignore  屏蔽错误 

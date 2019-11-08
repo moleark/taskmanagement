@@ -10,11 +10,11 @@ import QRCode from 'qrcode.react';
 
 export class VCreateCouponEnd extends VPage<CCoupon> {
 
-    private code: string
     @observable showTips: any = "none"
+    inviteParam: any;
 
-    async open(code: string) {
-        this.code = code;
+    async open(param: any) {
+        this.inviteParam = param;
         this.openPage(this.page);
     }
     comeBack = () => {
@@ -32,10 +32,12 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
     share = async (url: any) => {
 
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
+
+            let { paramtype, discount } = this.inviteParam;
             // @ts-ignore  屏蔽错误 
             window.plusShare({
-                title: setting.salse.shareTitle,//应用名字  
-                content: setting.salse.shareContent,
+                title: setting.sales.shareTitle(paramtype),//应用名字  
+                content: setting.sales.shareContent(discount),
                 href: url,//分享出去后，点击跳转地址 
                 //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片
                 thumbs: [setting.sharelogo] //分享缩略图  
@@ -47,14 +49,15 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
 
     private page = observer(() => {
         var inviteCode = "";
-        if (this.code) {
-            this.code = String(this.code);
-            let p1 = this.code.substr(0, 4);
-            let p2 = this.code.substr(4);
+        let { code } = this.inviteParam;
+        if (code) {
+            code = String(code);
+            let p1 = code.substr(0, 4);
+            let p2 = code.substr(4);
             inviteCode = p1 + ' ' + p2;
         }
 
-        let url = setting.url + "?type=invitation&code=" + this.code;
+        let url = setting.sales.shareUrl(code, "");
         let onshare = () => this.share(url);
         let share = <div className="text-center" style={{ width: 'auto', height: '10%' }} >
         </div>;
@@ -62,7 +65,7 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
             share = <span className="text-info cursor-info mx-2" onClick={onshare} >分享</span>;
         }
 
-        let header = setting.salse.couponHeader;
+        let header = setting.sales.couponHeader;
         return <Page header={header} back="none" headerClassName={setting.pageHeaderCss}>
             <div id="qrid" className="text-center" style={{ width: 'auto', height: '85%' }}  >
                 <Image src={setting.logo} className="mt-4" style={{ width: 'auto', height: '40%', margin: '2rem auto, 0 auto' }} />
