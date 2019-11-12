@@ -5,9 +5,8 @@ import { VPage, Page, List, SearchBox } from 'tonva';
 import { CProduct } from './CProduct';
 import { ProductImage } from '../tools/productImage';
 import { setting } from 'appConfig';
-import classNames from 'classnames';
 
-export class VProductList extends VPage<CProduct> {
+export class VProductBox extends VPage<CProduct> {
 
     async open(customer: any) {
 
@@ -30,11 +29,13 @@ export class VProductList extends VPage<CProduct> {
             <div className="col-8 col-sm-4 col-lg-8">{value}</div>
         </>;
     }
+
+
     private renderProduct = (product: any, index: number) => {
-        let { showProductDetail } = this.controller;
-        let { brand, description, descriptionC, CAS, purity, molecularFomula, molecularWeight, origin, imageUrl } = product;
-        let onshowProductDetail = async () => await showProductDetail(product);
-        return <div className="d-block mb-4 px-2" onClick={onshowProductDetail}>
+        let { id, brand, description, descriptionC, CAS, purity, molecularFomula, molecularWeight, origin, imageUrl } = product.main;
+        let { productCart } = this.controller.cApp;
+        let onremove = () => productCart.remove(id);
+        return <div className="d-block mb-4 px-2" >
             <div className="py-2">
                 <div><strong>{description}</strong></div>
                 <div>{descriptionC}</div>
@@ -54,6 +55,9 @@ export class VProductList extends VPage<CProduct> {
                     </div>
                 </div>
             </div>
+            <div className="w-100 d-flex justify-content-end" >
+                <span onClick={onremove} className="text-info mx-3"><FA name="trash" /></span>
+            </div>
         </div>
     }
 
@@ -62,35 +66,23 @@ export class VProductList extends VPage<CProduct> {
     }
 
     private page = observer((product: any) => {
-        let { pageProduct } = this.controller;
-        let { productCart } = this.controller.cApp;
 
-        let none = <div className="my-3 mx-2 text-warning">未搜索到产品</div>;
+        let { productCart, cCoupon } = this.controller.cApp;
+        let param = { paramtype: "productlist", product: productCart.getIds() };
+        let onShareProduct = async () => await cCoupon.showCreateCoupon(param);
 
-        let pointer, badge, count;
-        count = productCart.count;
-        if (count > 0) {
-            pointer = 'cursor-pointer';
-            if (count < 100) badge = <u>{count}</u>;
-            else badge = <u>99+</u>;
-        }
-        let onshowProductBox = async () => await this.controller.cApp.cProduct.showProductBox()
-        let header = < div className="w-100 px-3 d-flex justify-content-between" >
-            <div>产品</div>
-            <div>
-                <div className={classNames('jk-cart ml-1 mr-2', pointer)} onClick={onshowProductBox} >
-                    <FA className="fa-lg" name="shopping-cart" />
-                    {badge}
-                </div>
+        let productlist = productCart.list;
+        let footer = <div className="d-block">
+            <div className="w-100  justify-content-end" >
+                <button type="button" className="btn btn-primary mx-1 my-1 px-4" onClick={onShareProduct}>分享</button>
             </div>
         </div>;
 
-        return <Page header={header} onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss} >
-            <SearchBox className="px-1 w-100  mt-2 mr-2 "
-                size='md'
-                onSearch={(key: string) => this.controller.searchByKey(key)}
-                placeholder="搜索品名、编号、CAS、MDL等" />
-            <List before={''} none={none} items={pageProduct} item={{ render: this.renderProduct, onClick: null }} />
+        return <Page header='产品框' onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss} footer={footer} >
+            {
+                productlist && productlist && (productlist.length > 0) &&
+                <List before={''} none="无产品" items={productlist} item={{ render: this.renderProduct, onClick: null }} />
+            }
         </Page>
     })
 }

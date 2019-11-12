@@ -9,8 +9,7 @@ import { GLOABLE } from 'ui';
 import { setting } from 'appConfig';
 /* eslint-disable */
 export class VMe extends VPage<CMe> {
-    private user: any;
-    private inviteCodeShow: any;
+
     private inviteCode: any;
     @observable showTips: any = "none"
 
@@ -19,12 +18,9 @@ export class VMe extends VPage<CMe> {
     }
 
     render(member: any): JSX.Element {
-        let { user, inviteCode } = this.controller;
-        this.user = user;
+        let { inviteCode } = this.controller;
         this.inviteCode = inviteCode.substr(1, 9);
-        let p1 = inviteCode.substr(1, 4);
-        let p2 = inviteCode.substr(5);
-        this.inviteCodeShow = p1 + ' ' + p2;
+
         this.controller.onComputeAchievement();
         return <this.page />;
     }

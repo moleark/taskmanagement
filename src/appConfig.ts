@@ -34,7 +34,7 @@ abstract class Sales {
     couponDefaultValue: number;
     abstract shareTitle(type: string): string;
     abstract shareContent(discount: number): string;
-    abstract shareUrl(coupon: string, product: any): string;
+    abstract shareUrl(businesstype: string, coupon: string, product: any): string;
 
 }
 
@@ -53,8 +53,8 @@ export class InnerSales extends Sales {
     shareContent(discount: number): string {
         return "可获得积分";
     };
-    shareUrl(coupon: string, product: any): string {
-        return setting.carturl + "?type=" + this.couponType + "&code=" + coupon + "&product=" + product.id;
+    shareUrl(businesstype: string, coupon: string, product: any): string {
+        return setting.carturl + "?type=" + this.couponType + "&businesstype=" + businesstype + "&code=" + coupon + "&product=" + product.id;
     };
 
 

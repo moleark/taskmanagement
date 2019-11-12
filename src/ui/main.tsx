@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, TabCaptionComponent, Page, Tabs, LMR, Image } from 'tonva';
+import { VPage, TabCaptionComponent, Page, Tabs, Image } from 'tonva';
 import { observable } from 'mobx';
 import { CApp } from 'CApp';
 import { setting } from 'appConfig';
@@ -22,7 +22,7 @@ export class VHome extends VPage<CApp> {
             { name: 'home', label: '任务', content: cSalesTask.tab, icon: 'tasks', notify: undefined/*store.homeCount*/ },
             { name: 'member', label: '客户', content: cCustomer.tab, icon: 'vcard' },
             { name: 'member', label: '产品', content: cProduct.tab, icon: 'gift' },
-            { name: 'member', label: '我的', content: cMe.tab, icon: 'user', load: cMe.load, notify: cMessage.count }
+            { name: 'member', label: '我的', content: cMe.tab, icon: 'user', load: cMe.load, notify: cMessage.count },
         ].map(v => {
             let { name, label, icon, content, notify, load } = v;
             return {

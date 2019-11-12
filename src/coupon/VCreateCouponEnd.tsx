@@ -49,7 +49,7 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
 
     private page = observer(() => {
         var inviteCode = "";
-        let { code } = this.inviteParam;
+        let { code, businesstype } = this.inviteParam;
         if (code) {
             code = String(code);
             let p1 = code.substr(0, 4);
@@ -57,7 +57,8 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
             inviteCode = p1 + ' ' + p2;
         }
 
-        let url = setting.sales.shareUrl(code, "");
+        let { productCart } = this.controller.cApp;
+        let url = setting.sales.shareUrl(businesstype, code, productCart.getIds());
         let onshare = () => this.share(url);
         let share = <div className="text-center" style={{ width: 'auto', height: '10%' }} >
         </div>;

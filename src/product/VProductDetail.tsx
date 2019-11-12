@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, ItemSchema, ObjectSchema, NumSchema, tv, UiSchema, Form, BoxId } from 'tonva';
+import { VPage, Page, ItemSchema, ObjectSchema, NumSchema, tv, UiSchema, Form, FA } from 'tonva';
 import { observer } from 'mobx-react';
 import { ProductImage } from '../tools/productImage';
 import { MainProductChemical } from '../model/product';
@@ -7,6 +7,8 @@ import { consts } from '../consts';
 import { CProduct, renderBrand, productPropItem } from './CProduct';
 import { ProductPackRow } from './Product';
 import { ViewMainSubs } from '../mainSubs';
+import { ProductCart } from 'model/productcart';
+import classNames from 'classnames';
 
 const schema: ItemSchema[] = [
     { name: 'pack', type: 'object' } as ObjectSchema,
@@ -21,9 +23,9 @@ const schema: ItemSchema[] = [
 ];
 
 export class VProductDetail extends VPage<CProduct> {
-    private productBox: BoxId;
+    private productBox: any;
 
-    product: any;
+    private product: any;
     async open(product: any) {
         this.product = product;
         this.productBox = product;
@@ -54,15 +56,6 @@ export class VProductDetail extends VPage<CProduct> {
         </div>
     }
 
-    private onAddPack = async (data: any, value: any, prev: any) => {
-        let { pack, retail, vipPrice, promotionPrice, currency } = data;
-        let price = this.minPrice(vipPrice, promotionPrice) || retail;
-        let { cApp } = this.controller;
-        let { cart } = cApp;
-        await cart.add(this.productBox, pack, 1, price, currency);
-    }
-
-
 
     private arrTemplet = (item: ProductPackRow) => {
 
@@ -83,7 +76,7 @@ export class VProductDetail extends VPage<CProduct> {
 
             if (agentPrice) {
 
-                let discount = ((1 - ((price - agentPrice) / price)) * 10).toFixed(1);
+                let discount = ((1 - ((retail - agentPrice) / retail)) * 10).toFixed(1);
                 agent = <span>
                     <span className="small ml-2">
                         <strong className="small"><span className="small">{discount}折</span></strong>
@@ -113,7 +106,6 @@ export class VProductDetail extends VPage<CProduct> {
                     {right}
                 </div>
             </div>
-
             {this.controller.renderDeliveryTime(pack)}
 
         </div>;
@@ -129,25 +121,52 @@ export class VProductDetail extends VPage<CProduct> {
     };
 
     private renderPack = (pack: ProductPackRow) => {
-
         return <>
             <div className="sep-product-select" />
             <Form className="my-3" schema={schema} uiSchema={this.uiSchema} formData={pack} />
         </>;
     }
 
+    private onAddPack = () => {
+        this.controller.cApp.productCart.add(this.product, this.productBox.main.id);
+    }
+
     private page = observer((product: any) => {
 
         let param = { paramtype: "product", product: this.product };
         let onShareProduct = async () => await this.controller.cApp.cCoupon.showCreateCoupon(param);
+
         let footer = <div className="d-block">
             <div className="w-100  justify-content-end" >
-                <button type="button" className="btn btn-primary mx-1 my-1 " onClick={onShareProduct}>直接分享</button>
+                <button type="button" className="btn btn-primary mx-1 my-1 px-4 " onClick={onShareProduct}>分享</button>
+                <button type="button" className="btn btn-primary mx-1 my-1 px-3" onClick={this.onAddPack}>产品框</button>
             </div>
         </div>
         let viewProduct = new ViewMainSubs<MainProductChemical, ProductPackRow>(this.renderProduct, this.renderPack);
         viewProduct.model = product;
-        return <Page header={"产品明细"} headerClassName={consts.headerClass} footer={footer}>
+
+        let onshowProductBox = async () => await this.controller.cApp.cProduct.showProductBox()
+        let { productCart } = this.controller.cApp;
+        let pointer, badge, count;
+        count = productCart.count;
+        if (count > 0) {
+            pointer = 'cursor-pointer';
+            if (count < 100) badge = <u>{count}</u>;
+            else badge = <u>99+</u>;
+        }
+
+
+        let header = < div className="w-100 pr-3 d-flex justify-content-between" >
+            <div>产品明细</div>
+            <div>
+                <div className={classNames('jk-cart ml-1 mr-2', pointer)} onClick={onshowProductBox} >
+                    <FA className="fa-lg" name="shopping-cart" />
+                    {badge}
+                </div>
+            </div>
+        </div>;
+
+        return <Page header={header} headerClassName={consts.headerClass} footer={footer}>
             <div className="px-2 py-2 bg-white mb-3">{viewProduct.render()}</div>
         </Page>
     })

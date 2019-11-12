@@ -13,15 +13,14 @@ import { CInnerCustomer } from './innercustomer/CInnerCustomer';
 import { UQs } from "./uqs";
 import { CUqBase } from "./CBase";
 import { VHome, GLOABLE } from './ui';
-import { CCart } from "cart";
-import { Cart } from "cart/Cart";
+import { ProductCart } from "model/productcart";
 
 export class CApp extends CAppBase {
     get uqs(): UQs { return this._uqs };
 
-    cart: Cart;
     currentSalesRegion: any;
     currentLanguage: any;
+    productCart: ProductCart;
 
     /** 定义 Conctorlle*/
     cSalesTask: CSalesTask;
@@ -34,7 +33,6 @@ export class CApp extends CAppBase {
     cCustomerUnit: CCustomerUnit;
     cCoupon: CCoupon;
     cWebUser: CInnerCustomer;
-    cCart: CCart;
 
     protected newC<T extends CUqBase>(type: IConstructor<T>): T {
         return new type(this);
@@ -44,6 +42,8 @@ export class CApp extends CAppBase {
 
         this.currentSalesRegion = await this.uqs.common.SalesRegion.load(GLOABLE.SALESREGION_CN);
         this.currentLanguage = await this.uqs.common.Language.load(GLOABLE.CHINESE);
+        this.productCart = new ProductCart();
+
 
         /** 初始化 Conctrolle*/
         this.cCustomer = this.newC(CCustomer);
@@ -56,7 +56,6 @@ export class CApp extends CAppBase {
         this.cCustomerUnit = this.newC(CCustomerUnit);
         this.cCoupon = this.newC(CCoupon);
         this.cWebUser = this.newC(CInnerCustomer);
-        this.cCart = this.newC(CCart); // new CCart(this, undefined);
         /** 启动销售任务列表*/
         //this.cSalesTask.start();
 

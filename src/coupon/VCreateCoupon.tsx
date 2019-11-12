@@ -11,14 +11,35 @@ import { setting } from 'appConfig';
 const schema: Schema = [
     { name: 'validitydate', type: 'date', required: false },
     { name: 'discount', type: 'string', required: false },
+    { name: 'businesstype', type: 'string', required: false },
     { name: 'submit', type: 'submit' },
 ];
 
 class ValidityDate extends Widget {
     @observable dateVisible = false;
     private list = [
-        { value: 1, title: '    一周', name: 'b', checked: true },
+        { value: 1, title: '一周', name: 'b', checked: true },
         { value: 2, title: '两周', name: 'b', checked: undefined }
+    ];
+
+    render = () => {
+        return <div className="form-control" style={{ height: 'auto' }}>
+            {this.list.map((v, index) => {
+                let { value, title } = v;
+                return <label className="my-1 mx-3" key={index}>
+                    <input type="radio" value={value} name={this.name}
+                        defaultChecked={value === this.value} /> {title} &nbsp;
+                </label>
+            })}
+        </div>
+    };
+}
+
+class BusinessType extends Widget {
+    @observable dateVisible = false;
+    private list = [
+        { value: "notplatform", title: '非平台', name: 'b', checked: true },
+        { value: "platform", title: '平台', name: 'b', checked: undefined }
     ];
 
     render = () => {
@@ -101,6 +122,12 @@ export class VCreateCoupon extends VPage<CCoupon> {
                 WidgetClass: Discount,
                 defaultValue: setting.sales.couponDefaultValue,
                 visible: setting.sales.isInner ? false : true
+            } as UiCustom,
+            businesstype: {
+                widget: 'custom', label: '类型',
+                defaultValue: "notplatform",
+                WidgetClass: BusinessType,
+                visible: setting.sales.isInner ? true : false
             } as UiCustom,
             submit: { widget: 'button', label: '提交', className: 'btn btn-primary w-8c' },
         }

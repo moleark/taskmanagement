@@ -11,6 +11,7 @@ import { LoaderProductChemicalWithPrices } from './item';
 import { VProductPackSelect } from './VProductPackSelect';
 import classNames from 'classnames';
 import { VProductDelivery } from './VProductDelivery';
+import { VProductBox } from './VProductBox';
 
 //页面类
 class PageProduct extends PageItems<any> {
@@ -100,6 +101,12 @@ export class CProduct extends CUqBase {
                 this.futureDeliveryTimeDescriptionContainer[productId] = null;
             }
         }
+    }
+
+    //显示产品框
+
+    showProductBox = () => {
+        this.openVPage(VProductBox);
     }
 
     render = observer(() => {
