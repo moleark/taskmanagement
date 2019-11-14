@@ -3,7 +3,6 @@ import { nav } from 'tonva';
 import { CUqBase } from '../CBase';
 import { VMe } from './VMe';
 import { VMeDetail } from './VMeDetail';
-import { VAchievement } from './VAchievement';
 import { VSet } from './VSet';
 import { VAchievementDetail } from './VAchievementDetail';
 import { observable } from 'mobx';
@@ -12,7 +11,12 @@ import { VInvitationCode } from './VInvitationCode';
 export class CMe extends CUqBase {
     inviteCode: string;
     position: any;
-    @observable salesAmont: any = { oneSaleVolume: 0.00, twoSaleVolume: 0.00, threeSaleVolume: 0.00, oneAchievement: 0.0, twoAchievement: 0.0, threeAchievement: 0.0, teamCount: 0.0, customerCount: 0.0, activeCustomerCount: 0.0 };
+    @observable salesAmont: any = {
+        oneSaleVolume: 0.00, twoSaleVolume: 0.00, threeSaleVolume: 0.00,
+        oneAchievement: 0.0, twoAchievement: 0.0, threeAchievement: 0.0,
+        teamCount: 0.0, customerCount: 0.0, activeCustomerCount: 0.0,
+        totalOrderCount: 0
+    };
 
     //初始化
     protected async internalStart(param: any) {
@@ -53,14 +57,6 @@ export class CMe extends CUqBase {
         await showMyCustomer("", type);
     }
 
-    //显示业绩
-    showAchievement = async () => {
-        await this.uqs.salesTask.ComputeAchievement.submit({});
-        let query = { user: this.user.id };
-        let achievement = await this.uqs.salesTask.SearchAchievement.table(query);
-        this.openVPage(VAchievement, achievement);
-    }
-
     //显示业绩历史记录
     showAchievementDetail = async (param: any) => {
         this.openVPage(VAchievementDetail, param);
@@ -91,7 +87,6 @@ export class CMe extends CUqBase {
     onComputeAchievement = async () => {
         await this.uqs.salesTask.ComputeAchievement.submit({});
         let query = { user: this.user.id };
-
         let result = await this.uqs.salesTask.SearchAchievement.obj(query);
         if (result) {
             this.salesAmont = result;

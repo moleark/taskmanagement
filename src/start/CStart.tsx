@@ -6,7 +6,9 @@ import { VError } from './VError';
 import { VAgencyClauseDetil } from './VAgencyClauseDetil';
 import { VConfirm } from './VConfirm';
 import * as qs from 'querystringify';
-import { setting, InnerSales, AgentSales } from 'appConfig';
+import { setting } from 'appConfig';
+import { InnerSales, AgentSales } from 'model/sales';
+
 /**
  *
  */
@@ -42,11 +44,9 @@ export class CStart extends CUqBase {
     getIsInnerSales = async () => {
         let reult = await this.cApp.uqs.salesTask.WebUserEmployeeMap.query({ webuser: this.user.id });
         if (reult.ret.length > 0) {
-            let sales = new InnerSales();
-            setting.sales = new InnerSales();
+            setting.sales = new InnerSales(this.cApp);
         } else {
-            let sales = new AgentSales();
-            setting.sales = new AgentSales();
+            setting.sales = new AgentSales(this.cApp);
         }
     }
 

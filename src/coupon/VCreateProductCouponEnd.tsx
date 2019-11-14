@@ -29,7 +29,7 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
             let p2 = code.substr(4);
             this.inviteCode = p1 + ' ' + p2;
         }
-        this.url = setting.sales.shareUrl(businesstype, code, product);
+        this.url = setting.sales.shareUrl(code, product.main.id);
         this.openPage(this.page, param);
 
     }

@@ -32,10 +32,13 @@ export class ProductCart {
 
     getIds(): string {
 
-        let reuslt: string = "";
+        let result: string = "";
         this.listid.forEach(element => {
-            reuslt += element + '|';
+            result += element + '-';
         });
-        return reuslt;
+        if (result.length > 0) {
+            result = result.substring(0, result.length - 1)
+        }
+        return result;
     }
 }

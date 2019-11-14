@@ -44,6 +44,7 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
             }, function (result) {
                 //分享回调  
             });
+            this.controller.cApp.productCart.clearAll();
         }
     }
 
@@ -58,7 +59,8 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
         }
 
         let { productCart } = this.controller.cApp;
-        let url = setting.sales.shareUrl(businesstype, code, productCart.getIds());
+        let ids = productCart.getIds();
+        let url = setting.sales.shareUrl(code, ids);
         let onshare = () => this.share(url);
         let share = <div className="text-center" style={{ width: 'auto', height: '10%' }} >
         </div>;

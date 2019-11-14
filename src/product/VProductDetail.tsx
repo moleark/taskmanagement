@@ -7,7 +7,6 @@ import { consts } from '../consts';
 import { CProduct, renderBrand, productPropItem } from './CProduct';
 import { ProductPackRow } from './Product';
 import { ViewMainSubs } from '../mainSubs';
-import { ProductCart } from 'model/productcart';
 import classNames from 'classnames';
 
 const schema: ItemSchema[] = [

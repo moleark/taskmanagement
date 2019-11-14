@@ -3,7 +3,7 @@ import { VPage, TabCaptionComponent, Page, Tabs, Image } from 'tonva';
 import { observable } from 'mobx';
 import { CApp } from 'CApp';
 import { setting } from 'appConfig';
-
+/* eslint-disable */
 const color = (selected: boolean) => selected === true ? 'text-primary' : 'text-muted';
 
 export class VHome extends VPage<CApp> {

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import { tv, FA } from 'tonva';
-import { VPage, Page, List, SearchBox } from 'tonva';
+import { VPage, Page, List } from 'tonva';
 import { CProduct } from './CProduct';
 import { ProductImage } from '../tools/productImage';
 import { setting } from 'appConfig';

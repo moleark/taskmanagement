@@ -20,7 +20,6 @@ export class VMe extends VPage<CMe> {
     render(member: any): JSX.Element {
         let { inviteCode } = this.controller;
         this.inviteCode = inviteCode.substr(1, 9);
-
         this.controller.onComputeAchievement();
         return <this.page />;
     }
@@ -110,32 +109,7 @@ export class VMe extends VPage<CMe> {
 
     private achievement() {
         let { salesAmont } = this.controller;
-        let { oneAchievement, twoAchievement, threeAchievement } = salesAmont;
-        let divTag = (titel: string, achievement: number, status: number) => <div
-            className="cursor-pointer"
-            onClick={async () => await this.controller.showAchievementDetail(status)}>
-            {achievement <= 0.001 ?
-                <div className="h5"> - </div>
-                :
-                <div className="h5"><strong>{achievement.toFixed(2)}</strong> <span className="h6"><small>元</small></span></div>
-            }
-            <div className="h6"><small>{titel}</small></div>
-        </div>;
-
-        return <div className="text-center text-white bg-primary pt-1 pb-5" style={{ borderRadius: '0  0 5rem 5rem', margin: ' 0 -2rem 0 -2rem ' }}>
-            <div className="pb-2 pt-4 cursor-pointer" >
-                <div className="text-warning pt-4" onClick={async () => await this.controller.showAchievementDetail(0)}>
-                    <span className="h1">{(oneAchievement + twoAchievement + threeAchievement).toFixed(2)}</span>
-                    <small> 元</small>
-                </div>
-                <h6 className="text-warning"><small>累计收益</small></h6>
-            </div >
-            <div className="d-flex justify-content-around">
-                {divTag('待到款', (oneAchievement + twoAchievement + threeAchievement), 1)}
-                {divTag('可提现', 0, 1)}
-            </div>
-            <div className="my-4"></div>
-        </div>;
+        return setting.sales.achievement(salesAmont);
     }
 
     private myService() {
