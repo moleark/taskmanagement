@@ -14,6 +14,7 @@ import { UQs } from "./uqs";
 import { CUqBase } from "./CBase";
 import { VHome, GLOABLE } from './ui';
 import { ProductCart } from "model/productcart";
+import { CBalance } from "achievement/CBalance";
 
 export class CApp extends CAppBase {
     get uqs(): UQs { return this._uqs };
@@ -33,6 +34,7 @@ export class CApp extends CAppBase {
     cCustomerUnit: CCustomerUnit;
     cCoupon: CCoupon;
     cWebUser: CInnerCustomer;
+    cBalance: CBalance;
 
     protected newC<T extends CUqBase>(type: IConstructor<T>): T {
         return new type(this);
@@ -56,6 +58,7 @@ export class CApp extends CAppBase {
         this.cCustomerUnit = this.newC(CCustomerUnit);
         this.cCoupon = this.newC(CCoupon);
         this.cWebUser = this.newC(CInnerCustomer);
+        this.cBalance = this.newC(CBalance);
         /** 启动销售任务列表*/
         //this.cSalesTask.start();
 

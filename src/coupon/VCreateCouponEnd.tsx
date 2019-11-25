@@ -50,7 +50,7 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
 
     private page = observer(() => {
         var inviteCode = "";
-        let { code, businesstype } = this.inviteParam;
+        let { code } = this.inviteParam;
         if (code) {
             code = String(code);
             let p1 = code.substr(0, 4);
@@ -69,7 +69,7 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
         }
 
         let header = setting.sales.couponHeader;
-        return <Page header={header} back="none" headerClassName={setting.pageHeaderCss}>
+        return <Page header={header} headerClassName={setting.pageHeaderCss}>
             <div id="qrid" className="text-center" style={{ width: 'auto', height: '85%' }}  >
                 <Image src={setting.logo} className="mt-4" style={{ width: 'auto', height: '40%', margin: '2rem auto, 0 auto' }} />
                 <div>

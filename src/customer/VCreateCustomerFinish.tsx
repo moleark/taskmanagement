@@ -15,6 +15,7 @@ export class VCreateCustomerFinish extends VPage<CCustomer> {
 
     comeBack = () => {
         this.controller.searchByKey('');
+        this.controller.searchNewMyCustomer();
         this.closePage(3);
     }
     private page = observer(() => {

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { LMR, VPage, Image, FA } from 'tonva';
+import { LMR, VPage, Image, FA, ItemSchema } from 'tonva';
 import { CMe } from './CMe';
 import classNames from 'classnames';
 import copy from 'copy-to-clipboard';
@@ -18,6 +18,7 @@ export class VMe extends VPage<CMe> {
     }
 
     render(member: any): JSX.Element {
+
         let { inviteCode } = this.controller;
         this.inviteCode = inviteCode.substr(1, 9);
         this.controller.onComputeAchievement();
@@ -100,7 +101,7 @@ export class VMe extends VPage<CMe> {
                 </span >}>
                 <div>
                     <div onClick={showMeDetail}>{this.userSpan(name, nick)}</div>
-                    {setting.sales.isInner ? <></> : <div className="small"><span className="px-1" >邀请码  :</span><span>{this.inviteCode}<span style={{ border: '1px solid #999999' }} className="px-1 mx-1" onClick={this.copyClick}>复制</span></span ></div>}
+                    {setting.sales.isInner ? <></> : <div className="small"><span className="px-1" >邀请码  :</span><span>{this.inviteCode}<span style={{ border: '1px solid #999999' }} className="px-1 mx-1" onClick={this.copyClick}><FA name="clone" className="mr-1" />复制</span></span ></div>}
                 </div>
                 {this.teamSpan()}
             </LMR>
@@ -114,13 +115,13 @@ export class VMe extends VPage<CMe> {
 
     private myService() {
 
-        let { cSalesTask, cCoupon } = this.controller.cApp
+        let { cSalesTask } = this.controller.cApp
         let { showMyTasksCompleted } = cSalesTask;
         let { showSet } = this.controller;
         let onShowMyTasksCompleted = async () => await showMyTasksCompleted();
 
         let param = { paramtype: "coupon", product: undefined };
-        let onshowCreateCoupon = async () => await cCoupon.showCreateCoupon(param)
+        let onshowCreateCoupon = async () => await this.controller.cApp.cCoupon.showCreateCoupon(param)
 
         return <>
             <div className="text-left h6 mx-4"> <strong>我的服务</strong></div>
@@ -144,13 +145,25 @@ export class VMe extends VPage<CMe> {
         </>
     }
 
+    private onItemChanged = async (itemSchema: ItemSchema, newValue: any, preValue: any) => {
+        let { name } = itemSchema;
+        //await userApi.userSetProp(name, newValue);
+        //this.data[name] = newValue;
+        //let user:any = nav.user;
+        //user[name] = newValue;
+        //nav.saveLocalUser();
+        alert(`name=${name} value=${newValue}`);
+    }
+
     private page = observer(() => {
 
-        return <div className="bg-white" >
-            {this.achievement()}
-            {this.meInfo()}
-            {this.myService()}
-            <div className="text-center text-white small px-2" style={{ width: '28%', margin: '-27px auto 0 auto', padding: '4px', borderRadius: '3px', backgroundColor: '#505050', display: this.showTips }}>已复制到剪切板</div>
-        </div >
+        return <div>
+            <div className="bg-white" >
+                {this.achievement()}
+                {this.meInfo()}
+                {this.myService()}
+            </div >
+            <div className="text-center text-white small px-2" style={{ width: '28%', margin: '-100px auto 0 auto', padding: '4px', borderRadius: '3px', backgroundColor: '#505050', display: this.showTips }}>已复制到剪切板</div>
+        </div>
     })
 }

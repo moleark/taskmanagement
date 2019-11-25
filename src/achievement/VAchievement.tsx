@@ -2,7 +2,7 @@ import * as React from 'react';
 import { VPage, Page, LMR, Prop, ComponentProp, FA, PropGrid } from 'tonva';
 import { observer } from 'mobx-react';
 import { consts } from '../consts';
-import { CMe } from './CMe';
+import { CBalance } from './CBalance';
 
 function rowCom(iconName: string, iconColor: string, caption: string, value: any, onClick: any) {
     return <LMR className="cursor-pointer w-100 py-2 my-2 align-items-center  " onClick={onClick}
@@ -19,7 +19,7 @@ function rowComNone(iconName: string, iconColor: string, caption: string, value:
     </LMR>;
 }
 
-export class VAchievement extends VPage<CMe> {
+export class VAchievement extends VPage<CBalance> {
     private salesAmont: any;
 
     async open(param: any) {
@@ -31,8 +31,8 @@ export class VAchievement extends VPage<CMe> {
     }
 
     private page = observer((param: any) => {
-        let { oneSaleVolume, oneAchievement, twoAchievement, threeAchievement } = this.salesAmont;
 
+        let { oneSaleVolume, oneAchievement, twoAchievement, threeAchievement } = this.salesAmont;
         let onshowAchievementDetailA = async () => await this.controller.showAchievementDetail("A");
         let onshowAchievementDetailB = async () => await this.controller.showAchievementDetail("B");
         let onshowAchievementDetailC = async () => await this.controller.showAchievementDetail("C");

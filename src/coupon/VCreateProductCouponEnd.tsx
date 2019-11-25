@@ -22,7 +22,7 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
 
     async open(param: any) {
         this.inviteParam = param;
-        let { businesstype, code, product } = param;
+        let { code, product } = param;
         if (code) {
             code = String(code);
             let p1 = code.substr(0, 4);
@@ -175,7 +175,7 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
         let viewProduct = new ViewMainSubs<MainProductChemical, ProductPackRow>(this.renderProduct, this.renderPack);
         viewProduct.model = this.inviteParam.product;
 
-        return <Page header={setting.sales.couponHeader} back="none" headerClassName={setting.pageHeaderCss}>
+        return <Page header={setting.sales.couponHeader} headerClassName={setting.pageHeaderCss}>
             <div className="bg-white" style={{ height: '100%' }} >
                 <div className="px-2 py-2" >{viewProduct.render()}</div>
                 {this.showShare()}

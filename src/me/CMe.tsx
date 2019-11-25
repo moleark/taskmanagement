@@ -4,9 +4,9 @@ import { CUqBase } from '../CBase';
 import { VMe } from './VMe';
 import { VMeDetail } from './VMeDetail';
 import { VSet } from './VSet';
-import { VAchievementDetail } from './VAchievementDetail';
 import { observable } from 'mobx';
 import { VInvitationCode } from './VInvitationCode';
+import { VAccount } from './VAccount';
 
 export class CMe extends CUqBase {
     inviteCode: string;
@@ -46,28 +46,15 @@ export class CMe extends CUqBase {
 
     //显示我的团队
     showTeam = async () => {
-        await this.onComputeAchievement();
+        await this.onComputeAchievement;
         let { cTeam } = this.cApp
         await cTeam.start();
     }
 
     showMyCustomer = async (type: number) => {
-        await this.onComputeAchievement();
+        await this.onComputeAchievement;
         let { showMyCustomer } = this.cApp.cCustomer;
         await showMyCustomer("", type);
-    }
-
-    //显示业绩历史记录
-    showAchievementDetail = async (param: any) => {
-        this.openVPage(VAchievementDetail, param);
-    }
-
-    //搜索业绩历史记录
-    searchAchievementDetail = async (type: number, status: number) => {
-        await this.onComputeAchievement();
-        let param = { types: type, status: status };
-        let list = await this.uqs.salesTask.SearchAchievementHistory.table(param);
-        return list;
     }
 
     //显示消息
@@ -84,15 +71,49 @@ export class CMe extends CUqBase {
         this.openVPage(VInvitationCode, param);
     }
 
+    //计算更新业绩
     onComputeAchievement = async () => {
-        await this.uqs.salesTask.ComputeAchievement.submit({});
-        let query = { user: this.user.id };
-        let result = await this.uqs.salesTask.SearchAchievement.obj(query);
-        if (result) {
-            this.salesAmont = result;
-        }
+        this.salesAmont = await this.cApp.cBalance.getComputeAchievement();
     }
 
+    showAccount = async () => {
+        let data = {
+            telephone: "",
+            identityname: "",
+            identitycard: "",
+            identityicon: "",
+            subbranchbank: "",
+            bankaccountnumber: ""
+        };
+        let account = await this.uqs.salesTask.WebUserAccountMap.query({ webuser: this.user.id });
+        if (account.ret.length > 0) {
+            let { telephone, identityname, identitycard, identityicon, subbranchbank, bankaccountnumber } = account.ret[0];
+            data.telephone = telephone === undefined ? "" : telephone;
+            data.identityname = identityname === undefined ? "" : identityname;
+            data.identitycard = identitycard === undefined ? "" : identitycard;
+            data.identityicon = identityicon === undefined ? "" : identityicon;
+            data.subbranchbank = subbranchbank === undefined ? "" : subbranchbank;
+            data.bankaccountnumber = bankaccountnumber === undefined ? "" : bankaccountnumber;
+        }
+        this.openVPage(VAccount, data);
+    }
+
+    saveAccount = async (param: any) => {
+        let data = {
+            webuser: this.user.id,
+            telephone: param.telephone,
+            identityname: param.identityname,
+            identitycard: param.identitycard,
+            identityicon: param.identityicon,
+            subbranchbank: param.subbranchbank,
+            bankaccountnumber: param.bankaccountnumber,
+        };
+        await this.uqs.salesTask.AddWebUserAccountMap.submit(data)
+    }
+
+    IsCanUseCoupon = async () => {
+        // let a = await this.uqs.salesTask.IsCanUseCoupon.submit({ code: "14658995", customer: "46627" });
+    }
     render = () => {
         return this.renderView(VMe);
     }

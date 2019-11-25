@@ -75,14 +75,18 @@ export class VProductDetail extends VPage<CProduct> {
 
             if (agentPrice) {
 
-                let discount = ((1 - ((retail - agentPrice) / retail)) * 10).toFixed(1);
-                agent = <span>
-                    <span className="small ml-2">
-                        <strong className="small"><span className="small">{discount}折</span></strong>
-                    </span>
-                </span>;
+                let discount = ((1 - ((retail - agentPrice) / retail)) * 10)
+                if (discount < 10) {
+                    agent = <span>
+                        <span className="small ml-2">
+                            <strong className="small"><span className="small">{discount.toFixed(1)}折</span></strong>
+                        </span>
+                    </span>;
+                } else {
+                    agent = <span className="small ml-2"> <strong className="small"><span className="small">无折扣</span></strong></span >;
+                }
             } else {
-                agent = <span>{<span>/<span className="text-warning small"><strong className="small"> <span className="small">无折扣</span> </strong></span></span>}</span>;
+                agent = <span className="small ml-2"> <strong className="small"><span className="small">无折扣</span></strong></span >;
             }
 
             right = <div className="row">
@@ -137,8 +141,8 @@ export class VProductDetail extends VPage<CProduct> {
 
         let footer = <div className="d-block">
             <div className="w-100  justify-content-end" >
-                <button type="button" className="btn btn-primary mx-1 my-1 px-4 " onClick={onShareProduct}>分享</button>
-                <button type="button" className="btn btn-primary mx-1 my-1 px-3" onClick={this.onAddPack}>产品框</button>
+                <button type="button" className="btn btn-primary my-1 " style={{ padding: "6px 35px 6px 35px" }} onClick={onShareProduct}>分享</button>
+                <button type="button" className="btn btn-primary mx-1 my-1 px-3" onClick={this.onAddPack}>打包分享</button>
             </div>
         </div>
         let viewProduct = new ViewMainSubs<MainProductChemical, ProductPackRow>(this.renderProduct, this.renderPack);

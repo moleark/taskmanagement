@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { VPage, Page, Image } from 'tonva';
+import { VPage, Page, Image, tv } from 'tonva';
 import { observer } from 'mobx-react';
 import { CStart } from './CStart';
-import QRCode from 'qrcode.react';
 import { setting } from 'appConfig';
 
 
@@ -13,21 +12,20 @@ export class VConfirm extends VPage<CStart> {
     }
 
     private meInfoa(position: any) {
-        let { code } = position;
-        let url = setting.url + "?type=invitation&code=" + code;
+        let { code, user } = position;
+        code = code + "";
+        let p1 = code.substr(0, 4);
+        let p2 = code.substr(4);
+        code = p1 + ' ' + p2;
+        //let url = setting.url + "?type=invitation&code=" + code;
         return <div id="qrid" className="text-center" style={{ width: 'auto', height: '70%' }}  >
             <Image src={setting.logo} className="mt-4" style={{ width: 'auto', height: '50%', margin: '2rem auto, 0 auto' }} />
-            <div>
-                < QRCode style={{ margin: '2rem 0 0 0' }}
-                    value={url}  //value参数为生成二维码的链接
-                    size={100} //二维码的宽高尺寸
-                    fgColor="#000000"  //二维码的颜色
-                />
-                <div>{code}</div>
+            <div className="my-4">
+                <div> {tv(user, v => v.name)}，邀请您加入轻代理。</div>
+                <div>邀请码：<span className="text-info">{code}</span></div>
             </div>
         </div>
     }
-
     private CreatePosition = async (code: string) => {
         await this.controller.createPosition({ invitacode: code });
     }

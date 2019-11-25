@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { VPage, Page, LMR, List, EasyDate, TabCaption, Tabs } from 'tonva';
+import { VPage, Page, LMR, List, EasyDate, TabCaption, Tabs, tv } from 'tonva';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { CMe } from './CMe';
 import { consts } from '../consts';
+import { CBalance } from './CBalance';
 
 const color = (selected: boolean) => selected === true ? 'text-primary' : 'text-muted';
 const tabCaption = (caption: string, amount: number): TabCaption => {
@@ -16,7 +16,7 @@ const tabCaption = (caption: string, amount: number): TabCaption => {
 export enum TabStatus { sum = 0, pending = 1 };
 export enum TabType { A = 1, B = 2, C = 3 };
 
-export class VAchievementDetail extends VPage<CMe> {
+export class VAchievementDetail extends VPage<CBalance> {
 
     @observable private achievements: any[] = [];
     @observable private tab_Status: TabStatus = TabStatus.sum;
@@ -36,20 +36,28 @@ export class VAchievementDetail extends VPage<CMe> {
     }
 
     private renderItem(model: any, index: number) {
-        let { date, amount, orderno, status } = model;
+        let { date, amount, orderno, state, mycustomer } = model;
         var statusShow: any;
-        if (status === 1) {
-            statusShow = "待转入";
-        } else {
+        if (state === 1) {
             statusShow = "已转入";
+        } else {
+            statusShow = "待转入";
         }
+
+        if (mycustomer) {
+            mycustomer = tv(mycustomer, v => v.name);
+        } else {
+            mycustomer = "";
+        }
+
         let data = <EasyDate date={date} />;
         return <div className="d-block">
             <div>
                 <LMR className="px-3 pt-2 small" left={<div className="text-muted">收益产生日期</div>} right={data}></LMR>
                 <LMR className="px-3 small" left={<div className="text-muted">订单号</div>} right={orderno}></LMR>
-                <LMR className="px-3 small" left={<div className="text-muted">状态</div>} right={statusShow}></LMR>
-                <LMR className="px-3 pb-2 small" left={<div className="text-muted">预估金额</div>} right={amount}></LMR>
+                <LMR className="px-3 small" left={<div className="text-muted">客户</div>} right={mycustomer} ></LMR>
+                <LMR className="px-3 small" left={<div className="text-muted">预估金额</div>} right={amount}></LMR>
+                <LMR className="px-3 pb-2 small" left={<div className="text-muted">状态</div>} right={statusShow}></LMR>
             </div>
         </div>
     }

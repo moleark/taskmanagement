@@ -50,7 +50,7 @@ export class VCouponDetail extends VPage<CCoupon> {
                 </LMR >
             } as ComponentProp
         ];
-        if (customer.id !== undefined) {
+        if (customer.obj !== undefined) {
             rows.push(
                 {
                     type: 'component',

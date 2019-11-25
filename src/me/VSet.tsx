@@ -14,12 +14,18 @@ export class VSet extends VPage<CMe> {
         nav.showLogout();
     }
 
-
     private changePassword = async () => {
         await nav.changePassword();
     }
+
     private page = () => {
         let rows: Prop[] = [
+            '',
+            {
+                type: 'component',
+                component: <IconText iconClass="text-info mr-2" icon="credit-card" text="账户信息" />,
+                onClick: this.controller.showAccount
+            },
             '',
             {
                 type: 'component',

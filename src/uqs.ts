@@ -1,4 +1,4 @@
-import { Tuid, Map, Query, Action, Sheet } from "tonva";
+import { Tuid, Map, Query, Action, Sheet, Book } from "tonva";
 
 export interface UqOrder {
     //a: Tuid;
@@ -117,6 +117,12 @@ export interface UqSalesTask {
     Relation: Map;
     searchNewMyCustomer: Query;
     WebUserEmployeeMap: Map;
+    Withdrawal: Sheet;
+    WithdrawalStateBook: Book;
+    SearchWithdrawalStateQuery: Query;
+    SearchBalanceHistory: Query;
+    WebUserAccountMap: Map;
+    AddWebUserAccountMap: Action;
 }
 
 export interface UqMember {

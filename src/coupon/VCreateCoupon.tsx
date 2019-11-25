@@ -161,7 +161,8 @@ export class VCreateCoupon extends VPage<CCoupon> {
         data.validitydate = this.validDateFrom(validitydate);
         data.discount = _.round(1 - disc * 0.1, 2);
 
-        await this.controller.createCoupon(data, this.productParam);
+        let { createCoupon } = this.controller;
+        await createCoupon(data, this.productParam);
     }
 
     private validDateFrom(v: any) {
