@@ -2,9 +2,10 @@ import * as React from 'react';
 import classNames from 'classnames';
 import { VPage, Page } from 'tonva';
 import { CSalesTask } from '../CSalesTask';
-import { List, LMR, EasyDate, FA } from 'tonva';
+import { List, LMR, EasyDate } from 'tonva';
 import { observer } from 'mobx-react';
 import { tv } from 'tonva';
+import { consts } from 'consts';
 
 export class VMain extends VPage<CSalesTask> {
 
@@ -66,11 +67,13 @@ export class VMain extends VPage<CSalesTask> {
         if (tasks === undefined) return null;
 
         let none = <div className="my-3 mx-2" style={{ color: '#888' }}>无任务</div>;
-        let right = <div onClick={this.onSalesTaskAdd} className="cursor-pointer px-3 py-2"><FA name="plus" /></div>;
+        let right = <div className="cursor-pointer py-1" onClick={this.onSalesTaskAdd} >
+            <span className="iconfont  mx-3 icon-tianjia" style={{ fontSize: "20px", color: "#ffffff" }}></span>
+        </div>;
+
         let item = { render: this.renderSalesTask, onClick: this.onSalesTaskClick };
         let { tasksNow, dateTasksList } = tasks;
-
-        return <Page header="任务" onScrollBottom={this.onScrollBottom} right={right} headerClassName="bg-primary">
+        return <Page header="任务" onScrollBottom={this.onScrollBottom} right={right} headerClassName={consts.headerClass}>
             {tasksNow.length === 0 && dateTasksList.length === 0 && none}
             {tasksNow.length > 0 && <List before={''} none={none} items={tasksNow} item={item} />}
             {
@@ -83,7 +86,7 @@ export class VMain extends VPage<CSalesTask> {
                     </React.Fragment>;
                 })
             }
-        </Page>
+        </Page >
     });
 }
 

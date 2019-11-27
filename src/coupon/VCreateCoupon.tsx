@@ -2,7 +2,7 @@ import * as React from 'react';
 import _ from 'lodash';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { VPage, Page, Schema, Form, UiSchema, Context, Widget, UiCustom, FA } from 'tonva';
+import { VPage, Page, Schema, Form, UiSchema, Context, Widget, UiCustom } from 'tonva';
 import { consts } from '../consts';
 import { CCoupon } from './CCoupon';
 import { GLOABLE } from 'ui';
@@ -95,7 +95,7 @@ class Discount extends Widget {
                 <label className="my-1 mx-3"><input type="radio" value={0} name="a" onChange={this.onChange} /> 其他</label>
                 {this.dateVisible && <label className="my-1 mx-3 d-flex"><input type="number" className="form-control w-4c h-2c" onChange={this.onDateChange} /> 折</label>}
             </div>
-            <div className="small text-muted px-3 py-2">说明：折扣表示可享最大折扣，具体折扣以下单时为准</div>
+            <div className="small text-muted px-3"><i className="iconfont mr-2 icon-guanyu"></i>折扣表示可享最大折扣，具体折扣以下单时为准</div>
         </div>
     };
 }
@@ -184,7 +184,7 @@ export class VCreateCoupon extends VPage<CCoupon> {
         let { cCoupon } = this.controller.cApp
         let onshowCreateCoupon = async () => await cCoupon.start();
 
-        let right = <div onClick={onshowCreateCoupon} className="cursor-pointer py-2 mx-3"><FA name="ellipsis-h" /></div>;
+        let right = <div onClick={onshowCreateCoupon} className="cursor-pointer mx-3">   <i className="iconfont icon-qita" style={{ fontSize: "20px" }}></i></div>;
         let header = setting.sales.couponHeader
         return <Page header={header} headerClassName={consts.headerClass} right={right} >
             <Form className="my-3 mx-3"

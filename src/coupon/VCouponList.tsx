@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, LMR, SearchBox, FA, List, EasyDate } from 'tonva';
+import { VPage, Page, LMR, SearchBox, List, EasyDate } from 'tonva';
 import { observer } from 'mobx-react';
 import { consts } from '../consts';
 import { CCoupon } from './CCoupon';
@@ -22,7 +22,7 @@ export class VCouponList extends VPage<CCoupon> {
             inviteCode = p1 + ' ' + p2;
         }
 
-        let aleft = <div><FA name='th-large' className=' my-2 mr-3 text-warning' />{inviteCode}</div>;
+        let aleft = <div><i className="iconfont icon-youhuiquantuangou pr-2" style={{ fontSize: "20px", color: "#f6ad15" }}></i>{inviteCode}</div>;
         let aright = <div className="text-muted"><small>有效期：<EasyDate date={validitydate} /></small></div>;
         let bcenter: any, bleft: any;
         if (typeof discount === 'number') {

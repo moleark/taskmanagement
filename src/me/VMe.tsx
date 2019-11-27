@@ -127,18 +127,15 @@ export class VMe extends VPage<CMe> {
             <div className="text-left h6 mx-4"> <strong>我的服务</strong></div>
             <div className="row p-2 cursor-pointer">
                 <div className="col text-center" onClick={onshowCreateCoupon}>
-                    <FA name="th-large" className='text-warning' fixWidth={true} size="lg" />
-                    <br />
+                    <div><i className="iconfont icon-youhuiquantuangou" style={{ fontSize: "25px", color: "#f6ad15" }}></i></div>
                     <small><small>{setting.sales.couponHeader}</small></small>
                 </div>
                 <div className="col text-center" onClick={onShowMyTasksCompleted} >
-                    <FA name="clock-o" className='text-info' fixWidth={true} size="lg" />
-                    <br />
-                    <small><small>完成任务</small></small>
+                    <div><i className="iconfont icon-renwuwancheng" style={{ fontSize: "25px", color: "#2aa515" }}></i></div>
+                    <small><small>历史任务</small></small>
                 </div>
                 <div className="col text-center" onClick={showSet} >
-                    <FA name="cog" className='text-info' fixWidth={true} size="lg" />
-                    <br />
+                    <div><i className="iconfont icon-shezhi2" style={{ fontSize: "25px", color: "#0e6ff7" }}></i></div>
                     <small><small>设置</small></small>
                 </div>
             </div>

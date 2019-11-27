@@ -78,8 +78,8 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
                         size={100} //二维码的宽高尺寸
                         fgColor="#000000"  //二维码的颜色
                     />
-                    <div>
-                        <span className="w-100 text-center m-3 text-info">{inviteCode} </span>
+                    <div className="mt-4">
+                        <span className="w-100 text-center h3 m-3 text-info">{inviteCode} </span>
                     </div>
                 </div>
             </div>

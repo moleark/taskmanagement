@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, ItemSchema, ObjectSchema, NumSchema, tv, UiSchema, Form, FA } from 'tonva';
+import { VPage, Page, ItemSchema, ObjectSchema, NumSchema, tv, UiSchema, Form } from 'tonva';
 import { observer } from 'mobx-react';
 import { ProductImage } from '../tools/productImage';
 import { MainProductChemical } from '../model/product';
@@ -158,18 +158,16 @@ export class VProductDetail extends VPage<CProduct> {
             else badge = <u>99+</u>;
         }
 
-
-        let header = < div className="w-100 pr-3 d-flex justify-content-between" >
-            <div>产品明细</div>
+        let right = <div className="cursor-pointer py-1" >
             <div>
-                <div className={classNames('jk-cart ml-1 mr-2', pointer)} onClick={onshowProductBox} >
-                    <FA className="fa-lg" name="shopping-cart" />
+                <div className={classNames('jk-cart ml-1 mr-3', pointer)} onClick={onshowProductBox} >
                     {badge}
+                    <i className="iconfont icon-huowudui" style={{ fontSize: "20px" }}></i>
                 </div>
             </div>
         </div>;
 
-        return <Page header={header} headerClassName={consts.headerClass} footer={footer}>
+        return <Page header="产品明细" right={right} headerClassName={consts.headerClass} footer={footer}>
             <div className="px-2 py-2 bg-white mb-3">{viewProduct.render()}</div>
         </Page>
     })

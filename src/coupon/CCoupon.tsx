@@ -58,7 +58,8 @@ export class CCoupon extends CUqBase {
 
     //显示添加优惠券页面
     showCreateCoupon = async (param: any) => {
-
+        this.openVPage(VCreateCoupon, param);
+        /**
         let account = await this.uqs.salesTask.WebUserAccountMap.query({ webuser: this.user.id });
         if (account.ret.length > 0) {
             let { telephone, identityname, identitycard, identityicon, subbranchbank, bankaccountnumber } = account.ret[0];
@@ -70,7 +71,7 @@ export class CCoupon extends CUqBase {
         } else {
             await this.cApp.cMe.showAccount();
         }
-
+        **/
     }
 
     //添加优惠券
@@ -96,9 +97,6 @@ export class CCoupon extends CUqBase {
             this.openVPage(VCreateCouponEnd, couponparam)
         }
     }
-
-
-
 
     //作废优惠券
     invalidCoupon = async (param: any) => {

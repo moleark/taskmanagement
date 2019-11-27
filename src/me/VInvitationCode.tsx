@@ -5,11 +5,23 @@ import QRCode from 'qrcode.react';
 import { setting } from 'appConfig';
 import { CMe } from './CMe';
 import { scaleToImage_text } from './scaleToImage';
+import copy from 'copy-to-clipboard';
+import { observable } from 'mobx';
+import { GLOABLE } from 'ui';
 
 export class VInvitationCode extends VPage<CMe> {
 
+    @observable showTips: any = "none"
     async open(code: string) {
+
         this.openPage(this.page, { code: code });
+    }
+    copyClick = (e: any) => {
+        copy(e.target.parentNode.childNodes[0].innerHTML)
+        this.showTips = "";
+        setTimeout(() => {
+            this.showTips = "none";
+        }, GLOABLE.TIPDISPLAYTIME);
     }
 
     saveImage = async () => {
@@ -36,6 +48,7 @@ export class VInvitationCode extends VPage<CMe> {
         }
     }
 
+
     private page = observer((param: any) => {
         let url = setting.url + "?type=invitation&code=" + param.code;
         let onshare = () => this.share(url);
@@ -48,19 +61,32 @@ export class VInvitationCode extends VPage<CMe> {
             </div>;
         }
 
+        let inviteCode = String(param.code);
+        let p1 = inviteCode.substr(0, 4);
+        let p2 = inviteCode.substr(4);
+        inviteCode = p1 + ' ' + p2;
+
         return <Page header='邀请码' headerClassName={setting.pageHeaderCss}>
-            <div id="qrid" className="text-center" style={{ width: 'auto', height: '85%' }}  >
-                <Image src={setting.logo} className="mt-4" style={{ width: 'auto', height: '40%', margin: '2rem auto, 0 auto' }} />
-                <div>
-                    < QRCode style={{ margin: '2rem 0 0 0' }}
-                        value={url}  //value参数为生成二维码的链接
-                        size={100} //二维码的宽高尺寸
-                        fgColor="#000000"  //二维码的颜色
-                    />
-                    <div>{param.code}</div>
+            <div className="text-center bg-white" style={{ height: "100%" }} >
+                <div id="qrid" className="text-center" style={{ width: 'auto', height: '85%' }}  >
+                    <Image src={setting.logo} className="mt-4" style={{ width: 'auto', height: '40%', margin: '2rem auto, 0 auto' }} />
+                    <div>
+                        < QRCode style={{ margin: '2rem 0 0 0' }}
+                            value={url}  //value参数为生成二维码的链接
+                            size={100} //二维码的宽高尺寸
+                            fgColor="#000000"  //二维码的颜色
+                        />
+                    </div>
+                    <div className="mt-4">
+                        <span className="w-100 text-center h3 m-3 text-info">{inviteCode} </span>
+                    </div>
+                </div>
+                <div className="w-100 text-center">
+                    <span className="text-info cursor-info mx-2" onClick={this.copyClick}>复制</span>
+                    {share}
+                    <div className="text-center text-white small px-2" style={{ width: '28%', margin: '-80px auto 0 auto', padding: '4px', borderRadius: '3px', backgroundColor: '#505050', display: this.showTips }}>已复制到剪切板</div>
                 </div>
             </div>
-            {share}
         </Page >
     })
 }

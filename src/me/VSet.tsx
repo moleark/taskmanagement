@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, nav, FA, Prop, IconText, PropGrid } from 'tonva';
+import { VPage, Page, nav, FA, Prop, PropGrid } from 'tonva';
 import { CMe } from './CMe';
 import { consts } from '../consts';
 import { appConfig } from '../appConfig';
@@ -23,20 +23,27 @@ export class VSet extends VPage<CMe> {
             '',
             {
                 type: 'component',
-                component: <IconText iconClass="text-info mr-2" icon="credit-card" text="账户信息" />,
+
+                component: <div className="py-2">
+                    <i className="iconfont icon-zhanghuxinxi mr-2" style={{ fontSize: "20px", color: "#2aa515" }}></i>账户信息
+                </div>,
                 onClick: this.controller.showAccount
             },
             '',
             {
                 type: 'component',
-                component: <IconText iconClass="text-info mr-2" icon="key" text="修改密码" />,
+                component: <div className="py-2">
+                    <i className="iconfont icon-mima mr-2" style={{ fontSize: "20px", color: "#2aa515" }}></i><span className="pb-4 mb-4">密码</span>
+                </div>,
                 onClick: this.changePassword
             },
             '',
             {
                 type: 'component',
-                component: <div className="w-100 d-flex justify-content-between">
-                    <IconText iconClass="text-info mr-2" icon="smile-o" text="关于本APP" />
+                component: <div className="w-100 d-flex py-2 justify-content-between">
+                    <div>
+                        <i className="iconfont icon-guanyu mr-2" style={{ fontSize: "20px", color: "#2aa515" }}></i>关于本APP
+                    </div>
                     <div className="py-2 small">V{appConfig.version}</div>
                 </div>,
             },

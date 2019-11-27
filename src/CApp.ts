@@ -46,7 +46,6 @@ export class CApp extends CAppBase {
         this.currentLanguage = await this.uqs.common.Language.load(GLOABLE.CHINESE);
         this.productCart = new ProductCart();
 
-
         /** 初始化 Conctrolle*/
         this.cCustomer = this.newC(CCustomer);
         this.cProduct = this.newC(CProduct);

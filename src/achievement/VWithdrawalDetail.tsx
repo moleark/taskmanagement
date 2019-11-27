@@ -13,7 +13,7 @@ export class VWithdrawalDetail extends VPage<CBalance> {
 
     private page = observer((order: any) => {
 
-        let { brief, data, state } = order;
+        let { brief, data, state, comments } = order;
         let { no, discription, date } = brief;
         let { amount } = data;
         discription = discription === "withdrawal" ? "支出" : "汇入";
@@ -50,7 +50,7 @@ export class VWithdrawalDetail extends VPage<CBalance> {
             </div>
             <div className="bg-white row no-gutters p-3 my-1">
                 <div className="col-3 text-muted">备注</div>
-                <div className="col-9">{state.comments}</div>
+                <div className="col-9">{comments}</div>
             </div>
         </Page >
     });

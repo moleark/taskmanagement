@@ -39,7 +39,7 @@ export class CBalance extends CUqBase {
         oneSaleVolume: 0.00, twoSaleVolume: 0.00, threeSaleVolume: 0.00,
         oneAchievement: 0.0, twoAchievement: 0.0, threeAchievement: 0.0,
         teamCount: 0.0, customerCount: 0.0, activeCustomerCount: 0.0,
-        totalOrderCount: 0
+        totalOrderCount: 0, totalReceivableAmount: 0.0, totalaWithdrawal: 0.0, waitWithdrawal: 0.0
     };
 
     //初始化
@@ -85,7 +85,7 @@ export class CBalance extends CUqBase {
         let withdraw = {
             webUser: this.user,
             amount: amount,
-            currency: "RMB"
+            currency: "1"
         }
         let result: any = await this.uqs.salesTask.Withdrawal.save("withdrawal", withdraw);
         await this.uqs.salesTask.Withdrawal.action(result.id, result.flow, result.state, "submit");
@@ -104,7 +104,9 @@ export class CBalance extends CUqBase {
 
         let order = await this.uqs.salesTask.Withdrawal.getSheet(orderId);
         let list = await this.uqs.salesTask.SearchWithdrawalStateQuery.query({ withdrawal: orderId })
-        order.state = list.ret[0].state;
+        let { comments, state } = list.ret[0];
+        order.state = state;
+        order.comments = comments
         this.openVPage(VWithdrawalDetail, order);
     }
 

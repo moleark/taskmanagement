@@ -40,7 +40,7 @@ export class VCustomerUnitSelect extends VPage<CCustomerUnit> {
                 还没有创建过客户单位，请先<span className="text-primary" onClick={onshowCreateUnit}>创建单位！</span>
             </div>;
             text = <div className="my-3 mx-2 text-warning">新建客户前先选择单位，或点击右上角加号新建单位！</div>;
-            right = <div onClick={onshowCreateUnit} className="cursor-pointer px-3 py-2"><FA name="plus" /></div>;
+            right = <div onClick={onshowCreateUnit} className="cursor-pointer px-3"><span className="iconfont icon-tianjia" style={{ fontSize: "20px", color: "#ffffff" }}></span></div>;
         } else {
             text = "";
             none = <div className="my-3 mx-2 text-warning">你还没有创建单位，无法根据单位搜索！</div>;

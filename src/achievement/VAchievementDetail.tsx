@@ -56,10 +56,10 @@ export class VAchievementDetail extends VPage<CBalance> {
                 <LMR className="px-3 pt-2 small" left={<div className="text-muted">收益产生日期</div>} right={data}></LMR>
                 <LMR className="px-3 small" left={<div className="text-muted">订单号</div>} right={orderno}></LMR>
                 <LMR className="px-3 small" left={<div className="text-muted">客户</div>} right={mycustomer} ></LMR>
-                <LMR className="px-3 small" left={<div className="text-muted">预估金额</div>} right={amount}></LMR>
+                <LMR className="px-3 small" left={<div className="text-muted"> 预估金额</div>} right={<div><span className="iconfont icon-huobiqiandaizijin" style={{ fontSize: "15px", color: "#f6ad15" }}></span>{amount}</div>}></LMR>
                 <LMR className="px-3 pb-2 small" left={<div className="text-muted">状态</div>} right={statusShow}></LMR>
             </div>
-        </div>
+        </div >
     }
 
     private header = () => {

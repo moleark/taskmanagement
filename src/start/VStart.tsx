@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, Form, UiSchema, UiInputItem, Schema, Context } from 'tonva';
+import { VPage, Page, Form, UiSchema, UiInputItem, Schema, Context, Image } from 'tonva';
 import { observer } from 'mobx-react';
 import { CStart } from './CStart';
 import { setting } from 'appConfig';
@@ -14,7 +14,7 @@ export class VStart extends VPage<CStart> {
     private form: Form;
     private uiSchema: UiSchema = {
         items: {
-            invitacode: { widget: 'text', label: '邀请码', placeholder: '请输入邀请码' } as UiInputItem,
+            invitacode: { widget: 'text', label: ' ', placeholder: '请输入邀请码' } as UiInputItem,
             submit: { widget: 'button', label: '提交', className: 'btn btn-primary w-8c' },
         }
     }
@@ -46,15 +46,20 @@ export class VStart extends VPage<CStart> {
 
     private page = observer((position: any) => {
 
-        //let footer = <button type="button" className="btn btn-primary w-100" onClick={this.onCreatePosition}>保存</button>;
         return <Page header={setting.appName} headerClassName={setting.pageHeaderCss} logout={true}>
-            <Form ref={v => this.form = v} className="m-3"
-                schema={schema}
-                uiSchema={this.uiSchema}
-                onButtonClick={this.onFormButtonClick}
-                requiredFlag={false}
-                onEnter={this.onEnter}
-            />
-        </Page>
+            <div className="text-center  bg-white" style={{ width: 'auto', height: '100%', padding: '1rem 0 0 0' }}  >
+                <div className="pt-4" >欢迎加入轻代理，超越自我，实现共赢！</div>
+                <Image src={setting.logo} className="mt-4" style={{ width: 'auto', height: '30%', margin: '0 auto 0 auto' }} />
+                <div style={{ height: 'auto', margin: 'auto 5rem auto 5rem' }} >
+                    <Form ref={v => this.form = v} className="m-3"
+                        schema={schema}
+                        uiSchema={this.uiSchema}
+                        onButtonClick={this.onFormButtonClick}
+                        requiredFlag={false}
+                        onEnter={this.onEnter}
+                    />
+                </div>
+            </div>
+        </Page >
     })
 }

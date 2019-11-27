@@ -5,7 +5,7 @@ import { ProductImage } from '../../tools/productImage';
 import { CreateProduct } from '../model';
 import { CSalesTask } from '../CSalesTask';
 import { setting } from 'appConfig';
-
+//f8a905
 
 const schema: Schema = [
     { name: 'note', type: 'string', required: false },

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { tv, FA } from 'tonva';
+import { tv } from 'tonva';
 import { VPage, Page, List, SearchBox } from 'tonva';
 import { CProduct } from './CProduct';
 import { ProductImage } from '../tools/productImage';
@@ -75,17 +75,17 @@ export class VProductList extends VPage<CProduct> {
             else badge = <u>99+</u>;
         }
         let onshowProductBox = async () => await this.controller.cApp.cProduct.showProductBox()
-        let header = < div className="w-100 px-3 d-flex justify-content-between" >
-            <div>产品</div>
+
+        let right = <div className="cursor-pointer py-1" >
             <div>
-                <div className={classNames('jk-cart ml-1 mr-2', pointer)} onClick={onshowProductBox} >
-                    <FA className="fa-lg" name="shopping-cart" />
+                <div className={classNames('jk-cart ml-1 mr-3', pointer)} onClick={onshowProductBox} >
                     {badge}
+                    <i className="iconfont icon-huowudui" style={{ fontSize: "20px" }}></i>
                 </div>
             </div>
         </div>;
 
-        return <Page header={header} onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss} >
+        return <Page header="产品" right={right} onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss} >
             <SearchBox className="px-1 w-100  mt-2 mr-2 "
                 size='md'
                 onSearch={(key: string) => this.controller.searchByKey(key)}

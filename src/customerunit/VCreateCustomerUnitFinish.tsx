@@ -14,7 +14,6 @@ export class VCreateCustomerUnitFinish extends VPage<CCustomerUnit> {
         this.closePage(2);
     }
 
-
     private showresult = (param: any) => {
         if (param.code === 0) {
             return <>
@@ -22,15 +21,25 @@ export class VCreateCustomerUnitFinish extends VPage<CCustomerUnit> {
             </>;
         } else {
             return <>
-                单位添加成功，请在单位搜索页面查看详情！
+                添加成功，请在单位搜索页面查看详情！
             </>;
         }
+    }
 
+    private showIcon = (param: any) => {
+        if (param.code === 0) {
+            return <i className="iconfont icon-shibai1" style={{ margin: "50px", fontSize: "100px", color: "#d81e06" }}></i>;
+        } else {
+            return <i className="iconfont icon-ok" style={{ margin: "50px", fontSize: "100px", color: "#2aa515" }}></i>;
+        }
     }
 
     private page = observer((param: any) => {
         return <Page header='新建单位' headerClassName={setting.pageHeaderCss}>
-            <div className="w-100 text-center m-3 text-muted">
+            <div className="p-5 text-center">
+                {this.showIcon(param)}
+            </div>
+            <div className="p-5 text-center">
                 {this.showresult(param)}
             </div>
             <div className="w-100 text-center">

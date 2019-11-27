@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, List, EasyDate, LMR, FA } from 'tonva';
+import { VPage, Page, List, LMR, EasyTime } from 'tonva';
 import { observer } from 'mobx-react';
 import { consts } from '../consts';
 import { CBalance } from './CBalance';
@@ -15,11 +15,11 @@ export class VBalanceHistory extends VPage<CBalance> {
         let { date, ordertype, amount, order } = balanceOrder;
         let amountshow = ordertype === "withdrawal" ? "-" + amount : amount;
         ordertype = ordertype === "withdrawal" ? "提现" : "回款";
-        let dateshow = <div className="small text-muted">{<EasyDate date={date} />}</div>;
+        let dateshow = <div className="small text-muted">{<EasyTime date={date} />}</div>;
         let onshowWithdrawalDetail = async () => await this.controller.showWithdrawalDetail(order);
 
-        return <LMR left={<FA name="credit-card" className="h3 mt-2 mx-2" />} className="pl-2 pr-3 py-1" onClick={onshowWithdrawalDetail} >
-            <LMR left={ordertype} right={<strong>{amountshow}</strong>}></LMR>
+        return <LMR className="pl-2 px-4 py-2" onClick={onshowWithdrawalDetail} >
+            <LMR className="py-1" left={ordertype} right={<strong>{amountshow}</strong>}></LMR>
             <LMR left={dateshow} ></LMR>
         </LMR >
     }

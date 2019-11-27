@@ -15,7 +15,7 @@ export class CMe extends CUqBase {
         oneSaleVolume: 0.00, twoSaleVolume: 0.00, threeSaleVolume: 0.00,
         oneAchievement: 0.0, twoAchievement: 0.0, threeAchievement: 0.0,
         teamCount: 0.0, customerCount: 0.0, activeCustomerCount: 0.0,
-        totalOrderCount: 0
+        totalOrderCount: 0, totalReceivableAmount: 0.0, totalaWithdrawal: 0.0, waitWithdrawal: 0.0
     };
 
     //初始化
@@ -108,7 +108,7 @@ export class CMe extends CUqBase {
             subbranchbank: param.subbranchbank,
             bankaccountnumber: param.bankaccountnumber,
         };
-        await this.uqs.salesTask.AddWebUserAccountMap.submit(data)
+        await this.uqs.salesTask.AddWebUserAccountMap.submit(data);
     }
 
     IsCanUseCoupon = async () => {

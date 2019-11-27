@@ -16,8 +16,8 @@ export class CStart extends CUqBase {
 
     //初始化
     protected async internalStart(param: any) {
+
         this.getIsInnerSales();
-        //this.user;
         var isPosition: Boolean;
         isPosition = await this.isPosition();
         if (!isPosition) {

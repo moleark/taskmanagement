@@ -32,7 +32,11 @@ export class InnerSales extends Sales {
         return <div className="text-center text-white bg-primary pt-1 pb-5" style={{ borderRadius: '0  0 5rem 5rem', margin: ' 0 -2rem 0 -2rem ' }}>
             <div className="pb-2 pt-4 cursor-pointer" >
                 <div className="text-warning pt-4" onClick={async () => await this.cApp.cBalance.showAchievementDetail(0)}>
-                    <span className="h1">{salesAmont.totalOrderCount}</span>
+                    {salesAmont.totalOrderCount <= 0 ?
+                        <div className="h5"> - </div>
+                        :
+                        <div className="h5"><strong><span className="h1">{salesAmont.totalOrderCount}</span><small>个</small></strong></div>
+                    }
                     <small> 个</small>
                 </div>
                 <h6 className="text-warning"><small>累计订单</small></h6>
@@ -81,9 +85,9 @@ export class AgentSales extends Sales {
     }
     achievement(salesAmont: any): JSX.Element {
 
-        let { oneAchievement, twoAchievement, threeAchievement, totalReceivableAmount, totalaWithdrawal } = salesAmont;
+        let { oneAchievement, twoAchievement, threeAchievement, totalReceivableAmount, totalaWithdrawal, waitWithdrawal } = salesAmont;
         let achievement = oneAchievement + twoAchievement + threeAchievement;
-        let balance = totalReceivableAmount - totalaWithdrawal;
+        let balance = totalReceivableAmount - totalaWithdrawal - waitWithdrawal;
         return <div className="text-center text-white bg-primary pt-1 pb-5" style={{ borderRadius: '0  0 5rem 5rem', margin: ' 0 -2rem 0 -2rem ' }}>
             <div className="pb-2 pt-4 cursor-pointer" >
                 <div className="text-warning pt-4" onClick={async () => await this.cApp.cBalance.showAchievementDetail(0)}>
