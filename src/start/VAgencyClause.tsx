@@ -25,7 +25,7 @@ export class AgencyClause extends VPage<CStart> {
     }
 
     private page = (param: any) => {
-        return <Page header="温馨提示" back="none" headerClassName={consts.headerClass}>
+        return <Page header="温馨提示" back="none" headerClassName={setting.pageHeaderCss}>
             <div className="p-4 text-center">
                 <p className="mb-5 pl-2 text-left ">
 

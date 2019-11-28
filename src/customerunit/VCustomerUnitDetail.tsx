@@ -2,8 +2,8 @@ import * as React from 'react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { VPage, Page, Edit, Schema, UiSchema, UiInputItem, ItemSchema } from 'tonva';
-import { consts } from '../consts';
 import { CCustomerUnit } from './CCustomerUnit';
+import { setting } from 'appConfig';
 
 const schema: Schema = [
     { name: 'name', type: 'string' },
@@ -33,7 +33,7 @@ export class VCustomerUnitDetail extends VPage<CCustomerUnit> {
     private page = observer(() => {
 
         //let right = <div className="cursor-pointer py-2 px-3 "><FA name="pencil" /></div>;
-        return <Page header="客户单位详情" headerClassName={consts.headerClass}  >
+        return <Page header="客户单位详情" headerClassName={setting.pageHeaderCss}  >
             <Edit
                 schema={schema}
                 uiSchema={this.uiSchema}

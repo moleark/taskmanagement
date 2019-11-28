@@ -3,9 +3,9 @@ import { observer } from 'mobx-react';
 import { LMR, VPage, Page, EasyDate, ComponentProp, Prop, PropGrid, FA } from 'tonva';
 import { tv } from 'tonva';
 import classNames from 'classnames';
-import { consts } from '../../consts';
 import { observable } from 'mobx';
 import { CSelectType } from './CSelectType';
+import { setting } from 'appConfig';
 
 const cnRow = 'w-100 py-3';
 const cnRowCustor = classNames(cnRow, 'cursor-pointer');
@@ -77,7 +77,7 @@ export class VAiDetail extends VPage<CSelectType> {
             <button type="button" className="btn btn-outline-info ml-2 align-self-center" onClick={this.onCancel} >取消</button>
         </div>;
 
-        return <Page header="任务详细" headerClassName={consts.headerClass}>
+        return <Page header="任务详细" headerClassName={setting.pageHeaderCss}>
 
             <PropGrid className="my-2" rows={rows} values={this.task} />
             <LMR className=" mx-3 " left={left} right={rigth}></LMR>

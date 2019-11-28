@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { VPage, Page, FA } from 'tonva';
 import { observer } from 'mobx-react';
-import { consts } from '../consts';
 import { CBalance } from './CBalance';
+import { setting } from 'appConfig';
 
 export class VBalance extends VPage<CBalance> {
 
@@ -20,7 +20,7 @@ export class VBalance extends VPage<CBalance> {
         let buttondisabled = balance > 0 ? false : true;
 
         let onshowVWithdrawal = async () => await this.controller.showVWithdrawal(balance)
-        return <Page header="" headerClassName={consts.headerClass} right={right}>
+        return <Page header="" headerClassName={setting.pageHeaderCss} right={right}>
             <div className="text-center bg-white" style={{ height: "100%" }} >
                 <i className="iconfont icon-zhichibizhong" style={{ margin: "50px", fontSize: "100px", color: "#f6ad15" }}></i>
                 <div style={{ padding: "0px 80px 6px 80px" }}>我的余额</div>

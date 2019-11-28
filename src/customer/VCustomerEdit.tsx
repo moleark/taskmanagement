@@ -3,8 +3,8 @@ import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { VPage, Page, Schema, UiSchema, UiInputItem, UiRadio, Edit, ItemSchema } from 'tonva';
 import { CCustomer } from './CCustomer';
-import { consts } from '../consts';
 import { mobileValidation, nameValidation, emailValidation } from 'tools/inputValidations';
+import { setting } from 'appConfig';
 
 export const myCustomerSchema: Schema = [
     { name: 'name', type: 'string', required: true },
@@ -71,7 +71,7 @@ export class VCustomerEdit extends VPage<CCustomer> {
          </div>
         **/
         let header: any = <span>{this.customer.name}</span>;
-        return <Page header={header} headerClassName={consts.headerClass}>
+        return <Page header={header} headerClassName={setting.pageHeaderCss}>
             <Edit
                 schema={myCustomerSchema}
                 uiSchema={myCustomerUISchema}

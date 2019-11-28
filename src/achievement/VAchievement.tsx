@@ -3,6 +3,8 @@ import { VPage, Page, LMR, Prop, ComponentProp, FA, PropGrid } from 'tonva';
 import { observer } from 'mobx-react';
 import { consts } from '../consts';
 import { CBalance } from './CBalance';
+import { settings } from 'cluster';
+import { setting } from 'appConfig';
 
 function rowCom(iconName: string, iconColor: string, caption: string, value: any, onClick: any) {
     return <LMR className="cursor-pointer w-100 py-2 my-2 align-items-center  " onClick={onClick}
@@ -55,7 +57,7 @@ export class VAchievement extends VPage<CBalance> {
             } as ComponentProp,
         ];
 
-        return <Page header="我的业绩" headerClassName={consts.headerClass} >
+        return <Page header="我的业绩" headerClassName={setting.pageHeaderCss} >
             <PropGrid className="" rows={rows} values={null} alignValue="right" />
         </Page >
     })

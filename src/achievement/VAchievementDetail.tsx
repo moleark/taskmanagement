@@ -2,8 +2,8 @@ import * as React from 'react';
 import { VPage, Page, LMR, List, EasyDate, TabCaption, Tabs, tv } from 'tonva';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { consts } from '../consts';
 import { CBalance } from './CBalance';
+import { setting } from 'appConfig';
 
 const color = (selected: boolean) => selected === true ? 'text-primary' : 'text-muted';
 const tabCaption = (caption: string, amount: number): TabCaption => {
@@ -125,7 +125,7 @@ export class VAchievementDetail extends VPage<CBalance> {
             }
         ];
 
-        return <Page header={this.header()} headerClassName={consts.headerClass} >
+        return <Page header={this.header()} headerClassName={setting.pageHeaderCss} >
             <Tabs tabs={tabs} tabPosition="top" />
         </Page >
     })

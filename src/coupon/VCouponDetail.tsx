@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { VPage, Page, Prop, PropGrid, ComponentProp, tv, LMR, EasyDate } from 'tonva';
 import { observer } from 'mobx-react';
-import { consts } from '../consts';
 import { CCoupon } from './CCoupon';
+import { setting } from 'appConfig';
 
 export class VCouponDetail extends VPage<CCoupon> {
 
@@ -81,7 +81,7 @@ export class VCouponDetail extends VPage<CCoupon> {
             } as ComponentProp,
         );
         let footer = <button onClick={this.oninvalidCoupon} type="submit" className="btn btn-danger flex-grow-1 mx-3 my-1">作废</button>;
-        return <Page header="优惠券详情" headerClassName={consts.headerClass} footer={footer}>
+        return <Page header="优惠券详情" headerClassName={setting.pageHeaderCss} footer={footer}>
             <PropGrid className="my-2" rows={rows} values={this.coupon} alignValue="right" />
         </Page>
     })

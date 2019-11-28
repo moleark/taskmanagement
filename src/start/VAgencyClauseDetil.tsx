@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { CStart } from './CStart';
 import { VPage, Page } from 'tonva';
-import { consts } from '../consts';
+import { setting } from 'appConfig';
 
 export class VAgencyClauseDetil extends VPage<CStart> {
 
@@ -14,7 +14,7 @@ export class VAgencyClauseDetil extends VPage<CStart> {
 
 
     private page = (param: any) => {
-        return <Page header="服务条款与隐私政策" headerClassName={consts.headerClass}>
+        return <Page header="服务条款与隐私政策" headerClassName={setting.pageHeaderCss}>
             <div className="p-4 text-center">
                 <p className="mb-5 pl-2 ">
                     <p className="text-left"   >

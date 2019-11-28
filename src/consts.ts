@@ -7,6 +7,4 @@ export const consts = {
     uqPromotion: '百灵威系统工程部/promotion',
     uqWarehouse: "百灵威系统工程部/warehouse",
     appIcon: 'http://101.200.46.56/imgs/Bear-icon.png',
-
-    headerClass: 'bg-primary py-1',
 }

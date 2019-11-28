@@ -27,6 +27,20 @@
       "unicode_decimal": 58986
     },
     {
+      "icon_id": "583118",
+      "name": "编辑",
+      "font_class": "75bianji",
+      "unicode": "e651",
+      "unicode_decimal": 58961
+    },
+    {
+      "icon_id": "648757",
+      "name": "编辑",
+      "font_class": "bianji",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
       "icon_id": "677629",
       "name": "支持币种",
       "font_class": "zhichibizhong",
@@ -46,13 +60,6 @@
       "font_class": "jindutiaoqiandai",
       "unicode": "e63a",
       "unicode_decimal": 58938
-    },
-    {
-      "icon_id": "924702",
-      "name": "其他",
-      "font_class": "qita1",
-      "unicode": "e618",
-      "unicode_decimal": 58904
     },
     {
       "icon_id": "947490",
@@ -125,6 +132,13 @@
       "unicode_decimal": 58893
     },
     {
+      "icon_id": "2678574",
+      "name": "编辑",
+      "font_class": "bianji1",
+      "unicode": "e63d",
+      "unicode_decimal": 58941
+    },
+    {
       "icon_id": "2849288",
       "name": "失败",
       "font_class": "shibai",
@@ -144,6 +158,20 @@
       "font_class": "renwuwancheng",
       "unicode": "e61e",
       "unicode_decimal": 58910
+    },
+    {
+      "icon_id": "4157635",
+      "name": "编辑",
+      "font_class": "Shapecopy",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "4322609",
+      "name": "免费提现额度",
+      "font_class": "mianfeitixianedu",
+      "unicode": "e652",
+      "unicode_decimal": 58962
     },
     {
       "icon_id": "4343208",
@@ -188,6 +216,13 @@
       "unicode_decimal": 60553
     },
     {
+      "icon_id": "6943168",
+      "name": "编辑",
+      "font_class": "bianji2",
+      "unicode": "e639",
+      "unicode_decimal": 58937
+    },
+    {
       "icon_id": "7040619",
       "name": "其他",
       "font_class": "qita2",
@@ -207,6 +242,13 @@
       "font_class": "mima",
       "unicode": "e64b",
       "unicode_decimal": 58955
+    },
+    {
+      "icon_id": "7463948",
+      "name": "编辑",
+      "font_class": "bianji3",
+      "unicode": "e628",
+      "unicode_decimal": 58920
     },
     {
       "icon_id": "7978110",

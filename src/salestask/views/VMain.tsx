@@ -5,7 +5,7 @@ import { CSalesTask } from '../CSalesTask';
 import { List, LMR, EasyDate } from 'tonva';
 import { observer } from 'mobx-react';
 import { tv } from 'tonva';
-import { consts } from 'consts';
+import { setting } from 'appConfig';
 
 export class VMain extends VPage<CSalesTask> {
 
@@ -73,7 +73,7 @@ export class VMain extends VPage<CSalesTask> {
 
         let item = { render: this.renderSalesTask, onClick: this.onSalesTaskClick };
         let { tasksNow, dateTasksList } = tasks;
-        return <Page header="任务" onScrollBottom={this.onScrollBottom} right={right} headerClassName={consts.headerClass}>
+        return <Page header="任务" onScrollBottom={this.onScrollBottom} right={right} headerClassName={setting.pageHeaderCss}>
             {tasksNow.length === 0 && dateTasksList.length === 0 && none}
             {tasksNow.length > 0 && <List before={''} none={none} items={tasksNow} item={item} />}
             {

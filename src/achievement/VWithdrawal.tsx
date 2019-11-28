@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { VPage, Page, Schema, UiSchema, Context, Form, Widget, UiCustom, FA } from 'tonva';
 import { observer } from 'mobx-react';
-import { consts } from '../consts';
 import { CBalance } from './CBalance';
+import { setting } from 'appConfig';
 /* eslint-disable */
 const schema: Schema = [
     { name: 'amount', type: 'number', required: true },
@@ -52,7 +52,7 @@ export class VWithdrawal extends VPage<CBalance> {
 
     private page = observer(() => {
 
-        return <Page header="余额提现" headerClassName={consts.headerClass}>
+        return <Page header="余额提现" headerClassName={setting.pageHeaderCss}>
             <div className="bg-white" style={{ width: "90%", padding: "10px 10px 10px 10px", margin: '2rem auto 0 auto' }} >
                 <div className="my-3 mx-3" >转账到银行卡</div>
                 <Form className="my-3 mx-3"

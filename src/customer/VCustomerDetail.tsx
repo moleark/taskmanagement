@@ -221,8 +221,8 @@ export class VCustomerDetail extends VPage<CCustomer> {
 
         let { showCustomerEdit } = this.controller;
         let onshowCustomerEdit = async () => await showCustomerEdit(this.customer);
-        let right = <div className="cursor-pointer" onClick={onshowCustomerEdit}>
-            <span><FA name="pencil" className="mr-3" /></span>
+        let right = <div className="cursor-pointer py-1" onClick={onshowCustomerEdit}>
+            <i className="iconfont icon-bianji mr-3" style={{ fontSize: "20px" }}></i>
         </div>;
         let header: any = <span>{this.customer.name}</span>;
         let footer = <div className="d-block">

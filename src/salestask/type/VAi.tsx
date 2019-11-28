@@ -4,7 +4,7 @@ import { VPage, Page, tv, LMR, List, EasyDate } from 'tonva';
 import { observer } from 'mobx-react';
 import { CSelectType } from './CSelectType';
 import { observable } from 'mobx';
-import { consts } from '../../consts';
+import { setting } from 'appConfig';
 
 export class VAi extends VPage<CSelectType> {
 
@@ -46,7 +46,7 @@ export class VAi extends VPage<CSelectType> {
         let { pageMyJKTask } = this.controller;
 
         let none = <div className="my-3 mx-2 text-warning">正在筹备中</div>;
-        return <Page header="AI" headerClassName={consts.headerClass}>
+        return <Page header="AI" headerClassName={setting.pageHeaderCss}>
             <List none={none} items={pageMyJKTask} item={{ render: this.renderItem, onClick: this.onClickJKTask }} />
         </Page>;
     })

@@ -26,6 +26,15 @@ export class VActionsBottom extends View<CType> {
                 <button type="button" className="btn btn-outline-info ml-2 align-self-center" onClick={onInvalid} >取消任务</button>
                 <button type="button" className="btn btn-primary ml-2 align-self-center" onClick={onProcess}>处理任务</button>
             </div>
+
         </div>;
     }
 }
+
+/**
+ *  <div className="flex-grow-1 align-self-center justify-content-end">
+                <div style={{ backgroundColor: "#8a8a8a", color: "#ffffff", padding: "13px 20px" }} onClick={onPostpond} >延迟任务</div>
+                <div style={{ backgroundColor: "#d81e06", color: "#ffffff", padding: "13px 20px" }} onClick={onInvalid} >取消任务</div>
+                <div style={{ backgroundColor: "#f8a905", color: "#ffffff", padding: "13px 20px" }} onClick={onProcess}>处理任务</div>
+            </div>
+ * **/

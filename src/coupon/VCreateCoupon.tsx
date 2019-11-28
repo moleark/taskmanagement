@@ -3,7 +3,6 @@ import _ from 'lodash';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { VPage, Page, Schema, Form, UiSchema, Context, Widget, UiCustom } from 'tonva';
-import { consts } from '../consts';
 import { CCoupon } from './CCoupon';
 import { GLOABLE } from 'ui';
 import { setting } from 'appConfig';
@@ -186,7 +185,7 @@ export class VCreateCoupon extends VPage<CCoupon> {
 
         let right = <div onClick={onshowCreateCoupon} className="cursor-pointer mx-3">   <i className="iconfont icon-qita" style={{ fontSize: "20px" }}></i></div>;
         let header = setting.sales.couponHeader
-        return <Page header={header} headerClassName={consts.headerClass} right={right} >
+        return <Page header={header} headerClassName={setting.pageHeaderCss} right={right} >
             <Form className="my-3 mx-3"
                 schema={schema}
                 uiSchema={this.uiSchema}

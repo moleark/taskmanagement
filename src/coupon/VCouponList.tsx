@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { VPage, Page, LMR, SearchBox, List, EasyDate } from 'tonva';
 import { observer } from 'mobx-react';
-import { consts } from '../consts';
 import { CCoupon } from './CCoupon';
+import { setting } from 'appConfig';
 
 export class VCouponList extends VPage<CCoupon> {
 
@@ -47,7 +47,7 @@ export class VCouponList extends VPage<CCoupon> {
         let { pageCoupon } = this.controller;
         let none = <div className="my-3 mx-2 text-warning">还没有优惠券哦！马上添加招揽客户吧！</div>;
 
-        return <Page header='优惠券列表' headerClassName={consts.headerClass} >
+        return <Page header='优惠券列表' headerClassName={setting.pageHeaderCss} >
             <SearchBox className="px-1 w-100  mt-2 mr-2  "
                 size='md'
                 onSearch={(key: string) => this.controller.searchByKey(key)}

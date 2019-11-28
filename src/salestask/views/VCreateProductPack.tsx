@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { VPage, Page, ItemSchema, ObjectSchema, NumSchema, tv, UiSchema, Form } from 'tonva';
 import { observer } from 'mobx-react';
-import { consts } from '../../consts';
 import { ProductImage } from '../../tools/productImage';
 import { MainProductChemical } from '../../model/product';
 import { ViewMainSubs } from '../../mainSubs';
 import { renderBrand } from '../../product/CProduct';
-import { ProductPackRow } from '../../product/Product';
 import { CSalesTask } from '../CSalesTask';
+import { ProductPackRow } from 'product/product';
+import { setting } from 'appConfig';
 /* eslint-disable */
 const schema: ItemSchema[] = [
     { name: 'pack', type: 'object' } as ObjectSchema,
@@ -151,7 +151,7 @@ export class VCreateProductPack extends VPage<CSalesTask> {
 
         let viewProduct = new ViewMainSubs<MainProductChemical, ProductPackRow>(this.renderProduct, this.renderPack);
         viewProduct.model = product;
-        return <Page header={"添加产品包装"} headerClassName={consts.headerClass}>
+        return <Page header={"添加产品包装"} headerClassName={setting.pageHeaderCss}>
             <div className="px-2 py-2 bg-white mb-3">{viewProduct.render()}</div>
             <button type="button" className="btn btn-primary w-100" onClick={this.onCreateTaskProductPack} >添加</button>
         </Page>

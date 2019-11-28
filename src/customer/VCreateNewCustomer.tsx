@@ -5,8 +5,8 @@ import {
 } from 'tonva';
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
-import { consts } from '../consts';
 import { mobileValidation, nameValidation } from 'tools/inputValidations';
+import { setting } from 'appConfig';
 
 const schema: Schema = [
     { name: 'name', type: 'string', required: true },
@@ -48,7 +48,7 @@ export class VCreateNewCustomer extends VPage<CCustomer> {
     }
 
     private page = observer(() => {
-        return <Page header="新建客户" headerClassName={consts.headerClass} >
+        return <Page header="新建客户" headerClassName={setting.pageHeaderCss} >
             <LMR className="cursor-pointer pm-3 py-2 bg-white"
                 left={<div className="pl-3"><FA name="university" className="text-info mr-2 pt-1" /></div>}>
                 {tv(this.customerunit, (v) => v.name)}

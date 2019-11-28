@@ -3,11 +3,11 @@ import { VPage, Page, ItemSchema, ObjectSchema, NumSchema, tv, UiSchema, Form } 
 import { observer } from 'mobx-react';
 import { ProductImage } from '../tools/productImage';
 import { MainProductChemical } from '../model/product';
-import { consts } from '../consts';
 import { CProduct, renderBrand, productPropItem } from './CProduct';
-import { ProductPackRow } from './Product';
 import { ViewMainSubs } from '../mainSubs';
 import classNames from 'classnames';
+import { ProductPackRow } from './product';
+import { setting } from 'appConfig';
 
 const schema: ItemSchema[] = [
     { name: 'pack', type: 'object' } as ObjectSchema,
@@ -167,7 +167,7 @@ export class VProductDetail extends VPage<CProduct> {
             </div>
         </div>;
 
-        return <Page header="产品明细" right={right} headerClassName={consts.headerClass} footer={footer}>
+        return <Page header="产品明细" right={right} headerClassName={setting.pageHeaderCss} footer={footer}>
             <div className="px-2 py-2 bg-white mb-3">{viewProduct.render()}</div>
         </Page>
     })
