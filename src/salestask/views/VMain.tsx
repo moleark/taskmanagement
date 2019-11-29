@@ -68,12 +68,12 @@ export class VMain extends VPage<CSalesTask> {
 
         let none = <div className="my-3 mx-2" style={{ color: '#888' }}>无任务</div>;
         let right = <div className="cursor-pointer py-1" onClick={this.onSalesTaskAdd} >
-            <span className="iconfont  mx-3 icon-tianjia" style={{ fontSize: "20px", color: "#ffffff" }}></span>
+            <span className="iconfont mx-3 icon-tianjia" style={{ fontSize: "20px", color: "#ffffff" }}></span>
         </div>;
 
         let item = { render: this.renderSalesTask, onClick: this.onSalesTaskClick };
         let { tasksNow, dateTasksList } = tasks;
-        return <Page header="任务" onScrollBottom={this.onScrollBottom} right={right} headerClassName={setting.pageHeaderCss}>
+        return <Page header="任务" onScrollBottom={this.onScrollBottom} right={right} headerClassName={setting.pageHeaderCss} >
             {tasksNow.length === 0 && dateTasksList.length === 0 && none}
             {tasksNow.length > 0 && <List before={''} none={none} items={tasksNow} item={item} />}
             {

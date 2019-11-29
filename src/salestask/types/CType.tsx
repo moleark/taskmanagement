@@ -9,7 +9,6 @@ import { VDetailContent } from './share/VDetailContent';
 import { VFinish } from './commonType/VFinish';
 import { setting } from 'appConfig';
 
-/* eslint-disable */
 export abstract class CType extends Controller {
     caption: string;
     cSalesTask: CSalesTask;

@@ -26,12 +26,8 @@ export class VBalanceHistory extends VPage<CBalance> {
 
     private page = observer(() => {
 
-        return <Page header="余额明细" headerClassName={setting.pageHeaderCss} onScrollBottom={this.onScrollBottom} >
+        return <Page header="余额明细" headerClassName={setting.pageHeaderCss}   >
             <List items={this.controller.balanceHistory} item={{ render: this.renderOrder }} none="" />
         </Page >
     });
-
-    private onScrollBottom = async () => {
-        await this.controller.pageBalanceHistory.more();
-    }
 }

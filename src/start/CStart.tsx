@@ -9,34 +9,32 @@ import * as qs from 'querystringify';
 import { setting } from 'appConfig';
 import { InnerSales, AgentSales } from 'model/sales';
 
-/**
- *
- */
 export class CStart extends CUqBase {
 
     //初始化
     protected async internalStart(param: any) {
 
-        this.getIsInnerSales();
-        var isPosition: Boolean;
-        isPosition = await this.isPosition();
-        if (!isPosition) {
+        //判断是销售类型，以及创建销售类型
+        await this.getIsInnerSales();
+        var isPosition: Boolean = await this.isPosition();
+        let isInnerSale: Boolean = setting.sales.isInner;
+
+        //已有邀请码或者是内部销售的不需要输入邀请码
+        if (isPosition || isInnerSale) {
+            this.cApp.cSalesTask.start();
+        } else {
             nav.clear();
             let query = this.getQueryParam();
             if (query.code) {
                 let position = await this.uqs.salesTask.SearchPosition.table({ position: query.code });
                 if (position.length > 0) {
                     await this.openVPage(VConfirm, position[0]);
-                    //await this.openVPage(VStart, param);
                 } else {
                     await this.openVPage(VStart, param);
                 }
             } else {
                 await this.openVPage(VStart, param);
             }
-        }
-        else {
-            await this.cApp.cSalesTask.start();
         }
     }
 

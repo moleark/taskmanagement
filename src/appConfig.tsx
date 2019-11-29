@@ -6,7 +6,7 @@ import { Sales } from './model/sales';
 
 export const appConfig: AppConfig = {
     appName: "百灵威系统工程部/salestask",
-    version: "1.0.86", // 版本变化，缓存的uqs才会重载 
+    version: "1.0.87", // 版本变化，缓存的uqs才会重载 
     tvs: tvs,
     loginTop: jnkTop,
     oem: '百灵威'

@@ -29,17 +29,29 @@ export class InnerSales extends Sales {
     couponDefaultValue = 1;
     achievement(salesAmont: any): JSX.Element {
 
-        return <div className="text-center text-white bg-primary pt-1 pb-5" style={{ borderRadius: '0  0 5rem 5rem', margin: ' 0 -2rem 0 -2rem ' }}>
-            <div className="pb-2 pt-4 cursor-pointer" >
-                <div className="text-warning pt-4" onClick={async () => await this.cApp.cBalance.showAchievementDetail(0)}>
-                    {salesAmont.totalOrderCount <= 0 ?
-                        <div className="h5"> - </div>
-                        :
-                        <div className="h5"><strong><span className="h1">{salesAmont.totalOrderCount}</span><small>个</small></strong></div>
-                    }
-                    <small> 个</small>
+        let { totalOrderCount, oneSaleVolume } = salesAmont
+        return <div className="text-center text-white bg-primary py-5" style={{ borderRadius: '0  0 5rem 5rem', margin: ' 0 -2rem 0 -2rem ' }}>
+            <div className="d-flex mb-2" >
+                <div className="p-2 flex-fill">
+                    <div className="text-warning pt-4" onClick={async () => await this.cApp.cBalance.showAchievementDetail(0)}>
+                        {totalOrderCount <= 0 ?
+                            <div className="h5"> - </div>
+                            :
+                            <div className="h5"><strong><span className="h1">{oneSaleVolume}</span><small>￥</small></strong></div>
+                        }
+                    </div>
+                    <h6 className="text-warning"><small>销售额</small></h6>
                 </div>
-                <h6 className="text-warning"><small>累计订单</small></h6>
+                <div className="p-2 flex-fill">
+                    <div className="text-warning pt-4" onClick={async () => await this.cApp.cBalance.showAchievementDetail(0)}>
+                        {oneSaleVolume <= 0 ?
+                            <div className="h5"> - </div>
+                            :
+                            <div className="h5"><strong><span className="h1">{totalOrderCount}</span><small>个</small></strong></div>
+                        }
+                    </div>
+                    <h6 className="text-warning"><small>订单数</small></h6>
+                </div>
             </div >
             <div className="my-4"></div>
         </div>;

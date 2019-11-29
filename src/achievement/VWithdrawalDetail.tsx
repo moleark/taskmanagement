@@ -11,13 +11,20 @@ export class VWithdrawalDetail extends VPage<CBalance> {
         this.openPage(this.page, order);
     }
 
+    private renderitme(decription: any, val: any): JSX.Element {
+        return <div className="bg-white row px-4 py-1 small">
+            <div className="col-3 text-muted">{decription}</div>
+            <div className="col-9">{val}</div>
+        </div>
+    }
+
     private page = observer((order: any) => {
 
         let { brief, data, state, comments } = order;
         let { no, discription, date } = brief;
         let { amount } = data;
-        discription = discription === "withdrawal" ? "支出" : "汇入";
-
+        let discriptions = discription === "withdrawal" ? "-" : "+";
+        discription = discription === "withdrawal" ? "支出" : "收入";
         let stateShow: string = "";
         if (state.id === 1) {
             stateShow = "处理中";
@@ -28,30 +35,17 @@ export class VWithdrawalDetail extends VPage<CBalance> {
         }
 
         return <Page header="余额明细" headerClassName={setting.pageHeaderCss}>
-            <div className="bg-white row no-gutters p-3 my-1">
-                <div className="col-3 text-muted">类型</div>
-                <div className="col-9">{discription}</div>
+            <div className="text-center bg-white" >
+                <div className="pt-4 h6"> {discription}</div>
+                <div className="py-4 h4"><strong>{discriptions}{amount}</strong></div>
+                <div className="sep-product-select" style={{ width: "90%", margin: '0 auto 0 auto', padding: "10px 0 10px 0" }} />
             </div>
-            <div className="bg-white row no-gutters p-3 my-1">
-                <div className="col-3 text-muted">时间</div>
-                <div className="col-9">{<EasyTime date={date}></EasyTime>}</div>
-            </div>
-            <div className="bg-white row no-gutters p-3 my-1">
-                <div className="col-3 text-muted">单号</div>
-                <div className="col-9">{no}</div>
-            </div>
-            <div className="bg-white row no-gutters p-3 my-1">
-                <div className="col-3 text-muted">金额</div>
-                <div className="col-9">￥{amount}</div>
-            </div>
-            <div className="bg-white row no-gutters p-3 my-1">
-                <div className="col-3 text-muted">状态</div>
-                <div className="col-9">{stateShow}</div>
-            </div>
-            <div className="bg-white row no-gutters p-3 my-1">
-                <div className="col-3 text-muted">备注</div>
-                <div className="col-9">{comments}</div>
-            </div>
+            {this.renderitme("类型", discription)}
+            {this.renderitme("时间", <EasyTime date={date}></EasyTime>)}
+            {this.renderitme("单号", no)}
+            {this.renderitme("状态", stateShow)}
+            {this.renderitme("备注", comments)}
+            <div className="text-center bg-white py-3"></div>
         </Page >
     });
 }

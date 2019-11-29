@@ -80,7 +80,7 @@ export class VProductList extends VPage<CProduct> {
             <div>
                 <div className={classNames('jk-cart ml-1 mr-3', pointer)} onClick={onshowProductBox} >
                     {badge}
-                    <i className="iconfont icon-huowudui" style={{ fontSize: "20px" }}></i>
+                    <i className="iconfont icon-dabao" style={{ fontSize: "20px" }}></i>
                 </div>
             </div>
         </div>;

@@ -37,64 +37,6 @@ export class CSalesTask extends CUqBase {
     @observable tasks: Tasks;
     @observable createproduct: CreateProduct;
 
-    /*
-    protected actionCompletionTask: Action;
-    protected actionCompletionCustomerInfoTask: Action;
-    protected extensionTaskAction: Action;
-    protected addTaskAction: Action;
-    protected createTaskProductAction: Action;
-    protected createTaskProductPackAction: Action;
-    protected createTaskProjectAction: Action;
-    private taskTuid: Tuid;
-    private tuidCustomer: Tuid;
-    private tuidTaskType: Tuid;
-    private tuidProduct: Tuid;
-    private qeurySearchTask: Query;
-    private qeurySearchHistory: Query;
-    private qeurySearchEmployeeHistory: Query;
-    private qeurySearchCustomerHistory: Query;
-    private qeurySearchTaskCompletion: Query;
-    private qeurySearchTaskProduct: Query;
-    private qeurySearchTaskProject: Query;
-    private qeurySearchTaskProductPack: Query;
-
-    private taskBook: any;
-
-    constructor(cApp: CSalesTaskApp, res: any) {
-        super(res);
-        this.cApp = cApp;
-        this.cSelectType = new CSelectType(this, undefined);
-        this.cSalesTaskBiz = new CSelectBiz(this, undefined);
-
-        let { cUqSalesTask, cUqCustomer, cUqProduct } = this.cApp;
-        this.taskTuid = cUqSalesTask.tuid("task");
-        this.tuidCustomer = cUqCustomer.tuid('customer');
-        this.tuidTaskType = cUqSalesTask.tuid("tasktype");
-        this.tuidProduct = cUqProduct.tuid('productx');
-
-        this.taskBook = cUqSalesTask.book("taskbook");
-        this.actionCompletionTask = cUqSalesTask.action('CompletionTask');
-        this.actionCompletionCustomerInfoTask = cUqSalesTask.action('CompletionCustomerInfoTask');
-
-        this.extensionTaskAction = cUqSalesTask.action('ExtensionTask');
-        this.addTaskAction = cUqSalesTask.action('AddTask');
-        this.createTaskProductAction = cUqSalesTask.action('CreateTaskProduct');
-        this.createTaskProjectAction = cUqSalesTask.action('CreateTaskProject');
-        this.createTaskProductPackAction = cUqSalesTask.action('CreateTaskProductPack');
-
-        this.qeurySearchTask = cUqSalesTask.query("searchtask");
-        this.qeurySearchHistory = cUqSalesTask.query("searchhistorytask");
-        this.qeurySearchEmployeeHistory = cUqSalesTask.query("searchhistorytaskbyemployee");
-        this.qeurySearchCustomerHistory = cUqSalesTask.query("searchhistorytaskbycustomer");
-        this.qeurySearchTaskCompletion = cUqSalesTask.query("searchtaskcompletion");
-        this.qeurySearchTaskProduct = cUqSalesTask.query("SearchTaskProduct");
-        this.qeurySearchTaskProject = cUqSalesTask.query("SearchTaskProject");
-        this.qeurySearchTaskProductPack = cUqSalesTask.query("SearchTaskProductPack");
-
-        this.taskTypes = createTaskTypes(this);
-    }
-    */
-
     //初始化
     protected async internalStart(param: any) {
         this.cSelectType = this.newSub(CSelectType);
