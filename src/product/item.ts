@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { ProductPackRow } from './product';
+import { ProductPackRow } from './Product';
 import { Loader } from '../mainSubs/loader';
 import { MainSubs, MainProductChemical, MainBrand } from '../mainSubs';
 import { LoaderProductChemical } from './productChemical';

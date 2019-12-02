@@ -6,8 +6,8 @@ import { MainProductChemical } from '../../model/product';
 import { ViewMainSubs } from '../../mainSubs';
 import { renderBrand } from '../../product/CProduct';
 import { CSalesTask } from '../CSalesTask';
-import { ProductPackRow } from 'product/product';
 import { setting } from 'appConfig';
+import { ProductPackRow } from 'product/Product';
 /* eslint-disable */
 const schema: ItemSchema[] = [
     { name: 'pack', type: 'object' } as ObjectSchema,
