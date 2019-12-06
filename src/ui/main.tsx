@@ -13,7 +13,7 @@ export class VHome extends VPage<CApp> {
     }
 
     opensrc = () => {
-        window.open(setting.downloadAppurl);
+        window.open(setting.sales.downloadAppurl);
     }
 
     render = (param?: any): JSX.Element => {
@@ -58,8 +58,8 @@ export class VHome extends VPage<CApp> {
         if (!browser.versions.html5Plus && browser.versions.android) {
             header = <div className="w-100 mx-3 d-flex  justify-content-between">
                 <div>
-                    <Image src={setting.logo} style={{ width: "25px", height: "25px" }} ></Image>
-                    <span className="small mx-2" >{setting.appName}APP</span>
+                    <Image src={setting.sales.logo} style={{ width: "25px", height: "25px" }} ></Image>
+                    <span className="small mx-2" >{setting.sales.appName}APP</span>
                 </div >
                 <div>  <a download onClick={this.opensrc} className="small">立即打开</a></div>
             </div >;

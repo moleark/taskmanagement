@@ -7,7 +7,7 @@ import { VAgencyClauseDetil } from './VAgencyClauseDetil';
 import { VConfirm } from './VConfirm';
 import * as qs from 'querystringify';
 import { setting } from 'appConfig';
-import { InnerSales, AgentSales } from 'model/sales';
+import { AssistSales, AgentSales } from 'model/sales';
 
 export class CStart extends CUqBase {
 
@@ -15,7 +15,7 @@ export class CStart extends CUqBase {
     protected async internalStart(param: any) {
 
         //判断是销售类型，以及创建销售类型
-        await this.getIsInnerSales();
+        await this.getIsAssistSales();
         var isPosition: Boolean = await this.isPosition();
         let isInnerSale: Boolean = setting.sales.isInner;
 
@@ -39,10 +39,10 @@ export class CStart extends CUqBase {
     }
 
     //判断是否为内部销售
-    getIsInnerSales = async () => {
+    getIsAssistSales = async () => {
         let reult = await this.cApp.uqs.salesTask.WebUserEmployeeMap.query({ webuser: this.user.id });
         if (reult.ret.length > 0) {
-            setting.sales = new InnerSales(this.cApp);
+            setting.sales = new AssistSales(this.cApp);
         } else {
             setting.sales = new AgentSales(this.cApp);
         }

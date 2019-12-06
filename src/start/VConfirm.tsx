@@ -19,9 +19,9 @@ export class VConfirm extends VPage<CStart> {
         code = p1 + ' ' + p2;
         //let url = setting.url + "?type=invitation&code=" + code;
         return <div id="qrid" className="text-center" style={{ width: 'auto', height: '70%' }}  >
-            <Image src={setting.logo} className="mt-4" style={{ width: 'auto', height: '50%', margin: '2rem auto, 0 auto' }} />
+            <Image src={setting.sales.logo} className="mt-4" style={{ width: 'auto', height: '50%', margin: '2rem auto, 0 auto' }} />
             <div className="my-4">
-                <div> {tv(user, v => v.name)}，邀请您加入轻代理。</div>
+                <div> {tv(user, v => v.name)}，邀请您加入{setting.sales.appName}。</div>
                 <div>邀请码：<span className="text-info">{code}</span></div>
             </div>
         </div>

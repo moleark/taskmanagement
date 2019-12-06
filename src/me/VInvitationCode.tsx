@@ -32,7 +32,7 @@ export class VInvitationCode extends VPage<CMe> {
         let { user } = this.controller;
         let { name, nick } = user;
         //5+ 原生分享  
-        let content = (nick ? nick : name) + " 邀请您加入" + setting.appName + "！";
+        let content = (nick ? nick : name) + " 邀请您加入" + setting.sales.appName + "！";
 
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
             // @ts-ignore  屏蔽错误 
@@ -41,7 +41,7 @@ export class VInvitationCode extends VPage<CMe> {
                 content: content,
                 href: url,//分享出去后，点击跳转地址 
                 //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片
-                thumbs: [setting.sharelogo] //分享缩略图  
+                thumbs: [setting.sales.sharelogo] //分享缩略图  
             }, function (result) {
                 //分享回调  
             });
@@ -69,7 +69,7 @@ export class VInvitationCode extends VPage<CMe> {
         return <Page header='邀请码' headerClassName={setting.pageHeaderCss}>
             <div className="text-center bg-white" style={{ height: "100%" }} >
                 <div id="qrid" className="text-center" style={{ width: 'auto', height: '85%' }}  >
-                    <Image src={setting.logo} className="mt-4" style={{ width: 'auto', height: '40%', margin: '2rem auto, 0 auto' }} />
+                    <Image src={setting.sales.logo} className="mt-4" style={{ width: 'auto', height: '40%', margin: '2rem auto, 0 auto' }} />
                     <div>
                         < QRCode style={{ margin: '2rem 0 0 0' }}
                             value={url}  //value参数为生成二维码的链接

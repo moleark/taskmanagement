@@ -73,7 +73,8 @@ export class CMe extends CUqBase {
 
     //计算更新业绩
     onComputeAchievement = async () => {
-        this.salesAmont = await this.cApp.cBalance.getComputeAchievement();
+        let a = await this.cApp.cBalance.getComputeAchievement();
+        this.salesAmont = a;
     }
 
     showAccount = async () => {

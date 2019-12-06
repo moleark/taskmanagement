@@ -1,4 +1,4 @@
-export { jnkTop } from "./jnkTop";
+export { jnkTop, assistjnkTop } from "./jnkTop";
 export { VHome } from './main';
 
 /*测式*/

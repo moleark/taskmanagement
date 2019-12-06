@@ -46,10 +46,15 @@ export class VStart extends VPage<CStart> {
 
     private page = observer((position: any) => {
 
-        return <Page header={setting.appName} headerClassName={setting.pageHeaderCss} logout={true}>
+        return <Page header={setting.sales.appName} headerClassName={setting.pageHeaderCss} logout={true}>
             <div className="text-center  bg-white" style={{ width: 'auto', height: '100%', padding: '1rem 0 0 0' }}  >
-                <div className="pt-4" >欢迎加入轻代理，超越自我，实现共赢！</div>
-                <Image src={setting.logo} className="mt-4" style={{ width: 'auto', height: '30%', margin: '0 auto 0 auto' }} />
+                <div className="pt-4">
+                    <div className="h4 text-info">
+                        欢迎加入{setting.sales.appName}}
+                    </div>
+                    <div className="text-muted">超越自我，实现共赢</div>
+                </div>
+                <Image src={setting.sales.logo} className="mt-4" style={{ width: 'auto', height: '30%', margin: '0 auto 0 auto' }} />
                 <div style={{ height: 'auto', margin: 'auto 5rem auto 5rem' }} >
                     <Form ref={v => this.form = v} className="m-3"
                         schema={schema}

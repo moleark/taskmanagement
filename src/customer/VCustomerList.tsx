@@ -22,8 +22,9 @@ export class VCustomerList extends VPage<CCustomer> {
         let unitShow = <div className=" cursor-pointer text-muted" onClick={onClickCustomer}><small> {tv(unit, s => s.name)}</small></div>;
         let date = <div className=" cursor-pointer small"><EasyDate date={validity} /></div>
         let telephoneShow = mobile && <div className="small" ><a className="text-default" href={"tel:" + mobile} style={{ textDecorationLine: "none" }} ><FA name="phone" className="text-success px-1" />{mobile}</a></div>
+        let webuserid = webuser ? webuser.id : 1;
 
-        return <LMR className="px-2 py-1" left={<UserIcon className="mt-2 mx-2 w-3c h-3c" id={webuser} />} >
+        return <LMR className="px-2 py-1" left={<UserIcon className="mt-1 mx-2 w-3c h-3c" id={webuserid} style={{ borderRadius: '8px' }} />} >
             <LMR className="px-1 pt-2" left={nameShow} right={telephoneShow}>
                 <div className="cursor-pointer w-100" onClick={onClickCustomer}>&nbsp;</div>
             </LMR>

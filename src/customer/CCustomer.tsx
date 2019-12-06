@@ -305,7 +305,7 @@ export class CCustomer extends CUqBase {
     }
 
     /**
-     * 查询MyCustomer是否可能被其他轻代理绑定
+     * 查询MyCustomer是否可能被其他销售助手绑定
      */
     checkBinding = async (mycustomer: any): Promise<boolean> => {
         var customerlis = await this.uqs.customer.getCustomerByKey.query({ key: mycustomer.mobile });

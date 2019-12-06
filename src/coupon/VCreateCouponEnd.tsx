@@ -40,7 +40,7 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
                 content: setting.sales.shareContent(discount),
                 href: url,//分享出去后，点击跳转地址 
                 //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片
-                thumbs: [setting.sharelogo] //分享缩略图  
+                thumbs: [setting.sales.sharelogo] //分享缩略图  
             }, function (result) {
                 //分享回调  
             });
@@ -71,7 +71,7 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
         let header = setting.sales.couponHeader;
         return <Page header={header} headerClassName={setting.pageHeaderCss}>
             <div id="qrid" className="text-center" style={{ width: 'auto', height: '85%' }}  >
-                <Image src={setting.logo} className="mt-4" style={{ width: 'auto', height: '40%', margin: '2rem auto, 0 auto' }} />
+                <Image src={setting.sales.logo} className="mt-4" style={{ width: 'auto', height: '40%', margin: '2rem auto, 0 auto' }} />
                 <div>
                     < QRCode style={{ margin: '2rem 0 0 0' }}
                         value={url}  //value参数为生成二维码的链接

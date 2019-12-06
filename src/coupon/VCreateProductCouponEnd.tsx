@@ -163,7 +163,7 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
                 content: setting.sales.shareContent(discount),
                 href: url,//分享出去后，点击跳转地址 
                 //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片
-                thumbs: [setting.sharelogo] //分享缩略图  
+                thumbs: [setting.sales.sharelogo] //分享缩略图  
             }, function (result) {
                 //分享回调  
             });

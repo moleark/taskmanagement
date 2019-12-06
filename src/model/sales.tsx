@@ -1,32 +1,42 @@
 import * as React from 'react';
 import { CApp } from '../CApp';
 import { setting } from '../appConfig';
+import logo from 'images/logo.png';
+import assistlogo from 'images/assistlogo.png';
+
 
 export abstract class Sales {
     cApp: CApp;
     constructor(cApp: CApp) {
         this.cApp = cApp;
     }
-
     title: string;
+    logo: string;
+    appName: string;
     isInner: Boolean;
     couponHeader: string;
     addCouponHeader: string;
     couponType: string;
     couponDefaultValue: number;
+    downloadAppurl: string;
+    sharelogo: string;
     abstract achievement(achievement: any): JSX.Element;
     abstract shareTitle(type: string): string;
     abstract shareContent(discount: number): string;
     abstract shareUrl(coupon: string, product: any): string;
 }
 
-export class InnerSales extends Sales {
-    title = 'inner sales';
+export class AssistSales extends Sales {
+    title = 'assist sales';
+    logo = assistlogo;
+    appName = "销售助手";
     isInner = true;
     couponHeader = "积分券";
     addCouponHeader = "添加积分券";
     couponType = "credits";
     couponDefaultValue = 1;
+    downloadAppurl = "http://agent.jkchemical.com/download/jk-assist.apk";
+    sharelogo = "https://assist.jkchemical.com/sharelogo.png";
     achievement(salesAmont: any): JSX.Element {
 
         let { totalOrderCount, oneSaleVolume } = salesAmont
@@ -74,11 +84,15 @@ export class InnerSales extends Sales {
 
 export class AgentSales extends Sales {
     title = 'angent sales';
+    appName = "轻代理";
+    logo = logo;
     isInner = false;
     couponHeader = "优惠券";
     addCouponHeader = "添加优惠券";
     couponType = "coupon";
     couponDefaultValue = 9.5;
+    downloadAppurl = "http://agent.jkchemical.com/download/jk-agent.apk";
+    sharelogo = "https://agent.jkchemical.com/sharelogo.png";
     divTag(titel: string, achievement: number, status: number) {
         let onClick: any;
         if (status === 1) {
