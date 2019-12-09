@@ -73,20 +73,21 @@ export class VProductDetail extends VPage<CProduct> {
                 price = retail;
             }
 
-            if (agentPrice) {
-
-                let discount = ((1 - ((retail - agentPrice) / retail)) * 10)
-                if (discount < 10) {
-                    agent = <span>
-                        <span className="small ml-2">
-                            <strong className="small"><span className="small">{discount.toFixed(1)}折</span></strong>
-                        </span>
-                    </span>;
+            if (!setting.sales.isInner) {
+                if (agentPrice) {
+                    let discount = ((1 - ((retail - agentPrice) / retail)) * 10)
+                    if (discount < 10) {
+                        agent = <span>
+                            <span className="small ml-2">
+                                <strong className="small"><span className="small">{discount.toFixed(1)}折</span></strong>
+                            </span>
+                        </span>;
+                    } else {
+                        agent = <span className="small ml-2"> <strong className="small"><span className="small">无折扣</span></strong></span >;
+                    }
                 } else {
                     agent = <span className="small ml-2"> <strong className="small"><span className="small">无折扣</span></strong></span >;
                 }
-            } else {
-                agent = <span className="small ml-2"> <strong className="small"><span className="small">无折扣</span></strong></span >;
             }
 
             right = <div className="row">

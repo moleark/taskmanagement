@@ -11,7 +11,7 @@ export class VConfirm extends VPage<CStart> {
         this.openPage(this.page, position);
     }
 
-    private meInfoa(position: any) {
+    private meInfoAgent(position: any) {
         let { code, user } = position;
         code = code + "";
         let p1 = code.substr(0, 4);
@@ -26,6 +26,22 @@ export class VConfirm extends VPage<CStart> {
             </div>
         </div>
     }
+    private meInfoAssist(position: any) {
+        let { code, user } = position;
+        code = code + "";
+        let p1 = code.substr(0, 4);
+        let p2 = code.substr(4);
+        code = p1 + ' ' + p2;
+        //let url = setting.url + "?type=invitation&code=" + code;
+        return <div id="qrid" className="text-center" style={{ width: 'auto', height: '70%', padding: "100px 0 0 0 " }}  >
+            <Image src={setting.sales.logo} style={{ width: 'auto', height: '30%', margin: '10rem auto, 0 auto' }} />
+            <div className="my-4">
+                <div className="text-info py-2"> 您还不是内部销售</div>
+                <div className="text-info py-2">请联系管理员开通内部销售权限</div>
+            </div>
+        </div>
+    }
+
     private CreatePosition = async (code: string) => {
         await this.controller.createPosition({ invitacode: code });
     }
@@ -33,11 +49,14 @@ export class VConfirm extends VPage<CStart> {
     private page = observer((position: any) => {
 
         let onCreatePosition = async () => await this.CreatePosition(position.code + "");
-        let footer = <div className="d-block">
-            <button type="button" className="btn btn-primary w-100" onClick={onCreatePosition}>确认</button>
-        </div>
-        return <Page header='邀请人' headerClassName={setting.pageHeaderCss} logout={true} back='none' footer={footer} >
-            {this.meInfoa(position)}
+        let footer: any = setting.sales.isInner ? undefined :
+            <div className="d-block">
+                <button type="button" className="btn btn-primary w-100" onClick={onCreatePosition}>确认</button>
+            </div>
+
+        let header = setting.sales.isInner ? "提示" : "邀请人";
+        return <Page header={header} headerClassName={setting.pageHeaderCss} logout={true} back='none' footer={footer} >
+            {setting.sales.isInner ? this.meInfoAssist(position) : this.meInfoAgent(position)}
         </Page>
 
     })

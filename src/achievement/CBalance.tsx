@@ -8,6 +8,7 @@ import { VBalanceHistory } from './VBalanceHistory';
 import { observable } from 'mobx';
 import { VAchievementDetail } from './VAchievementDetail';
 import { VWithdrawalDetail } from './VWithdrawalDetail';
+import { VAssistAchievementDetail } from './VAssistAchievementDetail';
 
 class PageBalanceHistory extends PageItems<any> {
 
@@ -68,6 +69,11 @@ export class CBalance extends CUqBase {
     //显示业绩历史记录
     showAchievementDetail = async (param: any) => {
         this.openVPage(VAchievementDetail, param);
+    }
+
+    //显示业绩历史记录
+    showAssistAchievementDetail = async (param: any) => {
+        this.openVPage(VAssistAchievementDetail, param);
     }
 
     //显示余额

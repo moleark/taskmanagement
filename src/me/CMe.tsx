@@ -29,8 +29,12 @@ export class CMe extends CUqBase {
     load = async () => {
         await nav.loadMe();
         this.position = await this.uqs.salesTask.SearchPosition.table({ position: undefined });
-        let code = String(this.position[0].code + 100000000);
-        this.inviteCode = code;
+        if (this.position.length > 0) {
+            let code = String(this.position[0].code + 100000000);
+            this.inviteCode = code;
+        } else {
+            this.inviteCode = "100000000";
+        }
     }
 
     //显示我的个人信息
