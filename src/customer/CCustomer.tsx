@@ -97,8 +97,8 @@ export class CCustomer extends CUqBase {
     @observable pageCustomer: PageMyCustomer;
     @observable pageCustomerSearch: PageMyCustomerSearch;
     @observable pageMyCustomerActive: PageMyCustomerActive;
-    @observable innerCustomer: any;
     @observable newMyCustomerList: any[];
+    @observable customertask: any;
     private task: Task;
 
     //初始化
@@ -168,14 +168,10 @@ export class CCustomer extends CUqBase {
     }
 
     //查询客户--通过ID
-    showCustomerDetail = async (customerid: number) => {
-        let mycustomer = await this.loadCustomerDetail(customerid);
-        let customer = await this.uqs.salesTask.CustomerMyCustomerMap.query({ mycustomer: mycustomer.id });
-        if (customer.ret.length > 0) {
-            this.innerCustomer = customer.ret[0].customer;
-        } else {
-            this.innerCustomer = null;
-        }
+    showCustomerDetail = async (customer: any) => {
+        let { id } = customer;
+        let mycustomer = await this.loadCustomerDetail(id);
+        this.customertask = await this.uqs.salesTask.SearchTask.table({ customer: id });
         this.openVPage(VCustomerDetail, mycustomer);
     }
 

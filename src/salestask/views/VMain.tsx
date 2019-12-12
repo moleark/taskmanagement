@@ -35,11 +35,6 @@ export class VMain extends VPage<CSalesTask> {
         this.controller.showTaskDetailEdit(task);
     }
 
-    //添加任务
-    private onSalesTaskAdd = async () => {
-        await this.controller.showSelectTaskType();
-    }
-
     private renderSalesTask = (salesTask: any, index: number) => {
 
         let { bizName, customer, priorty, description } = salesTask;
@@ -62,12 +57,11 @@ export class VMain extends VPage<CSalesTask> {
     }
 
     private page = observer(() => {
-
         let { tasks } = this.controller;
         if (tasks === undefined) return null;
 
         let none = <div className="my-3 mx-2" style={{ color: '#888' }}>无任务</div>;
-        let right = <div className="cursor-pointer py-1" onClick={this.onSalesTaskAdd} >
+        let right = <div className="cursor-pointer py-1" onClick={async () => this.controller.showSelectTaskType(undefined)} >
             <span className="iconfont mx-3 icon-tianjia" style={{ fontSize: "20px", color: "#ffffff" }}></span>
         </div>;
 

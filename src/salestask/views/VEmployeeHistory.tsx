@@ -42,8 +42,8 @@ export class VEmployeeHistory extends VPage<CSalesTask> {
     }
 
     private page = observer(() => {
-        let none = <div className="m-3 text-muted small">【暂无已完成的任务！】</div>;
-        return <Page header="已完成任务" headerClassName={setting.pageHeaderCss}>
+        let none = <div className="m-3 text-muted small">【暂无历史任务！】</div>;
+        return <Page header="历史任务" headerClassName={setting.pageHeaderCss}>
             <List before={''} none={none} items={this.tasks} item={{ render: this.renderSalesTask, onClick: this.onTaskClick }} />
         </Page>
     })

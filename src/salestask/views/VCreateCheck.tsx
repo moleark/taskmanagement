@@ -35,7 +35,6 @@ export class VCreateCheck extends VPage<CSalesTask> {
         let { showCustomerDetail } = this.controller.cApp.cSalesTask;
         let { customer, type, biz } = task;
 
-        let onClickCustoemr = async () => await showCustomerDetail(customer.id);
         let rows: Prop[] = [
             {
                 type: 'component',
@@ -48,7 +47,7 @@ export class VCreateCheck extends VPage<CSalesTask> {
             {
                 type: 'component',
                 name: 'customer',
-                component: <LMR className={this.itemss} onClick={onClickCustoemr}
+                component: <LMR className={this.itemss} onClick={() => showCustomerDetail(customer)}
                     left={<div> <FA name="user" className="text-info mr-2 pt-1 " /> </div>}
                     right={<div className="text-right"><i className="fa fa-chevron-right" /></div>}>
                     {tv(customer, v => <>{v.name}</>)}

@@ -11,13 +11,11 @@ export class VCreateTop extends View<CType> {
     render(task: Task) {
         let { showCustomerDetail } = this.controller.cSalesTask;
         let { customer } = task;
-
-        let onClickCustoemr = async () => await showCustomerDetail(customer.id);
         let rows: Prop[] = [
             {
                 type: 'component',
                 name: 'customer',
-                component: <LMR className={this.itemss} onClick={onClickCustoemr}
+                component: <LMR className={this.itemss} onClick={() => showCustomerDetail(customer)}
                     left={<div> <FA name="user" className="text-info mr-2 pt-1 " /> </div>}
                     right={<div className="text-right"><i className="fa fa-chevron-right" /></div>}>
                     {tv(customer, v => <>{v.name}</>)}

@@ -125,9 +125,11 @@ export class AgentSales extends Sales {
     shareTitle(type: string): string {
         return type === "coupon" ? "折扣券" : "专享折扣券";
     };
+
     shareContent(discount: number): string {
-        return "可享受" + ((1 - discount) * 10).toFixed(1) + "折";
+        return "最多可享受" + ((1 - discount) * 10).toFixed(1) + "折";
     };
+
     shareUrl(coupon: string, product: any): string {
         if (product) {
             return setting.carturl + "?type=" + this.couponType + "&coupon=" + coupon + "&productids=" + product;

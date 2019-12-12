@@ -14,11 +14,9 @@ export class VDetailTop extends View<CType> {
 
     render(task: Task) {
 
-        let { showCustomerDetail, showTaskHistory } = this.controller.cSalesTask;
-        let { type, biz, customer, description, deadline, id } = task;
-        // eslint-disable-next-line 
-        let onShowSalesTaskHistory = async () => await showTaskHistory(id);
-        let onClickCustomer = async () => await showCustomerDetail(customer.id);
+        let { showCustomerDetail } = this.controller.cSalesTask;
+        let { customer, description, deadline } = task;
+        let onClickCustomer = () => showCustomerDetail(customer);
 
         let rows: Prop[] = [
             {

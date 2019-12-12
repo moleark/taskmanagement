@@ -117,7 +117,7 @@ export class CSelectType extends CUqSub {
         let { name } = customer.obj;
 
         await this.uqs.salesTask.ImportTask.submit({ task: id, customername: name, organization: this.organization.id, organizationName: this.organization.name });
-        await this.owner.searchTaskByKey('');
+        await this.owner.searchTaskByKey(0);
     }
 
     searchCustomerRelation = async (param: any) => {

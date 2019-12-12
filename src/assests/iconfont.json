@@ -83,6 +83,13 @@
       "unicode_decimal": 59355
     },
     {
+      "icon_id": "1350112",
+      "name": "头像",
+      "font_class": "photo",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
       "icon_id": "1403074",
       "name": "查询",
       "font_class": "icon-chaxun",
@@ -116,6 +123,20 @@
       "font_class": "youhuiquan1",
       "unicode": "e63f",
       "unicode_decimal": 58943
+    },
+    {
+      "icon_id": "2129812",
+      "name": "事业单位",
+      "font_class": "shiyedanwei",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "2559428",
+      "name": "新用户",
+      "font_class": "xinyonghu",
+      "unicode": "e6b2",
+      "unicode_decimal": 59058
     },
     {
       "icon_id": "2594641",

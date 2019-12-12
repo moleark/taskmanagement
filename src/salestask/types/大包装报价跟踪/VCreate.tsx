@@ -8,7 +8,7 @@ import { Task } from '../../model';
 
 const schema: Schema = [
     { name: 'description', type: 'string', required: false },
-    { name: 'priorty', type: 'number', required: false },
+    //{ name: 'priorty', type: 'number', required: false },
     { name: 'deadline', type: 'string', required: false },
     //{ name: 'submit', type: 'submit' },
 ];
@@ -21,7 +21,7 @@ export class VCreate extends VPage<CType> {
     private uiSchema: UiSchema = {
         items: {
             description: { widget: 'text', label: '内容', placeholder: '请填写任务内容' } as UiInputItem,
-            priorty: { widget: 'checkbox', label: '重要性', placeholder: '重要性' } as UiCheckItem,
+            //priorty: { widget: 'checkbox', label: '重要性', placeholder: '重要性' } as UiCheckItem,
             deadline: { widget: 'date', label: '要求完成时间', placeholder: '要求完成时间' } as UiInputItem,
             submit: { widget: 'button', label: '提交', },
         }

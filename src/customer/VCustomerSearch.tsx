@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, LMR, List, SearchBox, FA, tv } from 'tonva';
+import { VPage, Page, LMR, List, SearchBox, tv, EasyDate, UserIcon } from 'tonva';
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
 import { setting } from 'appConfig';
@@ -16,31 +16,32 @@ export class VCustomerSearch extends VPage<CCustomer> {
     }
 
     private renderCustomer = (customer: any, index: number) => {
-        let binded = this.controller.checkBinding(customer);
+        let { showCustomerDetail } = this.controller;
+        let onshowCustomerDetail = () => showCustomerDetail(customer);
 
-        let { name, unit } = customer;
-        let left = <div><FA name='user' className=' my-2 mr-3 text-info' /> <span className="font-weight-bold">{name}</span></div>
-        let right = <div className="text-muted  my-2 mr-3 "><small> {binded ? tv(unit, s => s.name) : tv(unit, s => s.id)}</small></div>;
-        return <LMR className="px-3 py-2" left={left} right={right}></LMR>
+        let { name, unit, validity, webuser } = customer;
+        let nameShow = <div className="cursor-pointer font-weight-bold w-100">{name}</div>;
+        let unitShow = <div className=" cursor-pointer text-muted"><small> {tv(unit, s => s.name)}</small></div>;
+        let date = <div className=" cursor-pointer small"><EasyDate date={validity} /></div>
+        let webuserid = webuser ? webuser.id : 47;
+        return <LMR onClick={onshowCustomerDetail} className="px-2 py-1" left={<UserIcon className="mt-1 mx-2 w-3c h-3c" id={webuserid} style={{ borderRadius: '8px' }} />} >
+            <LMR className="px-1 pt-2" left={nameShow} ></LMR>
+            <LMR className="px-1" left={unitShow} right={date}></LMR>
+        </LMR>
     }
 
-    private onClickCustomer = async (model: any) => {
-        await this.controller.showCustomerDetail(model.id);
-    }
 
     private page = observer((customer: any) => {
-        let { pageCustomerSearch, showSelectOrganization } = this.controller;
-
-        let onShowSelectOrganzation = async () => await showSelectOrganization(1);
+        let { pageCustomerSearch, showSelectOrganization, showCustomerDetail } = this.controller;
         let none = <div className="my-3 mx-2 text-warning">
-            还没有这个客户，是否<span className="text-primary" onClick={onShowSelectOrganzation}  >创建客户！</span>
+            还没有这个客户，是否<span className="text-primary" onClick={() => showSelectOrganization(1)}  >创建客户！</span>
         </div>;
         return <Page header='搜索客户' onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss}>
             <SearchBox className="px-1 w-100  mt-2 mr-2"
                 size='md'
                 onSearch={(key: string) => this.controller.searchCustomerByKey(key)}
                 placeholder="搜索客户姓名、单位" />
-            <List before={''} none={none} items={pageCustomerSearch} item={{ render: this.renderCustomer, onClick: this.onClickCustomer }} />
+            <List before={''} none={none} items={pageCustomerSearch} item={{ render: this.renderCustomer, onClick: () => () => showCustomerDetail(customer) }} />
         </Page>
     })
 

@@ -25,6 +25,7 @@ import { VProductPackDetail } from './views/VProductPackDetail';
 import { VCreateTask } from './views/VCreateTask';
 import { CCommonType } from './types/commonType';
 import { CType } from './types/CType';
+import { VCreateTaskOfCustomer } from './views/VCreateTaskOfCustomer';
 
 /* eslint-disable */
 export class CSalesTask extends CUqBase {
@@ -44,13 +45,13 @@ export class CSalesTask extends CUqBase {
 
         this.taskTypes = createTaskTypes(this);
 
-        await this.searchTaskByKey(param);
+        await this.searchTaskByKey(0);
     }
 
     //搜索开始------------------------------------------------
     //搜索所有未处理任务
-    searchTaskByKey = async (key: string) => {
-        let tasks = await this.uqs.salesTask.SearchTask.table({});
+    searchTaskByKey = async (key: any) => {
+        let tasks = await this.uqs.salesTask.SearchTask.table({ customer: key });
         this.tasks = new Tasks(tasks);
     }
     //搜索单个任务
@@ -294,7 +295,7 @@ export class CSalesTask extends CUqBase {
 
     //添加任务开始------------------------------------------------
     //显示任务类页面
-    showSelectTaskType = async () => {
+    showSelectTaskType = async (customer: any) => {
         //return await this.cSalesTaskType.call();
         //await this.cSelectType.start();
         let type = {
@@ -315,12 +316,42 @@ export class CSalesTask extends CUqBase {
             description: null as any,
             remindDate: null as any,
             deadline: null as any,
-            customer: null as any
+            customer: customer
         }
         //this.cApp.cCustomer.showSelectCustomer(task);
         this.openVPage(VCreateTask, task);
 
     }
+
+    showCreateTaskOfCustomer = async (customer: any) => {
+        //return await this.cSalesTaskType.call();
+        //await this.cSelectType.start();
+        let type = {
+            id: 1,
+            name: 'qualify',
+            description: '任务'
+        };
+        let biz = {
+            id: 1,
+            name: 'nonreagent',
+            description: ''
+        };
+
+        let task = {
+            id: null as any,
+            type: type,
+            biz: biz,
+            description: null as any,
+            remindDate: null as any,
+            deadline: null as any,
+            customer: customer
+        }
+        //this.cApp.cCustomer.showSelectCustomer(task);
+        this.openVPage(VCreateTaskOfCustomer, task);
+
+    }
+
+
     //显示选择处理方式的页面
     showCrateCheck = async (task: Task) => {
         this.openVPage(VCreateCheck, task);
@@ -329,7 +360,7 @@ export class CSalesTask extends CUqBase {
     //添加任务
     createTask = async (param: any, task: Task) => {
         let newtask = await this.createTasks(task);
-        await this.searchTaskByKey('');
+        await this.searchTaskByKey(0);
     }
 
     private createTasks = async (task: Task) => {

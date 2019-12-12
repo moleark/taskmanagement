@@ -1,13 +1,11 @@
 import * as React from 'react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { VPage, Page, Schema, UiSchema, UiInputItem, UiRadio, tv, LMR, ComponentProp, Prop, PropGrid, FA } from 'tonva';
+import { VPage, Page, Schema, UiSchema, UiInputItem, UiRadio, tv, LMR, ComponentProp, Prop, PropGrid, FA, List, EasyDate } from 'tonva';
 import { CCustomer } from './CCustomer';
 import { mobileValidation, nameValidation, emailValidation } from 'tools/inputValidations';
-import { GLOABLE } from 'ui';
 import { setting } from 'appConfig';
 
-/* eslint-disable */
 export const myCustomerSchema: Schema = [
     { name: 'name', type: 'string', required: true },
     { name: 'salutation', type: 'string' },
@@ -65,32 +63,51 @@ const genderText: { [v: number]: string } = {
 export class VCustomerDetail extends VPage<CCustomer> {
 
     @observable private customer: any;
-    @observable isBinded: boolean = false;
-    @observable bindTip: any = "";
+    isBinded: boolean = false;
 
-    async open(customer: any) {
-        this.customer = customer;
-        this.openPage(this.page, customer);
+    async open(param: any) {
+        this.customer = param;
+        this.checkBinding();
+        this.openPage(this.page, param);
     }
 
     private checkBinding = async () => {
         let binded = await this.controller.checkBinding(this.customer);
         if (binded) {
-            this.bindTip = <div className="alert alert-danger py-2" role="alert">
-                <FA name="exclamation-circle" className="text-warning float-left mr-3" size="2x"></FA>
-                该客户可能已被绑定</div>
+            this.isBinded = true;
         }
         else {
-            this.bindTip = <div className="alert alert-success py-2" role="alert">
-                <FA name="check-circle" className="text-warning float-left mr-3" size="2x"></FA>
-                可以绑定</div>
+            this.isBinded = false;
         }
-        setTimeout(() => {
-            this.bindTip = "";
-        }, GLOABLE.TIPDISPLAYTIME);
+    }
+
+    private renderTask = (taskhistory: any, index: number) => {
+        let { description, deadline } = taskhistory;
+        return <div className="d-block py-2 px-3">
+            <LMR left={<strong>{description}</strong>}
+                right={<small className="text-muted">{<EasyDate date={deadline} />} </small>}>
+            </LMR>
+        </div>;
+    }
+
+    private renderTitle = (title: string, iconeidit: string, eiditAction: any, iconeqita: string, qitaActiom: any) => {
+        let iconeiditname = "iconfont " + iconeidit + " text-primary";
+        let iconeqitaname = "iconfont " + iconeqita + " text-primary ml-3";
+        return <div>
+            <div className="px-3 py-2 strong d-flex justify-content-between">
+                <div>
+                    <strong className="text-primary">{title}</strong>
+                </div>
+                <div>
+                    {iconeidit === "" ? undefined : <span className={iconeiditname} style={{ fontSize: "18px" }} onClick={eiditAction} ></span>}
+                    {iconeqita === "" ? undefined : <span className={iconeqitaname} style={{ fontSize: "18px" }} onClick={qitaActiom} ></span>}
+                </div>
+            </div>
+        </div >;
     }
 
     private page = observer((param: any) => {
+
         let { cSalesTask } = this.controller.cApp
         let { showCustomerHistory } = cSalesTask;
         let { id: customerid, unit, name, salutation, telephone, gender, email, wechat, teacher, addressString, potential, research, mobile } = param
@@ -98,26 +115,20 @@ export class VCustomerDetail extends VPage<CCustomer> {
         var genderShow = gender === undefined ? "" : genderText[gender];
         var potentialShow = potential === undefined ? "[无]" : potentialText[potential];
         var researchShow = research === undefined ? "[无]" : researchText[research];
-        let onshowCustomerHistory = async () => await showCustomerHistory(customerid);
+        let telephoneShow = mobile && <div><a className="text-default" href={"tel:" + mobile} style={{ textDecorationLine: "none" }} ><FA name="phone" className="text-success px-1" />{mobile}</a></div>
+
+
 
         let rows: Prop[] = [];
         if (unit) rows.push(
             {
                 type: 'component',
                 name: 'customer',
-                component: <LMR className="cursor-pointer w-100 py-3"
-                    left={<div><small><FA name='university' className='text-info mr-2' /></small>{tv(unit)}</div>}>
-                </LMR >,
+                component: <LMR className="cursor-pointer w-100 py-2"
+                    left={<div><small></small>单位</div>}
+                    right={<div className="text-right">{tv(unit)}</div >}>
+                </LMR >
             } as ComponentProp
-        );
-        rows.push({
-            type: 'component',
-            name: 'customer',
-            component: <LMR className="cursor-pointer w-100 py-3" onClick={onshowCustomerHistory}
-                left={<div><small><FA name='hand-o-right' className='text-info mr-2' /></small>沟通记录</div>}
-                right={<div className="w-2c text-right"><i className="fa fa-chevron-right small" /></div >}>
-            </LMR >,
-        } as ComponentProp
         );
         rows.push({
             type: 'component',
@@ -151,7 +162,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
             name: 'mobile',
             component: <LMR className="cursor-pointer w-100 py-2"
                 left={<div><small></small>手机号</div>}
-                right={<div className="text-right">{mobile}</div >}>
+                right={telephoneShow}>
             </LMR >,
         } as ComponentProp
         );
@@ -218,21 +229,29 @@ export class VCustomerDetail extends VPage<CCustomer> {
             </LMR >,
         } as ComponentProp
         );
+        rows.push({
+            type: 'component',
+            name: 'binding',
+            component: <LMR className="cursor-pointer w-100 py-2"
+                left={<div><small></small>绑定状态</div>}
+                right={this.isBinded ? "已绑定" : "未绑定"}>
+            </LMR >,
+        } as ComponentProp
+        );
 
-        let { showCustomerEdit } = this.controller;
-        let onshowCustomerEdit = async () => await showCustomerEdit(this.customer);
-        let right = <div className="cursor-pointer py-1" onClick={onshowCustomerEdit}>
-            <i className="iconfont icon-bianji mr-3" style={{ fontSize: "20px" }}></i>
-        </div>;
+        let { showCustomerEdit, cApp, customertask } = this.controller;
+        let onshowCustomerEdit = () => showCustomerEdit(this.customer);
+        let onshowAddTsak = () => cApp.cSalesTask.showCreateTaskOfCustomer(this.customer);
+        let onshowCustomerHistory = () => showCustomerHistory(customerid);
         let header: any = <span>{this.customer.name}</span>;
-        let footer = <div className="d-block">
-            {this.bindTip}
-            <div className="w-100  justify-content-end" >
-                <button type="button" className="btn btn-primary mx-1 my-1 " onClick={this.checkBinding}>查询绑定</button>
-            </div>
-        </div>
-        return <Page header={header} headerClassName={setting.pageHeaderCss} right={right} footer={footer} >
-            <PropGrid className="my-2" rows={rows} values={this.customer} alignValue="right" />
+
+        return <Page header={header} headerClassName={setting.pageHeaderCss}>
+            {this.renderTitle("基本信息", "icon-bianji", onshowCustomerEdit, "", onshowCustomerEdit)}
+            <PropGrid rows={rows} values={this.customer} alignValue="right" />
+            {this.renderTitle("待办事项", "icon-tianjia", onshowAddTsak, "icon-qita", onshowCustomerHistory)}
+            {
+                <List before={''} none="无" items={customertask} item={{ render: this.renderTask }} />
+            }
         </Page >
     })
 }

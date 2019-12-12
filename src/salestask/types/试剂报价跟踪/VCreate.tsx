@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, PageItems, Schema, Form, Context, UiIdItem, UiCheckItem } from 'tonva';
+import { VPage, Page, PageItems, Schema, Form, Context, UiCheckItem } from 'tonva';
 import { observer } from 'mobx-react';
 import { UiSchema, UiInputItem } from 'tonva';
 import { setting } from 'appConfig';
