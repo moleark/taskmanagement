@@ -34,7 +34,6 @@ export class VFinish extends VPage<CCommonType> {
         })
         this.task.fields = fieldValues;
         await this.controller.cSalesTask.finishTask(this.task);
-        this.closePage(2);
     }
 
     private onCreateProduct = async () => {

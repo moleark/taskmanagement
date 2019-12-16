@@ -150,6 +150,7 @@ export class CSalesTask extends CUqBase {
             await this.uqs.salesTask.CompletionTask.submit(param);
         }
         this.tasks.remove(task);
+        await this.cApp.cCustomer.getActiveTasks(task.customer);
         this.closePage(2);
     }
 
@@ -359,8 +360,9 @@ export class CSalesTask extends CUqBase {
 
     //添加任务
     createTask = async (param: any, task: Task) => {
-        let newtask = await this.createTasks(task);
+        await this.createTasks(task);
         await this.searchTaskByKey(0);
+        await this.cApp.cCustomer.getActiveTasks(task.customer)
     }
 
     private createTasks = async (task: Task) => {

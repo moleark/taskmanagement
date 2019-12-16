@@ -13,7 +13,7 @@ export class VBalance extends VPage<CBalance> {
 
     private page = observer(() => {
 
-        let { salesAmont } = this.controller.cApp.cMe;
+        let { salesAmont } = this.controller;
         let { totalReceivableAmount, totalaWithdrawal, waitWithdrawal } = salesAmont;
         let balance: number = totalReceivableAmount - totalaWithdrawal - waitWithdrawal;
         let right = <div className="cursor-pointer py-2 mx-3" onClick={this.controller.showBalanceHistory} >余额明细</div>;
@@ -27,7 +27,7 @@ export class VBalance extends VPage<CBalance> {
                 <div style={{ padding: "0px 80px 6px 80px" }}>我的余额</div>
                 <div className="strong">
                     <FA name="cny" className="h3"> </FA>
-                    <span className="h1 mx-1"> <strong>{balance.toFixed(2)}</strong></span>
+                    <span className="h1 mx-1"> <strong>{(totalReceivableAmount - totalaWithdrawal - waitWithdrawal).toFixed(2)}</strong></span>
                 </div>
                 <div style={{ margin: "150px 10px 10px 10px" }}>
                     <button type="button" disabled={buttondisabled} className="btn btn-primary" style={{ padding: "6px 70px" }} onClick={onshowVWithdrawal}>提现</button>

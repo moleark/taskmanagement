@@ -13,7 +13,7 @@ class WithdrawalAmount extends Widget {
 
     private onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
         let val = evt.currentTarget.value;
-        if (val && !/(^[\-0-9][0-9]*(.[0-9]+)?)$/.test(val)) {
+        if (val && !/(^[0-9]+(.[0-9]{2})?$)/.test(val)) {
             evt.currentTarget.value = "";
         }
         this.setValue(val);
@@ -21,9 +21,8 @@ class WithdrawalAmount extends Widget {
     render = () => {
         return <div >
             <div className="d-flex my-2 ">
-                <FA name="cny" className="h2" /><input type="text" className="mx-1" style={{ width: "100%", height: "35px" }} onChange={this.onChange} ></input>
+                <FA name="cny" className="h2" /><input type="text" className="mx-1 text-censter mp-4" style={{ width: "100%", height: "35px" }} onChange={this.onChange} ></input>
             </div>
-            <div className="small text-muted">{}</div>
         </div >
     };
 }
@@ -37,7 +36,7 @@ export class VWithdrawal extends VPage<CBalance> {
                 label: '提现金额',
                 WidgetClass: WithdrawalAmount,
             } as UiCustom,
-            submit: { widget: 'button', label: '提现', className: 'btn btn-primary w-20c' },
+            submit: { widget: 'button', label: '提现', className: 'btn btn-primary w-100' },
         }
     }
 

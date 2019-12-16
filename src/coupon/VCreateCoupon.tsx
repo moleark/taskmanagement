@@ -8,12 +8,13 @@ import { GLOABLE } from 'ui';
 import { setting } from 'appConfig';
 
 const schema: Schema = [
-    { name: 'validitydate', type: 'date', required: false },
+    /*{ name: 'validitydate', type: 'date', required: false },*/
     { name: 'discount', type: 'string', required: false },
     { name: 'businesstype', type: 'string', required: false },
     { name: 'submit', type: 'submit' },
 ];
 
+/*
 class ValidityDate extends Widget {
     @observable dateVisible = false;
     private list = [
@@ -33,6 +34,7 @@ class ValidityDate extends Widget {
         </div>
     };
 }
+*/
 
 class BusinessType extends Widget {
     @observable dateVisible = false;
@@ -100,7 +102,7 @@ class Discount extends Widget {
 }
 
 const oneWeek = new Date(Date.now() + 7 * 24 * 3600 * 1000);
-const twoWeeks = new Date(Date.now() + 7 * 24 * 3600 * 1000);
+const twoWeeks = new Date(Date.now() + 14 * 24 * 3600 * 1000);
 
 export class VCreateCoupon extends VPage<CCoupon> {
 
@@ -109,12 +111,14 @@ export class VCreateCoupon extends VPage<CCoupon> {
 
     private uiSchema: UiSchema = {
         items: {
+            /**
             validitydate: {
                 widget: 'custom',
                 label: '有效期',
                 WidgetClass: ValidityDate,
                 defaultValue: 1,
             } as UiCustom,
+            **/
             discount: {
                 widget: 'custom',
                 label: '折扣',
@@ -140,6 +144,7 @@ export class VCreateCoupon extends VPage<CCoupon> {
 
     private onFormButtonClick = async (name: string, context: Context) => {
         let data = _.clone(context.data)
+        /*
         let { validitydate, discount } = data;
         if (validitydate === undefined || discount === undefined) {
             this.tip = "提示：请选择有效期和折扣！";
@@ -147,7 +152,8 @@ export class VCreateCoupon extends VPage<CCoupon> {
             setTimeout(() => this.showTip = false, GLOABLE.TIPDISPLAYTIME);
             return;
         }
-
+        */
+        let { discount } = data;
         let disc = parseFloat(discount);
         if (isNaN(disc) || disc > 10 || disc <= 0) {
             this.tip = "提示：折扣必须是数字，且介于0和10之间！";
@@ -157,7 +163,7 @@ export class VCreateCoupon extends VPage<CCoupon> {
         }
 
         this.showTip = false;
-        data.validitydate = this.validDateFrom(validitydate);
+        data.validitydate = this.validDateFrom(2);
         data.discount = _.round(1 - disc * 0.1, 2);
 
         let { createCoupon } = this.controller;

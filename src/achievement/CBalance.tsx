@@ -54,13 +54,12 @@ export class CBalance extends CUqBase {
         let query = { user: this.user.id };
         let result = await this.uqs.salesTask.SearchAchievement.obj(query);
         if (result) {
-            return result;
+            this.salesAmont = result;
         }
     }
 
     //搜索业绩历史记录
     searchAchievementDetail = async (type: number, status: number) => {
-        this.salesAmont = await this.getComputeAchievement();
         let param = { types: type, state: status };
         let list = await this.uqs.salesTask.SearchAchievementHistory.table(param);
         return list;
@@ -68,6 +67,7 @@ export class CBalance extends CUqBase {
 
     //显示业绩历史记录
     showAchievementDetail = async (param: any) => {
+        await this.getComputeAchievement();
         this.openVPage(VAchievementDetail, param);
     }
 
@@ -83,19 +83,31 @@ export class CBalance extends CUqBase {
 
     //显示提款页面
     showVWithdrawal = async (balance: number) => {
-        await this.openVPage(VWithdrawal, balance);
+        let account = await this.uqs.salesTask.WebUserAccountMap.query({ webuser: this.user.id });
+        if (account.ret.length > 0) {
+            let { telephone, identityname, identitycard, identityicon, subbranchbank, bankaccountnumber } = account.ret[0];
+            if (telephone && identityname && identitycard && identityicon && subbranchbank && bankaccountnumber) {
+                await this.openVPage(VWithdrawal, balance);
+            } else {
+                await this.cApp.cMe.showAccount();
+            }
+        } else {
+            await this.cApp.cMe.showAccount();
+        }
     }
 
     //提交取款
-    submitWithdrawal = async (amount: number) => {
+    submitWithdrawal = async (amount: any) => {
         let withdraw = {
             webUser: this.user,
             amount: amount,
             currency: "1"
         }
+
         let result: any = await this.uqs.salesTask.Withdrawal.save("withdrawal", withdraw);
         await this.uqs.salesTask.Withdrawal.action(result.id, result.flow, result.state, "submit");
-        this.salesAmont = await this.getComputeAchievement();
+        await this.getComputeAchievement();
+        this.salesAmont.waitWithdrawal += parseFloat(amount);
         this.openVPage(VWithdrawalEnd, amount);
     }
 

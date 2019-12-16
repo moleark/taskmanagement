@@ -21,7 +21,8 @@ export class VMe extends VPage<CMe> {
 
         let { inviteCode } = this.controller;
         this.inviteCode = inviteCode.substr(1, 9);
-        this.controller.onComputeAchievement();
+        //this.controller.onComputeAchievement();
+        this.controller.cApp.cBalance.getComputeAchievement();
         return <this.page />;
     }
 
@@ -39,8 +40,9 @@ export class VMe extends VPage<CMe> {
             : <b>{name}</b>
     }
 
-    private teamSpan(): JSX.Element {
-        let { showTeam, showMyCustomer, salesAmont } = this.controller;
+    private teamSpan = observer(() => {
+        let { showTeam, showMyCustomer, cApp } = this.controller;
+        let { salesAmont } = cApp.cBalance
         let { teamCount, customerCount, activeCustomerCount } = salesAmont;
         let onshowMyCustomer = async () => await showMyCustomer(1);
         let onshowMyCustomerActive = async () => await showMyCustomer(2);
@@ -71,9 +73,9 @@ export class VMe extends VPage<CMe> {
                 </div>
             </div>;
         }
-    }
+    });
 
-    private meInfo() {
+    private meInfo = observer(() => {
         let { user, showMeDetail, showMessage, showInvitationCode } = this.controller;
         if (user === undefined) return null;
         let { name, nick, icon } = user;
@@ -103,15 +105,15 @@ export class VMe extends VPage<CMe> {
                     <div onClick={showMeDetail}>{this.userSpan(name, nick)}</div>
                     {setting.sales.isInner ? <></> : <div className="small"><span className="px-1" >邀请码  :</span><span>{this.inviteCode}<span style={{ border: '1px solid #999999' }} className="px-1 mx-1" onClick={this.copyClick}><FA name="clone" className="mr-1" />复制</span></span ></div>}
                 </div>
-                {this.teamSpan()}
             </LMR>
+            <this.teamSpan />
         </div >;
-    }
+    });
 
-    private achievement() {
-        let { salesAmont } = this.controller;
+    private achievement = observer(() => {
+        let { salesAmont } = this.controller.cApp.cBalance;
         return setting.sales.achievement(salesAmont);
-    }
+    })
 
     private myService() {
 
@@ -156,11 +158,11 @@ export class VMe extends VPage<CMe> {
 
         return <div>
             <div className="bg-white" >
-                {this.achievement()}
-                {this.meInfo()}
+                <this.achievement />
+                <this.meInfo />
                 {this.myService()}
             </div >
-            <div className="text-center text-white small px-2" style={{ width: '28%', margin: '-100px auto 0 auto', padding: '4px', borderRadius: '3px', backgroundColor: '#505050', display: this.showTips }}>已复制到剪切板</div>
+            <div className="text-center text-white small px-2" style={{ width: '30%', margin: '-100px auto 0 auto', padding: '4px', borderRadius: '3px', backgroundColor: '#505050', display: this.showTips }}>已复制到剪切板</div>
         </div>
     })
 }

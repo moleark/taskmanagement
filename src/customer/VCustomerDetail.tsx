@@ -81,13 +81,18 @@ export class VCustomerDetail extends VPage<CCustomer> {
         }
     }
 
-    private renderTask = (taskhistory: any, index: number) => {
-        let { description, deadline } = taskhistory;
+    private renderTask = (task: any, index: number) => {
+        let showDetail = () => this.controller.cApp.cSalesTask.showTaskDetailEdit(task);
+        let { description, deadline, result } = task;
+        let right = <div>
+            <div className="text-muted small">{<EasyDate date={deadline} />} </div>
+            <div className="text-muted small">{result ? "已完结" : "待处理"} </div>
+        </div>;
         return <div className="d-block py-2 px-3">
             <LMR left={<strong>{description}</strong>}
-                right={<small className="text-muted">{<EasyDate date={deadline} />} </small>}>
+                right={right} onClick={showDetail}>
             </LMR>
-        </div>;
+        </div >;
     }
 
     private renderTitle = (title: string, iconeidit: string, eiditAction: any, iconeqita: string, qitaActiom: any) => {
@@ -116,8 +121,6 @@ export class VCustomerDetail extends VPage<CCustomer> {
         var potentialShow = potential === undefined ? "[无]" : potentialText[potential];
         var researchShow = research === undefined ? "[无]" : researchText[research];
         let telephoneShow = mobile && <div><a className="text-default" href={"tel:" + mobile} style={{ textDecorationLine: "none" }} ><FA name="phone" className="text-success px-1" />{mobile}</a></div>
-
-
 
         let rows: Prop[] = [];
         if (unit) rows.push(
@@ -239,7 +242,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
         } as ComponentProp
         );
 
-        let { showCustomerEdit, cApp, customertask } = this.controller;
+        let { showCustomerEdit, cApp, activetasks } = this.controller;
         let onshowCustomerEdit = () => showCustomerEdit(this.customer);
         let onshowAddTsak = () => cApp.cSalesTask.showCreateTaskOfCustomer(this.customer);
         let onshowCustomerHistory = () => showCustomerHistory(customerid);
@@ -250,7 +253,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
             <PropGrid rows={rows} values={this.customer} alignValue="right" />
             {this.renderTitle("待办事项", "icon-tianjia", onshowAddTsak, "icon-qita", onshowCustomerHistory)}
             {
-                <List before={''} none="无" items={customertask} item={{ render: this.renderTask }} />
+                <List before={''} none="无" items={activetasks} item={{ render: this.renderTask }} />
             }
         </Page >
     })

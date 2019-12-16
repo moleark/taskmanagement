@@ -4,19 +4,12 @@ import { CUqBase } from '../CBase';
 import { VMe } from './VMe';
 import { VMeDetail } from './VMeDetail';
 import { VSet } from './VSet';
-import { observable } from 'mobx';
 import { VInvitationCode } from './VInvitationCode';
 import { VAccount } from './VAccount';
 
 export class CMe extends CUqBase {
     inviteCode: string;
     position: any;
-    @observable salesAmont: any = {
-        oneSaleVolume: 0.00, twoSaleVolume: 0.00, threeSaleVolume: 0.00,
-        oneAchievement: 0.0, twoAchievement: 0.0, threeAchievement: 0.0,
-        teamCount: 0.0, customerCount: 0.0, activeCustomerCount: 0.0,
-        totalOrderCount: 0, totalReceivableAmount: 0.0, totalaWithdrawal: 0.0, waitWithdrawal: 0.0
-    };
 
     //初始化
     protected async internalStart(param: any) {
@@ -50,13 +43,13 @@ export class CMe extends CUqBase {
 
     //显示我的团队
     showTeam = async () => {
-        await this.onComputeAchievement;
+        await this.cApp.cBalance.getComputeAchievement();
         let { cTeam } = this.cApp
         await cTeam.start();
     }
 
     showMyCustomer = async (type: number) => {
-        await this.onComputeAchievement;
+        await this.cApp.cBalance.getComputeAchievement();
         let { showMyCustomer } = this.cApp.cCustomer;
         await showMyCustomer("", type);
     }
@@ -73,12 +66,6 @@ export class CMe extends CUqBase {
 
     showInvitationCode = async (param: string) => {
         this.openVPage(VInvitationCode, param);
-    }
-
-    //计算更新业绩
-    onComputeAchievement = async () => {
-        let a = await this.cApp.cBalance.getComputeAchievement();
-        this.salesAmont = a;
     }
 
     showAccount = async () => {

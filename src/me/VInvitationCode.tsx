@@ -84,7 +84,7 @@ export class VInvitationCode extends VPage<CMe> {
                 <div className="w-100 text-center">
                     <span className="text-info cursor-info mx-2" onClick={this.copyClick}>复制</span>
                     {share}
-                    <div className="text-center text-white small px-2" style={{ width: '28%', margin: '-80px auto 0 auto', padding: '4px', borderRadius: '3px', backgroundColor: '#505050', display: this.showTips }}>已复制到剪切板</div>
+                    <div className="text-center text-white small px-2" style={{ width: '30%', margin: '-80px auto 0 auto', padding: '4px', borderRadius: '3px', backgroundColor: '#505050', display: this.showTips }}>已复制到剪切板</div>
                 </div>
             </div>
         </Page >
