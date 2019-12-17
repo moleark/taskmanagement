@@ -155,13 +155,18 @@ export class VMe extends VPage<CMe> {
     }
 
     private page = observer(() => {
-
+        /**
+        <div>
+            <button type="button" className="btn btn-primary w-100" onClick={this.controller.IsCanUseCoupon}>积分吗</button>
+        </div>
+        **/
         return <div>
             <div className="bg-white" >
                 <this.achievement />
                 <this.meInfo />
                 {this.myService()}
             </div >
+
             <div className="text-center text-white small px-2" style={{ width: '30%', margin: '-100px auto 0 auto', padding: '4px', borderRadius: '3px', backgroundColor: '#505050', display: this.showTips }}>已复制到剪切板</div>
         </div>
     })

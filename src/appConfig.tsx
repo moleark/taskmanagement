@@ -1,23 +1,24 @@
+import _ from 'lodash';
 import { AppConfig } from "tonva";
 import { tvs } from "./tvs";
 import { jnkTop, assistjnkTop } from './ui';
 import { Sales } from './model/sales';
 
-export const appConfig: AppConfig = {
+const appConfigBase: AppConfig = {
     appName: "百灵威系统工程部/salestask",
-    version: "1.0.91", // 版本变化，缓存的uqs才会重载 
+    version: "1.0.98", // 版本变化，缓存的uqs才会重载 
     tvs: tvs,
     loginTop: jnkTop,
     oem: '百灵威'
 };
 
-export const assistappConfig: AppConfig = {
-    appName: "百灵威系统工程部/salestask",
-    version: "1.0.91", // 版本变化，缓存的uqs才会重载 
-    tvs: tvs,
+export const appConfig: AppConfig = _.merge(_.clone(appConfigBase), {
+    loginTop: jnkTop,
+});
+
+export const assistappConfig: AppConfig = _.merge(_.clone(appConfigBase), {
     loginTop: assistjnkTop,
-    oem: '百灵威'
-};
+});
 
 export const setting = {
     //appName: "销售助手",

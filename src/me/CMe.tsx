@@ -103,9 +103,13 @@ export class CMe extends CUqBase {
         await this.uqs.salesTask.AddWebUserAccountMap.submit(data);
     }
 
+    /**
     IsCanUseCoupon = async () => {
-        // let a = await this.uqs.salesTask.IsCanUseCoupon.submit({ code: "14658995", customer: "46627" });
+        let a = await this.uqs.salesTask.IsCanUseCoupon.submit({ code: "19521548", webUser: "46627" });
+        let b = a;
     }
+    **/
+
     render = () => {
         return this.renderView(VMe);
     }

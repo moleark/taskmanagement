@@ -14,7 +14,7 @@ class WithdrawalAmount extends Widget {
     private onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
         let val = evt.currentTarget.value;
         if (val && !/(^[0-9]+(.[0-9]{2})?$)/.test(val)) {
-            evt.currentTarget.value = "";
+            evt.currentTarget.value = "0";
         }
         this.setValue(val);
     }
@@ -40,13 +40,17 @@ export class VWithdrawal extends VPage<CBalance> {
         }
     }
 
+    private onFormButtonClick = async (name: string, context: Context) => {
+        if (context.data.amount > this.balance) {
+
+        } else {
+            await this.controller.submitWithdrawal(context.data.amount);
+        }
+    }
+
     async open(balance: number) {
         this.balance = balance;
         this.openPage(this.page);
-    }
-
-    private onFormButtonClick = async (name: string, context: Context) => {
-        await this.controller.submitWithdrawal(context.data.amount);
     }
 
     private page = observer(() => {

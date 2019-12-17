@@ -39,9 +39,8 @@ export class CStart extends CUqBase {
        **/
 
         var isPosition: Boolean = await this.isPosition();
-        let url = document.domain;
-        if (url === "assist.jkchemical.com") {
-            setting.sales = new AssistSales(this.cApp);
+        if (document.domain === "assist.jkchemical.com") {
+            //setting.sales = new AssistSales(this.cApp);
             let reult = await this.cApp.uqs.salesTask.WebUserEmployeeMap.query({ webuser: this.user.id });
             if (reult.ret.length > 0) {
                 this.cApp.cSalesTask.start();
@@ -49,7 +48,7 @@ export class CStart extends CUqBase {
                 await this.openVPage(VConfirm, null);
             }
         } else {
-            setting.sales = new AgentSales(this.cApp);
+            //setting.sales = new AgentSales(this.cApp);
             //已有邀请码或者是内部销售的不需要输入邀请码
             if (isPosition) {
                 this.cApp.cSalesTask.start();
