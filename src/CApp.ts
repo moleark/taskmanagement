@@ -45,7 +45,7 @@ export class CApp extends CAppBase {
     protected async internalStart() {
 
         //根据网址判断是什么APP
-        if (document.domain === "assist.jkchemical.com") {
+        if (document.domain === setting.appUrlDomain) {
             setting.sales = new AssistSales(this);
         } else {
             setting.sales = new AgentSales(this);
@@ -70,10 +70,10 @@ export class CApp extends CAppBase {
         this.cBalance = this.newC(CBalance);
 
         /** 启动销售任务列表*/
-        this.cSalesTask.start();
+        //this.cSalesTask.start();
 
         /** 启动邀请码页面 */
-        //this.cStart.start();
+        this.cStart.start();
 
         /**计算业绩**/
         //await this.cMe.onComputeAchievement();

@@ -50,7 +50,7 @@ export class VStart extends VPage<CStart> {
             <div className="text-center  bg-white" style={{ width: 'auto', height: '100%', padding: '1rem 0 0 0' }}  >
                 <div className="pt-4">
                     <div className="h4 text-info">
-                        欢迎加入{setting.sales.appName}}
+                        欢迎加入{setting.sales.appName}
                     </div>
                     <div className="text-muted">超越自我，实现共赢</div>
                 </div>

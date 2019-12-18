@@ -31,7 +31,11 @@ export class VMeDetail extends VPage<CMe> {
         let { name } = itemSchema;
         await userApi.userSetProp(name, newValue);
         this.data[name] = newValue;
-        nav.user.name = newValue;
+        switch (name) {
+            // case 'name': nav.user.name = newValue; break; 名字不可改变
+            case 'icon': nav.user.icon = newValue; break;
+            case 'nick': nav.user.nick = newValue; break;
+        }
         nav.saveLocalUser();
     }
 

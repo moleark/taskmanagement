@@ -39,7 +39,7 @@ export class CStart extends CUqBase {
        **/
 
         var isPosition: Boolean = await this.isPosition();
-        if (document.domain === "assist.jkchemical.com") {
+        if (document.domain === setting.appUrlDomain) {
             //setting.sales = new AssistSales(this.cApp);
             let reult = await this.cApp.uqs.salesTask.WebUserEmployeeMap.query({ webuser: this.user.id });
             if (reult.ret.length > 0) {

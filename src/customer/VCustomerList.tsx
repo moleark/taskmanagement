@@ -3,6 +3,7 @@ import { VPage, Page, LMR, List, tv, EasyDate, UserIcon } from 'tonva';
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
 import { setting } from 'appConfig';
+import smile from '../images/smile-face.jpg';
 
 export class VCustomerList extends VPage<CCustomer> {
 
@@ -15,6 +16,7 @@ export class VCustomerList extends VPage<CCustomer> {
         return <this.page />;
     }
 
+    private imgSmile = <div className="mt-1 mx-2 w-3c h-3c p-1"><img className="w-100 h-100" src={smile} /></div>;
     private renderCustomer = (customer: any, index: number) => {
         (customer as any)._source = 'VCustomerList';
         let onClickCustomer = () => this.controller.showCustomerDetail(customer);
@@ -23,8 +25,11 @@ export class VCustomerList extends VPage<CCustomer> {
         let nameShow = <div className="cursor-pointer font-weight-bold w-100">{name}</div>;
         let unitShow = <div className=" cursor-pointer text-muted"><small> {tv(unit, s => s.name)}</small></div>;
         let date = <div className=" cursor-pointer small"><EasyDate date={validity} /></div>
-        let webuserid = webuser ? webuser.id : 47;
-        return <LMR onClick={onClickCustomer} className="px-2 py-1" left={<UserIcon className="mt-1 mx-2 w-3c h-3c" id={webuserid} style={{ borderRadius: '8px' }} />} >
+        let left = webuser ?
+            <UserIcon className="mt-1 mx-2 w-3c h-3c" id={webuser.id} style={{ borderRadius: '8px' }} />
+            :
+            this.imgSmile;
+        return <LMR onClick={onClickCustomer} className="px-2 py-1" left={left} >
             <LMR className="px-1 pt-2" left={nameShow} ></LMR>
             <LMR className="px-1" left={unitShow} right={date}></LMR>
         </LMR>
