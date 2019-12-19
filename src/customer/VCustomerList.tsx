@@ -16,7 +16,7 @@ export class VCustomerList extends VPage<CCustomer> {
         return <this.page />;
     }
 
-    private imgSmile = <div className="mt-1 mx-2 w-3c h-3c p-1"><img className="w-100 h-100" src={smile} /></div>;
+    private imgSmile = <div className="mt-1 mx-2 w-3c h-3c p-1"><img className="w-100 h-100" src={smile} alt="" /></div>;
     private renderCustomer = (customer: any, index: number) => {
         (customer as any)._source = 'VCustomerList';
         let onClickCustomer = () => this.controller.showCustomerDetail(customer);

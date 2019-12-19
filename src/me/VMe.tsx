@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { LMR, VPage, Image, FA, ItemSchema } from 'tonva';
+import { LMR, VPage, Image, FA } from 'tonva';
 import { CMe } from './CMe';
 import classNames from 'classnames';
 import copy from 'copy-to-clipboard';
@@ -142,16 +142,6 @@ export class VMe extends VPage<CMe> {
                 </div>
             </div>
         </>
-    }
-
-    private onItemChanged = async (itemSchema: ItemSchema, newValue: any, preValue: any) => {
-        let { name } = itemSchema;
-        //await userApi.userSetProp(name, newValue);
-        //this.data[name] = newValue;
-        //let user:any = nav.user;
-        //user[name] = newValue;
-        //nav.saveLocalUser();
-        alert(`name=${name} value=${newValue}`);
     }
 
     private page = observer(() => {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, nav, FA, Prop, PropGrid } from 'tonva';
+import { VPage, Page, nav, Prop, PropGrid } from 'tonva';
 import { CMe } from './CMe';
 import { appConfig, setting } from '../appConfig';
 
@@ -39,18 +39,25 @@ export class VSet extends VPage<CMe> {
             '',
             {
                 type: 'component',
-                component: <div className="w-100 d-flex py-2 justify-content-between">
+                component: <div className="w-100 d-flex py-2 justify-content-between" onClick={() => this.controller.showAbout()}>
                     <div>
-                        <i className="iconfont icon-guanyu mr-2" style={{ fontSize: "20px", color: "#2aa515" }}></i>关于本APP
+                        <i className="iconfont icon-guanyu mr-2" style={{ fontSize: "20px", color: "#2aa515" }}></i>关于{setting.sales.appName}
                     </div>
-                    <div className="py-2 small">V{appConfig.version}</div>
+                    <div className="py-2 small">V {appConfig.version}</div>
+                </div>,
+            },
+            '',
+            {
+                type: 'component',
+                component: <div className="w-100 text-center py-3" onClick={this.logout}>
+                    退出
                 </div>,
             },
             ''
         ];
 
-        let footer = <button type="button" className="btn btn-danger flex-grow-1 mx-3 my-1 w-100" onClick={this.logout} ><FA name="sign-out" size="lg" /> 退出</button>;
-        return <Page header='设置' headerClassName={setting.pageHeaderCss} footer={footer}>
+
+        return <Page header='设置' headerClassName={setting.pageHeaderCss} >
             <PropGrid rows={rows} values={{}} />
         </Page >
     }

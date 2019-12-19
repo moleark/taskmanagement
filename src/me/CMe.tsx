@@ -6,6 +6,7 @@ import { VMeDetail } from './VMeDetail';
 import { VSet } from './VSet';
 import { VInvitationCode } from './VInvitationCode';
 import { VAccount } from './VAccount';
+import { VAbout } from './VAbout';
 
 export class CMe extends CUqBase {
     inviteCode: string;
@@ -103,6 +104,9 @@ export class CMe extends CUqBase {
         await this.uqs.salesTask.AddWebUserAccountMap.submit(data);
     }
 
+    showAbout = () => {
+        this.openVPage(VAbout);
+    }
     /**
     IsCanUseCoupon = async () => {
         let a = await this.uqs.salesTask.IsCanUseCoupon.submit({ code: "19521548", webUser: "46627" });

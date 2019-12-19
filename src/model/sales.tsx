@@ -103,12 +103,13 @@ export class AgentSales extends Sales {
     }
     achievement(salesAmont: any): JSX.Element {
         let { oneAchievement, twoAchievement, threeAchievement, totalReceivableAmount, totalaWithdrawal, waitWithdrawal } = salesAmont;
+        let totalachievement = oneAchievement + twoAchievement + threeAchievement;
         let achievement = oneAchievement + twoAchievement + threeAchievement - totalReceivableAmount;
         let balance = totalReceivableAmount - totalaWithdrawal - waitWithdrawal;
         return <div className="text-center text-white bg-primary pt-1 pb-5" style={{ borderRadius: '0  0 5rem 5rem', margin: ' 0 -2rem 0 -2rem ' }}>
             <div className="pb-2 pt-4 cursor-pointer" >
                 <div className="text-warning pt-4" onClick={async () => await this.cApp.cBalance.showAchievementDetail(0)}>
-                    <span className="h1">{achievement.toFixed(2)}</span>
+                    <span className="h1">{totalachievement.toFixed(2)}</span>
                     <small> 元</small>
                 </div>
                 <h6 className="text-warning"><small>累计收益</small></h6>
