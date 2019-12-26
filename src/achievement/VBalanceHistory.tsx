@@ -13,7 +13,7 @@ export class VBalanceHistory extends VPage<CBalance> {
     private renderOrder = (balanceOrder: any, index: number) => {
 
         let { date, amount, order } = balanceOrder;
-        let amountshow = "-" + amount;
+        let amountshow = "-" + amount.toFixed(2);
         let dateshow = <div className="small text-muted">{<EasyTime date={date} />}</div>;
         let onshowWithdrawalDetail = async () => await this.controller.showWithdrawalDetail(order);
 
@@ -25,7 +25,7 @@ export class VBalanceHistory extends VPage<CBalance> {
 
     private page = observer(() => {
 
-        return <Page header="余额明细" headerClassName={setting.pageHeaderCss}   >
+        return <Page header="历史记录" headerClassName={setting.pageHeaderCss}   >
             <List items={this.controller.balanceHistory} item={{ render: this.renderOrder }} none="" />
         </Page >
     });

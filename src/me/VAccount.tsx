@@ -20,7 +20,7 @@ export class VAccount extends VPage<CMe> {
     private uiSchema: UiSchema = {
         items: {
             identityname: { widget: 'text', label: '姓名', placeholder: '' } as UiTextItem,
-            identityicon: { widget: 'image', label: '证件照' } as UiImageItem,
+            identityicon: { widget: 'image', label: '证件照', size: 'lg' } as UiImageItem,
             subbranchbank: { widget: 'text', label: '开户行', placeholder: '' } as UiTextItem,
             bankaccountnumber: { widget: 'text', label: '银行账号', placeholder: '' } as UiTextItem,
             telephone: { widget: 'text', label: '手机', placeholder: '' } as UiTextItem,

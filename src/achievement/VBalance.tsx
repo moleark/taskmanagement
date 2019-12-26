@@ -16,7 +16,7 @@ export class VBalance extends VPage<CBalance> {
         let { salesAmont } = this.controller;
         let { totalReceivableAmount, totalaWithdrawal, waitWithdrawal } = salesAmont;
         let balance: number = totalReceivableAmount - totalaWithdrawal - waitWithdrawal;
-        let right = <div className="cursor-pointer py-2 mx-3" onClick={this.controller.showBalanceHistory} >余额明细</div>;
+        let right = <div className="cursor-pointer py-2 mx-3" onClick={this.controller.showBalanceHistory} >历史记录</div>;
         let buttondisabled = balance > 0 ? false : true;
 
         let onshowVWithdrawal = async () => await this.controller.showVWithdrawal(balance)

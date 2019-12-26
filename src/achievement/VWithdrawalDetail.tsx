@@ -34,10 +34,10 @@ export class VWithdrawalDetail extends VPage<CBalance> {
             stateShow = "已驳回";
         }
 
-        return <Page header="余额明细" headerClassName={setting.pageHeaderCss}>
+        return <Page header="详情" headerClassName={setting.pageHeaderCss}>
             <div className="text-center bg-white" >
                 <div className="pt-4 h6"> {discription}</div>
-                <div className="py-4 h4"><strong>{discriptions}{amount}</strong></div>
+                <div className="py-4 h4"><strong>{discriptions}{amount.toFixed(2)}</strong></div>
                 <div className="sep-product-select" style={{ width: "90%", margin: '0 auto 0 auto', padding: "10px 0 10px 0" }} />
             </div>
             {this.renderitme("类型", discription)}
