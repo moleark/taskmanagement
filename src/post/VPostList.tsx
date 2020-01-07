@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { VPage, Page, List, LMR, Tuid, User, UserView, FA, EasyTime, tv } from 'tonva';
+import { VPage, Page, List, LMR, FA, EasyTime, tv } from 'tonva';
 import { CPost } from './CPost';
 import { setting } from 'appConfig';
 /* eslint-disable */
@@ -24,7 +24,6 @@ export class VPostList extends VPage<CPost> {
 
         let { pagePost } = this.controller;
         let none = <div className="my-3 mx-2 text-warning">【无】</div>;
-
         return <Page header="帖文" onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss} >
             <List before={''} none={none} items={pagePost} item={{ render: this.renderItem, onClick: this.itemClick }} />
         </Page>
@@ -39,24 +38,19 @@ export class VPostList extends VPage<CPost> {
     }
 
     private itemRow = observer((item: any) => {
-        let { image, caption, discription, author, $update } = item;
-        let isMe = Tuid.equ(author, this.controller.user.id);
-        let renderAuthor = (user: User) => {
-            return <span>{isMe ? '' : user.nick || user.name}</span>;
-        };
-
+        let { image, caption, discription, $update } = item;
         let right = <div className="small text-muted text-right w-6c ">
-            <div className="small pt-1"><UserView id={author} render={renderAuthor} /></div>
             <div className="small"><EasyTime date={$update} /></div>
         </div>;
-        let tvImage = tv(image, (values) => {
-            return <div className="border text-center p-1 mr-4"><img className="w-3c h-3c" src={values.path} /></div>;
-        }, undefined,
-            () => <div className="border text-center mr-4 p-1"><FA className="w-3 p-2 h-3c text-center" name="camera" size="2x" /></div>);
 
-        return <LMR className="px-2 border" left={tvImage} right={right}>
-            <b>{caption}</b>
-            <div className="small py-1 text-muted ">{discription}</div>
+        let tvImage = tv(image, (values) => {
+            return <div className=" text-center m-2 mr-4"><img className="w-3c h-3c" src={values.path} style={{ borderRadius: '8px' }} /></div>;
+        }, undefined,
+            () => <div className=" text-center m-2 mr-4"><FA className="w-3 p-2 h-3c text-center" name="camera" size="2x" /></div>);
+
+        return <LMR className="" left={tvImage} right={right}>
+            <div className="mt-2"><strong>{caption}</strong></div>
+            <div className="small text-muted ">{discription}</div>
         </LMR>;
     });
 }

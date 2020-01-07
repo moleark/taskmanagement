@@ -18,6 +18,7 @@ import { CBalance } from "achievement/CBalance";
 import { setting } from "appConfig";
 import { AssistSales, AgentSales } from "model/sales";
 import { CPost } from "post/CPost";
+import { PostCustomer } from "post/postcustomer";
 
 export class CApp extends CAppBase {
     get uqs(): UQs { return this._uqs };
@@ -25,6 +26,7 @@ export class CApp extends CAppBase {
     currentSalesRegion: any;
     currentLanguage: any;
     productCart: ProductCart;
+    postCustomer: PostCustomer;
 
     /** 定义 Conctorlle*/
     cSalesTask: CSalesTask;
@@ -57,6 +59,7 @@ export class CApp extends CAppBase {
         this.currentSalesRegion = await this.uqs.common.SalesRegion.load(GLOABLE.SALESREGION_CN);
         this.currentLanguage = await this.uqs.common.Language.load(GLOABLE.CHINESE);
         this.productCart = new ProductCart();
+        this.postCustomer = new PostCustomer();
 
 
         this.cCustomer = this.newC(CCustomer);

@@ -65,19 +65,16 @@ export class VMain extends VPage<CSalesTask> {
 
         let item = { render: this.renderSalesTask, onClick: this.onSalesTaskClick };
         let { tasksNow, dateTasksList } = tasks;
-        /**
-          <LMR
-                        className="bg-white px-2 py-1"
-                        left={<i className="iconfont icon-neirong " style={{ fontSize: "30px", color: "#efb336" }}></i>}
-                        right={<i className="pt-2  px-2 iconfont icon-fangxiang1"></i>}
-                        onClick={showPost}
-                    >
-                        <div className="mx-3 pt-2 font-weight-bold">帖文</div>
-                    </LMR> 
-         * **/
 
         return <Page header="任务" onScrollBottom={this.onScrollBottom} right={right} headerClassName={setting.pageHeaderCss} >
-
+            <LMR
+                className="bg-white px-2 py-1"
+                left={<i className="iconfont icon-neirong " style={{ fontSize: "30px", color: "#efb336" }}></i>}
+                right={<i className="pt-2  px-2 iconfont icon-fangxiang1"></i>}
+                onClick={showPost}
+            >
+                <div className="mx-3 pt-2 font-weight-bold">帖文</div>
+            </LMR>
             {tasksNow.length === 0 && dateTasksList.length === 0 && none}
             {tasksNow.length > 0 && <List before={''} none={none} items={tasksNow} item={item} />}
             {

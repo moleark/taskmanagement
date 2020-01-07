@@ -82,8 +82,16 @@ export class CPost extends CUqBase {
         this.pageCustomer.first({ key: key, post: post });
     }
 
-    showCustomer = async (key: string, post: string) => {
-        await this.searchCustomerByKey(key, post);
-        this.openVPage(VCustomer);
+    showCustomer = async (key: string, post: any) => {
+        await this.searchCustomerByKey(key, post.id);
+        this.openVPage(VCustomer, post);
+    }
+
+    addMyCustomerPost = async (post: any, customerlist: any) => {
+
+        for (let i: number = 0; i < customerlist.length; i++) {
+            let param = { post: post.id, customer: customerlist[i] }
+            await this.uqs.salesTask.AddMyCustomerPost.submit(param);
+        }
     }
 }

@@ -42,7 +42,6 @@ export class VMeDetail extends VPage<CMe> {
     private page = () => {
 
         let { inviteCode, showInvitationCode } = this.controller;
-
         let onshowInvitationCode = async () => await showInvitationCode(inviteCode);
         let right = <div onClick={onshowInvitationCode} >
             <FA className="fa-lg" name="qrcode" />

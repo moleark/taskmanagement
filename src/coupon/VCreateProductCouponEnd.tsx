@@ -155,7 +155,6 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
     share = async (url: any) => {
 
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
-
             let { paramtype, discount } = this.inviteParam;
             // @ts-ignore  屏蔽错误 
             window.plusShare({
