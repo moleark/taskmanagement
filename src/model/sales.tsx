@@ -90,7 +90,7 @@ export class AgentSales extends Sales {
         if (status === 1) {
             onClick = async () => await this.cApp.cBalance.showAchievementDetail(status);
         } else {
-            onClick = async () => await this.cApp.cBalance.showBalance(achievement);
+            onClick = async () => await this.cApp.cBalance.showBalance();
         }
         return <div className="cursor-pointer" onClick={onClick}>
             {achievement <= 0.001 ?

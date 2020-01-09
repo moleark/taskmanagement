@@ -9,6 +9,7 @@ export class VMeDetail extends VPage<CMe> {
     private schema: ItemSchema[] = [
         { name: 'icon', type: 'image' } as ImageSchema,
         { name: 'nick', type: 'string' } as StringSchema,
+
     ];
     private uiSchema: UiSchema = {
         items: {
@@ -46,6 +47,7 @@ export class VMeDetail extends VPage<CMe> {
         let right = <div onClick={onshowInvitationCode} >
             <FA className="fa-lg" name="qrcode" />
         </div>
+        let { id } = nav.user;
         return <Page header='个人信息' headerClassName={setting.pageHeaderCss} >
             <Edit schema={this.schema} uiSchema={this.uiSchema}
                 data={this.data}
@@ -54,6 +56,10 @@ export class VMeDetail extends VPage<CMe> {
             <LMR className="d-flex px-3 py-2 bg-white align-items-center cursor-pointer"
                 right={right}>
                 邀请码
+            </LMR>
+            <LMR className="d-flex px-3 py-2 bg-white align-items-center cursor-pointer"
+                right={<div>{id}</div>}>
+                账号
             </LMR>
         </Page >
     }

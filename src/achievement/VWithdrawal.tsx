@@ -3,14 +3,15 @@ import { VPage, Page, Schema, UiSchema, Context, Form, Widget, UiCustom, FA } fr
 import { observer } from 'mobx-react';
 import { CBalance } from './CBalance';
 import { setting } from 'appConfig';
+
 /* eslint-disable */
+
 const schema: Schema = [
     { name: 'amount', type: 'number', required: true },
     { name: 'submit', type: 'submit' },
 ];
 
 class WithdrawalAmount extends Widget {
-
     private onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
         let val = evt.currentTarget.value;
         if (val && !/(^[0-9]+(.[0-9]{2})?$)/.test(val)) {

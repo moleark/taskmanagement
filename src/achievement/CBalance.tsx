@@ -31,7 +31,6 @@ class PageBalanceHistory extends PageItems<any> {
     }
 }
 
-
 export class CBalance extends CUqBase {
 
     @observable pageBalanceHistory: PageBalanceHistory;
@@ -78,8 +77,27 @@ export class CBalance extends CUqBase {
     }
 
     //显示余额
-    showBalance = async (balance: number) => {
-        await this.openVPage(VBalance, balance);
+    showBalance = async () => {
+
+        await this.openVPage(VBalance);
+    }
+
+    //提交取款
+    submitWithdrawal = async (amount: any) => {
+        if (this.cApp.cMe.account) {
+            let withdraw = {
+                webUser: this.user,
+                amount: amount,
+                currency: "1"
+            }
+            let result: any = await this.uqs.salesTask.Withdrawal.save("withdrawal", withdraw);
+            await this.uqs.salesTask.Withdrawal.action(result.id, result.flow, result.state, "submit");
+            await this.getComputeAchievement();
+            this.salesAmont.waitWithdrawal += parseFloat(amount);
+            this.openVPage(VWithdrawalEnd, amount);
+        } else {
+            await this.cApp.cMe.showAccount();
+        }
     }
 
     //显示提款页面
@@ -95,21 +113,6 @@ export class CBalance extends CUqBase {
         } else {
             await this.cApp.cMe.showAccount();
         }
-    }
-
-    //提交取款
-    submitWithdrawal = async (amount: any) => {
-        let withdraw = {
-            webUser: this.user,
-            amount: amount,
-            currency: "1"
-        }
-
-        let result: any = await this.uqs.salesTask.Withdrawal.save("withdrawal", withdraw);
-        await this.uqs.salesTask.Withdrawal.action(result.id, result.flow, result.state, "submit");
-        await this.getComputeAchievement();
-        this.salesAmont.waitWithdrawal += parseFloat(amount);
-        this.openVPage(VWithdrawalEnd, amount);
     }
 
     //显示提款记录
@@ -133,5 +136,4 @@ export class CBalance extends CUqBase {
         let list = await this.uqs.salesTask.SearchBalanceHistory.query({ ordertype: ordertype });
         this.balanceHistory = list.ret;
     }
-
 }

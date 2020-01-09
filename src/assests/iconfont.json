@@ -13,6 +13,13 @@
       "unicode_decimal": 58917
     },
     {
+      "icon_id": "372089",
+      "name": "icon-left",
+      "font_class": "left",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
       "icon_id": "410628",
       "name": "更新",
       "font_class": "gengxin",
@@ -137,6 +144,13 @@
       "font_class": "shiyedanwei",
       "unicode": "e61c",
       "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "2166790",
+      "name": "对号",
+      "font_class": "duihao",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
     },
     {
       "icon_id": "2559428",
@@ -298,6 +312,13 @@
       "font_class": "qita2",
       "unicode": "e63b",
       "unicode_decimal": 58939
+    },
+    {
+      "icon_id": "7349372",
+      "name": "银行卡",
+      "font_class": "yinhangqia",
+      "unicode": "eb19",
+      "unicode_decimal": 60185
     },
     {
       "icon_id": "7404300",

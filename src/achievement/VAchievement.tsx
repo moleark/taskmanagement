@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { VPage, Page, LMR, Prop, ComponentProp, FA, PropGrid } from 'tonva';
 import { observer } from 'mobx-react';
-import { consts } from '../consts';
 import { CBalance } from './CBalance';
-import { settings } from 'cluster';
 import { setting } from 'appConfig';
 
 function rowCom(iconName: string, iconColor: string, caption: string, value: any, onClick: any) {

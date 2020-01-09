@@ -7,10 +7,12 @@ import { VSet } from './VSet';
 import { VInvitationCode } from './VInvitationCode';
 import { VAccount } from './VAccount';
 import { VAbout } from './VAbout';
+import { observable } from 'mobx';
 
 export class CMe extends CUqBase {
     inviteCode: string;
     position: any;
+    @observable account: any;
 
     //初始化
     protected async internalStart(param: any) {
@@ -22,6 +24,7 @@ export class CMe extends CUqBase {
     //加载邀请码
     load = async () => {
         await nav.loadMe();
+        await this.lodeAccount();
         this.position = await this.uqs.salesTask.SearchPosition.table({ position: undefined });
         if (this.position.length > 0) {
             let code = String(this.position[0].code + 100000000);
@@ -69,7 +72,16 @@ export class CMe extends CUqBase {
         this.openVPage(VInvitationCode, param);
     }
 
+    //加载银行账户
+    lodeAccount = async () => {
+        let result = await this.uqs.salesTask.WebUserAccountMap.query({ webuser: this.user.id });
+        if (result.ret.length > 0) {
+            this.account = result.ret[0]
+        }
+    }
+
     showAccount = async () => {
+        await this.lodeAccount();
         let data = {
             telephone: "",
             identityname: "",
@@ -78,9 +90,8 @@ export class CMe extends CUqBase {
             subbranchbank: "",
             bankaccountnumber: ""
         };
-        let account = await this.uqs.salesTask.WebUserAccountMap.query({ webuser: this.user.id });
-        if (account.ret.length > 0) {
-            let { telephone, identityname, identitycard, identityicon, subbranchbank, bankaccountnumber } = account.ret[0];
+        if (this.account) {
+            let { telephone, identityname, identitycard, identityicon, subbranchbank, bankaccountnumber } = this.account;
             data.telephone = telephone === undefined ? "" : telephone;
             data.identityname = identityname === undefined ? "" : identityname;
             data.identitycard = identitycard === undefined ? "" : identitycard;
@@ -102,6 +113,7 @@ export class CMe extends CUqBase {
             bankaccountnumber: param.bankaccountnumber,
         };
         await this.uqs.salesTask.AddWebUserAccountMap.submit(data);
+        await this.lodeAccount();
     }
 
     showAbout = () => {
