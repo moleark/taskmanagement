@@ -21,7 +21,6 @@ export class VMe extends VPage<CMe> {
 
         let { inviteCode } = this.controller;
         this.inviteCode = inviteCode.substr(1, 9);
-        //this.controller.onComputeAchievement();
         this.controller.cApp.cBalance.getComputeAchievement();
         return <this.page />;
     }
@@ -34,10 +33,19 @@ export class VMe extends VPage<CMe> {
         }, GLOABLE.TIPDISPLAYTIME);
     }
 
-    private userSpan(name: string, nick: string): JSX.Element {
-        return nick ?
-            <><b>{nick} &nbsp; <small className="muted">{name}</small></b></>
-            : <b>{name}</b>
+    private userSpan(name: string, nick: string, level: number): JSX.Element {
+        let shownick = nick ? <b>{nick}</b> : <b>{name}</b>;
+        let showlevel = <span></span>;
+        if (level === 1) {
+            showlevel = <i className="iconfont icon-xiaoren mx-3" style={{ fontSize: "15px", color: "#1296db" }}></i>
+        } else if (level === 2) {
+            showlevel = <i className="iconfont icon-jinpai2 mx-3" style={{ fontSize: "17px", color: "#f6ad15" }}></i>
+        } else if (level === 3) {
+            showlevel = <i className="iconfont icon-zuanshi mx-3" style={{ fontSize: "15px", color: "#35ebfd" }}></i>
+        }
+        return <div>
+            {shownick}{showlevel}
+        </div>;
     }
 
     private teamSpan = observer(() => {
@@ -76,36 +84,37 @@ export class VMe extends VPage<CMe> {
     });
 
     private meInfo = observer(() => {
-        let { user, showMeDetail, showMessage, showInvitationCode } = this.controller;
+
+
+        let { user, showMeDetail, showMessage, showInvitationCode, cApp } = this.controller;
         if (user === undefined) return null;
         let { name, nick, icon } = user;
-        let { cMessage } = this.controller.cApp
+
+        let { cMessage, cBalance } = cApp;
+        let { salesAmont } = cBalance;
+
         let count: any = cMessage.count.get();
-        let onshowInvitationCode = async () => await showInvitationCode(this.inviteCode);
         let pointer, badge;
         if (count > 0) {
             pointer = 'cursor-pointer';
             if (count < 100) badge = <u>{count}</u>;
             else badge = <u>99+</u>;
         }
-
         let aright = < div className={classNames('jk-cart ml-1 mr-2', pointer)} onClick={showMessage} >
             <FA className="fa-lg" name="commenting-o" />
             {badge}
         </div >
+        let onshowInvitationCode = async () => await showInvitationCode(this.inviteCode);
 
-        return <div className="px-4 py-3 cursor-pointer"
-            style={{ backgroundColor: '#f9f9f9', width: '90%', borderRadius: '8px', margin: '-4rem auto 2rem auto', boxShadow: "2px 2px 15px #333333" }}>
-            <LMR
-                left={<div onClick={showMeDetail}> <Image className="w-3c h-3c mr-3" src={icon} /> </div>}
-                right={setting.sales.isInner ? <span></span> : <span onClick={onshowInvitationCode} >
-                    <FA className="h2" name="qrcode" />
-                </span >}>
-                <div>
-                    <div onClick={showMeDetail}>{this.userSpan(name, nick)}</div>
-                    {setting.sales.isInner ? <></> : <div className="small"><span className="px-1" >邀请码  :</span><span>{this.inviteCode}<span style={{ border: '1px solid #999999' }} className="px-1 mx-1" onClick={this.copyClick}><FA name="clone" className="mr-1" />复制</span></span ></div>}
-                </div>
-            </LMR>
+        let left = <div onClick={showMeDetail}> <Image className="w-3c h-3c mr-3" src={icon} /> </div>;
+        let right = setting.sales.isInner ? <span></span> : <span onClick={onshowInvitationCode} ><FA className="h2" name="qrcode" /></span >;
+        let contener = <div>
+            <div onClick={showMeDetail}>{this.userSpan(name, nick, salesAmont.level)}</div>
+            {setting.sales.isInner ? <></> : <div className="small"><span className="px-1" >邀请码:</span><span>{this.inviteCode}<span style={{ border: '1px solid #999999' }} className="px-1 mx-1" onClick={this.copyClick}><FA name="clone" className="mr-1" />复制</span></span ></div>}
+        </div>;
+
+        return <div className="px-4 py-3 cursor-pointer" style={{ backgroundColor: '#f9f9f9', width: '90%', borderRadius: '8px', margin: '-4rem auto 2rem auto', boxShadow: "2px 2px 15px #333333" }}>
+            <LMR left={left} right={right}>{contener}</LMR>
             <this.teamSpan />
         </div >;
     });

@@ -55,7 +55,7 @@ export class VMain extends VPage<CSalesTask> {
     }
 
     private page = observer(() => {
-        let { tasks } = this.controller;
+        let { tasks, showPost } = this.controller;
         if (tasks === undefined) return null;
         let none = <div className="my-3 mx-2" style={{ color: '#888' }}>无任务</div>;
         let right = <div className="cursor-pointer py-1" onClick={async () => this.controller.showSelectTaskType(undefined)} >
@@ -66,7 +66,14 @@ export class VMain extends VPage<CSalesTask> {
         let { tasksNow, dateTasksList } = tasks;
 
         return <Page header="任务" onScrollBottom={this.onScrollBottom} right={right} headerClassName={setting.pageHeaderCss} >
-
+            <LMR
+                className="bg-white px-2 py-1"
+                left={<i className="iconfont icon-neirong " style={{ fontSize: "30px", color: "#efb336" }}></i>}
+                right={<i className="pt-2  px-2 iconfont icon-fangxiang1"></i>}
+                onClick={showPost}
+            >
+                <div className="mx-3 pt-2 font-weight-bold">帖文</div>
+            </LMR>
             {tasksNow.length === 0 && dateTasksList.length === 0 && none}
             {tasksNow.length > 0 && <List before={''} none={none} items={tasksNow} item={item} />}
             {

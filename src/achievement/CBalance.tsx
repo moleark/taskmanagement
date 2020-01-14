@@ -39,7 +39,7 @@ export class CBalance extends CUqBase {
         oneSaleVolume: 0.00, twoSaleVolume: 0.00, threeSaleVolume: 0.00,
         oneAchievement: 0.0, twoAchievement: 0.0, threeAchievement: 0.0,
         teamCount: 0.0, customerCount: 0.0, activeCustomerCount: 0.0,
-        totalOrderCount: 0, totalReceivableAmount: 0.0, totalaWithdrawal: 0.0, waitWithdrawal: 0.0
+        totalOrderCount: 0, totalReceivableAmount: 0.0, totalaWithdrawal: 0.0, waitWithdrawal: 0.0, level: 0
     };
 
     //初始化

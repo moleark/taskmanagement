@@ -31,7 +31,7 @@ export class VBalance extends VPage<CBalance> {
 
     private bankcard = observer(() => {
         let { account } = this.controller.cApp.cMe;
-        let showaccount = account ? account.bankaccountnumber : "无";
+        let showaccount = account && account.bankaccountnumber ? account.bankaccountnumber : "无";
 
 
         let style = { backgroundColor: '#f9f9f9', width: '90%', height: "70px", borderRadius: '8px', margin: '-3rem auto 2rem auto', boxShadow: "2px 2px 15px #333333" };
@@ -94,7 +94,10 @@ export class VBalance extends VPage<CBalance> {
     /**< span className = "mx-2 text-primary" > 全部提现</span >**/
 
     private ontWithdrawal = async () => {
-        if (this.amount <= 0) {
+        let { account } = this.controller.cApp.cMe;
+        if (!(account && account.bankaccountnumber)) {
+            this.showmessage = "请填写银行账户、个人信息";
+        } else if (this.amount <= 0) {
             this.showmessage = "请填写取款金额";
         } else if (this.amount < 1) {
             this.showmessage = "提现金额不能小于100元";

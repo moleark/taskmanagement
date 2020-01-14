@@ -6,7 +6,7 @@ import { Sales } from './model/sales';
 
 const appConfigBase: AppConfig = {
     appName: "百灵威系统工程部/salestask",
-    version: "1.1.10", // 版本变化，缓存的uqs才会重载 
+    version: "1.1.12", // 版本变化，缓存的uqs才会重载 
     tvs: tvs,
     loginTop: undefined,
     oem: '百灵威'
@@ -24,7 +24,7 @@ export const setting = {
     //appName: "销售助手",
     url: "http://agent.jkchemical.com",
     carturl: "http://shop.jkchemical.com",
-    posturl: "https://c.jkchemical.com/web-build/post/",
+    posturl: "https://c.jkchemical.com/webBuilder/post/",
     //downloadAppurl: "http://agent.jkchemical.com/download/jk-agent.apk",
     //sharelogo: "https://agent.jkchemical.com/sharelogo.png",
     //logo: logo,
