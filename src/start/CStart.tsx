@@ -124,7 +124,8 @@ export class CStart extends CUqBase {
         let { succeed } = position;
         this.ceasePage();
         if (succeed === 1) {
-            await this.uqs.salesTask.$user.save(this.user.id, this.user);
+            //let { id, name, nick, icon } = this.user;
+            //await this.uqs.salesTask.$user.save(id, { name: name, nick: nick, icon: icon });
             await this.openVPage(VOK, position);
         } else if (succeed === -1) {
             await this.openVPage(VError, position);

@@ -110,7 +110,14 @@ export class VMe extends VPage<CMe> {
         let right = setting.sales.isInner ? <span></span> : <span onClick={onshowInvitationCode} ><FA className="h2" name="qrcode" /></span >;
         let contener = <div>
             <div onClick={showMeDetail}>{this.userSpan(name, nick, salesAmont.level)}</div>
-            {setting.sales.isInner ? <></> : <div className="small"><span className="px-1" >邀请码:</span><span>{this.inviteCode}<span style={{ border: '1px solid #999999' }} className="px-1 mx-1" onClick={this.copyClick}><FA name="clone" className="mr-1" />复制</span></span ></div>}
+            {
+                setting.sales.isInner ?
+                    <></> :
+                    <div className="small mt-1">
+                        <span>邀请码:</span>
+                        <span className="px-1">{this.inviteCode}</span >
+                        <span style={{ border: '1px solid #999999' }} className="px-1 mx-1" onClick={this.copyClick}><FA name="clone" className="mr-1" />复制</span>
+                    </div>}
         </div>;
 
         return <div className="px-4 py-3 cursor-pointer" style={{ backgroundColor: '#f9f9f9', width: '90%', borderRadius: '8px', margin: '-4rem auto 2rem auto', boxShadow: "2px 2px 15px #333333" }}>
