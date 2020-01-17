@@ -99,7 +99,7 @@ export class VBalance extends VPage<CBalance> {
             this.showmessage = "请填写银行账户、个人信息";
         } else if (this.amount <= 0) {
             this.showmessage = "请填写取款金额";
-        } else if (this.amount < 1) {
+        } else if (this.amount < 100) {
             this.showmessage = "提现金额不能小于100元";
         } else if (this.amount > this.balance) {
             this.showmessage = "提现金额不能大于余额";

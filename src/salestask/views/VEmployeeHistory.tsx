@@ -38,7 +38,7 @@ export class VEmployeeHistory extends VPage<CSalesTask> {
 
     //选择任务
     private onTaskClick = async (param: any) => {
-        this.controller.showDetailFromId(param.task.obj);
+        this.controller.showDetailFromId(param);
     }
 
     private page = observer(() => {
