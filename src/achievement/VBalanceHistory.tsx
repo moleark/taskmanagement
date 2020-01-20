@@ -12,13 +12,12 @@ export class VBalanceHistory extends VPage<CBalance> {
 
     private renderOrder = (balanceOrder: any, index: number) => {
 
-        let { date, amount, order } = balanceOrder;
-        let amountshow = "-" + amount.toFixed(2);
+        let { date, amount, order, ordertype } = balanceOrder;
+        let right = ordertype === "withdrawal" ? <strong>{"－" + amount.toFixed(2)}</strong> : <strong>{"＋" + amount.toFixed(2)}</strong>;
+        let left = ordertype === "withdrawal" ? "提现" : "回款";
         let dateshow = <div className="small text-muted">{<EasyTime date={date} />}</div>;
-        let onshowWithdrawalDetail = async () => await this.controller.showWithdrawalDetail(order);
-
-        return <LMR className="pl-2 px-4 py-2" onClick={onshowWithdrawalDetail} >
-            <LMR className="py-1" left='提现' right={<strong>{amountshow}</strong>}></LMR>
+        return <LMR className="pl-2 px-4 py-2" onClick={() => this.controller.showWithdrawalDetail(order)} >
+            <LMR className="py-1" left={left} right={right}></LMR>
             <LMR left={dateshow} ></LMR>
         </LMR >
     }

@@ -26,7 +26,7 @@ export class VMe extends VPage<CMe> {
     }
 
     copyClick = (e: any) => {
-        copy(e.target.parentNode.childNodes[0].data);
+        copy(this.inviteCode);
         this.showTips = "";
         setTimeout(() => {
             this.showTips = "none";
