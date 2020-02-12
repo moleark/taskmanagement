@@ -1,18 +1,18 @@
 import { CAppBase, IConstructor, nav } from "tonva";
-import { CSalesTask } from './salestask';
-import { CCustomer } from './customer/CCustomer';
-import { CProduct } from './product/CProduct';
-import { CMe } from './me/CMe';
-import { CStart } from './start/CStart';
-import { CTeam } from './team/CTeam';
-import { CMessage } from './message/CMessage';
-import { CCustomerUnit } from './customerunit/CCustomerUnit';
-import { CCoupon } from './coupon/CCoupon';
-import { CInnerCustomer } from './innercustomer/CInnerCustomer';
+import { CSalesTask } from "./salestask";
+import { CCustomer } from "./customer/CCustomer";
+import { CProduct } from "./product/CProduct";
+import { CMe } from "./me/CMe";
+import { CStart } from "./start/CStart";
+import { CTeam } from "./team/CTeam";
+import { CMessage } from "./message/CMessage";
+import { CCustomerUnit } from "./customerunit/CCustomerUnit";
+import { CCoupon } from "./coupon/CCoupon";
+import { CInnerCustomer } from "./innercustomer/CInnerCustomer";
 
 import { UQs } from "./uqs";
 import { CUqBase } from "./CBase";
-import { VHome, GLOABLE } from './ui';
+import { VHome, GLOABLE } from "./ui";
 import { ProductCart } from "model/productcart";
 import { CBalance } from "achievement/CBalance";
 import { setting } from "appConfig";
@@ -21,7 +21,9 @@ import { CPost } from "post/CPost";
 import { PostCustomer } from "post/postcustomer";
 
 export class CApp extends CAppBase {
-    get uqs(): UQs { return this._uqs };
+    get uqs(): UQs {
+        return this._uqs;
+    }
 
     currentSalesRegion: any;
     currentLanguage: any;
@@ -47,7 +49,6 @@ export class CApp extends CAppBase {
     }
 
     protected async internalStart() {
-
         //根据网址判断是什么APP
         if (document.domain === setting.appUrlDomain) {
             setting.sales = new AssistSales(this);
@@ -55,12 +56,14 @@ export class CApp extends CAppBase {
             setting.sales = new AgentSales(this);
         }
 
-
-        this.currentSalesRegion = await this.uqs.common.SalesRegion.load(GLOABLE.SALESREGION_CN);
-        this.currentLanguage = await this.uqs.common.Language.load(GLOABLE.CHINESE);
+        this.currentSalesRegion = await this.uqs.common.SalesRegion.load(
+            GLOABLE.SALESREGION_CN
+        );
+        this.currentLanguage = await this.uqs.common.Language.load(
+            GLOABLE.CHINESE
+        );
         this.productCart = new ProductCart();
         this.postCustomer = new PostCustomer();
-
 
         this.cCustomer = this.newC(CCustomer);
         this.cProduct = this.newC(CProduct);

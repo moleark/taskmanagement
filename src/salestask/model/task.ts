@@ -1,4 +1,4 @@
-import { BoxId } from 'tonva';
+import { BoxId } from "tonva";
 
 export interface Task {
     id: number;
@@ -8,7 +8,7 @@ export interface Task {
     remindDate: Date;
     deadline?: Date;
     customer: any;
-    priorty?: number
+    priorty?: number;
     fields?: TaskField[];
 }
 
@@ -24,8 +24,8 @@ export interface BizType {
     description: string;
 }
 
-
 export interface TaskField {
     fieldName: string;
     value: number;
+    note: string;
 }

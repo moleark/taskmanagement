@@ -1,12 +1,11 @@
-import * as React from 'react';
-import { VPage, Form, Context } from 'tonva';
-import { observer } from 'mobx-react';
-import { Task } from '../../model';
-import { CCommonType } from './CCommonType';
+import * as React from "react";
+import { VPage, Form, Context } from "tonva";
+import { observer } from "mobx-react";
+import { Task } from "../../model";
+import { CCommonType } from "./CCommonType";
 
 export class VFinish extends VPage<CCommonType> {
-
-    private task: Task
+    private task: Task;
     private form: Form;
 
     async open(task: Task) {
@@ -21,7 +20,7 @@ export class VFinish extends VPage<CCommonType> {
     private onCompletionTask = async (model: any) => {
         if (!this.form) return;
         await this.form.buttonClick("submit");
-    }
+    };
 
     private onFormButtonClick = async (name: string, context: Context) => {
         let { completSchema } = this.controller.taskCommonType;
@@ -29,36 +28,46 @@ export class VFinish extends VPage<CCommonType> {
             let { name } = v;
             return {
                 fieldName: name,
-                value: context.form.data[name]
+                value: context.form.data[name],
+                note: context.form.data[name]
             };
-        })
+        });
         this.task.fields = fieldValues;
         await this.controller.cSalesTask.finishTask(this.task);
-    }
+    };
 
     private onCreateProduct = async () => {
         await this.controller.cSalesTask.showPorductSelect(this.task);
-    }
+    };
 
     private onCreateProject = async () => {
         await this.controller.cSalesTask.showCreateProject(this.task);
-    }
+    };
 
     private onCreateProjectPack = async () => {
         await this.controller.cSalesTask.showPorductPackSelect(this.task);
-    }
+    };
 
     render(task: Task) {
         this.task = task;
         let { completSchema, completuiSchema } = this.controller.taskCommonType;
-        return <div className="mx-3">
-            <Form ref={v => this.form = v}
-                schema={completSchema}
-                uiSchema={completuiSchema}
-                onButtonClick={this.onFormButtonClick}
-                requiredFlag={false}
-            />
-            <button type="button" className="btn btn-primary w-100  my-3" onClick={this.onCompletionTask} >提交</button>
-        </div >
+        return (
+            <div className="mx-3">
+                <Form
+                    ref={v => (this.form = v)}
+                    schema={completSchema}
+                    uiSchema={completuiSchema}
+                    onButtonClick={this.onFormButtonClick}
+                    requiredFlag={false}
+                />
+                <button
+                    type="button"
+                    className="btn btn-primary w-100  my-3"
+                    onClick={this.onCompletionTask}
+                >
+                    提交
+                </button>
+            </div>
+        );
     }
 }
