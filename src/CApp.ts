@@ -19,6 +19,7 @@ import { setting } from "appConfig";
 import { AssistSales, AgentSales } from "model/sales";
 import { CPost } from "post/CPost";
 import { PostCustomer } from "post/postcustomer";
+import { CInnerTeam } from "innerteam/CInnerTeam";
 
 export class CApp extends CAppBase {
     get uqs(): UQs {
@@ -36,6 +37,7 @@ export class CApp extends CAppBase {
     cProduct: CProduct;
     cMe: CMe;
     cTeam: CTeam;
+    cInnerTeam: CInnerTeam;
     cStart: CStart;
     cMessage: CMessage;
     cCustomerUnit: CCustomerUnit;
@@ -70,6 +72,7 @@ export class CApp extends CAppBase {
         this.cSalesTask = this.newC(CSalesTask);
         this.cMe = this.newC(CMe);
         this.cTeam = this.newC(CTeam);
+        this.cInnerTeam = this.newC(CInnerTeam);
         this.cStart = this.newC(CStart);
         this.cMessage = this.newC(CMessage);
         this.cCustomerUnit = this.newC(CCustomerUnit);

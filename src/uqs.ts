@@ -126,7 +126,7 @@ export interface UqSalesTask {
     ComputeBalance: Action;
     SearchMyCustomerByPost: Query;
     AddMyCustomerPost: Action;
-
+    SearchSubordinate: Query;
 }
 
 export interface UqMember {
