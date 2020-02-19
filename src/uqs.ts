@@ -1,8 +1,6 @@
 import { Tuid, Map, Query, Action, Sheet, Book } from "tonva";
 
 export interface UqOrder {
-    //a: Tuid;
-    //b: Tuid;
     SetCart: Action;
     RemoveFromCart: Action;
     MergeCart: Action;
@@ -127,6 +125,10 @@ export interface UqSalesTask {
     SearchMyCustomerByPost: Query;
     AddMyCustomerPost: Action;
     SearchSubordinate: Query;
+    SearchCustomerOrder: Query;
+    SearchMyCustomerDepartment: Query;
+    SearchMyCustomerResearch: Query;
+    SearchMyCustomerOfficePost: Query;
 }
 
 export interface UqMember {
