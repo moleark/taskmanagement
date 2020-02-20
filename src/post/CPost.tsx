@@ -2,7 +2,6 @@ import { nav, PageItems, Query, QueryPager } from "tonva";
 import { CUqBase } from "../CBase";
 import { VPostList } from "./VPostList";
 import { observable } from "mobx";
-import { VPostDetil } from "./VPostDetil";
 import { VCustomer } from "./VCustomer";
 
 //页面类
@@ -31,7 +30,7 @@ class PageCustomer extends PageItems<any> {
 export class CPost extends CUqBase {
     @observable pagePost: QueryPager<any>;
     @observable pageCustomer: PageCustomer;
-    @observable current: any;
+
     //初始化
     protected async internalStart() {
         nav.clear();
@@ -39,18 +38,17 @@ export class CPost extends CUqBase {
 
     //查询客户--通过名称
     searchByKey = async (key: string, author: string) => {
-        this.pagePost = new QueryPager(this.uqs.webBuilder.SearchPost, 15, 30);
-        this.pagePost.first({ key: key, author: author });
+        this.pagePost = new QueryPager(
+            this.uqs.webBuilder.SearchPostPublish,
+            15,
+            30
+        );
+        this.pagePost.first({ key: key });
     };
 
     showPostList = async () => {
         await this.searchByKey("", "0");
         this.openVPage(VPostList);
-    };
-
-    showDetail = async (id: number) => {
-        this.current = await this.uqs.webBuilder.Post.load(id);
-        this.openVPage(VPostDetil);
     };
 
     //查询客户--通过名称
@@ -66,10 +64,8 @@ export class CPost extends CUqBase {
         this.openVPage(VCustomer, post);
     };
 
-    addMyCustomerPost = async (post: any, customerlist: any) => {
-        for (let i: number = 0; i < customerlist.length; i++) {
-            let param = { post: post.id, customer: customerlist[i] };
-            await this.uqs.salesTask.AddMyCustomerPost.submit(param);
-        }
+    addMyCustomerPost = async (post: any, customerid: any) => {
+        let param = { post: post.id, customer: customerid };
+        await this.uqs.salesTask.AddMyCustomerPost.submit(param);
     };
 }

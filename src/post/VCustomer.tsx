@@ -1,5 +1,5 @@
 import * as React from "react";
-import { VPage, Page, LMR, List, tv, UserIcon, SearchBox } from "tonva";
+import { VPage, Page, LMR, List, tv, UserIcon, SearchBox, FA } from "tonva";
 import { observer } from "mobx-react";
 import { CPost } from "./CPost";
 import { setting } from "appConfig";
@@ -39,27 +39,13 @@ export class VCustomer extends VPage<CPost> {
                 />
             </div>
         );
-        let footer = (
-            <div className="d-block">
-                <div className="w-100  justify-content-end">
-                    <button
-                        type="button"
-                        className="btn btn-primary my-1 mr-3"
-                        style={{ padding: "6px 35px 6px 35px" }}
-                        onClick={this.share}
-                    >
-                        分享
-                    </button>
-                </div>
-            </div>
-        );
+
         return (
             <Page
-                header="客户"
+                header="选择客户"
                 onScrollBottom={this.onScrollBottom}
                 headerClassName={setting.pageHeaderCss}
                 right={right}
-                footer={footer}
             >
                 <List
                     before={""}
@@ -83,7 +69,7 @@ export class VCustomer extends VPage<CPost> {
     private renderCustomer = (customer: any, index: number) => {
         (customer as any)._source = "VCustomerList";
 
-        let { name, unit, id, webuser } = customer;
+        let { name, unit, webuser, sharingTimes } = customer;
         let nameShow = (
             <div className="cursor-pointer font-weight-bold w-100">{name}</div>
         );
@@ -92,14 +78,10 @@ export class VCustomer extends VPage<CPost> {
                 <small> {tv(unit, s => s.name)}</small>
             </div>
         );
-        let date = (
-            <div className=" cursor-pointer small">
-                <input
-                    type="checkbox"
-                    onChange={() =>
-                        this.controller.cApp.postCustomer.add(id, this.post)
-                    }
-                />
+        let right = (
+            <div className="mt-3">
+                {sharingTimes > 0 ? <FA name="flag px-3" /> : <></>}
+                <span className="small text-primary">分享</span>
             </div>
         );
         let left = webuser ? (
@@ -112,18 +94,21 @@ export class VCustomer extends VPage<CPost> {
             this.imgSmile
         );
         return (
-            <LMR className="px-2 py-1" left={left}>
+            <LMR
+                className="px-3 py-1"
+                left={left}
+                right={right}
+                onClick={() => this.share(customer)}
+            >
                 <LMR className="px-1" left={nameShow}></LMR>
-                <LMR className="px-1" left={unitShow} right={date}></LMR>
+                <LMR className="px-1" left={unitShow}></LMR>
             </LMR>
         );
     };
 
-    private share = async () => {
-        let { postCustomer } = this.controller.cApp;
-        let { customerlist, post } = postCustomer;
-        let { caption, image, id, discription } = post;
-        await this.controller.addMyCustomerPost(post, customerlist);
+    private share = async (cusotmer: any) => {
+        let { caption, image, id, discription } = this.post;
+        await this.controller.addMyCustomerPost(this.post, cusotmer.id);
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
             // @ts-ignore  屏蔽错误
             window.plusShare(
@@ -138,8 +123,6 @@ export class VCustomer extends VPage<CPost> {
                     //分享回调
                 }
             );
-            this.closePage(2);
-            postCustomer.clearAll();
         }
     };
 }

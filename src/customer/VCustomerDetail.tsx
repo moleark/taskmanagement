@@ -119,13 +119,6 @@ const potentialText: { [v: number]: string } = {
     2: "大于30万"
 };
 
-const researchText: { [v: number]: string } = {
-    0: "有机",
-    1: "化学",
-    2: "分析",
-    3: "材料"
-};
-
 const genderText: { [v: number]: string } = {
     0: "女",
     1: "男"
@@ -173,6 +166,43 @@ export class VCustomerDetail extends VPage<CCustomer> {
                 ></LMR>
             </div>
         );
+    };
+
+    private renderContent = (item: any, index: number) => {
+        let { caption } = item;
+        let right = <div className="text-primary">分享</div>;
+        return (
+            <LMR
+                className="px-3 my-3 cursor-pointer small"
+                right={right}
+                onClick={() => this.share(item)}
+            >
+                <div>{caption}</div>
+            </LMR>
+        );
+    };
+
+    private share = async (post: any) => {
+        await this.controller.cApp.cPost.addMyCustomerPost(
+            post,
+            this.customer.id
+        );
+        let { caption, image, id, discription } = post;
+        if (navigator.userAgent.indexOf("Html5Plus") > -1) {
+            // @ts-ignore  屏蔽错误
+            window.plusShare(
+                {
+                    title: caption, //应用名字
+                    content: discription,
+                    href: setting.posturl + "/" + id, //分享出去后，点击跳转地址
+                    //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片
+                    thumbs: [image.obj.path] //分享缩略图
+                },
+                function(result) {
+                    //分享回调
+                }
+            );
+        }
     };
 
     private renderTitle = (
@@ -256,8 +286,6 @@ export class VCustomerDetail extends VPage<CCustomer> {
         var genderShow = gender === undefined ? "" : genderText[gender];
         var potentialShow =
             potential === undefined ? "[无]" : potentialText[potential];
-        var researchShow =
-            research === undefined ? "[无]" : researchText[research];
         let telephoneShow = mobile && (
             <div>
                 <a
@@ -533,7 +561,8 @@ export class VCustomerDetail extends VPage<CCustomer> {
             showCustomerEdit,
             cApp,
             activetasks,
-            custoemrorders
+            custoemrorders,
+            pagePost
         } = this.controller;
         let onshowCustomerEdit = () => showCustomerEdit(this.customer);
         let onshowAddTsak = () =>
@@ -582,6 +611,15 @@ export class VCustomerDetail extends VPage<CCustomer> {
                         none="无"
                         items={custoemrorders}
                         item={{ render: this.renderOrder }}
+                    />
+                )}
+                {this.renderTitle("相关内容", "", undefined, "", undefined)}
+                {this.renderOrder && (
+                    <List
+                        before={""}
+                        none="无"
+                        items={pagePost}
+                        item={{ render: this.renderContent }}
                     />
                 )}
             </Page>

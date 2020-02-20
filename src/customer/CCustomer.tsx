@@ -1,7 +1,7 @@
 import * as React from "react";
 import { observable } from "mobx";
 import { observer } from "mobx-react";
-import { PageItems, Query, Context } from "tonva";
+import { PageItems, Query, Context, QueryPager } from "tonva";
 import { CUqBase } from "../CBase";
 import { Task } from "../salestask/model";
 import { CAddress } from "../address/CAddress";
@@ -121,6 +121,7 @@ export class CCustomer extends CUqBase {
     @observable newMyCustomerList: any[];
     @observable activetasks: any;
     @observable custoemrorders: any;
+    @observable pagePost: QueryPager<any>;
     private task: Task;
 
     //初始化
@@ -215,6 +216,7 @@ export class CCustomer extends CUqBase {
 
         await this.getActiveTasks(customer);
         await this.getCustomerOrder(customer);
+        await this.getCustomerContent(customer);
         this.openVPage(VCustomerDetail, mycustomer);
     };
 
@@ -235,6 +237,16 @@ export class CCustomer extends CUqBase {
                 _ordertype: "coupon"
             }
         );
+    };
+
+    //获取客户相关内容
+    getCustomerContent = async (customer: any) => {
+        this.pagePost = new QueryPager(
+            this.uqs.webBuilder.SearchPostPublish,
+            5,
+            5
+        );
+        this.pagePost.first({ key: "" });
     };
 
     /**

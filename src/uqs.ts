@@ -142,6 +142,7 @@ export interface UqWebBuilder {
     Image: Tuid;
     Post: Tuid;
     SearchPost: Query;
+    SearchPostPublish: Query;
     SearchTemplate: Query;
     SearchImage: Query;
     AgentPost: Map;

@@ -10,7 +10,8 @@ export class VPostDetil extends VPage<CPost> {
     }
 
     private page = observer((product: any) => {
-        let { current, showCustomer } = this.controller;
+        let { showCustomer } = this.controller;
+        let current: any;
         let { caption, content, image, template, discription } = current;
         let tvImage = tv(image, values => {
             return (
