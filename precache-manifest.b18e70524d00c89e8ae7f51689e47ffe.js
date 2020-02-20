@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "06a030bfbcdd1255acfa86c6e20a64aa",
+    "revision": "190154214847d0fbfb613f4d6b15933f",
     "url": "./index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "./static/css/2.a858ca49.chunk.css"
   },
   {
-    "revision": "b50728dd9f89acc403d4",
+    "revision": "2f50291441018975e3ca",
     "url": "./static/css/main.d8ea2e5a.chunk.css"
   },
   {
@@ -24,16 +24,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "./static/js/4.e41e0d47.chunk.js"
   },
   {
-    "revision": "b50728dd9f89acc403d4",
-    "url": "./static/js/main.a04f6ef8.chunk.js"
+    "revision": "2f50291441018975e3ca",
+    "url": "./static/js/main.98deb5cd.chunk.js"
   },
   {
     "revision": "8f5e0ae3f52fec9868a9",
     "url": "./static/js/runtime-main.e0396eb4.js"
   },
   {
-    "revision": "d68e733441d921b017b984d0d4cddd4e",
-    "url": "./static/media/assistlogo.d68e7334.png"
+    "revision": "98e33fde5bdfb32cb2877badccb2af84",
+    "url": "./static/media/assistlogo.98e33fde.png"
   },
   {
     "revision": "674f50d287a8c48dc19ba404d20fe713",
