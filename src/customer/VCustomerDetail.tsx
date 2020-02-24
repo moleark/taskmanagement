@@ -578,6 +578,59 @@ export class VCustomerDetail extends VPage<CCustomer> {
             </div>
         );
 
+        let taskShow_titel: any;
+        let taskShow: any;
+        if (activetasks.length > 0) {
+            taskShow_titel = this.renderTitle(
+                "待办事项",
+                "icon-tianjia",
+                onshowAddTsak,
+                "icon-qita",
+                onshowCustomerHistory
+            );
+            taskShow = (
+                <List
+                    before={""}
+                    none="无"
+                    items={activetasks}
+                    item={{ render: this.renderTask }}
+                />
+            );
+        }
+
+        let orderShow_titel: any;
+        let orderShow: any;
+        if (custoemrorders.length > 0) {
+            orderShow_titel = this.renderTitle(
+                "历史订单",
+                "",
+                undefined,
+                "",
+                undefined
+            );
+            orderShow = (
+                <List
+                    before={""}
+                    none="无"
+                    items={custoemrorders}
+                    item={{ render: this.renderOrder }}
+                />
+            );
+        }
+
+        let postShow: any;
+        if (pagePost.items && pagePost.items.length > 0) {
+            postShow = (
+                <List
+                    className="mt-3"
+                    before={""}
+                    none="无"
+                    items={pagePost}
+                    item={{ render: this.renderContent }}
+                />
+            );
+        }
+
         return (
             <Page
                 header={header}
@@ -589,39 +642,11 @@ export class VCustomerDetail extends VPage<CCustomer> {
                     values={this.customer}
                     alignValue="right"
                 />
-                {this.renderTitle(
-                    "待办事项",
-                    "icon-tianjia",
-                    onshowAddTsak,
-                    "icon-qita",
-                    onshowCustomerHistory
-                )}
-                {
-                    <List
-                        before={""}
-                        none="无"
-                        items={activetasks}
-                        item={{ render: this.renderTask }}
-                    />
-                }
-                {this.renderTitle("历史订单", "", undefined, "", undefined)}
-                {this.renderOrder && (
-                    <List
-                        before={""}
-                        none="无"
-                        items={custoemrorders}
-                        item={{ render: this.renderOrder }}
-                    />
-                )}
-                {this.renderTitle("相关内容", "", undefined, "", undefined)}
-                {this.renderOrder && (
-                    <List
-                        before={""}
-                        none="无"
-                        items={pagePost}
-                        item={{ render: this.renderContent }}
-                    />
-                )}
+                {taskShow_titel}
+                {taskShow}
+                {orderShow_titel}
+                {orderShow}
+                {postShow}
             </Page>
         );
     });

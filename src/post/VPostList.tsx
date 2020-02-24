@@ -14,6 +14,11 @@ export class VPostList extends VPage<CPost> {
         return <this.page />;
     }
 
+    private onClick = (id: any) => {
+        window.open("https://web.jkchemical.com/post/" + id, "_blank");
+        return false;
+    };
+
     private onScrollBottom = async () => {
         this.controller.pagePost.more();
     };
@@ -43,7 +48,7 @@ export class VPostList extends VPage<CPost> {
 
     private itemRow = observer((item: any) => {
         let { showCustomer } = this.controller;
-        let { image, caption } = item;
+        let { image, caption, id } = item;
         let right = (
             <div
                 className="small cursor-pointer text-primary text-right w-6c pt-3 "
@@ -80,7 +85,10 @@ export class VPostList extends VPage<CPost> {
 
         return (
             <LMR className="px-3" left={tvImage} right={right}>
-                <div className="mt-2">
+                <div
+                    className="mt-2"
+                    onClick={() => this.controller.showPostDetail(item)}
+                >
                     <strong>{caption}</strong>
                 </div>
             </LMR>

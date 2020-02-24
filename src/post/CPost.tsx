@@ -3,6 +3,7 @@ import { CUqBase } from "../CBase";
 import { VPostList } from "./VPostList";
 import { observable } from "mobx";
 import { VCustomer } from "./VCustomer";
+import { VPostDetil } from "./VPostDetil";
 
 //页面类
 /* eslint-disable */
@@ -49,6 +50,10 @@ export class CPost extends CUqBase {
     showPostList = async () => {
         await this.searchByKey("", "0");
         this.openVPage(VPostList);
+    };
+
+    showPostDetail = async (param: any) => {
+        this.openVPage(VPostDetil, param);
     };
 
     //查询客户--通过名称

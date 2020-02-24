@@ -23,6 +23,7 @@ export class VInnerTeam extends VPage<CInnerTeam> {
     };
 
     private page = () => {
+        let { showTeamDetail } = this.controller;
         let none = <div className="my-3 mx-2 text-muted">还没有团队哦！</div>;
         return (
             <Page header="我的团队" headerClassName={setting.pageHeaderCss}>
@@ -30,7 +31,7 @@ export class VInnerTeam extends VPage<CInnerTeam> {
                     before={""}
                     none={none}
                     items={this.team}
-                    item={{ render: this.renderItem }}
+                    item={{ render: this.renderItem, onClick: showTeamDetail }}
                 />
             </Page>
         );

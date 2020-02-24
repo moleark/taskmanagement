@@ -1,52 +1,21 @@
 import * as React from "react";
 import { observer } from "mobx-react";
-import { VPage, Page, tv, LMR } from "tonva";
+import { VPage, Page } from "tonva";
 import { CPost } from "./CPost";
 import { setting } from "appConfig";
 /* eslint-disable */
 export class VPostDetil extends VPage<CPost> {
-    async open(customer: any) {
-        this.openPage(this.page, customer);
+    async open(param: any) {
+        this.openPage(this.page, param);
     }
 
-    private page = observer((product: any) => {
-        let { showCustomer } = this.controller;
-        let current: any;
-        let { caption, content, image, template, discription } = current;
-        let tvImage = tv(image, values => {
-            return (
-                <div className="border p-2">
-                    <img className="w-3c h-3c" src={values.path} />
-                </div>
-            );
-        });
-
-        let footer = (
-            <div className="flex-grow-1 align-self-center justify-content-end">
-                <button
-                    type="button"
-                    className="btn btn-primary mx-3 align-self-center"
-                    onClick={() => showCustomer("", current)}
-                >
-                    分享给客户
-                </button>
-            </div>
-        );
-
+    private page = observer((param: any) => {
         return (
-            <Page
-                header="帖文内容"
-                headerClassName={setting.pageHeaderCss}
-                footer={footer}
-            >
-                <div className="p-3">
-                    <div className="small text-muted p-1">标题</div>
-                    <div className="mb-1 h6 px-3 py-2 bg-white">{caption}</div>
-                    <div className="small text-muted p-1">链接描述</div>
-                    <LMR className="mb-3 bg-white px-3 h6" right={tvImage}>
-                        <div className="py-2">{discription}</div>
-                    </LMR>
-                </div>
+            <Page header="详情" headerClassName={setting.pageHeaderCss}>
+                <iframe
+                    style={{ width: "99%", height: "99%" }}
+                    src={"https://web.jkchemical.com/post/" + param.id}
+                ></iframe>
             </Page>
         );
     });

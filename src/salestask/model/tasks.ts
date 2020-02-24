@@ -1,6 +1,6 @@
-import { observable } from 'mobx';
-import _ from 'lodash';
-import { Task } from './task';
+import { observable } from "mobx";
+import _ from "lodash";
+import { Task } from "./task";
 
 interface DateTasks {
     date: Date;
@@ -39,8 +39,7 @@ export class Tasks {
             dateTasks = { date: deadline, list: [task] };
             // 插入到合适的地方
             this.dateTasksList.push(dateTasks);
-        }
-        else {
+        } else {
             dateTasks.list.push(task);
         }
     }
