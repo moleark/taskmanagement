@@ -54,7 +54,7 @@ export class VPostList extends VPage<CPost> {
                 className="small cursor-pointer text-primary text-right w-6c pt-3 "
                 onClick={() => showCustomer("", item)}
             >
-                分享
+                <button className="btn btn-outline-info">分享</button>
             </div>
         );
 
@@ -63,32 +63,21 @@ export class VPostList extends VPage<CPost> {
             values => {
                 return (
                     <div className=" text-center m-2 mr-4">
-                        <img
-                            className="w-3c h-3c"
-                            src={values.path}
-                            style={{ borderRadius: "8px" }}
-                        />
+                        <img className="w-3c h-3c" src={values.path} style={{ borderRadius: "8px" }} />
                     </div>
                 );
             },
             undefined,
             () => (
                 <div className=" text-center m-2 mr-4">
-                    <FA
-                        className="w-3 p-2 h-3c text-center"
-                        name="camera"
-                        size="2x"
-                    />
+                    <FA className="w-3 p-2 h-3c text-center" name="camera" size="2x" />
                 </div>
             )
         );
 
         return (
             <LMR className="px-3" left={tvImage} right={right}>
-                <div
-                    className="mt-2"
-                    onClick={() => this.controller.showPostDetail(item)}
-                >
+                <div className="mt-2" onClick={() => this.controller.showPostDetail(item)}  >
                     <strong>{caption}</strong>
                 </div>
             </LMR>

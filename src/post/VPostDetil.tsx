@@ -12,10 +12,9 @@ export class VPostDetil extends VPage<CPost> {
     private page = observer((param: any) => {
         return (
             <Page header="详情" headerClassName={setting.pageHeaderCss}>
-                <iframe
-                    style={{ width: "99%", height: "99%" }}
-                    src={"https://web.jkchemical.com/post/" + param.id}
-                ></iframe>
+                <div className="w-100 h-100">
+                    <iframe src={"https://web.jkchemical.com/post/" + param.id} className="border-0 w-100 h-100 overflow-hidden"></iframe>
+                </div>
             </Page>
         );
     });

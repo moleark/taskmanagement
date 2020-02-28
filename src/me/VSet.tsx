@@ -49,6 +49,16 @@ export class VSet extends VPage<CMe> {
             '',
             {
                 type: 'component',
+                component: <div className="w-100 d-flex py-2 justify-content-between" onClick={() => this.controller.showAbout()}>
+                    <div>
+                        <i className="iconfont icon-guanyu mr-2" style={{ fontSize: "20px", color: "#2aa515" }}></i>ID
+                    </div>
+                    <div className="py-2 small">{nav.user.id}</div>
+                </div>,
+            },
+            '',
+            {
+                type: 'component',
                 component: <div className="w-100 text-center py-3" onClick={this.logout}>
                     退出
                 </div>,

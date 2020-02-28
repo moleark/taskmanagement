@@ -3,22 +3,12 @@ import { VPage, Page, LMR, List, tv, UserIcon, SearchBox, FA } from "tonva";
 import { observer } from "mobx-react";
 import { CPost } from "./CPost";
 import { setting } from "appConfig";
-
-/**
-class Checkbox extends Widget {
-    private onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-        let val = evt.currentTarget.value;
-        this.setValue(val);
-    }
-    render = () => {
-        return <div>sdf  <input type="checkbox" onChange={this.onChange} /></div>;
-    };
-}
-*/
+import { observable } from "mobx";
+import { GLOABLE } from "ui";
 
 export class VCustomer extends VPage<CPost> {
     private post: any;
-
+    @observable showTips: any = "none"
     async open(param: any) {
         this.post = param;
         this.openPage(this.page);
@@ -29,13 +19,10 @@ export class VCustomer extends VPage<CPost> {
 
         let right = (
             <div className="w-19c d-flex">
-                <SearchBox
-                    className="w-80 mt-1 mr-2"
-                    size="sm"
+                <SearchBox className="w-80 mt-1 mr-2" size="sm" placeholder="搜索客户姓名、单位"
                     onSearch={(key: string) =>
                         this.controller.searchCustomerByKey(key, this.post.id)
                     }
-                    placeholder="搜索客户姓名、单位"
                 />
             </div>
         );
@@ -53,6 +40,9 @@ export class VCustomer extends VPage<CPost> {
                     items={pageCustomer}
                     item={{ render: this.renderCustomer }}
                 />
+                <div className="text-center text-white small px-2" style={{ width: '40%', margin: '-80px  auto 0 auto', padding: '4px', borderRadius: '3px', backgroundColor: '#505050', display: this.showTips }}>
+                    通过APP才能分享
+                </div>
             </Page>
         );
     });
@@ -81,34 +71,31 @@ export class VCustomer extends VPage<CPost> {
         let right = (
             <div className="mt-3">
                 {sharingTimes > 0 ? <FA name="flag px-3" /> : <></>}
-                <span className="small text-primary">分享</span>
+                <button className="btn btn-outline-info">分享微信</button>
             </div>
         );
         let left = webuser ? (
-            <UserIcon
-                className="mt-1 mx-2 w-3c h-3c"
-                id={webuser.id}
-                style={{ borderRadius: "8px" }}
-            />
+            <UserIcon className="mt-1 mx-2 w-3c h-3c" id={webuser.id} style={{ borderRadius: "8px" }} />
         ) : (
-            this.imgSmile
-        );
+                this.imgSmile
+            );
         return (
-            <LMR
-                className="px-3 py-1"
-                left={left}
-                right={right}
-                onClick={() => this.share(customer)}
-            >
+            <LMR className="px-3 py-1" left={left} right={right} onClick={() => this.share(customer)}>
                 <LMR className="px-1" left={nameShow}></LMR>
                 <LMR className="px-1" left={unitShow}></LMR>
             </LMR>
         );
     };
 
+    onTips = () => {
+        this.showTips = "";
+        setTimeout(() => {
+            this.showTips = "none";
+        }, GLOABLE.TIPDISPLAYTIME);
+    }
+
     private share = async (cusotmer: any) => {
         let { caption, image, id, discription } = this.post;
-        await this.controller.addMyCustomerPost(this.post, cusotmer.id);
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
             // @ts-ignore  屏蔽错误
             window.plusShare(
@@ -119,10 +106,13 @@ export class VCustomer extends VPage<CPost> {
                     //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片
                     thumbs: [image.obj.path] //分享缩略图
                 },
-                function(result) {
+                function (result) {
                     //分享回调
                 }
             );
+            await this.controller.addMyCustomerPost(this.post, cusotmer.id);
+        } else {
+            this.onTips();
         }
     };
 }
