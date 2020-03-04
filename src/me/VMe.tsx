@@ -175,10 +175,10 @@ export class VMe extends VPage<CMe> {
         let right = setting.sales.isInner ? (
             <span></span>
         ) : (
-            <span onClick={onshowInvitationCode}>
-                <FA className="h2" name="qrcode" />
-            </span>
-        );
+                <span onClick={onshowInvitationCode}>
+                    <FA className="h2" name="qrcode" />
+                </span>
+            );
         let contener = (
             <div>
                 <div onClick={showMeDetail}>
@@ -187,19 +187,19 @@ export class VMe extends VPage<CMe> {
                 {setting.sales.isInner ? (
                     <></>
                 ) : (
-                    <div className="small mt-1">
-                        <span>邀请码:</span>
-                        <span className="px-1">{this.inviteCode}</span>
-                        <span
-                            style={{ border: "1px solid #999999" }}
-                            className="px-1 mx-1"
-                            onClick={this.copyClick}
-                        >
-                            <FA name="clone" className="mr-1" />
-                            复制
+                        <div className="small mt-1">
+                            <span>邀请码:</span>
+                            <span className="px-1">{this.inviteCode}</span>
+                            <span
+                                style={{ border: "1px solid #999999" }}
+                                className="px-1 mx-1"
+                                onClick={this.copyClick}
+                            >
+                                <FA name="clone" className="mr-1" />
+                                复制
                         </span>
-                    </div>
-                )}
+                        </div>
+                    )}
             </div>
         );
 
@@ -228,14 +228,10 @@ export class VMe extends VPage<CMe> {
     });
 
     private myService() {
-        let { cSalesTask } = this.controller.cApp;
+        let { cSalesTask, cCoupon } = this.controller.cApp;
         let { showMyTasksCompleted } = cSalesTask;
         let { showSet } = this.controller;
         let onShowMyTasksCompleted = async () => await showMyTasksCompleted();
-
-        let param = { paramtype: "coupon", product: undefined };
-        let onshowCreateCoupon = async () =>
-            await this.controller.cApp.cCoupon.showCreateCoupon(param);
 
         return (
             <>
@@ -244,29 +240,17 @@ export class VMe extends VPage<CMe> {
                     <strong>我的服务</strong>
                 </div>
                 <div className="row p-2 cursor-pointer">
-                    <div
-                        className="col text-center"
-                        onClick={onshowCreateCoupon}
-                    >
+                    <div className="col text-center" onClick={() => cCoupon.showCreateCoupon({ type: "coupon", product: undefined })} >
                         <div>
-                            <i
-                                className="iconfont icon-youhuiquantuangou"
-                                style={{ fontSize: "25px", color: "#f6ad15" }}
-                            ></i>
+                            <i className="iconfont icon-youhuiquantuangou" style={{ fontSize: "25px", color: "#f6ad15" }} ></i>
                         </div>
                         <small>
-                            <small>{setting.sales.couponHeader}</small>
+                            <small>优惠券</small>
                         </small>
                     </div>
-                    <div
-                        className="col text-center"
-                        onClick={onShowMyTasksCompleted}
-                    >
+                    <div className="col text-center" onClick={onShowMyTasksCompleted}  >
                         <div>
-                            <i
-                                className="iconfont icon-renwuwancheng"
-                                style={{ fontSize: "25px", color: "#2aa515" }}
-                            ></i>
+                            <i className="iconfont icon-renwuwancheng" style={{ fontSize: "25px", color: "#2aa515" }}></i>
                         </div>
                         <small>
                             <small>历史任务</small>
@@ -274,26 +258,32 @@ export class VMe extends VPage<CMe> {
                     </div>
                     <div className="col text-center" onClick={showSet}>
                         <div>
-                            <i
-                                className="iconfont icon-shezhi2"
-                                style={{ fontSize: "25px", color: "#0e6ff7" }}
-                            ></i>
+                            <i className="iconfont icon-shezhi2" style={{ fontSize: "25px", color: "#0e6ff7" }}></i>
                         </div>
                         <small>
                             <small>设置</small>
                         </small>
                     </div>
                 </div>
+                {setting.sales.isInner && <div className="row p-2 cursor-pointer">
+                    <div className="col text-center" onClick={() => cCoupon.showCreateCoupon({ type: "credits", product: undefined })} >
+                        <div>
+                            <i className="iconfont icon-youhuiquantuangou" style={{ fontSize: "25px", color: "#f6ad15" }} ></i>
+                        </div>
+                        <small>
+                            <small>积分券</small>
+                        </small>
+                    </div>
+                    <div className="col text-center"></div>
+                    <div className="col text-center"></div>
+                </div>
+                }
             </>
         );
     }
 
     private page = observer(() => {
-        /**
-        <div>
-            <button type="button" className="btn btn-primary w-100" onClick={this.controller.IsCanUseCoupon}>积分吗</button>
-        </div>
-        **/
+
         return (
             <div>
                 <div className="bg-white">
@@ -304,14 +294,7 @@ export class VMe extends VPage<CMe> {
 
                 <div
                     className="text-center text-white small px-2"
-                    style={{
-                        width: "30%",
-                        margin: "-100px auto 0 auto",
-                        padding: "4px",
-                        borderRadius: "3px",
-                        backgroundColor: "#505050",
-                        display: this.showTips
-                    }}
+                    style={{ width: "30%", margin: "-100px auto 0 auto", padding: "4px", borderRadius: "3px", backgroundColor: "#505050", display: this.showTips }}
                 >
                     已复制到剪切板
                 </div>

@@ -11,56 +11,26 @@ import QRCode from 'qrcode.react';
 export class VCreateCouponEnd extends VPage<CCoupon> {
 
     @observable showTips: any = "none"
-    inviteParam: any;
+    private coupon: any;
 
     async open(param: any) {
-        this.inviteParam = param;
+        this.coupon = param;
         this.openPage(this.page);
-    }
-    comeBack = () => {
-        this.closePage(2);
-    }
-
-    copyClick = (e: any) => {
-        copy(e.target.parentNode.childNodes[0].innerHTML)
-        this.showTips = "";
-        setTimeout(() => {
-            this.showTips = "none";
-        }, GLOABLE.TIPDISPLAYTIME);
-    }
-
-    share = async (url: any) => {
-
-        if (navigator.userAgent.indexOf("Html5Plus") > -1) {
-
-            let { paramtype, discount } = this.inviteParam;
-            // @ts-ignore  屏蔽错误 
-            window.plusShare({
-                title: setting.sales.shareTitle(paramtype),//应用名字  
-                content: setting.sales.shareContent(discount),
-                href: url,//分享出去后，点击跳转地址 
-                //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片
-                thumbs: [setting.sales.sharelogo] //分享缩略图  
-            }, function (result) {
-                //分享回调  
-            });
-            this.controller.cApp.productCart.clearAll();
-        }
     }
 
     private page = observer(() => {
-        var inviteCode = "";
-        let { code } = this.inviteParam;
+        var couponCode = "";
+        let { code, type } = this.coupon;
         if (code) {
             code = String(code);
             let p1 = code.substr(0, 4);
             let p2 = code.substr(4);
-            inviteCode = p1 + ' ' + p2;
+            couponCode = p1 + ' ' + p2;
         }
 
         let { productCart } = this.controller.cApp;
         let ids = productCart.getIds();
-        let url = setting.sales.shareUrl(code, ids);
+        let url = setting.sales.shareUrl(type, code, ids);
         let onshare = () => this.share(url);
         let share = <div className="text-center" style={{ width: 'auto', height: '10%' }} >
         </div>;
@@ -68,7 +38,7 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
             share = <span className="text-info cursor-info mx-2" onClick={onshare} >分享</span>;
         }
 
-        let header = setting.sales.couponHeader;
+        let header = this.coupon.type === "coupon" ? "优惠券" : "积分券";
         return <Page header={header} headerClassName={setting.pageHeaderCss}>
             <div id="qrid" className="text-center" style={{ width: 'auto', height: '85%' }}  >
                 <Image src={setting.sales.logo} className="mt-4" style={{ width: 'auto', height: '40%', margin: '2rem auto, 0 auto' }} />
@@ -79,7 +49,7 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
                         fgColor="#000000"  //二维码的颜色
                     />
                     <div className="mt-4">
-                        <span className="w-100 text-center h3 m-3 text-info">{inviteCode} </span>
+                        <span className="w-100 text-center h3 m-3 text-info">{couponCode} </span>
                     </div>
                 </div>
             </div>
@@ -94,4 +64,32 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
             </div>
         </Page>
     })
+
+
+    comeBack = () => {
+        this.closePage(2);
+    }
+
+    copyClick = (e: any) => {
+        copy(e.target.parentNode.childNodes[0].innerHTML)
+        this.showTips = "";
+        setTimeout(() => {
+            this.showTips = "none";
+        }, GLOABLE.TIPDISPLAYTIME);
+    }
+
+    share = async (url: any) => {
+        if (navigator.userAgent.indexOf("Html5Plus") > -1) {
+            let { paramtype, discount } = this.coupon;
+            // @ts-ignore  屏蔽错误 
+            window.plusShare({
+                title: setting.sales.shareTitle(paramtype),//应用名字  
+                content: setting.sales.shareContent(discount),
+                href: url,//分享出去后，点击跳转地址 
+                thumbs: [setting.sales.sharelogo] //分享缩略图  
+            }, function (result) {
+            });
+            this.controller.cApp.productCart.clearAll();
+        }
+    }
 }

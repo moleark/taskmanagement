@@ -14,20 +14,20 @@ import { renderBrand } from "product/CProduct";
 
 export class VCreateProductCouponEnd extends VPage<CCoupon> {
     @observable showTips: any = "none";
-    inviteCode: string;
-    url: string;
-    inviteParam: any;
+    private inviteCode: string;
+    private url: string;
+    private coupon: any;
 
     async open(param: any) {
-        this.inviteParam = param;
-        let { code, product } = param;
+        this.coupon = param;
+        let { code, product, type } = param;
         if (code) {
             code = String(code);
             let p1 = code.substr(0, 4);
             let p2 = code.substr(4);
             this.inviteCode = p1 + " " + p2;
         }
-        this.url = setting.sales.shareUrl(code, product.main.id);
+        this.url = setting.sales.shareUrl(type, code, product.main.id);
         this.openPage(this.page, param);
     }
 
@@ -56,17 +56,7 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
     };
 
     private renderProduct = (product: MainProductChemical) => {
-        let {
-            brand,
-            description,
-            descriptionC,
-            CAS,
-            purity,
-            molecularFomula,
-            molecularWeight,
-            origin,
-            imageUrl
-        } = product;
+        let { brand, description, descriptionC, CAS, purity, molecularFomula, molecularWeight, origin, imageUrl } = product;
         return (
             <div className="mb-4 px-3">
                 <div className="py-2"></div>
@@ -94,44 +84,11 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
     };
 
     private renderPack = (item: ProductPackRow) => {
-        /**
-        let { discount } = this.inviteParam;
-
-        let onshare = () => this.share(this.url);
-
-        let share: any;
-        if (navigator.userAgent.indexOf("Html5Plus") > -1) {
-            share = <button className="btn btn-info" onClick={onshare} >点击分享</button>;
-        }
-
-        let { retail } = item;
-        let priceui = <div className="pt-4 mt-4 d-flex align-items-end justify-content-end text-danger">
-            <div><small>¥</small> <span className="h4">{(retail * (1 - discount)).toFixed(2)}</span> <del className="text-muted small"> ¥ {retail} </del></div>
-        </div>;
-
-        let qrcode = <div className="d-flex flex-grow-1">
-            <div className="text-center">
-                <div>{this.inviteCode}</div>
-                <QRCode value={this.url} size={100} fgColor="#000000" />
-            </div>
-        </div>;
-
-        return <>
-            <div className="sep-product-select py-4" style={{ margin: '0 auto' }} />
-            <div className="d-flex px-4">
-                {qrcode}
-                {priceui}
-            </div>
-            <div className="text-center mt-5">
-                {share}
-            </div>
-        </>;
-        */
         return <> </>;
     };
 
     private showShare = () => {
-        let { discount } = this.inviteParam;
+        let { discount } = this.coupon;
 
         let onshare = () => this.share(this.url);
 
@@ -176,7 +133,7 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
 
     share = async (url: any) => {
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
-            let { paramtype, discount } = this.inviteParam;
+            let { paramtype, discount } = this.coupon;
             // @ts-ignore  屏蔽错误
             window.plusShare(
                 {
@@ -186,7 +143,7 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
                     //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片
                     thumbs: [setting.sales.sharelogo] //分享缩略图
                 },
-                function(result) {
+                function (result) {
                     //分享回调
                 }
             );
@@ -198,13 +155,10 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
             this.renderProduct,
             this.renderPack
         );
-        viewProduct.model = this.inviteParam.product;
-
+        viewProduct.model = this.coupon.product;
+        let header = this.coupon.type === "coupon" ? "优惠券" : "积分券";
         return (
-            <Page
-                header={setting.sales.couponHeader}
-                headerClassName={setting.pageHeaderCss}
-            >
+            <Page header={header} headerClassName={setting.pageHeaderCss}>
                 <div className="bg-white" style={{ height: "100%" }}>
                     <div className="px-2 py-2">{viewProduct.render()}</div>
                     {this.showShare()}

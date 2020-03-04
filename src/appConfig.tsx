@@ -21,13 +21,9 @@ export const assistappConfig: AppConfig = _.merge(_.clone(appConfigBase), {
 });
 
 export const setting = {
-    //appName: "销售助手",
     url: "http://agent.jkchemical.com",
     carturl: "http://shop.jkchemical.com",
     posturl: "https://web.jkchemical.com/post",
-    //downloadAppurl: "http://agent.jkchemical.com/download/jk-agent.apk",
-    //sharelogo: "https://agent.jkchemical.com/sharelogo.png",
-    //logo: logo,
     userIcon: "",
     appUrlDomain: "assist.jkchemical.com",
     pageHeaderCss: "bg-primary py-1",

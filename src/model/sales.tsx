@@ -14,16 +14,13 @@ export abstract class Sales {
     logo: string;
     appName: string;
     isInner: Boolean;
-    couponHeader: string;
-    addCouponHeader: string;
-    couponType: string;
     couponDefaultValue: number;
     downloadAppurl: string;
     sharelogo: string;
     abstract achievement(achievement: any): JSX.Element;
     abstract shareTitle(type: string): string;
     abstract shareContent(discount: number): string;
-    abstract shareUrl(coupon: string, product: any): string;
+    abstract shareUrl(type: string, coupon: string, product: any): string;
 }
 
 export class AssistSales extends Sales {
@@ -31,9 +28,7 @@ export class AssistSales extends Sales {
     logo = assistlogo;
     appName = "销售助手";
     isInner = true;
-    couponHeader = "积分券";
-    addCouponHeader = "添加积分券";
-    couponType = "credits";
+
     couponDefaultValue = 1;
     downloadAppurl = "http://agent.jkchemical.com/download/jk-assist.apk";
     sharelogo = "https://assist.jkchemical.com/sharelogo.png";
@@ -65,11 +60,11 @@ export class AssistSales extends Sales {
     shareContent(discount: number): string {
         return "可获得积分";
     };
-    shareUrl(coupon: string, product: any): string {
+    shareUrl(type: string, coupon: string, product: any): string {
         if (product) {
-            return setting.carturl + "?type=" + this.couponType + "&credits=" + coupon + "&productids=" + product;
+            return setting.carturl + "?type=credits&credits=" + coupon + "&productids=" + product;
         } else {
-            return setting.carturl + "?type=" + this.couponType + "&credits=" + coupon;
+            return setting.carturl + "?type=credits&credits=" + coupon;
         }
     };
 };
@@ -79,9 +74,6 @@ export class AgentSales extends Sales {
     appName = "轻代理";
     logo = logo;
     isInner = false;
-    couponHeader = "优惠券";
-    addCouponHeader = "添加优惠券";
-    couponType = "coupon";
     couponDefaultValue = 9.5;
     downloadAppurl = "http://agent.jkchemical.com/download/jk-agent.apk";
     sharelogo = "https://agent.jkchemical.com/sharelogo.png";
@@ -130,11 +122,11 @@ export class AgentSales extends Sales {
         return "最多可享受" + ((1 - discount) * 10).toFixed(1) + "折";
     };
 
-    shareUrl(coupon: string, product: any): string {
+    shareUrl(type: string, coupon: string, product: any): string {
         if (product) {
-            return setting.carturl + "?type=" + this.couponType + "&coupon=" + coupon + "&productids=" + product;
+            return setting.carturl + "?type=" + type + "&coupon=" + coupon + "&productids=" + product;
         } else {
-            return setting.carturl + "?type=" + this.couponType + "&coupon=" + coupon;
+            return setting.carturl + "?type=" + type + "&coupon=" + coupon;
         }
     };
 };

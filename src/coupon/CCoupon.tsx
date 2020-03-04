@@ -59,42 +59,28 @@ export class CCoupon extends CUqBase {
     //显示添加优惠券页面
     showCreateCoupon = async (param: any) => {
         this.openVPage(VCreateCoupon, param);
-        /**
-        let account = await this.uqs.salesTask.WebUserAccountMap.query({ webuser: this.user.id });
-        if (account.ret.length > 0) {
-            let { telephone, identityname, identitycard, identityicon, subbranchbank, bankaccountnumber } = account.ret[0];
-            if (telephone && identityname && identitycard && identityicon && subbranchbank && bankaccountnumber) {
-                this.openVPage(VCreateCoupon, param);
-            } else {
-                await this.cApp.cMe.showAccount();
-            }
-        } else {
-            await this.cApp.cMe.showAccount();
-        }
-        **/
     }
 
     //添加优惠券
     createCoupon = async (data: any, param: any) => {
 
         let { validitydate, discount } = data;
-        let couponparam: any = {
+        let coupon: any = {
             validitydate: validitydate,
             discount: discount,
-            types: setting.sales.couponType
+            types: param.type
         }
-        let couponid = await this.uqs.salesTask.CreateCoupon.submit(couponparam);
+        let couponid = await this.uqs.salesTask.CreateCoupon.submit(coupon);
         let code = couponid.code;
+        coupon.code = code;
+        coupon.type = param.type;
+        coupon.product = param.product;
+        coupon.businesstype = data.businesstype;
 
-        couponparam.code = code;
-        couponparam.paramtype = param.paramtype;
-        couponparam.product = param.product;
-        couponparam.businesstype = data.businesstype;
-
-        if (couponparam.paramtype === "product") {
-            this.openVPage(VCreateProductCouponEnd, couponparam)
+        if (coupon.product) {
+            this.openVPage(VCreateProductCouponEnd, coupon)
         } else {
-            this.openVPage(VCreateCouponEnd, couponparam)
+            this.openVPage(VCreateCouponEnd, coupon)
         }
     }
 
