@@ -1,6 +1,6 @@
 import * as React from "react";
 import { observer } from "mobx-react";
-import { VPage, Page, List, LMR, FA, tv } from "tonva";
+import { VPage, Page, List, LMR, FA, tv, SearchBox } from "tonva";
 import { CPost } from "./CPost";
 import { setting } from "appConfig";
 /* eslint-disable */
@@ -24,14 +24,20 @@ export class VPostList extends VPage<CPost> {
     };
 
     private page = observer((product: any) => {
-        let { pagePost } = this.controller;
+        let { pagePost, searchByKey } = this.controller;
         let none = <div className="my-3 mx-2 text-warning">【无】</div>;
+        let right = (
+            <div className="d-flex align-items-center">
+                <SearchBox
+                    className=""
+                    size="sm"
+                    onSearch={(key: string) => searchByKey(key, "")}
+                    placeholder="搜索帖文"
+                />
+            </div>
+        );
         return (
-            <Page
-                header="帖文"
-                onScrollBottom={this.onScrollBottom}
-                headerClassName={setting.pageHeaderCss}
-            >
+            <Page header="帖文" onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss} right={right}>
                 <List
                     before={""}
                     none={none}

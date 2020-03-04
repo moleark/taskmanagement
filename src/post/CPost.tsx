@@ -39,11 +39,7 @@ export class CPost extends CUqBase {
 
     //查询客户--通过名称
     searchByKey = async (key: string, author: string) => {
-        this.pagePost = new QueryPager(
-            this.uqs.webBuilder.SearchPostPublish,
-            15,
-            30
-        );
+        this.pagePost = new QueryPager(this.uqs.webBuilder.SearchPostPublish, 15, 30);
         this.pagePost.first({ key: key });
     };
 

@@ -12,6 +12,7 @@ import { VProductPackSelect } from './VProductPackSelect';
 import classNames from 'classnames';
 import { VProductDelivery } from './VProductDelivery';
 import { VProductBox } from './VProductBox';
+import { setting } from 'appConfig';
 
 //页面类
 class PageProduct extends PageItems<any> {
