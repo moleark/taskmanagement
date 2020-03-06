@@ -70,7 +70,11 @@ export abstract class CType extends Controller {
 
     private renderComplet = (task: Task): JSX.Element => {
         let { caption } = this;
-        return <Page header={caption} headerClassName={setting.pageHeaderCss} >
+        let bin = <div className="mt-1">
+            <span className="px-3">订单</span>
+            <span className="px-3" onClick={() => this.cSalesTask.showCreateOrder(task)}>询单</span>
+        </div>;
+        return <Page header={caption} headerClassName={setting.pageHeaderCss} right={bin}>
             {this.renderCompletContent(task)}
         </Page >
     }
@@ -78,7 +82,6 @@ export abstract class CType extends Controller {
     private renderCompletContent = (task: Task): JSX.Element => {
         return this.renderView(VFinish as any, task);
     }
-
 
     //创建任务
     async showCreate(task: Task): Promise<void> {

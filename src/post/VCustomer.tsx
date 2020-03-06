@@ -5,12 +5,24 @@ import { CPost } from "./CPost";
 import { setting } from "appConfig";
 import { observable } from "mobx";
 import { GLOABLE } from "ui";
+import { cpus } from "os";
 
 export class VCustomer extends VPage<CPost> {
     private post: any;
+    private caption: string;
+    private image: string;
+    private id: string;
+    private discription: string;
+
     @observable showTips: any = "none"
     async open(param: any) {
         this.post = param;
+        let { caption, image, id, discription } = this.post;
+        this.caption = caption;
+        this.image = image.obj.path;
+        this.id = id;
+        this.discription = discription;
+
         this.openPage(this.page);
     }
 
@@ -95,22 +107,22 @@ export class VCustomer extends VPage<CPost> {
     }
 
     private share = async (cusotmer: any) => {
-        let { caption, image, id, discription } = this.post;
+        //let { caption, image, id, discription } = this.post;
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
             // @ts-ignore  屏蔽错误
             window.plusShare(
                 {
-                    title: caption, //应用名字
-                    content: discription,
-                    href: setting.posturl + "/" + id, //分享出去后，点击跳转地址
+                    title: this.caption, //应用名字
+                    content: this.discription,
+                    href: setting.posturl + "/" + this.id, //分享出去后，点击跳转地址
                     //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片
-                    thumbs: [image.obj.path] //分享缩略图
+                    thumbs: [this.image] //分享缩略图
                 },
                 function (result) {
                     //分享回调
                 }
             );
-            await this.controller.addMyCustomerPost(this.post, cusotmer.id);
+            //await this.controller.addMyCustomerPost(this.post, cusotmer.id);
         } else {
             this.onTips();
         }

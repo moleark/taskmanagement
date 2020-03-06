@@ -26,9 +26,11 @@ import { VCreateTask } from "./views/VCreateTask";
 import { CCommonType } from "./types/commonType";
 import { CType } from "./types/CType";
 import { VCreateTaskOfCustomer } from "./views/VCreateTaskOfCustomer";
+import { VCreateOrder } from "./views/VCreateOrder";
 
 class PageEmployeeTaskHistory extends PageItems<any> {
     private searchCustomerQuery: Query;
+
 
     constructor(searchCustomerQuery: Query) {
         super();
@@ -62,7 +64,7 @@ export class CSalesTask extends CUqBase {
     //cApp: CApp;
     cSelectType: CSelectType;
     cSalesTaskBiz: CSelectBiz;
-
+    @observable orderids: any;
     @observable tasks: Tasks;
     @observable createproduct: CreateProduct;
     @observable pageEmployeeTaskHistory: PageEmployeeTaskHistory;
@@ -168,6 +170,7 @@ export class CSalesTask extends CUqBase {
     };
     //显示销售任务明细页面
     showDetailFromId = async (task: Task) => {
+        this.orderids = await this.uqs.salesTask.TaskOrder.query({ task: task.id });
         this.getCTaskType(task.biz.obj.name).showDetailFromId(task.id);
     };
     //显示任务完结页面
@@ -353,6 +356,18 @@ export class CSalesTask extends CUqBase {
         });
         this.openVPage(VProjectDetail, projects);
     };
+
+    //添加订单-显示
+    showCreateOrder = async (task: Task) => {
+        this.openVPage(VCreateOrder, task);
+    };
+
+    //添加订单-显示
+    createOrder = async (model: any) => {
+        let { id, ordertype, orderid } = model;
+        await this.uqs.salesTask.TaskOrder.add({ task: id, arr1: [{ ordertype: ordertype, orderid: orderid }] });
+    };
+
 
     //处理任务结束------------------------------------------------
 

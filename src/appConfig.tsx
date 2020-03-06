@@ -26,6 +26,7 @@ export const setting = {
     posturl: "https://web.jkchemical.com/post",
     userIcon: "",
     appUrlDomain: "assist.jkchemical.com",
+    //appUrlDomain: "localhost",
     pageHeaderCss: "bg-primary py-1",
     sales: undefined as Sales
 };

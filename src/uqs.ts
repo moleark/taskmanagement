@@ -129,6 +129,7 @@ export interface UqSalesTask {
     SearchMyCustomerDepartment: Query;
     SearchMyCustomerResearch: Query;
     SearchMyCustomerOfficePost: Query;
+    TaskOrder: Map;
 }
 
 export interface UqMember {
@@ -149,6 +150,7 @@ export interface UqWebBuilder {
     WebPost: Map;
     AssistPost: Map;
     CustomerPost: Map;
+
 }
 
 export interface UQs {
