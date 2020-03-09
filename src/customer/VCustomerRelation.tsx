@@ -19,18 +19,14 @@ export class VCustomerRelation extends VPage<CCustomer> {
         this.closePage(1);
     }
 
-    private onshowCreateNewCustomer = async () => {
-        let { showCreateNewCustomer } = this.controller;
-        await showCreateNewCustomer(this.model);
-    }
-
     private page = observer(() => {
+        let { showCreateNewCustomer } = this.controller;
         let { webuser } = this.model;
         let { name } = webuser.obj;
         let footer = <div className="d-flex px-1">
             <div className="flex-grow-1 align-self-center justify-content-end">
                 <button type="button" className="btn btn-outline-info ml-2 align-self-center" onClick={this.onRelationCustomer}>关联客户</button>
-                <button type="button" className="btn btn-primary ml-2 align-self-center" onClick={this.onshowCreateNewCustomer} >新建客户</button>
+                <button type="button" className="btn btn-primary ml-2 align-self-center" onClick={() => showCreateNewCustomer(this.model)} >新建客户</button>
             </div>
         </div>;;
         return <Page header="新客户" headerClassName={setting.pageHeaderCss} footer={footer} >

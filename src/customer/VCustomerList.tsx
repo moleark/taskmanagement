@@ -35,29 +35,16 @@ export class VCustomerList extends VPage<CCustomer> {
         </LMR>
     }
 
-    private renderNewCustomer = (model: any, index: number) => {
-        let { showNewMyCustomerDetil } = this.controller;
-        let onClik = () => showNewMyCustomerDetil(model);
-        let { customer } = model;
-        let left: any = <div>{tv(customer, v => v.name)}</div>;
-        return <LMR className="pl-2 pr-3 py-1" left={<UserIcon className="mt-1 mx-2 w-2c h-2c" id={47} style={{ borderRadius: '8px' }} />} onClick={onClik}>
-            <LMR className="py-2" left={left} right={<div className="small text-warning">新客户</div>}>
-            </LMR>
-        </LMR >
-    }
-
     private page = observer(() => {
-        let { pageCustomer, showSelectOrganization, showCustomerSearch, newMyCustomerList } = this.controller;
-        let onShowSelectOrganzation = () => showSelectOrganization(1);
-        let onshowCustomerSearch = () => showCustomerSearch(null);
+        let { pageCustomer, showSelectOrganization, showCustomerSearch, showNewCustomerList, cApp } = this.controller;
         let right = <div className="cursor-pointer py-1">
-            <span onClick={onshowCustomerSearch} className="iconfont icon-icon-chaxun mx-2" style={{ fontSize: "20px", color: "#ffffff" }}></span>
-            <span onClick={onShowSelectOrganzation} className="iconfont icon-tianjia mx-3" style={{ fontSize: "20px", color: "#ffffff" }}></span>
+            <span onClick={() => showCustomerSearch(null)} className="iconfont icon-icon-chaxun mx-2" style={{ fontSize: "20px", color: "#ffffff" }}></span>
+            <span onClick={() => showSelectOrganization(1)} className="iconfont icon-tianjia mx-3" style={{ fontSize: "20px", color: "#ffffff" }}></span>
         </div>;
         let none = <div className="my-3 mx-2 text-warning"></div>;
         return <Page header="客户" onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss} right={right} >
-
-            {newMyCustomerList && newMyCustomerList.length > 0 && <List className="py-2" before={''} none={none} items={newMyCustomerList} item={{ render: this.renderNewCustomer }} />}
+            {branch("单位", "icon-photo", () => cApp.cCustomerUnit.start(3))}
+            {branch("新客户", "icon-xinyonghu", showNewCustomerList)}
             {
                 pageCustomer && pageCustomer.items && (pageCustomer.items.length > 0) &&
                 <List before={''} none={none} items={pageCustomer} item={{ render: this.renderCustomer }} />
@@ -68,4 +55,14 @@ export class VCustomerList extends VPage<CCustomer> {
     private onScrollBottom = async () => {
         await this.controller.pageCustomer.more();
     }
+}
+
+function branch(name: string, icon: string, action: any): JSX.Element {
+    let vicon = "iconfont " + icon;
+    return <LMR className="bg-white px-3 py-1 "
+        left={<div className="mx-2"><i className={vicon} style={{ fontSize: "2rem", color: "#1296db" }}></i></div>}
+        right={<i className="pt-2 px-2 iconfont icon-fangxiang1"></i>}
+        onClick={action}>
+        <div className="mx-3 pt-2 font-weight-bold"  >{name}</div>
+    </LMR>;
 }

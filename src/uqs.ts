@@ -130,6 +130,7 @@ export interface UqSalesTask {
     SearchMyCustomerResearch: Query;
     SearchMyCustomerOfficePost: Query;
     TaskOrder: Map;
+    SearchMyCustomerByUnit: Query;
 }
 
 export interface UqMember {

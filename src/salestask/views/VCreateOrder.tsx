@@ -3,8 +3,6 @@ import { VPage, Page, UiSchema, UiInputItem, Schema, Form, Context } from 'tonva
 import { observer } from 'mobx-react';
 import { CSalesTask } from '../CSalesTask';
 import { setting } from 'appConfig';
-import { Task } from 'salestask/model';
-
 
 const schema: Schema = [
     { name: 'order', type: 'string', required: false },

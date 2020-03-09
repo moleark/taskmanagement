@@ -1,7 +1,7 @@
 import * as React from "react";
 import { observable } from "mobx";
 import { observer } from "mobx-react";
-import { PageItems, Query, Context, QueryPager } from "tonva";
+import { Context, QueryPager } from "tonva";
 import { CUqBase } from "../CBase";
 import { Task } from "../salestask/model";
 import { CAddress } from "../address/CAddress";
@@ -16,108 +16,16 @@ import { VMyCustomer } from "./VMyCustomer";
 import { VCustomerRelation } from "./VCustomerRelation";
 import { VCreateNewCustomer } from "./VCreateNewCustomer";
 import { VCustomerOrderDetail } from "./VCustomerOrderDetail";
+import { VNewCustomerList } from "./VNewCustomerList";
+import { VCustomerSearchByUnit } from "./VCustomerSearchByUnit";
 /* eslint-disable */
-/**
- * 用于客户首页
- */
-class PageMyCustomer extends PageItems<any> {
-    private searchCustomerQuery: Query;
 
-    constructor(searchCustomerQuery: Query) {
-        super();
-        this.firstSize = this.pageSize = 11;
-        this.searchCustomerQuery = searchCustomerQuery;
-    }
-
-    protected async load(
-        param: any,
-        pageStart: any,
-        pageSize: number
-    ): Promise<any[]> {
-        if (pageStart === undefined) pageStart = 0;
-        let ret = await this.searchCustomerQuery.page(
-            param,
-            pageStart,
-            pageSize
-        );
-        return ret;
-    }
-
-    protected setPageStart(item: any): any {
-        this.pageStart = item === undefined ? 0 : item.id;
-    }
-}
-
-/**
- * 用于专门的客户搜索界面
- */
-class PageMyCustomerSearch extends PageItems<any> {
-    private searchCustomerQuery: Query;
-
-    constructor(searchCustomerQuery: Query) {
-        super();
-        this.firstSize = this.pageSize = 11;
-        this.searchCustomerQuery = searchCustomerQuery;
-    }
-
-    protected async load(
-        param: any,
-        pageStart: any,
-        pageSize: number
-    ): Promise<any[]> {
-        if (pageStart === undefined) pageStart = 0;
-        let ret = await this.searchCustomerQuery.page(
-            param,
-            pageStart,
-            pageSize
-        );
-        return ret;
-    }
-
-    protected setPageStart(item: any): any {
-        this.pageStart = item === undefined ? 0 : item.id;
-    }
-}
-
-/**
- * 用于专门的活跃客户的搜索
- */
-class PageMyCustomerActive extends PageItems<any> {
-    private searchCustomerQuery: Query;
-
-    constructor(searchCustomerQuery: Query) {
-        super();
-        this.firstSize = this.pageSize = 11;
-        this.searchCustomerQuery = searchCustomerQuery;
-    }
-
-    protected async load(
-        param: any,
-        pageStart: any,
-        pageSize: number
-    ): Promise<any[]> {
-        if (pageStart === undefined) pageStart = 0;
-        let ret = await this.searchCustomerQuery.page(
-            param,
-            pageStart,
-            pageSize
-        );
-        return ret;
-    }
-
-    protected setPageStart(item: any): any {
-        this.pageStart = item === undefined ? 0 : item.id;
-    }
-}
-
-/**
- *
- */
 export class CCustomer extends CUqBase {
-    //cApp: CApp;
-    @observable pageCustomer: PageMyCustomer;
-    @observable pageCustomerSearch: PageMyCustomerSearch;
-    @observable pageMyCustomerActive: PageMyCustomerActive;
+    @observable pageCustomer: QueryPager<any>;
+    @observable pageCustomerSearch: QueryPager<any>;
+    @observable pageCustomerSearchByUnit: QueryPager<any>;
+    @observable pageCustomerActive: QueryPager<any>;
+
     @observable newMyCustomerList: any[];
     @observable activetasks: any;
     @observable custoemrorders: any;
@@ -137,19 +45,22 @@ export class CCustomer extends CUqBase {
      * 查询客户——用在客户首页
      */
     searchByKey = async (key: string) => {
-        this.pageCustomer = new PageMyCustomer(
-            this.uqs.salesTask.searchMyCustomer
-        );
+        this.pageCustomer = new QueryPager(this.uqs.salesTask.searchMyCustomer, 15, 30);
         this.pageCustomer.first({ key: key });
+    };
+    /**
+     * 查询客户——用在客户首页
+     */
+    searchCustomerSearchByUnit = async (unit: any, key: string) => {
+        this.pageCustomerSearchByUnit = new QueryPager(this.uqs.salesTask.SearchMyCustomerByUnit, 15, 30);
+        this.pageCustomerSearchByUnit.first({ _unit: unit, _key: key });
     };
 
     /**
      * 查询客户——用在专门的客户搜索界面——没有必要
      */
     searchCustomerByKey = async (key: string) => {
-        this.pageCustomerSearch = new PageMyCustomerSearch(
-            this.uqs.salesTask.searchMyCustomer
-        );
+        this.pageCustomerSearch = new QueryPager(this.uqs.salesTask.searchMyCustomer, 15, 30);
         this.pageCustomerSearch.first({ key: key });
     };
 
@@ -157,10 +68,8 @@ export class CCustomer extends CUqBase {
      * 查询客户——查活跃客户
      */
     searchCustomerActiveByKey = async (key: string, type: number) => {
-        this.pageMyCustomerActive = new PageMyCustomerActive(
-            this.uqs.salesTask.searchMyCustomerActive
-        );
-        this.pageMyCustomerActive.first({ key: key, type: type });
+        this.pageCustomerActive = new QueryPager(this.uqs.salesTask.searchMyCustomerActive, 15, 30);
+        this.pageCustomerActive.first({ key: key, type: type });
     };
 
     /**
@@ -171,7 +80,6 @@ export class CCustomer extends CUqBase {
         if (list.ret.length > 0) {
             this.newMyCustomerList = list.ret;
         }
-        let a = 1;
     };
     /**
      * 显示新客户信息
@@ -282,7 +190,7 @@ export class CCustomer extends CUqBase {
      */
     showMyCustomer = async (val: any, type: number): Promise<any> => {
         if (val == null) {
-            this.pageMyCustomerActive = null;
+            this.pageCustomerActive = null;
         } else {
             this.searchCustomerActiveByKey(val, type);
         }
@@ -412,6 +320,15 @@ export class CCustomer extends CUqBase {
         let cAddress = this.newC(CAddress);
         return await cAddress.call<number>();
     };
+
+    showNewCustomerList = () => {
+        this.openVPage(VNewCustomerList)
+    }
+
+    showCustomerSearchByUnit = async (param: any) => {
+        await this.searchCustomerSearchByUnit(param.id.id, "");
+        this.openVPage(VCustomerSearchByUnit);
+    }
 
     render = observer(() => {
         return this.renderView(VCustomerList);

@@ -50,7 +50,8 @@ export class VFinish extends VPage<CCommonType> {
 
     private renderOrder = (param: any, index: number) => {
         let { ordertype, orderid } = param;
-        return <LMR className="py-2 px-2" left="订单号" right={orderid}></LMR>
+        let type = ordertype === "order" ? "订单" : "询单"
+        return <LMR className="py-2 px-2" left={type} right={orderid}></LMR>
     }
 
     render(task: Task) {

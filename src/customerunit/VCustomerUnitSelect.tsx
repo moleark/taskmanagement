@@ -8,7 +8,12 @@ import { setting } from 'appConfig';
 
 export class VCustomerUnitSelect extends VPage<CCustomerUnit> {
 
-    private type: any; // 显示类型:1.新建客户时的查询单位；2.按单位搜索客户时的查询单位
+    /**显示类型
+    1.新建客户时的查询单位；
+    2.关联单位用的，选择后返回单位对象
+    3.按照客户搜素单位用的； 点击后进入客户搜素页面
+    **/
+    private type: any;
 
     async open(param: any) {
         this.type = param;
@@ -23,10 +28,13 @@ export class VCustomerUnitSelect extends VPage<CCustomerUnit> {
     }
 
     private onClickRow = async (model: any) => {
+        let { showCreateCustomer, returnCustomerUnit, cApp } = this.controller;
         if (this.type === 1) {
-            await this.controller.showCreateCustomer(model.id);
+            await showCreateCustomer(model.id);
         } else if (this.type === 2) {
-            await this.controller.returnCustomerUnit(model);
+            await returnCustomerUnit(model);
+        } else if (this.type === 3) {
+            await cApp.cCustomer.showCustomerSearchByUnit(model);
         }
     }
 

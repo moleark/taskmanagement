@@ -15,7 +15,6 @@ export class VMyCustomer extends VPage<CCustomer> {
     }
 
     private renderCustomer = (customer: any, index: number) => {
-        //(customer as any)._source = 'VCustomerList';
         let { name, unit, validity, webuser } = customer;
         let { showCustomerDetail } = this.controller
 
@@ -31,7 +30,7 @@ export class VMyCustomer extends VPage<CCustomer> {
     }
 
     private page = observer(() => {
-        let { pageMyCustomerActive } = this.controller;
+        let { pageCustomerActive: pageMyCustomerActive } = this.controller;
         let none = <div className="my-3 mx-2 text-warning">【无】</div>;
         var header = <>客户</>;
         if (this.temp === 2) {
@@ -43,6 +42,6 @@ export class VMyCustomer extends VPage<CCustomer> {
     })
 
     private onScrollBottom = async () => {
-        await this.controller.pageMyCustomerActive.more();
+        await this.controller.pageCustomerActive.more();
     }
 }

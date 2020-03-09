@@ -1,38 +1,13 @@
-import { Query, PageItems } from 'tonva';
+import { QueryPager } from 'tonva';
 import { observable } from 'mobx';
 import { CUqBase } from '../CBase';
 import { VCustomerUnitSelect } from './VCustomerUnitSelect';
 import { VCreateCustomerUnit } from './VCreateCustomerUnit';
 import { VCustomerUnitDetail } from './VCustomerUnitDetail';
 /* eslint-disable */
-//页面类
-class PageUnit extends PageItems<any> {
 
-    private searchQuery: Query;
-
-    constructor(searchQuery: Query) {
-        super();
-        this.firstSize = this.pageSize = 10;
-        this.searchQuery = searchQuery;
-    }
-
-    protected async load(param: any, pageStart: any, pageSize: number): Promise<any[]> {
-        if (pageStart === undefined) pageStart = 0;
-        let ret = await this.searchQuery.page(param, pageStart, pageSize);
-        return ret;
-    }
-
-    protected setPageStart(item: any): any {
-        this.pageStart = item === undefined ? 0 : item.id;
-    }
-}
-
-/**
- *
- */
 export class CCustomerUnit extends CUqBase {
-    //cApp: CApp;
-    @observable pageUnit: PageUnit;
+    @observable pageUnit: QueryPager<any>;
 
     //初始化
     protected async internalStart(type: any) {
@@ -43,7 +18,7 @@ export class CCustomerUnit extends CUqBase {
 
     //查询客户--通过名称
     searchByKey = async (key: string) => {
-        this.pageUnit = new PageUnit(this.uqs.salesTask.searchMyCustomerUnit);
+        this.pageUnit = new QueryPager(this.uqs.salesTask.searchMyCustomerUnit, 15, 30);
         this.pageUnit.first({ key: key });
     }
 
