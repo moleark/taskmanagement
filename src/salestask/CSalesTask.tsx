@@ -170,11 +170,12 @@ export class CSalesTask extends CUqBase {
     };
     //显示销售任务明细页面
     showDetailFromId = async (task: Task) => {
-        this.orderids = await this.uqs.salesTask.TaskOrder.query({ task: task.id });
         this.getCTaskType(task.biz.obj.name).showDetailFromId(task.id);
     };
     //显示任务完结页面
     showTaskComplet = async (task: Task) => {
+        let model = await this.uqs.salesTask.TaskOrder.query({ task: task.id });
+        this.orderids = model.ret;
         let name = task.biz.obj ? task.biz.obj.name : task.biz.name;
         this.getCTaskType(name).showComplet(task);
     };
@@ -358,14 +359,17 @@ export class CSalesTask extends CUqBase {
     };
 
     //添加订单-显示
-    showCreateOrder = async (task: Task) => {
-        this.openVPage(VCreateOrder, task);
+    showCreateOrder = async (task: Task, type: string) => {
+        let param = { id: task.id, type: type };
+        this.openVPage(VCreateOrder, param);
     };
 
     //添加订单-显示
     createOrder = async (model: any) => {
         let { id, ordertype, orderid } = model;
         await this.uqs.salesTask.TaskOrder.add({ task: id, arr1: [{ ordertype: ordertype, orderid: orderid }] });
+        let order = await this.uqs.salesTask.TaskOrder.query({ task: id });
+        this.orderids = order.ret;
     };
 
 

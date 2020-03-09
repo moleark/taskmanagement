@@ -4,7 +4,6 @@ import { VPage, Page, List, tv } from "tonva";
 import { CCustomer } from "./CCustomer";
 import { setting } from "appConfig";
 import { ProductImage } from "tools/productImage";
-import classNames from "classnames";
 
 export class VCustomerOrderDetail extends VPage<CCustomer> {
     async open(order: any) {

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { VPage, Form, Context } from "tonva";
+import { VPage, Form, Context, List, LMR } from "tonva";
 import { observer } from "mobx-react";
 import { Task } from "../../model";
 import { CCommonType } from "./CCommonType";
@@ -48,11 +48,17 @@ export class VFinish extends VPage<CCommonType> {
         await this.controller.cSalesTask.showPorductPackSelect(this.task);
     };
 
+    private renderOrder = (param: any, index: number) => {
+        let { ordertype, orderid } = param;
+        return <LMR className="py-2 px-2" left="订单号" right={orderid}></LMR>
+    }
+
     render(task: Task) {
         this.task = task;
         let { completSchema, completuiSchema } = this.controller.taskCommonType;
         return (
             <div className="mx-3">
+                <List className="my-2" before={''} none="" items={this.controller.cSalesTask.orderids} item={{ render: this.renderOrder, onClick: null }} />
                 <Form
                     ref={v => (this.form = v)}
                     schema={completSchema}

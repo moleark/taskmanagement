@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { VPage, Page, UiSchema, UiInputItem, Schema, Form, Context } from 'tonva';
 import { observer } from 'mobx-react';
-import { CreateProduct, Task } from '../model';
 import { CSalesTask } from '../CSalesTask';
 import { setting } from 'appConfig';
+import { Task } from 'salestask/model';
 
 
 const schema: Schema = [
@@ -15,19 +15,20 @@ export class VCreateOrder extends VPage<CSalesTask> {
 
     private uiSchema: UiSchema = {
         items: {
-            order: { widget: 'text', label: '订单', placeholder: '' } as UiInputItem,
+            order: { widget: 'text', label: '编号', placeholder: '编号' } as UiInputItem,
             submit: { widget: 'button', label: '提交', },
         }
     }
     private form: Form;
-    private task: Task;
-    async open(task: Task) {
-        this.task = task;
-        this.openPage(this.page, task);
+    private task: any;
+    async open(param: any) {
+        this.task = param;
+        this.openPage(this.page, param);
     }
 
     private page = observer((param: any) => {
-        return <Page header="添加项目" footer={null} headerClassName={setting.pageHeaderCss}>
+        let header = param.type === "order" ? "添加订单" : "添加询单";
+        return <Page header={header} footer={null} headerClassName={setting.pageHeaderCss}>
             <div className="mx-3">
                 <Form ref={v => this.form = v}
                     schema={schema}
@@ -46,7 +47,7 @@ export class VCreateOrder extends VPage<CSalesTask> {
     }
 
     private onFormButtonClick = async (name: string, context: Context) => {
-        let param = { id: this.task.id, ordertype: "order", orderid: context.data.order }
+        let param = { id: this.task.id, ordertype: this.task.type, orderid: context.data.order }
         await this.controller.createOrder(param);
         this.closePage();
     }

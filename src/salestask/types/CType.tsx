@@ -71,8 +71,8 @@ export abstract class CType extends Controller {
     private renderComplet = (task: Task): JSX.Element => {
         let { caption } = this;
         let bin = <div className="mt-1">
-            <span className="px-3">订单</span>
-            <span className="px-3" onClick={() => this.cSalesTask.showCreateOrder(task)}>询单</span>
+            <span className="px-3" onClick={() => this.cSalesTask.showCreateOrder(task, "order")}>订单</span>
+            <span className="px-3" onClick={() => this.cSalesTask.showCreateOrder(task, "inquiry")}>询单</span>
         </div>;
         return <Page header={caption} headerClassName={setting.pageHeaderCss} right={bin}>
             {this.renderCompletContent(task)}

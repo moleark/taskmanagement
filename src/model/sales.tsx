@@ -3,6 +3,7 @@ import { CApp } from '../CApp';
 import { setting } from '../appConfig';
 import logo from 'images/logo.png';
 import assistlogo from 'images/assistlogo.png';
+import { nav } from 'tonva';
 
 
 export abstract class Sales {
@@ -62,9 +63,9 @@ export class AssistSales extends Sales {
     };
     shareUrl(type: string, coupon: string, product: any): string {
         if (product) {
-            return setting.carturl + "?type=credits&credits=" + coupon + "&productids=" + product;
+            return setting.carturl + "?type=" + type + "&credits=" + coupon + "&sales=" + nav.user.id + "&productids=" + product;
         } else {
-            return setting.carturl + "?type=credits&credits=" + coupon;
+            return setting.carturl + "?type=" + type + "&credits=" + coupon + "&sales=" + nav.user.id;
         }
     };
 };
@@ -124,9 +125,9 @@ export class AgentSales extends Sales {
 
     shareUrl(type: string, coupon: string, product: any): string {
         if (product) {
-            return setting.carturl + "?type=" + type + "&coupon=" + coupon + "&productids=" + product;
+            return setting.carturl + "?type=" + type + "&coupon=" + coupon + "&sales=" + nav.user.id + "&productids=" + product;
         } else {
-            return setting.carturl + "?type=" + type + "&coupon=" + coupon;
+            return setting.carturl + "?type=" + type + "&coupon=" + coupon + "&sales=" + nav.user.id;
         }
     };
 };

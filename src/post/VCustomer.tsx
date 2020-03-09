@@ -5,7 +5,6 @@ import { CPost } from "./CPost";
 import { setting } from "appConfig";
 import { observable } from "mobx";
 import { GLOABLE } from "ui";
-import { cpus } from "os";
 
 export class VCustomer extends VPage<CPost> {
     private post: any;
