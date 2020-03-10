@@ -54,7 +54,7 @@ export class VPostList extends VPage<CPost> {
 
     private itemRow = observer((item: any) => {
         let { showCustomer } = this.controller;
-        let { image, caption, id } = item;
+        let { image, caption } = item;
         let right = (
             <div
                 className="small cursor-pointer text-primary text-right w-6c pt-3 "
@@ -63,30 +63,38 @@ export class VPostList extends VPage<CPost> {
                 <button className="btn btn-outline-info">分享</button>
             </div>
         );
-
-        let tvImage = tv(
-            image,
-            values => {
-                return (
-                    <div className=" text-center m-2">
-                        <img className="w-3c h-3c" src={values.path} style={{ borderRadius: "8px" }} />
-                    </div>
-                );
-            },
-            undefined,
-            () => (
-                <div className=" text-center m-2">
-                    <FA className="w-3 p-2 h-3c text-center" name="camera" size="2x" />
-                </div>
-            )
-        );
-
+ 
         return (
-            <LMR className="px-2" left={tvImage} right={right}>
-                <div className="mt-2" onClick={() => this.controller.showPostDetail(item)}  >
+            <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
+                <div className="d-flex flex-fill cursor-pointer" onClick={() => this.controller.showPostDetail(item)} >
+                    <div className="mr-3 w-5c w-min-5c h-5c h-min-5c">
+                    {tv(
+                        image,
+						values => <div className="w-100 h-100 bg-center-img h-max-6c border rounded" 
+							style={{backgroundImage: 'url(' + values.path + ')'}}></div>,
+                        undefined, //w-6c h-4c mr-2 text-black-50 justify-content-center d-flex align-items-center
+                        () => (
+							<div className="d-flex align-items-center h-100
+								justify-content-center bg-light border rounded">
+                                <FA
+                                    className="text-info"
+									name="camera"
+									size="lg"
+                                />
+                            </div>
+                        )
+                    )}
+					</div>
                     {caption}
                 </div>
-            </LMR>
+                <div>
+                    <div className="small cursor-pointer text-primary text-right w-4c pt-3 " onClick={() => showCustomer("", item)} >
+                        <button className="btn btn-outline-info">
+                            分享
+                        </button>
+                    </div>
+                </div>
+            </div>
         );
     });
 }
