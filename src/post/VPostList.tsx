@@ -68,23 +68,23 @@ export class VPostList extends VPage<CPost> {
             image,
             values => {
                 return (
-                    <div className=" text-center m-2 mr-4">
+                    <div className=" text-center m-2">
                         <img className="w-3c h-3c" src={values.path} style={{ borderRadius: "8px" }} />
                     </div>
                 );
             },
             undefined,
             () => (
-                <div className=" text-center m-2 mr-4">
+                <div className=" text-center m-2">
                     <FA className="w-3 p-2 h-3c text-center" name="camera" size="2x" />
                 </div>
             )
         );
 
         return (
-            <LMR className="px-3" left={tvImage} right={right}>
+            <LMR className="px-2" left={tvImage} right={right}>
                 <div className="mt-2" onClick={() => this.controller.showPostDetail(item)}  >
-                    <strong>{caption}</strong>
+                    {caption}
                 </div>
             </LMR>
         );

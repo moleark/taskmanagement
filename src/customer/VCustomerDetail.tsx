@@ -15,7 +15,8 @@ import {
     PropGrid,
     FA,
     List,
-    EasyDate
+    EasyDate,
+    nav
 } from "tonva";
 import { CCustomer } from "./CCustomer";
 import {
@@ -194,11 +195,11 @@ export class VCustomerDetail extends VPage<CCustomer> {
                 {
                     title: caption, //应用名字
                     content: discription,
-                    href: setting.posturl + "/" + id, //分享出去后，点击跳转地址
+                    href: setting.posturl + "/" + id + "?sales=" + nav.user.id, //分享出去后，点击跳转地址
                     //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片
                     thumbs: [image.obj.path] //分享缩略图
                 },
-                function(result) {
+                function (result) {
                     //分享回调
                 }
             );
@@ -224,21 +225,21 @@ export class VCustomerDetail extends VPage<CCustomer> {
                         {iconeidit === "" ? (
                             undefined
                         ) : (
-                            <span
-                                className={iconeiditname}
-                                style={{ fontSize: "18px" }}
-                                onClick={eiditAction}
-                            ></span>
-                        )}
+                                <span
+                                    className={iconeiditname}
+                                    style={{ fontSize: "18px" }}
+                                    onClick={eiditAction}
+                                ></span>
+                            )}
                         {iconeqita === "" ? (
                             undefined
                         ) : (
-                            <span
-                                className={iconeqitaname}
-                                style={{ fontSize: "18px" }}
-                                onClick={qitaActiom}
-                            ></span>
-                        )}
+                                <span
+                                    className={iconeqitaname}
+                                    style={{ fontSize: "18px" }}
+                                    onClick={qitaActiom}
+                                ></span>
+                            )}
                     </div>
                 </div>
             </div>

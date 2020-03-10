@@ -1,5 +1,5 @@
 import * as React from "react";
-import { VPage, Page, LMR, List, tv, UserIcon, SearchBox, FA } from "tonva";
+import { VPage, Page, LMR, List, tv, UserIcon, SearchBox, FA, nav } from "tonva";
 import { observer } from "mobx-react";
 import { CPost } from "./CPost";
 import { setting } from "appConfig";
@@ -113,7 +113,7 @@ export class VCustomer extends VPage<CPost> {
                 {
                     title: this.caption, //应用名字
                     content: this.discription,
-                    href: setting.posturl + "/" + this.id, //分享出去后，点击跳转地址
+                    href: setting.posturl + "/" + this.id + "?sales=" + nav.user.id, //分享出去后，点击跳转地址
                     //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片
                     thumbs: [this.image] //分享缩略图
                 },
