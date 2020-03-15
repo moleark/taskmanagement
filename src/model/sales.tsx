@@ -56,16 +56,16 @@ export class AssistSales extends Sales {
     }
 
     shareTitle(type: string): string {
-        return type === "coupon" ? "积分券" : "专享积分券";
+        return type === "coupon" ? "优惠券" : "积分券";
     };
     shareContent(discount: number): string {
         return "可获得积分";
     };
     shareUrl(type: string, coupon: string, product: any): string {
         if (product) {
-            return setting.carturl + "?type=" + type + "&credits=" + coupon + "&sales=" + nav.user.id + "&productids=" + product;
+            return setting.carturl + "?type=" + type + "&coupon=" + coupon + "&sales=" + nav.user.id + "&productids=" + product;
         } else {
-            return setting.carturl + "?type=" + type + "&credits=" + coupon + "&sales=" + nav.user.id;
+            return setting.carturl + "?type=" + type + "&coupon=" + coupon + "&sales=" + nav.user.id;
         }
     };
 };
@@ -116,7 +116,7 @@ export class AgentSales extends Sales {
     }
 
     shareTitle(type: string): string {
-        return type === "coupon" ? "折扣券" : "专享折扣券";
+        return type === "coupon" ? "折扣券" : "积分券";
     };
 
     shareContent(discount: number): string {
