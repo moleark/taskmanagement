@@ -68,7 +68,7 @@ export class VProductBox extends VPage<CProduct> {
     private page = observer((product: any) => {
 
         let { productCart, cCoupon } = this.controller.cApp;
-        let param = { paramtype: "productlist", product: productCart.getIds() };
+        let param = { type: "coupon", product: productCart.getIds() };
         let onShareProduct = async () => await cCoupon.showCreateCoupon(param);
 
         let productlist = productCart.list;

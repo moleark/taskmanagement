@@ -76,7 +76,7 @@ export class CCoupon extends CUqBase {
         coupon.product = param.product;
         coupon.businesstype = data.businesstype;
 
-        if (coupon.product) {
+        if (coupon.product && coupon.product.main) {
             this.openVPage(VCreateProductCouponEnd, coupon)
         } else {
             this.openVPage(VCreateCouponEnd, coupon)

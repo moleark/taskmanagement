@@ -133,11 +133,11 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
 
     share = async (url: any) => {
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
-            let { paramtype, discount } = this.coupon;
+            let { type, discount } = this.coupon;
             // @ts-ignore  屏蔽错误
             window.plusShare(
                 {
-                    title: setting.sales.shareTitle(paramtype), //应用名字
+                    title: setting.sales.shareTitle(type), //应用名字
                     content: setting.sales.shareContent(discount),
                     href: url, //分享出去后，点击跳转地址
                     //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片

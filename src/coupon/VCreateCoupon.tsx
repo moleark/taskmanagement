@@ -79,8 +79,6 @@ class Discount extends Widget {
     };
 }
 
-
-
 const oneWeek = new Date(Date.now() + 7 * 24 * 3600 * 1000);
 const twoWeeks = new Date(Date.now() + 14 * 24 * 3600 * 1000);
 

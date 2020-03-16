@@ -77,8 +77,8 @@ export class VProductList extends VPage<CProduct> {
         let onshowProductBox = async () => await this.controller.cApp.cProduct.showProductBox()
 
         let right = <div className="cursor-pointer py-1" >
-            <div>
-                <div className={classNames('jk-cart ml-1 mr-3', pointer)} onClick={onshowProductBox} >
+            <div className={classNames('jk-cart ml-1 mr-3', pointer)}>
+                <div onClick={onshowProductBox} >
                     {badge}
                     <i className="iconfont icon-dabao" style={{ fontSize: "20px" }}></i>
                 </div>

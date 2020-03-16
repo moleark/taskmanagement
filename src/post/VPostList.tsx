@@ -1,6 +1,6 @@
 import * as React from "react";
 import { observer } from "mobx-react";
-import { VPage, Page, List, LMR, FA, tv, SearchBox } from "tonva";
+import { VPage, Page, List,  FA, tv, SearchBox } from "tonva";
 import { CPost } from "./CPost";
 import { setting } from "appConfig";
 /* eslint-disable */
