@@ -266,34 +266,13 @@ export class VCustomerDetail extends VPage<CCustomer> {
     private page = observer((param: any) => {
         let { cSalesTask } = this.controller.cApp;
         let { showCustomerHistory } = cSalesTask;
-        let {
-            id: customerid,
-            unit,
-            name,
-            salutation,
-            telephone,
-            gender,
-            email,
-            wechat,
-            teacher,
-            addressString,
-            potential,
-            research,
-            department,
-            officePost,
-            mobile
-        } = param;
-
+        let { id: customerid, unit, name, salutation, telephone, gender, email, wechat, teacher, addressString, potential, research, department, officePost, mobile } = param;
         var genderShow = gender === undefined ? "" : genderText[gender];
         var potentialShow =
             potential === undefined ? "[无]" : potentialText[potential];
         let telephoneShow = mobile && (
             <div>
-                <a
-                    className="text-default"
-                    href={"tel:" + mobile}
-                    style={{ textDecorationLine: "none" }}
-                >
+                <a className="text-default" href={"tel:" + mobile} style={{ textDecorationLine: "none" }}  >
                     <FA name="phone" className="text-success px-1" />
                     {mobile}
                 </a>
@@ -581,14 +560,15 @@ export class VCustomerDetail extends VPage<CCustomer> {
 
         let taskShow_titel: any;
         let taskShow: any;
+
+        taskShow_titel = this.renderTitle(
+            "待办事项",
+            "icon-tianjia",
+            onshowAddTsak,
+            "icon-qita",
+            onshowCustomerHistory
+        );
         if (activetasks.length > 0) {
-            taskShow_titel = this.renderTitle(
-                "待办事项",
-                "icon-tianjia",
-                onshowAddTsak,
-                "icon-qita",
-                onshowCustomerHistory
-            );
             taskShow = (
                 <List
                     before={""}

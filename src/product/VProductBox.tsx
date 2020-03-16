@@ -68,13 +68,12 @@ export class VProductBox extends VPage<CProduct> {
     private page = observer((product: any) => {
 
         let { productCart, cCoupon } = this.controller.cApp;
-        let param = { type: "coupon", product: productCart.getIds() };
-        let onShareProduct = async () => await cCoupon.showCreateCoupon(param);
-
+        let btn = setting.sales.isInner ? <button type="button" className="btn btn-primary mx-1 my-1 px-4" onClick={() => cCoupon.showCreateCoupon({ type: "credits", product: productCart.getIds() })}>分享积分</button> : <></>
         let productlist = productCart.list;
         let footer = <div className="d-block">
             <div className="w-100  justify-content-end" >
-                <button type="button" className="btn btn-primary mx-1 my-1 px-4" onClick={onShareProduct}>分享</button>
+                <button type="button" className="btn btn-primary mx-1 my-1 px-4" onClick={() => cCoupon.showCreateCoupon({ type: "coupon", product: productCart.getIds() })}>分享折扣</button>
+                {btn}
             </div>
         </div>;
 

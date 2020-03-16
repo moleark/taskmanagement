@@ -21,13 +21,17 @@ class BusinessType extends Widget {
         { value: "platform", title: '平台', name: 'b', checked: undefined }
     ];
 
+    private onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+        let val = evt.currentTarget.value;
+        this.setValue(val);
+    }
+
     render = () => {
         return <div className="form-control" style={{ height: 'auto' }}>
             {this.list.map((v, index) => {
                 let { value, title } = v;
                 return <label className="my-1 mx-3" key={index}>
-                    <input type="radio" value={value} name={this.name}
-                        defaultChecked={value === this.value} /> {title} &nbsp;
+                    <input type="radio" onChange={this.onChange} value={value} name={this.name} defaultChecked={value === this.value} /> {title} &nbsp;
                 </label>
             })}
         </div>

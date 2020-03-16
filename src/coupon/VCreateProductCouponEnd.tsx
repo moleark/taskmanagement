@@ -20,14 +20,14 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
 
     async open(param: any) {
         this.coupon = param;
-        let { code, product, type } = param;
+        let { code, product, type, platform } = param;
         if (code) {
             code = String(code);
             let p1 = code.substr(0, 4);
             let p2 = code.substr(4);
             this.inviteCode = p1 + " " + p2;
         }
-        this.url = setting.sales.shareUrl(type, code, product.main.id);
+        this.url = setting.sales.shareUrl(type, code, product.main.id, platform);
         this.openPage(this.page, param);
     }
 
@@ -88,7 +88,7 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
     };
 
     private showShare = () => {
-        let { discount } = this.coupon;
+        let { discount, type } = this.coupon;
 
         let onshare = () => this.share(this.url);
 
@@ -103,7 +103,7 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
 
         let priceui = (
             <div className="pt-4 mt-4 d-flex align-items-end justify-content-end text-danger">
-                <div>{setting.sales.shareContent(discount)}</div>
+                <div>{setting.sales.shareContent(type, discount)}</div>
             </div>
         );
 
@@ -138,7 +138,7 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
             window.plusShare(
                 {
                     title: setting.sales.shareTitle(type), //应用名字
-                    content: setting.sales.shareContent(discount),
+                    content: setting.sales.shareContent(type, discount),
                     href: url, //分享出去后，点击跳转地址
                     //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片
                     thumbs: [setting.sales.sharelogo] //分享缩略图

@@ -20,7 +20,7 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
 
     private page = observer(() => {
         var couponCode = "";
-        let { code, type } = this.coupon;
+        let { code, type, platform } = this.coupon;
         if (code) {
             code = String(code);
             let p1 = code.substr(0, 4);
@@ -30,7 +30,7 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
 
         let { productCart } = this.controller.cApp;
         let ids = productCart.getIds();
-        let url = setting.sales.shareUrl(type, code, ids);
+        let url = setting.sales.shareUrl(type, code, ids, platform);
         let onshare = () => this.share(url);
         let share = <div className="text-center" style={{ width: 'auto', height: '10%' }} >
         </div>;
@@ -80,11 +80,11 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
 
     share = async (url: any) => {
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
-            let { paramtype, discount } = this.coupon;
+            let { type, discount } = this.coupon;
             // @ts-ignore  屏蔽错误 
             window.plusShare({
-                title: setting.sales.shareTitle(paramtype),//应用名字  
-                content: setting.sales.shareContent(discount),
+                title: setting.sales.shareTitle(type),//应用名字  
+                content: setting.sales.shareContent(type, discount),
                 href: url,//分享出去后，点击跳转地址 
                 thumbs: [setting.sales.sharelogo] //分享缩略图  
             }, function (result) {
