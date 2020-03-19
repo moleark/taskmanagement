@@ -1,39 +1,18 @@
 import { observable } from 'mobx';
-import { Query, PageItems, Context } from 'tonva';
+import { Context, QueryPager } from 'tonva';
 import { CUqBase } from '../CBase';
 import { VCouponList } from './VCouponList';
 import { VCreateCoupon } from './VCreateCoupon';
 import { VCouponDetail } from './VCouponDetail';
 import { VCreateCouponEnd } from './VCreateCouponEnd';
 import { VCreateProductCouponEnd } from './VCreateProductCouponEnd';
-//页面类
-/* eslint-disable */
-class PageCoupon extends PageItems<any> {
 
-    private searchQuery: Query;
-
-    constructor(searchQuery: Query) {
-        super();
-        this.firstSize = this.pageSize = 10;
-        this.searchQuery = searchQuery;
-    }
-
-    protected async load(param: any, pageStart: any, pageSize: number): Promise<any[]> {
-        if (pageStart === undefined) pageStart = 0;
-        let ret = await this.searchQuery.page(param, pageStart, pageSize);
-        return ret;
-    }
-
-    protected setPageStart(item: any): any {
-        this.pageStart = item === undefined ? 0 : item.id;
-    }
-}
 /**
  *
  */
 export class CCoupon extends CUqBase {
     //cApp: CApp;
-    @observable pageCoupon: PageCoupon;
+    @observable pageCoupon: QueryPager<any>;
     @observable customers: any;
 
     //初始化
@@ -45,7 +24,7 @@ export class CCoupon extends CUqBase {
 
     //查询客户--通过名称
     searchByKey = async (key: string) => {
-        this.pageCoupon = new PageCoupon(this.uqs.salesTask.SearchCoupon);
+        this.pageCoupon = new QueryPager(this.uqs.salesTask.SearchCoupon, 15, 30);
         this.pageCoupon.first({ key: key });
     }
 

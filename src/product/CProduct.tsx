@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { Query, tv, PageItems, BoxId } from 'tonva';
+import { Query, tv, PageItems, BoxId, QueryPager } from 'tonva';
 import { CUqBase } from '../CBase';
 import { ProductImage } from '../tools/productImage';
 import { VProductSelect } from './VProductSelect';
@@ -13,34 +13,12 @@ import classNames from 'classnames';
 import { VProductDelivery } from './VProductDelivery';
 import { VProductBox } from './VProductBox';
 
-//页面类
-class PageProduct extends PageItems<any> {
-
-    private searchProductQuery: Query;
-
-    constructor(searchProductQuery: Query) {
-        super();
-        this.firstSize = this.pageSize = 10;
-        this.searchProductQuery = searchProductQuery;
-    }
-
-    protected async load(param: any, pageStart: any, pageSize: number): Promise<any[]> {
-        if (pageStart === undefined) pageStart = 0;
-        let ret = await this.searchProductQuery.page(param, pageStart, pageSize);
-        return ret;
-    }
-
-    protected setPageStart(item: any): any {
-        this.pageStart = item === undefined ? 0 : item.seq;
-    }
-}
-
 /**
  *
  */
 export class CProduct extends CUqBase {
     //cApp: CApp;
-    @observable pageProduct: PageProduct;
+    @observable pageProduct: QueryPager<any>;
     @observable customerlist: any;
 
     @observable inventoryAllocationContainer: { [packId: number]: any[] } = {};
@@ -55,7 +33,7 @@ export class CProduct extends CUqBase {
 
     //查询客户--通过名称
     searchByKey = async (key: string) => {
-        this.pageProduct = new PageProduct(this.uqs.product.SearchProduct);
+        this.pageProduct = new QueryPager(this.uqs.product.SearchProduct, 15, 30);
         await this.pageProduct.first({ keyWord: key, salesRegion: 1 });
     }
 

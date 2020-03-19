@@ -1,4 +1,4 @@
-import { nav, PageItems, Query } from "tonva";
+import { nav, PageItems, Query, QueryPager } from "tonva";
 import { CUqBase } from "CBase";
 import { VBalance } from "./VBalance";
 import { VWithdrawal } from "./VWithdrawal";
@@ -9,36 +9,8 @@ import { VAchievementDetail } from "./VAchievementDetail";
 import { VWithdrawalDetail } from "./VWithdrawalDetail";
 import { VAssistAchievementDetail } from "./VAssistAchievementDetail";
 
-class PageBalanceHistory extends PageItems<any> {
-    private searchBalanceHistory: Query;
-
-    constructor(searchBalanceHistory: Query) {
-        super();
-        this.firstSize = this.pageSize = 11;
-        this.searchBalanceHistory = searchBalanceHistory;
-    }
-
-    protected async load(
-        param: any,
-        pageStart: any,
-        pageSize: number
-    ): Promise<any[]> {
-        if (pageStart === undefined) pageStart = 0;
-        let ret = await this.searchBalanceHistory.page(
-            param,
-            pageStart,
-            pageSize
-        );
-        return ret;
-    }
-
-    protected setPageStart(item: any): any {
-        this.pageStart = item === undefined ? 0 : item.id;
-    }
-}
-
 export class CBalance extends CUqBase {
-    @observable pageBalanceHistory: PageBalanceHistory;
+    @observable pageBalanceHistory: QueryPager<any>;
     @observable balanceHistory: any;
     @observable salesAmont: any = {
         oneSaleVolume: 0.0,

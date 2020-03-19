@@ -1,6 +1,6 @@
 import * as React from "react";
 import { observer } from "mobx-react";
-import { VPage, Page, List,  FA, tv, SearchBox } from "tonva";
+import { VPage, Page, List, FA, tv, SearchBox } from "tonva";
 import { CPost } from "./CPost";
 import { setting } from "appConfig";
 /* eslint-disable */
@@ -63,28 +63,28 @@ export class VPostList extends VPage<CPost> {
                 <button className="btn btn-outline-info">分享</button>
             </div>
         );
- 
+
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
                 <div className="d-flex flex-fill cursor-pointer" onClick={() => this.controller.showPostDetail(item)} >
                     <div className="mr-3 w-5c w-min-5c h-5c h-min-5c">
-                    {tv(
-                        image,
-						values => <div className="w-100 h-100 bg-center-img h-max-6c border rounded" 
-							style={{backgroundImage: 'url(' + values.path + ')'}}></div>,
-                        undefined, //w-6c h-4c mr-2 text-black-50 justify-content-center d-flex align-items-center
-                        () => (
-							<div className="d-flex align-items-center h-100
+                        {tv(
+                            image,
+                            values => <div className="w-100 h-100 bg-center-img h-max-6c border rounded"
+                                style={{ backgroundImage: 'url(' + values.path + ')' }}></div>,
+                            undefined, //w-6c h-4c mr-2 text-black-50 justify-content-center d-flex align-items-center
+                            () => (
+                                <div className="d-flex align-items-center h-100
 								justify-content-center bg-light border rounded">
-                                <FA
-                                    className="text-info"
-									name="camera"
-									size="lg"
-                                />
-                            </div>
-                        )
-                    )}
-					</div>
+                                    <FA
+                                        className="text-info"
+                                        name="camera"
+                                        size="lg"
+                                    />
+                                </div>
+                            )
+                        )}
+                    </div>
                     {caption}
                 </div>
                 <div>

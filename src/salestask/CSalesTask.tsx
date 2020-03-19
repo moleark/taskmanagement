@@ -1,7 +1,7 @@
 import * as React from "react";
 import { observer } from "mobx-react";
 import { observable } from "mobx";
-import { FA, nav, PageItems, Query } from "tonva";
+import { FA, nav, PageItems, Query, QueryPager } from "tonva";
 import { CUqBase } from "../CBase";
 import { LoaderProductChemicalWithPrices } from "../product/item";
 import { VMain } from "./views/VMain";
@@ -28,34 +28,6 @@ import { CType } from "./types/CType";
 import { VCreateTaskOfCustomer } from "./views/VCreateTaskOfCustomer";
 import { VCreateOrder } from "./views/VCreateOrder";
 
-class PageEmployeeTaskHistory extends PageItems<any> {
-    private searchCustomerQuery: Query;
-
-
-    constructor(searchCustomerQuery: Query) {
-        super();
-        this.firstSize = this.pageSize = 11;
-        this.searchCustomerQuery = searchCustomerQuery;
-    }
-
-    protected async load(
-        param: any,
-        pageStart: any,
-        pageSize: number
-    ): Promise<any[]> {
-        if (pageStart === undefined) pageStart = 0;
-        let ret = await this.searchCustomerQuery.page(
-            param,
-            pageStart,
-            pageSize
-        );
-        return ret;
-    }
-
-    protected setPageStart(item: any): any {
-        this.pageStart = item === undefined ? 0 : item.id;
-    }
-}
 
 /* eslint-disable */
 export class CSalesTask extends CUqBase {
@@ -67,7 +39,7 @@ export class CSalesTask extends CUqBase {
     @observable orderids: any;
     @observable tasks: Tasks;
     @observable createproduct: CreateProduct;
-    @observable pageEmployeeTaskHistory: PageEmployeeTaskHistory;
+    @observable pageEmployeeTaskHistory: QueryPager<any>;
 
     //初始化
     protected async internalStart(param: any) {
@@ -115,9 +87,7 @@ export class CSalesTask extends CUqBase {
      * 查询客户——用在客户首页
      */
     searchHistoryTaskByEmployee = async () => {
-        this.pageEmployeeTaskHistory = new PageEmployeeTaskHistory(
-            this.uqs.salesTask.SearchHistoryTaskByEmployee
-        );
+        this.pageEmployeeTaskHistory = new QueryPager(this.uqs.salesTask.SearchHistoryTaskByEmployee, 15, 30);
         this.pageEmployeeTaskHistory.first({});
     };
 

@@ -5,7 +5,7 @@ import { observer } from 'mobx-react';
 import { UpdownWidget } from 'tonva';
 
 const keys = [107, 109, 110, 187, 189];
-
+/**
 export class MinusPlusWidget extends UpdownWidget {
     @observable protected value: any;
     @observable protected disabled: boolean;
@@ -17,12 +17,12 @@ export class MinusPlusWidget extends UpdownWidget {
     }
 
     protected onBlur(evt: React.FocusEvent<any>) {
-        super.onBlur(evt);
+        this.onBlur(evt);
         this.hasFocus = false;
     }
 
     protected onFocus(evt: React.FocusEvent<any>) {
-        super.onFocus(evt);
+        this.onFocus(evt)
         this.hasFocus = true;
     }
 
@@ -113,3 +113,4 @@ export class MinusPlusWidget extends UpdownWidget {
         return <this.renderContent />;
     }
 }
+**/

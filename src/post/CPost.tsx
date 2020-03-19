@@ -1,4 +1,4 @@
-import { nav, PageItems, Query, QueryPager } from "tonva";
+import { nav, QueryPager } from "tonva";
 import { CUqBase } from "../CBase";
 import { VPostList } from "./VPostList";
 import { observable } from "mobx";
@@ -7,30 +7,11 @@ import { VPostDetil } from "./VPostDetil";
 
 //页面类
 /* eslint-disable */
-class PageCustomer extends PageItems<any> {
-    private searchQuery: Query;
-    constructor(searchQuery: Query) {
-        super();
-        this.firstSize = this.pageSize = 10;
-        this.searchQuery = searchQuery;
-    }
-    protected async load(
-        param: any,
-        pageStart: any,
-        pageSize: number
-    ): Promise<any[]> {
-        if (pageStart === undefined) pageStart = 0;
-        let ret = await this.searchQuery.page(param, pageStart, pageSize);
-        return ret;
-    }
-    protected setPageStart(item: any): any {
-        this.pageStart = item === undefined ? 0 : item.id;
-    }
-}
+
 
 export class CPost extends CUqBase {
     @observable pagePost: QueryPager<any>;
-    @observable pageCustomer: PageCustomer;
+    @observable pageCustomer: QueryPager<any>;
 
     //初始化
     protected async internalStart() {
@@ -54,9 +35,7 @@ export class CPost extends CUqBase {
 
     //查询客户--通过名称
     searchCustomerByKey = async (key: string, post: string) => {
-        this.pageCustomer = new PageCustomer(
-            this.uqs.salesTask.SearchMyCustomerByPost
-        );
+        this.pageCustomer = new QueryPager(this.uqs.salesTask.SearchMyCustomerByPost, 15, 30);
         this.pageCustomer.first({ key: key, post: post });
     };
 

@@ -1,4 +1,4 @@
-import { Query, PageItems } from 'tonva';
+import { QueryPager } from 'tonva';
 import { observable } from 'mobx';
 import { CUqSub } from '../../CBase';
 import { Task } from '../model';
@@ -9,26 +9,6 @@ import { VAiDetail } from './VAiDetail';
 
 /* eslint-disable */
 //页面类
-class PageMyJKTask extends PageItems<any> {
-
-    private searchQuery: Query;
-
-    constructor(searchQuery: Query) {
-        super();
-        this.firstSize = this.pageSize = 10;
-        this.searchQuery = searchQuery;
-    }
-
-    protected async load(param: any, pageStart: any, pageSize: number): Promise<any[]> {
-        if (pageStart === undefined) pageStart = 0;
-        let ret = await this.searchQuery.page(param, pageStart, pageSize);
-        return ret;
-    }
-
-    protected setPageStart(item: any): any {
-        this.pageStart = item === undefined ? 0 : item.id;
-    }
-}
 
 /**
  *
@@ -39,7 +19,7 @@ export class CSelectType extends CUqSub {
     private customerid: number;
     private task: Task;
     @observable tasktypelist: any;
-    @observable pageMyJKTask: PageMyJKTask;
+    @observable pageMyJKTask: QueryPager<any>;
     @observable organization: any;
 
     //cApp: CApp;
@@ -102,7 +82,7 @@ export class CSelectType extends CUqSub {
     }
 
     aiClick = async () => {
-        this.pageMyJKTask = new PageMyJKTask(this.uqs.salesTask.SearchJKTask);
+        this.pageMyJKTask = new QueryPager(this.uqs.salesTask.SearchJKTask, 15, 30);
         this.pageMyJKTask.first({ key: undefined });
         this.openVPage(VAi);
     }

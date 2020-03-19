@@ -537,16 +537,9 @@ export class VCustomerDetail extends VPage<CCustomer> {
             )
         } as ComponentProp);
 
-        let {
-            showCustomerEdit,
-            cApp,
-            activetasks,
-            custoemrorders,
-            pagePost
-        } = this.controller;
+        let { showCustomerEdit, cApp, activetasks, custoemrorders, pagePost } = this.controller;
         let onshowCustomerEdit = () => showCustomerEdit(this.customer);
-        let onshowAddTsak = () =>
-            cApp.cSalesTask.showCreateTaskOfCustomer(this.customer);
+        let onshowAddTsak = () => cApp.cSalesTask.showCreateTaskOfCustomer(this.customer);
         let onshowCustomerHistory = () => showCustomerHistory(customerid);
         let header: any = <span>{this.customer.name}</span>;
         let right = (
