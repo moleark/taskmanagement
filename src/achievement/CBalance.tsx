@@ -1,4 +1,4 @@
-import { nav, PageItems, Query, QueryPager } from "tonva";
+import { nav, QueryPager } from "tonva";
 import { CUqBase } from "CBase";
 import { VBalance } from "./VBalance";
 import { VWithdrawal } from "./VWithdrawal";

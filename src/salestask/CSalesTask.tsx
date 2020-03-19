@@ -1,7 +1,7 @@
 import * as React from "react";
 import { observer } from "mobx-react";
 import { observable } from "mobx";
-import { FA, nav, PageItems, Query, QueryPager } from "tonva";
+import { FA, nav, QueryPager } from "tonva";
 import { CUqBase } from "../CBase";
 import { LoaderProductChemicalWithPrices } from "../product/item";
 import { VMain } from "./views/VMain";
@@ -27,7 +27,6 @@ import { CCommonType } from "./types/commonType";
 import { CType } from "./types/CType";
 import { VCreateTaskOfCustomer } from "./views/VCreateTaskOfCustomer";
 import { VCreateOrder } from "./views/VCreateOrder";
-
 
 /* eslint-disable */
 export class CSalesTask extends CUqBase {

@@ -1,4 +1,4 @@
-import { Query, PageItems, QueryPager } from 'tonva';
+import { QueryPager } from 'tonva';
 import { observable } from 'mobx';
 import { CUqBase } from '../CBase';
 import { Task } from '../salestask/model';

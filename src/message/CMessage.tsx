@@ -1,4 +1,4 @@
-import { Query, PageItems, QueryPager } from 'tonva';
+import { QueryPager } from 'tonva';
 import { CUqBase } from '../CBase';
 import { VMessage } from './VMessage';
 import { observable } from 'mobx';

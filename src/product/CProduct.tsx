@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { Query, tv, PageItems, BoxId, QueryPager } from 'tonva';
+import { tv, BoxId, QueryPager } from 'tonva';
 import { CUqBase } from '../CBase';
 import { ProductImage } from '../tools/productImage';
 import { VProductSelect } from './VProductSelect';
