@@ -138,11 +138,11 @@ export class VProductDetail extends VPage<CProduct> {
     private page = observer((product: any) => {
 
         let { showCreateCoupon } = this.controller.cApp.cCoupon;
-        let btn = setting.sales.isInner ? <button type="button" className="btn btn-primary mx-1 my-1 px-3" onClick={() => showCreateCoupon({ type: "credits", product: this.product })}>分享积分</button> : <></>
+        let btn = setting.sales.isInner ? <button type="button" className="btn btn-primary mx-1 my-1 px-3" onClick={() => showCreateCoupon({ type: "credits", product: this.product })}>分享积分</button> :
+            <button type="button" className="btn btn-primary mx-1 my-1 px-3" onClick={() => showCreateCoupon({ type: "coupon", product: this.product })}>分享折扣</button>
 
         let footer = <div className="d-block">
             <div className="w-100  justify-content-end" >
-                <button type="button" className="btn btn-primary mx-1 my-1 px-3" onClick={() => showCreateCoupon({ type: "coupon", product: this.product })}>分享折扣</button>
                 {btn}
                 <button type="button" className="btn btn-primary mx-1 my-1 px-3" onClick={this.onAddPack}>打包分享</button>
             </div>

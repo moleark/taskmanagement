@@ -67,12 +67,7 @@ export class VMe extends VPage<CMe> {
     private teamSpan = observer(() => {
         let { showTeam, showMyCustomer, cApp } = this.controller;
         let { salesAmont } = cApp.cBalance;
-        let {
-            teamCount,
-            innerteamCount,
-            customerCount,
-            activeCustomerCount
-        } = salesAmont;
+        let { teamCount, innerteamCount, customerCount, activeCustomerCount } = salesAmont;
         let onshowMyCustomer = async () => await showMyCustomer(1);
         let onshowMyCustomerActive = async () => await showMyCustomer(2);
         if (setting.sales.isInner) {
@@ -233,6 +228,26 @@ export class VMe extends VPage<CMe> {
         let { showSet } = this.controller;
         let onShowMyTasksCompleted = async () => await showMyTasksCompleted();
 
+        let vcoupon = <div className="col text-center" onClick={() => cCoupon.showCreateCoupon({ type: "coupon", product: undefined })} >
+            <div>
+                <i className="iconfont icon-youhuiquantuangou" style={{ fontSize: "25px", color: "#f6ad15" }} ></i>
+            </div>
+            <small>
+                <small>优惠券</small>
+            </small>
+        </div>;
+
+        let vassist = <div className="col text-center" onClick={() => cCoupon.showCreateCoupon({ type: "credits", product: undefined })} >
+            <div>
+                <i className="iconfont icon-youhuiquantuangou" style={{ fontSize: "25px", color: "#f6ad15" }} ></i>
+            </div>
+            <small>
+                <small>积分券</small>
+            </small>
+        </div>;
+
+        let vsp = setting.sales.isInner ? vassist : vcoupon
+
         return (
             <>
                 <div className="text-left h6 mx-4">
@@ -240,14 +255,7 @@ export class VMe extends VPage<CMe> {
                     <strong>我的服务</strong>
                 </div>
                 <div className="row p-2 cursor-pointer">
-                    <div className="col text-center" onClick={() => cCoupon.showCreateCoupon({ type: "coupon", product: undefined })} >
-                        <div>
-                            <i className="iconfont icon-youhuiquantuangou" style={{ fontSize: "25px", color: "#f6ad15" }} ></i>
-                        </div>
-                        <small>
-                            <small>优惠券</small>
-                        </small>
-                    </div>
+                    {vsp}
                     <div className="col text-center" onClick={onShowMyTasksCompleted}  >
                         <div>
                             <i className="iconfont icon-renwuwancheng" style={{ fontSize: "25px", color: "#2aa515" }}></i>
@@ -265,19 +273,6 @@ export class VMe extends VPage<CMe> {
                         </small>
                     </div>
                 </div>
-                {setting.sales.isInner && <div className="row p-2 cursor-pointer">
-                    <div className="col text-center" onClick={() => cCoupon.showCreateCoupon({ type: "credits", product: undefined })} >
-                        <div>
-                            <i className="iconfont icon-youhuiquantuangou" style={{ fontSize: "25px", color: "#f6ad15" }} ></i>
-                        </div>
-                        <small>
-                            <small>积分券</small>
-                        </small>
-                    </div>
-                    <div className="col text-center"></div>
-                    <div className="col text-center"></div>
-                </div>
-                }
             </>
         );
     }
