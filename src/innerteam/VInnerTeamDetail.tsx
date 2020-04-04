@@ -5,12 +5,12 @@ import { setting } from "appConfig";
 import { CInnerTeam } from "./CInnerTeam";
 
 export class VInnerTeamDetail extends VPage<CInnerTeam> {
-    async open(param: any) {
-        this.openPage(this.page, param);
+    async open() {
+        this.openPage(this.page);
     }
 
-    private page = observer((param: any) => {
-        let { totalOrderCount, oneSaleVolume } = param;
+    private page = observer(() => {
+        let { totalOrderCount, oneSaleVolume, counts } = this.controller.current;
 
         return (
             <Page header="我的团队" headerClassName={setting.pageHeaderCss}>
@@ -27,6 +27,7 @@ export class VInnerTeamDetail extends VPage<CInnerTeam> {
                 <LMR
                     className="bg-white px-3 py-2"
                     left={<span>任务数量</span>}
+                    right={counts}
                 ></LMR>
                 <LMR
                     className="bg-white px-3 py-2"

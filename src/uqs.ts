@@ -131,6 +131,8 @@ export interface UqSalesTask {
     SearchMyCustomerOfficePost: Query;
     TaskOrder: Map;
     SearchMyCustomerByUnit: Query;
+    SearchTaskHistoryCount: Query;
+    SearchTeamAchievement: Query;
 }
 
 export interface UqMember {
