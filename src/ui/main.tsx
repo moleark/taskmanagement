@@ -66,8 +66,7 @@ export class VHome extends VPage<CApp> {
             </div >;
         }
 
-        return <Page header={header} headerClassName={"bg-info"}>
-            <Tabs tabs={faceTabs} />
+        return <Page header={header} headerClassName={"bg-info"} tabsProps={{ tabs: faceTabs }}>
         </Page >;
     }
 
