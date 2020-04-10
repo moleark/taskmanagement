@@ -121,7 +121,7 @@ export class VCustomer extends VPage<CPost> {
                     //分享回调
                 }
             );
-            //await this.controller.addMyCustomerPost(this.post, cusotmer.id);
+            await this.controller.addMyCustomerPost(this.post, cusotmer.id);
         } else {
             this.onTips();
         }

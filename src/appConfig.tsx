@@ -27,6 +27,6 @@ export const setting = {
     userIcon: "",
     appUrlDomain: "assist.jkchemical.com",
     //appUrlDomain: "localhost",
-    pageHeaderCss: "bg-primary py-1",
+    pageHeaderCss: "bg-primary",
     sales: undefined as Sales
 };

@@ -62,7 +62,7 @@ export class VAchievementDetail extends VPage<CBalance> {
         </div >
     }
 
-    private header = () => {
+    private headers = () => {
 
         let onClickA = () => this.onClickHeader(TabStatus.sum);
         let onClickB = () => this.onClickHeader(TabStatus.pending);
@@ -125,7 +125,7 @@ export class VAchievementDetail extends VPage<CBalance> {
             }
         ];
 
-        return <Page header={this.header()} headerClassName={setting.pageHeaderCss} >
+        return <Page header={this.headers()} headerClassName={setting.pageHeaderCss} >
             <Tabs tabs={tabs} tabPosition="top" />
         </Page >
     })
