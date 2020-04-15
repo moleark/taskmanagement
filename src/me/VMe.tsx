@@ -114,10 +114,7 @@ export class VMe extends VPage<CMe> {
                             <small>客户</small>
                         </small>
                     </div>
-                    <div
-                        className="col text-center"
-                        onClick={onshowMyCustomerActive}
-                    >
+                    <div className="col text-center" onClick={onshowMyCustomerActive}>
                         <div>{activeCustomerCount}</div>
                         <small>
                             <small>活跃客户</small>

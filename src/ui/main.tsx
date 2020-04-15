@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, TabCaptionComponent, Page, Tabs, Image } from 'tonva';
+import { VPage, TabCaptionComponent, Page, Image } from 'tonva';
 import { observable } from 'mobx';
 import { CApp } from 'CApp';
 import { setting } from 'appConfig';

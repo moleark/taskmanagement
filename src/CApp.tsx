@@ -1,4 +1,5 @@
-import { CAppBase, IConstructor, nav } from "tonva";
+import * as React from 'react';
+import { CAppBase, IConstructor, nav, UserCache } from "tonva";
 import { CSalesTask } from "./salestask";
 import { CCustomer } from "./customer/CCustomer";
 import { CProduct } from "./product/CProduct";
@@ -20,6 +21,9 @@ import { AssistSales, AgentSales } from "model/sales";
 import { CPost } from "post/CPost";
 import { PostCustomer } from "post/postcustomer";
 import { CInnerTeam } from "innerteam/CInnerTeam";
+import { observer } from "mobx-react";
+
+/* eslint-disable */
 
 export class CApp extends CAppBase {
     get uqs(): UQs {
@@ -46,6 +50,8 @@ export class CApp extends CAppBase {
     cBalance: CBalance;
     cPost: CPost;
 
+    private userCache: UserCache<any>;
+
     protected newC<T extends CUqBase>(type: IConstructor<T>): T {
         return new type(this);
     }
@@ -64,6 +70,15 @@ export class CApp extends CAppBase {
         this.currentLanguage = await this.uqs.common.Language.load(
             GLOABLE.CHINESE
         );
+
+
+        let userLoader = async (userId: number): Promise<any> => {
+            let model = await this.uqs.hr.SearchEmployeeByid.query({ _id: userId });
+            return model.ret[0];
+        }
+        this.userCache = new UserCache(userLoader);
+
+
         this.productCart = new ProductCart();
         this.postCustomer = new PostCustomer();
 
@@ -91,9 +106,28 @@ export class CApp extends CAppBase {
         //await this.cMe.onComputeAchievement();
 
         /** 启动主程序*/
-        //await super.internalStart(param);
+        //await super.internalStart(param);npm 
 
         nav.clear();
         this.openVPage(VHome);
+    }
+
+    renderUser(userId: number) {
+        return <this._renderUser userId={userId} />;
+    }
+
+    private _renderUser = observer((props: { userId: number }): JSX.Element => {
+        let { userId } = props;
+        let val = this.userCache.getValue(userId);
+        switch (typeof val) {
+            case 'undefined':
+            case 'number':
+                return <span className="author" > {userId} </span>
+        };
+        return <span className="author" > {val.name} </span>;
+    });
+
+    useUser(userId: number) {
+        this.userCache.use(userId);
     }
 }

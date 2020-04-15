@@ -9,6 +9,10 @@ export interface UqOrder {
     getPendingPayment: Query;
 }
 
+export interface UqHr {
+    SearchEmployeeByid: Query;
+}
+
 export interface UqProduct {
     ProductX: Tuid;
     Brand: Tuid;
@@ -133,6 +137,7 @@ export interface UqSalesTask {
     SearchMyCustomerByUnit: Query;
     SearchTaskHistoryCount: Query;
     SearchTeamAchievement: Query;
+    SearchTeamAchievementDetail: Query;
 }
 
 export interface UqMember {
@@ -168,4 +173,5 @@ export interface UQs {
     salesTask: UqSalesTask;
     member: UqMember;
     webBuilder: UqWebBuilder;
+    hr: UqHr;
 }
