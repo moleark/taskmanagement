@@ -47,5 +47,6 @@ export class CPost extends CUqBase {
     addMyCustomerPost = async (post: any, customerid: any) => {
         let param = { post: post.id, customer: customerid };
         await this.uqs.salesTask.AddMyCustomerPost.submit(param);
+        await this.uqs.webBuilder.TransmitPost.submit({ _post: post });
     };
 }

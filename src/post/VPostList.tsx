@@ -14,11 +14,6 @@ export class VPostList extends VPage<CPost> {
         return <this.page />;
     }
 
-    private onClick = (id: any) => {
-        window.open("https://web.jkchemical.com/post/" + id, "_blank");
-        return false;
-    };
-
     private onScrollBottom = async () => {
         this.controller.pagePost.more();
     };

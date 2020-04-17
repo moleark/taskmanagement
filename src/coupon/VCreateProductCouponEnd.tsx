@@ -133,7 +133,7 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
 
     share = async (url: any) => {
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
-            let { type, discount } = this.coupon;
+            let { code, type, discount } = this.coupon;
             // @ts-ignore  屏蔽错误
             window.plusShare(
                 {
@@ -147,6 +147,7 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
                     //分享回调
                 }
             );
+            await this.controller.addCouponSendHistory(code);
         }
     };
 

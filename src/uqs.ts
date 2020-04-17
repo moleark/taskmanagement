@@ -138,6 +138,7 @@ export interface UqSalesTask {
     SearchTaskHistoryCount: Query;
     SearchTeamAchievement: Query;
     SearchTeamAchievementDetail: Query;
+    AddCouponSendHistory: Action;
 }
 
 export interface UqMember {
@@ -158,6 +159,7 @@ export interface UqWebBuilder {
     WebPost: Map;
     AssistPost: Map;
     CustomerPost: Map;
+    TransmitPost: Action;
 
 }
 

@@ -80,7 +80,7 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
 
     share = async (url: any) => {
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
-            let { type, discount } = this.coupon;
+            let { type, discount, code } = this.coupon;
             // @ts-ignore  屏蔽错误 
             window.plusShare({
                 title: setting.sales.shareTitle(type),//应用名字  
@@ -89,7 +89,9 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
                 thumbs: [setting.sales.sharelogo] //分享缩略图  
             }, function (result) {
             });
-            this.controller.cApp.productCart.clearAll();
+            let { cApp, addCouponSendHistory } = this.controller;
+            cApp.productCart.clearAll();
+            await addCouponSendHistory(code);
         }
     }
 }

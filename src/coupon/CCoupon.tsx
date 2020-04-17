@@ -62,6 +62,10 @@ export class CCoupon extends CUqBase {
         }
     }
 
+    addCouponSendHistory = async (code: any) => {
+        this.uqs.salesTask.AddCouponSendHistory.submit({ code: code });
+    }
+
     //作废优惠券
     invalidCoupon = async (param: any) => {
         let tuidCoupon = this.uqs.salesTask.Coupon;
