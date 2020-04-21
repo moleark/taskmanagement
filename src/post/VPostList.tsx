@@ -69,13 +69,8 @@ export class VPostList extends VPage<CPost> {
                                 style={{ backgroundImage: 'url(' + values.path + ')' }}></div>,
                             undefined, //w-6c h-4c mr-2 text-black-50 justify-content-center d-flex align-items-center
                             () => (
-                                <div className="d-flex align-items-center h-100
-								justify-content-center bg-light border rounded">
-                                    <FA
-                                        className="text-info"
-                                        name="camera"
-                                        size="lg"
-                                    />
+                                <div className="d-flex align-items-center h-100 justify-content-center bg-light border rounded">
+                                    <FA className="text-info" name="camera" size="lg" />
                                 </div>
                             )
                         )}

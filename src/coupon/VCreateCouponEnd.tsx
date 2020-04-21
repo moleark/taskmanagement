@@ -40,8 +40,8 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
 
         let header = this.coupon.type === "coupon" ? "优惠券" : "积分券";
         return <Page header={header} headerClassName={setting.pageHeaderCss}>
-            <div id="qrid" className="text-center" style={{ width: 'auto', height: '85%' }}  >
-                <Image src={setting.sales.logo} className="mt-4" style={{ width: 'auto', height: '40%', margin: '2rem auto, 0 auto' }} />
+            <div id="qrid" className="text-center" >
+                <Image src={setting.sales.logo} className="mt-4" style={{ width: '40%', height: '40%', margin: '2rem auto, 0 auto' }} />
                 <div>
                     < QRCode style={{ margin: '2rem 0 0 0' }}
                         value={url}  //value参数为生成二维码的链接
@@ -56,7 +56,7 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
             <div className="w-100 text-center">
 
             </div>
-            <div className="w-100 text-center">
+            <div className="w-100 text-center pt-3">
                 <span className="text-info cursor-info mx-2" onClick={(e) => this.copyClick(e, couponCode)}>复制</span>
                 <span className="text-info cursor-info mx-2" onClick={this.comeBack} >返回</span>
                 {share}
