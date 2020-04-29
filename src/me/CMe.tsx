@@ -1,5 +1,5 @@
 import * as React from "react";
-import { nav } from "tonva";
+import { nav, QueryPager } from "tonva";
 import { CUqBase } from "../CBase";
 import { VMe } from "./VMe";
 import { VMeDetail } from "./VMeDetail";
@@ -8,11 +8,14 @@ import { VInvitationCode } from "./VInvitationCode";
 import { VAccount } from "./VAccount";
 import { VAbout } from "./VAbout";
 import { observable } from "mobx";
+import { VClassRoom } from "./VClassRoom";
+import { VClassRoomDetail } from "./VClassRoomDetail";
 
 export class CMe extends CUqBase {
     inviteCode: string;
     position: any;
     @observable account: any;
+    @observable pagePost: QueryPager<any>;
 
     //初始化
     protected async internalStart(param: any) {
@@ -132,12 +135,20 @@ export class CMe extends CUqBase {
     showAbout = () => {
         this.openVPage(VAbout);
     };
-    /**
-    IsCanUseCoupon = async () => {
-        let a = await this.uqs.salesTask.IsCanUseCoupon.submit({ code: "19521548", webUser: "46627" });
-        let b = a;
+
+    showClassRoom = async () => {
+        await this.getPost();
+        this.openVPage(VClassRoom);
     }
-    **/
+    showClassRoomDetail = async (param: any) => {
+        this.openVPage(VClassRoomDetail, param);
+    }
+
+    getPost = async () => {
+        this.pagePost = new QueryPager(this.uqs.webBuilder.SearchPostPublish, 5, 5);
+        this.pagePost.first({ key: "" });
+    };
+
 
     render = () => {
         return this.renderView(VMe);

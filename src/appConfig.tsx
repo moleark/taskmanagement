@@ -25,8 +25,8 @@ export const setting = {
     carturl: "http://shop.jkchemical.com",
     posturl: "https://web.jkchemical.com/post",
     userIcon: "",
-    appUrlDomain: "assist.jkchemical.com",
-    //appUrlDomain: "localhost",
+    //appUrlDomain: "assist.jkchemical.com",
+    appUrlDomain: "localhost",
     pageHeaderCss: "bg-primary",
     sales: undefined as Sales
 };

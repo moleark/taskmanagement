@@ -27,7 +27,7 @@ export class VAssistAchievementDetail extends VPage<CBalance> {
     }
 
     private renderItem(model: any, index: number) {
-        let { date, orderAmount, orderno, state, mycustomer } = model;
+        let { date, orderAmount, orderno, state, webuser, mycustomer } = model;
         var statusShow: any;
         if (state === 1) {
             statusShow = "已转入";
@@ -38,7 +38,7 @@ export class VAssistAchievementDetail extends VPage<CBalance> {
         if (mycustomer) {
             mycustomer = tv(mycustomer, v => v.name);
         } else {
-            mycustomer = "";
+            mycustomer = tv(webuser, v => v.name);
         }
 
         let data = <EasyDate date={date} />;
