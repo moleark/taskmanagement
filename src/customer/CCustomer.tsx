@@ -86,7 +86,7 @@ export class CCustomer extends CUqBase {
     /**
      * 显示新客户信息
      */
-    showNewMyCustomerDetil = (model: any) => {
+    showNewMyCustomerDetail = (model: any) => {
         this.openVPage(VCustomerRelation, model);
     };
 
@@ -127,6 +127,7 @@ export class CCustomer extends CUqBase {
         await this.getActiveTasks(customer);
         await this.getCustomerOrder(customer);
         await this.getCustomerContent(customer);
+        // await this.getVIPCard(customer);
         this.openVPage(VCustomerDetail, mycustomer);
     };
 
@@ -335,6 +336,14 @@ export class CCustomer extends CUqBase {
         await this.searchCustomerSearchByUnit(param.id.id, "");
         this.openVPage(VCustomerSearchByUnit);
     }
+
+    /*
+    private getVIPCard = async (customer: any) => {
+        let { user: webuser } = customer;
+        let result = await this.uqs.salesTask.VIPCardForWebUser.obj({ sales: 5, webuser: webuser })
+        console.log(result);
+    }
+    */
 
     render = observer(() => {
         return this.renderView(VCustomerList);

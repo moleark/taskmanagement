@@ -139,6 +139,8 @@ export interface UqSalesTask {
     SearchTeamAchievement: Query;
     SearchTeamAchievementDetail: Query;
     AddCouponSendHistory: Action;
+
+    // VIPCardForWebUser: Map;
 }
 
 export interface UqMember {
