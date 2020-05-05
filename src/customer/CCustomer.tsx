@@ -28,7 +28,7 @@ export class CCustomer extends CUqBase {
 
     @observable newMyCustomerList: any[];
     @observable activetasks: any;
-    @observable custoemrorders: any;
+    @observable customerorders: any;
     @observable pagePost: QueryPager<any>;
     private task: Task;
 
@@ -48,6 +48,7 @@ export class CCustomer extends CUqBase {
         this.pageCustomer = new QueryPager(this.uqs.salesTask.searchMyCustomer, 15, 30);
         this.pageCustomer.first({ key: key });
     };
+
     /**
      * 查询客户——用在客户首页
      */
@@ -81,6 +82,7 @@ export class CCustomer extends CUqBase {
             this.newMyCustomerList = list.ret;
         }
     };
+
     /**
      * 显示新客户信息
      */
@@ -139,7 +141,7 @@ export class CCustomer extends CUqBase {
     //获取客户历史订单
     getCustomerOrder = async (customer: any) => {
         let { id } = customer;
-        this.custoemrorders = await this.uqs.salesTask.SearchCustomerOrder.table(
+        this.customerorders = await this.uqs.salesTask.SearchCustomerOrder.table(
             {
                 _mycustomer: id,
                 _ordertype: "coupon"
@@ -147,7 +149,7 @@ export class CCustomer extends CUqBase {
         );
     };
 
-    //获取客户相关内容
+    // 获取客户相关Post
     getCustomerContent = async (customer: any) => {
         this.pagePost = new QueryPager(
             this.uqs.webBuilder.SearchPostPublish,
@@ -167,7 +169,7 @@ export class CCustomer extends CUqBase {
     };
 
     /**
-     * 显示编辑
+     * 显示编辑客户信息界面
      */
     showCustomerEdit = async (customer: any) => {
         this.openVPage(VCustomerEdit, customer);
@@ -285,6 +287,9 @@ export class CCustomer extends CUqBase {
         await this.uqs.salesTask.MyCustomer.save(param.id, param);
     };
 
+    /**
+     * 打开客户详细信息显示界面
+     */
     showCustomerOrderDetail = async (param: any) => {
         let model = await this.uqs.order.Order.getSheet(param);
         this.openVPage(VCustomerOrderDetail, model);
@@ -294,19 +299,20 @@ export class CCustomer extends CUqBase {
      * 查询MyCustomer是否可能被其他销售助手绑定
      */
     checkBinding = async (mycustomer: any): Promise<boolean> => {
-        var customerlis = await this.uqs.customer.getCustomerByKey.query({
+        var customerList = await this.uqs.customer.getCustomerByKey.query({
             key: mycustomer.mobile
         });
         var counts: number = 0;
-        let { ret } = customerlis;
+        let { ret } = customerList;
         for (var i = 0; i < ret.length; i++) {
             let { customer } = ret[i];
-            let cust = await this.uqs.salesTask.MyCustomerIsOccupy.query(
+            let occupyResult = await this.uqs.salesTask.MyCustomerIsOccupy.query(
                 customer.id
             );
-            let result = cust.ret[0].code;
-            if (result === 1) {
+            let isOccupy = occupyResult.ret[0].code;
+            if (isOccupy === 1) {
                 counts++;
+                break;
             }
         }
         return !(counts === 0);

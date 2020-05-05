@@ -7,7 +7,7 @@ import { ViewMainSubs } from '../../mainSubs';
 import { renderBrand } from '../../product/CProduct';
 import { CSalesTask } from '../CSalesTask';
 import { setting } from 'appConfig';
-import { ProductPackRow } from 'product/Product';
+import { ProductPackRow } from 'product/product';
 /* eslint-disable */
 const schema: ItemSchema[] = [
     { name: 'pack', type: 'object' } as ObjectSchema,

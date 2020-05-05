@@ -2,117 +2,10 @@ import * as React from "react";
 import { observable } from "mobx";
 import { observer } from "mobx-react";
 import {
-    VPage,
-    Page,
-    Schema,
-    UiSchema,
-    UiInputItem,
-    UiRadio,
-    tv,
-    LMR,
-    ComponentProp,
-    Prop,
-    PropGrid,
-    FA,
-    List,
-    EasyDate,
-    nav
+    VPage, Page, tv, LMR, ComponentProp, Prop, PropGrid, FA, List, EasyDate, nav
 } from "tonva";
 import { CCustomer } from "./CCustomer";
-import {
-    mobileValidation,
-    nameValidation,
-    emailValidation
-} from "tools/inputValidations";
 import { setting } from "appConfig";
-
-export const myCustomerSchema: Schema = [
-    { name: "name", type: "string", required: true },
-    { name: "salutation", type: "string" },
-    { name: "telephone", type: "number", required: true },
-    { name: "gender", type: "number" },
-    { name: "email", type: "string" },
-    { name: "wechat", type: "string" },
-    // { name: 'teacher', type: 'string' },
-    { name: "potential", type: "string" },
-    { name: "research", type: "string" },
-    { name: "addressString", type: "string" }
-];
-
-export const myCustomerUISchema: UiSchema = {
-    items: {
-        name: {
-            widget: "text",
-            label: "姓名",
-            placeholder: "请输入姓名",
-            rules: nameValidation
-        } as UiInputItem,
-        salutation: {
-            widget: "text",
-            label: "称谓",
-            placeholder: "请输入称谓"
-        } as UiInputItem,
-        telephone: {
-            widget: "text",
-            label: "手机号",
-            placeholder: "请输入手机号",
-            rules: mobileValidation
-        } as UiInputItem,
-        gender: {
-            widget: "radio",
-            label: "性别",
-            list: [
-                { value: "1", title: "男" },
-                { value: "0", title: "女" }
-            ]
-        } as UiRadio,
-        birthDay: {
-            widget: "datetime",
-            label: "生日",
-            placeholder: "请输入生日"
-        } as UiInputItem,
-        email: {
-            widget: "text",
-            label: "Email",
-            placeholder: "请输入Email",
-            rules: emailValidation
-        } as UiInputItem,
-        wechat: {
-            widget: "text",
-            label: "微信",
-            placeholder: "请输入微信号"
-        } as UiInputItem,
-        teacher: {
-            widget: "text",
-            label: "老师",
-            placeholder: "请输入老师姓名"
-        } as UiInputItem,
-        addressString: {
-            widget: "text",
-            label: "地址",
-            placeholder: "请输地址"
-        } as UiInputItem,
-        potential: {
-            widget: "radio",
-            label: "潜力值",
-            list: [
-                { value: 0, title: "小于10万" },
-                { value: 1, title: "10万-30万" },
-                { value: 2, title: "大于30万" }
-            ]
-        } as UiRadio,
-        research: {
-            widget: "radio",
-            label: "研究方向",
-            list: [
-                { value: 0, title: "有机" },
-                { value: 1, title: "化学" },
-                { value: 2, title: "分析" },
-                { value: 3, title: "材料" }
-            ]
-        } as UiRadio
-    }
-};
 
 const potentialText: { [v: number]: string } = {
     0: "小于10万",
@@ -169,7 +62,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
         );
     };
 
-    private renderContent = (item: any, index: number) => {
+    private renderPost = (item: any, index: number) => {
         let { caption } = item;
         let right = <div className="text-primary">分享</div>;
         return (
@@ -208,43 +101,42 @@ export class VCustomerDetail extends VPage<CCustomer> {
 
     private renderTitle = (
         title: string,
-        iconeidit: string,
-        eiditAction: any,
-        iconeqita: string,
-        qitaActiom: any
+        editIcon: string,
+        editAction: any,
+        otherIcon: string,
+        otherAction: any
     ) => {
-        let iconeiditname = "iconfont " + iconeidit + " text-primary";
-        let iconeqitaname = "iconfont " + iconeqita + " text-primary ml-3";
+        let iconeiditname = "iconfont " + editIcon + " text-primary";
+        let iconeqitaname = "iconfont " + otherIcon + " text-primary ml-3";
         return (
-            <div>
-                <div className="px-3 py-2 strong d-flex justify-content-between">
-                    <div>
-                        <strong className="text-primary">{title}</strong>
-                    </div>
-                    <div>
-                        {iconeidit === "" ? (
-                            undefined
-                        ) : (
-                                <span
-                                    className={iconeiditname}
-                                    style={{ fontSize: "18px" }}
-                                    onClick={eiditAction}
-                                ></span>
-                            )}
-                        {iconeqita === "" ? (
-                            undefined
-                        ) : (
-                                <span
-                                    className={iconeqitaname}
-                                    style={{ fontSize: "18px" }}
-                                    onClick={qitaActiom}
-                                ></span>
-                            )}
-                    </div>
+            <div className="px-3 py-2 strong d-flex justify-content-between mt-3 bg-white">
+                <div>
+                    <strong className="text-primary">{title}</strong>
+                </div>
+                <div>
+                    {editIcon === "" ? (
+                        undefined
+                    ) : (
+                            <span
+                                className={iconeiditname}
+                                style={{ fontSize: "18px" }}
+                                onClick={editAction}
+                            ></span>
+                        )}
+                    {otherIcon === "" ? (
+                        undefined
+                    ) : (
+                            <span
+                                className={iconeqitaname}
+                                style={{ fontSize: "18px" }}
+                                onClick={otherAction}
+                            ></span>
+                        )}
                 </div>
             </div>
         );
     };
+
     private renderOrder = (model: any, index: number) => {
         let { order, orderNo, date } = model;
         let { showCustomerOrderDetail } = this.controller;
@@ -263,303 +155,82 @@ export class VCustomerDetail extends VPage<CCustomer> {
         );
     };
 
+    private geneCustomerPropertyComponent(name: string, showName: string, value: any) {
+        return {
+            type: "component",
+            name: name,
+            component: (
+                <LMR
+                    className="cursor-pointer w-100 py-2"
+                    left={<div>{showName}</div>}
+                    right={<div className="text-right">{value}</div>}
+                ></LMR>
+            )
+        } as ComponentProp;
+    }
+
     private page = observer((param: any) => {
-        let { cSalesTask } = this.controller.cApp;
-        let { showCustomerHistory } = cSalesTask;
-        let { id: customerid, unit, name, salutation, telephone, gender, email, wechat, teacher, addressString, potential, research, department, officePost, mobile } = param;
-        var genderShow = gender === undefined ? "" : genderText[gender];
-        var potentialShow =
-            potential === undefined ? "[无]" : potentialText[potential];
-        let telephoneShow = mobile && (
-            <div>
+        let { id: customerid, unit, name, salutation, telephone, gender,
+            email, wechat, teacher, addressString, potential, research, department, officePost, mobile } = param;
+
+        let rows: Prop[] = [];
+        if (unit)
+            rows.push(this.geneCustomerPropertyComponent("customer", "单位", <>{tv(unit)}</>));
+        rows.push(this.geneCustomerPropertyComponent("name", "姓名", name));
+        if (salutation)
+            rows.push(this.geneCustomerPropertyComponent("salutation", "称谓", salutation));
+        if (gender)
+            rows.push(this.geneCustomerPropertyComponent("salutation", "性别", genderText[gender]));
+        if (mobile) {
+            let telephoneShow = <div>
                 <a className="text-default" href={"tel:" + mobile} style={{ textDecorationLine: "none" }}  >
                     <FA name="phone" className="text-success px-1" />
                     {mobile}
                 </a>
             </div>
-        );
-
-        let rows: Prop[] = [];
-        if (unit)
-            rows.push({
-                type: "component",
-                name: "customer",
-                component: (
-                    <LMR
-                        className="cursor-pointer w-100 py-2"
-                        left={
-                            <div>
-                                <small></small>单位
-                            </div>
-                        }
-                        right={<div className="text-right">{tv(unit)}</div>}
-                    ></LMR>
-                )
-            } as ComponentProp);
-        rows.push({
-            type: "component",
-            name: "name",
-            component: (
-                <LMR
-                    className="cursor-pointer w-100 py-2"
-                    left={
-                        <div>
-                            <small></small>姓名
-                        </div>
-                    }
-                    right={<div className="text-right">{name}</div>}
-                ></LMR>
-            )
-        } as ComponentProp);
-        if (salutation)
-            rows.push({
-                type: "component",
-                name: "salutation",
-                component: (
-                    <LMR
-                        className="cursor-pointer w-100 py-2"
-                        left={
-                            <div>
-                                <small></small>称谓
-                            </div>
-                        }
-                        right={<div className="text-right">{salutation}</div>}
-                    ></LMR>
-                )
-            } as ComponentProp);
-        if (gender)
-            rows.push({
-                type: "component",
-                name: "salutation",
-                component: (
-                    <LMR
-                        className="cursor-pointer w-100 py-2"
-                        left={
-                            <div>
-                                <small></small>性别
-                            </div>
-                        }
-                        right={<div className="text-right">{genderShow}</div>}
-                    ></LMR>
-                )
-            } as ComponentProp);
-        if (mobile)
-            rows.push({
-                type: "component",
-                name: "mobile",
-                component: (
-                    <LMR
-                        className="cursor-pointer w-100 py-2"
-                        left={
-                            <div>
-                                <small></small>手机号
-                            </div>
-                        }
-                        right={telephoneShow}
-                    ></LMR>
-                )
-            } as ComponentProp);
+            rows.push(this.geneCustomerPropertyComponent("mobile", "手机号", telephoneShow));
+        }
         if (telephone)
-            rows.push({
-                type: "component",
-                name: "telephone",
-                component: (
-                    <LMR
-                        className="cursor-pointer w-100 py-2"
-                        left={
-                            <div>
-                                <small></small>固话
-                            </div>
-                        }
-                        right={<div className="text-right">{telephone}</div>}
-                    ></LMR>
-                )
-            } as ComponentProp);
+            rows.push(this.geneCustomerPropertyComponent("telephone", "固话", telephone));
         if (email)
-            rows.push({
-                type: "component",
-                name: "email",
-                component: (
-                    <LMR
-                        className="cursor-pointer w-100 py-2"
-                        left={
-                            <div>
-                                <small></small>Email
-                            </div>
-                        }
-                        right={<div className="text-right">{email}</div>}
-                    ></LMR>
-                )
-            } as ComponentProp);
+            rows.push(this.geneCustomerPropertyComponent("email", "Email", email));
         if (wechat)
-            rows.push({
-                type: "component",
-                name: "wechat",
-                component: (
-                    <LMR
-                        className="cursor-pointer w-100 py-2"
-                        left={
-                            <div>
-                                <small></small>微信
-                            </div>
-                        }
-                        right={<div className="text-right">{wechat}</div>}
-                    ></LMR>
-                )
-            } as ComponentProp);
+            rows.push(this.geneCustomerPropertyComponent("wechat", "微信", wechat));
         if (teacher)
-            rows.push({
-                type: "component",
-                name: "teacher",
-                component: (
-                    <LMR
-                        className="cursor-pointer w-100 py-2"
-                        left={
-                            <div>
-                                <small></small>老师
-                            </div>
-                        }
-                        right={<div className="text-right">{teacher}</div>}
-                    ></LMR>
-                )
-            } as ComponentProp);
+            rows.push(this.geneCustomerPropertyComponent("teacher", "老师", teacher));
         if (addressString)
-            rows.push({
-                type: "component",
-                name: "addressString",
-                component: (
-                    <LMR
-                        className="cursor-pointer w-100 py-2"
-                        left={
-                            <div>
-                                <small></small>地址
-                            </div>
-                        }
-                        right={
-                            <div className="text-right">{addressString}</div>
-                        }
-                    ></LMR>
-                )
-            } as ComponentProp);
+            rows.push(this.geneCustomerPropertyComponent("addressString", "地址", addressString));
         if (potential)
-            rows.push({
-                type: "component",
-                name: "potential",
-                component: (
-                    <LMR
-                        className="cursor-pointer w-100 py-2"
-                        left={
-                            <div>
-                                <small></small>潜力值
-                            </div>
-                        }
-                        right={
-                            <div className="text-right">{potentialShow}</div>
-                        }
-                    ></LMR>
-                )
-            } as ComponentProp);
+            rows.push(this.geneCustomerPropertyComponent("potential", "潜力值", potentialText[potential]));
         if (research)
-            rows.push({
-                type: "component",
-                name: "research",
-                component: (
-                    <LMR
-                        className="cursor-pointer w-100 py-2"
-                        left={
-                            <div>
-                                <small></small>研究方向
-                            </div>
-                        }
-                        right={
-                            <div className="text-right">
-                                {" "}
-                                {tv(research.research, v => v.name)}
-                            </div>
-                        }
-                    ></LMR>
-                )
-            } as ComponentProp);
+            rows.push(this.geneCustomerPropertyComponent("research", "研究方向", <>{tv(research.research, v => v.name)}</>));
         if (department)
-            rows.push({
-                type: "component",
-                name: "research",
-                component: (
-                    <LMR
-                        className="cursor-pointer w-100 py-2"
-                        left={
-                            <div>
-                                <small></small>部门
-                            </div>
-                        }
-                        right={
-                            <div className="text-right">
-                                {" "}
-                                {tv(department.department, v => v.name)}
-                            </div>
-                        }
-                    ></LMR>
-                )
-            } as ComponentProp);
+            rows.push(this.geneCustomerPropertyComponent("research", "部门", <>{tv(department.department, v => v.name)}</>));
         if (officePost)
-            rows.push({
-                type: "component",
-                name: "research",
-                component: (
-                    <LMR
-                        className="cursor-pointer w-100 py-2"
-                        left={
-                            <div>
-                                <small></small>职位
-                            </div>
-                        }
-                        right={
-                            <div className="text-right">
-                                {tv(officePost.officpost, v => v.name)}
-                            </div>
-                        }
-                    ></LMR>
-                )
-            } as ComponentProp);
-        rows.push({
-            type: "component",
-            name: "binding",
-            component: (
-                <LMR
-                    className="cursor-pointer w-100 py-2"
-                    left={
-                        <div>
-                            <small></small>绑定状态
-                        </div>
-                    }
-                    right={this.isBinded ? "已绑定" : "未绑定"}
-                ></LMR>
-            )
-        } as ComponentProp);
+            rows.push(this.geneCustomerPropertyComponent("research", "职位", <>{tv(officePost.officePost, v => v.name)}</>));
+        rows.push(this.geneCustomerPropertyComponent("bingding", "绑定状态", (this.isBinded ? "已绑定" : "未绑定")));
 
-        let { showCustomerEdit, cApp, activetasks, custoemrorders, pagePost } = this.controller;
-        let onshowCustomerEdit = () => showCustomerEdit(this.customer);
-        let onshowAddTsak = () => cApp.cSalesTask.showCreateTaskOfCustomer(this.customer);
-        let onshowCustomerHistory = () => showCustomerHistory(customerid);
+
+        let { showCustomerEdit, cApp, activetasks, customerorders, pagePost } = this.controller;
         let header: any = <span>{this.customer.name}</span>;
-        let right = (
+        let editCustomerButton = (
             <div className="mt-2">
                 <span
                     className="iconfont icon-bianji mx-3 "
-                    onClick={onshowCustomerEdit}
+                    onClick={() => showCustomerEdit(this.customer)}
                 ></span>
             </div>
         );
 
-        let taskShow_titel: any;
-        let taskShow: any;
-
-        taskShow_titel = this.renderTitle(
+        let { cSalesTask } = cApp;
+        let { showCustomerHistory, showCreateTaskOfCustomer } = cSalesTask;
+        let taskShowTitle: any, taskShow: any;
+        taskShowTitle = this.renderTitle(
             "待办事项",
             "icon-tianjia",
-            onshowAddTsak,
+            () => showCreateTaskOfCustomer(this.customer),
             "icon-qita",
-            onshowCustomerHistory
+            () => showCustomerHistory(customerid)
         );
         if (activetasks.length > 0) {
             taskShow = (
@@ -572,10 +243,9 @@ export class VCustomerDetail extends VPage<CCustomer> {
             );
         }
 
-        let orderShow_titel: any;
-        let orderShow: any;
-        if (custoemrorders.length > 0) {
-            orderShow_titel = this.renderTitle(
+        let orderShowTitle: any, orderShow: any;
+        if (customerorders.length > 0) {
+            orderShowTitle = this.renderTitle(
                 "历史订单",
                 "",
                 undefined,
@@ -586,21 +256,21 @@ export class VCustomerDetail extends VPage<CCustomer> {
                 <List
                     before={""}
                     none="无"
-                    items={custoemrorders}
+                    items={customerorders}
                     item={{ render: this.renderOrder }}
                 />
             );
         }
 
-        let postShow: any;
+        let postShow: any, postShowTitle: any;
         if (pagePost.items && pagePost.items.length > 0) {
+            postShowTitle = this.renderTitle("推文分享", undefined, undefined, undefined, undefined);
             postShow = (
                 <List
-                    className="mt-3"
                     before={""}
                     none="无"
                     items={pagePost}
-                    item={{ render: this.renderContent }}
+                    item={{ render: this.renderPost }}
                 />
             );
         }
@@ -609,17 +279,18 @@ export class VCustomerDetail extends VPage<CCustomer> {
             <Page
                 header={header}
                 headerClassName={setting.pageHeaderCss}
-                right={right}
+                right={editCustomerButton}
             >
                 <PropGrid
                     rows={rows}
                     values={this.customer}
                     alignValue="right"
                 />
-                {taskShow_titel}
+                {taskShowTitle}
                 {taskShow}
-                {orderShow_titel}
+                {orderShowTitle}
                 {orderShow}
+                {postShowTitle}
                 {postShow}
             </Page>
         );
