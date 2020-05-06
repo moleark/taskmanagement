@@ -18,6 +18,7 @@ import { VCreateNewCustomer } from "./VCreateNewCustomer";
 import { VCustomerOrderDetail } from "./VCustomerOrderDetail";
 import { VNewCustomerList } from "./VNewCustomerList";
 import { VCustomerSearchByUnit } from "./VCustomerSearchByUnit";
+import { VCreateVIPCard } from "./VCreateVIPCard";
 /* eslint-disable */
 
 export class CCustomer extends CUqBase {
@@ -30,6 +31,7 @@ export class CCustomer extends CUqBase {
     @observable activetasks: any;
     @observable customerorders: any;
     @observable pagePost: QueryPager<any>;
+    @observable vipCard: any;
     private task: Task;
 
     //初始化
@@ -107,7 +109,7 @@ export class CCustomer extends CUqBase {
 
     //查询客户--通过ID
     showCustomerDetail = async (customer: any) => {
-        let { id } = customer;
+        let { id, user: webuser } = customer;
         let mycustomer = await this.uqs.salesTask.MyCustomer.load(id);
         let department = await this.uqs.salesTask.SearchMyCustomerDepartment.query(
             { mycustomer: id }
@@ -127,7 +129,13 @@ export class CCustomer extends CUqBase {
         await this.getActiveTasks(customer);
         await this.getCustomerOrder(customer);
         await this.getCustomerContent(customer);
-        // await this.getVIPCard(customer);
+        if (webuser) {
+            let vipCardForWebUser = await this.getVIPCard(webuser);
+            if (vipCardForWebUser) {
+                vipCardForWebUser.drawed = await this.getVIPCardDrawing(webuser, vipCardForWebUser.coupon);
+                this.vipCard = vipCardForWebUser;
+            }
+        }
         this.openVPage(VCustomerDetail, mycustomer);
     };
 
@@ -337,13 +345,24 @@ export class CCustomer extends CUqBase {
         this.openVPage(VCustomerSearchByUnit);
     }
 
-    /*
-    private getVIPCard = async (customer: any) => {
-        let { user: webuser } = customer;
+    private getVIPCard = async (webuser: any) => {
         let result = await this.uqs.salesTask.VIPCardForWebUser.obj({ sales: 5, webuser: webuser })
-        console.log(result);
+        return result;
     }
-    */
+
+    private getVIPCardDrawing = async (webuser: any, coupon: any) => {
+        // let result = await this.uqs.webuser.
+        return false;
+    }
+
+    showCreateVIPCardPage = async (customer: any) => {
+        this.openVPage(VCreateVIPCard, customer);
+    }
+
+    renderVIPCardTypes = () => {
+        let { cVIPCardType } = this.cApp;
+        return cVIPCardType.renderVIPCardTypeList();
+    }
 
     render = observer(() => {
         return this.renderView(VCustomerList);

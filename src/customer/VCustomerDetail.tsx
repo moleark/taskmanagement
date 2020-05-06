@@ -211,8 +211,9 @@ export class VCustomerDetail extends VPage<CCustomer> {
         rows.push(this.geneCustomerPropertyComponent("bingding", "绑定状态", (this.isBinded ? "已绑定" : "未绑定")));
 
 
-        let { showCustomerEdit, cApp, activetasks, customerorders, pagePost } = this.controller;
-        let header: any = <span>{this.customer.name}</span>;
+        let { showCustomerEdit, cApp, activetasks, customerorders, pagePost, vipCard, showCreateVIPCardPage } = this.controller;
+        let { name: customerName, user: webuser } = this.customer;
+        let header: any = <span>{customerName}</span>;
         let editCustomerButton = (
             <div className="mt-2">
                 <span
@@ -221,6 +222,34 @@ export class VCustomerDetail extends VPage<CCustomer> {
                 ></span>
             </div>
         );
+
+        // VIP卡
+        let vipCardUI: any, vipCardContent: any;
+        if (setting.sales.isInner) {
+            if (!webuser)
+                vipCardContent = "该用户尚未注册，请推动注册";
+            else if (!this.isBinded) {
+                vipCardContent = <span className="small text-muted">先去绑定</span>;
+                vipCardContent = <span className="small text-muted">该客户无VIP卡，你可以
+            <span className="text-primary cursor-pointer" onClick={() => showCreateVIPCardPage(this.customer)}>去发卡</span></span>;
+            } else {
+                if (!vipCard) {
+                    vipCardContent = "去发卡"
+                    // 点击到生成卡的界面
+                } else {
+                    if (!vipCard.drawed) {
+                        vipCardContent = "让客户先领卡";
+                    }
+                }
+            }
+            vipCardUI = <div className="container-fluid bg-white mt-3">
+                <div className="row py-3">
+                    <div className="col-3">VIP</div>
+                    <div className="col-8">{vipCardContent}</div>
+                    <div className="col-1"></div>
+                </div>
+            </div>
+        }
 
         let { cSalesTask } = cApp;
         let { showCustomerHistory, showCreateTaskOfCustomer } = cSalesTask;
@@ -286,6 +315,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
                     values={this.customer}
                     alignValue="right"
                 />
+                {vipCardUI}
                 {taskShowTitle}
                 {taskShow}
                 {orderShowTitle}
