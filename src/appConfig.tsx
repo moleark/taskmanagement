@@ -28,5 +28,6 @@ export const setting = {
     //appUrlDomain: "assist.jkchemical.com",
     appUrlDomain: "localhost",
     pageHeaderCss: "bg-primary",
-    sales: undefined as Sales
+    sales: undefined as Sales,
+    couponType: { "coupon": "优惠券", "credits": "积分券", "vipcard": "VIP卡" }
 };

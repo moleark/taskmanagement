@@ -19,6 +19,7 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
     }
 
     private page = observer(() => {
+
         var couponCode = "";
         let { code, type, platform } = this.coupon;
         if (code) {
@@ -34,11 +35,12 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
         let onshare = () => this.share(url);
         let share = <div className="text-center" style={{ width: 'auto', height: '10%' }} >
         </div>;
+
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
             share = <span className="text-info cursor-info mx-2" onClick={onshare} >分享</span>;
         }
 
-        let header = this.coupon.type === "coupon" ? "优惠券" : "积分券";
+        let header = setting.couponType[type];
         return <Page header={header} headerClassName={setting.pageHeaderCss}>
             <div id="qrid" className="text-center" >
                 <Image src={setting.sales.logo} className="mt-4" style={{ width: '40%', height: '40%', margin: '2rem auto, 0 auto' }} />

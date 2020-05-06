@@ -48,13 +48,17 @@ export class CCoupon extends CUqBase {
             discount: discount,
             types: param.type
         }
-        let couponid = await this.uqs.salesTask.CreateCoupon.submit(coupon);
-        let code = couponid.code;
+        let createCouponResult = await this.uqs.salesTask.CreateCoupon.submit(coupon);
+        let { coupon: newCouponId, code } = createCouponResult;
+        coupon.id = newCouponId;
         coupon.code = code;
         coupon.type = param.type;
         coupon.product = param.product;
         coupon.platform = data.businesstype === "platform" ? "1" : "0";
+        return coupon;
+    }
 
+    showShareCoupon = (coupon: any) => {
         if (coupon.product && coupon.product.main) {
             this.openVPage(VCreateProductCouponEnd, coupon)
         } else {

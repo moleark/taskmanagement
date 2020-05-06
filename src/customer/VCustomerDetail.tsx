@@ -211,7 +211,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
         rows.push(this.geneCustomerPropertyComponent("bingding", "绑定状态", (this.isBinded ? "已绑定" : "未绑定")));
 
 
-        let { showCustomerEdit, cApp, activetasks, customerorders, pagePost, vipCard, showCreateVIPCardPage } = this.controller;
+        let { showCustomerEdit, cApp, activetasks, customerorders, pagePost, vipCardForWebUser, showCreateVIPCardPage } = this.controller;
         let { name: customerName, user: webuser } = this.customer;
         let header: any = <span>{customerName}</span>;
         let editCustomerButton = (
@@ -228,25 +228,35 @@ export class VCustomerDetail extends VPage<CCustomer> {
         if (setting.sales.isInner) {
             if (!webuser)
                 vipCardContent = "该用户尚未注册，请推动注册";
+            /*
             else if (!this.isBinded) {
                 vipCardContent = <span className="small text-muted">先去绑定</span>;
-                vipCardContent = <span className="small text-muted">该客户无VIP卡，你可以
-            <span className="text-primary cursor-pointer" onClick={() => showCreateVIPCardPage(this.customer)}>去发卡</span></span>;
-            } else {
-                if (!vipCard) {
-                    vipCardContent = "去发卡"
-                    // 点击到生成卡的界面
+            }
+            */
+            else {
+                if (!vipCardForWebUser) {
+                    vipCardContent = <span className="small text-muted">
+                        该客户无VIP卡，你可以
+                        <span className="text-primary cursor-pointer" onClick={() => showCreateVIPCardPage(this.customer)}>去发卡</span>
+                    </span>;
                 } else {
-                    if (!vipCard.drawed) {
-                        vipCardContent = "让客户先领卡";
-                    }
+                    let { vipCard, drawed, vipCardType } = vipCardForWebUser;
+                    let drawedUI = drawed ?
+                        <><i className="fa fa-check-cicle" style={{ color: "green" }}></i> 已领取</> :
+                        <><i className="fa fa-exclamation-triangle"></i> 未领取</>;
+                    vipCardContent = <>
+                        <div>{tv(vipCard, v => v.code)}</div>
+                        <div className="d-flex justify-content-between">
+                            <div>{tv(vipCardType, v => { return <>{v.name} - {v.description}</> })}</div>
+                            <div>{drawedUI}</div>
+                        </div>
+                    </>
                 }
             }
             vipCardUI = <div className="container-fluid bg-white mt-3">
-                <div className="row py-3">
-                    <div className="col-3">VIP</div>
+                <div className="row align-items-center py-3">
+                    <div className="col-4">VIP卡</div>
                     <div className="col-8">{vipCardContent}</div>
-                    <div className="col-1"></div>
                 </div>
             </div>
         }

@@ -129,7 +129,9 @@ export class VCreateCoupon extends VPage<CCoupon> {
         this.showTip = false;
         data.validitydate = this.validDateFrom(2);
         data.discount = _.round(1 - disc * 0.1, 2);
-        await this.controller.createCoupon(data, this.Coupon);
+        let { createCoupon, showShareCoupon } = this.controller;
+        let coupon: any = await createCoupon(data, this.Coupon);
+        showShareCoupon(coupon);
     }
 
     private validDateFrom(v: any) {
@@ -152,7 +154,7 @@ export class VCreateCoupon extends VPage<CCoupon> {
         let right = <div onClick={onshowCreateCoupon} className="cursor-pointer mx-3">
             <i className="iconfont icon-qita" style={{ fontSize: "20px" }}></i>
         </div>;
-        let header = this.Coupon.type === "coupon" ? "优惠券" : "积分券";
+        let header = setting.couponType[this.Coupon.type];
         return <Page header={header} headerClassName={setting.pageHeaderCss} right={right} >
             <Form className="my-3 mx-3"
                 schema={schema}
