@@ -160,6 +160,7 @@ export interface UqWebBuilder {
     AssistPost: Map;
     CustomerPost: Map;
     TransmitPost: Action;
+    SearchClassRoomPost: Query;
 
 }
 

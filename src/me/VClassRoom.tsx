@@ -13,13 +13,13 @@ export class VClassRoom extends VPage<CMe> {
     }
 
     private page = observer(() => {
-        let { pagePost } = this.controller;
+        let { RecommendPost } = this.controller;
         return <Page header="空中课堂" headerClassName={setting.pageHeaderCss}>
             <this.manue />
             <div className="bg-white px-3 mt-1 py-3">
                 <strong>推荐课程</strong>
             </div>
-            <List className="px-2" before={""} none="无" items={pagePost} item={{ render: this.renderContent }}
+            <List className="px-2" before={""} none="无" items={RecommendPost} item={{ render: this.renderContent }}
             />
         </Page >
     });
@@ -69,9 +69,11 @@ export class VClassRoom extends VPage<CMe> {
             );
         }
     };
-    private manue() {
+
+    private manue = () => {
+        let { showClassRoomList } = this.controller;
         return < div className="d-flex cursor-pointer bg-white py-3 " >
-            <div className="col text-center" >
+            <div className="col text-center" onClick={() => showClassRoomList(1)} >
                 <div>
                     <i className="iconfont icon-xuexi" style={{ fontSize: "25px", color: "#2aa515" }}></i>
                 </div>
@@ -79,7 +81,7 @@ export class VClassRoom extends VPage<CMe> {
                     <small>入门课程</small>
                 </small>
             </div>
-            <div className="col text-center"  >
+            <div className="col text-center" onClick={() => showClassRoomList(2)} >
                 <div>
                     <i className="iconfont icon-xinshou" style={{ fontSize: "25px", color: "#0e6ff7" }}></i>
                 </div>
@@ -87,7 +89,7 @@ export class VClassRoom extends VPage<CMe> {
                     <small>新手宝典</small>
                 </small>
             </div>
-            <div className="col text-center"  >
+            <div className="col text-center" onClick={() => showClassRoomList(3)} >
                 <div>
                     <i className="iconfont icon-daka1" style={{ fontSize: "25px", color: "#f6ad15" }}></i>
                 </div>

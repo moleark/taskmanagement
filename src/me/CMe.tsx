@@ -10,12 +10,14 @@ import { VAbout } from "./VAbout";
 import { observable } from "mobx";
 import { VClassRoom } from "./VClassRoom";
 import { VClassRoomDetail } from "./VClassRoomDetail";
+import { VClassRoomList } from "./VClassRoomList";
 
 export class CMe extends CUqBase {
     inviteCode: string;
     position: any;
     @observable account: any;
     @observable pagePost: QueryPager<any>;
+    @observable RecommendPost: QueryPager<any>;
 
     //初始化
     protected async internalStart(param: any) {
@@ -137,16 +139,19 @@ export class CMe extends CUqBase {
     };
 
     showClassRoom = async () => {
-        await this.getPost();
+        this.RecommendPost = new QueryPager(this.uqs.webBuilder.SearchClassRoomPost, 5, 5);
+        this.RecommendPost.first({ classroomType: 0 });
         this.openVPage(VClassRoom);
     }
+
     showClassRoomDetail = async (param: any) => {
         this.openVPage(VClassRoomDetail, param);
     }
 
-    getPost = async () => {
-        this.pagePost = new QueryPager(this.uqs.webBuilder.SearchPostPublish, 5, 5);
-        this.pagePost.first({ key: "" });
+    showClassRoomList = async (type: any) => {
+        this.pagePost = new QueryPager(this.uqs.webBuilder.SearchClassRoomPost, 30, 30);
+        this.pagePost.first({ classroomType: type });
+        this.openVPage(VClassRoomList, type);
     };
 
 
