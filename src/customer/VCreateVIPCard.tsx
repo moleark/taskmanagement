@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { VPage, Page, ItemSchema, StringSchema, UiSchema, UiRadio, Form, Context, ButtonSchema, UiButton } from 'tonva';
 import { CCustomer } from './CCustomer';
-import { VCreateCouponEnd } from 'coupon/VCreateCouponEnd';
 
 const schema: ItemSchema[] = [
     { name: "vipCardType", type: "string", required: true } as StringSchema,

@@ -18,7 +18,7 @@ export class VVIPTypeList extends View<CVIPCardType>{
     }
 
     private renderCardType(cardtype: any) {
-        let { id, name, description } = cardtype;
+        let { name, description } = cardtype;
         let right = <FA name="chevron-right" className=""></FA>
         return <LMR left={name} right={right}>
             {description}

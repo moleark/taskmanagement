@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { CUqBase } from "../CBase";
 import { VVIPTypeList } from './VVIPCardTypeList';
 

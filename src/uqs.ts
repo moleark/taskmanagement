@@ -44,7 +44,7 @@ export interface UqWebUser {
     webUserSetting: Map;
     WebUserCustomer: Map;
     WebUserContacts: Map;
-
+    WebUserVipCard: Map;
 
 }
 

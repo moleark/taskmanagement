@@ -6,7 +6,7 @@ import { Sales } from "./model/sales";
 
 const appConfigBase: AppConfig = {
     appName: "百灵威系统工程部/salestask",
-    version: "1.1.25", // 版本变化，缓存的uqs才会重载
+    version: "1.1.26", // 版本变化，缓存的uqs才会重载
     tvs: tvs,
     loginTop: undefined,
     oem: "百灵威"
@@ -25,8 +25,8 @@ export const setting = {
     carturl: "http://shop.jkchemical.com",
     posturl: "https://web.jkchemical.com/post",
     userIcon: "",
-    //appUrlDomain: "assist.jkchemical.com",
-    appUrlDomain: "localhost",
+    appUrlDomain: "assist.jkchemical.com",
+    //appUrlDomain: "localhost",
     pageHeaderCss: "bg-primary",
     sales: undefined as Sales,
     couponType: { "coupon": "优惠券", "credits": "积分券", "vipcard": "VIP卡" }

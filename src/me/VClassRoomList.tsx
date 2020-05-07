@@ -11,9 +11,9 @@ export class VClassRoomList extends VPage<CMe> {
     async open(type: number) {
         if (type === 1) {
             this.tite = "入门课程";
-        } else if (type = 2) {
+        } else if (type === 2) {
             this.tite = "新手宝典";
-        } else if (type = 3) {
+        } else if (type === 3) {
             this.tite = "大咖风采";
         }
 

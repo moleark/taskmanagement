@@ -20,26 +20,15 @@ const genderText: { [v: number]: string } = {
 
 export class VCustomerDetail extends VPage<CCustomer> {
     @observable private customer: any;
-    isBinded: boolean = false;
+
 
     async open(param: any) {
         this.customer = param;
-        this.checkBinding();
         this.openPage(this.page, param);
     }
 
-    private checkBinding = async () => {
-        let binded = await this.controller.checkBinding(this.customer);
-        if (binded) {
-            this.isBinded = true;
-        } else {
-            this.isBinded = false;
-        }
-    };
-
     private renderTask = (task: any, index: number) => {
-        let showDetail = () =>
-            this.controller.cApp.cSalesTask.showTaskDetailEdit(task);
+        let showDetail = () => this.controller.cApp.cSalesTask.showTaskDetailEdit(task);
         let { description, deadline, result } = task;
         let right = (
             <div className="text-right">
@@ -208,10 +197,9 @@ export class VCustomerDetail extends VPage<CCustomer> {
             rows.push(this.geneCustomerPropertyComponent("research", "部门", <>{tv(department.department, v => v.name)}</>));
         if (officePost)
             rows.push(this.geneCustomerPropertyComponent("research", "职位", <>{tv(officePost.officePost, v => v.name)}</>));
-        rows.push(this.geneCustomerPropertyComponent("bingding", "绑定状态", (this.isBinded ? "已绑定" : "未绑定")));
+        rows.push(this.geneCustomerPropertyComponent("bingding", "绑定状态", (this.controller.isBinded === 1 ? "已绑定" : "未绑定")));
 
-
-        let { showCustomerEdit, cApp, activetasks, customerorders, pagePost, vipCardForWebUser, showCreateVIPCardPage } = this.controller;
+        let { showCustomerEdit, cApp, activetasks, customerorders, pagePost, vipCardForWebUser, showCreateVIPCardPage, isBinded } = this.controller;
         let { name: customerName, user: webuser } = this.customer;
         let header: any = <span>{customerName}</span>;
         let editCustomerButton = (
@@ -226,39 +214,37 @@ export class VCustomerDetail extends VPage<CCustomer> {
         // VIP卡
         let vipCardUI: any, vipCardContent: any;
         if (setting.sales.isInner) {
-            if (!webuser)
-                vipCardContent = "该用户尚未注册，请推动注册";
-            /*
-            else if (!this.isBinded) {
-                vipCardContent = <span className="small text-muted">先去绑定</span>;
-            }
-            */
-            else {
-                if (!vipCardForWebUser) {
-                    vipCardContent = <span className="small text-muted">
-                        该客户无VIP卡，你可以
-                        <span className="text-primary cursor-pointer" onClick={() => showCreateVIPCardPage(this.customer)}>去发卡</span>
-                    </span>;
-                } else {
-                    let { vipCard, drawed, vipCardType } = vipCardForWebUser;
-                    let drawedUI = drawed ?
-                        <><i className="fa fa-check-cicle" style={{ color: "green" }}></i> 已领取</> :
-                        <><i className="fa fa-exclamation-triangle"></i> 未领取</>;
-                    vipCardContent = <>
-                        <div>{tv(vipCard, v => v.code)}</div>
-                        <div className="d-flex justify-content-between">
-                            <div>{tv(vipCardType, v => { return <>{v.name} - {v.description}</> })}</div>
-                            <div>{drawedUI}</div>
-                        </div>
-                    </>
+            if (isBinded === 1) {
+                if (!webuser) {
+                    vipCardContent = "该用户尚未注册，请推动注册";
                 }
-            }
-            vipCardUI = <div className="container-fluid bg-white mt-3">
-                <div className="row align-items-center py-3">
-                    <div className="col-4">VIP卡</div>
-                    <div className="col-8">{vipCardContent}</div>
+                else {
+                    if (!vipCardForWebUser) {
+                        vipCardContent = <span className="small text-muted">
+                            该客户无VIP卡，你可以
+                        <span className="text-primary cursor-pointer" onClick={() => showCreateVIPCardPage(this.customer)}>去发卡</span>
+                        </span>;
+                    } else {
+                        let { vipCard, drawed, vipCardType } = vipCardForWebUser;
+                        let drawedUI = drawed ?
+                            <><i className="fa fa-check-cicle" style={{ color: "green" }}></i> 已领取</> :
+                            <><i className="fa fa-exclamation-triangle"></i> 未领取</>;
+                        vipCardContent = <>
+                            <div>{tv(vipCard, v => v.code)}</div>
+                            <div className="d-flex justify-content-between">
+                                <div>{tv(vipCardType, v => { return <>{v.name} - {v.description}</> })}</div>
+                                <div>{drawedUI}</div>
+                            </div>
+                        </>
+                    }
+                }
+                vipCardUI = <div className="container-fluid bg-white mt-3">
+                    <div className="row align-items-center py-3">
+                        <div className="col-4">VIP卡</div>
+                        <div className="col-8">{vipCardContent}</div>
+                    </div>
                 </div>
-            </div>
+            }
         }
 
         let { cSalesTask } = cApp;
