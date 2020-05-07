@@ -135,8 +135,8 @@ export class CCustomer extends CUqBase {
 
 
         let customermap = await this.uqs.salesTask.CustomerMyCustomerMap.query({ sales: this.user.id, arr1: [{ mycustomer: myCustomer.id }] });
-        if (customermap.length > 0) {
-            let { webuser, customer } = customermap[0];
+        if (customermap.ret.length > 0) {
+            let { webuser, customer } = customermap.ret[0];
             await this.checkBinding(customer);
             if (webuser) {
                 let vipCardForWebUser = await this.getVIPCard(webuser);
