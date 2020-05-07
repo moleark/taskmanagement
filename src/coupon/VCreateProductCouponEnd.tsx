@@ -156,8 +156,10 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
             this.renderProduct,
             this.renderPack
         );
-        viewProduct.model = this.coupon.product;
-        let header = this.coupon.type === "coupon" ? "优惠券" : "积分券";
+
+        let { product, type } = this.coupon;
+        viewProduct.model = product;
+        let header = setting.couponType[type];
         return (
             <Page header={header} headerClassName={setting.pageHeaderCss}>
                 <div className="bg-white" style={{ height: "100%" }}>

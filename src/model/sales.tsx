@@ -19,12 +19,60 @@ export abstract class Sales {
     downloadAppurl: string;
     sharelogo: string;
     abstract achievement(achievement: any): JSX.Element;
-    abstract shareTitle(type: string): string;
-    abstract shareContent(type: string, discount: number): string;
-    abstract shareUrl(type: string, coupon: string, product: any, platform: string): string;
+
+    shareTitle(type: string): string {
+        return setting.couponType[type];
+    }
+
+    shareContent(type: string, discount: number): string {
+
+        let content: string;
+        switch (type) {
+            case "coupon":
+                content = "下单最多可享受" + ((1 - discount) * 10).toFixed(1) + "折优惠!";
+                break;
+            case "credits":
+                content = "下单即得双倍积分!";
+                break;
+            case "vipcard":
+                content = "";
+                break;
+            default:
+                break;
+        }
+        return content;
+    };
+
+    /**
+     * 
+     * @param type 
+     * @param coupon 
+     * @param product 
+     * @param platform 
+     */
+    shareUrl(type: string, coupon: string, product: any, platform: string): string {
+        let url = `${setting.carturl}?type=${type}&${type}=${coupon}&sales=${nav.user.id}`;
+        switch (type) {
+            case "coupon":
+                if (product)
+                    url = url + "&productids=" + product;
+                break;
+            case "credits":
+                url = url + "&platform=" + platform;
+                if (product)
+                    url = url + "&productids=" + product;
+                break;
+            case "vipcard":
+                break;
+            default:
+                break;
+        }
+        return url;
+    };
 }
 
 export class AssistSales extends Sales {
+
     title = 'assist sales';
     logo = assistlogo;
     appName = "销售助手";
@@ -33,8 +81,8 @@ export class AssistSales extends Sales {
     couponDefaultValue = 1;
     downloadAppurl = "http://agent.jkchemical.com/download/jk-assist.apk";
     sharelogo = "https://assist.jkchemical.com/assistlogo.png";
-    achievement(salesAmont: any): JSX.Element {
 
+    achievement(salesAmont: any): JSX.Element {
         let { totalOrderCount, oneSaleVolume } = salesAmont
         return <div className="text-center text-white bg-primary py-5" style={{ borderRadius: '0  0 5rem 5rem', margin: ' 0 -2rem 0 -2rem ' }}>
             <div className="d-flex mb-2" >
@@ -54,32 +102,6 @@ export class AssistSales extends Sales {
             <div className="my-4"></div>
         </div>;
     }
-
-    shareTitle(type: string): string {
-        return type === "coupon" ? "优惠券" : "积分券";
-    };
-    shareContent(type: string, discount: number): string {
-        if (type === "coupon") {
-            return "最多可享受" + ((1 - discount) * 10).toFixed(1) + "折";
-        } else {
-            return "可获得积分";
-        }
-    };
-    shareUrl(type: string, coupon: string, product: any, platform: string): string {
-        if (type === "coupon") {
-            if (product) {
-                return setting.carturl + "?type=" + type + "&" + type + "=" + coupon + "&sales=" + nav.user.id + "&productids=" + product;
-            } else {
-                return setting.carturl + "?type=" + type + "&" + type + "=" + coupon + "&sales=" + nav.user.id;
-            }
-        } else {
-            if (product) {
-                return setting.carturl + "?type=" + type + "&" + type + "=" + coupon + "&sales=" + nav.user.id + "&productids=" + product + "&platform=" + platform;
-            } else {
-                return setting.carturl + "?type=" + type + "&" + type + "=" + coupon + "&sales=" + nav.user.id + "&platform=" + platform;
-            }
-        }
-    };
 };
 
 export class AgentSales extends Sales {
@@ -126,32 +148,4 @@ export class AgentSales extends Sales {
             <div className="my-4"></div>
         </div>;
     }
-
-    shareTitle(type: string): string {
-        return type === "coupon" ? "折扣券" : "积分券";
-    };
-
-    shareContent(type: string, discount: number): string {
-        if (type === "coupon") {
-            return "最多可享受" + ((1 - discount) * 10).toFixed(1) + "折";
-        } else {
-            return "可获得积分";
-        }
-    };
-
-    shareUrl(type: string, coupon: string, product: any, platform: string): string {
-        if (type === "coupon") {
-            if (product) {
-                return setting.carturl + "?type=" + type + "&" + type + "=" + coupon + "&sales=" + nav.user.id + "&productids=" + product;
-            } else {
-                return setting.carturl + "?type=" + type + "&" + type + "=" + coupon + "&sales=" + nav.user.id;
-            }
-        } else {
-            if (product) {
-                return setting.carturl + "?type=" + type + "&" + type + "=" + coupon + "&sales=" + nav.user.id + "&productids=" + product + "&platform=" + platform;
-            } else {
-                return setting.carturl + "?type=" + type + "&" + type + "=" + coupon + "&sales=" + nav.user.id + "&platform=" + platform;
-            }
-        }
-    };
 };

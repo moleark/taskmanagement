@@ -9,6 +9,7 @@ import { CTeam } from "./team/CTeam";
 import { CMessage } from "./message/CMessage";
 import { CCustomerUnit } from "./customerunit/CCustomerUnit";
 import { CCoupon } from "./coupon/CCoupon";
+import { CVIPCardType } from "./vipCardType/CVIPCardType";
 import { CInnerCustomer } from "./innercustomer/CInnerCustomer";
 
 import { UQs } from "./uqs";
@@ -49,6 +50,8 @@ export class CApp extends CAppBase {
     cWebUser: CInnerCustomer;
     cBalance: CBalance;
     cPost: CPost;
+
+    cVIPCardType: CVIPCardType;
 
     private userCache: UserCache<any>;
 
@@ -95,6 +98,7 @@ export class CApp extends CAppBase {
         this.cWebUser = this.newC(CInnerCustomer);
         this.cBalance = this.newC(CBalance);
         this.cPost = this.newC(CPost);
+        this.cVIPCardType = this.newC(CVIPCardType);
 
         /** 启动销售任务列表*/
         //this.cSalesTask.start();

@@ -10,8 +10,8 @@ export class VNewCustomerList extends VPage<CCustomer> {
         this.openPage(this.page);
     }
     private renderNewCustomer = (model: any, index: number) => {
-        let { showNewMyCustomerDetil } = this.controller;
-        let onClik = () => showNewMyCustomerDetil(model);
+        let { showNewMyCustomerDetail } = this.controller;
+        let onClik = () => showNewMyCustomerDetail(model);
         let { customer } = model;
         let left: any = <div>{tv(customer, v => v.name)}</div>;
         return <LMR className="pl-2 pr-3 py-1" left={<UserIcon className="mt-1 mx-2 w-2c h-2c" id={47} style={{ borderRadius: '8px' }} />} onClick={onClik}>

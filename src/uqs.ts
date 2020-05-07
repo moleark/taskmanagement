@@ -44,6 +44,8 @@ export interface UqWebUser {
     webUserSetting: Map;
     WebUserCustomer: Map;
     WebUserContacts: Map;
+
+
 }
 
 export interface UqCustomer {
@@ -139,6 +141,8 @@ export interface UqSalesTask {
     SearchTeamAchievement: Query;
     SearchTeamAchievementDetail: Query;
     AddCouponSendHistory: Action;
+
+    VIPCardForWebUser: Map;
 }
 
 export interface UqMember {
@@ -161,7 +165,10 @@ export interface UqWebBuilder {
     CustomerPost: Map;
     TransmitPost: Action;
     SearchClassRoomPost: Query;
+}
 
+export interface UqVIPCardType {
+    VIPCardType: Tuid;
 }
 
 export interface UQs {
@@ -176,5 +183,6 @@ export interface UQs {
     salesTask: UqSalesTask;
     member: UqMember;
     webBuilder: UqWebBuilder;
+    vipCardType: UqVIPCardType;
     hr: UqHr;
 }
