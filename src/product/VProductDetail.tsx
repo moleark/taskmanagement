@@ -75,7 +75,8 @@ export class VProductDetail extends VPage<CProduct> {
 
             if (!setting.sales.isInner) {
                 if (agentPrice) {
-                    let discount = ((1 - ((retail - price) / retail)) * 10)
+                    agentPrice = price < agentPrice ? price : agentPrice
+                    let discount = ((1 - ((retail - agentPrice) / retail)) * 10)
                     if (discount < 10) {
                         agent = <span>
                             <span className="small ml-2">
