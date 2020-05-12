@@ -9,7 +9,7 @@ export class VSet extends VPage<CMe> {
         this.openPage(this.page);
     }
 
-    private logout = () => {
+    private logouts = () => {
         nav.showLogout();
     }
 
@@ -59,7 +59,7 @@ export class VSet extends VPage<CMe> {
             '',
             {
                 type: 'component',
-                component: <div className="w-100 text-center py-3" onClick={this.logout}>
+                component: <div className="w-100 text-center py-3" onClick={this.logouts}>
                     退出
                 </div>,
             },

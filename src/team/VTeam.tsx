@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, List, LMR, tv, FA } from 'tonva';
+import { VPage, Page, List, LMR, tv, FA, User, UserView } from 'tonva';
 import { CTeam } from './CTeam';
 import { setting } from 'appConfig';
 
@@ -18,17 +18,25 @@ export class VTeam extends VPage<CTeam> {
     }
 
 
+    renderTop = (user: User): JSX.Element => {
+        let { icon, name, nick } = user;
+        return <div>{nick || name}</div>
+    }
+
     private renderItem = (teamItem: any, index: number) => {
 
         let { showPeerDetail } = this.controller;
         let onshowPeerDetail = async () => await showPeerDetail(teamItem);
         let { children, volume, assigned } = teamItem;
-        let displayName = tv(children, v => v.nick || v.name);
+
 
         return <LMR className="px-3 py-2 " onClick={onshowPeerDetail}
             left={<div> <FA className="text-info px-2" name="user" /></div >}
             right={volume && <div className="w-2c mr-3 text-right" >￥{volume}</div>}>
-            <div className="font-weight-bold ">{this.userSpan(displayName, assigned)}</div>
+            <div className="font-weight-bold ">
+                <UserView user={children} render={this.renderTop} />
+            </div>
+
         </LMR >
     }
 
