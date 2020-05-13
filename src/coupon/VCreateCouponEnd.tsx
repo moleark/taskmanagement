@@ -69,7 +69,8 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
 
 
     comeBack = () => {
-        this.closePage(2);
+        let c = setting.sales.isInner ? 1 : 2;
+        this.closePage(c);
     }
 
     copyClick = (e: any, val: any) => {
