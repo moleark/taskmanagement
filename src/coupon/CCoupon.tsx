@@ -6,6 +6,7 @@ import { VCreateCoupon } from './VCreateCoupon';
 import { VCouponDetail } from './VCouponDetail';
 import { VCreateCouponEnd } from './VCreateCouponEnd';
 import { VCreateProductCouponEnd } from './VCreateProductCouponEnd';
+import { setting } from 'appConfig';
 
 /**
  *
@@ -27,7 +28,8 @@ export class CCoupon extends CUqBase {
     //查询客户--通过名称
     searchByKey = async (key: string) => {
         this.pageCoupon = new QueryPager(this.uqs.salesTask.SearchCoupon, 15, 30);
-        this.pageCoupon.first({ key: key });
+        let types = setting.sales.isInner ? "credits" : "coupon";
+        this.pageCoupon.first({ key: key, types: types });
     }
 
     //显示添加优惠券页面
