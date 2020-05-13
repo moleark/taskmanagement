@@ -14,6 +14,8 @@ export class CCoupon extends CUqBase {
     //cApp: CApp;
     @observable pageCoupon: QueryPager<any>;
     @observable customers: any;
+    oneWeek = new Date(Date.now() + 7 * 24 * 3600 * 1000);
+    twoWeeks = new Date(Date.now() + 14 * 24 * 3600 * 1000);
 
     //初始化
     protected async internalStart() {
@@ -39,9 +41,30 @@ export class CCoupon extends CUqBase {
         this.openVPage(VCreateCoupon, param);
     }
 
+    //显示添加积分券页面
+    showCreateCredits = async (param: any) => {
+        let validitydate = this.validDateFrom(2);
+        let coupon: any = await this.createCoupon({ validitydate: validitydate, discount: 0 }, param);
+        this.showShareCoupon(coupon);
+    }
+
+    validDateFrom(v: any) {
+        let d: Date;
+        switch (v) {
+            default: return undefined;
+            case 1:
+                d = this.oneWeek;
+                break;
+            case 2:
+                d = this.twoWeeks;
+                break;
+        }
+        return `${d.getFullYear()}-${(d.getMonth() + 1)}-${d.getDate()}`;
+    }
+
+
     //添加优惠券
     createCoupon = async (data: any, param: any) => {
-
         let { validitydate, discount } = data;
         let coupon: any = {
             validitydate: validitydate,
@@ -54,7 +77,7 @@ export class CCoupon extends CUqBase {
         coupon.code = code;
         coupon.type = param.type;
         coupon.product = param.product;
-        coupon.platform = data.businesstype === "platform" ? "1" : "0";
+        coupon.platform = "1";
         return coupon;
     }
 
