@@ -6,6 +6,8 @@ import { VCreateCoupon } from './VCreateCoupon';
 import { VCouponDetail } from './VCouponDetail';
 import { VCreateCouponEnd } from './VCreateCouponEnd';
 import { VCreateProductCouponEnd } from './VCreateProductCouponEnd';
+import { VVIPCardDiscount } from './VVIPCardDiscount';
+import { VCreateVIPCardDiscount } from './VCreateVIPCardDiscount';
 
 /**
  *
@@ -15,8 +17,13 @@ export class CCoupon extends CUqBase {
     @observable pageCoupon: QueryPager<any>;
     @observable customers: any;
 
-    //初始化
-    protected async internalStart() {
+    // 创建VIPCardDiscount 
+    protected async internalStart(vipCardLevel: any) {
+        let vipCardLevelDiscountSetting = await this.uqs.vipCardType.VIPCardTypeDiscount.table({ vipCard: vipCardLevel.id });
+        this.openVPage(VCreateVIPCardDiscount, vipCardLevelDiscountSetting);
+    }
+
+    showCouponList = async () => {
         this.pageCoupon = null;
         await this.searchByKey(undefined);
         this.openVPage(VCouponList);
@@ -94,6 +101,18 @@ export class CCoupon extends CUqBase {
             customer: customer
         });
         this.closePage();
+    }
+
+    /**
+     * 
+     */
+    showVIPCardDiscount = async (vipCardId: number) => {
+        let vipCardDiscountSetting = await this.uqs.salesTask.VIPCardDiscount.table({ coupon: vipCardId });
+        this.openVPage(VVIPCardDiscount, vipCardDiscountSetting);
+    }
+
+    createVIPCardDiscountCallback = async (vipCardDiscount: any[]) => {
+        this.returnCall(vipCardDiscount);
     }
 }
 /* eslint-enable */

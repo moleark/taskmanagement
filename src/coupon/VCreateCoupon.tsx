@@ -150,7 +150,7 @@ export class VCreateCoupon extends VPage<CCoupon> {
 
     private page = observer((param: any) => {
 
-        let onshowCreateCoupon = async () => await this.controller.cApp.cCoupon.start();
+        let onshowCreateCoupon = async () => await this.controller.cApp.cCoupon.showCouponList();
         let right = <div onClick={onshowCreateCoupon} className="cursor-pointer mx-3">
             <i className="iconfont icon-qita" style={{ fontSize: "20px" }}></i>
         </div>;

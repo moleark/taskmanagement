@@ -1,36 +1,32 @@
 import * as React from 'react';
-import { View, List, LMR, FA } from 'tonva';
+import { View, List, LMR, FA, VPage, Page } from 'tonva';
 import { CVIPCardType } from './CVIPCardType';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 
-export class VVIPTypeList extends View<CVIPCardType>{
-    @observable cardTypes: any[];
+export class VVIPCardTypeList extends VPage<CVIPCardType>{
 
-    render() {
-        return <this.content />
+    private vipCardTypes: any[];
+    async open(param: any) {
+        this.vipCardTypes = param;
+        this.openPage(this.page);
     }
 
-    private async getVIPCardTypeList() {
-        if (!this.cardTypes) {
-            this.cardTypes = await this.controller.getVIPCardTypeList();
-        }
-    }
-
-    private renderCardType(cardtype: any) {
+    private renderVIPCardType(cardtype: any) {
         let { name, description } = cardtype;
-        let right = <FA name="chevron-right" className=""></FA>
-        return <LMR left={name} right={right}>
-            {description}
+        let right = <FA name="chevron-right"></FA>
+        return <LMR right={right} className="p-3">
+            {name} - {description}
         </LMR>
     }
 
-    private onCardTypeClick = async (cardType: any) => {
-        console.log(cardType);
+    private onVIPCardTypeClick = async (vipCardType: any) => {
+        this.controller.showCreateVIPCardDiscount(vipCardType);
     }
 
-    private content = observer((): JSX.Element => {
-        this.getVIPCardTypeList();
-        return <List items={this.cardTypes} item={{ render: this.renderCardType, onClick: this.onCardTypeClick }}></List>
-    })
+    private page = (): JSX.Element => {
+        return <Page header="选择VIP卡级别">
+            <List items={this.vipCardTypes} item={{ render: this.renderVIPCardType, onClick: this.onVIPCardTypeClick }} />
+        </Page>
+    }
 }

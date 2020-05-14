@@ -143,6 +143,7 @@ export interface UqSalesTask {
     AddCouponSendHistory: Action;
 
     VIPCardForWebUser: Map;
+    VIPCardDiscount: Map;
 }
 
 export interface UqMember {
@@ -169,6 +170,7 @@ export interface UqWebBuilder {
 
 export interface UqVIPCardType {
     VIPCardType: Tuid;
+    VIPCardTypeDiscount: Map;
 }
 
 export interface UQs {

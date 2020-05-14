@@ -1,7 +1,7 @@
 import * as React from "react";
 import { observable } from "mobx";
 import { observer } from "mobx-react";
-import { Context, QueryPager, nav } from "tonva";
+import { Context, QueryPager, nav, Tuid } from "tonva";
 import { CUqBase } from "../CBase";
 import { Task } from "../salestask/model";
 import { CAddress } from "../address/CAddress";
@@ -18,7 +18,6 @@ import { VCreateNewCustomer } from "./VCreateNewCustomer";
 import { VCustomerOrderDetail } from "./VCustomerOrderDetail";
 import { VNewCustomerList } from "./VNewCustomerList";
 import { VCustomerSearchByUnit } from "./VCustomerSearchByUnit";
-import { VCreateVIPCard } from "./VCreateVIPCard";
 /* eslint-disable */
 
 export class CCustomer extends CUqBase {
@@ -111,15 +110,17 @@ export class CCustomer extends CUqBase {
 
     //查询客户--通过ID
     showCustomerDetail = async (myCustomer: any) => {
+        let { uqs, user } = this;
+        let { salesTask } = uqs;
         let { id } = myCustomer;
-        let mycustomer = await this.uqs.salesTask.MyCustomer.load(id);
-        let department = await this.uqs.salesTask.SearchMyCustomerDepartment.query(
+        let mycustomer = await salesTask.MyCustomer.load(id);
+        let department = await salesTask.SearchMyCustomerDepartment.query(
             { mycustomer: id }
         );
-        let research = await this.uqs.salesTask.SearchMyCustomerResearch.query({
+        let research = await salesTask.SearchMyCustomerResearch.query({
             mycustomer: id
         });
-        let officePost = await this.uqs.salesTask.SearchMyCustomerOfficePost.query(
+        let officePost = await salesTask.SearchMyCustomerOfficePost.query(
             { mycustomer: id }
         );
         if (department.ret.length > 0)
@@ -133,15 +134,16 @@ export class CCustomer extends CUqBase {
         await this.getCustomerContent(myCustomer);
 
 
-
-        let customermap = await this.uqs.salesTask.CustomerMyCustomerMap.query({ sales: this.user.id, arr1: [{ mycustomer: myCustomer.id }] });
-        if (customermap.ret.length > 0) {
-            let { webuser, customer } = customermap.ret[0];
-            await this.checkBinding(customer);
+        let customermap = await salesTask.CustomerMyCustomerMap.obj({ sales: user.id, arr1: [{ mycustomer: myCustomer.id }] });
+        if (customermap) {
+            let { webuser, customer } = customermap;
+            await this.setIsBinded(customer);
             if (webuser) {
                 let vipCardForWebUser = await this.getVIPCard(webuser);
                 if (vipCardForWebUser) {
-                    vipCardForWebUser.drawed = await this.getVIPCardDrawing(webuser, vipCardForWebUser.coupon);
+                    let { vipCard } = vipCardForWebUser;
+                    vipCardForWebUser.vipCard = await salesTask.Coupon.load(vipCard)
+                    vipCardForWebUser.drawed = await this.getVIPCardDrawing(webuser, vipCard);
                     this.vipCardForWebUser = vipCardForWebUser;
                 }
             }
@@ -317,7 +319,7 @@ export class CCustomer extends CUqBase {
     /**
      * 查询MyCustomer是否可能被其他销售助手绑定
      */
-    checkBinding = async (customer: any) => {
+    setIsBinded = async (customer: any) => {
         let occupyResult = await this.uqs.salesTask.MyCustomerIsOccupy.obj({ customer: customer.id });
         if (occupyResult) {
             this.isBinded = occupyResult.code;
@@ -354,10 +356,27 @@ export class CCustomer extends CUqBase {
         return result ? true : false;
     }
 
-    showCreateVIPCardPage = async (customer: any) => {
-        let { cVIPCardType } = this.cApp;
-        let vipCardTypes = await cVIPCardType.getVIPCardTypeList();
-        this.openVPage(VCreateVIPCard, { customer, vipCardTypes });
+    showCreateVIPCardPage = async (webuser: any) => {
+        let { cVIPCardType, uqs } = this.cApp;
+        let newVIPCard = await cVIPCardType.call<any>();
+        let { id, cardLevel } = newVIPCard;
+        await uqs.salesTask.VIPCardForWebUser.add(
+            {
+                sales: nav.user.id, webuser: webuser, vipCard: id,
+                arr1: [{ vipCardType: cardLevel }]
+            }
+        );
+        let vipCardForWebUser = await this.getVIPCard(webuser);
+        vipCardForWebUser.drawed = false;
+        this.vipCardForWebUser = vipCardForWebUser;
+    }
+
+    /**
+     * 显示VIP卡折扣界面 
+     */
+    showVIPCardDiscount = async (vipCardId: number) => {
+        let { cCoupon } = this.cApp;
+        cCoupon.showVIPCardDiscount(vipCardId);
     }
 
     /*
@@ -366,29 +385,6 @@ export class CCustomer extends CUqBase {
         return cVIPCardType.renderVIPCardTypeList();
     }
     */
-
-    createVIPCard = async (webuser: number, vipCardType: number) => {
-        let { cCoupon } = this.cApp;
-        let now = new Date();
-        let vipCardParam: any = {
-            validitydate: `${now.getFullYear() + 1}-${now.getMonth() + 1}-${now.getDate()}`,
-            discount: 0,
-        }
-        let newVIPCard = await cCoupon.createCoupon(vipCardParam, { type: 'vipcard' });
-        await this.uqs.salesTask.VIPCardForWebUser.add(
-            {
-                sales: nav.user.id, webuser: webuser, vipCard: newVIPCard.id,
-                arr1: [{ vipCardType: vipCardType }]
-            }
-        );
-        newVIPCard.drawed = false;
-        return newVIPCard;
-    }
-
-    showSharedVIPCard = (vipCard: any) => {
-        let { cCoupon } = this.cApp;
-        cCoupon.showShareCoupon(vipCard);
-    }
 
     render = observer(() => {
         return this.renderView(VCustomerList);

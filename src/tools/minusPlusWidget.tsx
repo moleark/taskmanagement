@@ -5,26 +5,28 @@ import { observer } from 'mobx-react';
 import { UpdownWidget } from 'tonva';
 
 const keys = [107, 109, 110, 187, 189];
-/**
+
 export class MinusPlusWidget extends UpdownWidget {
     @observable protected value: any;
     @observable protected disabled: boolean;
-    @observable protected hasFocus: boolean;
+    // @observable protected hasFocus: boolean;
 
     protected isValidKey(key: number): boolean {
         if (keys.find(v => v === key) !== undefined) return false;
         return super.isValidKey(key);
     }
 
-    protected onBlur(evt: React.FocusEvent<any>) {
-        this.onBlur(evt);
+	/*
+    protected onBlur = (evt: React.FocusEvent<any>) => {
+        super.onBlur(evt);
         this.hasFocus = false;
     }
 
     protected onFocus(evt: React.FocusEvent<any>) {
-        this.onFocus(evt)
+        super.onFocus(evt);
         this.hasFocus = true;
-    }
+	}
+	*/
 
     protected onChange(evt: React.ChangeEvent<any>) {
     }
@@ -57,18 +59,18 @@ export class MinusPlusWidget extends UpdownWidget {
     private renderContent = observer((): JSX.Element => {
         let renderTemplet = this.renderTemplet();
         if (renderTemplet !== undefined) return renderTemplet;
-        let cn = {
+        let cn: any = {
             //'form-control': true,
         };
         if (this.hasError === true) {
-            (cn as any)['is-invalid'] = true;
+            cn['is-invalid'] = true;
         }
         else {
-            (cn as any)['required-item'] = this.itemSchema.required === true;
+            cn['required-item'] = this.itemSchema.required === true;
         }
         let hasFocus = this.hasFocus; // document.hasFocus() && document.activeElement === this.input;
         let hasAction = this.readOnly !== true && this.disabled !== true;
-        let hasValue = this.value !== NaN && this.value !== undefined && this.value > 0;
+        let hasValue = isNaN(this.value) === false && this.value !== undefined && this.value > 0;
         let cursorPointer: string,
             minusColor: string, minusClick: any,
             plusColor: string, plusClick: any;
@@ -83,11 +85,11 @@ export class MinusPlusWidget extends UpdownWidget {
             plusColor = 'text-danger';
         }
         let minus = <i className={classNames('fa',
-            'fa-minus-circle', 'fa-lg', minusColor, cursorPointer,
-            { invisible: !(hasFocus === true || hasAction === true && hasValue === true) })}
+            'fa-minus-circle', 'fa-lg mr-1', minusColor, cursorPointer,
+            { invisible: !(hasFocus === true || (hasAction === true && hasValue === true)) })}
             onClick={minusClick} />;
         let input = <input ref={this.ref}
-            className={classNames(this.className, cn, 'mx-1 w-4c form-control',
+            className={classNames(this.className, cn, 'w-3c form-control',
                 { invisible: !(hasFocus === true || hasValue === true) })}
             type="text"
             defaultValue={this.value}
@@ -100,11 +102,14 @@ export class MinusPlusWidget extends UpdownWidget {
             onBlur={(evt: React.FocusEvent<any>) => this.onBlur(evt)}
             maxLength={10} />;
 
-        let plus = <i className={classNames('fa fa-plus-circle fa-lg',
+        let plus = <i className={classNames('fa fa-plus-circle fa-lg ml-1',
             plusColor, cursorPointer,
             { invisible: !(hasAction === true) })}
             onClick={plusClick} />;
-        return <div className="d-flex align-items-center">{minus}{input}{plus}
+        let append = <div className="input-group-append">
+            <span className="input-group-text px-1">%</span>
+        </div>
+        return <div className="d-flex align-items-center">{minus}{input}{append}{plus}
             {this.renderErrors()}
         </div>;
     });
@@ -113,4 +118,3 @@ export class MinusPlusWidget extends UpdownWidget {
         return <this.renderContent />;
     }
 }
-**/

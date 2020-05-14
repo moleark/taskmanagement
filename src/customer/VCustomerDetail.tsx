@@ -150,7 +150,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
             name: name,
             component: (
                 <LMR
-                    className="cursor-pointer w-100 py-2"
+                    className="w-100 py-2"
                     left={<div>{showName}</div>}
                     right={<div className="text-right">{value}</div>}
                 ></LMR>
@@ -199,7 +199,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
             rows.push(this.geneCustomerPropertyComponent("research", "职位", <>{tv(officePost.officePost, v => v.name)}</>));
         rows.push(this.geneCustomerPropertyComponent("bingding", "绑定状态", (this.controller.isBinded === 1 ? "已绑定" : "未绑定")));
 
-        let { showCustomerEdit, cApp, activetasks, customerorders, pagePost, vipCardForWebUser, showCreateVIPCardPage, isBinded } = this.controller;
+        let { showCustomerEdit, cApp, activetasks, customerorders, pagePost, vipCardForWebUser, showCreateVIPCardPage, showVIPCardDiscount, isBinded } = this.controller;
         let { name: customerName, user: webuser } = this.customer;
         let header: any = <span>{customerName}</span>;
         let editCustomerButton = (
@@ -222,27 +222,29 @@ export class VCustomerDetail extends VPage<CCustomer> {
                     if (!vipCardForWebUser) {
                         vipCardContent = <span className="small text-muted">
                             该客户无VIP卡，你可以
-                        <span className="text-primary cursor-pointer" onClick={() => showCreateVIPCardPage(this.customer)}>去发卡</span>
+                        <span className="text-primary cursor-pointer" onClick={() => showCreateVIPCardPage(webuser)}>去发卡</span>
                         </span>;
                     } else {
                         let { vipCard, drawed, vipCardType } = vipCardForWebUser;
+                        let { id: vipCardId, code, validitydate } = vipCard;
                         let drawedUI = drawed ?
-                            <><i className="fa fa-check-cicle" style={{ color: "green" }}></i> 已领取</> :
-                            <><i className="fa fa-exclamation-triangle"></i> 未领取</>;
-                        vipCardContent = <>
-                            <div>{tv(vipCard, v => v.code)}</div>
-                            <div className="d-flex justify-content-between">
-                                <div>{tv(vipCardType, v => { return <>{v.name} - {v.description}</> })}</div>
-                                <div>{drawedUI}</div>
+                            <small><i className="fa fa-check-cicle" style={{ color: "green" }}></i> 已领取</small> :
+                            <small><i className="fa fa-exclamation-triangle" style={{ color: 'red' }}></i> 未领取</small>;
+                        vipCardContent = <div className="cursor-point" onClick={() => showVIPCardDiscount(vipCardId)}>
+                            <FA name="th-large" className="mr-1 text-warning" />{code}
+                            <small className="ml-3">有效期：<EasyDate date={validitydate} /></small>
+                            <div className="d-flex mt-1">
+                                <div>{tv(vipCardType, v => { return <>{v.name} <span className="small text-muted mr-3">{v.description}</span></> })}</div>
+                                {drawedUI}
                             </div>
-                        </>
+                        </div>
                     }
                 }
-                vipCardUI = <div className="container-fluid bg-white mt-3">
-                    <div className="row align-items-center py-3">
-                        <div className="col-4">VIP卡</div>
-                        <div className="col-8">{vipCardContent}</div>
-                    </div>
+
+                vipCardUI = <div className="bg-white p-3 mt-3">
+                    <LMR left="VIP卡"
+                        right={vipCardContent}>
+                    </LMR>
                 </div>
             }
         }
