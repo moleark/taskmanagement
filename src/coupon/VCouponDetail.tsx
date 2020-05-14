@@ -13,11 +13,8 @@ export class VCouponDetail extends VPage<CCoupon> {
         this.openPage(this.page);
     }
 
-    private oninvalidCoupon = async () => await this.controller.invalidCoupon(this.coupon);
-
     private page = observer(() => {
         let { code, validitydate, discount, isValid, customer } = this.coupon;
-
         var inviteCode: string = "";
         if (code) {
             let p1 = code.substr(0, 4);
@@ -80,7 +77,13 @@ export class VCouponDetail extends VPage<CCoupon> {
                 </LMR >
             } as ComponentProp,
         );
-        let footer = <button onClick={this.oninvalidCoupon} type="submit" className="btn btn-danger flex-grow-1 mx-3 my-1">作废</button>;
+
+        let { invalidCoupon, showShareCoupon } = this.controller;
+
+        let footer = <div>
+            <button onClick={() => invalidCoupon(this.coupon)} type="submit" className="btn btn-danger flex-grow-1 mx-3 my-1">作废</button>
+            <button onClick={() => showShareCoupon({ code: this.coupon.code, type: this.coupon.types, product: undefined })} type="submit" className="btn btn-primary mx-1 my-1 px-3">分享</button>
+        </div>;
         return <Page header="优惠券详情" headerClassName={setting.pageHeaderCss} footer={footer}>
             <PropGrid className="my-2" rows={rows} values={this.coupon} alignValue="right" />
         </Page>

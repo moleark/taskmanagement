@@ -235,7 +235,7 @@ export class VMe extends VPage<CMe> {
             </small>
         </div>;
 
-        let vassist = <div className="col text-center" onClick={() => cCoupon.showCreateCoupon({ type: "credits", product: undefined })} >
+        let vassist = <div className="col text-center" onClick={() => cCoupon.showCreateCredits({ type: "credits", product: undefined })} >
             <div>
                 <i className="iconfont icon-youhuiquantuangou" style={{ fontSize: "25px", color: "#f6ad15" }} ></i>
             </div>
@@ -244,7 +244,23 @@ export class VMe extends VPage<CMe> {
             </small>
         </div>;
 
+
+        let agnetclassroom = <div className="col text-center" onClick={showClassRoom} >
+            <div>
+                <i className="iconfont icon-xuexi" style={{ fontSize: "25px", color: "#2aa515" }}></i>
+            </div>
+            <small>
+                <small>空中课堂</small>
+            </small>
+        </div>;
+
+        let assistclassroom = <div className="col text-center" onClick={showClassRoom} >
+
+        </div>
+
         let vsp = setting.sales.isInner ? vassist : vcoupon
+
+        let room = setting.sales.isInner ? assistclassroom : agnetclassroom
 
         return (
             <>
@@ -272,14 +288,7 @@ export class VMe extends VPage<CMe> {
                     </div>
                 </div>
                 <div className="row p-2 cursor-pointer mt-3">
-                    <div className="col text-center" onClick={showClassRoom} >
-                        <div>
-                            <i className="iconfont icon-xuexi" style={{ fontSize: "25px", color: "#2aa515" }}></i>
-                        </div>
-                        <small>
-                            <small>空中课堂</small>
-                        </small>
-                    </div>
+                    {room}
                     <div className="col text-center"  >
                     </div>
                     <div className="col text-center"  >

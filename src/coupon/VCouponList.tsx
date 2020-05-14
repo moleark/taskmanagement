@@ -35,6 +35,11 @@ export class VCouponList extends VPage<CCoupon> {
             bcenter = <div className="text-muted"><small>优惠：<span className="mx-3">￥{preferential}</span></small></div>;
         }
 
+        let nowValue = Date.now();
+        let endValue = new Date(validitydate).valueOf();
+
+        isValid = (nowValue < endValue && isValid === 1) ? true : false;
+
         return <LMR className="px-3 py-2" onClick={onshowCouponDetail}>
             <LMR left={aleft} right={aright}></LMR>
             <LMR left={bleft} right={<small className="text-muted">{isValid ? '有效' : '无效'}</small>}>

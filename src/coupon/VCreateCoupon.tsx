@@ -83,9 +83,6 @@ class Discount extends Widget {
     };
 }
 
-const oneWeek = new Date(Date.now() + 7 * 24 * 3600 * 1000);
-const twoWeeks = new Date(Date.now() + 14 * 24 * 3600 * 1000);
-
 export class VCreateCoupon extends VPage<CCoupon> {
 
     @observable showTip: boolean = false;
@@ -127,26 +124,14 @@ export class VCreateCoupon extends VPage<CCoupon> {
         }
 
         this.showTip = false;
-        data.validitydate = this.validDateFrom(2);
+        data.validitydate = this.controller.validDateFrom(2);
         data.discount = _.round(1 - disc * 0.1, 2);
         let { createCoupon, showShareCoupon } = this.controller;
         let coupon: any = await createCoupon(data, this.Coupon);
         showShareCoupon(coupon);
     }
 
-    private validDateFrom(v: any) {
-        let d: Date;
-        switch (v) {
-            default: return undefined;
-            case 1:
-                d = oneWeek;
-                break;
-            case 2:
-                d = twoWeeks;
-                break;
-        }
-        return `${d.getFullYear()}-${(d.getMonth() + 1)}-${d.getDate()}`;
-    }
+
 
     private page = observer((param: any) => {
 

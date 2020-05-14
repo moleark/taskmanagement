@@ -8,6 +8,7 @@ import { VCreateCouponEnd } from './VCreateCouponEnd';
 import { VCreateProductCouponEnd } from './VCreateProductCouponEnd';
 import { VVIPCardDiscount } from './VVIPCardDiscount';
 import { VCreateVIPCardDiscount } from './VCreateVIPCardDiscount';
+import { setting } from 'appConfig';
 
 /**
  *
@@ -16,6 +17,8 @@ export class CCoupon extends CUqBase {
     //cApp: CApp;
     @observable pageCoupon: QueryPager<any>;
     @observable customers: any;
+    oneWeek = new Date(Date.now() + 7 * 24 * 3600 * 1000);
+    twoWeeks = new Date(Date.now() + 14 * 24 * 3600 * 1000);
 
     // 创建VIPCardDiscount 
     protected async internalStart(vipCardLevel: any) {
@@ -32,7 +35,8 @@ export class CCoupon extends CUqBase {
     //查询客户--通过名称
     searchByKey = async (key: string) => {
         this.pageCoupon = new QueryPager(this.uqs.salesTask.SearchCoupon, 15, 30);
-        this.pageCoupon.first({ key: key });
+        let types = setting.sales.isInner ? "credits" : "coupon";
+        this.pageCoupon.first({ key: key, types: types });
     }
 
     //显示添加优惠券页面
@@ -46,9 +50,30 @@ export class CCoupon extends CUqBase {
         this.openVPage(VCreateCoupon, param);
     }
 
+    //显示添加积分券页面
+    showCreateCredits = async (param: any) => {
+        let validitydate = this.validDateFrom(2);
+        let coupon: any = await this.createCoupon({ validitydate: validitydate, discount: 0 }, param);
+        this.showShareCoupon(coupon);
+    }
+
+    validDateFrom(v: any) {
+        let d: Date;
+        switch (v) {
+            default: return undefined;
+            case 1:
+                d = this.oneWeek;
+                break;
+            case 2:
+                d = this.twoWeeks;
+                break;
+        }
+        return `${d.getFullYear()}-${(d.getMonth() + 1)}-${d.getDate()}`;
+    }
+
+
     //添加优惠券
     createCoupon = async (data: any, param: any) => {
-
         let { validitydate, discount } = data;
         let coupon: any = {
             validitydate: validitydate,
@@ -61,7 +86,7 @@ export class CCoupon extends CUqBase {
         coupon.code = code;
         coupon.type = param.type;
         coupon.product = param.product;
-        coupon.platform = data.businesstype === "platform" ? "1" : "0";
+        coupon.platform = "1";
         return coupon;
     }
 
