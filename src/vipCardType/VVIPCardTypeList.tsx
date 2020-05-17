@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { View, List, LMR, FA, VPage, Page } from 'tonva';
 import { CVIPCardType } from './CVIPCardType';
-import { observable } from 'mobx';
-import { observer } from 'mobx-react';
 
 export class VVIPCardTypeList extends VPage<CVIPCardType>{
 
@@ -16,7 +14,7 @@ export class VVIPCardTypeList extends VPage<CVIPCardType>{
         let { name, description } = cardtype;
         let right = <FA name="chevron-right"></FA>
         return <LMR right={right} className="p-3">
-            {name} - {description}
+            {name}
         </LMR>
     }
 
