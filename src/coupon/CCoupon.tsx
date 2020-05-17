@@ -16,14 +16,14 @@ import { setting } from 'appConfig';
 export class CCoupon extends CUqBase {
     //cApp: CApp;
     @observable pageCoupon: QueryPager<any>;
-    @observable customers: any;
+    // @observable customers: any[];
     oneWeek = new Date(Date.now() + 7 * 24 * 3600 * 1000);
     twoWeeks = new Date(Date.now() + 14 * 24 * 3600 * 1000);
 
     // 创建VIPCardDiscount 
-    protected async internalStart(vipCardLevel: any) {
-        let vipCardLevelDiscountSetting = await this.uqs.vipCardType.VIPCardTypeDiscount.table({ vipCard: vipCardLevel.id });
-        this.openVPage(VCreateVIPCardDiscount, vipCardLevelDiscountSetting);
+    protected async internalStart(param: any) {
+        // let vipCardLevelDiscountSetting = await this.uqs.vipCardType.VIPCardTypeDiscount.table({ vipCard: vipCardLevel.id });
+        this.openVPage(VCreateVIPCardDiscount, param);
     }
 
     showCouponList = async () => {
@@ -74,8 +74,9 @@ export class CCoupon extends CUqBase {
 
     //添加优惠券
     createCoupon = async (data: any, param: any) => {
-        let { validitydate, discount } = data;
+        let { validitydate, discount, webUser } = data;
         let coupon: any = {
+            webUser: webUser,
             validitydate: validitydate,
             discount: discount,
             types: param.type
@@ -110,6 +111,7 @@ export class CCoupon extends CUqBase {
         await tuidCoupon.save(coupon.id, coupon);
     }
 
+    /*
     //显示客户
     showAddCouponCustomer = async (context: Context, name: string, value: number): Promise<any> => {
         let { cCustomer } = this.cApp;
@@ -127,6 +129,7 @@ export class CCoupon extends CUqBase {
         });
         this.closePage();
     }
+    */
 
     /**
      * 
@@ -136,8 +139,15 @@ export class CCoupon extends CUqBase {
         this.openVPage(VVIPCardDiscount, vipCardDiscountSetting);
     }
 
-    createVIPCardDiscountCallback = async (vipCardDiscount: any[]) => {
-        this.returnCall(vipCardDiscount);
+    createVIPCardDiscountCallback = async (webUser: any, vipCardDiscountSetting: any[]) => {
+        let now = new Date();
+        let vipCardParam: any = {
+            webUser: webUser,
+            validitydate: `${now.getFullYear() + 1}-${now.getMonth() + 1}-${now.getDate()}`,
+            discount: 0,
+        }
+        let newVIPCard = await this.createCoupon(vipCardParam, { type: 'vipcard' });
+        this.returnCall({ newVIPCard, vipCardDiscountSetting });
     }
 }
 /* eslint-enable */

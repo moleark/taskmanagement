@@ -77,7 +77,6 @@ export interface UqSalesTask {
     TaskType: Tuid;
     Organization: Tuid;
     CreateCoupon: Action;
-    AddCouponCustomer: Action;
     IsCanUseCoupon: Action;
     CreateMyCustomer: Action;
     UpateCustomerMyCustomerMap: Action;

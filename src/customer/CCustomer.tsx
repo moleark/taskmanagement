@@ -347,7 +347,7 @@ export class CCustomer extends CUqBase {
     }
 
     private getVIPCard = async (webuser: any) => {
-        let result = await this.uqs.salesTask.VIPCardForWebUser.obj({ sales: nav.user.id, webuser: webuser })
+        let result = await this.uqs.salesTask.VIPCardForWebUser.obj({ webuser: webuser })
         return result;
     }
 
@@ -356,17 +356,21 @@ export class CCustomer extends CUqBase {
         return result ? true : false;
     }
 
-    showCreateVIPCardPage = async (webuser: any) => {
+    /**
+     * 显示创建VIP卡界面的第一步——选择VIP卡级别
+     */
+    showCreateVIPCardPage = async (webUser: any) => {
         let { cVIPCardType, uqs } = this.cApp;
-        let newVIPCard = await cVIPCardType.call<any>();
+        let newVIPCard = await cVIPCardType.call<any>(webUser);
+
         let { id, cardLevel } = newVIPCard;
         await uqs.salesTask.VIPCardForWebUser.add(
             {
-                sales: nav.user.id, webuser: webuser, vipCard: id,
+                webuser: webUser, sales: nav.user.id, vipCard: id,
                 arr1: [{ vipCardType: cardLevel }]
             }
         );
-        let vipCardForWebUser = await this.getVIPCard(webuser);
+        let vipCardForWebUser = await this.getVIPCard(webUser);
         vipCardForWebUser.drawed = false;
         this.vipCardForWebUser = vipCardForWebUser;
     }

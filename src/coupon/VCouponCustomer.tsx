@@ -5,6 +5,7 @@ import { observer } from 'mobx-react';
 import { CCoupon } from './CCoupon';
 import { setting } from 'appConfig';
 
+/*
 export class VCouponCustomer extends VPage<CCoupon> {
 
     private coupon: any;
@@ -35,3 +36,4 @@ export class VCouponCustomer extends VPage<CCoupon> {
         </Page>
     })
 }
+*/

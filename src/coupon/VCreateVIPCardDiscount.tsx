@@ -25,9 +25,16 @@ const eachSchema: ItemSchema[] = [
 export class VCreateVIPCardDiscount extends VPage<CCoupon> {
 
     private vipCardDiscountSetting: any[];
+    private vipCardLevelDiscountSetting: any[];
+    private webUser: any;
     async open(param: any) {
-        param.forEach(v => v.discount = 100 - v.discount * 100);
-        this.vipCardDiscountSetting = param.sort((a: any, b: any) => { return a.brand.name > b.brand.name ? 0 : 1 });
+        let { webUser, vipCardLevelDiscountSetting } = param;
+        this.webUser = webUser;
+        this.vipCardLevelDiscountSetting = vipCardLevelDiscountSetting;
+
+        this.vipCardDiscountSetting = vipCardLevelDiscountSetting;
+        this.vipCardDiscountSetting.forEach(v => v.discount = 100 - v.discount * 100);
+        this.vipCardDiscountSetting.sort((a: any, b: any) => { return a.brand.name > b.brand.name ? 0 : 1 });
 
         this.openPage(this.page);
     }
@@ -79,7 +86,7 @@ export class VCreateVIPCardDiscount extends VPage<CCoupon> {
             v.discount = (100 - v.discount) / 100;
             return v;
         }); //.forEach(v => v.discount = (100 - v.discount) / 100);
-        await createVIPCardDiscountCallback(vipCardDiscountSettingCopy);
+        await createVIPCardDiscountCallback(this.webUser, vipCardDiscountSettingCopy);
     }
 
     private onItemChanged = async (itemSchema: ItemSchema, newValue: any, preValue: any) => {

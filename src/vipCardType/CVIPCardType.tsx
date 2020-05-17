@@ -3,8 +3,9 @@ import { VVIPCardTypeList } from './VVIPCardTypeList';
 
 export class CVIPCardType extends CUqBase {
 
-    protected async internalStart(param: any) {
-
+    private targetWebUser: any;
+    protected async internalStart(targetWebUser: any) {
+        this.targetWebUser = targetWebUser;
         let vipCardTypes = await this.getVIPCardTypeList();
         this.openVPage(VVIPCardTypeList, vipCardTypes);
     }
@@ -26,14 +27,9 @@ export class CVIPCardType extends CUqBase {
 
         let { uqs, cApp, closePage } = this;
         let { cCoupon } = cApp;
-        let vipCardDiscountSetting = await cCoupon.call<any>(vipCardLevel);
+        let vipCardLevelDiscountSetting = await uqs.vipCardType.VIPCardTypeDiscount.table({ vipCard: vipCardLevel.id });
+        let { newVIPCard, vipCardDiscountSetting } = await cCoupon.call<any>({ webUser: this.targetWebUser, vipCardLevelDiscountSetting });
 
-        let now = new Date();
-        let vipCardParam: any = {
-            validitydate: `${now.getFullYear() + 1}-${now.getMonth() + 1}-${now.getDate()}`,
-            discount: 0,
-        }
-        let newVIPCard = await cCoupon.createCoupon(vipCardParam, { type: 'vipcard' });
         newVIPCard.cardLevel = vipCardLevel;
         await uqs.salesTask.VIPCardDiscount.add({
             coupon: newVIPCard.id,
