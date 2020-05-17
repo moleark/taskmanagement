@@ -245,7 +245,7 @@ export class VMe extends VPage<CMe> {
         </div>;
 
 
-        let agnetclassroom = <div className="col text-center" onClick={showClassRoom} >
+        let agentclassroom = <div className="col text-center" onClick={showClassRoom} >
             <div>
                 <i className="iconfont icon-xuexi" style={{ fontSize: "25px", color: "#2aa515" }}></i>
             </div>
@@ -258,9 +258,9 @@ export class VMe extends VPage<CMe> {
 
         </div>
 
-        let vsp = setting.sales.isInner ? vassist : vcoupon
-
-        let room = setting.sales.isInner ? assistclassroom : agnetclassroom
+        // let vsp = setting.sales.isInner ? vassist : vcoupon
+        let vsp = setting.sales.isInner ? vassist : null;
+        let room = setting.sales.isInner ? assistclassroom : agentclassroom;
 
         return (
             <>
@@ -269,6 +269,7 @@ export class VMe extends VPage<CMe> {
                     <strong>我的服务</strong>
                 </div>
                 <div className="row p-2 cursor-pointer">
+                    {vcoupon}
                     {vsp}
                     <div className="col text-center" onClick={onShowMyTasksCompleted}  >
                         <div>

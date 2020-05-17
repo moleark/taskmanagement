@@ -78,7 +78,7 @@ export class AssistSales extends Sales {
     appName = "销售助手";
     isInner = true;
 
-    couponDefaultValue = 1;
+    couponDefaultValue = 9.5;
     downloadAppurl = "http://agent.jkchemical.com/download/jk-assist.apk";
     sharelogo = "https://assist.jkchemical.com/assistlogo.png";
 
