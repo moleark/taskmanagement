@@ -148,6 +148,7 @@ export class CCoupon extends CUqBase {
         }
         let newVIPCard = await this.createCoupon(vipCardParam, { type: 'vipcard' });
         this.returnCall({ newVIPCard, vipCardDiscountSetting });
+        this.closePage();
     }
 }
 /* eslint-enable */

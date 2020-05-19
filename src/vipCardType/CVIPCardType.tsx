@@ -1,13 +1,36 @@
 import { CUqBase } from "../CBase";
 import { VVIPCardTypeList } from './VVIPCardTypeList';
+import { Tuid } from "tonva";
 
 export class CVIPCardType extends CUqBase {
 
     private targetWebUser: any;
+    targetWebUserVIPLevel: any;
     protected async internalStart(targetWebUser: any) {
         this.targetWebUser = targetWebUser;
+
+        let { uqs } = this;
+        let { webuser, customer, vipCardType } = uqs;
+        this.targetWebUserVIPLevel = await vipCardType.VIPCardType.load(1);
+        let wcMap: any = await webuser.WebUserCustomer.obj({ webUser: targetWebUser });
+        if (wcMap) {
+            let { customer: customerTuid } = wcMap;
+            let coMap: any = await customer.getCustomerOrganization.obj({ customerId: customerTuid });
+            let organization = coMap && coMap.organization;
+            if (organization) {
+                let olMap: any = await vipCardType.OrganizationVIPLevel.obj({ organization: organization });
+                if (olMap) {
+                    let { vipCardLevel } = olMap;
+                    this.targetWebUserVIPLevel = vipCardLevel;
+                }
+            }
+        }
+
         let vipCardTypes = await this.getVIPCardTypeList();
         this.openVPage(VVIPCardTypeList, vipCardTypes);
+        if (this.targetWebUserVIPLevel.id === 1) {
+            this.showCreateVIPCardDiscount(this.targetWebUserVIPLevel);
+        }
     }
 
     getVIPCardTypeList = async () => {
@@ -37,7 +60,7 @@ export class CVIPCardType extends CUqBase {
         });
         this.returnCall(newVIPCard);
         // 跳转到分享界面
-        closePage(2);
+        closePage();
         cCoupon.showShareCoupon(newVIPCard);
     }
 }

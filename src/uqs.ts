@@ -54,6 +54,7 @@ export interface UqCustomer {
     CustomerSetting: Map;
     SearchWebUser: Query;
     getCustomerByKey: Query;
+    getCustomerOrganization: Query;
 }
 
 export interface UqCustomerDiscount {
@@ -170,6 +171,7 @@ export interface UqWebBuilder {
 export interface UqVIPCardType {
     VIPCardType: Tuid;
     VIPCardTypeDiscount: Map;
+    OrganizationVIPLevel: Map;
 }
 
 export interface UQs {

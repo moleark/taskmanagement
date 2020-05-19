@@ -10,8 +10,11 @@ export class VVIPCardTypeList extends VPage<CVIPCardType>{
         this.openPage(this.page);
     }
 
-    private renderVIPCardType(cardtype: any) {
-        let { name, description } = cardtype;
+    private renderVIPCardType = (cardtype: any) => {
+        let { targetWebUserVIPLevel } = this.controller;
+        let { id, name, description } = cardtype;
+        if (id > targetWebUserVIPLevel.id)
+            return <></>;
         let right = <FA name="chevron-right"></FA>
         return <LMR right={right} className="p-3">
             {name}

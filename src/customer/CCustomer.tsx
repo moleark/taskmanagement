@@ -108,21 +108,16 @@ export class CCustomer extends CUqBase {
         await this.searchNewMyCustomer();
     };
 
-    //查询客户--通过ID
+    // 查询客户--通过ID
     showCustomerDetail = async (myCustomer: any) => {
         let { uqs, user } = this;
         let { salesTask } = uqs;
+        let { MyCustomer, SearchMyCustomerDepartment, SearchMyCustomerResearch, SearchMyCustomerOfficePost, CustomerMyCustomerMap, Coupon } = salesTask;
         let { id } = myCustomer;
-        let mycustomer = await salesTask.MyCustomer.load(id);
-        let department = await salesTask.SearchMyCustomerDepartment.query(
-            { mycustomer: id }
-        );
-        let research = await salesTask.SearchMyCustomerResearch.query({
-            mycustomer: id
-        });
-        let officePost = await salesTask.SearchMyCustomerOfficePost.query(
-            { mycustomer: id }
-        );
+        let mycustomer = await MyCustomer.load(id);
+        let department = await SearchMyCustomerDepartment.query({ mycustomer: id });
+        let research = await SearchMyCustomerResearch.query({ mycustomer: id });
+        let officePost = await SearchMyCustomerOfficePost.query({ mycustomer: id });
         if (department.ret.length > 0)
             mycustomer.department = department.ret[0];
         if (research.ret.length > 0) mycustomer.research = research.ret[0];
@@ -134,7 +129,7 @@ export class CCustomer extends CUqBase {
         await this.getCustomerContent(myCustomer);
 
 
-        let customermap = await salesTask.CustomerMyCustomerMap.obj({ sales: user.id, arr1: [{ mycustomer: myCustomer.id }] });
+        let customermap = await CustomerMyCustomerMap.obj({ sales: user.id, arr1: [{ mycustomer: id }] });
         if (customermap) {
             let { webuser, customer } = customermap;
             await this.setIsBinded(customer);
@@ -142,9 +137,11 @@ export class CCustomer extends CUqBase {
                 let vipCardForWebUser = await this.getVIPCard(webuser);
                 if (vipCardForWebUser) {
                     let { vipCard } = vipCardForWebUser;
-                    vipCardForWebUser.vipCard = await salesTask.Coupon.load(vipCard)
+                    vipCardForWebUser.vipCard = await Coupon.load(vipCard)
                     vipCardForWebUser.drawed = await this.getVIPCardDrawing(webuser, vipCard);
                     this.vipCardForWebUser = vipCardForWebUser;
+                } else {
+                    this.vipCardForWebUser = undefined;
                 }
             }
         }
@@ -246,9 +243,9 @@ export class CCustomer extends CUqBase {
     };
 
     //新建客户
-    createMyCustomer = async (param: any, customerunit: any) => {
+    createMyCustomer = async (param: any, organization: any) => {
         let par = {
-            unit: customerunit.id,
+            unit: organization.id,
             no: undefined as any,
             name: param.name,
             firstName: "",
@@ -283,11 +280,11 @@ export class CCustomer extends CUqBase {
 
     createNewCustomer = async (
         model: any,
-        customerunit: any,
+        organization: any,
         newcustomer: number
     ) => {
         let par = {
-            unit: customerunit.id,
+            unit: organization.id,
             no: undefined as any,
             name: model.name,
             firstName: "",
@@ -309,7 +306,7 @@ export class CCustomer extends CUqBase {
     };
 
     /**
-     * 打开客户详细信息显示界面
+     * 在客户详细信息界面打开客户的订单列表
      */
     showCustomerOrderDetail = async (param: any) => {
         let model = await this.uqs.order.Order.getSheet(param);
