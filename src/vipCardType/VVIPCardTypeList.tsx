@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, List, LMR, FA, VPage, Page } from 'tonva';
+import { List, LMR, FA, VPage, Page } from 'tonva';
 import { CVIPCardType } from './CVIPCardType';
 
 export class VVIPCardTypeList extends VPage<CVIPCardType>{
@@ -12,7 +12,7 @@ export class VVIPCardTypeList extends VPage<CVIPCardType>{
 
     private renderVIPCardType = (cardtype: any) => {
         let { targetWebUserVIPLevel } = this.controller;
-        let { id, name, description } = cardtype;
+        let { id, name } = cardtype;
         if (id > targetWebUserVIPLevel.id)
             return <></>;
         let right = <FA name="chevron-right"></FA>

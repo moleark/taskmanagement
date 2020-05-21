@@ -1,6 +1,5 @@
 import { CUqBase } from "../CBase";
 import { VVIPCardTypeList } from './VVIPCardTypeList';
-import { Tuid } from "tonva";
 
 export class CVIPCardType extends CUqBase {
 

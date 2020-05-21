@@ -1,7 +1,7 @@
 import * as React from "react";
 import { observable } from "mobx";
 import { observer } from "mobx-react";
-import { Context, QueryPager, nav, Tuid } from "tonva";
+import { Context, QueryPager, nav } from "tonva";
 import { CUqBase } from "../CBase";
 import { Task } from "../salestask/model";
 import { CAddress } from "../address/CAddress";
@@ -126,7 +126,7 @@ export class CCustomer extends CUqBase {
 
         await this.getActiveTasks(myCustomer);
         await this.getCustomerOrder(myCustomer);
-        await this.getCustomerContent(myCustomer);
+        await this.getCustomerContent(mycustomer.research ? mycustomer.research.id : 0);
 
 
         let customermap = await CustomerMyCustomerMap.obj({ sales: user.id, arr1: [{ mycustomer: id }] });
@@ -168,13 +168,9 @@ export class CCustomer extends CUqBase {
     };
 
     // 获取客户相关Post
-    getCustomerContent = async (customer: any) => {
-        this.pagePost = new QueryPager(
-            this.uqs.webBuilder.SearchPostPublish,
-            5,
-            5
-        );
-        this.pagePost.first({ key: "" });
+    getCustomerContent = async (domain: any) => {
+        this.pagePost = new QueryPager(this.uqs.webBuilder.SearchPostPublish, 5, 5);
+        this.pagePost.first({ key: "", domain: domain });
     };
 
     /**

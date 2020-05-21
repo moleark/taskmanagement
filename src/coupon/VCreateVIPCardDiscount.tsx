@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {
-    VPage, Page, ItemSchema, UiSchema, Form, Context, ArrSchema, ObjectSchema, ButtonSchema,
-    NumSchema, UiArr, tv, FormField, Edit, UiRange, UiButton, Tuid, FA
+    VPage, Page, ItemSchema, UiSchema, Form, Context, ArrSchema, ObjectSchema,
+    NumSchema, UiArr, tv, FormField, Edit, UiRange, Tuid, FA
 } from 'tonva';
 import { CCoupon } from './CCoupon';
 import { MinusPlusWidget } from '../tools/minusPlusWidget';
-import { observable, reaction } from 'mobx';
+import { observable } from 'mobx';
 import { GLOABLE } from 'ui';
 import { observer } from 'mobx-react';
 
@@ -47,7 +47,7 @@ export class VCreateVIPCardDiscount extends VPage<CCoupon> {
     }
 
     private renderBrandDiscount = (item: any) => {
-        let { brand, discount } = item;
+        let { brand } = item;
         return <div>
             <div className="row">
                 <div className="col-7">
@@ -117,7 +117,7 @@ export class VCreateVIPCardDiscount extends VPage<CCoupon> {
     })
 
     private onItemChanged = async (itemSchema: ItemSchema, newValue: any, preValue: any) => {
-        let { name } = itemSchema;
+        //let { name } = itemSchema;
         // this.vipCardDiscountSetting.list[name] = newValue;
     }
 
