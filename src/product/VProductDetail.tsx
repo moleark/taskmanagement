@@ -75,12 +75,13 @@ export class VProductDetail extends VPage<CProduct> {
 
             if (!setting.sales.isInner) {
                 if (agentPrice) {
-                    agentPrice = price < agentPrice ? price : agentPrice
-                    let discount = ((1 - ((retail - agentPrice) / retail)) * 10)
+                    let newagentPrice = price < agentPrice ? price : agentPrice
+                    let discount = ((1 - ((retail - newagentPrice) / retail)) * 10)
                     if (discount < 10) {
+                        let reatShow = price < agentPrice ? <span className="small text-danger">促销产品无收益</span> : <span className="small">{discount.toFixed(1)}折</span>;
                         agent = <span>
                             <span className="small ml-2">
-                                <strong className="small"><span className="small">{discount.toFixed(1)}折</span></strong>
+                                <strong className="small">{reatShow}</strong>
                             </span>
                         </span>;
                     } else {
@@ -91,12 +92,12 @@ export class VProductDetail extends VPage<CProduct> {
                 }
             }
 
-            right = <div className="row">
+            right = <div className="">
                 <div className="col-sm-6 pb-2 d-flex justify-content-end align-items-center">
                     <small className="text-muted">{retailUI}</small>&nbsp; &nbsp;
                     <span className="text-danger">¥ <span className="h5 pb-2">{price}</span></span>
-                    <span> <span className="h5">{agent}</span></span>
                 </div>
+                <div className="col-sm-6 pb-2 d-flex justify-content-end align-items-center"> <span className="h5">{agent}</span></div>
             </div>;
         } else {
             right = <small>请询价</small>
