@@ -94,24 +94,21 @@ export class LoaderProductChemicalWithPrices extends Loader<MainSubs<MainProduct
     }
 
     protected async loadToData(productId: any, data: MainSubs<MainProductChemical, ProductPackRow>): Promise<void> {
-        let uqProduct = this.cApp.uqs.product;
-        let { product, promotion } = this.cApp.uqs;
-        let productLoader = new LoaderProductWithChemical(this.cApp);
+        // let uqProduct = this.cApp.uqs.product;
+        let { cApp } = this;
+        let { product, promotion, salesTask } = cApp.uqs;
+        let productLoader = new LoaderProductWithChemical(cApp);
         data.main = await productLoader.load(productId);
 
-        let discount = 0;
-        let { currentSalesRegion, currentLanguage } = this.cApp;
-
+        // let discount = 0;
+        let { currentSalesRegion, currentLanguage } = cApp;
 
         let { id: currentSalesRegionId } = currentSalesRegion;
         let prices = await product.PriceX.table({ product: productId, salesRegion: currentSalesRegionId });
-        let agentprices = await uqProduct.AgentPrice.table({ product: productId, salesRegion: GLOABLE.SALESREGION_CN });
         data.subs = prices.filter(e => e.discountinued === 0 && e.expireDate > Date.now()).sort((a, b) => a.retail - b.retail).map(element => {
             let ret: any = {};
             ret.pack = element.pack;
             ret.retail = element.retail;
-            if (discount !== 0)
-                ret.vipPrice = Math.round(element.retail * (1 - discount));
             ret.currency = currentSalesRegion.currency;
             return ret;
         });
@@ -122,6 +119,11 @@ export class LoaderProductChemicalWithPrices extends Loader<MainSubs<MainProduct
         })
         let results = await Promise.all(promises);
 
+        // let agentprices = await product.AgentPrice.table({ product: productId, salesRegion: GLOABLE.SALESREGION_CN });
+        let bottomDiscountMap: any = await salesTask.BottomDiscount.obj({ brand: data.main.brand, salesRegion: currentSalesRegion });
+        let bottomDiscount = 0;
+        if (bottomDiscountMap && bottomDiscountMap.discount)
+            bottomDiscount = bottomDiscountMap.discount;
         for (let i = 0; i < data.subs.length; i++) {
             let promotion = results[i];
             let discount = promotion && promotion.discount;
@@ -129,6 +131,8 @@ export class LoaderProductChemicalWithPrices extends Loader<MainSubs<MainProduct
             if (discount)
                 data.subs[i].promotionPrice = Math.round((1 - discount) * data.subs[i].retail);
 
+            data.subs[i].agentPrice = data.subs[i].retail * (1 - bottomDiscount);
+            /*
             for (let j = 0; j < agentprices.length; j++) {
                 let pid = agentprices[j].pack.id;
                 let pidx = data.subs[i].pack.id;
@@ -136,10 +140,11 @@ export class LoaderProductChemicalWithPrices extends Loader<MainSubs<MainProduct
                     data.subs[i].agentPrice = agentprices[j].agentPrice;
                 }
             }
+            */
         }
     }
 
-    getagentPrices = async (agents: any[], pack: any) => {
+    getAgentPrices = async (agents: any[], pack: any) => {
         for (let i = 0; i < agents.length; i++) {
             let { pack: packid, agentprice } = agents[i];
             if (packid === pack) {

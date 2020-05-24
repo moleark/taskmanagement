@@ -144,6 +144,8 @@ export interface UqSalesTask {
 
     VIPCardForWebUser: Map;
     VIPCardDiscount: Map;
+
+    BottomDiscount: Map;
 }
 
 export interface UqMember {

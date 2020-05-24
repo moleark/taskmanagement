@@ -58,39 +58,35 @@ export class VProductDetail extends VPage<CProduct> {
 
     private arrTemplet = (item: ProductPackRow) => {
 
-        let { pack, retail, vipPrice, agentPrice, promotionPrice } = item;
+        let { pack, retail, agentPrice, promotionPrice } = item;
         let right = null;
         let agent = null;
 
         if (retail) {
-
-            let price: number = this.minPrice(vipPrice, promotionPrice);
+            let price: number = this.minPrice(promotionPrice, retail);
             let retailUI: any;
-            if (price) {
+            if (price < retail) {
                 retailUI = <small className="text-muted"><del>¥{retail}</del></small>;
             }
-            else {
-                price = retail;
-            }
 
-            if (!setting.sales.isInner) {
-                if (agentPrice) {
-                    let newagentPrice = price < agentPrice ? price : agentPrice
-                    let discount = ((1 - ((retail - newagentPrice) / retail)) * 10)
-                    if (discount < 10) {
-                        let reatShow = price < agentPrice ? <span className="small text-danger">促销产品无收益</span> : <span className="small">{discount.toFixed(1)}折</span>;
-                        agent = <span>
-                            <span className="small ml-2">
-                                <strong className="small">{reatShow}</strong>
-                            </span>
-                        </span>;
-                    } else {
-                        agent = <span className="small ml-2"> <strong className="small"><span className="small">无折扣</span></strong></span >;
-                    }
+            // if (!setting.sales.isInner) {
+            if (agentPrice) {
+                let newagentPrice = price < agentPrice ? price : agentPrice
+                let discount = ((1 - ((retail - newagentPrice) / retail)) * 10)
+                if (discount < 10) {
+                    let reatShow = price < agentPrice ? <span className="small text-danger">促销产品无收益</span> : <span className="small">{discount.toFixed(1)}折</span>;
+                    agent = <span>
+                        <span className="small ml-2">
+                            <strong className="small">{reatShow}</strong>
+                        </span>
+                    </span>;
                 } else {
-                    agent = <span className="small ml-2"> <strong className="small"><span className="small">无折扣</span></strong></span >;
+                    agent = <span className="small ml-2"> <strong className="small"><span className="small">无折扣</span></strong></span>;
                 }
+            } else {
+                agent = <span className="small ml-2"> <strong className="small"><span className="small">无折扣</span></strong></span>;
             }
+            // }
 
             right = <div className="">
                 <div className="col-sm-6 pb-2 d-flex justify-content-end align-items-center">
@@ -138,10 +134,13 @@ export class VProductDetail extends VPage<CProduct> {
     }
 
     private page = observer((product: any) => {
-
-        let { showCreateCoupon, showCreateCredits } = this.controller.cApp.cCoupon;
-        let btn = setting.sales.isInner ? <button type="button" className="btn btn-primary mx-1 my-1 px-3" onClick={() => showCreateCredits({ type: "credits", product: this.product })}>分享积分</button> :
-            <button type="button" className="btn btn-primary mx-1 my-1 px-3" onClick={() => showCreateCoupon({ type: "coupon", product: this.product })}>分享折扣</button>
+        let { cApp } = this.controller;
+        let { cCoupon, cProduct, productCart } = cApp;
+        let { showCreateCoupon, showCreateCredits } = cCoupon;
+        let btn = setting.sales.isInner ? <button type="button" className="btn btn-primary mx-1 my-1 px-3"
+            onClick={() => showCreateCredits({ type: "credits", product: this.product })}>分享积分</button> :
+            <button type="button" className="btn btn-primary mx-1 my-1 px-3"
+                onClick={() => showCreateCoupon({ type: "coupon", product: this.product })}>分享折扣</button>
 
         let footer = <div className="d-block">
             <div className="w-100  justify-content-end" >
@@ -152,8 +151,7 @@ export class VProductDetail extends VPage<CProduct> {
         let viewProduct = new ViewMainSubs<MainProductChemical, ProductPackRow>(this.renderProduct, this.renderPack);
         viewProduct.model = product;
 
-        let onshowProductBox = async () => await this.controller.cApp.cProduct.showProductBox()
-        let { productCart } = this.controller.cApp;
+        let onshowProductBox = async () => await cProduct.showProductBox()
         let pointer, badge, count;
         count = productCart.count;
         if (count > 0) {
