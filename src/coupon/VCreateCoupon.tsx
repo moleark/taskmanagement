@@ -8,7 +8,6 @@ import { GLOABLE } from 'ui';
 import { setting } from 'appConfig';
 
 const schema: Schema = [
-    /*{ name: 'validitydate', type: 'date', required: false },*/
     { name: 'discount', type: 'string', required: false },
     { name: 'businesstype', type: 'string', required: false },
     { name: 'submit', type: 'submit' },
@@ -131,11 +130,8 @@ export class VCreateCoupon extends VPage<CCoupon> {
         showShareCoupon(coupon);
     }
 
-
-
     private page = observer((param: any) => {
-
-        let onshowCreateCoupon = async () => await this.controller.cApp.cCoupon.showCouponList();
+        let onshowCreateCoupon = async () => await this.controller.cApp.cCoupon.showCouponList(this.Coupon.type);
         let right = <div onClick={onshowCreateCoupon} className="cursor-pointer mx-3">
             <i className="iconfont icon-qita" style={{ fontSize: "20px" }}></i>
         </div>;

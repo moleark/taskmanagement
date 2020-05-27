@@ -3,17 +3,8 @@ import { ProductPackRow } from './product';
 import { Loader } from '../mainSubs/loader';
 import { MainSubs, MainProductChemical, MainBrand } from '../mainSubs';
 import { LoaderProductChemical } from './productChemical';
-import { GLOABLE } from 'ui';
 
 export class LoaderBrand extends Loader<MainBrand> {
-    //private brandTuid: Tuid;
-
-    /*
-    protected initEntities() {
-        let { cUqProduct } = this.cApp;
-        this.brandTuid = cUqProduct.tuid('brand');
-    }
-    */
 
     protected async loadToData(brandId: number, data: MainBrand): Promise<void> {
         let brand = await this.cApp.uqs.product.Brand.load(brandId);

@@ -8,34 +8,28 @@ import { VCreateCouponEnd } from './VCreateCouponEnd';
 import { VCreateProductCouponEnd } from './VCreateProductCouponEnd';
 import { VVIPCardDiscount } from './VVIPCardDiscount';
 import { VCreateVIPCardDiscount } from './VCreateVIPCardDiscount';
-import { setting } from 'appConfig';
-
 /**
  *
  */
 export class CCoupon extends CUqBase {
-    //cApp: CApp;
     @observable pageCoupon: QueryPager<any>;
-    // @observable customers: any[];
     oneWeek = new Date(Date.now() + 7 * 24 * 3600 * 1000);
     twoWeeks = new Date(Date.now() + 14 * 24 * 3600 * 1000);
 
     // 创建VIPCardDiscount 
     protected async internalStart(param: any) {
-        // let vipCardLevelDiscountSetting = await this.uqs.vipCardType.VIPCardTypeDiscount.table({ vipCard: vipCardLevel.id });
         this.openVPage(VCreateVIPCardDiscount, param);
     }
 
-    showCouponList = async () => {
+    showCouponList = async (types: string) => {
         this.pageCoupon = null;
-        await this.searchByKey(undefined);
-        this.openVPage(VCouponList);
+        await this.searchByKey(undefined, types);
+        this.openVPage(VCouponList, types);
     }
 
     //查询客户--通过名称
-    searchByKey = async (key: string) => {
+    searchByKey = async (key: string, types: string) => {
         this.pageCoupon = new QueryPager(this.uqs.salesTask.SearchCoupon, 15, 30);
-        let types = setting.sales.isInner ? "credits" : "coupon";
         this.pageCoupon.first({ key: key, types: types });
     }
 

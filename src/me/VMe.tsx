@@ -197,8 +197,7 @@ export class VMe extends VPage<CMe> {
         );
 
         return (
-            <div
-                className="px-4 py-3 cursor-pointer"
+            <div className="px-4 py-3 cursor-pointer"
                 style={{
                     backgroundColor: "#f9f9f9",
                     width: "90%",
@@ -207,9 +206,7 @@ export class VMe extends VPage<CMe> {
                     boxShadow: "2px 2px 15px #333333"
                 }}
             >
-                <LMR left={left} right={right}>
-                    {contener}
-                </LMR>
+                <LMR left={left} right={right}> {contener}</LMR>
                 <this.teamSpan />
             </div>
         );
@@ -235,7 +232,7 @@ export class VMe extends VPage<CMe> {
             </small>
         </div>;
 
-        let vassist = <div className="col text-center" onClick={() => cCoupon.showCreateCredits({ type: "credits", product: undefined })} >
+        let vassist = <div className="col text-center" onClick={() => cCoupon.showCouponList("credits")} >
             <div>
                 <i className="iconfont icon-youhuiquantuangou" style={{ fontSize: "25px", color: "#f6ad15" }} ></i>
             </div>
@@ -258,7 +255,6 @@ export class VMe extends VPage<CMe> {
 
         </div>
 
-        // let vsp = setting.sales.isInner ? vassist : vcoupon
         let vsp = setting.sales.isInner ? vassist : null;
         let room = setting.sales.isInner ? assistclassroom : agentclassroom;
 
