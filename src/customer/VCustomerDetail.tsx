@@ -200,7 +200,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
         rows.push(this.geneCustomerPropertyComponent("bingding", "绑定状态", (this.controller.isBinded === 1 ? "已绑定" : "未绑定")));
 
         let { showCustomerEdit, cApp, activetasks, customerorders, pagePost, vipCardForWebUser, showCreateVIPCardPage, showVIPCardDiscount, isBinded } = this.controller;
-        let { name: customerName, user: webuser } = this.customer;
+        let { name: customerName, webuser } = this.customer;
         let header: any = <span>{customerName}</span>;
         let editCustomerButton = (
             <div className="mt-2">

@@ -132,6 +132,7 @@ export class CCustomer extends CUqBase {
         let customermap = await CustomerMyCustomerMap.obj({ sales: user, mycustomer: myCustomer });
         if (customermap) {
             let { webuser, customer } = customermap;
+            mycustomer.webuser = webuser;
             await this.setIsBinded(customer);
             if (webuser) {
                 let vipCardForWebUser = await this.getVIPCard(webuser);
