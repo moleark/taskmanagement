@@ -129,7 +129,7 @@ export class CCustomer extends CUqBase {
         await this.getCustomerContent(mycustomer.research ? mycustomer.research.id : 0);
 
 
-        let customermap = await CustomerMyCustomerMap.obj({ sales: user.id, arr1: [{ mycustomer: id }] });
+        let customermap = await CustomerMyCustomerMap.obj({ sales: user, mycustomer: myCustomer });
         if (customermap) {
             let { webuser, customer } = customermap;
             await this.setIsBinded(customer);
