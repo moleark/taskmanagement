@@ -10,12 +10,20 @@ export class VPostDetil extends VPage<CPost> {
     }
 
     private page = observer((param: any) => {
-        return (
-            <Page header="详情" headerClassName={setting.pageHeaderCss}>
-                <div className="w-100 h-100">
-                    <iframe src={"https://web.jkchemical.com/post/" + param.id} className="border-0 w-100 h-100 overflow-hidden"></iframe>
-                </div>
-            </Page>
-        );
+        return <Page header="详情" headerClassName={setting.pageHeaderCss}>
+            <iframe
+                ref={this.refIframe}
+                src={"https://web.jkchemical.com/post/" + param.id}
+                className="border-0 w-100">
+            </iframe>
+        </Page>
     });
+
+    private refIframe = (ifrm: HTMLIFrameElement) => {
+        if (!ifrm) return;
+        let article = ifrm.parentElement.parentElement;
+        let header = (article.querySelector('section.tv-page-header') as HTMLElement);
+        ifrm.style.height = (window.innerHeight - header.clientHeight) + 'px';
+        article.parentElement.style.overflowY = 'hidden';
+    }
 }

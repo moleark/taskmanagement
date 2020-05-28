@@ -13,12 +13,21 @@ export class VClassRoomDetail extends VPage<CMe> {
 
     private page = observer((param: any) => {
         let { id, caption } = param;
-        return (
-            <Page header={caption} headerClassName={setting.pageHeaderCss}>
-                <div className="w-100 h-100">
-                    <iframe src={"https://web.jkchemical.com/post/" + id} className="border-0 w-100 h-100 overflow-hidden"></iframe>
-                </div>
-            </Page>
-        );
+        return <Page header={caption} headerClassName={setting.pageHeaderCss}>
+            <iframe
+                ref={this.refIframe}
+                src={"https://web.jkchemical.com/post/" + id}
+                className="border-0 w-100">
+            </iframe>
+        </Page>
     });
+
+    private refIframe = (ifrm: HTMLIFrameElement) => {
+        if (!ifrm) return;
+        let article = ifrm.parentElement.parentElement;
+        let header = (article.querySelector('section.tv-page-header') as HTMLElement);
+        ifrm.style.height = (window.innerHeight - header.clientHeight) + 'px';
+        article.parentElement.style.overflowY = 'hidden';
+    }
 }
+
