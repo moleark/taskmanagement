@@ -29,5 +29,7 @@ export const setting = {
     //appUrlDomain: "localhost",
     pageHeaderCss: "bg-primary",
     sales: undefined as Sales,
+    SALESREGION_CN: 1,
+    CHINESE: 196,
     couponType: { "coupon": "优惠券", "credits": "积分券", "vipcard": "VIP卡" }
 };

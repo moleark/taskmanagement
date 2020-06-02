@@ -55,6 +55,7 @@ export interface UqCustomer {
     SearchWebUser: Query;
     getCustomerByKey: Query;
     getCustomerOrganization: Query;
+    SearchDomain: Query;
 }
 
 export interface UqCustomerDiscount {
@@ -168,6 +169,11 @@ export interface UqWebBuilder {
     CustomerPost: Map;
     TransmitPost: Action;
     SearchClassRoomPost: Query;
+    SearchProductCategoryPost: Query;
+    SearchSubject: Query;
+    SearchSubjectPost: Query;
+    SearchDomainPost: Query;
+    PostDomain: Map;
 }
 
 export interface UqVIPCardType {
