@@ -35,21 +35,7 @@ export class VSubjectPost extends VPage<CPost> {
     private itemRow = observer((item: any) => {
         let { user, showPostDetail, showCustomer } = this.controller;
         if (!user) return;
-        let { image, caption, $update, $create, hits, sumHits } = item;
-
-        let $c: Date = $create, $u: Date = $update;
-        let updated: boolean = false;
-        if ($c && $u) {
-            let now = Date.now(), create = $c.getTime(), update = $u.getTime();
-            if (update - create > 3600 * 1000 && now - create < 24 * 3600 * 1000) {
-                updated = true;
-            }
-            else {
-                let cYear = $c.getFullYear(), cMonth = $c.getMonth(), cDate = $c.getDate();
-                let uYear = $u.getFullYear(), uMonth = $u.getMonth(), uDate = $u.getDate();
-                updated = cYear !== uYear || cMonth !== uMonth || cDate !== uDate;
-            }
-        }
+        let { image, caption, publishdate, hits, sumHits } = item;
 
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex" >
@@ -71,8 +57,7 @@ export class VSubjectPost extends VPage<CPost> {
                         <div className="mb-2"><small onClick={() => showPostDetail(item)} >{caption}</small>  </div>
                         <div className="small d-flex justify-content-between " onClick={() => showPostDetail(item)} >
                             <div className="flex-fill">
-                                <EasyTime date={$create} />
-                                {updated === true && <>&ensp;<FA name="pencil-square-o" /><EasyTime date={$update} /></>}
+                                <EasyTime date={publishdate} />
                             </div>
                             <div className="author">
                                 {sumHits && <>阅读<b>{sumHits}</b>次 </>}
