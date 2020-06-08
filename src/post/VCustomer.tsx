@@ -108,11 +108,12 @@ export class VCustomer extends VPage<CPost> {
     private share = async (cusotmer: any) => {
         //let { caption, image, id, discription } = this.post;
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
+
             // @ts-ignore  屏蔽错误
             window.plusShare(
                 {
                     title: this.caption, //应用名字
-                    content: this.discription,
+                    content: this.caption + "  " + this.discription,
                     href: setting.posturl + "/" + this.id + "?sales=" + nav.user.id, //分享出去后，点击跳转地址
                     //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片
                     thumbs: [this.image] //分享缩略图
