@@ -58,7 +58,7 @@ export class VClassRoom extends VPage<CMe> {
             window.plusShare(
                 {
                     title: caption, //应用名字
-                    content: discription,
+                    content: caption + "  " + discription,
                     href: setting.posturl + "/" + id + "?sales=" + nav.user.id, //分享出去后，点击跳转地址
                     //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片
                     thumbs: [image.obj.path] //分享缩略图
