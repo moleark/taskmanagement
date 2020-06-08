@@ -5,6 +5,7 @@ import { CPost } from "./CPost";
 import { setting } from "appConfig";
 import { observable } from "mobx";
 import { GLOABLE } from "ui";
+import smile from '../images/smile-face.jpg';
 
 export class VCustomer extends VPage<CPost> {
     private post: any;
@@ -39,22 +40,15 @@ export class VCustomer extends VPage<CPost> {
         );
 
         return (
-            <Page
-                header="选择客户"
-                onScrollBottom={this.onScrollBottom}
-                headerClassName={setting.pageHeaderCss}
-                right={right}
-            >
-                <List
-                    before={""}
-                    none="【无】"
-                    items={pageCustomer}
-                    item={{ render: this.renderCustomer }}
-                />
+            <Page header="选择客户" onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss} right={right}>
+                <LMR className="px-3 py-1" left={this.imgSmile} right={<div className="mt-3"><button onClick={() => this.share({ id: 0 })} className="btn btn-outline-info">分享微信</button> </div>}>
+                    <div className="pt-3 font-weight-bold"> 其他客户</div>
+                </LMR>
+                {pageCustomer.items && pageCustomer.items.length > 0 && <List before={""} none="【无】" items={pageCustomer} item={{ render: this.renderCustomer }} />}
                 <div className="text-center text-white small px-2" style={{ width: '40%', margin: '-80px  auto 0 auto', padding: '4px', borderRadius: '3px', backgroundColor: '#505050', display: this.showTips }}>
                     通过APP才能分享
                 </div>
-            </Page>
+            </Page >
         );
     });
 
@@ -64,7 +58,7 @@ export class VCustomer extends VPage<CPost> {
 
     private imgSmile = (
         <div className="mt-1 mx-2 w-3c h-3c p-1">
-            <img className="w-100 h-100" alt="" />
+            <img className="w-100 h-100" src={smile} alt="" />
         </div>
     );
     private renderCustomer = (customer: any, index: number) => {
