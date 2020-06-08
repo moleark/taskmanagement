@@ -15,6 +15,7 @@ const schema: ItemSchema[] = [
         type: "arr",
         arr: [
             { name: 'brand', type: 'object' } as ObjectSchema,
+            { name: 'stdDiscount', type: 'number' } as NumSchema,
             { name: 'discount', type: 'number' } as NumSchema
         ]
     } as ArrSchema,
@@ -28,14 +29,16 @@ export class VCreateVIPCardDiscount extends VPage<CCoupon> {
 
     private vipCardDiscountSetting: any[] = [];
     private vipCardLevelDiscountSetting: any[];
+    private vipCardLevel: any;
     private webUser: any;
     @observable tips: string;
     private form: Form;
 
     async open(param: any) {
-        let { webUser, vipCardLevelDiscountSetting } = param;
+        let { webUser, vipCardLevel, vipCardLevelDiscountSetting } = param;
         this.webUser = webUser;
-        vipCardLevelDiscountSetting.forEach(v => v.discount = 100 - v.discount * 100);
+        this.vipCardLevel = vipCardLevel;
+        vipCardLevelDiscountSetting.forEach(v => { v.discount = 100 - v.discount * 100; v.stdDiscount = v.discount });
         this.vipCardLevelDiscountSetting = vipCardLevelDiscountSetting;
 
         for (let i = 0; i < vipCardLevelDiscountSetting.length; i++) {
@@ -47,15 +50,13 @@ export class VCreateVIPCardDiscount extends VPage<CCoupon> {
     }
 
     private renderBrandDiscount = (item: any) => {
-        let { brand } = item;
-        return <div>
-            <div className="row">
-                <div className="col-7">
-                    {tv(brand, v => v.name)}
-                </div>
-                <div className="col-5">
-                    <FormField name="discount"></FormField>
-                </div>
+        let { brand, stdDiscount } = item;
+        return <div className="row">
+            <div className="col-7">
+                {tv(brand, v => v.name)}
+            </div>
+            <div className="col-5">
+                <FormField name="discount"></FormField>
             </div>
         </div>
     }
@@ -89,9 +90,9 @@ export class VCreateVIPCardDiscount extends VPage<CCoupon> {
         let { createVIPCardDiscountCallback } = this.controller;
         let { vipCardDiscountSetting } = context.form.data;
         if (!vipCardDiscountSetting.every((e: any) => {
-            let stdBrandDiscount = this.vipCardLevelDiscountSetting.find((v: any) => Tuid.equ(v.brand, e.brand));
-            let stdDiscount = stdBrandDiscount && stdBrandDiscount.discount;
-            return e.discount >= stdDiscount;
+            // let stdBrandDiscount = this.vipCardLevelDiscountSetting.find((v: any) => Tuid.equ(v.brand, e.brand));
+            // let stdDiscount = stdBrandDiscount && stdBrandDiscount.discount;
+            return e.discount >= e.stdDiscount;
         })) {
             this.tips = "有些品牌折扣设置低于规定值，请修改后提交。";
             setTimeout(() => { this.tips = undefined; }, GLOABLE.TIPDISPLAYTIME);
@@ -103,7 +104,7 @@ export class VCreateVIPCardDiscount extends VPage<CCoupon> {
             vipCardDiscountSettingCopy.push(vipCardDiscountSetting[i]); // = vipCardLevelDiscountSetting.slice(0);
         }
         vipCardDiscountSettingCopy.forEach(v => v.discount = (100 - v.discount) / 100);
-        await createVIPCardDiscountCallback(this.webUser, vipCardDiscountSettingCopy);
+        await createVIPCardDiscountCallback(this.webUser, this.vipCardLevel, vipCardDiscountSettingCopy);
     }
 
     private tipsUi = observer(() => {

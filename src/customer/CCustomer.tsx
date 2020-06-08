@@ -357,13 +357,6 @@ export class CCustomer extends CUqBase {
         let { cVIPCardType, uqs } = this.cApp;
         let newVIPCard = await cVIPCardType.call<any>(webUser);
 
-        let { id, cardLevel } = newVIPCard;
-        await uqs.salesTask.VIPCardForWebUser.add(
-            {
-                webuser: webUser, sales: nav.user.id, vipCard: id,
-                arr1: [{ vipCardType: cardLevel }]
-            }
-        );
         let vipCardForWebUser = await this.getVIPCard(webUser);
         vipCardForWebUser.drawed = false;
         this.vipCardForWebUser = vipCardForWebUser;

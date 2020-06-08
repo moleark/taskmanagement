@@ -233,8 +233,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
                         vipCardContent = <div className="cursor-point" onClick={() => showVIPCardDiscount(vipCardId)}>
                             <FA name="th-large" className="mr-1 text-warning" />{code}
                             <small className="ml-3">有效期：<EasyDate date={validitydate} /></small>
-                            <div className="d-flex mt-1">
-                                <div>{tv(vipCardType, v => { return <>{v.name} <span className="small text-muted mr-3">{v.description}</span></> })}</div>
+                            <div className="d-flex mt-1 justify-content-end">
                                 {drawedUI}
                             </div>
                         </div>

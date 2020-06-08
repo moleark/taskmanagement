@@ -1,5 +1,5 @@
 import { observable } from 'mobx';
-import { QueryPager } from 'tonva';
+import { QueryPager, nav } from 'tonva';
 import { CUqBase } from '../CBase';
 import { VCouponList } from './VCouponList';
 import { VCreateCoupon } from './VCreateCoupon';
@@ -19,6 +19,32 @@ export class CCoupon extends CUqBase {
     // 创建VIPCardDiscount 
     protected async internalStart(param: any) {
         this.openVPage(VCreateVIPCardDiscount, param);
+    }
+
+    /**
+     * 
+     */
+    createVIPCardDiscountCallback = async (webUser: any, vipCardLevel: any, vipCardDiscountSetting: any[]) => {
+        let now = new Date();
+        let vipCardParam: any = {
+            webUser: webUser,
+            validitydate: `${now.getFullYear() + 1}-${now.getMonth() + 1}-${now.getDate()}`,
+            discount: 0,
+        }
+        let newVIPCard = await this.createCoupon(vipCardParam, { type: 'vipcard' });
+
+        let { id } = newVIPCard;
+        let { salesTask } = this.uqs;
+        await this.uqs.salesTask.VIPCardDiscount.add({
+            coupon: id,
+            arr1: vipCardDiscountSetting
+        });
+        await salesTask.VIPCardForWebUser.add({
+            webuser: webUser, sales: nav.user.id, vipCard: id,
+            arr1: [{ vipCardType: vipCardLevel }]
+        });
+        this.returnCall(newVIPCard);
+        this.closePage();
     }
 
     showCouponList = async (types: string) => {
@@ -131,18 +157,6 @@ export class CCoupon extends CUqBase {
     showVIPCardDiscount = async (vipCardId: number) => {
         let vipCardDiscountSetting = await this.uqs.salesTask.VIPCardDiscount.table({ coupon: vipCardId });
         this.openVPage(VVIPCardDiscount, vipCardDiscountSetting);
-    }
-
-    createVIPCardDiscountCallback = async (webUser: any, vipCardDiscountSetting: any[]) => {
-        let now = new Date();
-        let vipCardParam: any = {
-            webUser: webUser,
-            validitydate: `${now.getFullYear() + 1}-${now.getMonth() + 1}-${now.getDate()}`,
-            discount: 0,
-        }
-        let newVIPCard = await this.createCoupon(vipCardParam, { type: 'vipcard' });
-        this.returnCall({ newVIPCard, vipCardDiscountSetting });
-        this.closePage();
     }
 }
 /* eslint-enable */
