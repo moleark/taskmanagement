@@ -19,8 +19,6 @@ export class VCustomerList extends VPage<CCustomer> {
     private imgSmile = <div className="mt-1 mx-2 w-3c h-3c p-1"><img className="w-100 h-100" src={smile} alt="" /></div>;
     private renderCustomer = (customer: any, index: number) => {
         (customer as any)._source = 'VCustomerList';
-        let onClickCustomer = () => this.controller.showCustomerDetail(customer);
-
         let { name, unit, validity, webuser } = customer;
         let nameShow = <div className="cursor-pointer font-weight-bold w-100">{name}</div>;
         let unitShow = <div className=" cursor-pointer text-muted"><small> {tv(unit, s => s.name)}</small></div>;
@@ -29,7 +27,7 @@ export class VCustomerList extends VPage<CCustomer> {
             <UserIcon className="mt-1 mx-2 w-3c h-3c" id={webuser.id} style={{ borderRadius: '8px' }} />
             :
             this.imgSmile;
-        return <LMR onClick={onClickCustomer} className="px-2 py-1" left={left} >
+        return <LMR onClick={() => this.controller.showCustomerDetail(customer)} className="px-2 py-1" left={left} >
             <LMR className="px-1 pt-2" left={nameShow} ></LMR>
             <LMR className="px-1" left={unitShow} right={date}></LMR>
         </LMR>

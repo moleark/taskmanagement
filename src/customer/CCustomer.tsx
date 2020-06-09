@@ -18,6 +18,7 @@ import { VCreateNewCustomer } from "./VCreateNewCustomer";
 import { VCustomerOrderDetail } from "./VCustomerOrderDetail";
 import { VNewCustomerList } from "./VNewCustomerList";
 import { VCustomerSearchByUnit } from "./VCustomerSearchByUnit";
+import { setting } from "appConfig";
 /* eslint-disable */
 
 export class CCustomer extends CUqBase {
@@ -170,8 +171,9 @@ export class CCustomer extends CUqBase {
 
     // 获取客户相关Post
     getCustomerContent = async (domain: any) => {
+        let publish = setting.sales.isInner ? 3 : 2;
         this.pagePost = new QueryPager(this.uqs.webBuilder.SearchPostPublish, 5, 5);
-        this.pagePost.first({ key: "", domain: domain });
+        this.pagePost.first({ key: "", domain: domain, publish: publish });
     };
 
     /**
