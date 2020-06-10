@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {
     VPage, Page, ItemSchema, UiSchema, Form, Context, ArrSchema, ObjectSchema,
-    NumSchema, UiArr, tv, FormField, Edit, UiRange, Tuid, FA
+    NumSchema, UiArr, tv, FormField, Edit, UiRange, FA
 } from 'tonva';
 import { CCoupon } from './CCoupon';
 import { MinusPlusWidget } from '../tools/minusPlusWidget';
@@ -30,15 +30,17 @@ export class VCreateVIPCardDiscount extends VPage<CCoupon> {
     private vipCardDiscountSetting: any[] = [];
     private vipCardLevelDiscountSetting: any[];
     private vipCardLevel: any;
+    private vipCardType: any;
     private webUser: any;
     @observable tips: string;
     private form: Form;
 
     async open(param: any) {
-        let { webUser, vipCardLevel, vipCardLevelDiscountSetting } = param;
+        let { webUser, vipCardLevel, vipCardType, vipCardLevelDiscountSetting } = param;
         this.webUser = webUser;
         this.vipCardLevel = vipCardLevel;
-        vipCardLevelDiscountSetting.forEach(v => { v.discount = 100 - v.discount * 100; v.stdDiscount = v.discount });
+        this.vipCardType = vipCardType;
+        vipCardLevelDiscountSetting.forEach(v => { v.stdDiscount = 100 - v.discount * 100; v.discount = 100; });
         this.vipCardLevelDiscountSetting = vipCardLevelDiscountSetting;
 
         for (let i = 0; i < vipCardLevelDiscountSetting.length; i++) {
@@ -52,11 +54,14 @@ export class VCreateVIPCardDiscount extends VPage<CCoupon> {
     private renderBrandDiscount = (item: any) => {
         let { brand, stdDiscount } = item;
         return <div className="row">
-            <div className="col-7">
+            <div className="col-6">
                 {tv(brand, v => v.name)}
             </div>
-            <div className="col-5">
+            <div className="col-4">
                 <FormField name="discount"></FormField>
+            </div>
+            <div className="col-2">
+                <small className="text-primary">≥{stdDiscount}%</small>
             </div>
         </div>
     }
@@ -72,7 +77,7 @@ export class VCreateVIPCardDiscount extends VPage<CCoupon> {
                 items: {
                     discount: {
                         widget: 'custom',
-                        className: 'text-center',
+                        className: 'text-cente w-4c',
                         WidgetClass: MinusPlusWidget,
                         // onChanged: this.controller.onDiscountChanged as any
                     }
@@ -100,11 +105,12 @@ export class VCreateVIPCardDiscount extends VPage<CCoupon> {
         }
 
         let vipCardDiscountSettingCopy = [];
-        for (let i = 0; i < vipCardDiscountSetting.length; i++) {
-            vipCardDiscountSettingCopy.push(vipCardDiscountSetting[i]); // = vipCardLevelDiscountSetting.slice(0);
-        }
+        vipCardDiscountSetting.forEach(element => {
+            if (element.discount < 100) vipCardDiscountSettingCopy.push(element);
+        });
+
         vipCardDiscountSettingCopy.forEach(v => v.discount = (100 - v.discount) / 100);
-        await createVIPCardDiscountCallback(this.webUser, this.vipCardLevel, vipCardDiscountSettingCopy);
+        await createVIPCardDiscountCallback(this.webUser, this.vipCardLevel, this.vipCardType, vipCardDiscountSettingCopy);
     }
 
     private tipsUi = observer(() => {

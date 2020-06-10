@@ -1,9 +1,7 @@
 import * as React from "react";
 import { observable } from "mobx";
 import { observer } from "mobx-react";
-import {
-    VPage, Page, tv, LMR, ComponentProp, Prop, PropGrid, FA, List, EasyDate, nav
-} from "tonva";
+import { VPage, Page, tv, LMR, ComponentProp, Prop, PropGrid, FA, List, EasyDate, nav } from "tonva";
 import { CCustomer } from "./CCustomer";
 import { setting } from "appConfig";
 
@@ -225,7 +223,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
                         <span className="text-primary cursor-pointer" onClick={() => showCreateVIPCardPage(webuser)}>去发卡</span>
                         </span>;
                     } else {
-                        let { vipCard, drawed, vipCardType } = vipCardForWebUser;
+                        let { vipCard, drawed } = vipCardForWebUser;
                         let { id: vipCardId, code, validitydate } = vipCard;
                         let drawedUI = drawed ?
                             <small><i className="fa fa-check-cicle" style={{ color: "green" }}></i> 已领取</small> :

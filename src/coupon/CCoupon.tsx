@@ -2,7 +2,6 @@ import { observable } from 'mobx';
 import { QueryPager, nav } from 'tonva';
 import { CUqBase } from '../CBase';
 import { VCouponList } from './VCouponList';
-import { VCreateCoupon } from './VCreateCoupon';
 import { VCouponDetail } from './VCouponDetail';
 import { VCreateCouponEnd } from './VCreateCouponEnd';
 import { VCreateProductCouponEnd } from './VCreateProductCouponEnd';
@@ -24,27 +23,29 @@ export class CCoupon extends CUqBase {
     /**
      * 
      */
-    createVIPCardDiscountCallback = async (webUser: any, vipCardLevel: any, vipCardDiscountSetting: any[]) => {
+    createVIPCardDiscountCallback = async (webUser: any, vipCardLevel: any, cardType: any, vipCardDiscountSetting: any[]) => {
         let now = new Date();
         let vipCardParam: any = {
             webUser: webUser,
             validitydate: `${now.getFullYear() + 1}-${now.getMonth() + 1}-${now.getDate()}`,
             discount: 0,
         }
-        let newVIPCard = await this.createCoupon(vipCardParam, { type: 'vipcard' });
+        let newVIPCard = await this.createCoupon(vipCardParam, { type: cardType });
 
         let { id } = newVIPCard;
         let { salesTask } = this.uqs;
-        await this.uqs.salesTask.VIPCardDiscount.add({
-            coupon: id,
-            arr1: vipCardDiscountSetting
-        });
-        await salesTask.VIPCardForWebUser.add({
-            webuser: webUser, sales: nav.user.id, vipCard: id,
-            arr1: [{ vipCardType: vipCardLevel }]
-        });
-        this.returnCall(newVIPCard);
-        this.closePage();
+        await this.uqs.salesTask.VIPCardDiscount.add({ coupon: id, arr1: vipCardDiscountSetting });
+        if (cardType === "vipcard") {
+            await salesTask.VIPCardForWebUser.add({
+                webuser: webUser, sales: nav.user.id, vipCard: id,
+                arr1: [{ vipCardType: vipCardLevel }]
+            });
+            this.returnCall(newVIPCard);
+            this.closePage();
+        } else {
+            this.showShareCoupon(newVIPCard);
+        }
+
     }
 
     showCouponList = async (types: string) => {
@@ -67,7 +68,9 @@ export class CCoupon extends CUqBase {
 
     //显示添加优惠券页面
     showCreateCoupon = async (param: any) => {
-        this.openVPage(VCreateCoupon, param);
+        let vipCardDiscountSetting = await this.uqs.salesTask.SearchBottomDiscount.query({});
+        let params = { webUser: undefined, vipCardLevel: undefined, vipCardType: param.type, product: param.product, vipCardLevelDiscountSetting: vipCardDiscountSetting.ret };
+        this.openVPage(VCreateVIPCardDiscount, params);
     }
 
     //显示添加积分券页面
@@ -75,6 +78,15 @@ export class CCoupon extends CUqBase {
         let validitydate = this.validDateFrom(2);
         let coupon: any = await this.createCoupon({ validitydate: validitydate, discount: 0 }, param);
         this.showShareCoupon(coupon);
+    }
+
+    //显示新建积分券完成页面
+    showShareCoupon = (coupon: any) => {
+        if (coupon.product && coupon.product.main) {
+            this.openVPage(VCreateProductCouponEnd, coupon)
+        } else {
+            this.openVPage(VCreateCouponEnd, coupon)
+        }
     }
 
     validDateFrom(v: any) {
@@ -111,13 +123,6 @@ export class CCoupon extends CUqBase {
         return coupon;
     }
 
-    showShareCoupon = (coupon: any) => {
-        if (coupon.product && coupon.product.main) {
-            this.openVPage(VCreateProductCouponEnd, coupon)
-        } else {
-            this.openVPage(VCreateCouponEnd, coupon)
-        }
-    }
 
     addCouponSendHistory = async (code: any) => {
         this.uqs.salesTask.AddCouponSendHistory.submit({ code: code });

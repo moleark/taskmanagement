@@ -142,6 +142,7 @@ export interface UqSalesTask {
     SearchTeamAchievement: Query;
     SearchTeamAchievementDetail: Query;
     AddCouponSendHistory: Action;
+    SearchBottomDiscount: Query;
 
     VIPCardForWebUser: Map;
     VIPCardDiscount: Map;

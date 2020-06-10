@@ -1,7 +1,7 @@
 import * as React from "react";
 import { observable } from "mobx";
 import { observer } from "mobx-react";
-import { Context, QueryPager, nav } from "tonva";
+import { Context, QueryPager } from "tonva";
 import { CUqBase } from "../CBase";
 import { Task } from "../salestask/model";
 import { CAddress } from "../address/CAddress";

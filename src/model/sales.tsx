@@ -29,7 +29,7 @@ export abstract class Sales {
         let content: string;
         switch (type) {
             case "coupon":
-                content = "下单最多可享受" + ((1 - discount) * 10).toFixed(1) + "折优惠!";
+                content = "下单即可享受品牌折扣!";
                 break;
             case "credits":
                 content = "下单即得双倍积分!";

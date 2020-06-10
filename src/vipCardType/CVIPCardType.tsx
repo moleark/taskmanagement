@@ -1,5 +1,4 @@
 import { CUqBase } from "../CBase";
-import { VVIPCardTypeList } from './VVIPCardTypeList';
 
 export class CVIPCardType extends CUqBase {
 
@@ -49,15 +48,14 @@ export class CVIPCardType extends CUqBase {
 
     showCreateVIPCardDiscount = async (vipCardLevel: any) => {
 
-        let { uqs, cApp, closePage } = this;
+        let { uqs, cApp } = this;
         let { cCoupon } = cApp;
         let { vipCardType } = uqs;
         let vipCardLevelDiscountSetting = await vipCardType.VIPCardTypeDiscount.table({ vipCard: vipCardLevel.id });
-        let newVIPCard = await cCoupon.call<any>({ webUser: this.targetWebUser, vipCardLevel, vipCardLevelDiscountSetting });
+        let newVIPCard = await cCoupon.call<any>({ webUser: this.targetWebUser, vipCardLevel, vipCardType: "vipcard", vipCardLevelDiscountSetting });
 
         this.returnCall(newVIPCard);
         // 跳转到分享界面
-        // closePage();
         cCoupon.showShareCoupon(newVIPCard);
     }
 }
