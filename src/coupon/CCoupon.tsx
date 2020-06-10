@@ -23,16 +23,23 @@ export class CCoupon extends CUqBase {
     /**
      * 
      */
-    createVIPCardDiscountCallback = async (webUser: any, vipCardLevel: any, cardType: any, vipCardDiscountSetting: any[]) => {
+    createVIPCardDiscountCallback = async (webUser: any, vipCardLevel: any, cardType: any, product: any, vipCardDiscountSetting: any[]) => {
+        let validitydate: any;
         let now = new Date();
+        if (cardType === "vipcard") {
+            validitydate = `${now.getFullYear() + 1} -${now.getMonth() + 1} -${now.getDate()}`;
+        } else {
+            now = this.twoWeeks;
+            validitydate = `${now.getFullYear()}-${(now.getMonth() + 1)}-${now.getDate()}`;
+        }
         let vipCardParam: any = {
             webUser: webUser,
-            validitydate: `${now.getFullYear() + 1}-${now.getMonth() + 1}-${now.getDate()}`,
+            validitydate: validitydate,
             discount: 0,
         }
         let newVIPCard = await this.createCoupon(vipCardParam, { type: cardType });
 
-        let { id } = newVIPCard;
+        let { id, code } = newVIPCard;
         let { salesTask } = this.uqs;
         await this.uqs.salesTask.VIPCardDiscount.add({ coupon: id, arr1: vipCardDiscountSetting });
         if (cardType === "vipcard") {
@@ -43,9 +50,9 @@ export class CCoupon extends CUqBase {
             this.returnCall(newVIPCard);
             this.closePage();
         } else {
-            this.showShareCoupon(newVIPCard);
+            let param = { code: code, product: product, type: cardType, platform: "1" };
+            this.showShareCoupon(param);
         }
-
     }
 
     showCouponList = async (types: string) => {

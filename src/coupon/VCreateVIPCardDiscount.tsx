@@ -32,14 +32,16 @@ export class VCreateVIPCardDiscount extends VPage<CCoupon> {
     private vipCardLevel: any;
     private vipCardType: any;
     private webUser: any;
+    private product: any;
     @observable tips: string;
     private form: Form;
 
     async open(param: any) {
-        let { webUser, vipCardLevel, vipCardType, vipCardLevelDiscountSetting } = param;
+        let { webUser, vipCardLevel, vipCardType, product, vipCardLevelDiscountSetting } = param;
         this.webUser = webUser;
         this.vipCardLevel = vipCardLevel;
         this.vipCardType = vipCardType;
+        this.product = product;
         vipCardLevelDiscountSetting.forEach(v => { v.stdDiscount = 100 - v.discount * 100; v.discount = 100; });
         this.vipCardLevelDiscountSetting = vipCardLevelDiscountSetting;
 
@@ -110,7 +112,7 @@ export class VCreateVIPCardDiscount extends VPage<CCoupon> {
         });
 
         vipCardDiscountSettingCopy.forEach(v => v.discount = (100 - v.discount) / 100);
-        await createVIPCardDiscountCallback(this.webUser, this.vipCardLevel, this.vipCardType, vipCardDiscountSettingCopy);
+        await createVIPCardDiscountCallback(this.webUser, this.vipCardLevel, this.vipCardType, this.product, vipCardDiscountSettingCopy);
     }
 
     private tipsUi = observer(() => {
