@@ -53,9 +53,9 @@ export class VDomainPost extends VPage<CPost> {
                             )
                         )}
                     </div>
-                    <div className="d-flex flex-column w-100">
-                        <div className="mb-2"><small onClick={() => showPostDetail(item)} >{caption}</small>  </div>
-                        <div className="small d-flex justify-content-between " onClick={() => showPostDetail(item)} >
+                    <div className="d-flex flex-column w-100" onClick={() => showPostDetail(item)} >
+                        <div className="mb-2"><small >{caption}</small>  </div>
+                        <div className="small d-flex justify-content-between " >
                             <div className="flex-fill">
                                 <EasyTime date={publishdate} />
                             </div>

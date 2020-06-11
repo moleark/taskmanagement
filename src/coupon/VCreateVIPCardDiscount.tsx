@@ -56,14 +56,14 @@ export class VCreateVIPCardDiscount extends VPage<CCoupon> {
     private renderBrandDiscount = (item: any) => {
         let { brand, stdDiscount } = item;
         return <div className="row">
-            <div className="col-6">
+            <div className="col-5">
                 {tv(brand, v => v.name)}
             </div>
             <div className="col-4">
                 <FormField name="discount"></FormField>
             </div>
-            <div className="col-2">
-                <small className="text-primary">≥{stdDiscount}%</small>
+            <div className="col-3">
+                <small className=" ml-3 text-primary">≥{stdDiscount}%</small>
             </div>
         </div>
     }
