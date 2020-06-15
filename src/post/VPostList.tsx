@@ -54,7 +54,7 @@ export class VPostList extends VPage<CPost> {
     private itemRow = observer((item: any) => {
         let { user, showPostDetail, showCustomer } = this.controller;
         if (!user) return;
-        let { image, caption, publishdate, hits, sumHits } = item;
+        let { image, caption, publishdate, hits, sumHits, discription, post } = item;
 
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex" >
@@ -72,7 +72,7 @@ export class VPostList extends VPage<CPost> {
                             )
                         )}
                     </div>
-                    <div className="d-flex flex-column w-100" onClick={() => showPostDetail(item.post)} >
+                    <div className="d-flex flex-column w-100" onClick={() => showPostDetail(post)} >
                         <div className="mb-2"><small >{caption}</small>  </div>
                         <div className="small d-flex justify-content-between ">
                             <div className="flex-fill">
@@ -85,7 +85,7 @@ export class VPostList extends VPage<CPost> {
                         </div>
                     </div>
                 </div>
-                <div className="small cursor-pointer text-primary text-right w-6c pt-3 " onClick={() => showCustomer("", item)} >
+                <div className="small cursor-pointer text-primary text-right w-6c pt-3 " onClick={() => showCustomer("", { caption: caption, image: image, discription: discription, id: post.id })} >
                     <button className="btn btn-outline-info">分享</button>
                 </div>
             </div>
