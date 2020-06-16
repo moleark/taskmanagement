@@ -95,6 +95,10 @@ export class CProduct extends CUqBase {
     tab = () => {
         return <this.render />;
     }
+
+    onScrollBottom = async () => {
+        await this.pageProduct.more();
+    }
 }
 
 

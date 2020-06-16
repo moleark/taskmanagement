@@ -379,6 +379,10 @@ export class CCustomer extends CUqBase {
     }
     */
 
+    onScrollBottom = async () => {
+        await this.pageCustomer.more();
+    }
+
     render = observer(() => {
         return this.renderView(VCustomerList);
     });

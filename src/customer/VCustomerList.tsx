@@ -34,13 +34,13 @@ export class VCustomerList extends VPage<CCustomer> {
     }
 
     private page = observer(() => {
-        let { pageCustomer, showSelectOrganization, showCustomerSearch, showNewCustomerList, cApp } = this.controller;
+        let { pageCustomer, showSelectOrganization, showCustomerSearch, showNewCustomerList, onScrollBottom, cApp } = this.controller;
         let right = <div className="cursor-pointer py-1">
             <span onClick={() => showCustomerSearch(null)} className="iconfont icon-icon-chaxun mx-2" style={{ fontSize: "20px", color: "#ffffff" }}></span>
             <span onClick={() => showSelectOrganization(1)} className="iconfont icon-tianjia mx-3" style={{ fontSize: "20px", color: "#ffffff" }}></span>
         </div>;
         let none = <div className="my-3 mx-2 text-warning"></div>;
-        return <Page header="客户" onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss} right={right} >
+        return <Page header="客户" onScrollBottom={onScrollBottom} headerClassName={setting.pageHeaderCss} right={right} >
             {branch("单位", "icon-photo", () => cApp.cCustomerUnit.start(3))}
             {branch("新客户", "icon-xinyonghu", showNewCustomerList)}
             {
@@ -50,9 +50,6 @@ export class VCustomerList extends VPage<CCustomer> {
         </Page>
     })
 
-    private onScrollBottom = async () => {
-        await this.controller.pageCustomer.more();
-    }
 }
 
 function branch(name: string, icon: string, action: any): JSX.Element {
