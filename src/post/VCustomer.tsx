@@ -57,37 +57,28 @@ export class VCustomer extends VPage<CPost> {
     };
 
     private imgSmile = (
-        <div className="mt-1 mx-2 w-3c h-3c p-1">
+        <div className="mt-1 mx-2 w-2c h-2c p-1">
             <img className="w-100 h-100" src={smile} alt="" />
         </div>
     );
     private renderCustomer = (customer: any, index: number) => {
         (customer as any)._source = "VCustomerList";
 
-        let { name, unit, webuser, sharingTimes } = customer;
-        let nameShow = (
-            <div className="cursor-pointer font-weight-bold w-100">{name}</div>
-        );
-        let unitShow = (
-            <div className=" cursor-pointer text-muted">
-                <small> {tv(unit, s => s.name)}</small>
-            </div>
-        );
-        let right = (
-            <div className="mt-3">
-                {sharingTimes > 0 ? <FA name="flag px-3" /> : <></>}
-                <button className="btn btn-outline-info">分享微信</button>
-            </div>
-        );
-        let left = webuser ? (
-            <UserIcon className="mt-1 mx-2 w-3c h-3c" id={webuser.id} style={{ borderRadius: "8px" }} />
-        ) : (
-                this.imgSmile
-            );
+        let { name, unit, webuser, sharingTimes, sharingCount } = customer;
+
+        let right = <div className="mt-3"><button className="btn btn-outline-info">分享微信</button></div>;
+        let left = webuser ? <UserIcon className="mt-1 mx-2 w-3c h-3c" id={webuser.id} style={{ borderRadius: "8px" }} /> : this.imgSmile;
+
         return (
             <LMR className="px-3 py-1" left={left} right={right} onClick={() => this.share(customer)}>
-                <LMR className="px-1" left={nameShow}></LMR>
-                <LMR className="px-1" left={unitShow}></LMR>
+                <div className="cursor-pointer font-weight-bold w-100">{name}</div>
+                <div className=" cursor-pointer text-muted">
+                    <small> {tv(unit, s => s.name)}</small>
+                </div>
+                <div className="d-flex small">
+                    <div>{sharingTimes > 0 ? <FA name="flag text-primary mr-3" /> : <></>}</div>
+                    <div className="text-primary">{sharingCount > 0 ? <span>已发{sharingCount}次</span> : <></>}</div>
+                </div>
             </LMR>
         );
     };
