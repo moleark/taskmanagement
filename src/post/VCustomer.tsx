@@ -41,7 +41,11 @@ export class VCustomer extends VPage<CPost> {
 
         return (
             <Page header="选择客户" onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss} right={right}>
-                <LMR className="px-3 py-1" left={this.imgSmile} right={<div className="mt-3"><button onClick={() => this.share({ id: 0 })} className="btn btn-outline-info">分享微信</button> </div>}>
+                <LMR className="px-3 py-1 bg-white" left={<div><FA name='chrome h3 mt-1 mx-2 w-2c h-2c p-1 text-warning' /></div>} right={<div className="my-2"><button onClick={() => this.share({ id: 0 }, "title")} className="btn btn-outline-info">分享朋友圈</button> </div>}>
+                    <div className="pt-3 font-weight-bold"> 朋友圈</div>
+                </LMR>
+
+                <LMR className="px-3 py-1 " left={this.imgSmile} right={<div className="mt-3"><button onClick={() => this.share({ id: 0 }, "content")} className="btn btn-outline-info">分享微信</button> </div>}>
                     <div className="pt-3 font-weight-bold"> 其他客户</div>
                 </LMR>
                 {pageCustomer.items && pageCustomer.items.length > 0 && <List before={""} none="【无】" items={pageCustomer} item={{ render: this.renderCustomer }} />}
@@ -70,7 +74,7 @@ export class VCustomer extends VPage<CPost> {
         let left = webuser ? <UserIcon className="mt-1 mx-2 w-3c h-3c" id={webuser.id} style={{ borderRadius: "8px" }} /> : this.imgSmile;
 
         return (
-            <LMR className="px-3 py-1" left={left} right={right} onClick={() => this.share(customer)}>
+            <LMR className="px-3 py-1" left={left} right={right} onClick={() => this.share(customer, "content")}>
                 <div className="cursor-pointer font-weight-bold w-100">{name}</div>
                 <div className=" cursor-pointer text-muted">
                     <small> {tv(unit, s => s.name)}</small>
@@ -90,7 +94,7 @@ export class VCustomer extends VPage<CPost> {
         }, GLOABLE.TIPDISPLAYTIME);
     }
 
-    private share = async (cusotmer: any) => {
+    private share = async (cusotmer: any, type: any) => {
         //let { caption, image, id, discription } = this.post;
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
 
@@ -98,7 +102,7 @@ export class VCustomer extends VPage<CPost> {
             window.plusShare(
                 {
                     title: this.caption, //应用名字
-                    content: this.caption + "  " + this.discription,
+                    content: type === "content" ? this.discription : this.caption,
                     href: setting.posturl + "/" + this.id + "?sales=" + nav.user.id, //分享出去后，点击跳转地址
                     //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片
                     thumbs: [this.image] //分享缩略图
