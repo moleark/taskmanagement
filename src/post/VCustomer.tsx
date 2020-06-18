@@ -40,14 +40,19 @@ export class VCustomer extends VPage<CPost> {
         );
 
         return (
-            <Page header="选择客户" onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss} right={right}>
-                <LMR className="px-3 py-1 bg-white" left={<div><FA name='chrome h3 mt-1 mx-2 w-2c h-2c p-1 text-warning' /></div>} right={<div className="my-2"><button onClick={() => this.share({ id: 0 }, "title")} className="btn btn-outline-info">分享朋友圈</button> </div>}>
-                    <div className="pt-3 font-weight-bold"> 朋友圈</div>
+            <Page header="分享" onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss} right={right}>
+                <LMR className="px-3 py-3 bg-white d-flex align-items-center "
+                    onClick={() => this.share({ id: 0 }, "title")}
+                    left={<FA name='chrome' className="text-warning mr-3 " size="lg" fixWidth={true} />}>
+                    <span className="font-weight-bold">分享朋友圈</span>
                 </LMR>
-
-                <LMR className="px-3 py-1 " left={this.imgSmile} right={<div className="mt-3"><button onClick={() => this.share({ id: 0 }, "content")} className="btn btn-outline-info">分享微信</button> </div>}>
-                    <div className="pt-3 font-weight-bold"> 其他客户</div>
+                <div className="sep-product-select" style={{ margin: "0 auto" }} />
+                <LMR className="px-3 py-3 bg-white d-flex align-items-center "
+                    onClick={() => this.share({ id: 0 }, "content")}
+                    left={<FA name='wechat' className=" text-success mr-3" size="lg" fixWidth={true} />}>
+                    <span className="font-weight-bold">分享其他人</span>
                 </LMR>
+                <div className="sep-product-select" style={{ margin: "0 auto" }} />
                 {pageCustomer.items && pageCustomer.items.length > 0 && <List before={""} none="【无】" items={pageCustomer} item={{ render: this.renderCustomer }} />}
                 <div className="text-center text-white small px-2" style={{ width: '40%', margin: '-80px  auto 0 auto', padding: '4px', borderRadius: '3px', backgroundColor: '#505050', display: this.showTips }}>
                     通过APP才能分享
@@ -67,21 +72,24 @@ export class VCustomer extends VPage<CPost> {
     );
     private renderCustomer = (customer: any, index: number) => {
         (customer as any)._source = "VCustomerList";
-
         let { name, unit, webuser, sharingTimes, sharingCount } = customer;
-
-        let right = <div className="mt-3"><button className="btn btn-outline-info">分享微信</button></div>;
+        let right = <div onClick={() => this.share(customer, "content")}><FA name='wechat text-success mx-3' /></div>;
         let left = webuser ? <UserIcon className="mt-1 mx-2 w-3c h-3c" id={webuser.id} style={{ borderRadius: "8px" }} /> : this.imgSmile;
-
+        let namev = name.length < 3 ? <div className="cursor-pointer font-weight-bold pr-3" > {name}</div> : <div className="cursor-pointer font-weight-bold pr-1" > {name}</div>
         return (
-            <LMR className="px-3 py-1" left={left} right={right} onClick={() => this.share(customer, "content")}>
-                <div className="cursor-pointer font-weight-bold w-100">{name}</div>
-                <div className=" cursor-pointer text-muted">
+            <LMR className="py-1 align-items-center" left={left}  >
+                <div className="cursor-pointer text-muted">
                     <small> {tv(unit, s => s.name)}</small>
                 </div>
-                <div className="d-flex small">
-                    <div>{sharingTimes > 0 ? <FA name="flag text-primary mr-3" /> : <></>}</div>
-                    <div className="text-primary">{sharingCount > 0 ? <span>已发{sharingCount}次</span> : <></>}</div>
+                <div className="d-flex justify-content-between">
+                    <div className="d-flex">
+                        {namev}
+                        <div>{sharingTimes > 0 ? <FA name="flag text-primary small" /> : <></>}</div>
+                    </div>
+                    <div className="d-flex">
+                        <div className="text-primary small pt-1">{sharingCount > 0 ? <span>已发{sharingCount}次</span> : <></>}</div>
+                        {right}
+                    </div>
                 </div>
             </LMR>
         );
@@ -104,7 +112,6 @@ export class VCustomer extends VPage<CPost> {
                     title: this.caption, //应用名字
                     content: type === "content" ? this.discription : this.caption,
                     href: setting.posturl + "/" + this.id + "?sales=" + nav.user.id, //分享出去后，点击跳转地址
-                    //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片
                     thumbs: [this.image] //分享缩略图
                 },
                 function (result) {
