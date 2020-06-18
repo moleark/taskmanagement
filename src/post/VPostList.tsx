@@ -57,7 +57,7 @@ export class VPostList extends VPage<CPost> {
         let { image, caption, publishdate, hits, sumHits, discription, post } = item;
 
         return (
-            <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex" >
+            <div className="d-flex p-2" >
                 <div className="d-flex flex-fill cursor-pointer"  >
                     <div className="mr-3 w-3c w-min-3c h-3c h-min-3c">
                         {tv(
@@ -72,21 +72,19 @@ export class VPostList extends VPage<CPost> {
                             )
                         )}
                     </div>
-                    <div className="d-flex flex-column w-100" onClick={() => showPostDetail(post)} >
-                        <div className="mb-2"><small >{caption}</small>  </div>
-                        <div className="small d-flex justify-content-between ">
-                            <div className="flex-fill">
+                    <div className="d-flex flex-column w-100 small" >
+                        <div className="mb-2" onClick={() => showPostDetail(post)}> {caption} </div>
+                        <div className="d-flex justify-content-between align-items-center ">
+                            <div className="flex-fill" onClick={() => showPostDetail(post)}>
                                 <EasyTime date={publishdate} />
                             </div>
-                            <div className="author">
+                            <div className="author" onClick={() => showPostDetail(post)}>
                                 {sumHits && <>阅读<b>{sumHits}</b>次 </>}
                                 {hits > 0 && <>周<b>{hits}</b>次</>}
                             </div>
+                            <button className="btn btn-outline-info btn-sm mx-2" onClick={() => showCustomer("", { caption: caption, image: image, discription: discription, id: post.id })}>分享</button>
                         </div>
                     </div>
-                </div>
-                <div className="small cursor-pointer text-primary text-right w-6c pt-3 " onClick={() => showCustomer("", { caption: caption, image: image, discription: discription, id: post.id })} >
-                    <button className="btn btn-outline-info">分享</button>
                 </div>
             </div>
         );
