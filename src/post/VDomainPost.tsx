@@ -1,24 +1,30 @@
 import * as React from "react";
 import { observer } from "mobx-react";
-import { VPage, Page, List, tv, FA, EasyTime } from "tonva";
+import { VPage, Page, List, tv, FA, EasyTime, SearchBox } from "tonva";
 import { setting } from "appConfig";
 import { CPost } from "./CPost";
 
 export class VDomainPost extends VPage<CPost> {
-
-    async open() {
+    private domain: any
+    async open(param: any) {
+        this.domain = param;
         this.openPage(this.page);
     }
 
     private page = observer(() => {
-        let { pageDomainPost } = this.controller;
+        let { pageDomainPost, showDomainPost_Search } = this.controller;
         let none = (
             <div className="my-3 mx-2">
                 <span className="text-muted small">[{this.t('noposts')}]</span>
             </div>
         );
+        let right = (
+            <div className="d-flex align-items-center">
+                <SearchBox size="sm" onSearch={(key: string) => showDomainPost_Search(this.domain, key)} placeholder={this.t('')} />
+            </div>
+        );
         return (
-            <Page header={"研究领域"} headerClassName={setting.pageHeaderCss} onScrollBottom={this.onScrollBottom} >
+            <Page header={"研究领域"} headerClassName={setting.pageHeaderCss} right={right} onScrollBottom={this.onScrollBottom} >
                 <List before={""} none={none} items={pageDomainPost} item={{ render: this.renderItem }} />
             </Page>
         );
