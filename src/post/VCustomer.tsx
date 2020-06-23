@@ -41,13 +41,14 @@ export class VCustomer extends VPage<CPost> {
 
         return (
             <Page header="分享" onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss} right={right}>
-                <LMR className="px-3 py-3 bg-white d-flex align-items-center "
+                <div className="bg-warning text-white text-center w-100 small px-3">客户浏览高峰在8-9、11-13、15-18时</div>
+                <LMR className="px-3 py-3 bg-white d-flex align-items-center"
                     onClick={() => this.share({ id: 0 }, "title")}
                     left={<FA name='chrome' className="text-warning mr-3 " size="lg" fixWidth={true} />}>
                     <span className="font-weight-bold">分享朋友圈</span>
                 </LMR>
                 <div className="sep-product-select" style={{ margin: "0 auto" }} />
-                <LMR className="px-3 py-3 bg-white d-flex align-items-center "
+                <LMR className="px-3 py-3 bg-white d-flex align-items-center"
                     onClick={() => this.share({ id: 0 }, "content")}
                     left={<FA name='wechat' className=" text-success mr-3" size="lg" fixWidth={true} />}>
                     <span className="font-weight-bold">分享其他人</span>
