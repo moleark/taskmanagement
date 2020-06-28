@@ -27,7 +27,7 @@ export class CCoupon extends CUqBase {
         let validitydate: any;
         let now = new Date();
         if (cardType === "vipcard") {
-            validitydate = `${now.getFullYear() + 1} -${now.getMonth() + 1} -${now.getDate()}`;
+            validitydate = `${now.getFullYear() + 1}-${now.getMonth() + 1}-${now.getDate()}`;
         } else {
             now = this.twoWeeks;
             validitydate = `${now.getFullYear()}-${(now.getMonth() + 1)}-${now.getDate()}`;
