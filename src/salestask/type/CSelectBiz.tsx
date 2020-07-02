@@ -7,7 +7,7 @@ import { CUqSub } from '../../CBase';
 /**
  *
  */
-export class CSelectBiz extends CUqSub {
+export class CSelectBiz extends CUqSub<CSalesTask> {
     get owner(): CSalesTask { return this._owner as CSalesTask }
 
     taskBizs: any[];

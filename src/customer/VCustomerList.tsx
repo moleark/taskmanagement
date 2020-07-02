@@ -19,8 +19,6 @@ export class VCustomerList extends VPage<CCustomer> {
     private imgSmile = <div className="mt-1 mx-2 w-3c h-3c p-1"><img className="w-100 h-100" src={smile} alt="" /></div>;
     private renderCustomer = (customer: any, index: number) => {
         (customer as any)._source = 'VCustomerList';
-        let onClickCustomer = () => this.controller.showCustomerDetail(customer);
-
         let { name, unit, validity, webuser } = customer;
         let nameShow = <div className="cursor-pointer font-weight-bold w-100">{name}</div>;
         let unitShow = <div className=" cursor-pointer text-muted"><small> {tv(unit, s => s.name)}</small></div>;
@@ -29,20 +27,20 @@ export class VCustomerList extends VPage<CCustomer> {
             <UserIcon className="mt-1 mx-2 w-3c h-3c" id={webuser.id} style={{ borderRadius: '8px' }} />
             :
             this.imgSmile;
-        return <LMR onClick={onClickCustomer} className="px-2 py-1" left={left} >
+        return <LMR onClick={() => this.controller.showCustomerDetail(customer)} className="px-2 py-1" left={left} >
             <LMR className="px-1 pt-2" left={nameShow} ></LMR>
             <LMR className="px-1" left={unitShow} right={date}></LMR>
         </LMR>
     }
 
     private page = observer(() => {
-        let { pageCustomer, showSelectOrganization, showCustomerSearch, showNewCustomerList, cApp } = this.controller;
+        let { pageCustomer, showSelectOrganization, showCustomerSearch, showNewCustomerList, onScrollBottom, cApp } = this.controller;
         let right = <div className="cursor-pointer py-1">
             <span onClick={() => showCustomerSearch(null)} className="iconfont icon-icon-chaxun mx-2" style={{ fontSize: "20px", color: "#ffffff" }}></span>
             <span onClick={() => showSelectOrganization(1)} className="iconfont icon-tianjia mx-3" style={{ fontSize: "20px", color: "#ffffff" }}></span>
         </div>;
         let none = <div className="my-3 mx-2 text-warning"></div>;
-        return <Page header="客户" onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss} right={right} >
+        return <Page header="客户" onScrollBottom={onScrollBottom} headerClassName={setting.pageHeaderCss} right={right} >
             {branch("单位", "icon-photo", () => cApp.cCustomerUnit.start(3))}
             {branch("新客户", "icon-xinyonghu", showNewCustomerList)}
             {
@@ -52,9 +50,6 @@ export class VCustomerList extends VPage<CCustomer> {
         </Page>
     })
 
-    private onScrollBottom = async () => {
-        await this.controller.pageCustomer.more();
-    }
 }
 
 function branch(name: string, icon: string, action: any): JSX.Element {

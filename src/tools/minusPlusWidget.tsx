@@ -89,7 +89,7 @@ export class MinusPlusWidget extends UpdownWidget {
             { invisible: !(hasFocus === true || (hasAction === true && hasValue === true)) })}
             onClick={minusClick} />;
         let input = <input ref={this.ref}
-            className={classNames(this.className, cn, 'w-3c form-control',
+            className={classNames(this.className, cn, 'form-control',
                 { invisible: !(hasFocus === true || hasValue === true) })}
             type="text"
             defaultValue={this.value}

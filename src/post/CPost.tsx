@@ -77,12 +77,16 @@ export class CPost extends CUqBase {
         domain.first({ _parent: param });
         this.openVPage(VDomain, domain);
     }
-    showDomainPost = async (param: any) => {
+    showDomainPost = async (param: any, key: any) => {
+        await this.showDomainPost_Search(param, key);
+        this.openVPage(VDomainPost, param);
+    }
+    showDomainPost_Search = async (param: any, key: any) => {
         let publish = setting.sales.isInner ? 3 : 2;
         this.pageDomainPost = new QueryPager(this.uqs.webBuilder.SearchDomainPost, 15, 100);
-        this.pageDomainPost.first({ author: 0, domain: param.id, publish: publish })
-        this.openVPage(VDomainPost);
+        this.pageDomainPost.first({ key: key, author: 0, domain: param.id, publish: publish })
     }
+
 
     showPostDetail = async (param: any) => {
         this.openVPage(VPostDetil, param);

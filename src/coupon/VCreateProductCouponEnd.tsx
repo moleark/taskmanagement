@@ -89,47 +89,32 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
     };
 
     private showShare = () => {
-        let { discount, type } = this.coupon;
-
-        let onshare = () => this.share(this.url);
-
+        let { discount, type, code } = this.coupon;
         let share: any;
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
-            share = (
-                <button className="btn btn-info" onClick={onshare}>
-                    点击分享
-                </button>
-            );
+            share = <div className="w-100 text-center py-3" >
+                <button className="btn btn-info mx-1 px-4" onClick={() => this.share(this.url)}> 点击分享 </button>
+                <button className="btn btn-info mx-1 px-4" onClick={() => this.copyClick(code)}> 复制 </button>
+            </div>;
+        } else {
+            share = <div className="w-100 text-center py-3" >
+                <button className="btn btn-info mx-1 px-4" onClick={() => this.copyClick(code)}> 复制 </button>
+            </div>
         }
 
-        let priceui = (
-            <div className="pt-4 mt-4 d-flex align-items-end justify-content-end text-danger">
-                <div>{setting.sales.shareContent(type, discount)}</div>
-            </div>
-        );
-
-        let qrcode = (
-            <div className="d-flex flex-grow-1">
-                <div className="text-center">
-                    <div>{this.inviteCode}</div>
+        return <>
+            <div className="sep-product-select py-4" style={{ margin: "0 auto" }} />
+            <div className="row pb-3">
+                <div className="col-6 text-center ">
+                    <div className="mb-4 h4 m-3 text-info">{this.inviteCode}</div>
                     <QRCode value={this.url} size={100} fgColor="#000000" />
                 </div>
-            </div>
-        );
-
-        return (
-            <>
-                <div
-                    className="sep-product-select py-4"
-                    style={{ margin: "0 auto" }}
-                />
-                <div className="d-flex px-4">
-                    {qrcode}
-                    {priceui}
+                <div className="col-6 text-danger d-flex align-items-end small" >
+                    {setting.sales.shareContent(type, discount)}
                 </div>
-                <div className="text-center mt-5">{share}</div>
-            </>
-        );
+            </div>
+            <div >{share}</div>
+        </>
     };
 
     share = async (url: any) => {
@@ -163,7 +148,7 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
         let header = setting.couponType[type];
         return (
             <Page header={header} headerClassName={setting.pageHeaderCss}>
-                <div className="bg-white" style={{ height: "100%" }}>
+                <div className="bg-white w-100" >
                     <div className="px-2 py-2">{viewProduct.render()}</div>
                     {this.showShare()}
                 </div>

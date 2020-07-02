@@ -57,12 +57,8 @@ export class VProductList extends VPage<CProduct> {
         </div>
     }
 
-    private onScrollBottom = async () => {
-        await this.controller.pageProduct.more();
-    }
-
     private page = observer((product: any) => {
-        let { pageProduct } = this.controller;
+        let { pageProduct, onScrollBottom } = this.controller;
         let { productCart } = this.controller.cApp;
 
         let none = <div className="my-3 mx-2 text-warning">未搜索到产品</div>;
@@ -85,7 +81,7 @@ export class VProductList extends VPage<CProduct> {
             </div>
         </div>;
 
-        return <Page header="产品" right={right} onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss} >
+        return <Page header="产品" right={right} onScrollBottom={onScrollBottom} headerClassName={setting.pageHeaderCss} >
             <SearchBox className="px-1 w-100  mt-2 mr-2 "
                 size='md'
                 onSearch={(key: string) => this.controller.searchByKey(key)}

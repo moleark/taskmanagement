@@ -13,7 +13,7 @@ import { VAiDetail } from './VAiDetail';
 /**
  *
  */
-export class CSelectType extends CUqSub {
+export class CSelectType extends CUqSub<CSalesTask> {
     private taskBook: any;
     private tasks: [];
     private customerid: number;

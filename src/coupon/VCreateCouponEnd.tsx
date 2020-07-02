@@ -60,21 +60,15 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
             </div>
             <div className="w-100 text-center pt-3">
                 <span className="text-info cursor-info mx-2" onClick={(e) => this.copyClick(e, couponCode)}>复制</span>
-                <span className="text-info cursor-info mx-2" onClick={this.comeBack} >返回</span>
+                <span className="text-info cursor-info mx-2" onClick={() => this.closePage(2)} >返回</span>
                 {share}
                 <div className="text-center text-white small px-2" style={{
                     width: '30%', margin: '-80px  auto 0 auto', padding: '4px', borderRadius: '3px',
                     backgroundColor: '#505050', display: this.showTips
                 }}>已复制到剪切板</div>
             </div>
-        </Page>
+        </Page >
     })
-
-
-    comeBack = () => {
-        let c = setting.sales.isInner ? 1 : 2;
-        this.closePage(c);
-    }
 
     copyClick = (e: any, val: any) => {
         copy(val)

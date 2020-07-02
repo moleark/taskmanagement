@@ -1,9 +1,7 @@
 import * as React from "react";
 import { observable } from "mobx";
 import { observer } from "mobx-react";
-import {
-    VPage, Page, tv, LMR, ComponentProp, Prop, PropGrid, FA, List, EasyDate, nav
-} from "tonva";
+import { VPage, Page, tv, LMR, ComponentProp, Prop, PropGrid, FA, List, EasyDate, nav } from "tonva";
 import { CCustomer } from "./CCustomer";
 import { setting } from "appConfig";
 
@@ -76,7 +74,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
             window.plusShare(
                 {
                     title: caption, //应用名字
-                    content: discription,
+                    content: caption + "  " + discription,
                     href: setting.posturl + "/" + id + "?sales=" + nav.user.id, //分享出去后，点击跳转地址
                     //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片
                     thumbs: [image.obj.path] //分享缩略图
@@ -225,7 +223,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
                         <span className="text-primary cursor-pointer" onClick={() => showCreateVIPCardPage(webuser)}>去发卡</span>
                         </span>;
                     } else {
-                        let { vipCard, drawed, vipCardType } = vipCardForWebUser;
+                        let { vipCard, drawed } = vipCardForWebUser;
                         let { id: vipCardId, code, validitydate } = vipCard;
                         let drawedUI = drawed ?
                             <small><i className="fa fa-check-cicle" style={{ color: "green" }}></i> 已领取</small> :
@@ -233,8 +231,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
                         vipCardContent = <div className="cursor-point" onClick={() => showVIPCardDiscount(vipCardId)}>
                             <FA name="th-large" className="mr-1 text-warning" />{code}
                             <small className="ml-3">有效期：<EasyDate date={validitydate} /></small>
-                            <div className="d-flex mt-1">
-                                <div>{tv(vipCardType, v => { return <>{v.name} <span className="small text-muted mr-3">{v.description}</span></> })}</div>
+                            <div className="d-flex mt-1 justify-content-end">
                                 {drawedUI}
                             </div>
                         </div>

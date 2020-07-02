@@ -1,7 +1,7 @@
 import * as React from "react";
 import { observable } from "mobx";
 import { observer } from "mobx-react";
-import { Context, QueryPager, nav } from "tonva";
+import { Context, QueryPager } from "tonva";
 import { CUqBase } from "../CBase";
 import { Task } from "../salestask/model";
 import { CAddress } from "../address/CAddress";
@@ -18,6 +18,7 @@ import { VCreateNewCustomer } from "./VCreateNewCustomer";
 import { VCustomerOrderDetail } from "./VCustomerOrderDetail";
 import { VNewCustomerList } from "./VNewCustomerList";
 import { VCustomerSearchByUnit } from "./VCustomerSearchByUnit";
+import { setting } from "appConfig";
 /* eslint-disable */
 
 export class CCustomer extends CUqBase {
@@ -170,8 +171,9 @@ export class CCustomer extends CUqBase {
 
     // 获取客户相关Post
     getCustomerContent = async (domain: any) => {
+        let publish = setting.sales.isInner ? 3 : 2;
         this.pagePost = new QueryPager(this.uqs.webBuilder.SearchPostPublish, 5, 5);
-        this.pagePost.first({ key: "", domain: domain });
+        this.pagePost.first({ key: "", domain: domain, publish: publish });
     };
 
     /**
@@ -357,13 +359,6 @@ export class CCustomer extends CUqBase {
         let { cVIPCardType, uqs } = this.cApp;
         let newVIPCard = await cVIPCardType.call<any>(webUser);
 
-        let { id, cardLevel } = newVIPCard;
-        await uqs.salesTask.VIPCardForWebUser.add(
-            {
-                webuser: webUser, sales: nav.user.id, vipCard: id,
-                arr1: [{ vipCardType: cardLevel }]
-            }
-        );
         let vipCardForWebUser = await this.getVIPCard(webUser);
         vipCardForWebUser.drawed = false;
         this.vipCardForWebUser = vipCardForWebUser;
@@ -383,6 +378,10 @@ export class CCustomer extends CUqBase {
         return cVIPCardType.renderVIPCardTypeList();
     }
     */
+
+    onScrollBottom = async () => {
+        await this.pageCustomer.more();
+    }
 
     render = observer(() => {
         return this.renderView(VCustomerList);
