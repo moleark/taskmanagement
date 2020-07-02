@@ -36,9 +36,10 @@ export class VProductCatalogPost extends VPage<CPost> {
     private itemRow = observer((item: any) => {
         let { user, showPostDetail, showCustomer } = this.controller;
         if (!user) return;
-        let { image, caption, publishdate, hits, sumHits } = item;
+        let { image, caption, publishdate, hits, sumHits, emphasis } = item;
 
-
+        let showImport = emphasis === 1 ?
+            <FA className="text-danger ml-3 " name="star" /> : null
         return (
             <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex" >
                 <div className="d-flex flex-fill cursor-pointer"  >
@@ -60,6 +61,7 @@ export class VProductCatalogPost extends VPage<CPost> {
                         <div className="small d-flex justify-content-between " onClick={() => showPostDetail(item)} >
                             <div className="flex-fill">
                                 <EasyTime date={publishdate} />
+                                {showImport}
                             </div>
                             <div className="author">
                                 {sumHits && <>阅读<b>{sumHits}</b>次 </>}
