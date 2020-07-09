@@ -98,12 +98,12 @@ export class CPost extends CUqBase {
         this.pageCustomer.first({ key: key, post: post, domain: 0 });
     };
 
-    showCustomer = async (key: string, post: any) => {
-        let domainmap = await this.uqs.webBuilder.PostDomain.obj({ post: post.id });
+    showCustomer = async (key: string, param: any) => {
+        let domainmap = await this.uqs.webBuilder.PostDomain.obj({ post: param.id });
         let domain = domainmap ? domainmap.domain.id : 0;
         this.pageCustomer = new QueryPager(this.uqs.salesTask.SearchMyCustomerByPost, 15, 30);
-        this.pageCustomer.first({ key: key, post: post, domain: domain });
-        this.openVPage(VCustomer, post);
+        this.pageCustomer.first({ key: key, post: param.id, domain: domain });
+        this.openVPage(VCustomer, param);
     };
 
     addMyCustomerPost = async (post: any, customerid: any) => {

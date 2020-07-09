@@ -74,8 +74,8 @@ export class VPostList extends VPage<CPost> {
                         )}
                     </div>
                     <div className="d-flex flex-column w-100">
-                        <div className="mb-2"><small onClick={() => showPostDetail(item)} >{caption}</small>  </div>
-                        <div className="small d-flex justify-content-between " onClick={() => showPostDetail(item)} >
+                        <div className="mb-2"><small onClick={() => showPostDetail(item.post)} >{caption}</small>  </div>
+                        <div className="small d-flex justify-content-between " onClick={() => showPostDetail(item.post)} >
                             <div className="flex-fill">
                                 <EasyTime date={publishdate} />
                                 {showImport}
