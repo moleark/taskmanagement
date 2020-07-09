@@ -11,16 +11,14 @@ export class VCustomer extends VPage<CPost> {
     private post: any;
     private caption: string;
     private image: string;
-    private id: string;
     private discription: string;
 
     @observable showTips: any = "none"
     async open(param: any) {
-        this.post = param;
-        let { caption, image, id, discription } = this.post;
+        let { caption, image, post, discription } = param;
         this.caption = caption;
         this.image = image.obj.path;
-        this.id = id;
+        this.post = post;
         this.discription = discription;
 
         this.openPage(this.page);
@@ -112,7 +110,7 @@ export class VCustomer extends VPage<CPost> {
                 {
                     title: this.caption, //应用名字
                     content: type === "content" ? this.discription : this.caption,
-                    href: setting.posturl + "/" + this.id + "?sales=" + nav.user.id, //分享出去后，点击跳转地址
+                    href: setting.posturl + "/" + this.post.id + "?sales=" + nav.user.id, //分享出去后，点击跳转地址
                     thumbs: [this.image] //分享缩略图
                 },
                 function (result) {
