@@ -47,7 +47,7 @@ export class VStart extends VPage<CStart> {
     private page = observer((position: any) => {
 
         return <Page header={setting.sales.appName} headerClassName={setting.pageHeaderCss} logout={true}>
-            <div className="text-center  bg-white" style={{ width: 'auto', height: '100%', padding: '1rem 0 0 0' }}  >
+            <div className="text-center  bg-white" ref={this.refIframe}  >
                 <div className="pt-4">
                     <div className="h4 text-info">
                         欢迎加入{setting.sales.appName}
@@ -67,4 +67,12 @@ export class VStart extends VPage<CStart> {
             </div>
         </Page >
     })
+
+    private refIframe = (ifrm: HTMLIFrameElement) => {
+        if (!ifrm) return;
+        let article = ifrm.parentElement.parentElement;
+        let header = (article.querySelector('section.tv-page-header') as HTMLElement);
+        ifrm.style.height = (window.innerHeight - header.clientHeight) + 'px';
+        article.parentElement.style.overflowY = 'hidden';
+    }
 }
