@@ -52,23 +52,8 @@ export class VConfirm extends VPage<CStart> {
         code = p1 + " " + p2;
         //let url = setting.url + "?type=invitation&code=" + code;
         return (
-            <div
-                id="qrid"
-                className="text-center"
-                style={{
-                    width: "auto",
-                    height: "70%",
-                    padding: "100px 0 0 0 "
-                }}
-            >
-                <Image
-                    src={setting.sales.logo}
-                    style={{
-                        width: "auto",
-                        height: "30%",
-                        margin: "10rem auto, 0 auto"
-                    }}
-                />
+            <div id="qrid" className="text-center" style={{ width: "auto", height: "70%", padding: "100px 0 0 0 " }}>
+                <Image src={setting.sales.logo} style={{ width: "30%", height: "30%", margin: "10rem auto, 0 auto" }} />
                 <div className="my-4">
                     <div className="text-info py-2">您还未被授权</div>
                     <div className="text-info py-2">
@@ -90,16 +75,16 @@ export class VConfirm extends VPage<CStart> {
         let footer: any = setting.sales.isInner ? (
             undefined
         ) : (
-            <div className="d-block">
-                <button
-                    type="button"
-                    className="btn btn-primary w-100"
-                    onClick={onCreatePosition}
-                >
-                    确认
+                <div className="d-block">
+                    <button
+                        type="button"
+                        className="btn btn-primary w-100"
+                        onClick={onCreatePosition}
+                    >
+                        确认
                 </button>
-            </div>
-        );
+                </div>
+            );
 
         let header = setting.sales.isInner ? "提示" : "邀请人";
         return (
