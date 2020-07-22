@@ -44,13 +44,13 @@ export class VConfirm extends VPage<CStart> {
             </div>
         );
     }
+
     private meInfoAssist(position: any) {
         let { code } = position;
         code = code + "";
         let p1 = code.substr(0, 4);
         let p2 = code.substr(4);
         code = p1 + " " + p2;
-        //let url = setting.url + "?type=invitation&code=" + code;
         return (
             <div id="qrid" className="text-center" style={{ width: "auto", height: "70%", padding: "100px 0 0 0 " }}>
                 <Image src={setting.sales.logo} style={{ width: "30%", height: "30%", margin: "10rem auto, 0 auto" }} />
@@ -59,7 +59,7 @@ export class VConfirm extends VPage<CStart> {
                     <div className="text-info py-2">
                         请联系管理员开通内部销售权限
                     </div>
-                    <div className="text-info py-2">账号：{nav.user.id}</div>
+                    <div className="text-info py-2">账号：{nav.user && nav.user.id}</div>
                 </div>
             </div>
         );
