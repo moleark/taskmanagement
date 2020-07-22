@@ -46,5 +46,5 @@ const assistConfig = {
     appConfig: assistAppConfig,
 }
 
-export const isAssistApp = document.domain !== setting.assistDomain;
-export const appEnvConfig = document.domain !== setting.assistDomain ? assistConfig : agentConfig
+export const isAssistApp = document.domain === setting.assistDomain;
+export const appEnvConfig = document.domain === setting.assistDomain ? assistConfig : agentConfig
