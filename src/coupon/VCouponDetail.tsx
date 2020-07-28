@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, Prop, PropGrid, ComponentProp, tv, LMR, EasyDate, List } from 'tonva';
+import { VPage, Page, Prop, PropGrid, ComponentProp, tv, LMR, EasyDate, List, UserView, User } from 'tonva';
 import { observer } from 'mobx-react';
 import { CCoupon } from './CCoupon';
 import { setting } from 'appConfig';
@@ -104,7 +104,13 @@ export class VCouponDetail extends VPage<CCoupon> {
 
     private renderItem = (itme: any, index: number) => {
         return <LMR className="px-3 py-2" right={<EasyDate date={itme.createDate}></EasyDate>}  >
-            {tv(itme.webuser, v => v.name)}
+            <UserView user={itme.webuser} render={this.renderTop} />
         </LMR >
     }
+
+    renderTop = (user: User): JSX.Element => {
+        let { name, nick } = user;
+        return <div>{nick || name}</div>
+    }
+
 }
