@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {
     VPage, Page, ItemSchema, UiSchema, Form, Context, ArrSchema, ObjectSchema,
-    NumSchema, UiArr, tv, FormField, Edit, UiRange, FA
+    NumSchema, UiArr, tv, FormField, FA
 } from 'tonva';
 import { CCoupon } from './CCoupon';
 import { MinusPlusWidget } from '../tools/minusPlusWidget';
@@ -19,10 +19,6 @@ const schema: ItemSchema[] = [
             { name: 'discount', type: 'number' } as NumSchema
         ]
     } as ArrSchema,
-]
-
-const eachSchema: ItemSchema[] = [
-    { name: 'discount', type: 'number' } as NumSchema
 ]
 
 export class VCreateVIPCardDiscount extends VPage<CCoupon> {
@@ -81,7 +77,6 @@ export class VCreateVIPCardDiscount extends VPage<CCoupon> {
                         widget: 'custom',
                         className: 'text-cente w-4c',
                         WidgetClass: MinusPlusWidget,
-                        // onChanged: this.controller.onDiscountChanged as any
                     }
                 }
             } as UiArr,
@@ -97,8 +92,6 @@ export class VCreateVIPCardDiscount extends VPage<CCoupon> {
         let { createVIPCardDiscountCallback } = this.controller;
         let { vipCardDiscountSetting } = context.form.data;
         if (!vipCardDiscountSetting.every((e: any) => {
-            // let stdBrandDiscount = this.vipCardLevelDiscountSetting.find((v: any) => Tuid.equ(v.brand, e.brand));
-            // let stdDiscount = stdBrandDiscount && stdBrandDiscount.discount;
             return e.discount >= e.stdDiscount;
         })) {
             this.tips = "有些品牌折扣设置低于规定值，请修改后提交。";
@@ -125,48 +118,17 @@ export class VCreateVIPCardDiscount extends VPage<CCoupon> {
         return null;
     })
 
-    private onItemChanged = async (itemSchema: ItemSchema, newValue: any, preValue: any) => {
-        //let { name } = itemSchema;
-        // this.vipCardDiscountSetting.list[name] = newValue;
-    }
-
-    private renderEditBrandDiscount = (item: any) => {
-        let { brand, discount } = item;
-        let eachUISchema: UiSchema = {
-            items: {
-                discount: {
-                    widget: 'range',
-                    placeholder: "discount",
-                    labelHide: true,
-                    min: discount,
-                    max: 100,
-                    step: 1,
-                    defaultValue: discount,
-                    // onChanged: this.controller.onDiscountChanged as any
-                } as UiRange
-            }
-        }
-        return <div className="d-flex px-3 justify-content-between">
-            <div className="">{<>{tv(brand, v => v.name)}</>}</div>
-            <Edit className="bg-white p-3"
-                schema={eachSchema} uiSchema={eachUISchema} data={item} onItemChanged={this.onItemChanged} />
-        </div>
-    }
-
-    /*
-            <List items={this.vipCardDiscountSetting} item={{ render: this.renderEditBrandDiscount }}>
-            </List>
-    */
     private page = () => {
-        let submitButton = <button type="button"
-            className="btn btn-primary w-100"
-            onClick={this.onSubmit}>提交</button>;
-        return <Page header="设置品牌折扣">
+
+        let footer = <button type="button" className="btn btn-primary w-100 " onClick={this.onSubmit}>一键分享</button>;
+        let right = <div className="cursor-pointer mx-3 small d-flex" onClick={() => this.controller.cApp.cCoupon.showCouponList("coupon")} >
+            <i className="iconfont icon-qita" style={{ fontSize: "20px" }}></i>
+        </div>;
+        return <Page header="设置品牌折扣" right={right} footer={footer}>
             <Form ref={v => this.form = v} className="bg-white p-3"
                 schema={schema} uiSchema={this.uiSchema} formData={{ vipCardDiscountSetting: this.vipCardDiscountSetting }}
                 onButtonClick={this.onFormButtonClick} />
             {React.createElement(this.tipsUi)}
-            {submitButton}
         </Page>
     }
 }
