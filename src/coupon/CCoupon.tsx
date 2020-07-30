@@ -72,6 +72,7 @@ export class CCoupon extends CUqBase {
 
     //显示添加优惠券页面
     showCouponDetail = async (couponid: any) => {
+        this.pageCouponReceiveUsed = [];
         let coupon = await this.uqs.salesTask.Coupon.load(couponid);
         let pageCouponUsed = await this.uqs.salesTask.SearchCouponUsed.table({ coupon: couponid });
         pageCouponUsed.forEach(element => {

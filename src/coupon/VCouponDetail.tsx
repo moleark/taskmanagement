@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, Prop, PropGrid, ComponentProp, tv, LMR, EasyDate, List, UserView, User, FA } from 'tonva';
+import { VPage, Page, Prop, PropGrid, ComponentProp, tv, LMR, EasyDate, UserView, User, FA } from 'tonva';
 import { observer } from 'mobx-react';
 import { CCoupon } from './CCoupon';
 import { setting } from 'appConfig';
@@ -91,21 +91,29 @@ export class VCouponDetail extends VPage<CCoupon> {
                     <div className="sep-product-select" style={{ margin: "0 auto" }} />
                 </>
             }
-            {pageCouponReceiveUsed.length > 0 && <List before={''} items={pageCouponReceiveUsed} item={{ render: this.renderItem, onClick: null }} />}
+            {pageCouponReceiveUsed.length > 0 && this.renderItem()}
         </Page>
-    })
+    });
 
-    private renderItem = (itme: any, index: number) => {
-        let { receivedate, useddate, receive, used, webuser } = itme;
+    private renderItem = () => {
 
-        let vreceive = <>
-            <FA name="check" />
-            <div><EasyDate date={receivedate}></EasyDate></div>
-        </>;
-        let vused = <>
-            <FA name="check" />
-            <div><EasyDate date={useddate}></EasyDate></div>
-        </>;
+        let content = this.controller.pageCouponReceiveUsed.map((v, index) => {
+            let { receivedate, useddate, receive, used, webuser } = v;
+            let vreceive = <>
+                <FA name="check" />
+                <div><EasyDate date={receivedate}></EasyDate></div>
+            </>;
+            let vused = <>
+                <FA name="check" />
+                <div><EasyDate date={useddate}></EasyDate></div>
+            </>;
+            return <tr className="col bg-white" >
+                <td className="w-1 pt-3">{<UserView user={webuser} render={this.renderTop} />}</td>
+                <td className="w-5">{receive && vreceive}</td>
+                <td className="w-5">{used && vused}</td>
+            </tr >
+        })
+
         return <table className="table text-center small">
             <thead className="text-primary">
                 <tr className="bg-white">
@@ -115,15 +123,11 @@ export class VCouponDetail extends VPage<CCoupon> {
                 </tr>
             </thead>
             <tbody>
-                <tr className="col bg-white" >
-                    <td className="w-1 pt-3">{<UserView user={webuser} render={this.renderTop} />}</td>
-                    <td className="w-5">{receive && vreceive}</td>
-                    <td className="w-5">{used && vused}</td>
-                </tr >
+                {content}
             </tbody>
-        </table>
-
+        </table>;
     }
+
 
     renderTop = (user: User): JSX.Element => {
         let { name, nick } = user;
