@@ -52,18 +52,16 @@ export class VCouponDetail extends VPage<CCoupon> {
                 {
                     type: 'component',
                     name: 'customer',
-                    component: <>
-                        {
-                            tv(
-                                customer, v =>
-                                <LMR className="cursor-pointer w-100 py-3"
-                                    left="指定客户："
-                                    right={<div>{tv(v.unit, s => s.name)}</div>}>
-                                    <div className="mx-3">{v.name}</div>
-                                </LMR >
-                            )
-                        }
-                    </>
+                    component: <>{
+                        tv(
+                            customer, v =>
+                            <LMR className="cursor-pointer w-100 py-3"
+                                left="指定客户："
+                                right={<div>{tv(v.unit, s => s.name)}</div>}>
+                                <div className="mx-3">{v.name}</div>
+                            </LMR >
+                        )
+                    }</>
                 } as ComponentProp
             )
         }
@@ -127,7 +125,6 @@ export class VCouponDetail extends VPage<CCoupon> {
             </tbody>
         </table>;
     }
-
 
     renderTop = (user: User): JSX.Element => {
         let { name, nick } = user;
