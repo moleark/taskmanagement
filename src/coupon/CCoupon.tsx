@@ -75,14 +75,16 @@ export class CCoupon extends CUqBase {
         let coupon = await this.uqs.salesTask.Coupon.load(couponid);
         let pageCouponUsed = await this.uqs.salesTask.SearchCouponUsed.table({ coupon: couponid });
         pageCouponUsed.forEach(element => {
-            this.pageCouponReceiveUsed.push({ webuser: element.webuser, receive: true, used: true })
+            this.pageCouponReceiveUsed.push({ webuser: element.webuser, receive: true, receivedate: element.createDate, used: true, useddate: null })
         });
 
         let pageCouponReceive = await this.uqs.webuser.SearchCouponReceive.table({ coupon: couponid });
         pageCouponReceive.forEach(element => {
-            let a = this.pageCouponReceiveUsed.find(v => v.webuser.id === element.webuser.id);
-            if (!a) {
-                this.pageCouponReceiveUsed.push({ webuser: element.webuser, receive: true, used: false })
+            let index = this.pageCouponReceiveUsed.findIndex(v => v.webuser.id === element.webuser.id);
+            if (index >= 0) {
+                this.pageCouponReceiveUsed[index].useddate = element.createDate
+            } else {
+                this.pageCouponReceiveUsed.push({ webuser: element.webuser, receive: true, receivedate: element.createDate, used: false, useddate: null })
             }
         });
         this.openVPage(VCouponDetail, coupon);

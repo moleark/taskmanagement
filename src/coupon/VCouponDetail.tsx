@@ -96,7 +96,16 @@ export class VCouponDetail extends VPage<CCoupon> {
     })
 
     private renderItem = (itme: any, index: number) => {
-        let { receive, used, webuser } = itme;
+        let { receivedate, useddate, receive, used, webuser } = itme;
+
+        let vreceive = <>
+            <FA name="check" />
+            <div><EasyDate date={receivedate}></EasyDate></div>
+        </>;
+        let vused = <>
+            <FA name="check" />
+            <div><EasyDate date={useddate}></EasyDate></div>
+        </>;
         return <table className="table text-center small">
             <thead className="text-primary">
                 <tr className="bg-white">
@@ -106,10 +115,10 @@ export class VCouponDetail extends VPage<CCoupon> {
                 </tr>
             </thead>
             <tbody>
-                <tr className="col dec px-3 py-2 bg-white" >
-                    <td className="w-3">{<UserView user={webuser} render={this.renderTop} />}</td>
-                    <td className="w-3">{receive && <FA name="check" />}</td>
-                    <td className="w-3">{used && <FA name="check" />}</td>
+                <tr className="col bg-white" >
+                    <td className="w-1 pt-3">{<UserView user={webuser} render={this.renderTop} />}</td>
+                    <td className="w-5">{receive && vreceive}</td>
+                    <td className="w-5">{used && vused}</td>
                 </tr >
             </tbody>
         </table>
