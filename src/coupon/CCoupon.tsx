@@ -12,8 +12,7 @@ import { VCreateVIPCardDiscount } from './VCreateVIPCardDiscount';
  */
 export class CCoupon extends CUqBase {
     @observable pageCoupon: QueryPager<any>;
-    @observable pageCouponUsed: any[];
-    @observable pageCouponReceive: any[];
+    @observable pageCouponReceiveUsed: any[] = [];
 
     oneWeek = new Date(Date.now() + 7 * 24 * 3600 * 1000);
     twoWeeks = new Date(Date.now() + 14 * 24 * 3600 * 1000);
@@ -74,9 +73,18 @@ export class CCoupon extends CUqBase {
     //显示添加优惠券页面
     showCouponDetail = async (couponid: any) => {
         let coupon = await this.uqs.salesTask.Coupon.load(couponid);
-        this.pageCouponUsed = await this.uqs.salesTask.SearchCouponUsed.table({ coupon: couponid });
-        this.pageCouponReceive = await this.uqs.webuser.SearchCouponReceive.table({ coupon: couponid });
+        let pageCouponUsed = await this.uqs.salesTask.SearchCouponUsed.table({ coupon: couponid });
+        pageCouponUsed.forEach(element => {
+            this.pageCouponReceiveUsed.push({ webuser: element.webuser, receive: true, used: true })
+        });
 
+        let pageCouponReceive = await this.uqs.webuser.SearchCouponReceive.table({ coupon: couponid });
+        pageCouponReceive.forEach(element => {
+            let a = this.pageCouponReceiveUsed.find(v => v.webuser.id === element.webuser.id);
+            if (!a) {
+                this.pageCouponReceiveUsed.push({ webuser: element.webuser, receive: true, used: false })
+            }
+        });
         this.openVPage(VCouponDetail, coupon);
     }
 

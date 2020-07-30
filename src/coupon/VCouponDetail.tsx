@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, Prop, PropGrid, ComponentProp, tv, LMR, EasyDate, List, UserView, User } from 'tonva';
+import { VPage, Page, Prop, PropGrid, ComponentProp, tv, LMR, EasyDate, List, UserView, User, FA } from 'tonva';
 import { observer } from 'mobx-react';
 import { CCoupon } from './CCoupon';
 import { setting } from 'appConfig';
@@ -78,34 +78,42 @@ export class VCouponDetail extends VPage<CCoupon> {
             } as ComponentProp,
         );
 
-        let { invalidCoupon, showShareCoupon, pageCouponUsed, pageCouponReceive } = this.controller;
+        let { invalidCoupon, showShareCoupon, pageCouponReceiveUsed } = this.controller;
         let footer = <div>
             <button onClick={() => invalidCoupon(this.coupon)} type="submit" className="btn btn-danger flex-grow-1 px-3 mx-3">&nbsp; &nbsp; 作废&nbsp; &nbsp; </button>
             <button onClick={() => showShareCoupon({ code: this.coupon.code, type: this.coupon.types, product: undefined })} type="submit" className="btn btn-primary  px-3">&nbsp; &nbsp; 分享&nbsp; &nbsp; </button>
         </div>;
         return <Page header="详情" headerClassName={setting.pageHeaderCss} footer={footer}>
             <PropGrid className="my-2" rows={rows} values={this.coupon} alignValue="right" />
-            {pageCouponReceive.length > 0 &&
-                <>
-                    <LMR className="cursor-pointer bg-white w-100 py-2 pl-3" left="领用记录" ></LMR >
-                    <div className="sep-product-select" style={{ margin: "0 auto" }} />
-                </>
-            }
-            {pageCouponReceive.length > 0 && <List before={''} items={pageCouponReceive} item={{ render: this.renderItem, onClick: null }} />}
-            {pageCouponUsed.length > 0 &&
+            {pageCouponReceiveUsed.length > 0 &&
                 <>
                     <LMR className="cursor-pointer bg-white w-100 mt-2 py-2 pl-3" left="使用记录" ></LMR >
                     <div className="sep-product-select" style={{ margin: "0 auto" }} />
                 </>
             }
-            {pageCouponUsed.length > 0 && <List before={''} items={pageCouponUsed} item={{ render: this.renderItem, onClick: null }} />}
+            {pageCouponReceiveUsed.length > 0 && <List before={''} items={pageCouponReceiveUsed} item={{ render: this.renderItem, onClick: null }} />}
         </Page>
     })
 
     private renderItem = (itme: any, index: number) => {
-        return <LMR className="px-3 py-2" right={<EasyDate date={itme.createDate}></EasyDate>}  >
-            <UserView user={itme.webuser} render={this.renderTop} />
-        </LMR >
+        let { receive, used, webuser } = itme;
+        return <table className="table text-center small">
+            <thead className="text-primary">
+                <tr className="bg-white">
+                    <th></th>
+                    <th>领用</th>
+                    <th>使用</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr className="col dec px-3 py-2 bg-white" >
+                    <td className="w-3">{<UserView user={webuser} render={this.renderTop} />}</td>
+                    <td className="w-3">{receive && <FA name="check" />}</td>
+                    <td className="w-3">{used && <FA name="check" />}</td>
+                </tr >
+            </tbody>
+        </table>
+
     }
 
     renderTop = (user: User): JSX.Element => {
