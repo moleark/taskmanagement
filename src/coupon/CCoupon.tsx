@@ -12,6 +12,8 @@ import { VCreateVIPCardDiscount } from './VCreateVIPCardDiscount';
  */
 export class CCoupon extends CUqBase {
     @observable pageCoupon: QueryPager<any>;
+    @observable pageCouponReceiveUsed: any[] = [];
+
     oneWeek = new Date(Date.now() + 7 * 24 * 3600 * 1000);
     twoWeeks = new Date(Date.now() + 14 * 24 * 3600 * 1000);
 
@@ -65,11 +67,27 @@ export class CCoupon extends CUqBase {
     searchByKey = async (key: string, types: string) => {
         this.pageCoupon = new QueryPager(this.uqs.salesTask.SearchCoupon, 15, 30);
         this.pageCoupon.first({ key: key, types: types });
+
     }
 
     //显示添加优惠券页面
     showCouponDetail = async (couponid: any) => {
+        this.pageCouponReceiveUsed = [];
         let coupon = await this.uqs.salesTask.Coupon.load(couponid);
+        let pageCouponUsed = await this.uqs.salesTask.SearchCouponUsed.table({ coupon: couponid });
+        pageCouponUsed.forEach(element => {
+            this.pageCouponReceiveUsed.push({ webuser: element.webuser, receive: true, receivedate: element.createDate, used: true, useddate: null })
+        });
+
+        let pageCouponReceive = await this.uqs.webuser.SearchCouponReceive.table({ coupon: couponid });
+        pageCouponReceive.forEach(element => {
+            let index = this.pageCouponReceiveUsed.findIndex(v => v.webuser.id === element.webuser.id);
+            if (index >= 0) {
+                this.pageCouponReceiveUsed[index].useddate = element.createDate
+            } else {
+                this.pageCouponReceiveUsed.push({ webuser: element.webuser, receive: true, receivedate: element.createDate, used: false, useddate: null })
+            }
+        });
         this.openVPage(VCouponDetail, coupon);
     }
 
@@ -143,26 +161,6 @@ export class CCoupon extends CUqBase {
         await tuidCoupon.save(coupon.id, coupon);
     }
 
-    /*
-    //显示客户
-    showAddCouponCustomer = async (context: Context, name: string, value: number): Promise<any> => {
-        let { cCustomer } = this.cApp;
-        let d = await cCustomer.call();
-        return d;
-    }
-
-    //添加客户
-    addCouponCustomer = async (coupon: any, customer: any) => {
-        let param = { coupon: coupon.id, customer: customer.id }
-        this.uqs.salesTask.AddCouponCustomer.submit(param);
-        this.customers.unshift({
-            coupon: coupon,
-            customer: customer
-        });
-        this.closePage();
-    }
-    */
-
     /**
      * 
      */
@@ -170,5 +168,7 @@ export class CCoupon extends CUqBase {
         let vipCardDiscountSetting = await this.uqs.salesTask.VIPCardDiscount.table({ coupon: vipCardId });
         this.openVPage(VVIPCardDiscount, vipCardDiscountSetting);
     }
+
+
 }
 /* eslint-enable */

@@ -18,7 +18,7 @@ import { CUqBase } from "./CBase";
 import { VMain, GLOABLE } from "./ui";
 import { ProductCart } from "model/productcart";
 import { CBalance } from "achievement/CBalance";
-import { setting } from "appConfig";
+import { setting, isAssistApp } from "appConfig";
 import { AssistSales, AgentSales } from "model/sales";
 import { CPost } from "post/CPost";
 import { PostCustomer } from "post/postcustomer";
@@ -65,12 +65,16 @@ export class CApp extends CAppBase {
     }
 
     protected async internalStart() {
+
+        /*
         //根据网址判断是什么APP
-        if (document.domain === setting.appUrlDomain) {
+        if (isAssist) {
             setting.sales = new AssistSales(this);
         } else {
             setting.sales = new AgentSales(this);
         }
+        */
+        setting.sales = isAssistApp ? new AssistSales(this) : new AgentSales(this);
 
         this.currentSalesRegion = await this.uqs.common.SalesRegion.load(
             GLOABLE.SALESREGION_CN

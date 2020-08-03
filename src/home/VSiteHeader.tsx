@@ -11,7 +11,7 @@ export class VSiteHeader extends View<CHome> {
             {currentSalesRegion} &nbsp;
             <button onClick={()=>nav.start()}>Try</button>
         </div>;*/
-        let left = <img className="m-1 ml-2" src={logo} alt="logo" style={{ height: "3rem", width: "2.5rem" }} />;
+        let left = <img className="m-1 ml-2" src={logo} alt="logo" style={{ height: "3rem", width: "3rem" }} />;
         return <div>
             <LMR className="mb-1 align-items-center bg-white" left={left}>
                 <div className="px-3 py-3">

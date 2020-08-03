@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, Prop, PropGrid, ComponentProp, tv, LMR, EasyDate } from 'tonva';
+import { VPage, Page, Prop, PropGrid, ComponentProp, tv, LMR, EasyDate, UserView, User, FA } from 'tonva';
 import { observer } from 'mobx-react';
 import { CCoupon } from './CCoupon';
 import { setting } from 'appConfig';
@@ -52,18 +52,16 @@ export class VCouponDetail extends VPage<CCoupon> {
                 {
                     type: 'component',
                     name: 'customer',
-                    component: <>
-                        {
-                            tv(
-                                customer, v =>
-                                <LMR className="cursor-pointer w-100 py-3"
-                                    left="指定客户："
-                                    right={<div>{tv(v.unit, s => s.name)}</div>}>
-                                    <div className="mx-3">{v.name}</div>
-                                </LMR >
-                            )
-                        }
-                    </>
+                    component: <>{
+                        tv(
+                            customer, v =>
+                            <LMR className="cursor-pointer w-100 py-3"
+                                left="指定客户："
+                                right={<div>{tv(v.unit, s => s.name)}</div>}>
+                                <div className="mx-3">{v.name}</div>
+                            </LMR >
+                        )
+                    }</>
                 } as ComponentProp
             )
         }
@@ -78,14 +76,59 @@ export class VCouponDetail extends VPage<CCoupon> {
             } as ComponentProp,
         );
 
-        let { invalidCoupon, showShareCoupon } = this.controller;
-
+        let { invalidCoupon, showShareCoupon, pageCouponReceiveUsed } = this.controller;
         let footer = <div>
-            <button onClick={() => invalidCoupon(this.coupon)} type="submit" className="btn btn-danger flex-grow-1 mx-3 my-1">作废</button>
-            <button onClick={() => showShareCoupon({ code: this.coupon.code, type: this.coupon.types, product: undefined })} type="submit" className="btn btn-primary mx-1 my-1 px-3">分享</button>
+            <button onClick={() => invalidCoupon(this.coupon)} type="submit" className="btn btn-danger flex-grow-1 px-3 mx-3">&nbsp; &nbsp; 作废&nbsp; &nbsp; </button>
+            <button onClick={() => showShareCoupon({ code: this.coupon.code, type: this.coupon.types, product: undefined })} type="submit" className="btn btn-primary  px-3">&nbsp; &nbsp; 分享&nbsp; &nbsp; </button>
         </div>;
-        return <Page header="优惠券详情" headerClassName={setting.pageHeaderCss} footer={footer}>
+        return <Page header="详情" headerClassName={setting.pageHeaderCss} footer={footer}>
             <PropGrid className="my-2" rows={rows} values={this.coupon} alignValue="right" />
+            {pageCouponReceiveUsed.length > 0 &&
+                <>
+                    <LMR className="cursor-pointer bg-white w-100 mt-2 py-2 pl-3" left="使用记录" ></LMR >
+                    <div className="sep-product-select" style={{ margin: "0 auto" }} />
+                </>
+            }
+            {pageCouponReceiveUsed.length > 0 && this.renderItem()}
         </Page>
-    })
+    });
+
+    private renderItem = () => {
+
+        let content = this.controller.pageCouponReceiveUsed.map((v, index) => {
+            let { receivedate, useddate, receive, used, webuser } = v;
+            let vreceive = <>
+                <FA name="check" />
+                <div><EasyDate date={receivedate}></EasyDate></div>
+            </>;
+            let vused = <>
+                <FA name="check" />
+                <div><EasyDate date={useddate}></EasyDate></div>
+            </>;
+            return <tr className="col bg-white" >
+                <td className="w-1 pt-3">{<UserView user={webuser} render={this.renderTop} />}</td>
+                <td className="w-5">{receive && vreceive}</td>
+                <td className="w-5">{used && vused}</td>
+            </tr >
+        })
+
+        return <table className="table text-center small">
+            <thead className="text-primary">
+                <tr className="bg-white">
+                    <th></th>
+                    <th>领用</th>
+                    <th>使用</th>
+                </tr>
+            </thead>
+            <tbody>
+                {content}
+            </tbody>
+        </table>;
+    }
+
+    renderTop = (user: User): JSX.Element => {
+        let { name, nick } = user;
+        return <div>{nick || name}</div>
+    }
+
 }

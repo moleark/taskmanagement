@@ -9,6 +9,7 @@ import { GLOABLE } from 'ui';
 export class VBalance extends VPage<CBalance> {
 
     private balance: number;
+    private waitWithdrawal: number;
     private amount: number = 0;
     @observable private showmessage: string;
     @observable showTips: any = "none"
@@ -17,14 +18,19 @@ export class VBalance extends VPage<CBalance> {
         let { salesAmont } = this.controller;
         let { totalReceivableAmount, totalaWithdrawal, waitWithdrawal } = salesAmont;
         this.balance = totalReceivableAmount - totalaWithdrawal - waitWithdrawal;
+        this.waitWithdrawal = waitWithdrawal;
         this.openPage(this.page);
     }
 
     private main = observer(() => {
-        return <div className="text-white bg-primary py-2 pb-5" style={{ borderRadius: '0  0 5rem 5rem', margin: ' 0 -2rem 0 -2rem ' }}>
+        return <div className=" d-flex text-white bg-primary py-2 pb-5" style={{ borderRadius: '0  0 5rem 5rem', margin: ' 0 -2rem 0 -2rem ' }}>
             <div style={{ margin: '1rem 0 0 4rem' }}>
-                <h6><small>全部余额（元）</small></h6>
+                <h6><small>余额（元）</small></h6>
                 <h4>{this.balance.toFixed(2)}</h4>
+            </div >
+            <div style={{ margin: '1rem 0 0 2rem' }}>
+                <h6><small>待到账（元）</small></h6>
+                <h4>{this.waitWithdrawal.toFixed(2)}</h4>
             </div >
         </div>;
     })

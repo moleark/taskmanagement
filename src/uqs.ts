@@ -51,6 +51,7 @@ export interface UqWebUser {
     WebUserBuyerAccount: Map;
     WebUserVIPCard: Map;
 
+    SearchCouponReceive: Query;
 }
 
 export interface UqCustomer {
@@ -152,9 +153,9 @@ export interface UqSalesTask {
 
     VIPCardForWebUser: Map;
     VIPCardDiscount: Map;
-
     BottomDiscount: Map;
 
+    SearchCouponUsed: Query;
 }
 
 export interface UqMember {
