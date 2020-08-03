@@ -11,10 +11,11 @@ import { CCustomerUnit } from "./customerunit/CCustomerUnit";
 import { CCoupon } from "./coupon/CCoupon";
 import { CVIPCardType } from "./vipCardType/CVIPCardType";
 import { CInnerCustomer } from "./innercustomer/CInnerCustomer";
+import { CHome } from './home/CHome'
 
 import { UQs } from "./uqs";
 import { CUqBase } from "./CBase";
-import { VHome, GLOABLE } from "./ui";
+import { VMain, GLOABLE } from "./ui";
 import { ProductCart } from "model/productcart";
 import { CBalance } from "achievement/CBalance";
 import { setting } from "appConfig";
@@ -24,9 +25,12 @@ import { PostCustomer } from "post/postcustomer";
 import { CInnerTeam } from "innerteam/CInnerTeam";
 import { observer } from "mobx-react";
 
+import { WebUser } from "./CurrentUser";
+
 /* eslint-disable */
 
 export class CApp extends CAppBase {
+    // topKey: any;
     get uqs(): UQs {
         return this._uqs;
     }
@@ -35,7 +39,7 @@ export class CApp extends CAppBase {
     currentLanguage: any;
     productCart: ProductCart;
     postCustomer: PostCustomer;
-
+    currentUser: WebUser;
     /** 定义 Conctorlle*/
     cSalesTask: CSalesTask;
     cCustomer: CCustomer;
@@ -50,6 +54,7 @@ export class CApp extends CAppBase {
     cWebUser: CInnerCustomer;
     cBalance: CBalance;
     cPost: CPost;
+    cHome: CHome;
 
     cVIPCardType: CVIPCardType;
 
@@ -81,7 +86,6 @@ export class CApp extends CAppBase {
         }
         this.userCache = new UserCache(userLoader);
 
-
         this.productCart = new ProductCart();
         this.postCustomer = new PostCustomer();
 
@@ -99,9 +103,11 @@ export class CApp extends CAppBase {
         this.cBalance = this.newC(CBalance);
         this.cPost = this.newC(CPost);
         this.cVIPCardType = this.newC(CVIPCardType);
+        this.cHome = this.newC(CHome)
 
+        // this.cProduce = this.newC(CProduce);
         /** 启动销售任务列表*/
-        //this.cSalesTask.start();
+        // this.cSalesTask.start();
 
         /** 启动邀请码页面 */
         this.cStart.start();
@@ -111,9 +117,11 @@ export class CApp extends CAppBase {
 
         /** 启动主程序*/
         //await super.internalStart(param);npm 
-
+        await this.cHome.getSlideShow();
+        await this.cMe.load()
         nav.clear();
-        this.openVPage(VHome);
+        this.openVPage(VMain);
+
     }
 
     renderUser(userId: number) {

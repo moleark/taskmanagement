@@ -37,7 +37,7 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
     };
 
     copyClick = (e: any) => {
-        copy(e.target.parentNode.childNodes[0].innerHTML);
+        copy(e);
         this.showTips = "";
         setTimeout(() => {
             this.showTips = "none";
@@ -99,6 +99,7 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
         } else {
             share = <div className="w-100 text-center py-3" >
                 <button className="btn btn-info mx-1 px-4" onClick={() => this.copyClick(code)}> 复制 </button>
+                <div className="text-center text-white small px-2" style={{ width: '30%', margin: '-80px auto 0 auto', padding: '4px', borderRadius: '3px', backgroundColor: '#505050', display: this.showTips }}>已复制到剪切板</div>
             </div>
         }
 

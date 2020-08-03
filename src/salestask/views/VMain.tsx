@@ -6,11 +6,13 @@ import { List, LMR, EasyDate } from 'tonva';
 import { observer } from 'mobx-react';
 import { tv } from 'tonva';
 import { setting } from 'appConfig';
+import bg from '../../images/bg.jpg';
+
 
 export class VMain extends VPage<CSalesTask> {
 
-    //private tasklist: any;
     async open(param: any) {
+        this.openPage(this.page);
     }
 
     render(member: any): JSX.Element {
@@ -57,7 +59,10 @@ export class VMain extends VPage<CSalesTask> {
     private page = observer(() => {
         let { tasks, showPost } = this.controller;
         if (tasks === undefined) return null;
-        let none = <div className="my-3 mx-2" style={{ color: '#888' }}>无任务</div>;
+        let none = <div className=" text-warning text-center" style={{ fontSize: '1.5rem', background: 'white' }}>
+            <p> 亲，你的任务是空的哦</p>
+            <img className="w-100 " src={bg} alt="bg" style={{}} />
+        </div>;
         let right = <div className="cursor-pointer py-1" onClick={async () => this.controller.showSelectTaskType(undefined)} >
             <span className="iconfont mx-3 icon-tianjia" style={{ fontSize: "20px", color: "#ffffff" }}></span>
         </div>;
@@ -66,14 +71,17 @@ export class VMain extends VPage<CSalesTask> {
         let { tasksNow, dateTasksList } = tasks;
 
         return <Page header="任务" onScrollBottom={this.onScrollBottom} right={right} headerClassName={setting.pageHeaderCss} >
-            <LMR
-                className="bg-white px-2 py-1"
-                left={<i className="iconfont icon-neirong " style={{ fontSize: "30px", color: "#efb336" }}></i>}
-                right={<i className="pt-2  px-2 iconfont icon-fangxiang1"></i>}
-                onClick={showPost}
-            >
-                <div className="mx-3 pt-2 font-weight-bold">帖文</div>
-            </LMR>
+            {(setting.sales.isInner) ?
+                <LMR
+                    className="bg-white px-2 py-1"
+                    left={<i className="iconfont icon-neirong " style={{ fontSize: "30px", color: "#efb336" }}></i>}
+                    right={<i className="pt-2  px-2 iconfont icon-fangxiang1"></i>}
+                    onClick={showPost}
+                >
+                    <div className="mx-3 pt-2 font-weight-bold">帖文</div>
+                </LMR>
+                : null
+            }
             {tasksNow.length === 0 && dateTasksList.length === 0 && none}
             {tasksNow.length > 0 && <List before={''} none={none} items={tasksNow} item={item} />}
             {
@@ -89,17 +97,6 @@ export class VMain extends VPage<CSalesTask> {
         </Page >
     });
 }
-
-/**
-    <LMR
-        className="bg-white px-2 py-1"
-        left={<i className="iconfont icon-neirong " style={{ fontSize: "30px", color: "#efb336" }}></i>}
-        right={<i className="pt-2  px-2 iconfont icon-fangxiang1"></i>}
-        onClick={showPost}
-    >
-        <div className="mx-3 pt-2 font-weight-bold">帖文</div>
-    </LMR>
-*/
 
 export const subStyle: React.CSSProperties = {
     fontSize: '0.75rem',

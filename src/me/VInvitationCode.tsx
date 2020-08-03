@@ -17,7 +17,7 @@ export class VInvitationCode extends VPage<CMe> {
         this.openPage(this.page, { code: code });
     }
     copyClick = (e: any) => {
-        copy(e.target.parentNode.childNodes[0].innerHTML)
+        copy(e)
         this.showTips = "";
         setTimeout(() => {
             this.showTips = "none";
@@ -69,7 +69,7 @@ export class VInvitationCode extends VPage<CMe> {
         return <Page header='邀请码' headerClassName={setting.pageHeaderCss}>
             <div className="text-center bg-white" style={{ height: "100%" }} >
                 <div id="qrid" className="text-center" style={{ width: 'auto', height: '85%' }}  >
-                    <Image src={setting.sales.logo} className="mt-4" style={{ width: 'auto', height: '40%', margin: '2rem auto, 0 auto' }} />
+                    <Image src={setting.sales.logo} className="mt-4" style={{ width: 'auto', height: '23.5rem', margin: '2rem auto, 0 auto' }} />
                     <div>
                         < QRCode style={{ margin: '2rem 0 0 0' }}
                             value={url}  //value参数为生成二维码的链接
@@ -82,7 +82,7 @@ export class VInvitationCode extends VPage<CMe> {
                     </div>
                 </div>
                 <div className="w-100 text-center">
-                    <span className="text-info cursor-info mx-2" onClick={this.copyClick}>复制</span>
+                    <span className="text-info cursor-info mx-2" onClick={() => this.copyClick(inviteCode)}>复制</span>
                     {share}
                     <div className="text-center text-white small px-2" style={{ width: '30%', margin: '-80px auto 0 auto', padding: '4px', borderRadius: '3px', backgroundColor: '#505050', display: this.showTips }}>已复制到剪切板</div>
                 </div>

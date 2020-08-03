@@ -1,5 +1,5 @@
 export { jnkTop, assistjnkTop } from "./jnkTop";
-export { VHome } from './main';
+export { VMain } from './main';
 
 /*测式*/
 /*

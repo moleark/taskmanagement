@@ -59,6 +59,7 @@ export class VProductDetail extends VPage<CProduct> {
     private arrTemplet = (item: ProductPackRow) => {
 
         let { pack, retail, agentPrice, promotionPrice } = item;
+
         let right = null;
         let agent = null;
 

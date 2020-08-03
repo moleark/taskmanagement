@@ -6,8 +6,8 @@ import { setting } from 'appConfig';
 
 export class VNewCustomerList extends VPage<CCustomer> {
 
-    async open() {
-        this.openPage(this.page);
+    async open(param: any) {
+        this.openPage(this.page, param);
     }
     private renderNewCustomer = (model: any, index: number) => {
         let { showNewMyCustomerDetail } = this.controller;
@@ -20,11 +20,11 @@ export class VNewCustomerList extends VPage<CCustomer> {
         </LMR >
     }
 
-    private page = observer(() => {
-        let { newMyCustomerList } = this.controller;
-        let none = <div className="my-3 mx-2 text-warning"></div>;
+    private page = observer((param: any) => {
+        //let { newMyCustomerList } = this.controller;
+        let none = <div className="my-3 mx-2 text-warning">无</div>;
         return <Page header="新客户" headerClassName={setting.pageHeaderCss} >
-            <List className="py-2" before={''} none={none} items={newMyCustomerList} item={{ render: this.renderNewCustomer }} />
+            <List className="py-2" before={''} none={none} items={param} item={{ render: this.renderNewCustomer }} />
         </Page>
     })
 }

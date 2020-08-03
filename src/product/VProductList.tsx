@@ -1,17 +1,17 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { tv } from 'tonva';
-import { VPage, Page, List, SearchBox } from 'tonva';
+import { tv, SearchBox } from 'tonva';
+import { VPage, Page, List } from 'tonva';
 import { CProduct } from './CProduct';
 import { ProductImage } from '../tools/productImage';
 import { setting } from 'appConfig';
 import classNames from 'classnames';
 
 export class VProductList extends VPage<CProduct> {
-
+    private seachkey: any;
     async open(customer: any) {
-
-        this.openPage(this.page, customer);
+        this.seachkey = customer
+        this.openPage(this.page);
     }
 
     //每个视图都有一个render方法， 用于自定义页面
@@ -82,10 +82,10 @@ export class VProductList extends VPage<CProduct> {
         </div>;
 
         return <Page header="产品" right={right} onScrollBottom={onScrollBottom} headerClassName={setting.pageHeaderCss} >
-            <SearchBox className="px-1 w-100  mt-2 mr-2 "
+            {(setting.sales.isInner) ? <SearchBox className="px-1 w-100  mt-2 mr-2 "
                 size='md'
                 onSearch={(key: string) => this.controller.searchByKey(key)}
-                placeholder="搜索品名、编号、CAS、MDL等" />
+                placeholder="搜索品名、编号、CAS、MDL等" /> : <div className="bg-white py-2 px-3 mb-1"><small className=" small text-muted">搜索: </small>{this.seachkey}</div>}
             <List before={''} none={none} items={pageProduct} item={{ render: this.renderProduct, onClick: null }} />
         </Page>
     })

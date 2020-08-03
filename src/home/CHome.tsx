@@ -1,31 +1,54 @@
 import * as React from 'react';
 import { observable } from 'mobx';
 // import { observer } from 'mobx-react';
-import { tv, BoxId, QueryPager } from 'tonva';
+import { tv, BoxId, QueryPager, PageItems, Tuid } from 'tonva';
 import { CUqBase } from '../CBase';
 import { ProductImage } from '../tools/productImage';
-import { VProductSelect } from './VProductSelect';
-import { VProductDetail } from './VProductDetail';
-import { LoaderProductChemicalWithPrices } from './item';
+import { VProductSelect } from '../product/VProductSelect';
+import { VProductDetail } from '../product/VProductDetail';
+import { LoaderProductChemicalWithPrices } from '../product/item';
 import classNames from 'classnames';
-import { VProductDelivery } from './VProductDelivery';
-import { VProductBox } from './VProductBox';
+import { VProductDelivery } from '../product/VProductDelivery';
+import { VProductBox } from '../product/VProductBox';
+import { VHome } from './VHome';
+import { VSearchHeader } from './VSearchHeader';
+import { VProductPackSelect } from '../product/VProductPackSelect';
 
-import { VProductPackSelect } from './VProductPackSelect';
-
-import { VProductPromotion } from './VProductPromotion';
-import { VProductSearchPromotion } from './VProductSearchPromotion';
-import { VProductList } from './VProductList';
-import { observer } from 'mobx-react';
-import { setting } from 'appConfig';
+import { VProductPromotion } from '../product/VProductPromotion';
+import { VProductSearchPromotion } from '../product/VProductSearchPromotion';
+import { VProductList } from '../product/VProductList';
 
 /**
  *Query SearchPromotion( keyWord char(20), salesRegion ID SalesRegion, language ID Language )
   Query SearchPromotion( salesRegion ID SalesRegion, language ID Language )
 
  */
+class HomeSections extends PageItems<any> {
 
-export class CProduct extends CUqBase {
+    private sectionTuid: Tuid;
+
+    constructor(sectionTuid: Tuid) {
+        super();
+        this.firstSize = this.pageSize = 13;
+        this.sectionTuid = sectionTuid;
+    }
+
+    protected async loadResults(param: any, pageStart: any, pageSize: number): Promise<{ [name: string]: any[] }> {
+        let ret = await this.sectionTuid.search("", pageStart, pageSize);
+        return { $page: ret };
+    }
+    protected async load(param: any, pageStart: any, pageSize: number): Promise<any[]> {
+        if (pageStart === undefined) pageStart = 0;
+        let ret = await this.sectionTuid.search("", pageStart, pageSize);
+        return ret;
+    }
+
+    protected setPageStart(item: any): any {
+        if (item === undefined) return 0;
+        return item.id;
+    }
+}
+export class CHome extends CUqBase {
     //cApp: CApp;
     @observable pageProduct: QueryPager<any>;
     @observable customerlist: any;
@@ -40,22 +63,31 @@ export class CProduct extends CUqBase {
 
 
     //初始化
-    protected async internalStart(param: any) {
-        this.pageProduct = null;
-        this.openVPage(VProductSelect, param);
-    }
+
+    homeSections: HomeSections;
+    sectionTuid: Tuid;
 
     banners: any[] = [];
 
-    render = observer(() => {
-        this.pageProduct = null;
-        return this.renderView(VProductList);
-    })
-
-    tab = () => {
-        return <this.render />;
+    async internalStart(param: any) {
+        await this.openVPage(VHome);
     }
 
+    renderSearchHeader = (size?: string) => {
+        return this.renderView(VSearchHeader, size);
+    }
+
+
+    getSlideShow = async () => {
+        let list = await this.uqs.webBuilder.GetSlideShow.table({});
+        // this.bannercaption = list[0].caption;
+        // this.bannerdescription = list[0].description
+        list.forEach(v => {
+            this.banners.push({ path: v.path, src: v.src, caption: v.caption, description: v.description });
+        })
+    }
+
+    tab = () => this.renderView(VHome);
 
     onScrollBottom = async () => {
         await this.pageProduct.more();
@@ -66,11 +98,7 @@ export class CProduct extends CUqBase {
     searchByKey = async (key: string) => {
         this.pageProduct = new QueryPager(this.uqs.product.SearchProduct, 15, 30);
         await this.pageProduct.first({ keyWord: key, salesRegion: 1 });
-        if (setting.sales.isInner) {
-        } else {
-            return await this.openVPage(VProductList, key);
-        }
-
+        return await this.openVPage(VProductList, key);
     }
 
     //选择客户--给调用页面返回客户id

@@ -1,0 +1,1 @@
+export { CProduct } from './CProduct';

@@ -6,7 +6,7 @@ import { setting } from 'appConfig';
 /* eslint-disable */
 const color = (selected: boolean) => selected === true ? 'text-primary' : 'text-muted';
 
-export class VHome extends VPage<CApp> {
+export class VMain extends VPage<CApp> {
     async open(param?: any) {
         this.calcSum();
         this.openPage(this.render);
@@ -17,24 +17,46 @@ export class VHome extends VPage<CApp> {
     }
 
     render = (param?: any): JSX.Element => {
-        let { cSalesTask, cCustomer, cProduct, cMe, cMessage, cBalance } = this.controller;
-        let faceTabs: any[] = [
-            { name: 'home', label: '任务', content: cSalesTask.tab, icon: 'tasks', notify: undefined/*store.homeCount*/ },
-            { name: 'member', label: '客户', content: cCustomer.tab, icon: 'vcard', onScrollBottom: cCustomer.onScrollBottom },
-            { name: 'member', label: '产品', content: cProduct.tab, icon: 'gift', onScrollBottom: cProduct.onScrollBottom },
-            { name: 'member', label: '我的', content: cMe.tab, icon: 'user', onShown: cBalance.getComputeAchievement, load: cMe.load, notify: cMessage.count },
-        ].map(v => {
-            let { name, label, icon, content, notify, load, onShown, onScrollBottom } = v;
-            return {
-                name: name,
-                caption: (selected: boolean) => TabCaptionComponent(label, icon, color(selected)),
-                content: content,
-                notify: notify,
-                load: load,
-                onShown: onShown,
-                onScrollBottom,
-            }
-        });
+        let { cCustomer, cProduct, cMe, cMessage, cBalance, cPost, cHome, cSalesTask } = this.controller;
+        let faceTabs: any[];
+        if (setting.sales.isInner) {
+            faceTabs = [
+                { name: 'home', label: '任务', content: cSalesTask.tab, icon: 'tasks', notify: undefined/*store.homeCount*/ },
+                { name: 'member', label: '客户', content: cCustomer.tab, icon: 'vcard', onScrollBottom: cCustomer.onScrollBottom },
+                { name: 'member', label: '产品', content: cProduct.tab, icon: 'gift', onScrollBottom: cProduct.onScrollBottom },
+                { name: 'member', label: '我的', content: cMe.tab, icon: 'user', onShown: cBalance.getComputeAchievement, load: cMe.load, notify: cMessage.count },
+            ].map(v => {
+                let { name, label, icon, content, notify, load, onShown, onScrollBottom } = v;
+                return {
+                    name: name,
+                    caption: (selected: boolean) => TabCaptionComponent(label, icon, color(selected)),
+                    content: content,
+                    notify: notify,
+                    load: load,
+                    onShown: onShown,
+                    onScrollBottom,
+                }
+            });
+        } else {
+            faceTabs = [
+                { name: 'member', label: '首页', content: cHome.tab, icon: 'home', notify: undefined },
+                { name: 'member', label: '客户', content: cCustomer.tab, icon: 'vcard', onScrollBottom: cCustomer.onScrollBottom },
+                { name: 'home', label: '帖文', content: cPost.tab, icon: 'tasks', onScrollBottom: cPost.onScrollBottom, notify: undefined },
+                { name: 'member', label: '我的', content: cMe.tab, icon: 'user', onShown: cBalance.getComputeAchievement, load: cMe.load, notify: cMessage.count },
+            ].map(v => {
+                let { name, label, icon, content, notify, load, onShown, onScrollBottom } = v;
+                return {
+                    name: name,
+                    caption: (selected: boolean) => TabCaptionComponent(label, icon, color(selected)),
+                    content: content,
+                    notify: notify,
+                    load: load,
+                    onShown: onShown,
+                    onScrollBottom,
+                }
+            });
+        }
+
 
         var browser = {
             versions: function () {
@@ -46,12 +68,12 @@ export class VHome extends VPage<CApp> {
                     gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,    //火狐内核
                     mobile: !!u.match(/AppleWebKit.*Mobile.*/),                    //是否为移动终端
                     ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),               //ios终端
-                    android: u.indexOf('Android') > -1, //android终端或者uc浏览器
-                    uc: u.indexOf('Linux') > -1, //android终端或者uc浏览器
+                    android: u.indexOf('Android') > -1,                            //android终端或者uc浏览器
+                    uc: u.indexOf('Linux') > -1,                                   //android终端或者uc浏览器
                     iPhone: u.indexOf('iPhone') > -1,                              //是否为iPhone或者QQHD浏览器
                     iPad: u.indexOf('iPad') > -1,                                  //是否iPad
                     webApp: u.indexOf('Safari') == -1,                             //是否web应该程序，没有头部与底部
-                    html5Plus: u.indexOf('Html5Plus') > -1                      //是否微信 （2015-01-22新增）
+                    html5Plus: u.indexOf('Html5Plus') > -1                         //是否微信 （2015-01-22新增）
                 };
             }()
         };

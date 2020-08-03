@@ -25,6 +25,8 @@ export interface UqProduct {
     SearchProduct: Query;
     SearchProductByCategory: Query;
     GetFutureDeliveryTime: Query;
+    ProductCategory: Tuid;
+
 }
 
 export interface UqCommon {
@@ -45,6 +47,9 @@ export interface UqWebUser {
     WebUserCustomer: Map;
     WebUserContacts: Map;
     WebUserVipCard: Map;
+    WebUserSetting: Map;
+    WebUserBuyerAccount: Map;
+    WebUserVIPCard: Map;
 
 }
 
@@ -64,6 +69,7 @@ export interface UqCustomerDiscount {
 
 export interface UqPromotion {
     GetPromotionPack: Query;
+    SearchPromotion: Query;
 }
 
 export interface UqWarehouse {
@@ -148,6 +154,7 @@ export interface UqSalesTask {
     VIPCardDiscount: Map;
 
     BottomDiscount: Map;
+
 }
 
 export interface UqMember {
@@ -175,6 +182,7 @@ export interface UqWebBuilder {
     SearchSubjectPost: Query;
     SearchDomainPost: Query;
     PostDomain: Map;
+    GetSlideShow: Query;
 }
 
 export interface UqVIPCardType {

@@ -19,6 +19,7 @@ import { VCustomerOrderDetail } from "./VCustomerOrderDetail";
 import { VNewCustomerList } from "./VNewCustomerList";
 import { VCustomerSearchByUnit } from "./VCustomerSearchByUnit";
 import { setting } from "appConfig";
+
 /* eslint-disable */
 
 export class CCustomer extends CUqBase {
@@ -38,10 +39,9 @@ export class CCustomer extends CUqBase {
 
     //初始化
     protected async internalStart(task: Task) {
-        this.pageCustomer = null;
+        // this.pageCustomer = null;
         this.task = task;
         this.searchByKey("");
-        this.searchNewMyCustomer();
         this.openVPage(VCustomerSelect);
     }
 
@@ -333,8 +333,10 @@ export class CCustomer extends CUqBase {
         return await cAddress.call<number>();
     };
 
-    showNewCustomerList = () => {
-        this.openVPage(VNewCustomerList)
+    showNewCustomerList = async () => {
+        let list = await this.uqs.salesTask.searchNewMyCustomer.table({});
+        // await this.showNewCustomerList();
+        this.openVPage(VNewCustomerList, list);
     }
 
     showCustomerSearchByUnit = async (param: any) => {
@@ -382,14 +384,26 @@ export class CCustomer extends CUqBase {
     onScrollBottom = async () => {
         await this.pageCustomer.more();
     }
+    // showTaskList = () => {
+    //     // this.cApp.cSalesTask.taskshow()
+    //     // this.cApp.cSalesTask.start()
+    //     this.cApp.cSalesTask.tab()
+    // }
+
+    searchTaskByKey = async () => {
+        let { cSalesTask } = this.cApp;
+        return cSalesTask.searchTaskByKey('')
+    }
 
     render = observer(() => {
+
         return this.renderView(VCustomerList);
     });
 
     tab = () => {
         this.searchByKey("");
-        this.searchNewMyCustomer();
+        this.searchTaskByKey();
         return <this.render />;
     };
+
 }

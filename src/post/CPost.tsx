@@ -1,3 +1,4 @@
+import * as React from "react";
 import { nav, QueryPager } from "tonva";
 import { CUqBase } from "../CBase";
 import { VPostList } from "./VPostList";
@@ -11,6 +12,7 @@ import { VSubject } from "./VSubject";
 import { VSubjectPost } from "./VSubjectPost";
 import { VDomain } from "./VDomain";
 import { VDomainPost } from "./VDomainPost";
+import { observer } from "mobx-react";
 
 //页面类
 /* eslint-disable */
@@ -110,5 +112,17 @@ export class CPost extends CUqBase {
         let param = { post: post.id, customer: customerid };
         await this.uqs.salesTask.AddMyCustomerPost.submit(param);
         await this.uqs.webBuilder.TransmitPost.submit({ _post: post });
+    };
+
+    onScrollBottom = () => {
+        this.pagePost.more();
+    };
+
+    render = observer(() => {
+        return this.renderView(VPostList);
+    });
+    tab = () => {
+        this.searchByKey("", "");
+        return <this.render />;
     };
 }

@@ -1,7 +1,7 @@
 import * as React from "react";
-import { observer } from "mobx-react";
+// import { observer } from "mobx-react";
 import { observable } from "mobx";
-import { FA, nav, QueryPager } from "tonva";
+import { FA, QueryPager, nav } from "tonva";
 import { CUqBase } from "../CBase";
 import { LoaderProductChemicalWithPrices } from "../product/item";
 import { VMain } from "./views/VMain";
@@ -27,6 +27,7 @@ import { CCommonType } from "./types/commonType";
 import { CType } from "./types/CType";
 import { VCreateTaskOfCustomer } from "./views/VCreateTaskOfCustomer";
 import { VCreateOrder } from "./views/VCreateOrder";
+import { observer } from "mobx-react";
 
 /* eslint-disable */
 export class CSalesTask extends CUqBase {
@@ -47,7 +48,11 @@ export class CSalesTask extends CUqBase {
 
         this.taskTypes = createTaskTypes(this);
 
-        await this.searchTaskByKey(0);
+        this.searchTaskByKey(0);
+
+    }
+    showTask = () => {
+        this.openVPage(VMain);
     }
 
     //搜索开始------------------------------------------------
@@ -475,7 +480,7 @@ export class CSalesTask extends CUqBase {
                         onClick={() => nav.showLogin(this.loginCallback, true)}
                     >
                         <FA name="sign-out" size="lg" /> 请登录
-                    </button>
+                     </button>
                     <div className="flex-fill" />
                     <div className="flex-fill" />
                 </div>
@@ -491,4 +496,5 @@ export class CSalesTask extends CUqBase {
     tab = () => {
         return <this.render />;
     };
+
 }

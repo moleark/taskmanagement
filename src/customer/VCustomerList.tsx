@@ -34,15 +34,19 @@ export class VCustomerList extends VPage<CCustomer> {
     }
 
     private page = observer(() => {
+
         let { pageCustomer, showSelectOrganization, showCustomerSearch, showNewCustomerList, onScrollBottom, cApp } = this.controller;
         let right = <div className="cursor-pointer py-1">
             <span onClick={() => showCustomerSearch(null)} className="iconfont icon-icon-chaxun mx-2" style={{ fontSize: "20px", color: "#ffffff" }}></span>
             <span onClick={() => showSelectOrganization(1)} className="iconfont icon-tianjia mx-3" style={{ fontSize: "20px", color: "#ffffff" }}></span>
         </div>;
-        let none = <div className="my-3 mx-2 text-warning"></div>;
+        let none = <div className="my-3 mx-2 text-warning">【无】</div>;
+
         return <Page header="客户" onScrollBottom={onScrollBottom} headerClassName={setting.pageHeaderCss} right={right} >
             {branch("单位", "icon-photo", () => cApp.cCustomerUnit.start(3))}
             {branch("新客户", "icon-xinyonghu", showNewCustomerList)}
+            {(setting.sales.isInner) ? null : branch("任务", "icon-renwuwancheng", () => cApp.cSalesTask.showTask())}
+
             {
                 pageCustomer && pageCustomer.items && (pageCustomer.items.length > 0) &&
                 <List before={''} none={none} items={pageCustomer} item={{ render: this.renderCustomer }} />

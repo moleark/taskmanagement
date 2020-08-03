@@ -74,7 +74,7 @@ export class VCustomer extends VPage<CPost> {
         let { name, unit, webuser, sharingTimes, sharingCount } = customer;
         let right = <div onClick={() => this.share(customer, "content")}><FA name='wechat text-success mx-3' /></div>;
         let left = webuser ? <UserIcon className="mt-1 mx-2 w-3c h-3c" id={webuser.id} style={{ borderRadius: "8px" }} /> : this.imgSmile;
-        let namev = name.length < 3 ? <div className="cursor-pointer font-weight-bold pr-3" > {name}</div> : <div className="cursor-pointer font-weight-bold pr-1" > {name}</div>
+        let namev = (name && name.length < 3) ? <div className="cursor-pointer font-weight-bold pr-3" > {name}</div> : <div className="cursor-pointer font-weight-bold pr-1" > {name}</div>
         return (
             <LMR className="py-1 align-items-center" left={left}  >
                 <div className="cursor-pointer text-muted">

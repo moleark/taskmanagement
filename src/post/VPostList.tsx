@@ -14,7 +14,7 @@ export class VPostList extends VPage<CPost> {
         return <this.page />;
     }
 
-    private onScrollBottom = async () => {
+    private onScrollBottoms = async () => {
         this.controller.pagePost.more();
     };
 
@@ -32,7 +32,7 @@ export class VPostList extends VPage<CPost> {
             </div>
         );
         return (
-            <Page header="帖文" onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss} right={right}>
+            <Page header={"帖文"} headerClassName={setting.pageHeaderCss} right={right} onScrollBottom={this.onScrollBottoms}>
                 <LMR className="bg-white py-3 my-1" right={<i className="pt-2 px-2 iconfont icon-fangxiang1"></i>} onClick={showProductCatalog}>
                     <div className="mx-3 px-2 font-weight-bold">产品目录</div>
                 </LMR>

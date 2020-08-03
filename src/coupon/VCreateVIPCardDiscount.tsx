@@ -157,16 +157,18 @@ export class VCreateVIPCardDiscount extends VPage<CCoupon> {
             <List items={this.vipCardDiscountSetting} item={{ render: this.renderEditBrandDiscount }}>
             </List>
     */
+
     private page = () => {
-        let submitButton = <button type="button"
-            className="btn btn-primary w-100"
-            onClick={this.onSubmit}>提交</button>;
-        return <Page header="设置品牌折扣">
+        let footer = <button type="button" className="btn btn-primary w-100 " onClick={this.onSubmit}>一键分享</button>;
+        let right = <div className="cursor-pointer mx-3 small text-warning" onClick={() => this.controller.cApp.cCoupon.showCouponList("coupon")} >
+            {/* <i className="iconfont icon-qita" style={{ fontSize: "20px" }}></i> */}
+            <FA name="list-ol" className="pl-1 mr-1 fa-lg" />
+        </div>;
+        return <Page header="设置品牌折扣" right={right} footer={footer} >
             <Form ref={v => this.form = v} className="bg-white p-3"
                 schema={schema} uiSchema={this.uiSchema} formData={{ vipCardDiscountSetting: this.vipCardDiscountSetting }}
                 onButtonClick={this.onFormButtonClick} />
             {React.createElement(this.tipsUi)}
-            {submitButton}
         </Page>
     }
 }
