@@ -113,18 +113,16 @@ export class CApp extends CAppBase {
         /** 启动销售任务列表*/
         // this.cSalesTask.start();
 
-        /** 启动邀请码页面 */
-        this.cStart.start();
-
         /**计算业绩**/
         //await this.cMe.onComputeAchievement();
 
-        /** 启动主程序*/
-        //await super.internalStart(param);npm 
-        await this.cHome.getSlideShow();
+        //加载邀请码
         await this.cMe.load()
         nav.clear();
+        //显示主页面
         this.openVPage(VMain);
+        //启动主程序
+        this.cStart.start();
 
     }
 

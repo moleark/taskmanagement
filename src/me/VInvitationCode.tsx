@@ -67,9 +67,9 @@ export class VInvitationCode extends VPage<CMe> {
         inviteCode = p1 + ' ' + p2;
 
         return <Page header='邀请码' headerClassName={setting.pageHeaderCss}>
-            <div className="text-center bg-white" style={{ height: "100%" }} >
+            <div className="text-center bg-white" ref={this.refIframe} >
                 <div id="qrid" className="text-center" style={{ width: 'auto', height: '85%' }}  >
-                    <Image src={setting.sales.logo} className="mt-2" style={{ width: 'auto', height: '23.5rem', margin: '2rem auto, 0 auto' }} />
+                    <Image src={setting.sales.logo} className="mt-2" style={{ width: 'auto', height: '15rem', margin: '2rem auto, 0 auto' }} />
                     <div>
                         < QRCode style={{ margin: '2rem 0 0 0' }}
                             value={url}  //value参数为生成二维码的链接
@@ -89,4 +89,12 @@ export class VInvitationCode extends VPage<CMe> {
             </div>
         </Page >
     })
+
+    private refIframe = (ifrm: HTMLIFrameElement) => {
+        if (!ifrm) return;
+        let article = ifrm.parentElement.parentElement;
+        let header = (article.querySelector('section.tv-page-header') as HTMLElement);
+        ifrm.style.height = (window.innerHeight - header.clientHeight) + 'px';
+        article.parentElement.style.overflowY = 'hidden';
+    }
 }
