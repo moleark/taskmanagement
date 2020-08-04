@@ -6,9 +6,6 @@ import { List, LMR, EasyDate } from 'tonva';
 import { observer } from 'mobx-react';
 import { tv } from 'tonva';
 import { setting } from 'appConfig';
-import bg from '../../images/bg.jpg';
-
-
 export class VMain extends VPage<CSalesTask> {
 
     async open(param: any) {
@@ -59,10 +56,7 @@ export class VMain extends VPage<CSalesTask> {
     private page = observer(() => {
         let { tasks, showPost } = this.controller;
         if (tasks === undefined) return null;
-        let none = <div className=" text-warning text-center" style={{ fontSize: '1.5rem', background: 'white' }}>
-            <p> 亲，你的任务是空的哦</p>
-            <img className="w-100 " src={bg} alt="bg" style={{}} />
-        </div>;
+        let none = <div className="py-2 text-warning text-center" style={{ background: 'white' }}> 您还未创建任务呢</div>;
         let right = <div className="cursor-pointer py-1" onClick={async () => this.controller.showSelectTaskType(undefined)} >
             <span className="iconfont mx-3 icon-tianjia" style={{ fontSize: "20px", color: "#ffffff" }}></span>
         </div>;
@@ -96,6 +90,13 @@ export class VMain extends VPage<CSalesTask> {
             }
         </Page >
     });
+    private refIframe = (ifrm: HTMLIFrameElement) => {
+        if (!ifrm) return;
+        let article = ifrm.parentElement.parentElement;
+        let header = (article.querySelector('section.tv-page-header') as HTMLElement);
+        ifrm.style.height = (window.innerHeight - header.clientHeight) + 'px';
+        article.parentElement.style.overflowY = 'hidden';
+    }
 }
 
 export const subStyle: React.CSSProperties = {

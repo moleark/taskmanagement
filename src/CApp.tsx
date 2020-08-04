@@ -116,6 +116,8 @@ export class CApp extends CAppBase {
         /**计算业绩**/
         //await this.cMe.onComputeAchievement();
 
+        //加载轮播图
+        await this.cHome.getSlideShow();
         //加载邀请码
         await this.cMe.load()
         nav.clear();

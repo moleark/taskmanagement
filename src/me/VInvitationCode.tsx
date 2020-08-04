@@ -86,7 +86,7 @@ export class VInvitationCode extends VPage<CMe> {
                     {share}
                     <div className="text-center text-white small px-2" style={{ width: '30%', margin: '-58px auto 0 auto', padding: '4px', borderRadius: '3px', backgroundColor: '#505050', display: this.showTips }}>已复制到剪切板</div>
                 </div>
-                <div className="mt-4 px-4 small text-muted">简洁易于操作，可以复制分享邀请码，快速邀请客户发展团队.</div>
+                <div className="mt-4 px-4 small text-muted">复制分享邀请码，可以邀请客户发展团队.</div>
             </div>
         </Page >
     })

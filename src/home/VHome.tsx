@@ -75,7 +75,7 @@ export class VHome extends VPage<CHome> {
 
         let promotions = <div className="" style={{ background: "white" }}>
             <div className="px-1 py-1 d-flex w-100" style={{ borderBottom: '1px solid #ccc' }}>
-                <span className="px-2" style={{ borderRight: '1px dotted #ccc' }}>特惠活动</span>
+                <span className="px-2 text-danger" style={{ borderRight: '1px dotted #ccc' }}>特惠活动</span>
                 <div className="ml-4 small text-muted pt-2">优惠活动，分享其优惠券可以快速的帮助绑定客户，增加客户源，并将优惠产品分享给客户</div>
             </div>
             <div className="d-flex flex-column w-100 small py-1" >

@@ -48,12 +48,12 @@ export class VCustomerList extends VPage<CCustomer> {
             {(setting.sales.isInner) ? null : branch("任务", "icon-renwuwancheng", () => cApp.cSalesTask.showTask())}
 
             {
-                pageCustomer && pageCustomer.items && (pageCustomer.items.length > 0) &&
-                <List before={''} none={none} items={pageCustomer} item={{ render: this.renderCustomer }} />
+                (pageCustomer && pageCustomer.items && (pageCustomer.items.length > 0)) ?
+                    <List before={''} none={none} items={pageCustomer} item={{ render: this.renderCustomer }} />
+                    : < div className="m-2 text-warning text-center"> 您还没客户呢,可以添加创建新客户</div>
             }
-        </Page>
+        </Page >
     })
-
 }
 
 function branch(name: string, icon: string, action: any): JSX.Element {
