@@ -57,7 +57,6 @@ export class VMain extends VPage<CApp> {
             });
         }
 
-
         var browser = {
             versions: function () {
                 var u = navigator.userAgent, app = navigator.appVersion;
@@ -90,7 +89,7 @@ export class VMain extends VPage<CApp> {
         }
 
         return <Page header={header} headerClassName={"bg-info"} tabsProps={{ tabs: faceTabs }}>
-        </Page >;
+        </Page>;
     }
 
 

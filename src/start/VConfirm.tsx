@@ -26,14 +26,13 @@ export class VConfirm extends VPage<CStart> {
                     src={setting.sales.logo}
                     className="mt-4"
                     style={{
-                        width: "auto",
+                        width: "50%",
                         height: "50%",
                         margin: "2rem auto, 0 auto"
                     }}
                 />
                 <div className="my-4">
                     <div>
-                        {" "}
                         {tv(user, v => v.name)}，邀请您加入
                         {setting.sales.appName}。
                     </div>
@@ -65,13 +64,11 @@ export class VConfirm extends VPage<CStart> {
         );
     }
 
-    private CreatePosition = async (code: string) => {
-        await this.controller.createPosition({ invitacode: code });
-    };
-
     private page = observer((position: any) => {
+
         let onCreatePosition = async () =>
-            await this.CreatePosition(position.code + "");
+            await this.controller.createPosition({ invitacode: position.code + "" });
+
         let footer: any = setting.sales.isInner ? (
             undefined
         ) : (

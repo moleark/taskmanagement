@@ -48,16 +48,13 @@ export class CStart extends CUqBase {
             }
         } else {
             var isPosition: Boolean = await this.isPosition();
-            if (isPosition) {
-                // 已有邀请码
-                cSalesTask.start();
-            } else {
+            if (!isPosition) {
                 nav.clear();
                 let query = this.getQueryParam();
                 if (query.code) {
-                    let position = await salesTask.SearchPosition.table({ position: query.code });
-                    if (position.length > 0) {
-                        await this.openVPage(VConfirm, position[0]);
+                    let position = await salesTask.SearchPosition.obj({ position: query.code });
+                    if (position !== undefined) {
+                        await this.openVPage(VConfirm, position);
                     } else {
                         await this.openVPage(VStart, param);
                     }
@@ -102,7 +99,9 @@ export class CStart extends CUqBase {
         await this.openVPage(VStart, param);
     }
 
-    //判断是否有邀请码
+    /**
+     * 判断是否有邀请码
+     */
     isPosition = async () => {
         let position = await this.uqs.salesTask.SearchPosition.table({ position: undefined });
         if (position && position.length > 0) {
@@ -134,9 +133,10 @@ export class CStart extends CUqBase {
         return position;
     }
 
-    //开启APP
+    // 开启APP
     startApp = async () => {
-        await this.cApp.start();
+        // await this.cApp.start();
+        this.cApp.showMain();
     }
 
 }

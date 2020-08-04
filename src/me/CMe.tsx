@@ -30,16 +30,26 @@ export class CMe extends CUqBase {
     load = async () => {
         await nav.loadMe();
         await this.lodeAccount();
-        this.position = await this.uqs.salesTask.SearchPosition.table({
+        this.position = await this.uqs.salesTask.SearchPosition.obj({
             position: undefined
         });
-        if (this.position.length > 0) {
-            let code = String(this.position[0].code + 100000000);
+        if (this.position !== undefined) {
+            let code = String(this.position.code + 100000000);
             this.inviteCode = code;
         } else {
             this.inviteCode = "100000000";
         }
     };
+
+    getMyPositionCode = async () => {
+        let position = await this.uqs.salesTask.SearchPosition.obj({
+            position: undefined
+        });
+        if (position !== undefined) {
+            return position.code;
+        }
+        return '00000000';
+    }
 
     //显示我的个人信息
     showMeDetail = async () => {
@@ -75,7 +85,7 @@ export class CMe extends CUqBase {
         this.openVPage(VSet);
     };
 
-    showInvitationCode = async (param: string) => {
+    showInvitationCode = (param: string) => {
         this.openVPage(VInvitationCode, param);
     };
 

@@ -47,10 +47,9 @@ export class CSalesTask extends CUqBase {
         this.cSalesTaskBiz = this.newSub(CSelectBiz);
 
         this.taskTypes = createTaskTypes(this);
-
         this.searchTaskByKey(0);
-
     }
+
     showTask = () => {
         this.openVPage(VMain);
     }

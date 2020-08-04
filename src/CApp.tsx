@@ -118,14 +118,16 @@ export class CApp extends CAppBase {
 
         //加载轮播图
         await this.cHome.getSlideShow();
-        //加载邀请码
-        await this.cMe.load()
         nav.clear();
         //显示主页面
-        this.openVPage(VMain);
+        this.showMain();
         //启动主程序
         this.cStart.start();
 
+    }
+
+    showMain() {
+        this.openVPage(VMain);
     }
 
     renderUser(userId: number) {
