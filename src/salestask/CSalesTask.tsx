@@ -51,6 +51,7 @@ export class CSalesTask extends CUqBase {
     }
 
     showTask = () => {
+        this.searchTaskByKey(0);
         this.openVPage(VMain);
     }
 
@@ -141,10 +142,14 @@ export class CSalesTask extends CUqBase {
         let tt = this.getCTaskType(task.biz.obj.name);
         if (tt !== undefined) tt.showDetailEdit(task);
     };
-    //显示销售任务明细页面
+
+    //TODO: 显示销售任务明细页面
     showDetailFromId = async (task: Task) => {
-        this.getCTaskType(task.biz.obj.name).showDetailFromId(task.id);
+        let taskType: CType = this.getCTaskType(task.biz.obj.name)
+        if (taskType !== undefined)
+            taskType.showDetailFromId(task.id);
     };
+
     //显示任务完结页面
     showTaskComplet = async (task: Task) => {
         let model = await this.uqs.salesTask.TaskOrder.query({ task: task.id });
@@ -469,6 +474,7 @@ export class CSalesTask extends CUqBase {
 
     render = observer(() => {
         if (this.isLogined) {
+            this.searchTaskByKey(0);
             return this.renderView(VMain);
         } else {
             return (

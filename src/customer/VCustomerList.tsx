@@ -50,7 +50,7 @@ export class VCustomerList extends VPage<CCustomer> {
             {
                 (pageCustomer && pageCustomer.items && (pageCustomer.items.length > 0)) ?
                     <List before={''} none={none} items={pageCustomer} item={{ render: this.renderCustomer }} />
-                    : < div className="m-2 text-warning text-center"> 您还没客户呢,可以添加创建新客户</div>
+                    : < div className="py-2 text-warning text-center bg-white mt-2">您还没客户呢,可以添加创建新客户</div>
             }
         </Page >
     })

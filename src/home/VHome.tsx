@@ -3,14 +3,11 @@ import { Page, VPage, FA, LMR } from 'tonva';
 import { CHome } from './CHome';
 import { VSiteHeader } from './VSiteHeader';
 import { VSlider } from './VSlider';
-// import { setting } from "appConfig";
 import { observer } from "mobx-react";
 import { observable } from 'mobx';
-// import { ProductImage } from 'tools/productImage';
 
 export class VHome extends VPage<CHome> {
     @observable showTips: any = "";
-    private inviteCode: any;
 
     async open(param?: any) {
         this.openPage(this.page);
@@ -25,9 +22,6 @@ export class VHome extends VPage<CHome> {
             <this.pageContent />
         </Page>;
     });
-    // private hiddenSow = () => {
-    //     this.showTips = "none";
-    // }
 
     private pageContent = observer(() => {
 
@@ -37,16 +31,12 @@ export class VHome extends VPage<CHome> {
         let siteHeader = this.renderVm(VSiteHeader);
 
         let onshowInvitationCode = async () => {
-            let inviteCode = await cMe.getMyPositionCode();
+            let code = await cMe.getMyPositionCode();
+            let inviteCode = code.substr(1, 9);
             showInvitationCode(inviteCode);
         }
 
         let commonfuncs = <div className="mt-1 mb-2 bg-white">
-            {/* <div className=" text-center text-muted  w-100 small" style={{ position: 'absolute', left: ' 50 %', top: '-.7rem', background: '#FFFF91', opacity: '.6', display: this.showTips }}>
-                可以分享优惠券，邀请码
-				<span className=" text-danger float-right cursor-pointer" style={{ marginTop: '-.5rem' }} onClick={this.hiddenSow}>
-                    <i style={{ fontSize: '1rem' }} className="iconfont icon-shanchu"></i></span>
-            </div> */}
             <div className="d-flex py-2 pl-2" style={{ borderBottom: '1px solid #ccc' }}>常用功能</div>
             <div className="d-flex justify-content-around small text-center">
                 <div className="m-1 p-3 cursor-pointer" onClick={() => cCoupon.showCreateCoupon({ type: "coupon", product: undefined })}>
@@ -78,11 +68,11 @@ export class VHome extends VPage<CHome> {
                 <span className="px-2 text-danger" style={{ borderRight: '1px dotted #ccc' }}>特惠活动</span>
                 <div className="ml-4 small text-muted pt-2">优惠活动，分享其优惠券可以快速的帮助绑定客户，增加客户源，并将优惠产品分享给客户</div>
             </div>
-            <div className="d-flex flex-column w-100 small py-1" >
-                <LMR className="bg-white py-3 px-2 mb-1" right={<i className=" iconfont icon-fangxiang1"></i>} onClick={() => showPromotion(32)}>
+            <div className="w-100 small" >
+                <LMR className="bg-white py-3 px-2 mb-1" right={<i className=" iconfont icon-fangxiang1"></i>} onClick={() => showPromotion('', 32)}>
                     <div className="pl-2">百灵威一级标准品 现货优惠活动中</div>
                 </LMR>
-                <LMR className="bg-white py-3 px-2 mb-1" right={<i className=" iconfont icon-fangxiang1"></i>} onClick={() => showPromotion(35)}>
+                <LMR className="bg-white py-3 px-2 mb-1" right={<i className=" iconfont icon-fangxiang1"></i>} onClick={() => showPromotion('', 35)}>
                     <div className="pl-2">百灵威四大产品线4折起，优品好价“购”不停</div>
                 </LMR>
             </div>

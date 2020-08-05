@@ -22,9 +22,11 @@ export class VNewCustomerList extends VPage<CCustomer> {
 
     private page = observer((param: any) => {
         //let { newMyCustomerList } = this.controller;
+        if (param.length === 0) return null;
         let none = <div className="my-3 mx-2 text-warning">无</div>;
         return <Page header="新客户" headerClassName={setting.pageHeaderCss} >
-            <List className="py-2" before={''} none={none} items={param} item={{ render: this.renderNewCustomer }} />
+            {(param && (param.length > 0)) ? <List className="py-2" before={''} none={none} items={param} item={{ render: this.renderNewCustomer }} />
+                : <div className="text-center text-warning py-3 bg-white">亲，您还没拥有新客户呢</div>}
         </Page>
     })
 }

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, List, SearchBox, tv } from 'tonva';
+import { VPage, Page, List, tv } from 'tonva';
 import { observer } from 'mobx-react';
 import { ProductImage } from '../tools/productImage';
 import { CProduct } from './CProduct';
@@ -30,6 +30,7 @@ export class VProductSelect extends VPage<CProduct> {
             <div className="col-8 col-sm-4 col-lg-8">{value}</div>
         </>;
     }
+
     private renderProduct = (product: any, index: number) => {
         let { brand, description, descriptionC, CAS, purity, molecularFomula, molecularWeight, origin, imageUrl } = product;
         return <div className="d-block mb-4 px-2">
@@ -66,14 +67,12 @@ export class VProductSelect extends VPage<CProduct> {
     }
 
     private page = observer((product: any) => {
-        let { pageProduct } = this.controller;
+        let { pageProduct, cApp } = this.controller;
+        let { cHome } = cApp;
         let none = <div className="my-3 mx-2 text-warning">未搜索到产品</div>;
 
         return <Page header='添加产品' onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss}>
-            <SearchBox className="px-1 w-100  mt-2 mr-2 "
-                size='md'
-                onSearch={(key: string) => this.controller.searchByKey(key)}
-                placeholder="搜索品名、编号、CAS、MDL等" />
+            {cHome.renderSearchHeader()}
             <List before={''} none={none} items={pageProduct} item={{ render: this.renderProduct, onClick: this.onSelectItem }} />
         </Page>
     })

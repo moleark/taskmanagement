@@ -21,18 +21,18 @@ export class VPostList extends VPage<CPost> {
     private page = observer((product: any) => {
         let { pagePost, searchByKey, showProductCatalog, showSubject, showDomain } = this.controller;
         let none = <div className="my-3 mx-2 text-warning">【无】</div>;
-        let right = (
-            <div className="d-flex align-items-center">
-                <SearchBox
-                    className=""
-                    size="sm"
-                    onSearch={(key: string) => searchByKey(key, "")}
-                    placeholder="搜索帖文"
-                />
-            </div>
-        );
+        let search = <div className="w-100 d-flex">
+            <span className="pt-1 text-white ml-2" style={{ width: '3rem' }}>帖文</span>
+            <SearchBox
+                className="w-100 px-2 small"
+                size="sm"
+                onSearch={(key: string) => searchByKey(key, "")}
+                placeholder="搜索帖文"
+            />
+        </div>
+
         return (
-            <Page header={"帖文"} headerClassName={setting.pageHeaderCss} right={right} onScrollBottom={this.onScrollBottoms}>
+            <Page header={search} onScrollBottom={this.onScrollBottoms} headerClassName={setting.pageHeaderCss}>
                 <LMR className="bg-white py-3 my-1" right={<i className="pt-2 px-2 iconfont icon-fangxiang1"></i>} onClick={showProductCatalog}>
                     <div className="mx-3 px-2 font-weight-bold">产品目录</div>
                 </LMR>

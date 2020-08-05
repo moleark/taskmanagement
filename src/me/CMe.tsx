@@ -30,9 +30,7 @@ export class CMe extends CUqBase {
     load = async () => {
         await nav.loadMe();
         await this.lodeAccount();
-        this.position = await this.uqs.salesTask.SearchPosition.obj({
-            position: undefined
-        });
+        this.position = await this.uqs.salesTask.SearchPosition.obj({ position: undefined });
         if (this.position !== undefined) {
             let code = String(this.position.code + 100000000);
             this.inviteCode = code;
@@ -42,13 +40,13 @@ export class CMe extends CUqBase {
     };
 
     getMyPositionCode = async () => {
-        let position = await this.uqs.salesTask.SearchPosition.obj({
-            position: undefined
-        });
+        let position = await this.uqs.salesTask.SearchPosition.obj({ position: undefined });
         if (position !== undefined) {
-            return position.code;
+            let code = String(position.code + 100000000);
+            return code;
+        } else {
+            return "100000000";
         }
-        return '00000000';
     }
 
     //显示我的个人信息

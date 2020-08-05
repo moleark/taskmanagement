@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { tv, SearchBox } from 'tonva';
+import { tv } from 'tonva';
 import { VPage, Page, List } from 'tonva';
 import { CProduct } from './CProduct';
 import { ProductImage } from '../tools/productImage';
@@ -58,8 +58,9 @@ export class VProductList extends VPage<CProduct> {
     }
 
     private page = observer((product: any) => {
-        let { pageProduct, onScrollBottom } = this.controller;
-        let { productCart } = this.controller.cApp;
+
+        let { pageProduct, onScrollBottom, cApp } = this.controller;
+        let { productCart, cHome } = cApp;
 
         let none = <div className="my-3 mx-2 text-warning">未搜索到产品</div>;
 
@@ -70,7 +71,7 @@ export class VProductList extends VPage<CProduct> {
             if (count < 100) badge = <u>{count}</u>;
             else badge = <u>99+</u>;
         }
-        let onshowProductBox = async () => await this.controller.cApp.cProduct.showProductBox()
+        let onshowProductBox = async () => await this.controller.showProductBox()
 
         let right = <div className="cursor-pointer py-1" >
             <div className={classNames('jk-cart ml-1 mr-3', pointer)}>
@@ -81,11 +82,9 @@ export class VProductList extends VPage<CProduct> {
             </div>
         </div>;
 
-        return <Page header="产品" right={right} onScrollBottom={onScrollBottom} headerClassName={setting.pageHeaderCss} >
-            {(setting.sales.isInner) ? <SearchBox className="px-1 w-100  mt-2 mr-2 "
-                size='md'
-                onSearch={(key: string) => this.controller.searchByKey(key)}
-                placeholder="搜索品名、编号、CAS、MDL等" /> : <div className="bg-white py-2 px-3 mb-1"><small className=" small text-muted">搜索: </small>{this.seachkey}</div>}
+        let header = cHome.renderSearchHeader();
+        return <Page header={header} right={right} onScrollBottom={onScrollBottom} headerClassName={setting.pageHeaderCss} >
+            {/* <div className="bg-white py-2 px-3 mb-1"><small className=" small text-muted">搜索: </small>{this.seachkey}</div> */}
             <List before={''} none={none} items={pageProduct} item={{ render: this.renderProduct, onClick: null }} />
         </Page>
     })

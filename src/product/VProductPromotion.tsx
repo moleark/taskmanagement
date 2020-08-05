@@ -49,8 +49,7 @@ export class VProductPromotion extends VPage<CProduct> {
     }
 
     private onSelectItem = async (product: any) => {
-        let { showProductDetail } = this.controller;
-        showProductDetail(product)
+        this.controller.showProductDetail(product)
     }
 
     private onScrollBottom = async (scroller: Scroller) => {
@@ -59,16 +58,16 @@ export class VProductPromotion extends VPage<CProduct> {
     }
 
     private onSearch = async (key: string) => {
-        this.controller.searchpromotionPager(key, this.promotion)
+        this.controller.searchPromotion(key, this.promotion)
     }
 
     private page = observer((promotion: any) => {
         let { promotionPager } = this.controller;
 
         let none = <div className="p-3 text-warning">【无】</div>
-        let search = <SearchBox className="w-100 pr-2 small" size='md'
+        let search = <SearchBox className="w-100 pr-2 my-2 small" size='sm'
             onSearch={(key: string) => this.onSearch(key)}
-            placeholder="搜索品名、编号、CAS、MDL等" />
+            placeholder="优惠品名、编号、CAS、MDL等" />
         return <Page header={search} onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss}>
             <List before={''} none={none} items={promotionPager} item={{ render: this.renderProduct, onClick: this.onSelectItem }} />
         </Page >

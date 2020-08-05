@@ -384,11 +384,6 @@ export class CCustomer extends CUqBase {
     onScrollBottom = async () => {
         await this.pageCustomer.more();
     }
-    // showTaskList = () => {
-    //     // this.cApp.cSalesTask.taskshow()
-    //     // this.cApp.cSalesTask.start()
-    //     this.cApp.cSalesTask.tab()
-    // }
 
     searchTaskByKey = async () => {
         let { cSalesTask } = this.cApp;

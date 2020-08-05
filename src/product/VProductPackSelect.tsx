@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, List, SearchBox, tv } from 'tonva';
+import { VPage, Page, List, tv } from 'tonva';
 import { observer } from 'mobx-react';
 import { CProduct } from './CProduct';
 import { ProductImage } from '../tools/productImage';
@@ -59,24 +59,19 @@ export class VProductPackSelect extends VPage<CProduct> {
         await this.controller.pageProduct.more();
     }
 
-
     private onSelectItem = async (product: any) => {
         let { showPorductPackSelectDetail } = this.controller.cApp.cSalesTask;
         this.createproduct.product = product;
         showPorductPackSelectDetail(this.createproduct);
     }
 
-
     private page = observer((customer: any) => {
-        let { pageProduct } = this.controller;
-        //let add = <div className="cursor-pointer "><FA name="plus" /></div>;
+        let { pageProduct, cApp } = this.controller;
+        let { cHome } = cApp;
         let none = <div className="my-3 mx-2 text-warning">未搜索到产品</div>;
 
         return <Page header='选择包装' onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss}>
-            <SearchBox className="px-1 w-100  mt-2 mr-2 "
-                size='md'
-                onSearch={(key: string) => this.controller.searchByKey(key)}
-                placeholder="搜索品名、编号、CAS、MDL等" />
+            {cHome.renderSearchHeader()}
             <List before={''} none={none} items={pageProduct} item={{ render: this.renderProduct, onClick: this.onSelectItem }} />
         </Page>
     })

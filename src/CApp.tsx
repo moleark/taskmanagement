@@ -122,8 +122,7 @@ export class CApp extends CAppBase {
         //显示主页面
         this.showMain();
         //启动主程序
-        this.cStart.start();
-
+        // this.cStart.start();
     }
 
     showMain() {

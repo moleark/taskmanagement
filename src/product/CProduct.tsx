@@ -14,10 +14,8 @@ import { VProductBox } from './VProductBox';
 import { VProductPackSelect } from './VProductPackSelect';
 
 import { VProductPromotion } from './VProductPromotion';
-import { VProductSearchPromotion } from './VProductSearchPromotion';
 import { VProductList } from './VProductList';
 import { observer } from 'mobx-react';
-import { setting } from 'appConfig';
 
 /**
  *Query SearchPromotion( keyWord char(20), salesRegion ID SalesRegion, language ID Language )
@@ -61,16 +59,11 @@ export class CProduct extends CUqBase {
         await this.pageProduct.more();
     }
 
-
     //查询客户--通过名称
     searchByKey = async (key: string) => {
         this.pageProduct = new QueryPager(this.uqs.product.SearchProduct, 15, 30);
         await this.pageProduct.first({ keyWord: key, salesRegion: 1 });
-        if (setting.sales.isInner) {
-        } else {
-            return await this.openVPage(VProductList, key);
-        }
-
+        return await this.openVPage(VProductList, key);
     }
 
     //选择客户--给调用页面返回客户id
@@ -129,12 +122,7 @@ export class CProduct extends CUqBase {
         let { currentSalesRegion } = this.cApp;
         this.promotionPager = new QueryPager(this.uqs.promotion.SearchPromotion, 15, 30);
         await this.promotionPager.first({ keyWord: key, promotion: promotionId, salesRegion: currentSalesRegion })
-    }
-
-    searchpromotionPager = async (key: string, promotionId: any) => {
-        this.searcdpPromotionPager = new QueryPager(this.uqs.promotion.SearchPromotion, 15, 30);
-        await this.searcdpPromotionPager.first({ keyWord: key, promotion: promotionId, salesRegion: 1 })
-        return await this.vCall(VProductSearchPromotion, key);
+        await this.openVPage(VProductPromotion, promotionId)
     }
 
     showPromotion = async (promotion: any) => {
@@ -142,7 +130,6 @@ export class CProduct extends CUqBase {
         await this.openVPage(VProductPromotion, promotion)
     }
 }
-
 
 export function renderBrand(brand: any) {
     return productPropItem('品牌', brand.name);
@@ -181,5 +168,4 @@ export function renderProduct(product: any, index: number) {
             </div>
         </div>
     </div>
-
 }
