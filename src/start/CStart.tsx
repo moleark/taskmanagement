@@ -6,7 +6,7 @@ import { VError } from './VError';
 import { VAgencyClauseDetil } from './VAgencyClauseDetil';
 import { VConfirm } from './VConfirm';
 import * as qs from 'querystringify';
-import { isAssistApp } from 'appConfig';
+import { GLOABLE } from 'ui';
 
 export class CStart extends CUqBase {
 
@@ -39,7 +39,7 @@ export class CStart extends CUqBase {
 
         let { uqs, cSalesTask } = this.cApp;
         let { salesTask } = uqs;
-        if (isAssistApp) {
+        if (GLOABLE.IsAssistApp) {
             let result = await salesTask.WebUserEmployeeMap.obj({ webuser: this.user.id });
             if (result === undefined) {
                 await this.openVPage(VConfirm, null);
@@ -133,7 +133,7 @@ export class CStart extends CUqBase {
     // 开启APP
     startApp = async () => {
         // await this.cApp.start();
-        this.cApp.showMain();
+        await this.cApp.showMain();
     }
 
 }

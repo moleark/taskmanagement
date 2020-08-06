@@ -4,13 +4,17 @@ import { setting } from '../appConfig';
 import logo from 'images/logo.png';
 import assistlogo from 'images/assistlogo.png';
 import { nav } from 'tonva';
+import { GLOABLE } from 'ui';
 
 
-export abstract class Sales {
+export abstract class AppEnv {
     cApp: CApp;
-    constructor(cApp: CApp) {
+
+    constructor() { }
+    setCApp(cApp: CApp) {
         this.cApp = cApp;
     }
+
     title: string;
     logo: string;
     appName: string;
@@ -51,7 +55,7 @@ export abstract class Sales {
      * @param platform 
      */
     shareUrl(type: string, coupon: string, product: any, platform: string): string {
-        let url = `${setting.carturl}?type=${type}&${type}=${coupon}&sales=${nav.user.id}`;
+        let url = `${GLOABLE.carturl}?type=${type}&${type}=${coupon}&sales=${nav.user.id}`;
         switch (type) {
             case "coupon":
                 if (product)
@@ -71,9 +75,9 @@ export abstract class Sales {
     };
 }
 
-export class AssistSales extends Sales {
+export class AssistApp extends AppEnv {
 
-    title = 'assist sales';
+    title = '销售助手';
     logo = assistlogo;
     appName = "销售助手";
     isInner = true;
@@ -104,8 +108,8 @@ export class AssistSales extends Sales {
     }
 };
 
-export class AgentSales extends Sales {
-    title = 'angent sales';
+export class AgentApp extends AppEnv {
+    title = '轻代理';
     appName = "轻代理";
     logo = logo;
     isInner = false;

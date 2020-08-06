@@ -18,8 +18,7 @@ import { CUqBase } from "./CBase";
 import { VMain, GLOABLE } from "./ui";
 import { ProductCart } from "model/productcart";
 import { CBalance } from "achievement/CBalance";
-import { setting, isAssistApp } from "appConfig";
-import { AssistSales, AgentSales } from "model/sales";
+import { setting } from "appConfig";
 import { CPost } from "post/CPost";
 import { PostCustomer } from "post/postcustomer";
 import { CInnerTeam } from "innerteam/CInnerTeam";
@@ -74,13 +73,14 @@ export class CApp extends CAppBase {
             setting.sales = new AgentSales(this);
         }
         */
-        setting.sales = isAssistApp ? new AssistSales(this) : new AgentSales(this);
+        setting.sales.setCApp(this); // = IsAssistApp ? new AssistApp(this) : new AgentApp(this);
 
+        let { SALESREGION_CN, CHINESE } = GLOABLE;
         this.currentSalesRegion = await this.uqs.common.SalesRegion.load(
-            GLOABLE.SALESREGION_CN
+            SALESREGION_CN
         );
         this.currentLanguage = await this.uqs.common.Language.load(
-            GLOABLE.CHINESE
+            CHINESE
         );
 
 
@@ -118,7 +118,6 @@ export class CApp extends CAppBase {
 
         //加载轮播图
         await this.cHome.getSlideShow();
-        nav.clear();
         //显示主页面
         this.showMain();
     }
@@ -126,7 +125,7 @@ export class CApp extends CAppBase {
     async showMain() {
         let hasQualification: boolean = false;
         let { salesTask } = this.uqs;
-        if (isAssistApp) {
+        if (GLOABLE.IsAssistApp) {
             let result = await salesTask.WebUserEmployeeMap.obj({ webuser: this.user.id });
             if (result !== undefined) {
                 hasQualification = true;

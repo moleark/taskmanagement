@@ -110,7 +110,7 @@ export class VCustomer extends VPage<CPost> {
                 {
                     title: this.caption, //应用名字
                     content: type === "content" ? this.discription : this.caption,
-                    href: setting.posturl + "/" + this.post.id + "?sales=" + nav.user.id, //分享出去后，点击跳转地址
+                    href: GLOABLE.posturl + "/" + this.post.id + "?sales=" + nav.user.id, //分享出去后，点击跳转地址
                     thumbs: [this.image] //分享缩略图
                 },
                 function (result) {

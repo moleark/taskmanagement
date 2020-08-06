@@ -50,7 +50,7 @@ export class VInvitationCode extends VPage<CMe> {
 
 
     private page = observer((param: any) => {
-        let url = setting.url + "?type=invitation&code=" + param.code;
+        let url = GLOABLE.url + "?type=invitation&code=" + param.code;
         let onshare = () => this.share(url);
 
         let share = <div className="text-center" style={{ width: 'auto', height: '10%' }} >

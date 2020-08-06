@@ -4,6 +4,7 @@ import { observer } from "mobx-react";
 import { VPage, Page, tv, LMR, ComponentProp, Prop, PropGrid, FA, List, EasyDate, nav } from "tonva";
 import { CCustomer } from "./CCustomer";
 import { setting } from "appConfig";
+import { GLOABLE } from "ui";
 
 const potentialText: { [v: number]: string } = {
     0: "小于10万",
@@ -75,7 +76,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
                 {
                     title: caption, //应用名字
                     content: caption + "  " + discription,
-                    href: setting.posturl + "/" + id + "?sales=" + nav.user.id, //分享出去后，点击跳转地址
+                    href: GLOABLE.posturl + "/" + id + "?sales=" + nav.user.id, //分享出去后，点击跳转地址
                     //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片
                     thumbs: [image.obj.path] //分享缩略图
                 },

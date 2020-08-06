@@ -1,8 +1,10 @@
 import * as React from 'react';
 import './App.css';
 import { start, NavView, nav } from 'tonva';
-import { appEnvConfig } from './appConfig';
+import { setting, appConfig } from './appConfig';
 import { CApp } from './CApp';
+import { GLOABLE } from 'ui';
+import { AssistApp, AgentApp } from 'model/sales';
 
 /*
 //启动前获取连接地址，判断是销售助手还是轻代理
@@ -24,10 +26,13 @@ if (document.domain === setting.assistDomain) {
 }
 */
 
-let { documentTitle, favicon, appConfig } = appEnvConfig;
-document.title = documentTitle;
+export const currentApp = GLOABLE.IsAssistApp ? new AssistApp() : new AgentApp();
+setting.sales = currentApp
+
+let { title, logo } = currentApp;
+document.title = title;
 let $favicon: any = document.querySelector('link[rel="shortcut icon"]');
-$favicon.attributes.href.value = favicon;
+$favicon.attributes.href.value = logo;
 nav.setSettings(appConfig);
 
 

@@ -3,6 +3,7 @@ import { VPage, Page, List, nav, tv, FA } from "tonva";
 import { CMe } from "./CMe";
 import { setting } from "appConfig";
 import { observer } from "mobx-react";
+import { GLOABLE } from "ui";
 
 export class VClassRoom extends VPage<CMe> {
 
@@ -59,7 +60,7 @@ export class VClassRoom extends VPage<CMe> {
                 {
                     title: caption, //应用名字
                     content: caption + "  " + discription,
-                    href: setting.posturl + "/" + id + "?sales=" + nav.user.id, //分享出去后，点击跳转地址
+                    href: GLOABLE.posturl + "/" + id + "?sales=" + nav.user.id, //分享出去后，点击跳转地址
                     //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片
                     thumbs: [image.obj.path] //分享缩略图
                 },

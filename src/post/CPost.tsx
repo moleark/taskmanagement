@@ -13,6 +13,7 @@ import { VSubjectPost } from "./VSubjectPost";
 import { VDomain } from "./VDomain";
 import { VDomainPost } from "./VDomainPost";
 import { observer } from "mobx-react";
+import { GLOABLE } from "ui";
 
 //页面类
 /* eslint-disable */
@@ -44,12 +45,14 @@ export class CPost extends CUqBase {
 
     //目录树
     showProductCatalog = async () => {
-        let results = await this.uqs.product.GetRootCategory.query({ salesRegion: setting.SALESREGION_CN, language: setting.CHINESE });
+        let { SALESREGION_CN, CHINESE } = GLOABLE;
+        let results = await this.uqs.product.GetRootCategory.query({ salesRegion: SALESREGION_CN, language: CHINESE });
         this.openVPage(VProductCatalog, results.first);
     }
 
     searchProductCatalogChildrenKeys = async (key: string) => {
-        let results = await this.uqs.product.GetChildrenCategory.query({ parent: key, salesRegion: setting.SALESREGION_CN, language: setting.CHINESE });
+        let { SALESREGION_CN, CHINESE } = GLOABLE;
+        let results = await this.uqs.product.GetChildrenCategory.query({ parent: key, salesRegion: SALESREGION_CN, language: CHINESE });
         this.openVPage(VProductCatalog, results.first)
     };
 
