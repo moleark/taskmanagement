@@ -121,12 +121,28 @@ export class CApp extends CAppBase {
         nav.clear();
         //显示主页面
         this.showMain();
-        //启动主程序
-        // this.cStart.start();
     }
 
-    showMain() {
-        this.openVPage(VMain);
+    async showMain() {
+        let hasQualification: boolean = false;
+        let { salesTask } = this.uqs;
+        if (isAssistApp) {
+            let result = await salesTask.WebUserEmployeeMap.obj({ webuser: this.user.id });
+            if (result !== undefined) {
+                hasQualification = true;
+            }
+        } else {
+            let result = await salesTask.SearchPosition.obj({ position: undefined });
+            if (result !== undefined) {
+                hasQualification = true;
+            }
+        }
+
+        if (hasQualification) {
+            this.openVPage(VMain);
+        } else {
+            this.cStart.start();
+        }
     }
 
     renderUser(userId: number) {

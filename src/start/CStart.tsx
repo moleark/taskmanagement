@@ -41,9 +41,7 @@ export class CStart extends CUqBase {
         let { salesTask } = uqs;
         if (isAssistApp) {
             let result = await salesTask.WebUserEmployeeMap.obj({ webuser: this.user.id });
-            if (result !== undefined) {
-                cSalesTask.start();
-            } else {
+            if (result === undefined) {
                 await this.openVPage(VConfirm, null);
             }
         } else {
@@ -63,7 +61,6 @@ export class CStart extends CUqBase {
                 }
             }
         }
-
     }
 
     /*

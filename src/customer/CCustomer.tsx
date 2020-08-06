@@ -386,7 +386,7 @@ export class CCustomer extends CUqBase {
 
     searchTaskByKey = async () => {
         let { cSalesTask } = this.cApp;
-        return cSalesTask.searchTaskByKey('')
+        return cSalesTask.searchTaskByKey(0)
     }
 
     render = observer(() => {
