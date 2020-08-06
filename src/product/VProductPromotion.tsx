@@ -65,9 +65,12 @@ export class VProductPromotion extends VPage<CProduct> {
         let { promotionPager } = this.controller;
 
         let none = <div className="p-3 text-warning">【无】</div>
-        let search = <SearchBox className="w-100 pr-2 my-2 small" size='sm'
-            onSearch={(key: string) => this.onSearch(key)}
-            placeholder="优惠品名、编号、CAS、MDL等" />
+        let search = <div className="d-flex w-100">
+            <span className="w-4c align-self-center">特惠</span>
+            <SearchBox className="w-100 pr-2 my-2 small" size='sm'
+                onSearch={(key: string) => this.onSearch(key)}
+                placeholder="特惠品名、编号、CAS、MDL等" />
+        </div>
         return <Page header={search} onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss}>
             <List before={''} none={none} items={promotionPager} item={{ render: this.renderProduct, onClick: this.onSelectItem }} />
         </Page >

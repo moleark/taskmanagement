@@ -335,7 +335,6 @@ export class CCustomer extends CUqBase {
 
     showNewCustomerList = async () => {
         let list = await this.uqs.salesTask.searchNewMyCustomer.table({});
-        // await this.showNewCustomerList();
         this.openVPage(VNewCustomerList, list);
     }
 

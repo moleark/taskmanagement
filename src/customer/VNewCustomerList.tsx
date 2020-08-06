@@ -26,7 +26,7 @@ export class VNewCustomerList extends VPage<CCustomer> {
         let none = <div className="my-3 mx-2 text-warning">无</div>;
         return <Page header="新客户" headerClassName={setting.pageHeaderCss} >
             {(param && (param.length > 0)) ? <List className="py-2" before={''} none={none} items={param} item={{ render: this.renderNewCustomer }} />
-                : <div className="text-center text-warning py-3 bg-white">亲，您还没拥有新客户呢</div>}
+                : <div className="text-center text-warning py-3 bg-white">亲，您还没有新客户</div>}
         </Page>
     })
 }

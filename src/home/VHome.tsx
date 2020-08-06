@@ -65,8 +65,8 @@ export class VHome extends VPage<CHome> {
 
         let promotions = <div>
             <div className="bg-white px-1 py-1 d-flex w-100" style={{ borderBottom: '1px solid #ccc' }}>
-                <span className="px-2 text-danger" style={{ borderRight: '1px dotted #ccc' }}>特惠活动</span>
-                <div className="ml-4 small text-muted pt-2">优惠活动，分享其优惠券可以快速的帮助绑定客户，增加客户源，并将优惠产品分享给客户</div>
+                <span className="px-2 w-4c text-danger" style={{ borderRight: '1px dotted #ccc' }}>特惠活动</span>
+                <span className="ml-4 small text-muted align-self-end pb-1">极具吸引力的价格，快速绑定客户</span>
             </div>
             <div className="w-100 small" >
                 <LMR className="bg-white py-3 px-2 mb-1" right={<i className=" iconfont icon-fangxiang1"></i>} onClick={() => showPromotion('', 32)}>
