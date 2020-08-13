@@ -37,12 +37,12 @@ export class VCreateVIPCardDiscount2 extends VPage<CCoupon> {
             <div className="col-3">
                 {tv(brand, v => v.name)}
             </div>
-            <div className="col-6">
+            <div className="col-9">
                 <SlidingBlock minDiscountForDisplay={minDiscountForDisplay} brandId={brand.id} hanleClickCallBack={this.hanleClickCallBack} />
             </div>
-            <div className="col-3">
+            {/* <div className="col-3">
                 <small className=" ml-3 text-danger">≥{minDiscountForDisplay}%</small>
-            </div>
+            </div> */}
         </div>
     }
 
@@ -91,17 +91,7 @@ export class VCreateVIPCardDiscount2 extends VPage<CCoupon> {
     }
 }
 
-const useStyles = makeStyles({
-    root: {
-        width: 150,
-    },
-    input: {
-        width: 30,
-    },
-});
-
 export default function SlidingBlock(props) {
-    const classes = useStyles();
     const [value, setValue] = React.useState(100);
     const { minDiscountForDisplay, brandId, hanleClickCallBack } = props;
     if (hanleClickCallBack) { hanleClickCallBack(value, brandId) }
@@ -112,22 +102,29 @@ export default function SlidingBlock(props) {
     const handleInputChange = (event) => {
         setValue(Number(event.target.value));
     };
-
+    let marks = [{
+        value: minDiscountForDisplay,
+        label: minDiscountForDisplay + '%',
+    },
+    {
+        value: 100,
+        label: '100%',
+    }]
     return (
-        <div className={classes.root}>
-            <Grid container spacing={2}>
-                <Grid item xs>
+        <div className='w-100'>
+            <Grid container spacing={3}>
+                <Grid item xs={9}>
                     <Slider
                         value={typeof value === 'number' ? value : 0}
                         onChange={handleSliderChange}
                         aria-labelledby="input-slider"
                         min={minDiscountForDisplay}
+                        marks={marks}
                     />
                 </Grid>
-                <Grid item>
+                <Grid item xs={3}>
                     <Input
-                        value={value}
-                        className={classes.input}
+                        value={value + '%'}
                         onChange={handleInputChange}
                     />
                 </Grid>
