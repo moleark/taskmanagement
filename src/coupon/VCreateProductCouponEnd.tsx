@@ -110,7 +110,7 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
                     <QRCode value={this.url} size={100} fgColor="#000000" />
                 </div>
                 <div className="col-6 text-danger d-flex align-items-end small pl-1" >
-                    {setting.sales.shareContent(type, isno)}
+                    {isno === "1" ? "活动产品直接分享用户获客" : ""}
                 </div>
             </div>
             <div >{share}</div>

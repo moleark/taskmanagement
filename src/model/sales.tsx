@@ -32,11 +32,7 @@ export abstract class AppEnv {
         let content: string;
         switch (type) {
             case "coupon":
-                if (isno === "1") {
-                    content = "活动产品直接分享用于获客"
-                } else {
-                    content = "客户使用此券，即可产生收益!"
-                }
+                content = "下单即可享受品牌折扣!";
                 break;
             case "credits":
                 content = "下单即得双倍积分!";

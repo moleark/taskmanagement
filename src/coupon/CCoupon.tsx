@@ -25,7 +25,8 @@ export class CCoupon extends CUqBase {
     /**
      * 
      */
-    createVIPCardDiscountCallback = async (webUser: any, vipCardLevel: any, cardType: any, product: any, vipCardDiscountSetting: any[], isno: any) => {
+    createVIPCardDiscountCallback = async (webUser: any, vipCardLevel: any, cardType: any, product: any
+        , vipCardDiscountSetting: any[], isno: any) => {
         let validitydate: any;
         let now = new Date();
         if (cardType === "vipcard") {

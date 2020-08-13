@@ -66,7 +66,8 @@ export class VCreateVIPCardDiscount2 extends VPage<CCoupon> {
             }
         });
         vipCardDiscountSettingCopy.forEach(v => v.discount = (100 - v.discount) / 100);
-        await createVIPCardDiscountCallback(this.webUser, this.vipCardLevel, this.vipCardType, this.product, vipCardDiscountSettingCopy, "0");
+        await createVIPCardDiscountCallback(this.webUser, this.vipCardLevel, this.vipCardType, this.product
+            , vipCardDiscountSettingCopy, "0");
     }
 
     private tipsUi = observer(() => {
