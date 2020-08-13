@@ -28,12 +28,15 @@ export abstract class AppEnv {
         return setting.couponType[type];
     }
 
-    shareContent(type: string, discount: number): string {
-
+    shareContent(type: string, isno: any): string {
         let content: string;
         switch (type) {
             case "coupon":
-                content = "下单即可享受品牌折扣!";
+                if (isno === "1") {
+                    content = "分享优惠活动产品，无需设置折扣，可帮您发展客户!"
+                } else {
+                    content = "客户使用此券，即可产生收益!"
+                }
                 break;
             case "credits":
                 content = "下单即得双倍积分!";

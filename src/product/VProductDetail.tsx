@@ -8,6 +8,7 @@ import { ViewMainSubs } from '../mainSubs';
 import classNames from 'classnames';
 import { setting } from 'appConfig';
 import { ProductPackRow } from './product';
+import { threadId } from 'worker_threads';
 
 const schema: ItemSchema[] = [
     { name: 'pack', type: 'object' } as ObjectSchema,
@@ -23,8 +24,10 @@ const schema: ItemSchema[] = [
 
 export class VProductDetail extends VPage<CProduct> {
     private productBox: any;
-
+    private discount: any;
     private product: any;
+    private agentPrice: any;
+    private pack: any;
     async open(product: any) {
         this.product = product;
         this.productBox = product;
@@ -55,11 +58,11 @@ export class VProductDetail extends VPage<CProduct> {
         </div>
     }
 
-
     private arrTemplet = (item: ProductPackRow) => {
 
         let { pack, retail, agentPrice, promotionPrice } = item;
-
+        this.agentPrice = agentPrice
+        this.pack = pack
         let right = null;
         let agent = null;
 
@@ -69,11 +72,10 @@ export class VProductDetail extends VPage<CProduct> {
             if (price < retail) {
                 retailUI = <small className="text-muted"><del>¥{retail}</del></small>;
             }
-
-            // if (!setting.sales.isInner) {
             if (agentPrice) {
                 let newagentPrice = price < agentPrice ? price : agentPrice
                 let discount = ((1 - ((retail - newagentPrice) / retail)) * 10)
+                this.discount = discount
                 if (discount < 10) {
                     let reatShow = price < agentPrice ? <span className="small text-danger">促销产品无收益</span> : <span className="small">{discount.toFixed(1)}折</span>;
                     agent = <span>
@@ -87,7 +89,6 @@ export class VProductDetail extends VPage<CProduct> {
             } else {
                 agent = <span className="small ml-2"> <strong className="small"><span className="small">无折扣</span></strong></span>;
             }
-            // }
 
             right = <div className="">
                 <div className="col-sm-6 pb-2 d-flex justify-content-end align-items-center">
@@ -145,7 +146,7 @@ export class VProductDetail extends VPage<CProduct> {
                     <button type="button" className="btn btn-primary mx-1 my-1 px-3"
                         onClick={() => showCreateCredits({ type: "credits", product: this.product })}>分享积分</button>
                     <button type="button" className="btn btn-primary mx-1 my-1 px-3"
-                        onClick={() => showCreateCoupon({ type: "coupon", product: this.product })}>分享折扣</button>
+                        onClick={() => showCreateCoupon({ type: "coupon", product: this.product, discount: this.discount })}>分享折扣</button>
                     <button type="button" className="btn btn-primary mx-1 my-1 px-3" onClick={this.onAddPack}>打包分享</button>
                 </div>
             </div>
@@ -153,7 +154,7 @@ export class VProductDetail extends VPage<CProduct> {
             footer = <div className="d-block">
                 <div className="w-100  justify-content-end" >
                     <button type="button" className="btn btn-primary mx-1 my-1 px-3"
-                        onClick={() => showCreateCoupon({ type: "coupon", product: this.product })}>分享折扣</button>
+                        onClick={() => showCreateCoupon({ type: "coupon", product: this.product, discount: this.discount })}>分享折扣</button>
                     <button type="button" className="btn btn-primary mx-1 my-1 px-3" onClick={this.onAddPack}>打包分享</button>
                 </div>
             </div>

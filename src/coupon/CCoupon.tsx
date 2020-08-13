@@ -6,7 +6,7 @@ import { VCouponDetail } from './VCouponDetail';
 import { VCreateCouponEnd } from './VCreateCouponEnd';
 import { VCreateProductCouponEnd } from './VCreateProductCouponEnd';
 import { VVIPCardDiscount } from './VVIPCardDiscount';
-import { VCreateVIPCardDiscount } from './VCreateVIPCardDiscount';
+import { VCreateVIPCardDiscount2 } from './VCreateVIPCardDiscount2';
 /**
  *
  */
@@ -19,13 +19,13 @@ export class CCoupon extends CUqBase {
 
     // 创建VIPCardDiscount 
     protected async internalStart(param: any) {
-        this.openVPage(VCreateVIPCardDiscount, param);
+        this.openVPage(VCreateVIPCardDiscount2, param);
     }
 
     /**
      * 
      */
-    createVIPCardDiscountCallback = async (webUser: any, vipCardLevel: any, cardType: any, product: any, vipCardDiscountSetting: any[]) => {
+    createVIPCardDiscountCallback = async (webUser: any, vipCardLevel: any, cardType: any, product: any, vipCardDiscountSetting: any[], isno: any) => {
         let validitydate: any;
         let now = new Date();
         if (cardType === "vipcard") {
@@ -40,7 +40,6 @@ export class CCoupon extends CUqBase {
             discount: 0,
         }
         let newVIPCard = await this.createCoupon(vipCardParam, { type: cardType });
-
         let { id, code } = newVIPCard;
         let { salesTask } = this.uqs;
         await this.uqs.salesTask.VIPCardDiscount.add({ coupon: id, arr1: vipCardDiscountSetting });
@@ -52,7 +51,7 @@ export class CCoupon extends CUqBase {
             this.returnCall(newVIPCard);
             this.closePage();
         } else {
-            let param = { code: code, product: product, type: cardType, platform: "1" };
+            let param = { code: code, product: product, type: cardType, platform: "1", isno: isno };
             this.showShareCoupon(param);
         }
     }
@@ -93,9 +92,15 @@ export class CCoupon extends CUqBase {
 
     //显示添加优惠券页面
     showCreateCoupon = async (param: any) => {
+        let { discount } = param;
         let vipCardDiscountSetting = await this.uqs.salesTask.SearchBottomDiscount.query({});
-        let params = { webUser: undefined, vipCardLevel: undefined, vipCardType: param.type, product: param.product, vipCardLevelDiscountSetting: vipCardDiscountSetting.ret };
-        this.openVPage(VCreateVIPCardDiscount, params);
+
+        if (discount < 10) {
+            await this.createVIPCardDiscountCallback(undefined, undefined, param.type, param.product, undefined, "1");
+        } else {
+            let params = { webUser: undefined, vipCardLevel: undefined, vipCardType: param.type, product: param.product, vipCardLevelDiscountSetting: vipCardDiscountSetting.ret };
+            this.openVPage(VCreateVIPCardDiscount2, params);
+        }
     }
 
     //显示添加积分券页面
