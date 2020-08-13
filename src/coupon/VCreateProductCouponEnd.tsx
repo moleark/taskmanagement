@@ -10,7 +10,6 @@ import QRCode from "qrcode.react";
 import { ViewMainSubs, MainProductChemical } from "mainSubs";
 import { ProductPackRow } from "model/product";
 import { ProductImage } from "tools/productImage";
-import { renderBrand } from "product/CProduct";
 
 export class VCreateProductCouponEnd extends VPage<CCoupon> {
     @observable showTips: any = "none";
@@ -72,7 +71,7 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
                             {this.productPropItem("分子式", molecularFomula)}
                             {this.productPropItem("分子量", molecularWeight)}
                             {this.productPropItem("产品编号", origin)}
-                            {renderBrand(brand)}
+                            {this.productPropItem("品牌", brand.name)}
                         </div>
                     </div>
                 </div>

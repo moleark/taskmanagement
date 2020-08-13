@@ -33,7 +33,7 @@ export abstract class AppEnv {
         switch (type) {
             case "coupon":
                 if (isno === "1") {
-                    content = "分享优惠活动产品，无需设置折扣，可帮您发展客户!"
+                    content = "活动产品直接分享用于获客"
                 } else {
                     content = "客户使用此券，即可产生收益!"
                 }

@@ -32,15 +32,16 @@ export class VCreateVIPCardDiscount2 extends VPage<CCoupon> {
 
     private renderVIPCardDiscountSetting = (item: any) => {
         let { brand, discount } = item;
+        let minDiscountForDisplay = 100 - discount * 100;
         return <div className="row">
             <div className="col-3">
                 {tv(brand, v => v.name)}
             </div>
             <div className="col-6">
-                <SlidingBlock msg={discount} msg2={brand.id} hanleClickCallBack={this.hanleClickCallBack} />
+                <SlidingBlock minDiscountForDisplay={minDiscountForDisplay} brandId={brand.id} hanleClickCallBack={this.hanleClickCallBack} />
             </div>
             <div className="col-3">
-                <small className=" ml-3 text-danger">≥{100 - discount * 100}%</small>
+                <small className=" ml-3 text-danger">≥{minDiscountForDisplay}%</small>
             </div>
         </div>
     }
@@ -102,9 +103,8 @@ const useStyles = makeStyles({
 export default function SlidingBlock(props) {
     const classes = useStyles();
     const [value, setValue] = React.useState(100);
-    const { msg, msg2, hanleClickCallBack } = props;
-    let min = 100 - (msg * 100);
-    if (hanleClickCallBack) { hanleClickCallBack(value, msg2) }
+    const { minDiscountForDisplay, brandId, hanleClickCallBack } = props;
+    if (hanleClickCallBack) { hanleClickCallBack(value, brandId) }
 
     const handleSliderChange = (event, newValue) => {
         setValue(newValue);
@@ -121,7 +121,7 @@ export default function SlidingBlock(props) {
                         value={typeof value === 'number' ? value : 0}
                         onChange={handleSliderChange}
                         aria-labelledby="input-slider"
-                        min={min}
+                        min={minDiscountForDisplay}
                     />
                 </Grid>
                 <Grid item>

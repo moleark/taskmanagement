@@ -98,7 +98,10 @@ export class CCoupon extends CUqBase {
         if (discount < 10) {
             await this.createVIPCardDiscountCallback(undefined, undefined, param.type, param.product, undefined, "1");
         } else {
-            let params = { webUser: undefined, vipCardLevel: undefined, vipCardType: param.type, product: param.product, vipCardLevelDiscountSetting: vipCardDiscountSetting.ret };
+            let params = {
+                webUser: undefined, vipCardLevel: undefined, vipCardType: param.type, product: param.product,
+                vipCardLevelDiscountSetting: vipCardDiscountSetting.ret
+            };
             this.openVPage(VCreateVIPCardDiscount2, params);
         }
     }
