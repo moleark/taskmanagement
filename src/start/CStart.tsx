@@ -37,7 +37,7 @@ export class CStart extends CUqBase {
         }
         **/
 
-        let { uqs, cSalesTask } = this.cApp;
+        let { uqs } = this.cApp;
         let { salesTask } = uqs;
         if (GLOABLE.IsAssistApp) {
             let result = await salesTask.WebUserEmployeeMap.obj({ webuser: this.user.id });

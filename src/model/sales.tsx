@@ -10,7 +10,6 @@ import { GLOABLE } from 'ui';
 export abstract class AppEnv {
     cApp: CApp;
 
-    constructor() { }
     setCApp(cApp: CApp) {
         this.cApp = cApp;
     }

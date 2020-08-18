@@ -90,6 +90,7 @@ export class VMain extends VPage<CSalesTask> {
             }
         </Page >
     });
+
     private refIframe = (ifrm: HTMLIFrameElement) => {
         if (!ifrm) return;
         let article = ifrm.parentElement.parentElement;

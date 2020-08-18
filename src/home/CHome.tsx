@@ -1,6 +1,4 @@
-import * as React from 'react';
 import { observable } from 'mobx';
-// import { observer } from 'mobx-react';
 import { QueryPager, PageItems, Tuid } from 'tonva';
 import { CUqBase } from '../CBase';
 import { VHome } from './VHome';

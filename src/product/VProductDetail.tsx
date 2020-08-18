@@ -8,7 +8,6 @@ import { ViewMainSubs } from '../mainSubs';
 import classNames from 'classnames';
 import { setting } from 'appConfig';
 import { ProductPackRow } from './product';
-import { threadId } from 'worker_threads';
 
 const schema: ItemSchema[] = [
     { name: 'pack', type: 'object' } as ObjectSchema,

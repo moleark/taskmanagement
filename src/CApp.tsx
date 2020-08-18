@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CAppBase, IConstructor, nav, UserCache } from "tonva";
+import { CAppBase, IConstructor, UserCache } from "tonva";
 import { CSalesTask } from "./salestask";
 import { CCustomer } from "./customer/CCustomer";
 import { CProduct } from "./product/CProduct";

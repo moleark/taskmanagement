@@ -45,12 +45,13 @@ export class CSalesTask extends CUqBase {
     protected async internalStart(param: any) {
         this.cSelectType = this.newSub(CSelectType);
         this.cSalesTaskBiz = this.newSub(CSelectBiz);
-
         this.taskTypes = createTaskTypes(this);
-        this.searchTaskByKey(0);
     }
 
     showTask = () => {
+        this.cSelectType = this.newSub(CSelectType);
+        this.cSalesTaskBiz = this.newSub(CSelectBiz);
+        this.taskTypes = createTaskTypes(this);
         this.searchTaskByKey(0);
         this.openVPage(VMain);
     }

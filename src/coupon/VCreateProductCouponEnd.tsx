@@ -88,7 +88,7 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
     };
 
     private showShare = () => {
-        let { type, code, isno } = this.coupon;
+        let { code, isno } = this.coupon;
         let share: any;
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
             share = <div className="w-100 text-center py-3" >

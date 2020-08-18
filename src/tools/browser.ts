@@ -1,6 +1,6 @@
 export let browser = {
     versions: function () {
-        var u = navigator.userAgent, app = navigator.appVersion;
+        var u = navigator.userAgent;
         return {
             trident: u.indexOf('Trident') > -1,                            //IE内核
             presto: u.indexOf('Presto') > -1,                              //opera内核
