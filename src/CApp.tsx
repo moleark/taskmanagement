@@ -25,6 +25,7 @@ import { CInnerTeam } from "innerteam/CInnerTeam";
 import { observer } from "mobx-react";
 
 import { WebUser } from "./CurrentUser";
+import { CWebUser } from 'webuser/CWebUser';
 
 /* eslint-disable */
 
@@ -50,10 +51,12 @@ export class CApp extends CAppBase {
     cMessage: CMessage;
     cCustomerUnit: CCustomerUnit;
     cCoupon: CCoupon;
-    cWebUser: CInnerCustomer;
+    cInnerCustomer: CInnerCustomer;
     cBalance: CBalance;
     cPost: CPost;
     cHome: CHome;
+    cWebUser: CWebUser;
+
 
     cVIPCardType: CVIPCardType;
 
@@ -103,11 +106,12 @@ export class CApp extends CAppBase {
         this.cMessage = this.newC(CMessage);
         this.cCustomerUnit = this.newC(CCustomerUnit);
         this.cCoupon = this.newC(CCoupon);
-        this.cWebUser = this.newC(CInnerCustomer);
+        this.cInnerCustomer = this.newC(CInnerCustomer);
         this.cBalance = this.newC(CBalance);
         this.cPost = this.newC(CPost);
         this.cVIPCardType = this.newC(CVIPCardType);
-        this.cHome = this.newC(CHome)
+        this.cHome = this.newC(CHome);
+        this.cWebUser = this.newC(CWebUser);
 
         // this.cProduce = this.newC(CProduce);
         /** 启动销售任务列表*/
@@ -120,6 +124,8 @@ export class CApp extends CAppBase {
         await this.cHome.getSlideShow();
         //显示主页面
         this.showMain();
+        let user = await this.uqs.webuser.WebUser.load(47);
+
     }
 
     async showMain() {

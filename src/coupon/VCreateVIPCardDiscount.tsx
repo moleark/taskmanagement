@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Slider from '@material-ui/core/Slider';
 import Input from '@material-ui/core/Input';
 
-export class VCreateVIPCardDiscount2 extends VPage<CCoupon> {
+export class VCreateVIPCardDiscount extends VPage<CCoupon> {
     private vipCardDiscountSetting: any[] = [];
     private vipCardLevel: any;
     private vipCardType: any;
@@ -39,9 +39,6 @@ export class VCreateVIPCardDiscount2 extends VPage<CCoupon> {
             <div className="col-9">
                 <SlidingBlock minDiscountForDisplay={minDiscountForDisplay} brandId={brand.id} hanleClickCallBack={this.hanleClickCallBack} />
             </div>
-            {/* <div className="col-3">
-                <small className=" ml-3 text-danger">≥{minDiscountForDisplay}%</small>
-            </div> */}
         </div>
     }
 

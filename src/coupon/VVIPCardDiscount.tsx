@@ -23,7 +23,7 @@ export class VVIPCardDiscount extends VPage<CCoupon>{
     }
 
     private page = () => {
-        return <Page header="VIP卡折扣">
+        return <Page header="品牌折扣">
             <List items={this.vipCardDiscountSetting} item={{ render: this.renderVIPCardDiscountSetting, className: "px-3 py-2" }}></List>
         </Page>
     }

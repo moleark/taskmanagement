@@ -6,7 +6,7 @@ import { VCouponDetail } from './VCouponDetail';
 import { VCreateCouponEnd } from './VCreateCouponEnd';
 import { VCreateProductCouponEnd } from './VCreateProductCouponEnd';
 import { VVIPCardDiscount } from './VVIPCardDiscount';
-import { VCreateVIPCardDiscount2 } from './VCreateVIPCardDiscount2';
+import { VCreateVIPCardDiscount } from './VCreateVIPCardDiscount';
 /**
  *
  */
@@ -19,7 +19,7 @@ export class CCoupon extends CUqBase {
 
     // 创建VIPCardDiscount 
     protected async internalStart(param: any) {
-        this.openVPage(VCreateVIPCardDiscount2, param);
+        this.openVPage(VCreateVIPCardDiscount, param);
     }
 
     /**
@@ -103,7 +103,7 @@ export class CCoupon extends CUqBase {
                 webUser: undefined, vipCardLevel: undefined, vipCardType: param.type, product: param.product,
                 vipCardLevelDiscountSetting: vipCardDiscountSetting.ret
             };
-            this.openVPage(VCreateVIPCardDiscount2, params);
+            this.openVPage(VCreateVIPCardDiscount, params);
         }
     }
 
