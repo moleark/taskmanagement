@@ -4,7 +4,7 @@ export { jnkTop, assistjnkTop } from "./jnkTop";
 export { VMain } from './main';
 
 const GLOABLE_PRODUCTION = {
-    IsAssistApp: document.domain === "localhost",
+    IsAssistApp: document.domain === "assist.jkchemical.com",
     CHINA: 44,
     CHINESE: 196,
     SALESREGION_CN: 1,
