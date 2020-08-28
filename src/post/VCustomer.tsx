@@ -12,52 +12,67 @@ export class VCustomer extends VPage<CPost> {
     private caption: string;
     private image: string;
     private discription: string;
+    private domain: any[];
+    private catalog: any[];
 
     @observable showTips: any = "none"
     async open(param: any) {
-        let { caption, image, post, discription } = param;
+        let { caption, image, post, discription, domain, catalog } = param;
         this.caption = caption;
         this.image = image.obj.path;
         this.post = post;
         this.discription = discription;
-
+        this.domain = domain;
+        this.catalog = catalog;
         this.openPage(this.page);
     }
 
     private page = observer(() => {
         let { pageCustomer } = this.controller;
 
-        let right = (
-            <div className="w-19c d-flex">
-                <SearchBox className="w-80 mt-1 mr-2" size="sm" placeholder="搜索客户姓名、单位"
-                    onSearch={(key: string) =>
-                        this.controller.searchCustomerByKey(key, this.post.id)
-                    }
-                />
-            </div>
-        );
+        let right = <div className="w-19c d-flex">
+            <SearchBox className="w-80 mt-1 mr-2" size="sm" placeholder="搜索客户姓名、单位"
+                onSearch={(key: string) => this.controller.searchCustomerByKey(key, this.post.id, 0)}
+            />
+        </div>;
 
-        return (
-            <Page header="分享" onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss} right={right}>
-                <div className="bg-warning text-white text-center w-100 small px-3">客户浏览高峰在8-9、11-13、15-18时</div>
-                <LMR className="px-3 py-3 bg-white d-flex align-items-center"
-                    onClick={() => this.share({ id: 0 }, "title")}
-                    left={<FA name='chrome' className="text-warning mr-3 " size="lg" fixWidth={true} />}>
-                    <span className="font-weight-bold">分享朋友圈</span>
-                </LMR>
-                <div className="sep-product-select" style={{ margin: "0 auto" }} />
-                <LMR className="px-3 py-3 bg-white d-flex align-items-center"
-                    onClick={() => this.share({ id: 0 }, "content")}
-                    left={<FA name='wechat' className=" text-success mr-3" size="lg" fixWidth={true} />}>
-                    <span className="font-weight-bold">分享其他人</span>
-                </LMR>
-                <div className="sep-product-select" style={{ margin: "0 auto" }} />
-                {pageCustomer.items && pageCustomer.items.length > 0 && <List before={""} none="【无】" items={pageCustomer} item={{ render: this.renderCustomer }} />}
-                <div className="text-center text-white small px-2" style={{ width: '40%', margin: '-80px  auto 0 auto', padding: '4px', borderRadius: '3px', backgroundColor: '#505050', display: this.showTips }}>
-                    通过APP才能分享
+        return <Page header="分享" onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss} right={right} >
+            <div className="bg-warning text-white text-center w-100 small px-3">客户浏览高峰在8-9、11-13、15-18时</div>
+            <LMR className="px-3 py-3 bg-white d-flex align-items-center"
+                onClick={() => this.share({ id: 0 }, "title")}
+                left={<FA name='chrome' className="text-warning mr-3 " size="lg" fixWidth={true} />}>
+                <span className="font-weight-bold">分享朋友圈</span>
+            </LMR>
+            <div className="sep-product-select" style={{ margin: "0 auto" }} />
+            <LMR className="px-3 py-3 bg-white d-flex align-items-center"
+                onClick={() => this.share({ id: 0 }, "content")}
+                left={<FA name='wechat' className=" text-success mr-3" size="lg" fixWidth={true} />}>
+                <span className="font-weight-bold">分享其他人</span>
+            </LMR>
+            <div className="sep-product-select" style={{ margin: "0 auto" }} />
+            <div className="small text-muted bg-white mt-2 px-3 py-1">筛选：根据贴文相关的目录节点和研究领域筛选客户</div>
+            <div className="sep-product-select" style={{ margin: "0 auto" }} />
+            <div className="d-flex justify-content-around  bg-white">
+                <div className="bg-white px-1 py-1 d-flex w-100"  >
+                    <span className="px-2 w-4c text-danger text-center" style={{ borderRight: '1px dotted #ccc' }}><strong>研究领域</strong></span>
+                    {this.domain.map((v: any) => {
+                        return <div className="text-primary small mx-1" onClick={() => this.controller.searchCustomerByKey("", v.post.id, v.domain.id)}>{tv(v.domain, vv => vv.name)}</div>
+                    })}
                 </div>
-            </Page >
-        );
+                <div className="bg-white px-1 py-1 d-flex w-100"  >
+                    <span className="px-2 w-4c text-danger text-center" style={{ borderRight: '1px dotted #ccc', borderLeft: '1px dotted #ccc' }}><strong>目录节点</strong></span>
+                    {this.catalog.map((v: any) => { return <div className="text-primary small mx-1">{v.name}</div> })}
+                </div>
+            </div>
+
+            <div className="sep-product-select" style={{ margin: "0 auto" }} />
+            {pageCustomer.items && pageCustomer.items.length > 0 && <List before={""} none="【无】" items={pageCustomer} item={{ render: this.renderCustomer }} />}
+            <div className="text-center text-white small px-2"
+                style={{ width: '40%', margin: '-80px  auto 0 auto', padding: '4px', borderRadius: '3px', backgroundColor: '#505050', display: this.showTips }}>
+                通过APP才能分享
+            </div>
+        </Page >;
+
     });
 
     private onScrollBottom = async () => {

@@ -98,17 +98,21 @@ export class CPost extends CUqBase {
     };
 
     //查询客户--通过名称
-    searchCustomerByKey = async (key: string, post: string) => {
+    searchCustomerByKey = async (key: string, post: string, domain: any) => {
         this.pageCustomer = new QueryPager(this.uqs.salesTask.SearchMyCustomerByPost, 15, 30);
-        this.pageCustomer.first({ key: key, post: post, domain: 0 });
+        this.pageCustomer.first({ key: key, post: post, domain: domain });
     };
 
     showCustomer = async (key: string, param: any) => {
-        let domainmap = await this.uqs.webBuilder.PostDomain.obj({ post: param.id });
-        let domain = domainmap ? domainmap.domain.id : 0;
+        let { caption, image, post, discription } = param;
         this.pageCustomer = new QueryPager(this.uqs.salesTask.SearchMyCustomerByPost, 15, 30);
-        this.pageCustomer.first({ key: key, post: param.id, domain: domain });
-        this.openVPage(VCustomer, param);
+        this.pageCustomer.first({ key: key, post: post.id, domain: 0 });
+
+        let domain = await this.uqs.webBuilder.PostDomain.query({ post: post.id });
+        let catalog = await this.uqs.webBuilder.PostProductCatalog.query({ post: post.id });
+
+        let params = { caption, image, post, discription, domain: domain.ret, catalog: catalog.ret }
+        this.openVPage(VCustomer, params);
     };
 
     addMyCustomerPost = async (post: any, customerid: any) => {
