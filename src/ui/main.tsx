@@ -22,7 +22,7 @@ export class VMain extends VPage<CApp> {
         let faceTabs: any[];
         if (setting.sales.isInner) {
             faceTabs = [
-                { name: 'home', label: '任务', content: cSalesTask.tab, icon: 'tasks', onShown: cSalesTask.start(), notify: undefined/*store.homeCount*/ },
+                { name: 'home', label: '任务', content: cSalesTask.tab, icon: 'tasks', onShown: cSalesTask.init, notify: undefined/*store.homeCount*/ },
                 { name: 'member', label: '客户', content: cCustomer.tab, icon: 'vcard', onScrollBottom: cCustomer.onScrollBottom },
                 { name: 'member', label: '产品', content: cProduct.tab, icon: 'gift', onScrollBottom: cProduct.onScrollBottom },
                 { name: 'member', label: '我的', content: cMe.tab, icon: 'user', onShown: cBalance.getComputeAchievement, load: cMe.load, notify: cMessage.count },
