@@ -1,4 +1,5 @@
 import { Tuid, Map, Query, Action, Sheet, Book } from "tonva";
+import { Many } from "lodash";
 
 export interface UqOrder {
     SetCart: Action;
@@ -183,6 +184,7 @@ export interface UqWebBuilder {
     SearchSubjectPost: Query;
     SearchDomainPost: Query;
     PostDomain: Map;
+    PostProductCatalog: Map;
     GetSlideShow: Query;
 
     SearchAchievementOfTeamNew: Query;
