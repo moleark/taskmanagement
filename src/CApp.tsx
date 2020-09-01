@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { CAppBase, IConstructor, UserCache } from "tonva";
 import { CSalesTask } from "./salestask";
 import { CCustomer } from "./customer/CCustomer";
@@ -22,7 +21,6 @@ import { setting } from "appConfig";
 import { CPost } from "post/CPost";
 import { PostCustomer } from "post/postcustomer";
 import { CInnerTeam } from "innerteam/CInnerTeam";
-import { observer } from "mobx-react";
 
 import { WebUser } from "./CurrentUser";
 import { CWebUser } from 'webuser/CWebUser';

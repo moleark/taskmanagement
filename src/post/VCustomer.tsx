@@ -28,7 +28,7 @@ export class VCustomer extends VPage<CPost> {
     }
 
     private page = observer(() => {
-        let { pageCustomer } = this.controller;
+        let { pageCustomer, searchCustomerByKey, searchCustomerByCategory } = this.controller;
 
         let right = <div className="w-19c d-flex">
             <SearchBox className="w-80 mt-1 mr-2" size="sm" placeholder="搜索客户姓名、单位"
@@ -56,12 +56,14 @@ export class VCustomer extends VPage<CPost> {
                 <div className="bg-white px-1 py-1 d-flex w-100"  >
                     <span className="px-2 w-4c text-danger text-center" style={{ borderRight: '1px dotted #ccc' }}><strong>研究领域</strong></span>
                     {this.domain.map((v: any) => {
-                        return <div className="text-primary small mx-1" onClick={() => this.controller.searchCustomerByKey("", v.post.id, v.domain.id)}>{tv(v.domain, vv => vv.name)}</div>
+                        return <div className="text-primary small mx-1 cursor-pointer" onClick={() => searchCustomerByKey("", v.post.id, v.domain.id)}>{tv(v.domain, vv => vv.name)}</div>
                     })}
                 </div>
                 <div className="bg-white px-1 py-1 d-flex w-100"  >
                     <span className="px-2 w-4c text-danger text-center" style={{ borderRight: '1px dotted #ccc', borderLeft: '1px dotted #ccc' }}><strong>目录节点</strong></span>
-                    {this.catalog.map((v: any) => { return <div className="text-primary small mx-1">{v.name}</div> })}
+                    {this.catalog.map((v: any) => {
+                        return <div className="text-primary small mx-1 cursor-pointer" onClick={() => searchCustomerByCategory("", v.productcategory.id)}>{v.name}</div>
+                    })}
                 </div>
             </div>
 

@@ -101,9 +101,9 @@ export class CCustomer extends CUqBase {
         let mycustomer = await this.cApp.cCustomer.call();
         let { customer, webuser } = model;
         await this.uqs.salesTask.UpateCustomerMyCustomerMap.submit({
-            mycustomer: mycustomer,
-            customer: customer,
-            webuser: webuser
+            _mycustomer: mycustomer,
+            _customer: customer,
+            _webuser: webuser
         });
         await this.searchByKey("");
         await this.searchNewMyCustomer();
@@ -316,7 +316,7 @@ export class CCustomer extends CUqBase {
      * 查询MyCustomer是否可能被其他销售助手绑定
      */
     setIsBinded = async (customer: any) => {
-        let occupyResult = await this.uqs.salesTask.MyCustomerIsOccupy.obj({ customer: customer.id });
+        let occupyResult = await this.uqs.salesTask.MyCustomerIsOccupy.obj({ _customer: customer.id });
         if (occupyResult) {
             this.isBinded = occupyResult.code;
         } else {

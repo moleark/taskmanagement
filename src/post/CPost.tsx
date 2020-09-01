@@ -104,13 +104,13 @@ export class CPost extends CUqBase {
     };
 
     searchCustomerByDomain = async (key: string, post: string, domain: any) => {
-        this.pageCustomer = new QueryPager(this.uqs.salesTask.SearchMyCustomerByPost, 15, 30);
+        this.pageCustomer = new QueryPager(this.uqs.salesTask.SearchMyCustomerByDomain, 15, 30);
         this.pageCustomer.first({ key: key, post: post, domain: domain });
     };
 
-    searchCustomerByCategory = async (key: string, post: string, domain: any) => {
-        this.pageCustomer = new QueryPager(this.uqs.salesTask.SearchMyCustomerByPosts, 15, 30);
-        this.pageCustomer.first({ key: key, post: post, domain: domain });
+    searchCustomerByCategory = async (key: string, category: any) => {
+        this.pageCustomer = new QueryPager(this.uqs.salesTask.SearchMyCustomerByCategory, 15, 30);
+        this.pageCustomer.first({ key: key, category: category });
     };
 
     showCustomer = async (key: string, param: any) => {
