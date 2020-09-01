@@ -149,21 +149,15 @@ export class CApp extends CAppBase {
             this.cStart.start();
         }
     }
-
     renderUser(userId: number) {
-        return <this._renderUser userId={userId} />;
-    }
-
-    private _renderUser = observer((props: { userId: number }): JSX.Element => {
-        let { userId } = props;
         let val = this.userCache.getValue(userId);
         switch (typeof val) {
             case 'undefined':
             case 'number':
-                return <span className="author" > {userId} </span>
+                return userId;
         };
-        return <span className="author" > {val.name} </span>;
-    });
+        return val.name;
+    }
 
     useUser(userId: number) {
         this.userCache.use(userId);

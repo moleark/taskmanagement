@@ -187,6 +187,9 @@ export interface UqWebBuilder {
     PostDomain: Map;
     PostProductCatalog: Map;
     GetSlideShow: Query;
+
+    SearchAchievementOfTeamNew: Query;
+    SearchAchievementOfTeamDetail: Query;
 }
 
 export interface UqVIPCardType {
