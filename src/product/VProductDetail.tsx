@@ -25,6 +25,7 @@ export class VProductDetail extends VPage<CProduct> {
     private productBox: any;
     private discount: any;
     private product: any;
+    private promotionPrice: any;
     private agentPrice: any;
     private pack: any;
     async open(product: any) {
@@ -62,6 +63,7 @@ export class VProductDetail extends VPage<CProduct> {
         let { pack, retail, agentPrice, promotionPrice } = item;
         this.agentPrice = agentPrice
         this.pack = pack
+        this.promotionPrice = promotionPrice
         let right = null;
         let agent = null;
 
@@ -145,7 +147,7 @@ export class VProductDetail extends VPage<CProduct> {
                     <button type="button" className="btn btn-primary mx-1 my-1 px-3"
                         onClick={() => showCreateCredits({ type: "credits", product: this.product })}>分享积分</button>
                     <button type="button" className="btn btn-primary mx-1 my-1 px-3"
-                        onClick={() => showCreateCoupon({ type: "coupon", product: this.product, discount: this.discount })}>分享折扣</button>
+                        onClick={() => showCreateCoupon({ type: "coupon", product: this.product, promotionPrice: this.promotionPrice })}>分享折扣</button>
                     <button type="button" className="btn btn-primary mx-1 my-1 px-3" onClick={this.onAddPack}>打包分享</button>
                 </div>
             </div>
@@ -153,7 +155,7 @@ export class VProductDetail extends VPage<CProduct> {
             footer = <div className="d-block">
                 <div className="w-100  justify-content-end" >
                     <button type="button" className="btn btn-primary mx-1 my-1 px-3"
-                        onClick={() => showCreateCoupon({ type: "coupon", product: this.product, discount: this.discount })}>分享折扣</button>
+                        onClick={() => showCreateCoupon({ type: "coupon", product: this.product, promotionPrice: this.promotionPrice })}>分享折扣</button>
                     <button type="button" className="btn btn-primary mx-1 my-1 px-3" onClick={this.onAddPack}>打包分享</button>
                 </div>
             </div>

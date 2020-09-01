@@ -93,10 +93,10 @@ export class CCoupon extends CUqBase {
 
     //显示添加优惠券页面
     showCreateCoupon = async (param: any) => {
-        let { discount } = param;
+        let { promotionPrice } = param;
         let vipCardDiscountSetting = await this.uqs.salesTask.SearchBottomDiscount.query({});
 
-        if (discount < 10) {
+        if (promotionPrice) {
             await this.createVIPCardDiscountCallback(undefined, undefined, param.type, param.product, undefined, "1");
         } else {
             let params = {
