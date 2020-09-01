@@ -138,6 +138,7 @@ export interface UqSalesTask {
     AddWebUserAccountMap: Action;
     ComputeBalance: Action;
     SearchMyCustomerByPost: Query;
+    SearchMyCustomerByPosts: Query;
     AddMyCustomerPost: Action;
     SearchSubordinate: Query;
     SearchCustomerOrder: Query;
