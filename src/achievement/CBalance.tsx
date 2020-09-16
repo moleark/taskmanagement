@@ -63,6 +63,7 @@ export class CBalance extends CUqBase {
 
     //显示业绩历史记录
     showAssistAchievementDetail = async (param: any) => {
+        await this.getComputeAchievement();
         this.openVPage(VAssistAchievementDetail, param);
     };
 

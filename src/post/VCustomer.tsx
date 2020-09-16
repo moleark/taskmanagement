@@ -62,7 +62,7 @@ export class VCustomer extends VPage<CPost> {
                 <div className="bg-white px-1 py-1 d-flex w-100"  >
                     <span className="px-2 w-4c text-danger text-center" style={{ borderRight: '1px dotted #ccc', borderLeft: '1px dotted #ccc' }}><strong>目录节点</strong></span>
                     {this.catalog.map((v: any) => {
-                        return <div className="text-primary small mx-1 cursor-pointer" onClick={() => searchCustomerByCategory("", v.productcategory.id)}>{v.name}</div>
+                        return <div className="text-primary small mx-1 cursor-pointer" onClick={() => searchCustomerByCategory("", v.productCategory.id)}>{v.name}</div>
                     })}
                 </div>
             </div>
