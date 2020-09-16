@@ -123,7 +123,7 @@ export class VBalance extends VPage<CBalance> {
     }
 
     private explain = observer(() => {
-        return <div className="px-3 pt-3 small text-muted" style={{ bottom: "4%", position: "absolute" }} >
+        return <div className="px-3 pt-3 small text-muted" >
             1、	提现次数：每个账户每月仅限1次。<br />
             2、	提现申请时间：每月21号至27号（二月份为21号至25号）。<br />
             3、	提现到账时间：3个工作日以内。<br />
