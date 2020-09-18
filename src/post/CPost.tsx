@@ -27,6 +27,7 @@ export class CPost extends CUqBase {
     @observable pageProductCatalogPost: QueryPager<any>;
     @observable pageSubjectPost: QueryPager<any>;
     @observable pageDomainPost: QueryPager<any>;
+    @observable language: number = 0;
 
     //初始化
     protected async internalStart() {
@@ -37,12 +38,18 @@ export class CPost extends CUqBase {
     searchByKey = async (key: string, domain: string) => {
         let publish = setting.sales.isInner ? 3 : 2;
         this.pagePost = new QueryPager(this.uqs.webBuilder.SearchPostPublish, 15, 30);
-        this.pagePost.first({ key: key, domain: 0, publish: publish });
+        this.pagePost.first({ key: key, domain: 0, publish: publish, language: this.language });
     };
 
     showPostList = async () => {
         await this.searchByKey("", "0");
         this.openVPage(VPostList);
+    };
+
+
+    setLanguage = async (language: number) => {
+        this.language = language;
+        await this.searchByKey("", "0");
     };
 
     //目录树

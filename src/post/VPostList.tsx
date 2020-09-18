@@ -1,10 +1,15 @@
 import * as React from "react";
+import classNames from "classnames";
 import { observer } from "mobx-react";
 import { VPage, Page, List, FA, tv, SearchBox, LMR, EasyTime } from "tonva";
 import { CPost } from "./CPost";
 import { setting } from "appConfig";
+import { observable } from "mobx";
 /* eslint-disable */
 export class VPostList extends VPage<CPost> {
+    @observable private isMes: boolean = false;
+
+
     async open(customer: any) {
         this.openPage(this.page, customer);
     }
@@ -18,21 +23,38 @@ export class VPostList extends VPage<CPost> {
         this.controller.pagePost.more();
     };
 
+    private onMeAll = async (evt: React.ChangeEvent<HTMLInputElement>) => {
+        this.isMes = evt.currentTarget.value === '英';
+        await this.controller.setLanguage(this.isMes ? 1 : 0);
+    }
+    private renderMeAllToggle() {
+        let cnButton = ['btn', 'btn-outline-warning', 'btn-sm', 'text-nowrap'];
+        return <div className="px-sm-2 d-flex align-items-center">
+            <div className="btn-group btn-group-toggle" data-toggle="buttons">
+                <label className={classNames(cnButton, { active: !this.isMes })}>
+                    <input type="radio" name="options" value="中" defaultChecked={true} onChange={this.onMeAll} />
+                    <span className="d-inline d-sm-none">{this.t('中')}</span>
+                    <span className="d-none d-sm-inline">{this.t('中文')}</span>
+                </label>
+                <label className={classNames(cnButton, { active: this.isMes })}>
+                    <input type="radio" name="options" value="英" defaultChecked={false} onChange={this.onMeAll} />
+                    <span className="d-inline d-sm-none">{this.t('英')}</span>
+                    <span className="d-none d-sm-inline">{this.t('英文')}</span>
+                </label>
+            </div>
+        </div>
+    }
+
     private page = observer((product: any) => {
         let { pagePost, searchByKey, showProductCatalog, showSubject, showDomain } = this.controller;
         let none = <div className="my-3 mx-2 text-warning">【无】</div>;
-        let search = <div className="w-100 d-flex">
-            <span className="pt-1 text-white ml-2" style={{ width: '3rem' }}>帖文</span>
-            <SearchBox
-                className="w-100 px-2 small"
-                size="sm"
-                onSearch={(key: string) => searchByKey(key, "")}
-                placeholder="搜索帖文"
-            />
+        let right = <div className="d-flex align-items-center">
+            {this.renderMeAllToggle()}
+            <SearchBox className="w-100 px-2 small" size="sm" onSearch={(key: string) => searchByKey(key, "")} placeholder="搜索帖文" />
         </div>
 
         return (
-            <Page header={search} onScrollBottom={this.onScrollBottoms} headerClassName={setting.pageHeaderCss}>
+            <Page header={"贴文"} onScrollBottom={this.onScrollBottoms} right={right} headerClassName={setting.pageHeaderCss}>
                 <LMR className="bg-white py-3 my-1" right={<i className="pt-2 px-2 iconfont icon-fangxiang1"></i>} onClick={showProductCatalog}>
                     <div className="mx-3 px-2 font-weight-bold">产品目录</div>
                 </LMR>
