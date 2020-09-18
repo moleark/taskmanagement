@@ -26,7 +26,7 @@ if (document.domain === setting.assistDomain) {
 }
 */
 
-export const currentApp = GLOABLE.IsAssistApp ? new AgentApp() : new AssistApp();
+export const currentApp = GLOABLE.IsAssistApp ? new AssistApp() : new AgentApp();
 setting.sales = currentApp
 
 let { title, logo } = currentApp;
