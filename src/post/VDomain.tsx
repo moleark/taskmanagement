@@ -7,43 +7,51 @@ import { setting } from "appConfig";
 
 export class VDomain extends VPage<CPost> {
 
+    @observable name: any;
     @observable pageDomain: any;
     async open(param: any) {
-        this.pageDomain = param;
+        this.pageDomain = param.domain;
+        this.name = param.name;
         this.openPage(this.page);
     }
 
     private page = observer(() => {
         return (
-            <Page header={"研究领域"} headerClassName={setting.pageHeaderCss} >
+            <Page header={this.name} headerClassName={setting.pageHeaderCss} >
                 <List before={""} none="无" items={this.pageDomain} item={{ render: this.renderItem }} />
             </Page>
         );
     });
 
     private renderItem = (model: any, index: number) => {
-        let { showDomainPost, showDomain } = this.controller;
-        let { name, id } = model;
-        return (
-            <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 pt-2 pb-3 d-flex">
-                <div className="d-flex flex-fill mx-2" >
-                    <span>{name}</span>
+        let { showDomainPost, showDomain, renderDomainPostCount } = this.controller;
+        let { name, id, counts } = model;
+        let postcount = renderDomainPostCount(id);
+
+        let next: any;
+        if (counts > 0) {
+            next = <div className="w-7c ml-3" onClick={() => showDomain(model)} >
+                <span className="p-2 small pl-4 text-primary cursor-pointer iconfont icon-fangxiang1" style={{ fontSize: "12px" }}>
+                </span>
+            </div>
+        } else {
+            next = < div className="w-7c ml-3" >
+                <span className="p-2 small pl-4 text-primary cursor-pointer" >
+                    &nbsp;&nbsp;&nbsp;
+                </span>
+            </div>
+        }
+
+        return <div className="pl-2 pl-sm-3 pr-2 pr-sm-3 py-3 d-flex justify-content-between">
+            <div className="mx-2  small" >
+                <span>{name}</span>
+            </div>
+            <div className="d-flex">
+                <div className="w-7c mr-3  text-primary text-center cursor-pointer" onClick={() => showDomainPost(model, "")} >
+                    {postcount}
                 </div>
-                <div onClick={() => showDomainPost(model, "")} >
-                    <div className="small d-flex cursor-pointer text-primary text-right w-7c ">
-                        <button className="btn btn-outline-info mx-2 px-3">
-                            贴  文
-                        </button>
-                    </div>
-                </div>
-                <div onClick={() => showDomain(id)} >
-                    <div className="small d-flex cursor-pointer text-primary text-right w-7c ">
-                        <button className="btn btn-outline-info mx-2 px-3">
-                            下一级
-                        </button>
-                    </div>
-                </div>
-            </div >
-        );
+                {next}
+            </div>
+        </div >
     };
 }

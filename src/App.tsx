@@ -26,7 +26,7 @@ if (document.domain === setting.assistDomain) {
 }
 */
 
-export const currentApp = GLOABLE.IsAssistApp ? new AssistApp() : new AgentApp();
+export const currentApp = GLOABLE.IsAssistApp ? new AgentApp() : new AssistApp();
 setting.sales = currentApp
 
 let { title, logo } = currentApp;
@@ -38,14 +38,14 @@ nav.setSettings(appConfig);
 
 class App extends React.Component {
 
-  private onLogined = async () => {
+    private onLogined = async () => {
 
-    await start(CApp, appConfig);
-  }
+        await start(CApp, appConfig);
+    }
 
-  public render() {
-    return <NavView onLogined={this.onLogined} />
-  }
+    public render() {
+        return <NavView onLogined={this.onLogined} />
+    }
 }
 
 export default App;

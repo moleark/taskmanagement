@@ -143,7 +143,7 @@ export class VProductDetail extends VPage<CProduct> {
         let footer: any;
         if (setting.sales.isInner) {
             footer = <div className="d-block">
-                <div className="w-100  justify-content-end" >
+                <div className="w-100 d-flex justify-content-center py-2" >
                     <button type="button" className="btn btn-primary mx-1 my-1 px-3"
                         onClick={() => showCreateCredits({ type: "credits", product: this.product })}>分享积分</button>
                     <button type="button" className="btn btn-primary mx-1 my-1 px-3"
@@ -153,7 +153,7 @@ export class VProductDetail extends VPage<CProduct> {
             </div>
         } else {
             footer = <div className="d-block">
-                <div className="w-100  justify-content-end" >
+                <div className="w-100  d-flex justify-content-center py-2" >
                     <button type="button" className="btn btn-primary mx-1 my-1 px-3"
                         onClick={() => showCreateCoupon({ type: "coupon", product: this.product, promotionPrice: this.promotionPrice })}>分享折扣</button>
                     <button type="button" className="btn btn-primary mx-1 my-1 px-3" onClick={this.onAddPack}>打包分享</button>

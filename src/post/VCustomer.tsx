@@ -29,14 +29,16 @@ export class VCustomer extends VPage<CPost> {
 
     private page = observer(() => {
         let { pageCustomer, searchCustomerByKey, searchCustomerByCategory } = this.controller;
-
-        let right = <div className="w-19c d-flex">
-            <SearchBox className="w-80 mt-1 mr-2" size="sm" placeholder="搜索客户姓名、单位"
+        let search = <div className="w-100 d-flex">
+            <span className="pt-1 text-white ml-2" style={{ width: '3rem' }}>分享</span>
+            <SearchBox
+                className="w-100 px-2 small"
+                size="sm"
                 onSearch={(key: string) => this.controller.searchCustomerByKey(key, this.post.id, 0)}
+                placeholder="搜索客户姓名、单位"
             />
-        </div>;
-
-        return <Page header="分享" onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss} right={right} >
+        </div>
+        return <Page header={search} onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss} >
             <div className="bg-warning text-white text-center w-100 small px-3">客户浏览高峰在8-9、11-13、15-18时</div>
             <LMR className="px-3 py-3 bg-white d-flex align-items-center"
                 onClick={() => this.share({ id: 0 }, "title")}

@@ -40,14 +40,20 @@ export class VSalesTaskInvalid extends VPage<CSalesTask> {
     }
 
     private page = observer((salestask: any) => {
-        let footer = <button type="button" className="btn btn-primary w-100" onClick={this.onInvalidTask} >提交</button>;
-        return <Page header="取消" footer={footer} headerClassName={setting.pageHeaderCss} >
+        return <Page header="取消" headerClassName={setting.pageHeaderCss} >
             <div className="App-container container text-left">
                 <Form ref={v => this.form = v} className="my-3"
                     schema={schema}
                     uiSchema={this.uiSchema}
                     onButtonClick={this.onFormButtonClick}
                 />
+                <button
+                    type="button"
+                    className="btn btn-primary w-100  my-3"
+                    onClick={this.onInvalidTask}
+                >
+                    提交
+                </button>
             </div>
         </Page >
     })

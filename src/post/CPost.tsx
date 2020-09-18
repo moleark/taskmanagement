@@ -14,6 +14,8 @@ import { VDomain } from "./VDomain";
 import { VDomainPost } from "./VDomainPost";
 import { observer } from "mobx-react";
 import { GLOABLE } from "ui";
+import { VDomainPostCount } from "./VDomainPostCount";
+import { VProductCatalogPostCount } from "./VProductCatalogPostCount";
 
 //页面类
 /* eslint-disable */
@@ -47,13 +49,21 @@ export class CPost extends CUqBase {
     showProductCatalog = async () => {
         let { SALESREGION_CN, CHINESE } = GLOABLE;
         let results = await this.uqs.product.GetRootCategory.query({ salesRegion: SALESREGION_CN, language: CHINESE });
-        this.openVPage(VProductCatalog, results.first);
+        let param = { data: results.first, name: "产品目录" };
+        this.openVPage(VProductCatalog, param);
     }
-
-    searchProductCatalogChildrenKeys = async (key: string) => {
+    renderProductCatalogPostCount = (productcatolg: any) => {
+        return this.renderView(VProductCatalogPostCount, productcatolg);
+    }
+    searchProductCatalogPostCount = async (productcategory: any) => {
+        let list = await this.uqs.webBuilder.SearchProductCategoryPostCount.obj({ productCategory: productcategory });
+        return list.postcounts;
+    }
+    searchProductCatalogChildrenKeys = async (param: any) => {
         let { SALESREGION_CN, CHINESE } = GLOABLE;
-        let results = await this.uqs.product.GetChildrenCategory.query({ parent: key, salesRegion: SALESREGION_CN, language: CHINESE });
-        this.openVPage(VProductCatalog, results.first)
+        let { productCategory, name } = param
+        let results = await this.uqs.product.GetChildrenCategory.query({ parent: productCategory.id, salesRegion: SALESREGION_CN, language: CHINESE });
+        this.openVPage(VProductCatalog, { data: results.first, childdata: results.secend, name: name })
     };
 
     showProductCatalogDetil = async (param: any) => {
@@ -63,11 +73,15 @@ export class CPost extends CUqBase {
         return await this.vCall(VProductCatalogPost);
     }
 
+
     //栏目
     showSubject = async (param: any) => {
+        let { name, id } = param;
         let pageSubject = new QueryPager(this.uqs.webBuilder.SearchSubject, 15, 100);
-        pageSubject.first({ _parent: param });
-        this.openVPage(VSubject, pageSubject);
+        pageSubject.first({ _parent: id });
+
+        let sub = { pageSubject, name: name }
+        this.openVPage(VSubject, sub);
     }
     showSubjectPost = async (param: any) => {
         let publish = setting.sales.isInner ? 3 : 2;
@@ -78,9 +92,11 @@ export class CPost extends CUqBase {
 
     //研究领域
     showDomain = async (param: any) => {
+        let { id, name } = param;
         let domain = new QueryPager(this.uqs.customer.SearchDomain, 15, 100);
-        domain.first({ _parent: param });
-        this.openVPage(VDomain, domain);
+        domain.first({ _parent: id });
+        let sdomain = { domain, name: name }
+        this.openVPage(VDomain, sdomain);
     }
     showDomainPost = async (param: any, key: any) => {
         await this.showDomainPost_Search(param, key);
@@ -91,7 +107,13 @@ export class CPost extends CUqBase {
         this.pageDomainPost = new QueryPager(this.uqs.webBuilder.SearchDomainPost, 15, 100);
         this.pageDomainPost.first({ key: key, author: 0, domain: param.id, publish: publish })
     }
-
+    renderDomainPostCount = (domain: any) => {
+        return this.renderView(VDomainPostCount, domain);
+    }
+    searchDomainCount = async (domain: any) => {
+        let list = await this.uqs.webBuilder.SearchDomainPostCount.obj({ domain: domain });
+        return list.postcounts;
+    }
 
     showPostDetail = async (param: any) => {
         this.openVPage(VPostDetil, param);

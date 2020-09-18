@@ -191,6 +191,8 @@ export interface UqWebBuilder {
 
     SearchAchievementOfTeamNew: Query;
     SearchAchievementOfTeamDetail: Query;
+    SearchDomainPostCount: Query;
+    SearchProductCategoryPostCount: Query;
 }
 
 export interface UqVIPCardType {

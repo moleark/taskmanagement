@@ -84,7 +84,7 @@ export class AssistApp extends AppEnv {
     divTag(titel: string, achievement: number, status: number) {
         let onClick: any;
         if (status === 1) {
-            onClick = async () => await this.cApp.cBalance.showAssistAchievementDetail(0);
+            onClick = async () => await this.cApp.cBalance.showAssistAchievementDetail(status);
         } else {
             onClick = async () => await this.cApp.cBalance.showBalance();
         }
@@ -103,15 +103,17 @@ export class AssistApp extends AppEnv {
         let achievement = oneAchievement + twoAchievement + threeAchievement - totalReceivableAmount;
         let balance = totalReceivableAmount - totalaWithdrawal;
         return <div className="text-center text-white bg-primary pt-1 pb-5" style={{ borderRadius: '0  0 5rem 5rem', margin: ' 0 -2rem 0 -2rem ' }}>
+            <div className="text-right d-flex justify-content-end mr-4 pr-4 cursor-pointer" onClick={async () => await this.cApp.cBalance.showexplanation()}>
+                <i className="iconfont icon-guanyu" style={{ fontSize: "", color: "#f5960a" }}></i></div>
             <div className="pb-2 pt-4 cursor-pointer" >
-                <div className="text-warning pt-4" onClick={async () => await this.cApp.cBalance.showAssistAchievementDetail(0)}>
+                <div className="text-warning pt-3" onClick={async () => await this.cApp.cBalance.showAssistAchievementDetail(0)}>
                     <span className="h1">{totalachievement.toFixed(2)}</span>
                     <small> 元</small>
                 </div>
                 <h6 className="text-warning"><small>累计收益</small></h6>
             </div >
             <div className="d-flex justify-content-around">
-                {this.divTag('待到帐', achievement, 1)}
+                {this.divTag('待到款', achievement, 1)}
                 {this.divTag('余额', balance, 2)}
             </div>
             <div className="my-4"></div>
@@ -157,7 +159,7 @@ export class AgentApp extends AppEnv {
                 <h6 className="text-warning"><small>累计收益</small></h6>
             </div >
             <div className="d-flex justify-content-around">
-                {this.divTag('待到帐', achievement, 1)}
+                {this.divTag('待到款', achievement, 1)}
                 {this.divTag('余额', balance, 2)}
             </div>
             <div className="my-4"></div>

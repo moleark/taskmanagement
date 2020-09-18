@@ -35,7 +35,7 @@ export class VCouponList extends VPage<CCoupon> {
         if ((nowValue < endValue && isValid === 1)) {
             bright = <small style={{ borderRadius: "15%/48%" }} className="bg-success small text-white px-3" >有效</small>;
         } else {
-            bright = <small style={{ borderRadius: "15%/48%" }} className="bg-danger small text-white px-3" >无效</small>;
+            bright = <small style={{ borderRadius: "15%/48%" }} className="bg-danger small text-white px-3" >失效</small>;
         }
 
         let bleft: any;

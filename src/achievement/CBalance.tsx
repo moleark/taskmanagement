@@ -8,6 +8,7 @@ import { observable } from "mobx";
 import { VAchievementDetail } from "./VAchievementDetail";
 import { VWithdrawalDetail } from "./VWithdrawalDetail";
 import { VAssistAchievementDetail } from "./VAssistAchievementDetail";
+import { VExplanation } from "./VExplanation";
 
 export class CBalance extends CUqBase {
     @observable pageBalanceHistory: QueryPager<any>;
@@ -153,4 +154,9 @@ export class CBalance extends CUqBase {
         });
         this.balanceHistory = list.ret;
     };
+
+    /**累计收益，贷到款解释说明 */
+    showexplanation = async () => {
+        this.openVPage(VExplanation);
+    }
 }

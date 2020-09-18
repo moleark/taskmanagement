@@ -24,12 +24,12 @@ export class VCouponDetail extends VPage<CCoupon> {
             rows.push(this.renderGridItem("品牌折扣：", "", "", "查看", () => showVIPCardDiscount(id)));
         rows.push(this.renderGridItem("状 态：", isValid ? '有效' : '无效', "", "", undefined));
 
-        let footer = <div className="">
-            <button onClick={() => invalidCoupon(this.coupon)} type="submit" className="btn btn-danger flex-grow-1 px-3 mx-3">&nbsp; &nbsp; 作废&nbsp; &nbsp; </button>
+        let divButton = <div className="mt-4 d-flex justify-content-center">
+            <button onClick={() => invalidCoupon(this.coupon)} type="submit" className="btn btn-danger mx-3">&nbsp; &nbsp; 作废&nbsp; &nbsp; </button>
             <button onClick={() => showShareCoupon({ code: code, type: types, product: undefined })} type="submit" className="btn btn-primary  px-3">&nbsp; &nbsp; 分享&nbsp; &nbsp; </button>
         </div>;
 
-        return <Page header="详情" headerClassName={setting.pageHeaderCss} footer={footer}>
+        return <Page header="详情" headerClassName={setting.pageHeaderCss} >
             <PropGrid className="my-2" rows={rows} values={this.coupon} alignValue="right" />
             {pageCouponReceiveUsed.length > 0 &&
                 <>
@@ -38,6 +38,7 @@ export class VCouponDetail extends VPage<CCoupon> {
                 </>
             }
             {pageCouponReceiveUsed.length > 0 && this.renderItem()}
+            {divButton}
         </Page>
     });
 
