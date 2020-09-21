@@ -86,7 +86,9 @@ export class VCustomerDetail extends VPage<CCustomer> {
                         </div>
                     </div>
                 </div>
-                <div className="small cursor-pointer text-primary text-right w-6c pt-3 ml-1 w-3c w-min-3c h-3c h-min-3c" onClick={() => showCustomer("", item)} >
+                <div className="small cursor-pointer text-primary text-right w-6c pt-3 ml-1 w-3c w-min-3c h-3c h-min-3c"
+                    // onClick={() => showCustomer("", item)}
+                    onClick={() => this.share(item)} >
                     <button className="btn btn-outline-info  btn-sm">分享</button>
                 </div>
             </div>
@@ -328,7 +330,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
         }
 
         let postShow: any, postShowTitle: any;
-        if (pagePost.items && pagePost.items.length > 0) {
+        if (pagePost.items && pagePost.items !== undefined && pagePost.items.length > 0) {
             postShowTitle = this.renderTitle("贴文分享", undefined, undefined, undefined, undefined);
             postShow = (
                 <List

@@ -15,21 +15,35 @@ export class VCouponDetail extends VPage<CCoupon> {
 
     private page = observer(() => {
         let { id, code, validitydate, isValid, types } = this.coupon;
-        let { invalidCoupon, showShareCoupon, pageCouponReceiveUsed, showVIPCardDiscount } = this.controller;
-
+        let { invalidCoupon, showShareCoupon, pageCouponReceiveUsed, showVIPCardDiscount, ifCheck } = this.controller;
+        let nowValue = Date.now();
+        let endValue = new Date(validitydate).valueOf();
+        let bright: any;
+        if ((nowValue < endValue && isValid === 1)) {
+            bright = <span className=" text-success">有效</span>;
+        } else {
+            bright = <span className=" text-danger" >失效</span>;
+        }
         let rows: Prop[] = [];
         rows.push(this.renderGridItem(types === "coupon" ? " 优 惠 券 ：" : "积 分 券：", code, "", "", undefined));
         rows.push(this.renderGridItem(" 有 效 期 ：", validitydate, "date", "", undefined));
-        if (types === "coupon")
-            rows.push(this.renderGridItem("品牌折扣：", "", "", "查看", () => showVIPCardDiscount(id)));
-        rows.push(this.renderGridItem("状 态：", isValid ? '有效' : '无效', "", "", undefined));
+        if (types === "coupon") {
+            if (ifCheck !== 0) {
+                rows.push(this.renderGridItem("品牌折扣：", "", "", "查看", () => showVIPCardDiscount(id)));
+            }
+        }
 
-        let divButton = <div className="mt-4 d-flex justify-content-center">
-            <button onClick={() => invalidCoupon(this.coupon)} type="submit" className="btn btn-danger mx-3">&nbsp; &nbsp; 作废&nbsp; &nbsp; </button>
-            <button onClick={() => showShareCoupon({ code: code, type: types, product: undefined })} type="submit" className="btn btn-primary  px-3">&nbsp; &nbsp; 分享&nbsp; &nbsp; </button>
-        </div>;
+        rows.push(this.renderGridItem("状 态：", bright, "", "", undefined));
 
-        return <Page header="详情" headerClassName={setting.pageHeaderCss} >
+        let footer: any;
+        if ((nowValue < endValue && isValid === 1)) {
+            footer = <div className="py-2 d-flex justify-content-center">
+                <button onClick={() => invalidCoupon(this.coupon)} type="submit" className="btn btn-danger mx-3">&nbsp; &nbsp; 作废&nbsp; &nbsp; </button>
+                <button onClick={() => showShareCoupon({ code: code, type: types, product: undefined })} type="submit" className="btn btn-primary  px-3">&nbsp; &nbsp; 分享&nbsp; &nbsp; </button>
+            </div>;
+        }
+
+        return <Page header="详情" headerClassName={setting.pageHeaderCss} footer={footer}>
             <PropGrid className="my-2" rows={rows} values={this.coupon} alignValue="right" />
             {pageCouponReceiveUsed.length > 0 &&
                 <>
@@ -38,7 +52,6 @@ export class VCouponDetail extends VPage<CCoupon> {
                 </>
             }
             {pageCouponReceiveUsed.length > 0 && this.renderItem()}
-            {divButton}
         </Page>
     });
 

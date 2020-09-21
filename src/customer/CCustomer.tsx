@@ -33,6 +33,7 @@ export class CCustomer extends CUqBase {
     @observable customerorders: any;
     @observable pagePost: QueryPager<any>;
     @observable vipCardForWebUser: any;
+    @observable language: number = 0;
     private task: Task;
 
     @observable isBinded: any;
@@ -173,8 +174,13 @@ export class CCustomer extends CUqBase {
     getCustomerContent = async (domain: any) => {
         let publish = setting.sales.isInner ? 3 : 2;
         this.pagePost = new QueryPager(this.uqs.webBuilder.SearchPostPublish, 5, 5);
-        this.pagePost.first({ key: "", domain: domain, publish: publish });
+        this.pagePost.first({ key: "", domain: domain, publish: publish, language: this.language });
     };
+    // searchByKey = async (key: string, domain: string) => {
+    //     let publish = setting.sales.isInner ? 3 : 2;
+    //     this.pagePost = new QueryPager(this.uqs.webBuilder.SearchPostPublish, 15, 30);
+    //     this.pagePost.first({ key: key, domain: 0, publish: publish });
+    // };
 
     /**
      * 搜索客户——用在任务等要需要选择客户的界面？

@@ -156,7 +156,9 @@ export class CBalance extends CUqBase {
     };
 
     /**累计收益，贷到款解释说明 */
-    showexplanation = async () => {
+    showexplanation = async (e: any) => {
+        e.preventDefault();
+        e.stopPropagation()
         this.openVPage(VExplanation);
     }
 }

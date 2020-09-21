@@ -12,7 +12,7 @@ export class VSearchHeader extends View<CHome> {
     }
     render(key: any) {
 
-        return <SearchBox className="w-100 px-2 small" size='sm'
+        return <SearchBox className="w-100 px-2 small ml-2" size='sm'
             onSearch={(key: string) => this.onSearch(key)}
             placeholder="搜索品名、编号、CAS、MDL等" />
     }
