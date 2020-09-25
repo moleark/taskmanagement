@@ -2,7 +2,7 @@ import * as React from "react";
 import { VPage, Page, FA } from "tonva";
 import { CInnerTeam } from "./CInnerTeam";
 import { observer } from "mobx-react";
-import { LineChart } from 'bizcharts';
+
 export class VInnerTeam extends VPage<CInnerTeam> {
 
     async open() {
@@ -10,125 +10,9 @@ export class VInnerTeam extends VPage<CInnerTeam> {
     }
 
     private page = observer(() => {
-        let { teamAchievementDays, teamAchievementMonthchart, showTeamAchievementDetail } = this.controller; //  
-        let dataDay: any = []
-        teamAchievementDays.forEach(v => {
-            let { day, postPubSum, postTranSum, postHitSum, percent } = v;
-            dataDay.push(
-                {
-                    date: day,
-                    type: '浏览量',
-                    value: postHitSum
-                },
-                {
-                    date: day,
-                    type: '转发量',
-                    value: postTranSum
-                },
-                {
-                    date: day,
-                    type: '发布量',
-                    value: postPubSum
-                },
-                {
-                    date: day,
-                    type: '转换率',
-                    value: percent
-                }
-            )
-        })
-        let dataMonth: any = []
-        teamAchievementMonthchart.forEach(val => {
-            let { month, postPubSum, postTranSum, postHitSum, percent } = val;
-            month = month + "月";
-            dataMonth.push(
-                {
-                    date: month,
-                    type: '浏览量',
-                    value: postHitSum
-                },
-                {
-                    date: month,
-                    type: '转发量',
-                    value: postTranSum
-                },
-                {
-                    date: month,
-                    type: '发布量',
-                    value: postPubSum
-                },
-                {
-                    date: month,
-                    type: '转换率',
-                    value: percent
-                }
-            )
-        })
+
         return (
             <Page header="我的团队" >
-                <div className='pb-4'>
-                    <LineChart forceFit height={400} padding={[60, 40, 50, 40]} smooth
-                        data={dataDay}
-                        title={{
-                            visible: true,
-                            alignTo: 'middle',
-                            text: '贴文系统日报表',
-                        }}
-                        xField='date'
-                        yField='value'
-                        seriesField="type"
-                        interactions={[
-                            {
-                                type: 'slider',
-                                cfg: {
-                                    start: 0.8,
-                                    end: 1,
-                                },
-                            },
-                        ]}
-                        legend={{
-                            offsetY: 4,
-                            text: {
-                                style: {
-                                    fontSize: 16,
-                                    fill: 'grey',
-                                }
-                            }
-                        }}
-                        events={{
-                            onLineClick: (event) => showTeamAchievementDetail()
-                        }}
-                    />
-                    <LineChart forceFit height={400} padding={[70, 10, 50, 40]} smooth
-                        data={dataMonth}
-                        title={{
-                            visible: true,
-                            alignTo: 'middle',
-                            text: '贴文系统月报表',
-                        }}
-                        xField='date'
-                        yField='value'
-                        seriesField="type"
-                        legend={{
-                            offsetY: 4,
-                            text: {
-                                style: {
-                                    fontSize: 16,
-                                    fill: 'grey',
-                                }
-                            }
-                        }}
-                        events={{
-                            onAxisClick: (event) => {
-                                let month = event.target.attrs.text;
-                                month = month.replace("月", "");
-                                if (month !== '0') {
-                                    this.controller.showTeamAchievementMonDetail(month)
-                                }
-                            }
-                        }}
-                    />
-                </div>
                 < this.teamAchievementDay />
                 < this.teamAchievementMonth />
             </Page>

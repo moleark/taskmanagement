@@ -53,7 +53,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
     private renderPost = (item: any, index: number) => {
         let { user, cApp } = this.controller;
         let { cPost } = cApp;
-        let { showPostDetail, showCustomer } = cPost
+        let { showPostDetail } = cPost
         if (!user) return;
         let { image, caption, publishdate, hits, sumHits, emphasis } = item;
         let showImport = emphasis === 1 ?
