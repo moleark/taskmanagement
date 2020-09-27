@@ -309,7 +309,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
         }
 
         let orderShowTitle: any, orderShow: any;
-        if (customerorders.length > 0) {
+        if (customerorders && customerorders.length > 0) {
             orderShowTitle = this.renderTitle(
                 "历史订单",
                 "",
