@@ -48,20 +48,26 @@ export class VPostList extends VPage<CPost> {
     private page = observer((product: any) => {
         let { pagePost, searchByKey, showProductCatalog, showSubject, showDomain } = this.controller;
         let none = <div className="my-3 mx-2 text-warning">【无】</div>;
-        let right = <div className="d-flex align-items-center">
-            {this.renderMeAllToggle()}
-            <SearchBox className="w-100 px-2 small" size="sm" onSearch={(key: string) => searchByKey(key, "")} placeholder="搜索帖文" />
-        </div>
 
+        let search = <div className="w-100 d-flex">
+            <span className="pt-1 text-white mx-2 text-left" style={{ width: '4rem' }}>帖文</span>
+            {this.renderMeAllToggle()}
+            <SearchBox
+                className="w-100 px-2 small"
+                size="sm"
+                onSearch={(key: string) => searchByKey(key, "")}
+                placeholder="搜索帖文"
+            />
+        </div>
         return (
-            <Page header={"贴文"} onScrollBottom={this.onScrollBottoms} right={right} headerClassName={setting.pageHeaderCss}>
-                <LMR className="bg-white py-3 my-1" right={<i className="pt-2 px-2 iconfont icon-fangxiang1"></i>} onClick={showProductCatalog}>
+            <Page header={search} onScrollBottom={this.onScrollBottoms} headerClassName={setting.pageHeaderCss}>
+                <LMR className="bg-white py-2 my-1" right={<i className="px-2 iconfont icon-fangxiang1"></i>} onClick={showProductCatalog}>
                     <div className="mx-3 px-2 font-weight-bold">产品目录</div>
                 </LMR>
-                <LMR className="bg-white py-3 my-1" right={<i className="pt-2 px-2 iconfont icon-fangxiang1"></i>} onClick={() => showSubject({ name: "帖文栏目", id: "10000" + 1 })}>
+                <LMR className="bg-white py-2 my-1" right={<i className="px-2 iconfont icon-fangxiang1"></i>} onClick={() => showSubject({ name: "帖文栏目", id: "10000" + 1 })}>
                     <div className="mx-3 px-2 font-weight-bold">帖文栏目</div>
                 </LMR>
-                <LMR className="bg-white py-3 my-1" right={<i className="pt-2 px-2 iconfont icon-fangxiang1"></i>} onClick={() => showDomain({ name: '研究领域', id: 0 })}>
+                <LMR className="bg-white py-2 my-1" right={<i className="px-2 iconfont icon-fangxiang1"></i>} onClick={() => showDomain({ name: '研究领域', id: 0 })}>
                     <div className="mx-3 px-2 font-weight-bold">研究领域</div>
                 </LMR>
                 <List before={""} none={none} items={pagePost} item={{ render: this.renderItem }} />

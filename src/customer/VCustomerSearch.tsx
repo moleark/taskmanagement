@@ -36,11 +36,18 @@ export class VCustomerSearch extends VPage<CCustomer> {
         let none = <div className="my-3 mx-2 text-warning">
             还没有这个客户，是否<span className="text-primary" onClick={() => showSelectOrganization(1)}  >创建客户！</span>
         </div>;
-        return <Page header='搜索客户' onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss}>
-            <SearchBox className="px-1 w-100  mt-2 mr-2"
-                size='md'
+        let search = <div className="w-100 d-flex">
+            <span className="pt-1 text-white " style={{ width: '9rem' }}>搜索客户</span>
+            <SearchBox className="w-100 mr-2"
+                size='sm'
                 onSearch={(key: string) => this.controller.searchCustomerByKey(key)}
                 placeholder="搜索客户姓名、单位" />
+        </div>
+        return <Page header={search} onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss}>
+            {/* <SearchBox className="px-1 w-100  mt-2 mr-2"
+                size='md'
+                onSearch={(key: string) => this.controller.searchCustomerByKey(key)}
+                placeholder="搜索客户姓名、单位" /> */}
             <List before={''} none={none} items={pageCustomerSearch} item={{ render: this.renderCustomer, onClick: () => () => showCustomerDetail(customer) }} />
         </Page>
     })

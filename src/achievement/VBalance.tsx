@@ -29,7 +29,7 @@ export class VBalance extends VPage<CBalance> {
                 <h4>{this.balance.toFixed(2)}</h4>
             </div >
             <div style={{ margin: '1rem 0 0 2rem' }}>
-                <h6><small>待到账（元）</small></h6>
+                <h6><small>待到款（元）</small></h6>
                 <h4>{this.waitWithdrawal.toFixed(2)}</h4>
             </div >
         </div>;

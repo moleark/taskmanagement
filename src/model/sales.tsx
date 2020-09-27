@@ -3,7 +3,7 @@ import { CApp } from '../CApp';
 import { setting } from '../appConfig';
 import logo from 'images/logo.png';
 import assistlogo from 'images/assistlogo.png';
-import { nav } from 'tonva';
+import { nav, FA } from 'tonva';
 import { GLOABLE } from 'ui';
 
 
@@ -88,14 +88,17 @@ export class AssistApp extends AppEnv {
         } else {
             onClick = async () => await this.cApp.cBalance.showBalance();
         }
-        return <div className="cursor-pointer" onClick={onClick}>
-            {achievement <= 0.001 ?
-                <div className="h5"> - </div>
-                :
-                <div className="h5"><strong>{achievement.toFixed(2)}</strong> <span className="h6"><small>元</small></span></div>
-            }
-            <div className="h6"><small>{titel}</small></div>
-        </div >
+        return <div>
+            <div className="cursor-pointer" onClick={onClick}>
+                {achievement <= 0.001 ?
+                    <div className="h5"> - </div>
+                    :
+                    <div className="h5"><strong>{achievement.toFixed(2)}</strong> <span className="h6"><small>元</small></span></div>
+                }
+                <div className="h6"><small>{titel}</small></div>
+            </div >
+
+        </div>
     }
     achievement(salesAmont: any): JSX.Element {
         let { oneAchievement, twoAchievement, threeAchievement, totalReceivableAmount, totalaWithdrawal } = salesAmont;
@@ -103,8 +106,10 @@ export class AssistApp extends AppEnv {
         let achievement = oneAchievement + twoAchievement + threeAchievement - totalReceivableAmount;
         let balance = totalReceivableAmount - totalaWithdrawal;
         return <div className="text-center text-white bg-primary pt-1 pb-5" style={{ borderRadius: '0  0 5rem 5rem', margin: ' 0 -2rem 0 -2rem ' }}>
-            <div className="text-right d-flex justify-content-end mr-4 pr-4 cursor-pointer" onClick={async () => await this.cApp.cBalance.showexplanation()}>
-                <i className="iconfont icon-guanyu" style={{ fontSize: "", color: "#f5960a" }}></i></div>
+            <div className="text-right mr-4 pr-4 pt-1 cursor-pointer"
+                onClick={async (e) => await this.cApp.cBalance.showexplanation(e)}>
+                <FA name="question-circle " className="text-warning" />
+            </div>
             <div className="pb-2 pt-4 cursor-pointer" >
                 <div className="text-warning pt-3" onClick={async () => await this.cApp.cBalance.showAssistAchievementDetail(0)}>
                     <span className="h1">{totalachievement.toFixed(2)}</span>

@@ -13,6 +13,7 @@ import { VCreateVIPCardDiscount } from './VCreateVIPCardDiscount';
 export class CCoupon extends CUqBase {
     @observable pageCoupon: QueryPager<any>;
     @observable pageCouponReceiveUsed: any[] = [];
+    @observable ifCheck: any;
 
     oneWeek = new Date(Date.now() + 7 * 24 * 3600 * 1000);
     twoWeeks = new Date(Date.now() + 14 * 24 * 3600 * 1000);
@@ -88,6 +89,8 @@ export class CCoupon extends CUqBase {
                 this.pageCouponReceiveUsed.push({ webuser: element.webuser, receive: true, receivedate: element.createDate, used: false, useddate: null })
             }
         });
+        let vipCardDiscountSetting = await this.uqs.salesTask.VIPCardDiscount.table({ coupon: couponid });
+        this.ifCheck = vipCardDiscountSetting.length
         this.openVPage(VCouponDetail, coupon);
     }
 

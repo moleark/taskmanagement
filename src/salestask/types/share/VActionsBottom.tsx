@@ -19,7 +19,7 @@ export class VActionsBottom extends View<CType> {
         let onProcess = async () => await showTaskComplet(tasks);
         let onPostpond = async () => await showTaskExtension(tasks);
         let onInvalid = async () => await showTaskInvalid(tasks);
-        return <div className=" px-1 py-4">
+        return <div className=" px-1 py-2">
             <div className="d-flex justify-content-center">
                 <button type="button" className="btn btn-outline-info ml-2 align-self-center" onClick={onPostpond} >延迟任务</button>
                 <button type="button" className="btn btn-outline-info ml-2 align-self-center" onClick={onInvalid} >取消任务</button>

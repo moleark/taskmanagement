@@ -41,23 +41,36 @@ export class VCustomerUnitSelect extends VPage<CCustomerUnit> {
     private page = observer(() => {
         let { pageUnit, showCreateOrganization } = this.controller;
         let onshowCreateUnit = async () => await showCreateOrganization(this.type);
-
-        let none, text, right;
+        let none, text, search;
         if (this.type === 1 || this.type === 2) {
             none = <div className="my-3 mx-2 text-warning">
                 还没有创建过客户单位，请先<span className="text-primary" onClick={onshowCreateUnit}>创建单位！</span>
             </div>;
             text = <div className="my-3 mx-2 text-warning">新建客户前先选择单位，或点击右上角加号新建单位！</div>;
-            right = <div onClick={onshowCreateUnit} className="cursor-pointer px-3"><span className="iconfont icon-tianjia" style={{ fontSize: "20px", color: "#ffffff" }}></span></div>;
+            search = <div className="w-100 d-flex">
+                <span className="pt-1 text-white " style={{ width: '9rem' }}>选择单位</span>
+                <SearchBox
+                    className="w-100 px-2 small"
+                    size="sm"
+                    onSearch={(key: string) => this.controller.searchByKey(key)}
+                    placeholder="搜索单位"
+                />
+                <div onClick={onshowCreateUnit} className="cursor-pointer pl-1 pr-3"><span className="iconfont icon-tianjia" style={{ fontSize: "20px", color: "#ffffff" }}></span></div>
+            </div>
         } else {
             text = "";
             none = <div className="my-3 mx-2 text-warning">你还没有创建单位，无法根据单位搜索！</div>;
+            search = <div className="w-100 d-flex">
+                <span className="pt-1 text-white " style={{ width: '3rem' }}>单位</span>
+                <SearchBox
+                    className="w-100 px-2 small"
+                    size="sm"
+                    onSearch={(key: string) => this.controller.searchByKey(key)}
+                    placeholder="搜索单位"
+                />
+            </div>
         }
-        return <Page header="单位" onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss} right={right}>
-            <SearchBox className="px-1 w-100 mt-2 mr-2"
-                size='md'
-                onSearch={(key: string) => this.controller.searchByKey(key)}
-                placeholder="搜索单位" />
+        return <Page header={search} onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss}>
             <List before={''} none={none} className="mt-2" items={pageUnit}
                 item={{ render: this.renderItem, onClick: this.onClickRow }} />
             {(!pageUnit) && text}
