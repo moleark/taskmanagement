@@ -33,7 +33,7 @@ export abstract class AppEnv {
                 content = "下单即可享受品牌折扣!";
                 break;
             case "credits":
-                content = "限时9月下单得四倍积分!";
+                content = "可享双倍积分!";
                 break;
             case "vipcard":
                 content = "";
