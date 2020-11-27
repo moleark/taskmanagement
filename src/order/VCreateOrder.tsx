@@ -139,7 +139,7 @@ export class VCreateOrder extends VPage<COrder> {
 
     private page = observer(() => {
 
-        let { cApp, orderData, onCouponEdit } = this.controller;
+        let { cApp, orderData, onSelectShippingContact, onSelectInvoiceContact, onCouponEdit, onInvoiceInfoEdit } = this.controller;
         let { currentUser } = cApp;
         let footer = <div className="w-100 px-3 py-1" style={{ backgroundColor: "#f8f8f8" }}>
             <div className="d-flex justify-content-left">
@@ -168,7 +168,7 @@ export class VCreateOrder extends VPage<COrder> {
             } else {
                 divInvoiceContact = <div className="col-8 offset-4 offset-sm-2">
                     <button className="btn btn-outline-primary"
-                    >选择发票地址</button>
+                        onClick={onSelectInvoiceContact}>选择发票地址</button>
                     {invoiceAddressBlankTip}
                 </div>
             }
@@ -193,7 +193,7 @@ export class VCreateOrder extends VPage<COrder> {
         </div>
 
         let invoiceBlankTip = this.invoiceIsBlank ? <div className="text-danger small my-2"><FA name="exclamation-circle" /> 必须填写发票信息</div> : null;
-        let invoiceInfoUI = <div className="row py-3 bg-white mb-1" >
+        let invoiceInfoUI = <div className="row py-3 bg-white mb-1" onClick={onInvoiceInfoEdit}>
             <div className="col-4 col-sm-2 pb-2 text-muted">发票信息:</div>
             <div className="col-8 col-sm-10">
                 <LMR className="w-100 align-items-center" right={chevronRight}>
@@ -235,7 +235,7 @@ export class VCreateOrder extends VPage<COrder> {
 
         return <Page header="订单预览" footer={footer}>
             <div className="px-2">
-                <div className="row py-3 bg-white mb-1" >
+                <div className="row py-3 bg-white mb-1" onClick={onSelectShippingContact}>
                     <div className="col-4 col-sm-2 pb-2 text-muted">收货地址:</div>
                     <div className="col-8 col-sm-10">
                         <LMR className="w-100 align-items-center" right={chevronRight}>

@@ -14,6 +14,8 @@ import { VCustomerCart } from './VCustomerCart';
 import { CartPackRow, CartItem2 } from 'cart/Cart';
 import { VCreateOrder } from './VCreateOrder';
 import { Order, OrderItem } from './Order';
+import { CInvoiceInfo } from './CInvoiceInfo';
+import { CSelectShippingContact, CSelectInvoiceContact } from './CSelectContact';
 
 const FREIGHTFEEFIXED = 12;
 const FREIGHTFEEREMITTEDSTARTPOINT = 100;
@@ -265,10 +267,35 @@ export class COrder extends CUqBase {
         let { webuser } = this.customer;
         return await this.uqs.webuser.WebUserContacts.table({ webUser: webuser.id });
     }
+    /**修改客户地址信息 */
+    onSelectShippingContact = async () => {
+        let cSelect = this.newC(CSelectShippingContact);
+        let contactBox = await cSelect.call<BoxId>(true);
+        this.orderData.shippingContact = contactBox;
+    }
+    /**修改客户发票地址 */
+    onSelectInvoiceContact = async () => {
+        let cSelect = this.newC(CSelectInvoiceContact);
+        let contactBox = await cSelect.call<BoxId>(true);
+        this.orderData.invoiceContact = contactBox;
+    }
+    /*** 打开发票信息编辑界面 */
+    onInvoiceInfoEdit = async () => {
+        let cInvoiceInfo = this.newC(CInvoiceInfo);
+        let { invoiceType, invoiceInfo } = this.orderData;
+        let origInvoice = {
+            invoiceType: invoiceType,
+            invoiceInfo: invoiceInfo,
+        }
+        let newInvoice = await cInvoiceInfo.call<any>(origInvoice, true);
+        this.orderData.invoiceType = newInvoice.invoiceType;
+        this.orderData.invoiceInfo = newInvoice.invoiceInfo;
+    }
+
     /**打开优惠卡券界面 */
     onCouponEdit = async () => {
-        // let { cCoupon } = this.cApp;
-        // let coupon = await cCoupon.call<any>(true);
+        let { cCoupon } = this.cApp;
+        let coupon = await cCoupon.call<any>(true);
         // if (coupon) {
         //     await this.applyCoupon(coupon);
         // }
