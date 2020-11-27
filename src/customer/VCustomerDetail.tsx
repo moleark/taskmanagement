@@ -169,11 +169,11 @@ export class VCustomerDetail extends VPage<CCustomer> {
 
     private renderOrder = (model: any, index: number) => {
         let { order, orderNo, date } = model;
-        let { showCustomerOrderDetail } = this.controller;
+        let { openOrderDetail } = this.controller.cApp.cOrder;
         return (
             <div className="d-block py-2 px-3">
                 <LMR
-                    onClick={() => showCustomerOrderDetail(order)}
+                    onClick={() => openOrderDetail(order)}
                     left={<strong>{orderNo}</strong>}
                     right={
                         <div className="text-muted small">
@@ -201,7 +201,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
 
     private page = observer((param: any) => {
         let { id: customerid, unit, name, salutation, telephone, gender,
-            email, wechat, teacher, addressString, potential, research, department, officePost, mobile } = param;
+            email, wechat, teacher, addressString, potential, research, department, officePost, mobile, IsBinded } = param;
 
         let rows: Prop[] = [];
         if (unit)
@@ -238,9 +238,10 @@ export class VCustomerDetail extends VPage<CCustomer> {
             rows.push(this.geneCustomerPropertyComponent("research", "部门", <>{tv(department.department, v => v.name)}</>));
         if (officePost)
             rows.push(this.geneCustomerPropertyComponent("research", "职位", <>{tv(officePost.officePost, v => v.name)}</>));
-        rows.push(this.geneCustomerPropertyComponent("bingding", "绑定状态", (this.controller.isBinded === 1 ? "已绑定" : "未绑定")));
+        rows.push(this.geneCustomerPropertyComponent("bingding", "绑定状态", (IsBinded === 1 ? "已绑定" : "未绑定")));
 
         let { showCustomerEdit, cApp, activetasks, customerorders, pagePost, vipCardForWebUser, showCreateVIPCardPage, showVIPCardDiscount, isBinded } = this.controller;
+        let { onSelectProduct } = cApp.cOrder;
         let { name: customerName, webuser } = this.customer;
         let header: any = <span>{customerName}</span>;
         let editCustomerButton = (
@@ -255,7 +256,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
         // VIP卡
         let vipCardUI: any, vipCardContent: any;
         if (setting.sales.isInner) {
-            if (isBinded === 1) {
+            if (IsBinded === 1) {
                 if (!webuser) {
                     vipCardContent = "该用户尚未注册，请推动注册";
                 }
@@ -342,11 +343,15 @@ export class VCustomerDetail extends VPage<CCustomer> {
             );
         }
 
+        let footer = <div className='bg-light py-3 text-right' >
+            <span className='bg-primary p-2 mr-4 text-white' onClick={() => onSelectProduct(this.customer)} >制作订单</span>
+        </div>
         return (
             <Page
                 header={header}
                 headerClassName={setting.pageHeaderCss}
                 right={editCustomerButton}
+                footer={footer}
             >
                 <PropGrid
                     rows={rows}

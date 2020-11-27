@@ -220,7 +220,8 @@ export class VMe extends VPage<CMe> {
     private myService() {
         let { cSalesTask, cCoupon } = this.controller.cApp;
         let { showMyTasksCompleted } = cSalesTask;
-        let { showSet, showClassRoom } = this.controller;
+        let { showSet, showClassRoom, cApp } = this.controller;
+        let { orderMangement } = cApp.cOrder
         let onShowMyTasksCompleted = async () => await showMyTasksCompleted();
 
         let vcoupon = <div className="col text-center" onClick={() => cCoupon.showCreateCoupon({ type: "coupon", product: undefined })} >
@@ -282,6 +283,13 @@ export class VMe extends VPage<CMe> {
                         <small>
                             <small>设置</small>
                         </small>
+                    </div>
+                    <div className="col text-center" onClick={orderMangement} >
+                        <div className="text-primary">
+                            <i style={{ fontSize: "25px" }} className="iconfont icon-kejian-zimulu"></i>
+                        </div>
+                        <div><small>订单管理</small></div>
+
                     </div>
                 </div>
                 <div className="row p-2 cursor-pointer mt-3">

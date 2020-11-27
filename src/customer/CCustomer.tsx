@@ -15,7 +15,6 @@ import { VCustomerEdit } from "./VCustomerEdit";
 import { VMyCustomer } from "./VMyCustomer";
 import { VCustomerRelation } from "./VCustomerRelation";
 import { VCreateNewCustomer } from "./VCreateNewCustomer";
-import { VCustomerOrderDetail } from "./VCustomerOrderDetail";
 import { VNewCustomerList } from "./VNewCustomerList";
 import { VCustomerSearchByUnit } from "./VCustomerSearchByUnit";
 import { setting } from "appConfig";
@@ -54,9 +53,7 @@ export class CCustomer extends CUqBase {
         this.pageCustomer.first({ key: key });
     };
 
-    /**
-     * 查询客户——用在客户首页
-     */
+    /*** 查询客户——用在客户首页*/
     searchCustomerSearchByUnit = async (unit: any, key: string) => {
         this.pageCustomerSearchByUnit = new QueryPager(this.uqs.salesTask.SearchMyCustomerByUnit, 15, 30);
         this.pageCustomerSearchByUnit.first({ _unit: unit, _key: key });
@@ -135,7 +132,7 @@ export class CCustomer extends CUqBase {
         if (customermap) {
             let { webuser, customer } = customermap;
             mycustomer.webuser = webuser;
-            await this.setIsBinded(customer);
+            mycustomer.IsBinded = await this.setIsBinded(customer);
             if (webuser) {
                 let vipCardForWebUser = await this.getVIPCard(webuser);
                 if (vipCardForWebUser) {
@@ -313,10 +310,10 @@ export class CCustomer extends CUqBase {
     /**
      * 在客户详细信息界面打开客户的订单列表
      */
-    showCustomerOrderDetail = async (param: any) => {
-        let model = await this.uqs.order.Order.getSheet(param);
-        this.openVPage(VCustomerOrderDetail, model);
-    };
+    // showCustomerOrderDetail = async (param: any) => {
+    //     let model = await this.uqs.order.Order.getSheet(param);
+    //     this.openVPage(VCustomerOrderDetail, model);
+    // };
 
     /**
      * 查询MyCustomer是否可能被其他销售助手绑定
@@ -324,9 +321,9 @@ export class CCustomer extends CUqBase {
     setIsBinded = async (customer: any) => {
         let occupyResult = await this.uqs.salesTask.MyCustomerIsOccupy.obj({ _customer: customer.id });
         if (occupyResult) {
-            this.isBinded = occupyResult.code;
+            return this.isBinded = occupyResult.code;
         } else {
-            this.isBinded = 0;
+            return this.isBinded = 0;
         }
     };
 

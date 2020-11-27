@@ -12,7 +12,8 @@ import { VProductDelivery } from './VProductDelivery';
 import { VProductBox } from './VProductBox';
 
 import { VProductPackSelect } from './VProductPackSelect';
-
+import { VChemicalInfoInCart } from './VChemicalInfoInCart';
+import { VCartProuductView } from './VCartProuductView';
 import { VProductPromotion } from './VProductPromotion';
 import { VProductList } from './VProductList';
 import { observer } from 'mobx-react';
@@ -26,6 +27,7 @@ import { observer } from 'mobx-react';
 export class CProduct extends CUqBase {
     //cApp: CApp;
     @observable pageProduct: QueryPager<any>;
+    @observable pageProduct1: QueryPager<any>;
     @observable customerlist: any;
     // @observable bannercaption: any;
     // @observable bannerdescription: any;
@@ -39,8 +41,8 @@ export class CProduct extends CUqBase {
 
     //初始化
     protected async internalStart(param: any) {
-        this.pageProduct = null;
-        this.openVPage(VProductSelect, param);
+        // this.pageProduct = null;
+        // this.openVPage(VProductSelect, param);
     }
 
     banners: any[] = [];
@@ -128,6 +130,18 @@ export class CProduct extends CUqBase {
     showPromotion = async (promotion: any) => {
         await this.searchPromotion("", promotion);
         await this.openVPage(VProductPromotion, promotion)
+    }
+
+    renderCartProduct = (product: BoxId) => {
+        return this.renderView(VCartProuductView, product);
+    }
+    renderChemicalInfoInCart = (product: BoxId) => {
+        return this.renderView(VChemicalInfoInCart, product);
+    }
+    getChemicalInfo = async (productId: number) => {
+        if (this.chemicalInfoContainer[productId] === undefined) {
+            this.chemicalInfoContainer[productId] = await this.uqs.product.ProductChemical.obj({ product: productId });
+        }
     }
 }
 

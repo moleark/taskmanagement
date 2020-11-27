@@ -51,7 +51,7 @@ export interface UqWebUser {
     WebUserSetting: Map;
     WebUserBuyerAccount: Map;
     WebUserVIPCard: Map;
-
+    WebUserCoupon: Map;
     SearchCouponReceive: Query;
 }
 
@@ -63,6 +63,7 @@ export interface UqCustomer {
     getCustomerByKey: Query;
     getCustomerOrganization: Query;
     SearchDomain: Query;
+    InvoiceInfo: Tuid;
 }
 
 export interface UqCustomerDiscount {

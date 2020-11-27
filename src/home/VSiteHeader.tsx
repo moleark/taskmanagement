@@ -8,7 +8,7 @@ export class VSiteHeader extends View<CHome> {
         let left = <img className="m-1 ml-2" src={logo} alt="logo" style={{ height: "3rem", width: "3rem" }} />;
         return <div>
             <LMR className="mb-1 align-items-center bg-white" left={left}>
-                <div className="mt-1">
+                <div className="mt-1 pr-2">
                     {this.controller.renderSearchHeader('md')}
                 </div>
             </LMR>

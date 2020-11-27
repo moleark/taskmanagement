@@ -24,6 +24,9 @@ import { CInnerTeam } from "innerteam/CInnerTeam";
 
 import { WebUser } from "./CurrentUser";
 import { CWebUser } from 'webuser/CWebUser';
+import { COrder } from 'order/COrder';
+import { CCart } from 'cart/CCart';
+import { Cart } from 'cart/Cart'
 
 /* eslint-disable */
 
@@ -32,7 +35,7 @@ export class CApp extends CAppBase {
     get uqs(): UQs {
         return this._uqs;
     }
-
+    cart: Cart;
     currentSalesRegion: any;
     currentLanguage: any;
     productCart: ProductCart;
@@ -54,7 +57,8 @@ export class CApp extends CAppBase {
     cPost: CPost;
     cHome: CHome;
     cWebUser: CWebUser;
-
+    cOrder: COrder;
+    cCart: CCart;
 
     cVIPCardType: CVIPCardType;
 
@@ -63,7 +67,12 @@ export class CApp extends CAppBase {
     protected newC<T extends CUqBase>(type: IConstructor<T>): T {
         return new type(this);
     }
-
+    private setUser() {
+        this.currentUser = new WebUser(this.uqs); //this.cUqWebUser, this.cUqCustomer);
+        if (this.isLogined) {
+            this.currentUser.setUser(this.user);
+        }
+    }
     protected async internalStart() {
 
         /*
@@ -83,12 +92,13 @@ export class CApp extends CAppBase {
         this.currentLanguage = await this.uqs.common.Language.load(
             CHINESE
         );
-
+        this.setUser();
 
         let userLoader = async (userId: number): Promise<any> => {
             let model = await this.uqs.hr.SearchEmployeeByid.query({ _id: userId });
             return model.ret[0];
         }
+        this.cart = new Cart(this);
         this.userCache = new UserCache(userLoader);
 
         this.productCart = new ProductCart();
@@ -110,6 +120,8 @@ export class CApp extends CAppBase {
         this.cVIPCardType = this.newC(CVIPCardType);
         this.cHome = this.newC(CHome);
         this.cWebUser = this.newC(CWebUser);
+        this.cOrder = this.newC(COrder);
+        this.cCart = this.newC(CCart);
 
         // this.cProduce = this.newC(CProduce);
         /** 启动销售任务列表*/

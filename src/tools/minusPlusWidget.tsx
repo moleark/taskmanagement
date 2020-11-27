@@ -106,10 +106,7 @@ export class MinusPlusWidget extends UpdownWidget {
             plusColor, cursorPointer,
             { invisible: !(hasAction === true) })}
             onClick={plusClick} />;
-        let append = <div className="input-group-append">
-            <span className="input-group-text px-1">%</span>
-        </div>
-        return <div className="d-flex align-items-center">{minus}{input}{append}{plus}
+        return <div className="d-flex align-items-center">{minus}{input}{plus}
             {this.renderErrors()}
         </div>;
     });
