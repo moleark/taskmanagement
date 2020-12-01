@@ -17,6 +17,8 @@ import { VCartProuductView } from './VCartProuductView';
 import { VProductPromotion } from './VProductPromotion';
 import { VProductList } from './VProductList';
 import { observer } from 'mobx-react';
+import { VCustomerProductList } from './VCustomerProductList';
+import { VProduct } from './VProduct';
 
 /**
  *Query SearchPromotion( keyWord char(20), salesRegion ID SalesRegion, language ID Language )
@@ -38,7 +40,7 @@ export class CProduct extends CUqBase {
     @observable futureDeliveryTimeDescriptionContainer: { [productId: number]: string } = {};
     @observable chemicalInfoContainer: { [productId: number]: any } = {};
 
-
+    @observable customer: any;
     //初始化
     protected async internalStart(param: any) {
         // this.pageProduct = null;
@@ -62,10 +64,16 @@ export class CProduct extends CUqBase {
     }
 
     //查询客户--通过名称
-    searchByKey = async (key: string) => {
+    searchByKey = async (par: any) => {
+        let { key, customer } = par;
         this.pageProduct = new QueryPager(this.uqs.product.SearchProduct, 15, 30);
         await this.pageProduct.first({ keyWord: key, salesRegion: 1 });
-        return await this.openVPage(VProductList, key);
+        if (!customer)
+            return await this.openVPage(VProductList, key);
+        else {
+            this.closePage();
+            await this.onSelectProduct(customer)
+        }
     }
 
     //选择客户--给调用页面返回客户id
@@ -77,8 +85,7 @@ export class CProduct extends CUqBase {
     showProductDetail = async (param: any): Promise<any> => {
         let loader = new LoaderProductChemicalWithPrices(this.cApp);
         let product = await loader.load(param.id);
-
-        this.openVPage(VProductDetail, product)
+        this.openVPage(VProductDetail, product);
     }
 
     //显示选择产品
@@ -141,6 +148,21 @@ export class CProduct extends CUqBase {
     getChemicalInfo = async (productId: number) => {
         if (this.chemicalInfoContainer[productId] === undefined) {
             this.chemicalInfoContainer[productId] = await this.uqs.product.ProductChemical.obj({ product: productId });
+        }
+    }
+
+    /**帮客户选择产品 */
+    onSelectProduct = async (customer: any) => {
+        this.customer = customer;
+        this.openVPage(VCustomerProductList, customer)
+    }
+    /**产品详情 */
+    onProductDetail = async (productId: BoxId | any) => {
+        if (productId) {
+            let discount = 0, product = productId;
+            let loader = new LoaderProductChemicalWithPrices(this.cApp);
+            let productData = await loader.load(productId);
+            this.openVPage(VProduct, { productData, product, discount });
         }
     }
 }

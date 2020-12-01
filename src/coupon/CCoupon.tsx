@@ -7,6 +7,7 @@ import { VCreateCouponEnd } from './VCreateCouponEnd';
 import { VCreateProductCouponEnd } from './VCreateProductCouponEnd';
 import { VVIPCardDiscount } from './VVIPCardDiscount';
 import { VCreateVIPCardDiscount } from './VCreateVIPCardDiscount';
+import { VCoupleAvailable } from './VCoupleAvailable';
 /**
  *
  */
@@ -20,7 +21,10 @@ export class CCoupon extends CUqBase {
 
     // 创建VIPCardDiscount 
     protected async internalStart(param: any) {
-        this.openVPage(VCreateVIPCardDiscount, param);
+        await this.searchByKey(undefined, "coupon");
+        //现在只是优惠券
+        // await this.searchByKey(undefined, 'credits');
+        this.openVPage(VCoupleAvailable, 'coupon');
     }
 
     /**
@@ -174,13 +178,25 @@ export class CCoupon extends CUqBase {
     }
 
     /**
-     * 
+     * 显示VIP卡的品牌折扣明细 
      */
     showVIPCardDiscount = async (vipCardId: number) => {
         let vipCardDiscountSetting = await this.uqs.salesTask.VIPCardDiscount.table({ coupon: vipCardId });
         this.openVPage(VVIPCardDiscount, vipCardDiscountSetting);
     }
 
+    applySelectedCoupon = async (coupon: any) => {
+        let { result: rtn, id } = coupon;
+        coupon.discountSetting = await this.getCouponDiscountSetting('coupon', id);
+        this.returnCall(coupon);
+        this.closePage();
+    }
+
+    private getCouponDiscountSetting = async (types: string, couponId: number) => {
+        if (types === 'vipcard' || types === 'coupon') {
+            return await this.uqs.salesTask.VIPCardDiscount.table({ coupon: couponId });
+        }
+    }
 
 }
 /* eslint-enable */

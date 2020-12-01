@@ -1,17 +1,16 @@
 import * as React from 'react';
-import { COrder } from './COrder';
+import { CProduct } from './CProduct';
 import {
-    VPage, Page, Form, ItemSchema, NumSchema, UiSchema, Field,
+    VPage, Page, Form, ItemSchema, NumSchema, UiSchema,
     ObjectSchema, RowContext, UiCustom, FormField, BoxId, SearchBox
 } from 'tonva';
 import { tv } from 'tonva';
 import { MinusPlusWidget } from '../tools/minusPlusWidget';
-import { ProductPackRow } from "model/product";
-import { ViewMainSubs, MainProductChemical } from 'mainSubs';
-import { ProductImage } from 'tools/productImage';
-// import { productPropItem, renderBrand } from './VProductView';
+import { ProductPackRow } from "../model/product";
+import { ViewMainSubs, MainProductChemical } from '../mainSubs';
+import { ProductImage } from '../tools/productImage';
 import { observer } from 'mobx-react';
-import { productPropItem, renderBrand } from 'product/CProduct';
+import { productPropItem, renderBrand } from './CProduct';
 
 const schema: ItemSchema[] = [
     { name: 'pack', type: 'object' } as ObjectSchema,
@@ -24,14 +23,12 @@ const schema: ItemSchema[] = [
     { name: 'futureDeliveryTimeDescription', type: 'string' }
 ];
 
-export class VProduct extends VPage<COrder> {
+export class VProduct extends VPage<CProduct> {
     private productBox: BoxId;
-    private discount: number;
 
     async open(param: any) {
-        let { productData, product, discount } = param;
+        let { productData, product } = param;
         this.productBox = product;
-        this.discount = discount;
         this.openPage(this.page, productData);
     }
 
@@ -86,7 +83,7 @@ export class VProduct extends VPage<COrder> {
             <div className="row">
                 <div className="col-6">
                     <div><b>{tv(pack.obj, v => v.radioy)}{tv(pack.obj, v => v.unit)}</b></div>
-                    <div>{this.controller.cApp.cProduct.renderDeliveryTime(pack)}</div>
+                    <div>{this.controller.renderDeliveryTime(pack)}</div>
                 </div>
                 <div className="col-6">
                     {right}
@@ -139,7 +136,7 @@ export class VProduct extends VPage<COrder> {
             <span className="pt-1 text-white " style={{ width: '4rem' }}>{customer.name}</span>
             <SearchBox className="w-100 mr-2"
                 size={"sm"}
-                onSearch={(key: string) => this.controller.searchByKey(key)}
+                onSearch={(key: string) => this.controller.searchByKey({ key, customer: customer })}
                 placeholder="搜索品名、编号、CAS、MDL等" />
         </div>;
         let right = cApp.cCart.renderCartLabel();
@@ -148,6 +145,7 @@ export class VProduct extends VPage<COrder> {
             viewProduct.model = productData;
 
             return <Page header={header} right={right}>
+                <div className="bg-white py-2 px-3 mb-1"><small className=" small text-muted">选择客户需要的产品 </small></div>
                 <div className="px-2 py-2 bg-white mb-3">{viewProduct.render()}</div>
             </Page>
         }

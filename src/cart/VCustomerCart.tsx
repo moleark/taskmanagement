@@ -3,9 +3,9 @@ import { observer } from 'mobx-react';
 import { VPage, Page, Form, ObjectSchema, NumSchema, ArrSchema, UiSchema, UiArr, FormField, UiCustom } from 'tonva';
 import { FA } from 'tonva';
 import { tv } from 'tonva';
-import { COrder } from './COrder';
-import { CartPackRow, CartItem2 } from 'cart/Cart';
-import { MinusPlusWidget } from 'tools/minusPlusWidget';
+import { CCart } from './CCart';
+import { CartPackRow, CartItem2 } from './Cart';
+import { MinusPlusWidget } from '../tools/minusPlusWidget';
 
 const cartSchema = [
     {
@@ -27,15 +27,14 @@ const cartSchema = [
     } as ArrSchema
 ];
 
-export class VCustomerCart extends VPage<COrder> {
+export class VCustomerCart extends VPage<CCart> {
 
     async open() {
         this.openPage(this.page);
     }
 
     protected CheckOutButton = observer(() => {
-        let { cApp } = this.controller;
-        let { strikeOut, checkOut } = cApp.cCart;
+        let { strikeOut, checkOut, cApp } = this.controller;
         let { cart } = cApp;
         let amount = cart.amount.get();
         let check = cart.editButton.get() ? '删除' : "添加到订单";
@@ -63,10 +62,10 @@ export class VCustomerCart extends VPage<COrder> {
 
     private renderCartItem = (item: CartItem2) => {
         let { product } = item;
-        let { onProductClick, renderCartProduct } = this.controller;
+        let { renderCartProduct } = this.controller;
         return <div className="pr-1">
             <div className="row">
-                <div className="col-lg-6 pb-3" onClick={() => onProductClick(product)}>
+                <div className="col-lg-6 pb-3" >
                     {renderCartProduct(product)}
                 </div>
                 <div className="col-lg-6"><FormField name="packs" /></div>
@@ -132,7 +131,7 @@ export class VCustomerCart extends VPage<COrder> {
 
     private page = observer((params: any): JSX.Element => {
         let { cart } = this.controller.cApp;
-        let { name } = this.controller.cApp.cOrder.customer;
+        let { name } = this.controller.cApp.cProduct.customer;
         let footer: any, content: any;
         if (cart.count.get() === 0 && cart.cartItems.length === 0) {
             content = this.empty();
@@ -144,6 +143,7 @@ export class VCustomerCart extends VPage<COrder> {
         }
         let header = <div>{name}</div>
         return <Page header={header} footer={footer}>
+            <div className="bg-white py-2 px-3 mb-1"><small className=" small text-muted">客户的购物列表</small></div>
             {content}
         </Page>;
     })

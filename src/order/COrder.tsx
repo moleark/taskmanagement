@@ -5,24 +5,22 @@ import { observable } from "mobx";
 import { VOrderStatus } from "./VOrderStatus";
 import { groupByProduct } from '../tools/groupByProduct';
 import { VOrderDetail } from './VOrderDetail';
-import { VCustomerProductList } from './VCustomerProductList';
 import { VExplanationRegiste } from "./VExplanationRegiste";
 import { VExplanationRegiste1 } from "./VExplanationRegiste";
 import { LoaderProductChemicalWithPrices } from "../product/item";
-import { VProduct } from './VProduct';
-import { VCustomerCart } from './VCustomerCart';
 import { CartPackRow, CartItem2 } from 'cart/Cart';
 import { VCreateOrder } from './VCreateOrder';
 import { Order, OrderItem } from './Order';
 import { CInvoiceInfo } from './CInvoiceInfo';
 import { CSelectShippingContact, CSelectInvoiceContact } from './CSelectContact';
+import { createOrderPriceStrategy, OrderPriceStrategy } from 'coupon/Coupon';
 
 const FREIGHTFEEFIXED = 12;
 const FREIGHTFEEREMITTEDSTARTPOINT = 100;
 /* eslint-disable */
 export class COrder extends CUqBase {
     @observable customer: any;
-    @observable pageProductList: QueryPager<any>;
+
     @observable orderData: Order = new Order();
     /**
      * 存储已经被应用的卡券，以便在使用后（下单后）将其删除
@@ -86,69 +84,14 @@ export class COrder extends CUqBase {
                 break;
         }
     }
-    /**根据本代理、销售与客户的绑定关系及客户是否注册shop账号 */
-    onSelectProduct = async (customer: any) => {
-        this.customer = customer;
-        let { webuser, IsBinded } = customer;
-        if (IsBinded === 1) {
-            if (webuser) {
-                this.openVPage(VCustomerProductList, customer)
-            } else {
-                this.openVPage(VExplanationRegiste)
-            }
-        } else {
-            this.openVPage(VExplanationRegiste1)
-        }
-    }
-    /**搜索产品 */
-    searchByKey = async (key: string) => {
-        let { currentSalesRegion } = this.cApp;
-        this.pageProductList = new QueryPager(this.uqs.product.SearchProduct, 15, 30);
-        this.pageProductList.first({ keyWord: key, salesRegion: currentSalesRegion.id });
-        this.closePage()
-        this.openVPage(VCustomerProductList, this.customer);
-    };
-    /**产品详情 */
-    showProductDetail = async (productId: BoxId | any) => {
-        if (productId) {
-            let discount = 0, product = productId;
-            let loader = new LoaderProductChemicalWithPrices(this.cApp);
-            let productData = await loader.load(productId);
-            this.openVPage(VProduct, { productData, product, discount });
-        }
-    }
-
-    showCusCart = async () => {
-        this.openVPage(VCustomerCart)
-    }
-
-    onProductClick = (product: BoxId) => {
-        // let { cart, cProduct } = this.cApp;
-        // if (!cart.isDeleted(product.id)) {
-        //     this.showProductDetail(product);
-        // }
-    }
-
-    renderCartProduct = (product: BoxId) => {
-        let { cProduct } = this.cApp;
-        return cProduct.renderCartProduct(product);
-    }
-
-    onQuantityChanged = async (context: RowContext, value: any, prev: any) => {
-        let { data, parentData } = context;
-        let { product } = parentData;
-        let { pack, price, retail, currency } = data as CartPackRow;
-        let { cart } = this.cApp;
-        if (value > 0)
-            await cart.add(product, pack, value, price, retail, currency);
-        else
-            await cart.removeFromCart([{ productId: product.id, packId: pack.id }]);
-    }
 
     /**传参数 */
     createOrderFromCart = async (cartItems: CartItem2[]) => {
         let { cApp, uqs } = this;
-        let { currentUser, currentSalesRegion, cCoupon, cCustomer } = cApp;
+        let { currentUser, currentSalesRegion, cCoupon, cProduct } = cApp;
+
+        this.customer = cProduct.customer
+
         let { webuser } = this.customer;
         //获取客户的contact
         let { webuser: webUserTuid } = this.uqs;
@@ -225,29 +168,10 @@ export class COrder extends CUqBase {
 
     }
 
-    /**
-         * 使用优惠券后计算折扣金额和抵扣额
-         */
-    // applyCoupon = async (coupon: any) => {
 
-    //     this.removeCoupon();
-    //     let { result: validationResult, validitydate, isValid } = coupon;
-    //     if ((validationResult === 1 || validationResult === 6) && isValid === 1 && new Date(validitydate).getTime() > Date.now()) {
-    //         this.couponAppliedData = coupon;
-    //         let orderPriceStrategy: OrderPriceStrategy = createOrderPriceStrategy(coupon);
-    //         orderPriceStrategy.applyTo(this.orderData, this.uqs);
-
-    //         // 运费和运费减免
-    //         this.orderData.freightFee = FREIGHTFEEFIXED;
-    //         if (this.orderData.productAmount > FREIGHTFEEREMITTEDSTARTPOINT)
-    //             this.orderData.freightFeeRemitted = FREIGHTFEEFIXED * -1;
-    //         else
-    //             this.orderData.freightFeeRemitted = 0;
-    //     }
-    // }
     /**
-       * 删除优惠券
-       */
+      * 删除优惠券
+      */
     removeCoupon = () => {
         this.orderData.coupon = undefined;
         this.couponAppliedData = {};
@@ -296,9 +220,31 @@ export class COrder extends CUqBase {
     onCouponEdit = async () => {
         let { cCoupon } = this.cApp;
         let coupon = await cCoupon.call<any>(true);
-        // if (coupon) {
-        //     await this.applyCoupon(coupon);
-        // }
+        if (coupon) {
+            await this.applyCoupon(coupon);
+        }
+    }
+
+    /**
+      * 使用优惠券后计算折扣金额和抵扣额
+      */
+    applyCoupon = async (coupon: any) => {
+
+        this.removeCoupon();
+        let { validitydate, isValid } = coupon;
+        if (isValid === 1 && new Date(validitydate).getTime() > Date.now()) {
+            this.couponAppliedData = coupon;
+            let orderPriceStrategy: OrderPriceStrategy = createOrderPriceStrategy(coupon);
+            if (orderPriceStrategy)
+                orderPriceStrategy.applyTo(this.orderData, this.uqs);
+
+            // 运费和运费减免
+            this.orderData.freightFee = FREIGHTFEEFIXED;
+            if (this.orderData.productAmount > FREIGHTFEEREMITTEDSTARTPOINT)
+                this.orderData.freightFeeRemitted = FREIGHTFEEFIXED * -1;
+            else
+                this.orderData.freightFeeRemitted = 0;
+        }
     }
 
 }

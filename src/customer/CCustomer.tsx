@@ -111,20 +111,26 @@ export class CCustomer extends CUqBase {
     showCustomerDetail = async (myCustomer: any) => {
         let { uqs, user } = this;
         let { salesTask } = uqs;
-        let { MyCustomer, SearchMyCustomerDepartment, SearchMyCustomerResearch, SearchMyCustomerOfficePost, CustomerMyCustomerMap, Coupon } = salesTask;
+        let { MyCustomer, SearchMyCustomerDepartment, SearchMyCustomerResearch, SearchMyCustomerOfficePost,
+            CustomerMyCustomerMap, Coupon } = salesTask;
         let { id } = myCustomer;
-        let mycustomer = await MyCustomer.load(id);
-        let department = await SearchMyCustomerDepartment.query({ mycustomer: id });
-        let research = await SearchMyCustomerResearch.query({ mycustomer: id });
-        let officePost = await SearchMyCustomerOfficePost.query({ mycustomer: id });
+        let promises: PromiseLike<any>[] = [];
+        promises.push(
+            MyCustomer.load(id),
+            SearchMyCustomerDepartment.query({ mycustomer: id }),
+            SearchMyCustomerResearch.query({ mycustomer: id }),
+            SearchMyCustomerOfficePost.query({ mycustomer: id }),
+            this.getActiveTasks(myCustomer),
+            this.getCustomerOrder(myCustomer)
+        );
+        let results = await Promise.all(promises);
+        let [mycustomer, department, research, officePost] = [...results];
+
         if (department.ret.length > 0)
             mycustomer.department = department.ret[0];
         if (research.ret.length > 0) mycustomer.research = research.ret[0];
         if (officePost.ret.length > 0)
             mycustomer.officePost = officePost.ret[0];
-
-        await this.getActiveTasks(myCustomer);
-        await this.getCustomerOrder(myCustomer);
         await this.getCustomerContent(mycustomer.research ? mycustomer.research.id : 0);
 
 
@@ -306,14 +312,6 @@ export class CCustomer extends CUqBase {
     updateMyCustomer = async (param: any) => {
         await this.uqs.salesTask.MyCustomer.save(param.id, param);
     };
-
-    /**
-     * 在客户详细信息界面打开客户的订单列表
-     */
-    // showCustomerOrderDetail = async (param: any) => {
-    //     let model = await this.uqs.order.Order.getSheet(param);
-    //     this.openVPage(VCustomerOrderDetail, model);
-    // };
 
     /**
      * 查询MyCustomer是否可能被其他销售助手绑定

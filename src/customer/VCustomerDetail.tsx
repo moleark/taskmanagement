@@ -241,7 +241,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
         rows.push(this.geneCustomerPropertyComponent("bingding", "绑定状态", (IsBinded === 1 ? "已绑定" : "未绑定")));
 
         let { showCustomerEdit, cApp, activetasks, customerorders, pagePost, vipCardForWebUser, showCreateVIPCardPage, showVIPCardDiscount, isBinded } = this.controller;
-        let { onSelectProduct } = cApp.cOrder;
+        let { onSelectProduct } = cApp.cProduct;
         let { name: customerName, webuser } = this.customer;
         let header: any = <span>{customerName}</span>;
         let editCustomerButton = (
@@ -343,9 +343,22 @@ export class VCustomerDetail extends VPage<CCustomer> {
             );
         }
 
-        let footer = <div className='bg-light py-3 text-right' >
-            <span className='bg-primary p-2 mr-4 text-white' onClick={() => onSelectProduct(this.customer)} >制作订单</span>
-        </div>
+        let footer: any;
+        if (!webuser) {
+            footer = <div className='bg-light py-3 text-right' >
+                <span className='p-2 mr-4 text-warning' >该用户尚未注册，请推动注册</span>
+            </div>
+        } else {
+            if (IsBinded === 1 || IsBinded === 0) {
+                footer = <div className='bg-light py-3 text-right' >
+                    <span className='bg-primary p-2 mr-4 text-white' onClick={() => onSelectProduct(this.customer)} >待客下单</span>
+                </div>
+            } else {
+                footer = <div className='bg-light py-3 text-right' >
+                    <span className='bg-primary p-2 mr-4 text-white' >该用户与其他代理/销售绑定，无法制单</span>
+                </div>
+            }
+        }
         return (
             <Page
                 header={header}

@@ -7,7 +7,7 @@ export class VSearchHeader extends View<CHome> {
     private onSearch = async (key: string) => {
         if (key) {
             let { cProduct } = this.controller.cApp;
-            cProduct.searchByKey(key)
+            cProduct.searchByKey({ key, customer: '' })
         }
     }
     render(key: any) {

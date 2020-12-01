@@ -89,3 +89,38 @@ export class VProductList extends VPage<CProduct> {
         </Page>
     })
 }
+
+/*
+export class VCustomerProductList extends VProductList {
+    private customer: any;
+    async open(param: any) {
+        this.customer = param
+        this.openPage(this.page);
+    }
+    private onProductClick = async (product: any) => {
+        let customer = this.customer;
+        let param = { product, customer }
+        await this.controller.showProductDetail(param);
+    }
+
+    page = observer(() => {
+        let { pageProduct, cApp, onScrollBottom } = this.controller;
+        let search = <div className="w-100 d-flex">
+            <span className="pt-1 text-white " style={{ width: '4rem' }}>{this.customer.name}</span>
+            <SearchBox className="w-100 mr-2"
+                size={"sm"}
+                onSearch={(key: string) => this.controller.searchByKey({ key, customer: this.customer })}
+                placeholder="搜索品名、编号、CAS、MDL等" />
+        </div>
+        let right = cApp.cCart.renderCartLabel();
+        let none = <div className="my-3 mx-2 text-warning">无</div>;
+        return <Page header={search} onScrollBottom={onScrollBottom} right={right}>
+            <div className="bg-white py-2 px-3 mb-1"><small className=" small text-muted">搜索客户需要的产品 </small></div>
+            <div className="px-2 py-2 bg-white mb-3">
+                {(pageProduct && pageProduct.items && (pageProduct.items.length > 0)) ? <List before={''} none={none}
+                    items={pageProduct} item={{ render: this.renderProduct, onClick: this.onProductClick }} /> : null}
+            </div>
+        </Page>
+    })
+}
+*/

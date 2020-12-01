@@ -144,10 +144,10 @@ export class VCreateOrder extends VPage<COrder> {
         let footer = <div className="w-100 px-3 py-1" style={{ backgroundColor: "#f8f8f8" }}>
             <div className="d-flex justify-content-left">
                 <div className="text-danger flex-grow-1" style={{ fontSize: '1.8rem' }}><small>¥</small>{orderData.amount}</div>
-                {/* <button type="button"
+                <button type="button"
                     className={classNames('btn', 'w-30', { 'btn-danger': currentUser.allowOrdering, 'btn-secondary': !currentUser.allowOrdering })}
                     onClick={this.onSubmit} disabled={!currentUser.allowOrdering}>提交订单
-                </button> */}
+                </button>
             </div>
         </div>;
 
