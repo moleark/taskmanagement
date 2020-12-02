@@ -32,6 +32,7 @@ import { Cart } from 'cart/Cart'
 
 export class CApp extends CAppBase {
     // topKey: any;
+    draftCustomer: any;
     get uqs(): UQs {
         return this._uqs;
     }

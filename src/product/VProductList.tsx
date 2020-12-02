@@ -8,9 +8,8 @@ import { setting } from 'appConfig';
 import classNames from 'classnames';
 
 export class VProductList extends VPage<CProduct> {
-    private seachkey: any;
-    async open(customer: any) {
-        this.seachkey = customer
+
+    async open(param: any) {
         this.openPage(this.page);
     }
 

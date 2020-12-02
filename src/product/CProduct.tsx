@@ -40,7 +40,6 @@ export class CProduct extends CUqBase {
     @observable futureDeliveryTimeDescriptionContainer: { [productId: number]: string } = {};
     @observable chemicalInfoContainer: { [productId: number]: any } = {};
 
-    @observable customer: any;
     //初始化
     protected async internalStart(param: any) {
         // this.pageProduct = null;
@@ -153,7 +152,6 @@ export class CProduct extends CUqBase {
 
     /**帮客户选择产品 */
     onSelectProduct = async (customer: any) => {
-        this.customer = customer;
         this.openVPage(VCustomerProductList, customer)
     }
     /**产品详情 */

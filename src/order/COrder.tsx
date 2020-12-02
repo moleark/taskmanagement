@@ -19,7 +19,6 @@ const FREIGHTFEEFIXED = 12;
 const FREIGHTFEEREMITTEDSTARTPOINT = 100;
 /* eslint-disable */
 export class COrder extends CUqBase {
-    @observable customer: any;
 
     @observable orderData: Order = new Order();
     /**
@@ -90,9 +89,7 @@ export class COrder extends CUqBase {
         let { cApp, uqs } = this;
         let { currentUser, currentSalesRegion, cCoupon, cProduct } = cApp;
 
-        this.customer = cProduct.customer
-
-        let { webuser } = this.customer;
+        let { webuser } = cApp.draftCustomer;
         //获取客户的contact
         let { webuser: webUserTuid } = this.uqs;
         let { WebUser, WebUserContact, WebUserSetting } = webUserTuid;
@@ -188,7 +185,7 @@ export class COrder extends CUqBase {
 
     /**获取客户地址列表 */
     async getContacts(): Promise<any[]> {
-        let { webuser } = this.customer;
+        let { webuser } = this.cApp.draftCustomer;
         return await this.uqs.webuser.WebUserContacts.table({ webUser: webuser.id });
     }
     /**修改客户地址信息 */

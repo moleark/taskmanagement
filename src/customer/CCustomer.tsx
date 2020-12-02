@@ -109,7 +109,7 @@ export class CCustomer extends CUqBase {
 
     // 查询客户--通过ID
     showCustomerDetail = async (myCustomer: any) => {
-        let { uqs, user } = this;
+        let { uqs, user, cApp } = this;
         let { salesTask } = uqs;
         let { MyCustomer, SearchMyCustomerDepartment, SearchMyCustomerResearch, SearchMyCustomerOfficePost,
             CustomerMyCustomerMap, Coupon } = salesTask;
@@ -151,6 +151,7 @@ export class CCustomer extends CUqBase {
                 }
             }
         }
+        cApp.draftCustomer = mycustomer;
         this.openVPage(VCustomerDetail, mycustomer);
     };
 

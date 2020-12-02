@@ -37,7 +37,7 @@ export class VCustomerCart extends VPage<CCart> {
         let { strikeOut, checkOut, cApp } = this.controller;
         let { cart } = cApp;
         let amount = cart.amount.get();
-        let check = cart.editButton.get() ? '删除' : "添加到订单";
+        let check = cart.editButton.get() ? '删除' : "去制单";
         let content = cart.editButton.get() ? <>{check}</> : amount > 0 ?
             <>{check} (¥{amount})</> :
             <>{check}</>;
@@ -130,8 +130,8 @@ export class VCustomerCart extends VPage<CCart> {
     }
 
     private page = observer((params: any): JSX.Element => {
-        let { cart } = this.controller.cApp;
-        let { name } = this.controller.cApp.cProduct.customer;
+        let { cart, draftCustomer } = this.controller.cApp;
+        let { name } = draftCustomer;
         let footer: any, content: any;
         if (cart.count.get() === 0 && cart.cartItems.length === 0) {
             content = this.empty();
@@ -141,9 +141,10 @@ export class VCustomerCart extends VPage<CCart> {
             content = React.createElement(this.cartForm);
             footer = React.createElement(this.CheckOutButton);
         }
-        let header = <div>{name}</div>
+        let header = <div>购物车</div>
         return <Page header={header} footer={footer}>
-            <div className="bg-white py-2 px-3 mb-1"><small className=" small text-muted">客户的购物列表</small></div>
+            <div className="bg-white py-2 px-3 mb-1 small text-muted">客户<span className="px-1 text-success" >
+                {name}</span>的购物车</div>
             {content}
         </Page>;
     })

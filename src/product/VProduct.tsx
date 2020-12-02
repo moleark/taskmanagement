@@ -131,9 +131,10 @@ export class VProduct extends VPage<CProduct> {
 
     private page = observer((productData: any) => {
 
-        let { cApp, customer } = this.controller;
+        let { cApp } = this.controller;
+        let customer = cApp.draftCustomer;
         let header = <div className="w-100 d-flex">
-            <span className="pt-1 text-white " style={{ width: '4rem' }}>{customer.name}</span>
+            {/* <span className="pt-1 text-white " style={{ width: '4rem' }}>{customer.name}</span> */}
             <SearchBox className="w-100 mr-2"
                 size={"sm"}
                 onSearch={(key: string) => this.controller.searchByKey({ key, customer: customer })}
@@ -145,7 +146,7 @@ export class VProduct extends VPage<CProduct> {
             viewProduct.model = productData;
 
             return <Page header={header} right={right}>
-                <div className="bg-white py-2 px-3 mb-1"><small className=" small text-muted">选择客户需要的产品 </small></div>
+                <div className="bg-white py-2 px-3 mb-1"><small className=" small text-muted">选择客户<span className="px-1 text-success" >{customer.name}</span>需要的产品 </small></div>
                 <div className="px-2 py-2 bg-white mb-3">{viewProduct.render()}</div>
             </Page>
         }
