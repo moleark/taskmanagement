@@ -8,7 +8,7 @@ import { CApp } from '../CApp';
 export interface CartItem2 {
     product: BoxId;
     packs: CartPackRow[];
-    $isSelected?: boolean;
+    // $isSelected?: boolean;
     $isDeleted?: boolean;
     createdate: number;
 }
@@ -56,8 +56,8 @@ export class Cart {
     protected calcSum = () => {
         let count = 0, amount = 0;
         for (let cp of this.cartItems) {
-            let { $isSelected, $isDeleted, packs } = cp;
-            if ($isDeleted === true || !($isSelected === true)) continue;
+            let { $isDeleted, packs } = cp;
+            if ($isDeleted === true) continue;
             for (let pi of packs) {
                 let { price, quantity } = pi;
                 count += quantity;
@@ -123,8 +123,8 @@ export class Cart {
 
     getSelectedItems(): CartItem2[] {
         return this.cartItems.filter(v => {
-            let { $isSelected, $isDeleted } = v;
-            return $isSelected === true && $isDeleted !== true;
+            let { $isDeleted } = v;
+            return $isDeleted !== true;
         });
     }
 
@@ -137,7 +137,7 @@ export class Cart {
             cartItemExists = {
                 product: product,
                 packs: [{ pack: pack, quantity: quantity, price: price, retail: retail, currency: currency }],
-                $isSelected: true,
+
                 $isDeleted: false,
                 createdate: Date.now()
             };
@@ -167,7 +167,7 @@ export class Cart {
                 packExists.price = price;
                 packExists.currency = currency;
             }
-            cartItemExists.$isSelected = true;
+            // cartItemExists.$isSelected = true;
             cartItemExists.$isDeleted = false;
             cartItemExists.createdate = Date.now();
         }

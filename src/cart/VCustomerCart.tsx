@@ -87,7 +87,6 @@ export class VCustomerCart extends VPage<CCart> {
     }
 
     private uiSchema: UiSchema = {
-        selectable: true,
         deletable: true,
         restorable: true,
         items: {
@@ -100,7 +99,6 @@ export class VCustomerCart extends VPage<CCart> {
                     packs: {
                         widget: 'arr',
                         Templet: this.packsRow,
-                        selectable: false,
                         deletable: false,
                         ArrContainer: (label: any, content: JSX.Element) => content,
                         RowContainer: (content: JSX.Element) => content,
