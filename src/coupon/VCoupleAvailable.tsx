@@ -16,8 +16,8 @@ export class VCoupleAvailable extends VPage<CCoupon> {
         this.openPage(this.page);
     }
     couponli: any = [
-        { caption: '优惠券', state: 'coupon', toolTip: '无' },
-        { caption: '积分券', state: 'credits', toolTip: '无' },
+        { caption: '优惠券', state: 'coupon', toolTip: '无', icon: 'cc-discover' },
+        { caption: '积分券', state: 'credits', toolTip: '无', icon: 'credit-card' },
     ];
     private getTabs = async () => {
         this.tabs = this.couponli.map((v: any) => {
@@ -41,12 +41,10 @@ export class VCoupleAvailable extends VPage<CCoupon> {
 
     private page = observer(() => {
         this.getTabs();
-        return <Page header="选用卡券">
+        return <Page header="选用卡券" >
             <div className='w-100'>
                 <Tabs tabs={this.tabs} tabPosition="top" />
             </div>
-
-
         </Page>
     })
 }

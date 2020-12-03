@@ -42,7 +42,14 @@ export class VCouponPage extends View<CCoupon> {
         let { pageCoupon, cApp } = this.controller;
         let couponUi;
         let none = <div className="my-3 mx-2 text-warning">无优惠券</div>;
-        couponUi = <List before={''} none={none} items={pageCoupon} item={{ render: this.renderItem, onClick: null }} className='mb-1' />
+        couponUi = <>
+            <div className='bg-white py-1'>
+                <button className="ml-2 btn btn-sm btn-info" onClick={() => this.controller.showCreateCoupon({ type: "coupon", product: undefined })}>
+                    {this.t('创建优惠券')}
+                </button>
+            </div>
+            <List before={''} none={none} items={pageCoupon} item={{ render: this.renderItem, onClick: null }} className='mb-1' />
+        </>
         return couponUi
 
     }
@@ -82,9 +89,15 @@ export class VCreditsPage extends View<CCoupon> {
         let { pageCredits, cApp } = this.controller;
         let creditsUi;
         let none = <div className="my-3 mx-2 text-warning">无积分券</div>;
-        creditsUi = <List before={''} none={none} items={pageCredits} item={{ render: this.renderItem, onClick: null }} />
+        creditsUi = <>
+            <div className='bg-white py-1'>
+                <button className="ml-2 btn btn-sm btn-info" onClick={() => this.controller.showCreateCredits({ type: 'credits', product: undefined })}>
+                    {this.t('创建积分券')}
+                </button>
+            </div>
+            <List before={''} none={none} items={pageCredits} item={{ render: this.renderItem, onClick: null }} />
+        </>
         return creditsUi
-
     }
 }
 

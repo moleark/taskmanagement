@@ -23,7 +23,6 @@ export class CCoupon extends CUqBase {
     // 创建VIPCardDiscount 
     protected async internalStart(param: any) {
         await this.searchByKey(undefined, 'coupon');
-        //现在只是优惠券
         await this.searchByKeys(undefined, 'credits');
         this.openVPage(VCoupleAvailable);
     }

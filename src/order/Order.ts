@@ -5,8 +5,9 @@ import { CartPackRow } from 'cart/Cart';
 
 export class Order {
     @observable orderItems: OrderItem[] = [];
-    customer: any;
+    buyerAccount: any;
     webUser: any;
+    orderMaker: any;
     @observable freightFee: number;
     @observable freightFeeRemitted: number;
     organization: BoxId;
@@ -48,9 +49,10 @@ export class Order {
             })
         });
         return {
+            orderMaker: this.orderMaker,
             webUser: this.webUser,
             organization: this.organization,
-            customer: this.customer,
+            buyerAccount: this.buyerAccount,
             shippingContact: this.shippingContact,
             invoiceContact: this.invoiceContact,
             invoiceType: this.invoiceType,

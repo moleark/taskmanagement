@@ -134,7 +134,7 @@ export class VCreateOrder extends VPage<COrder> {
             return;
         }
 
-        // this.controller.submitOrder();  提交订单
+        this.controller.submitOrder();
     }
 
     private page = observer(() => {

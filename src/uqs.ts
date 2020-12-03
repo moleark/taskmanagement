@@ -53,6 +53,7 @@ export interface UqWebUser {
     WebUserVIPCard: Map;
     WebUserCoupon: Map;
     SearchCouponReceive: Query;
+    WebUserCouponUsed: Map;
 }
 
 export interface UqCustomer {
@@ -201,6 +202,10 @@ export interface UqVIPCardType {
     VIPCardTypeDiscount: Map;
     OrganizationVIPLevel: Map;
 }
+export interface UqOrderDraft {
+    OrderDraft: Sheet;
+    SendOut: Action;
+}
 
 export interface UQs {
     order: UqOrder;
@@ -216,4 +221,5 @@ export interface UQs {
     webBuilder: UqWebBuilder;
     vipCardType: UqVIPCardType;
     hr: UqHr;
+    orderDraft: UqOrderDraft
 }
