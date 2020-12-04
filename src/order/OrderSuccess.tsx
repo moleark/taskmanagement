@@ -43,8 +43,10 @@ export class OrderSuccess extends VPage<COrder> {
                 <div>
                     <p className="text-primary"><span className="h4">下单成功！</span></p>
                     <p className="">
-                        订单: <span className="h5 text-info">{orderCreateResult.no}</span><br /><br />
-                        <span className="text-primary" onClick={() => this.share(orderCreateResult)}>分享确认</span>
+                        订单: <span className="h5 text-info">{orderCreateResult.no}</span>
+                    </p>
+                    <p className='text-right mt-2'>
+                        <button className="btn btn-outline-success  btn-sm" onClick={() => this.share(orderCreateResult)}>分享确认</button>
                     </p>
                 </div>
             </div>

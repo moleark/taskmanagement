@@ -23,7 +23,6 @@ export class CCoupon extends CUqBase {
     // 创建VIPCardDiscount 
     protected async internalStart(param: any) {
         await this.searchByKey(undefined, 'coupon');
-        await this.searchByKeys(undefined, 'credits');
         this.openVPage(VCoupleAvailable);
     }
 
@@ -76,10 +75,6 @@ export class CCoupon extends CUqBase {
     searchByKey = async (key: string, types: string) => {
         this.pageCoupon = new QueryPager(this.uqs.salesTask.SearchCoupon, 15, 30);
         this.pageCoupon.first({ key: key, types: types });
-    }
-    searchByKeys = async (key: string, types: string) => {
-        this.pageCredits = new QueryPager(this.uqs.salesTask.SearchCoupon, 15, 30);
-        this.pageCredits.first({ key: key, types: 'credits' });
     }
 
     //显示添加优惠券页面

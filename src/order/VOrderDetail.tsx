@@ -96,12 +96,18 @@ export class VOrderDetail extends VPage<COrder> {
             <div className="bg-white row no-gutters p-3 my-1">
                 <div className="col-3 text-muted">收货地址:</div>
                 <div className="col-9">
-                    {tv(shippingContact, (v) => <>{v.name}{v.organizationName}{v.mobile}{v.addressString}</>)}
+                    {/* {tv(shippingContact, (v) => <>{v.name}{v.organizationName}{v.mobile}{v.addressString}</>)} */}
+                    <div>{tv(shippingContact, (v) => <>{v.name}<span className='px-1'>{v.mobile}</span>{v.organizationName}</>)}</div>
+                    <div className='small'>{tv(shippingContact.obj.address, undefined, undefined)}{tv(shippingContact, (v) => v.addressString)}</div>
                 </div>
             </div>
             <div className="bg-white row no-gutters p-3 my-1">
                 <div className="col-3 text-muted">发票地址:</div>
-                <div className="col-9">{tv(invoiceContact)}</div>
+                <div className="col-9">
+                    {/* {tv(invoiceContact)} */}
+                    <div>{tv(invoiceContact, (v) => <>{v.name}<span className='px-1'>{v.mobile}</span>{v.organizationName}</>)}</div>
+                    <div className='small'>{tv(invoiceContact.obj.address, undefined, undefined)}{tv(invoiceContact, (v) => v.addressString)}</div>
+                </div>
             </div>
             <div className="bg-white row no-gutters p-3 my-1">
                 <div className="col-3 text-muted">发票信息:</div>

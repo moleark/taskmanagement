@@ -162,7 +162,9 @@ export class VCreateOrder extends VPage<COrder> {
         if (this.useShippingAddress === false) {
             if (orderData.invoiceContact !== undefined) {
                 divInvoiceContact = <div className="col-8 col-sm-10 offset-4 offset-sm-2 d-flex">
-                    {tv(orderData.invoiceContact, undefined, undefined, this.nullContact)}
+                    {/* {tv(orderData.invoiceContact, undefined, undefined, this.nullContact)} */}
+                    <div>{tv(orderData.invoiceContact, (v) => <>{v.name}<span className='px-1'>{v.mobile}</span>{v.organizationName}</>)}</div>
+                    <div className='small'>{tv(orderData.invoiceContact.obj.address, undefined, undefined)}{tv(orderData.invoiceContact, (v) => v.addressString)}</div>
                     <div>{chevronRight}</div>
                 </div>
             } else {
@@ -239,7 +241,9 @@ export class VCreateOrder extends VPage<COrder> {
                     <div className="col-4 col-sm-2 pb-2 text-muted">收货地址:</div>
                     <div className="col-8 col-sm-10">
                         <LMR className="w-100 align-items-center" right={chevronRight}>
-                            {tv(orderData.shippingContact, undefined, undefined, this.nullContact)}
+                            {/* {tv(orderData.shippingContact, (v) => <>{v.name}{v.organizationName}{v.mobile}{v.addressString}</>)} */}
+                            <div>{tv(orderData.shippingContact, (v) => <>{v.name}<span className='px-1'>{v.mobile}</span>{v.organizationName}</>)}</div>
+                            <div className='small'>{tv(orderData.shippingContact.obj.address, undefined, undefined)}{tv(orderData.shippingContact, (v) => v.addressString)}</div>
                         </LMR>
                         {shippingAddressBlankTip}
                     </div>

@@ -19,7 +19,9 @@ export class VContactList extends VPage<CSelectContact> {
         </div>
         return <LMR right={right} className="px-3 py-2">
             <div onClick={() => onContactSelected(contact)}>
-                {tv(contact)}
+                {/* {tv(contact)} */}
+                <div>{tv(contact, (v) => <>{v.name}<span className='px-1'>{v.mobile}</span>{v.organizationName}</>)}</div>
+                <div className='small'>{tv(contact.obj.address, undefined, undefined)}{tv(contact, (v) => v.addressString)}</div>
             </div>
         </LMR>
     }

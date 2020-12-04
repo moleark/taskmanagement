@@ -68,24 +68,6 @@ export class COrder extends CUqBase {
         this.openVPage(VOrderDetail, param);
     }
 
-    /**
-    * 根据状态读取我的订单  不同客户
-    */
-    getMyOrders = async (state: string, customer: any) => {
-        let { id } = customer;
-        let { order } = this.uqs;
-        switch (state) {
-            case 'tobeconfirmed':
-                return await order.Order.mySheets(undefined, 1, -20);
-            case 'cancelled':
-                return await order.Order.mySheets(undefined, 1, -20);
-            case 'completed':
-                return await order.Order.mySheets("#", 1, -20)
-            default:
-                break;
-        }
-    }
-
     /**传参数 */
     createOrderFromCart = async (cartItems: CartItem2[]) => {
         let { cApp, uqs } = this;
@@ -187,10 +169,10 @@ export class COrder extends CUqBase {
         let { order, webuser, orderDraft } = uqs;
         let { orderItems } = this.orderData;
 
-        // let result: any = await orderDraft.OrderDraft.save("order", this.orderData.getDataForSave());
-        // let { id: orderId, flow, state } = result;
+        let result: any = await orderDraft.OrderDraft.save("order", this.orderData.getDataForSave());
+        let { id: orderId, flow, state } = result;
 
-        // await orderDraft.OrderDraft.action(orderId, flow, state, "SendOut");
+        await orderDraft.OrderDraft.action(orderId, flow, state, "SendOut");
 
         let param: [{ productId: number, packId: number }] = [] as any;
         orderItems.forEach(e => {
@@ -203,7 +185,7 @@ export class COrder extends CUqBase {
         // // 打开下单成功显示界面
         // nav.popTo(this.cApp.topKey);
         this.closePage(5)
-        // this.openVPage(OrderSuccess, result);
+        this.openVPage(OrderSuccess, result);
     }
 
     renderOrderItemProduct = (product: BoxId) => {
