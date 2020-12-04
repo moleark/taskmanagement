@@ -8,9 +8,10 @@ import { OrderItem } from '../order/Order';
 // import { webuser } from 'tvs/webuser';
 
 export class VOrderDetail extends VPage<COrder> {
-
-    async open(order: any) {
-
+    private orderName: string;
+    async open(param: any) {
+        let { order, type } = param;
+        this.orderName = type;
         this.openPage(this.page, order);
     }
 
@@ -47,9 +48,10 @@ export class VOrderDetail extends VPage<COrder> {
     private page = (order: any) => {
 
         let { brief, data } = order;
-        let { id, no, state, description, date } = brief;
+        let { id, no, state, description, date, user } = brief;
         let { orderItems, currency, shippingContact, invoiceContact, invoiceType, invoiceInfo, amount, couponOffsetAmount, couponRemitted
             , freightFee, freightFeeRemitted, adress, webUser, addressString, name, mobile } = data;
+
         let couponUI;
         if (couponOffsetAmount || couponRemitted) {
             let offsetUI, remittedUI;
@@ -85,14 +87,12 @@ export class VOrderDetail extends VPage<COrder> {
                 </>
             }
         }
+        let { currentUser } = this.controller.cApp;
+        let draftName = (this.orderName === 'customerSelf') ? <>{tv(shippingContact, v => v.name)}</> : currentUser.firstName;
 
         let header = <>订单详情: {no}</>
         return <Page header={header} footer={<></>}>
             <List items={orderItems} item={{ render: this.renderOrderItem }} />
-            <div className="bg-white row no-gutters py-2 px-3 my-1">
-                <div className="col-3 text-muted">姓名:</div>
-                <div className="col-9 text-muted">{tv(webUser, v => v.firstName)}</div>
-            </div>
             <div className="bg-white row no-gutters p-3 my-1">
                 <div className="col-3 text-muted">收货地址:</div>
                 <div className="col-9">
@@ -116,7 +116,8 @@ export class VOrderDetail extends VPage<COrder> {
                 <div className="col-3 text-muted">下单时间:</div>
                 <div className="col-9 text-right"><EasyDate date={date} /></div>
             </div>
-            <div className="bg-white p-3 my-1 text-right">
+            <div className="bg-white p-3 my-1 d-flex justify-content-between">
+                <span className='text-success'>制单人:{draftName}</span>
                 <span className="text-danger font-weight-bold">总金额: {amount}{tv(currency)}</span>
             </div>
         </Page>

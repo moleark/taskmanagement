@@ -173,7 +173,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
         return (
             <div className="d-block py-2 px-3">
                 <LMR
-                    onClick={() => openOrderDetail(order)}
+                    onClick={() => openOrderDetail(order, 'customerSelf')}
                     left={<strong>{orderNo}</strong>}
                     right={
                         <div className="text-muted small">

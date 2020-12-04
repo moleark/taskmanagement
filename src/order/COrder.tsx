@@ -57,14 +57,15 @@ export class COrder extends CUqBase {
         }
     }
 
-    openOrderDetail = async (orderId: number) => {
+    openOrderDetail = async (orderId: number, type: string) => {
 
         let order = await this.uqs.order.Order.getSheet(orderId);
         let { data } = order;
         let { orderItems } = data;
         let orderItemsGrouped = groupByProduct(orderItems);
         data.orderItems = orderItemsGrouped;
-        this.openVPage(VOrderDetail, order);
+        let param = { order, type }
+        this.openVPage(VOrderDetail, param);
     }
 
     /**
@@ -88,15 +89,13 @@ export class COrder extends CUqBase {
     /**传参数 */
     createOrderFromCart = async (cartItems: CartItem2[]) => {
         let { cApp, uqs } = this;
-        let { currentUser, currentSalesRegion, cCoupon, cProduct } = cApp;
-        console.log(cApp.draftCustomer);
+        let { currentUser, currentSalesRegion } = cApp;
 
         let { webuser, user } = cApp.draftCustomer;
         //获取客户的contact
         let { webuser: webUserTuid } = this.uqs;
         let { WebUser, WebUserContact, WebUserSetting } = webUserTuid;
         let webUser = await WebUser.load(webuser.id);
-        // let contact = await WebUserContact.obj({ "webUser": webuser.id });
         let webUserSettings = await WebUserSetting.obj({ webUser: webuser.id }) || { webUser: webuser.id };
 
         this.orderData.webUser = webuser.id; //客户webUser ID储存在订单中；
@@ -150,7 +149,7 @@ export class COrder extends CUqBase {
         }
 
         // 如果当前webuser有VIP卡，默认下单时使用其VIP卡
-        let webUserVIPCard = await webUserTuid.WebUserVIPCard.obj({ webUser: webUser });
+        // let webUserVIPCard = await webUserTuid.WebUserVIPCard.obj({ webUser: webUser });
         // if (webUserVIPCard !== undefined) {
         //     let coupon = await cCoupon.getCouponValidationResult(
         //         webUserVIPCard.vipCardCode.toString()
@@ -188,42 +187,23 @@ export class COrder extends CUqBase {
         let { order, webuser, orderDraft } = uqs;
         let { orderItems } = this.orderData;
 
-        let result: any = await orderDraft.OrderDraft.save("order", this.orderData.getDataForSave());
-        let { id: orderId, flow, state } = result;
+        // let result: any = await orderDraft.OrderDraft.save("order", this.orderData.getDataForSave());
+        // let { id: orderId, flow, state } = result;
 
-        await orderDraft.OrderDraft.action(orderId, flow, state, "SendOut");
+        // await orderDraft.OrderDraft.action(orderId, flow, state, "SendOut");
 
-        // 如果使用了coupon/credits，需要将其标记为已使用
-        let { id: couponId, code, types } = this.couponAppliedData;
-        if (couponId) {
-            let nowDate = new Date();
-            let usedDate = `${nowDate.getFullYear()}-${nowDate.getMonth() + 1}-${nowDate.getDate()}`;
-            switch (types) {
-                case 'coupon':
-                    webuser.WebUserCoupon.del({ webUser: currentUser.id, coupon: couponId, arr1: [{ couponType: 1 }] });
-                    webuser.WebUserCouponUsed.add({ webUser: currentUser.id, arr1: [{ coupon: couponId, usedDate: usedDate }] });
-                    break;
-                //         case 'credits':
-                //             积分商城.WebUserCredits.del({ webUser: currentUser.id, arr1: [{ credits: couponId }] });
-                //             积分商城.WebUserCreditsUsed.add({ webUser: currentUser.id, arr1: [{ credits: couponId, usedDate: usedDate }] });
-                //             break;
-                //         default:
-                //             break;
-            }
-        }
-
-        // let param: [{ productId: number, packId: number }] = [] as any;
-        // orderItems.forEach(e => {
-        //     e.packs.forEach(v => {
-        //         param.push({ productId: e.product.id, packId: v.pack.id })
-        //     })
-        // });
-        // cart.removeFromCart(param);
+        let param: [{ productId: number, packId: number }] = [] as any;
+        orderItems.forEach(e => {
+            e.packs.forEach(v => {
+                param.push({ productId: e.product.id, packId: v.pack.id })
+            })
+        });
+        cart.removeFromCart(param);
 
         // // 打开下单成功显示界面
         // nav.popTo(this.cApp.topKey);
         this.closePage(5)
-        this.openVPage(OrderSuccess, result);
+        // this.openVPage(OrderSuccess, result);
     }
 
     renderOrderItemProduct = (product: BoxId) => {

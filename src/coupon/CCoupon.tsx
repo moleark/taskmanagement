@@ -31,7 +31,7 @@ export class CCoupon extends CUqBase {
      * 
      */
     createVIPCardDiscountCallback = async (webUser: any, vipCardLevel: any, cardType: any, product: any
-        , vipCardDiscountSetting: any[], isno: any) => {
+        , vipCardDiscountSetting: any[], isno: any, newCoupon: any) => {
         let validitydate: any;
         let now = new Date();
         if (cardType === "vipcard") {
@@ -56,6 +56,10 @@ export class CCoupon extends CUqBase {
             });
             this.returnCall(newVIPCard);
             this.closePage();
+        } else if (newCoupon) {
+            this.closePage();
+            newVIPCard.isValid = 1;
+            return this.applySelectedCoupon(newVIPCard)
         } else {
             let param = { code: code, product: product, type: cardType, platform: "1", isno: isno };
             this.showShareCoupon(param);
@@ -103,15 +107,15 @@ export class CCoupon extends CUqBase {
 
     //显示添加优惠券页面
     showCreateCoupon = async (param: any) => {
-        let { promotionPrice } = param;
+        let { promotionPrice, newCoupon } = param;
         let vipCardDiscountSetting = await this.uqs.salesTask.SearchBottomDiscount.query({});
 
         if (promotionPrice) {
-            await this.createVIPCardDiscountCallback(undefined, undefined, param.type, param.product, undefined, "1");
+            await this.createVIPCardDiscountCallback(undefined, undefined, param.type, param.product, undefined, "1", newCoupon);
         } else {
             let params = {
                 webUser: undefined, vipCardLevel: undefined, vipCardType: param.type, product: param.product,
-                vipCardLevelDiscountSetting: vipCardDiscountSetting.ret
+                vipCardLevelDiscountSetting: vipCardDiscountSetting.ret, newCoupon
             };
             this.openVPage(VCreateVIPCardDiscount, params);
         }
@@ -121,7 +125,12 @@ export class CCoupon extends CUqBase {
     showCreateCredits = async (param: any) => {
         let validitydate = this.validDateFrom(2);
         let coupon: any = await this.createCoupon({ validitydate: validitydate, discount: 0 }, param);
-        this.showShareCoupon(coupon);
+        if (param.newCoupon) {
+            coupon.isValid = 1;
+            return this.applySelectedCoupon(coupon)
+        } else {
+            this.showShareCoupon(coupon);
+        }
     }
 
     //显示新建积分券完成页面

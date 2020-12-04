@@ -47,7 +47,7 @@ export class VOrderStatus extends VPage<COrder> {
         let { openOrderDetail } = this.controller;
         let { id, no, date, name, unit } = order;
         let counts = 0
-        let orderno = <div onClick={() => openOrderDetail(id)}><span className="small text-muted"></span><strong>{no}</strong></div>
+        let orderno = <div onClick={() => openOrderDetail(id, "draftName")}><span className="small text-muted"></span><strong>{no}</strong></div>
         let orders = (this.currentState === 'tobeconfirmed') ? <div className="small cursor-pointer text-primary">
             <span className="text-primary" onClick={() => this.share(order)}>分享确认<i>( {counts} )</i></span>
         </div> : null;

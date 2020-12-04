@@ -13,15 +13,17 @@ export class VCreateVIPCardDiscount extends VPage<CCoupon> {
     private vipCardType: any;
     private webUser: any;
     private product: any;
+    private newCoupon: any;
     private changeVipCardDiscount: any[];
     @observable tips: string;
 
     async open(param: any) {
-        let { webUser, vipCardLevel, vipCardType, product, vipCardLevelDiscountSetting } = param;
+        let { webUser, vipCardLevel, vipCardType, product, vipCardLevelDiscountSetting, newCoupon } = param;
         this.webUser = webUser;
         this.vipCardLevel = vipCardLevel;
         this.vipCardType = vipCardType;
         this.product = product;
+        this.newCoupon = newCoupon;
         for (let i = 0; i < vipCardLevelDiscountSetting.length; i++) {
             this.vipCardDiscountSetting.push(vipCardLevelDiscountSetting[i]);
         }
@@ -63,7 +65,7 @@ export class VCreateVIPCardDiscount extends VPage<CCoupon> {
         });
         vipCardDiscountSettingCopy.forEach(v => v.discount = (100 - v.discount) / 100);
         await createVIPCardDiscountCallback(this.webUser, this.vipCardLevel, this.vipCardType, this.product
-            , vipCardDiscountSettingCopy, "0");
+            , vipCardDiscountSettingCopy, "0", this.newCoupon);
     }
 
     private tipsUi = observer(() => {
@@ -77,7 +79,8 @@ export class VCreateVIPCardDiscount extends VPage<CCoupon> {
     })
 
     private page = () => {
-        let footer = <button type="button" className="btn btn-primary w-100 " onClick={this.onSubmit}>一键分享</button>;
+        let footer = (this.newCoupon && this.newCoupon === 1) ? < button type="button" className="btn btn-primary w-100 " onClick={this.onSubmit} >使用</button>
+            : < button type="button" className="btn btn-primary w-100 " onClick={this.onSubmit} > 一键分享</button>;
         let right = <div className="cursor-pointer mx-3 small text-warning" onClick={() => this.controller.cApp.cCoupon.showCouponList("coupon")} >
             <FA name="list-ol" className="pl-1 mr-1 fa-lg" />
         </div>;
