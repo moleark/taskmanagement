@@ -120,7 +120,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
                     content: caption + "  " + discription,
                     href: GLOABLE.posturl + "/" + id + "?sales=" + nav.user.id, //分享出去后，点击跳转地址
                     //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片
-                    thumbs: [image.obj.path] //分享缩略图
+                    thumbs: [image.obj] //分享缩略图
                 },
                 function (result) {
                     //分享回调

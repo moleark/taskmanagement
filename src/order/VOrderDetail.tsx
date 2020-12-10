@@ -87,9 +87,8 @@ export class VOrderDetail extends VPage<COrder> {
                 </>
             }
         }
-        let { currentUser } = this.controller.cApp;
-        let draftName = (this.orderName === 'customerSelf') ? <>{tv(shippingContact, v => v.name)}</> : currentUser.firstName;
-
+        let { cApp } = this.controller;
+        let draftName = (this.orderName === 'customerSelf') ? <>{tv(shippingContact, v => v.name)}</> : cApp.cWebUser.renderWebuserName(user);
         let header = <>订单详情: {no}</>
         return <Page header={header} footer={<></>}>
             <List items={orderItems} item={{ render: this.renderOrderItem }} />

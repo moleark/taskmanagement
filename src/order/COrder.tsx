@@ -27,6 +27,7 @@ export class COrder extends CUqBase {
      */
     @observable couponAppliedData: any = {};
     hasAnyCoupon: boolean;
+    @observable couponNo: any;
     /**
      * 当前webuser对应的buyeraccount，用来设置订单中的buyeraccount
      */
@@ -130,20 +131,7 @@ export class COrder extends CUqBase {
                 this.orderData.freightFeeRemitted = 0;
         }
 
-        // 如果当前webuser有VIP卡，默认下单时使用其VIP卡
-        // let webUserVIPCard = await webUserTuid.WebUserVIPCard.obj({ webUser: webUser });
-        // if (webUserVIPCard !== undefined) {
-        //     let coupon = await cCoupon.getCouponValidationResult(
-        //         webUserVIPCard.vipCardCode.toString()
-        //     );
-        //     let { result, types, id } = coupon;
-        //     if (result === 1) {
-        //         if (types === "vipcard" || types === "coupon") {
-        //             coupon.discountSetting = await cCoupon.getValidDiscounts(types, id);
-        //         }
-        //         this.applyCoupon(coupon);
-        //     }
-        // }
+
         this.openVPage(VCreateOrder);
 
     }
@@ -168,11 +156,10 @@ export class COrder extends CUqBase {
         let { uqs, cart, currentUser } = this.cApp;
         let { order, webuser, orderDraft } = uqs;
         let { orderItems } = this.orderData;
-
         let result: any = await orderDraft.OrderDraft.save("order", this.orderData.getDataForSave());
         let { id: orderId, flow, state } = result;
 
-        await orderDraft.OrderDraft.action(orderId, flow, state, "SendOut");
+        await orderDraft.OrderDraft.action(orderId, flow, state, "submit");
 
         let param: [{ productId: number, packId: number }] = [] as any;
         orderItems.forEach(e => {
@@ -181,11 +168,11 @@ export class COrder extends CUqBase {
             })
         });
         cart.removeFromCart(param);
-
         // // 打开下单成功显示界面
         // nav.popTo(this.cApp.topKey);
+        let couponNo = this.couponNo
         this.closePage(5)
-        this.openVPage(OrderSuccess, result);
+        this.openVPage(OrderSuccess, { result, couponNo });
     }
 
     renderOrderItemProduct = (product: BoxId) => {
@@ -227,6 +214,7 @@ export class COrder extends CUqBase {
     onCouponEdit = async () => {
         let { cCoupon } = this.cApp;
         let coupon = await cCoupon.call<any>(true);
+        this.couponNo = coupon.code;
         if (coupon) {
             await this.applyCoupon(coupon);
         }

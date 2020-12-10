@@ -2,7 +2,7 @@ import * as React from 'react';
 import { VPage, Page, FA, EasyDate, nav } from 'tonva';
 import { COrder } from './COrder';
 import { observable } from 'mobx';
-import { GLOABLE } from 'cartenv';
+import { GLOABLE } from "ui";
 
 export class OrderSuccess extends VPage<COrder> {
     @observable showTips: any = "none"
@@ -10,17 +10,21 @@ export class OrderSuccess extends VPage<COrder> {
 
         this.openPage(this.page, orderCreateResult);
     }
-    private share = async (order: any) => {
+    private share = async (orderCreateResult: any) => {
+        let { uqs } = this.controller.cApp;
+        let { orderDraft } = uqs;
+        let { result, couponNo } = orderCreateResult;
+        let { id, no, date, flow, state } = result;
+        await orderDraft.OrderDraft.action(id, flow, state, "Sended");
 
-        let { id, no, date } = order;
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
             // @ts-ignore  屏蔽错误
             window.plusShare(
                 {
-                    title: no, //订单号
-                    content: <EasyDate date={date} />,
-                    /**href 跟的地址有待确认 地址的订单 + ID */
-                    href: GLOABLE.PIRVACYURL + "/" + id + "?sales=" + nav.user.id, //分享出去后，点击跳转地址
+
+                    title: '您的订单', //订单号
+                    content: '根据您的需要制订的订单',
+                    href: GLOABLE.carturl + "?type=orderdraft & orderdraftid=" + id + "&coupons" + couponNo  //分享出去后，点击跳转地址
                 },
                 function (result) {
                     //分享回调
@@ -43,7 +47,7 @@ export class OrderSuccess extends VPage<COrder> {
                 <div>
                     <p className="text-primary"><span className="h4">下单成功！</span></p>
                     <p className="">
-                        订单: <span className="h5 text-info">{orderCreateResult.no}</span>
+                        订单: <span className="h5 text-info">{orderCreateResult.result.no}</span>
                     </p>
                     <p className='text-right mt-2'>
                         <button className="btn btn-outline-success  btn-sm" onClick={() => this.share(orderCreateResult)}>分享确认</button>

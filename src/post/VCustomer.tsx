@@ -19,7 +19,7 @@ export class VCustomer extends VPage<CPost> {
     async open(param: any) {
         let { caption, image, post, discription, domain, catalog } = param;
         this.caption = caption;
-        this.image = image.obj.path;
+        this.image = (image) ? image.obj.path : null;
         this.post = post;
         this.discription = discription;
         this.domain = domain;

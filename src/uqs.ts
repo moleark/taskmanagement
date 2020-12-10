@@ -204,7 +204,7 @@ export interface UqVIPCardType {
 }
 export interface UqOrderDraft {
     OrderDraft: Sheet;
-    SendOut: Action;
+    getOrderDraftByMaker: Query;
 }
 
 export interface UQs {
