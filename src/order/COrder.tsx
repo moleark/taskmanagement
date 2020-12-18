@@ -1,13 +1,10 @@
 import * as React from "react";
 import { CUqBase } from "../CBase";
-import { BoxId, QueryPager, RowContext, nav } from "tonva";
+import { BoxId, QueryPager } from "tonva";
 import { observable } from "mobx";
 import { VOrderStatus } from "./VOrderStatus";
 import { groupByProduct } from '../tools/groupByProduct';
 import { VOrderDetail } from './VOrderDetail';
-import { VExplanationRegiste } from "./VExplanationRegiste";
-import { VExplanationRegiste1 } from "./VExplanationRegiste";
-import { LoaderProductChemicalWithPrices } from "../product/item";
 import { CartPackRow, CartItem2 } from 'cart/Cart';
 import { VCreateOrder } from './VCreateOrder';
 import { Order, OrderItem } from './Order';
@@ -20,7 +17,7 @@ const FREIGHTFEEFIXED = 12;
 const FREIGHTFEEREMITTEDSTARTPOINT = 100;
 /* eslint-disable */
 export class COrder extends CUqBase {
-
+    @observable pageShareCustomer: QueryPager<any>;
     @observable orderData: Order = new Order();
     /**
      * 存储已经被应用的卡券，以便在使用后（下单后）将其删除
@@ -39,28 +36,73 @@ export class COrder extends CUqBase {
     orderMangement = async () => {
         this.openVPage(VOrderStatus)
     }
+
     /**
-   * 获取不同状态下的订单
- */
+     * 获取不同状态下的订单
+     */
     showMyOrders = async (state: any) => {
-        let { order } = this.uqs;
-        // let { currentUser } = this.cApp;
-        let result;
+        let { orderDraft } = this.uqs;
+        let result: any;
         switch (state) {
-            case 'tobeconfirmed':
-                return await order.Order.mySheets(undefined, 1, -20);
-            case 'cancelled':
-                return await order.Order.mySheets(undefined, undefined, undefined);
-            case 'confirmed':
-                return await order.Order.mySheets(undefined, 1, -20);
+            case 'BeingReviewed':
+                result = await orderDraft.OrderDraft.mySheets('BeingReviewed', 1, -20);
+                await this.getNewResult(result);
+                return result;
+            case 'Cancel':
+                result = await orderDraft.OrderDraft.mySheets('Canceled', 1, -20);
+                await this.getNewResult(result);
+                return result
+            case 'Pass':
+                result = await orderDraft.OrderDraft.mySheets('END', 1, -20);
+                await this.getNewResult(result);
+                return result
             default:
                 break;
         }
     }
+    getNewResult = async (result: any) => {
+        let promises: PromiseLike<any>[] = [];
+        let promises1: PromiseLike<any>[] = [];
+        result.forEach((v) => {
+            promises.push(this.uqs.orderDraft.OrderDraft.getSheet(v.id));
+            promises1.push(this.uqs.orderDraft.getSendOutHistory.table({ orderDraft: v.id }))
+        })
+        let order = await Promise.all(promises);
+        let list = await Promise.all(promises1);
+        console.log('list', list)
+        result.forEach((v) => {
+            order.forEach((e) => {
+                if (e.brief.id === v.id) {
+                    v.webUser = e.data.webUser
+                }
+            })
+            list.forEach((ele) => {
+                if (ele && ele.length > 0 && v.id === ele[0].id)
+                    v.counts = ele.length
+            })
+        })
+        return result
+    }
+
+    getValidCouponsForWebUser = async (currentUserId: number): Promise<any[]> => {
+        let { uqs } = this.cApp;
+        let { webuser } = uqs;
+        let { WebUserCoupon } = webuser;
+        let couponsForWebUser: any[] = await WebUserCoupon.table({ webUser: currentUserId });
+        let validCouponsForWebUser: any[] = [];
+        if (couponsForWebUser) {
+            validCouponsForWebUser = couponsForWebUser.filter(v => v.expiredDate.getTime() > Date.now());
+        }
+        return validCouponsForWebUser;
+    }
 
     openOrderDetail = async (orderId: number, type: string) => {
-
-        let order = await this.uqs.order.Order.getSheet(orderId);
+        let order: any
+        if (type === 'customerSelf') {
+            order = await this.uqs.order.Order.getSheet(orderId);
+        } else {
+            order = await this.uqs.orderDraft.OrderDraft.getSheet(orderId);
+        }
         let { data } = order;
         let { orderItems } = data;
         let orderItemsGrouped = groupByProduct(orderItems);
@@ -69,7 +111,9 @@ export class COrder extends CUqBase {
         this.openVPage(VOrderDetail, param);
     }
 
-    /**传参数 */
+    /**
+     * 传参数 
+     */
     createOrderFromCart = async (cartItems: CartItem2[]) => {
         let { cApp, uqs } = this;
         let { currentUser, currentSalesRegion } = cApp;
@@ -153,14 +197,12 @@ export class COrder extends CUqBase {
     * 提交订单
     */
     submitOrder = async () => {
-        let { uqs, cart, currentUser } = this.cApp;
-        let { order, webuser, orderDraft } = uqs;
+        let { uqs, cart } = this.cApp;
+        let { orderDraft } = uqs;
         let { orderItems } = this.orderData;
         let result: any = await orderDraft.OrderDraft.save("order", this.orderData.getDataForSave());
         let { id: orderId, flow, state } = result;
-
         await orderDraft.OrderDraft.action(orderId, flow, state, "submit");
-
         let param: [{ productId: number, packId: number }] = [] as any;
         orderItems.forEach(e => {
             e.packs.forEach(v => {
@@ -169,7 +211,6 @@ export class COrder extends CUqBase {
         });
         cart.removeFromCart(param);
         // // 打开下单成功显示界面
-        // nav.popTo(this.cApp.topKey);
         let couponNo = this.couponNo
         this.closePage(5)
         this.openVPage(OrderSuccess, { result, couponNo });
@@ -180,24 +221,35 @@ export class COrder extends CUqBase {
         return cProduct.renderCartProduct(product);
     }
 
-    /**获取客户地址列表 */
+    /**
+     * 获取客户地址列表
+     */
     async getContacts(): Promise<any[]> {
         let { webuser } = this.cApp.draftCustomer;
         return await this.uqs.webuser.WebUserContacts.table({ webUser: webuser.id });
     }
-    /**修改客户地址信息 */
+
+    /**
+     * 修改客户地址信息
+     */
     onSelectShippingContact = async () => {
         let cSelect = this.newC(CSelectShippingContact);
         let contactBox = await cSelect.call<BoxId>(true);
         this.orderData.shippingContact = contactBox;
     }
-    /**修改客户发票地址 */
+
+    /**
+     * 修改客户发票地址
+     */
     onSelectInvoiceContact = async () => {
         let cSelect = this.newC(CSelectInvoiceContact);
         let contactBox = await cSelect.call<BoxId>(true);
         this.orderData.invoiceContact = contactBox;
     }
-    /*** 打开发票信息编辑界面 */
+
+    /**
+     * 打开发票信息编辑界面
+     */
     onInvoiceInfoEdit = async () => {
         let cInvoiceInfo = this.newC(CInvoiceInfo);
         let { invoiceType, invoiceInfo } = this.orderData;
@@ -210,7 +262,9 @@ export class COrder extends CUqBase {
         this.orderData.invoiceInfo = newInvoice.invoiceInfo;
     }
 
-    /**打开优惠卡券界面 */
+    /**
+     * 打开优惠卡券界面
+     */
     onCouponEdit = async () => {
         let { cCoupon } = this.cApp;
         let coupon = await cCoupon.call<any>(true);
@@ -221,10 +275,9 @@ export class COrder extends CUqBase {
     }
 
     /**
-      * 使用优惠券后计算折扣金额和抵扣额
-      */
+     * 使用优惠券后计算折扣金额和抵扣额
+     */
     applyCoupon = async (coupon: any) => {
-
         this.removeCoupon();
         let { validitydate, isValid } = coupon;
         if (isValid === 1 && new Date(validitydate).getTime() > Date.now()) {
@@ -241,5 +294,17 @@ export class COrder extends CUqBase {
                 this.orderData.freightFeeRemitted = 0;
         }
     }
+    getResultCode = async (id: number) => {
+        let { uqs } = this.cApp;
+        let orderData = await uqs.orderDraft.OrderDraft.getSheet(id);
+        let { coupon } = orderData.data;
+        let couponId = coupon.id;
+        return await uqs.salesTask.Coupon.load(couponId);
+    }
 
+    getOrderDraftState = async (id: number) => {
+        let { uqs } = this.cApp;
+        let orderData = await uqs.orderDraft.OrderDraft.getSheet(id);
+        return orderData.brief;
+    }
 }

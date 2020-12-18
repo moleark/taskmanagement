@@ -10,21 +10,23 @@ export class OrderSuccess extends VPage<COrder> {
 
         this.openPage(this.page, orderCreateResult);
     }
+
     private share = async (orderCreateResult: any) => {
         let { uqs } = this.controller.cApp;
         let { orderDraft } = uqs;
         let { result, couponNo } = orderCreateResult;
-        let { id, no, date, flow, state } = result;
-        await orderDraft.OrderDraft.action(id, flow, state, "Sended");
+        let { id } = result;
+        let newDraftOrder = await this.controller.getOrderDraftState(id);
+        let { id: orderId, flow, state } = newDraftOrder;
+        await orderDraft.OrderDraft.action(orderId, flow, state, "sendOutOrderDraft");
 
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
             // @ts-ignore  屏蔽错误
             window.plusShare(
                 {
-
-                    title: '您的订单', //订单号
+                    title: '您的订单',
                     content: '根据您的需要制订的订单',
-                    href: GLOABLE.carturl + "?type=orderdraft & orderdraftid=" + id + "&coupons" + couponNo  //分享出去后，点击跳转地址
+                    href: GLOABLE.carturl + "?type=orderdraft&orderdraftid=" + id + "&coupon=" + couponNo
                 },
                 function (result) {
                     //分享回调
@@ -41,16 +43,18 @@ export class OrderSuccess extends VPage<COrder> {
         }, GLOABLE.TIPDISPLAYTIME);
     }
     private page = (orderCreateResult: any) => {
+        let { cApp } = this.controller;
+        let customer = cApp.draftCustomer;
         return <Page header="下单成功" back="close">
             <div className="py-4 px-3 bg-white mb-3 d-flex">
                 <FA name="list-alt" className="text-success mr-3" size="4x" />
                 <div>
-                    <p className="text-primary"><span className="h4">下单成功！</span></p>
+                    <p className="text-primary">代客户<span className="h4 px-1">{customer.name}</span>下单成功！</p>
                     <p className="">
                         订单: <span className="h5 text-info">{orderCreateResult.result.no}</span>
                     </p>
                     <p className='text-right mt-2'>
-                        <button className="btn btn-outline-success  btn-sm" onClick={() => this.share(orderCreateResult)}>分享确认</button>
+                        <button className="btn btn-outline-success  btn-sm" onClick={() => this.share(orderCreateResult)}>分享</button>
                     </p>
                 </div>
             </div>

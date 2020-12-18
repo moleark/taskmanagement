@@ -346,19 +346,22 @@ export class VCustomerDetail extends VPage<CCustomer> {
         let footer: any;
         if (!webuser) {
             footer = <div className='bg-light py-3 text-right' >
-                <span className='p-2 mr-4 text-warning' >该用户尚未注册，请推动注册</span>
+                <span className='p-2 text-danger small'>*该用户尚未注册,不能制单,请推动注册</span>
+                <button type="button" disabled={true} className="btn btn-primary mx-1 my-1 px-3">代客下单</button>
             </div>
         } else {
             if (IsBinded === 1 || IsBinded === 0) {
-                footer = <div className='bg-light py-3 text-right' >
-                    <span className='bg-primary p-2 mr-4 text-white' onClick={() => onSelectProduct(this.customer)} >待客下单</span>
+                footer = <div className='bg-light py-2 text-right pr-3' >
+                    <button type="button" className="btn btn-primary mx-1 my-1 px-3" onClick={() => onSelectProduct(this.customer)} >代客下单</button>
                 </div>
             } else {
                 footer = <div className='bg-light py-3 text-right' >
-                    <span className='bg-primary p-2 mr-4 text-white' >该用户与其他代理/销售绑定，无法制单</span>
+                    <span className='p-2 text-danger small'>*该用户与其他代理/销售绑定,无法制单</span>
+                    <button type="button" disabled={true} className="btn btn-primary mx-1 my-1 px-3">代客下单</button>
                 </div>
             }
         }
+
         return (
             <Page
                 header={header}

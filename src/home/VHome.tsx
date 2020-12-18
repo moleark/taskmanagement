@@ -28,7 +28,6 @@ export class VHome extends VPage<CHome> {
         let { cApp, showPromotion } = this.controller
         let { cCoupon, cMe, cOrder } = cApp;
         let { showTeam, showInvitationCode } = cMe;
-        let { orderMangement } = cOrder
         let siteHeader = this.renderVm(VSiteHeader);
 
         let onshowInvitationCode = async () => {
@@ -59,12 +58,6 @@ export class VHome extends VPage<CHome> {
                     <div className="py-3 my-1 ">
                         <div className="mb-2"><i style={{ fontSize: '2rem', color: '#00CED1' }} className="iconfont icon-photo"></i></div>
                         <div className="mx-3 px-2 font-weight-bold">团队</div>
-                    </div>
-                </div>
-                <div className="m-1 p-3 cursor-pointer" onClick={orderMangement} >
-                    <div className="py-3 my-1 ">
-                        <div className="mb-2 text-success"><i style={{ fontSize: '2rem' }} className="iconfont icon-kejian-zimulu"></i></div>
-                        <div className="mx-3 px-2 font-weight-bold">订单管理</div>
                     </div>
                 </div>
             </div>

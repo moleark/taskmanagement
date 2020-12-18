@@ -205,6 +205,7 @@ export interface UqVIPCardType {
 export interface UqOrderDraft {
     OrderDraft: Sheet;
     getOrderDraftByMaker: Query;
+    getSendOutHistory: Query;
 }
 
 export interface UQs {

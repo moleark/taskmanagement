@@ -87,9 +87,16 @@ export class VOrderDetail extends VPage<COrder> {
                 </>
             }
         }
+
         let { cApp } = this.controller;
-        let draftName = (this.orderName === 'customerSelf') ? <>{tv(shippingContact, v => v.name)}</> : cApp.cWebUser.renderWebuserName(user);
+        let draftUser = (this.orderName === 'customerSelf') ? <></>
+            : <div className="bg-white p-3 my-1 d-flex justify-content-between">
+                <span className='text-success'>制单人:{cApp.cWebUser.renderWebuserName(user)}</span>
+                <span className="text-danger font-weight-bold">总金额: {amount}{tv(currency)}</span>
+            </div>;
+
         let header = <>订单详情: {no}</>
+
         return <Page header={header} footer={<></>}>
             <List items={orderItems} item={{ render: this.renderOrderItem }} />
             <div className="bg-white row no-gutters p-3 my-1">
@@ -121,10 +128,11 @@ export class VOrderDetail extends VPage<COrder> {
                 <div className="col-3 text-muted">下单时间:</div>
                 <div className="col-9 text-right"><EasyDate date={date} /></div>
             </div>
-            <div className="bg-white p-3 my-1 d-flex justify-content-between">
+            {draftUser}
+            {/* <div className="bg-white p-3 my-1 d-flex justify-content-between">
                 <span className='text-success'>制单人:{draftName}</span>
                 <span className="text-danger font-weight-bold">总金额: {amount}{tv(currency)}</span>
-            </div>
+            </div> */}
         </Page>
     }
 }

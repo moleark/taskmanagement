@@ -19,9 +19,9 @@ export class VOrderStatus extends VPage<COrder> {
     }
 
     orderStatus: any = [
-        { caption: '待确认', state: 'tobeconfirmed', toolTip: '无' },
-        { caption: '已取消', state: 'cancelled', toolTip: '无' },
-        { caption: '已确认', state: 'confirmed', toolTip: '无' }
+        { caption: '待确认', state: 'BeingReviewed', toolTip: '无' },
+        { caption: '已取消', state: 'Cancel', toolTip: '无' },
+        { caption: '已确认', state: 'Pass', toolTip: '无' }
     ];
     private getTabs = async () => {
         let { showMyOrders } = this.controller;
@@ -42,19 +42,23 @@ export class VOrderStatus extends VPage<COrder> {
             };
         });
     }
+
     private renderOrder = (order: any, index: number) => {
-        let { openOrderDetail } = this.controller;
-        let { id, no, date, name, unit } = order;
-        let counts = 0
+        let { openOrderDetail, cApp } = this.controller;
+        let { id, no, date, webUser, counts } = order;
+        let { id: webUserId } = webUser;
+        let orderName = cApp.cWebUser.renderWebuserName(webUserId);
+        let shareCounts = (counts && counts > 0) ? <i>( {counts} )</i> : null;
+        console.log('order', order)
         let orderno = <div onClick={() => openOrderDetail(id, "draftName")}><span className="small text-muted"></span><strong>{no}</strong></div>
-        let orders = (this.currentState === 'tobeconfirmed') ? <div className="small cursor-pointer text-primary">
-            <span className="text-primary" onClick={() => this.share(order)}>分享确认<i>( {counts} )</i></span>
+        let orders = (this.currentState === 'BeingReviewed') ? <div className="small cursor-pointer text-primary">
+            <span className="text-primary" onClick={() => this.share(order)}>分享 {shareCounts} </span>
         </div> : null;
-        let unitShow = <div>{name}<small> {tv(unit, s => s.name)}</small></div>
+        let unitShow = <div>{orderName}</div>
         let datetime = <div className="small text-muted"><EasyDate date={date} /></div>
         return <div className='d-flex flex-column  m-2'>
             <LMR className="px-1" left={orderno} right={orders}></LMR>
-            <LMR className="px-1" left={unitShow} right={datetime}></LMR>
+            <LMR className="px-1" left={unitShow}></LMR>
         </div>
     }
 
@@ -67,17 +71,20 @@ export class VOrderStatus extends VPage<COrder> {
     private share = async (order: any) => {
         let { uqs } = this.controller.cApp;
         let { orderDraft } = uqs;
-        let { id, no, date, flow, state } = order;
-        await orderDraft.OrderDraft.action(id, flow, state, "Sended");
+        let { id } = order;
+        let result = await this.controller.getResultCode(id)
+        let { code } = result;
+        let newDraftOrder = await this.controller.getOrderDraftState(id);
+        let { id: orderId, flow, state } = newDraftOrder;
+        await orderDraft.OrderDraft.action(orderId, flow, state, "sendOutOrderDraft");
 
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
             // @ts-ignore  屏蔽错误
             window.plusShare(
                 {
-
-                    title: '您的订单', //订单号
+                    title: '您的订单',
                     content: '根据您的需要制订的订单',
-                    href: GLOABLE.carturl + "?type=orderdraft & orderdraftid=" + id  //分享出去后，点击跳转地址
+                    href: GLOABLE.carturl + "?type=orderdraft & orderdraftid=" + id + "&coupon=" + code
                 },
                 function (result) {
                     //分享回调

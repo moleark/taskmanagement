@@ -9,8 +9,8 @@ const GLOABLE_PRODUCTION = {
     CHINESE: 196,
     SALESREGION_CN: 1,
     TIPDISPLAYTIME: 2000,
-    url: "http://agent.jkchemical.com",
-    carturl: "http://shop.jkchemical.com",
+    url: "https://agent.jkchemical.com",
+    carturl: "https://shop.jkchemical.com",
     posturl: "https://web.jkchemical.com/post",
 }
 
@@ -20,8 +20,8 @@ const GLOABLE_TEST = {
     CHINESE: 197,
     SALESREGION_CN: 4,
     TIPDISPLAYTIME: 2000,
-    url: "http://agent.jkchemical.com",
-    carturl: "http://shop.jkchemical.com",
+    url: "https://agent.jkchemical.com",
+    carturl: "https://shop.jkchemical.com",
     posturl: "https://web.jkchemical.com/post",
 }
 
