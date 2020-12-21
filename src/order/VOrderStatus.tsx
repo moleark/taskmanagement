@@ -78,7 +78,7 @@ export class VOrderStatus extends VPage<COrder> {
                 {
                     title: '您的订单',
                     content: '根据您的需要制订的订单',
-                    href: GLOABLE.carturl + "?type=orderdraft & orderdraftid=" + id + "&coupon=" + code
+                    href: GLOABLE.carturl + "?type=orderdraft&orderdraftid=" + id + "&coupon=" + code
                 },
                 function (result) {
                     //分享回调

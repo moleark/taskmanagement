@@ -68,10 +68,9 @@ export class VCouponDetail extends VPage<CCoupon> {
 
     private renderItem = () => {
         let { pageCouponReceiveUsed, cApp } = this.controller;
-        let user = cApp.cWebUser.renderWebuserName(47);
         let content = pageCouponReceiveUsed.map((v, index) => {
-            let { receivedate, useddate, receive, used } = v;
-
+            let { receivedate, useddate, receive, used, webuser } = v;
+            let user = cApp.cWebUser.renderWebuserName(webuser.id);
             let vreceive = <>
                 <FA name="check" /> <EasyDate date={receivedate}></EasyDate>
             </>;

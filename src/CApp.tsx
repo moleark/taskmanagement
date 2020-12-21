@@ -135,8 +135,6 @@ export class CApp extends CAppBase {
         await this.cHome.getSlideShow();
         //显示主页面
         this.showMain();
-        let user = await this.uqs.webuser.WebUser.load(47);
-
     }
 
     async showMain() {
@@ -160,6 +158,7 @@ export class CApp extends CAppBase {
             this.cStart.start();
         }
     }
+
     renderUser(userId: number) {
         let val = this.userCache.getValue(userId);
         switch (typeof val) {
