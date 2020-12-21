@@ -7,21 +7,15 @@ import { GLOABLE } from "ui";
 export class OrderSuccess extends VPage<COrder> {
     @observable showTips: any = "none"
     async open(orderCreateResult: any) {
-
         this.openPage(this.page, orderCreateResult);
     }
 
     private share = async (orderCreateResult: any) => {
-        let { uqs } = this.controller.cApp;
-        let { orderDraft } = uqs;
         let { result, couponNo } = orderCreateResult;
         let { id } = result;
-        let newDraftOrder = await this.controller.getOrderDraftState(id);
-        let { id: orderId, flow, state } = newDraftOrder;
-        await orderDraft.OrderDraft.action(orderId, flow, state, "sendOutOrderDraft");
-
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
-            // @ts-ignore  屏蔽错误
+            this.controller.orderDraftAction(id)
+            // @ts-ignore  屏蔽错误  
             window.plusShare(
                 {
                     title: '您的订单',

@@ -346,7 +346,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
         let footer: any;
         if (!webuser) {
             footer = <div className='bg-light py-3 text-right' >
-                <span className='p-2 text-danger small'>*该用户尚未注册,不能制单,请推动注册</span>
+                <span className='p-2 text-danger small'>*该客户尚未注册,不能制单,请推动注册</span>
                 <button type="button" disabled={true} className="btn btn-primary mx-1 my-1 px-3">代客下单</button>
             </div>
         } else {
@@ -356,7 +356,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
                 </div>
             } else {
                 footer = <div className='bg-light py-3 text-right' >
-                    <span className='p-2 text-danger small'>*该用户与其他代理/销售绑定,无法制单</span>
+                    <span className='p-2 text-danger small'>*该客户与其他代理/销售绑定,无法制单</span>
                     <button type="button" disabled={true} className="btn btn-primary mx-1 my-1 px-3">代客下单</button>
                 </div>
             }

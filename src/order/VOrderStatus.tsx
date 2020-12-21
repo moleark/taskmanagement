@@ -49,7 +49,6 @@ export class VOrderStatus extends VPage<COrder> {
         let { id: webUserId } = webUser;
         let orderName = cApp.cWebUser.renderWebuserName(webUserId);
         let shareCounts = (counts && counts > 0) ? <i>( {counts} )</i> : null;
-        console.log('order', order)
         let orderno = <div onClick={() => openOrderDetail(id, "draftName")}><span className="small text-muted"></span><strong>{no}</strong></div>
         let orders = (this.currentState === 'BeingReviewed') ? <div className="small cursor-pointer text-primary">
             <span className="text-primary" onClick={() => this.share(order)}>分享 {shareCounts} </span>
@@ -69,16 +68,11 @@ export class VOrderStatus extends VPage<COrder> {
         }, GLOABLE.TIPDISPLAYTIME);
     }
     private share = async (order: any) => {
-        let { uqs } = this.controller.cApp;
-        let { orderDraft } = uqs;
         let { id } = order;
         let result = await this.controller.getResultCode(id)
         let { code } = result;
-        let newDraftOrder = await this.controller.getOrderDraftState(id);
-        let { id: orderId, flow, state } = newDraftOrder;
-        await orderDraft.OrderDraft.action(orderId, flow, state, "sendOutOrderDraft");
-
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
+            this.controller.orderDraftAction(id)
             // @ts-ignore  屏蔽错误
             window.plusShare(
                 {

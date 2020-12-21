@@ -206,6 +206,7 @@ export interface UqOrderDraft {
     OrderDraft: Sheet;
     getOrderDraftByMaker: Query;
     getSendOutHistory: Query;
+    sendOutOrderDraft: Action
 }
 
 export interface UQs {

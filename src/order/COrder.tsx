@@ -53,7 +53,7 @@ export class COrder extends CUqBase {
                 await this.getNewResult(result);
                 return result
             case 'Pass':
-                result = await orderDraft.OrderDraft.mySheets('END', 1, -20);
+                result = await orderDraft.OrderDraft.mySheets('#', 1, -20);
                 await this.getNewResult(result);
                 return result
             default:
@@ -69,7 +69,6 @@ export class COrder extends CUqBase {
         })
         let order = await Promise.all(promises);
         let list = await Promise.all(promises1);
-        console.log('list', list)
         result.forEach((v) => {
             order.forEach((e) => {
                 if (e.brief.id === v.id) {
@@ -306,5 +305,11 @@ export class COrder extends CUqBase {
         let { uqs } = this.cApp;
         let orderData = await uqs.orderDraft.OrderDraft.getSheet(id);
         return orderData.brief;
+    }
+
+    orderDraftAction = async (id: number) => {
+        let { uqs } = this.cApp;
+        let { orderDraft } = uqs;
+        await orderDraft.sendOutOrderDraft.submit({ orderDraft: id });
     }
 }
