@@ -11,7 +11,7 @@ export class OrderSuccess extends VPage<COrder> {
     }
 
     private share = async (orderCreateResult: any) => {
-        let { result, couponNo } = orderCreateResult;
+        let { result } = orderCreateResult;
         let { id } = result;
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
             this.controller.orderDraftAction(id)
@@ -20,7 +20,7 @@ export class OrderSuccess extends VPage<COrder> {
                 {
                     title: '您的订单',
                     content: '根据您的需要制订的订单',
-                    href: GLOABLE.carturl + "?type=orderdraft&orderdraftid=" + id + "&coupon=" + couponNo
+                    href: GLOABLE.carturl + "?type=orderdraft&orderdraftid=" + id
                 },
                 function (result) {
                     //分享回调

@@ -293,13 +293,6 @@ export class COrder extends CUqBase {
                 this.orderData.freightFeeRemitted = 0;
         }
     }
-    getResultCode = async (id: number) => {
-        let { uqs } = this.cApp;
-        let orderData = await uqs.orderDraft.OrderDraft.getSheet(id);
-        let { coupon } = orderData.data;
-        let couponId = coupon.id;
-        return await uqs.salesTask.Coupon.load(couponId);
-    }
 
     getOrderDraftState = async (id: number) => {
         let { uqs } = this.cApp;

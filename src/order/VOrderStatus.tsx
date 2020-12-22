@@ -69,8 +69,6 @@ export class VOrderStatus extends VPage<COrder> {
     }
     private share = async (order: any) => {
         let { id } = order;
-        let result = await this.controller.getResultCode(id)
-        let { code } = result;
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
             this.controller.orderDraftAction(id)
             // @ts-ignore  屏蔽错误
@@ -78,7 +76,7 @@ export class VOrderStatus extends VPage<COrder> {
                 {
                     title: '您的订单',
                     content: '根据您的需要制订的订单',
-                    href: GLOABLE.carturl + "?type=orderdraft&orderdraftid=" + id + "&coupon=" + code
+                    href: GLOABLE.carturl + "?type=orderdraft&orderdraftid=" + id
                 },
                 function (result) {
                     //分享回调
