@@ -151,9 +151,10 @@ export class CProduct extends CUqBase {
     }
 
     /**帮客户选择产品 */
-    onSelectProduct = async (customer: any) => {
-        this.openVPage(VCustomerProductList, customer)
+    onSelectProduct = async (myCustomer: any) => {
+        this.openVPage(VCustomerProductList, myCustomer)
     }
+
     /**产品详情 */
     onProductDetail = async (productId: BoxId | any) => {
         if (productId) {

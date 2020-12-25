@@ -117,16 +117,16 @@ export class COrder extends CUqBase {
         let { cApp, uqs } = this;
         let { currentUser, currentSalesRegion } = cApp;
 
-        let { webuser, user } = cApp.draftCustomer;
+        let { webuser } = cApp.draftCustomer;
         //获取客户的contact
         let { webuser: webUserTuid } = this.uqs;
         let { WebUser, WebUserContact, WebUserSetting } = webUserTuid;
         let webUser = await WebUser.load(webuser.id);
-        let webUserSettings = await WebUserSetting.obj({ webUser: webuser.id }) || { webUser: webuser.id };
+        let webUserSettings = await WebUserSetting.obj({ webUser: webuser.id }) || { webUser: webUser.id };
 
         this.orderData.webUser = webuser.id; //客户webUser ID储存在订单中；
         this.orderData.salesRegion = currentSalesRegion.id;//销售区域
-        this.orderData.orderMaker = user
+        this.orderData.orderMaker = currentUser;
         this.removeCoupon();
         // this.hasAnyCoupon = await this.hasCoupons();
 
@@ -138,21 +138,13 @@ export class COrder extends CUqBase {
             }
         }
         //地址
-        if (this.orderData.shippingContact === undefined) {
-            this.orderData.shippingContact = webUserSettings.shippingContact;
-        }
+        this.orderData.shippingContact = webUserSettings.shippingContact;
         //发票地址
-        if (this.orderData.invoiceContact === undefined) {
-            this.orderData.invoiceContact = webUserSettings.shippingContact;
-        }
+        this.orderData.invoiceContact = webUserSettings.shippingContact;
         //发票类型
-        if (this.orderData.invoiceType === undefined) {
-            this.orderData.invoiceType = webUserSettings.invoiceType;
-        }
+        this.orderData.invoiceType = webUserSettings.invoiceType;
         //发票信息
-        if (this.orderData.invoiceInfo === undefined) {
-            this.orderData.invoiceInfo = webUserSettings.invoiceInfo;
-        }
+        this.orderData.invoiceInfo = webUserSettings.invoiceInfo;
 
         if (cartItems !== undefined && cartItems.length > 0) {
             this.orderData.currency = cartItems[0].packs[0].currency;

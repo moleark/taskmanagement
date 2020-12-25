@@ -18,11 +18,11 @@ const genderText: { [v: number]: string } = {
 };
 
 export class VCustomerDetail extends VPage<CCustomer> {
-    @observable private customer: any;
 
+    @observable private myCustomer: any;
 
     async open(param: any) {
-        this.customer = param;
+        this.myCustomer = param;
         this.openPage(this.page, param);
     }
 
@@ -109,7 +109,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
     private share = async (post: any) => {
         await this.controller.cApp.cPost.addMyCustomerPost(
             post,
-            this.customer.id
+            this.myCustomer.id
         );
         let { caption, image, id, discription } = post;
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
@@ -240,15 +240,16 @@ export class VCustomerDetail extends VPage<CCustomer> {
             rows.push(this.geneCustomerPropertyComponent("research", "职位", <>{tv(officePost.officePost, v => v.name)}</>));
         rows.push(this.geneCustomerPropertyComponent("bingding", "绑定状态", (IsBinded === 1 ? "已绑定" : "未绑定")));
 
-        let { showCustomerEdit, cApp, activetasks, customerorders, pagePost, vipCardForWebUser, showCreateVIPCardPage, showVIPCardDiscount, isBinded } = this.controller;
+        let { showCustomerEdit, cApp, activetasks, customerorders, pagePost, vipCardForWebUser,
+            showCreateVIPCardPage, showVIPCardDiscount, isBinded } = this.controller;
         let { onSelectProduct } = cApp.cProduct;
-        let { name: customerName, webuser } = this.customer;
+        let { name: customerName, webuser } = this.myCustomer;
         let header: any = <span>{customerName}</span>;
         let editCustomerButton = (
             <div className="mt-2">
                 <span
                     className="iconfont icon-bianji mx-3 "
-                    onClick={() => showCustomerEdit(this.customer)}
+                    onClick={() => showCustomerEdit(this.myCustomer)}
                 ></span>
             </div>
         );
@@ -296,7 +297,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
         taskShowTitle = this.renderTitle(
             "待办事项",
             "icon-tianjia",
-            () => showCreateTaskOfCustomer(this.customer),
+            () => showCreateTaskOfCustomer(this.myCustomer),
             "icon-qita",
             () => showCustomerHistory(customerid)
         );
@@ -343,24 +344,25 @@ export class VCustomerDetail extends VPage<CCustomer> {
             );
         }
 
-        let footer: any;
+        let tipUi = <></>, flags: boolean;
         if (!webuser) {
-            footer = <div className='bg-light py-3 text-right' >
-                <span className='p-2 text-danger small'>*该客户尚未注册,不能制单,请推动注册</span>
-                <button type="button" disabled={true} className="btn btn-primary mx-1 my-1 px-3">代客下单</button>
-            </div>
+            tipUi = <span className='p-2 text-danger small'>*该客户尚未注册,不能制单,请推动注册</span>;
+            flags = true
         } else {
             if (IsBinded === 1 || IsBinded === 0) {
-                footer = <div className='bg-light py-2 text-right pr-3' >
-                    <button type="button" className="btn btn-primary mx-1 my-1 px-3" onClick={() => onSelectProduct(this.customer)} >代客下单</button>
-                </div>
+                flags = false;
             } else {
-                footer = <div className='bg-light py-3 text-right' >
-                    <span className='p-2 text-danger small'>*该客户与其他代理/销售绑定,无法制单</span>
-                    <button type="button" disabled={true} className="btn btn-primary mx-1 my-1 px-3">代客下单</button>
-                </div>
+                tipUi = <span className='p-2 text-danger small'>*该客户与其他代理/销售绑定,无法制单</span>
+                flags = true
             }
         }
+
+        let footer: any;
+        footer = <div className='bg-light py-2 text-right pr-3' >
+            {tipUi}
+            <button type="button" className="btn btn-primary mx-1 my-1 px-3" disabled={flags}
+                onClick={() => onSelectProduct(this.myCustomer)}>代客下单</button>
+        </div>
 
         return (
             <Page
@@ -371,7 +373,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
             >
                 <PropGrid
                     rows={rows}
-                    values={this.customer}
+                    values={this.myCustomer}
                     alignValue="right"
                 />
                 {vipCardUI}

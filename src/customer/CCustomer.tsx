@@ -117,7 +117,7 @@ export class CCustomer extends CUqBase {
         let promises: PromiseLike<any>[] = [];
         promises.push(
             MyCustomer.load(id),
-            SearchMyCustomerDepartment.query({ mycustomer: id }),
+            SearchMyCustomerDepartment.obj({ mycustomer: id }),
             SearchMyCustomerResearch.query({ mycustomer: id }),
             SearchMyCustomerOfficePost.query({ mycustomer: id }),
             this.getActiveTasks(myCustomer),
@@ -126,15 +126,14 @@ export class CCustomer extends CUqBase {
         let results = await Promise.all(promises);
         let [mycustomer, department, research, officePost] = [...results];
 
-        if (department.ret.length > 0)
-            mycustomer.department = department.ret[0];
+        mycustomer.department = department;
         if (research.ret.length > 0) mycustomer.research = research.ret[0];
         if (officePost.ret.length > 0)
             mycustomer.officePost = officePost.ret[0];
         await this.getCustomerContent(mycustomer.research ? mycustomer.research.id : 0);
 
 
-        let customermap = await CustomerMyCustomerMap.obj({ sales: user, mycustomer: myCustomer });
+        let customermap = await CustomerMyCustomerMap.obj({ mycustomer: myCustomer });
         if (customermap) {
             let { webuser, customer } = customermap;
             mycustomer.webuser = webuser;

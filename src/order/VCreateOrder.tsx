@@ -145,8 +145,8 @@ export class VCreateOrder extends VPage<COrder> {
             <div className="d-flex justify-content-left">
                 <div className="text-danger flex-grow-1" style={{ fontSize: '1.8rem' }}><small>¥</small>{orderData.amount}</div>
                 <button type="button"
-                    className={classNames('btn', 'w-30', { 'btn-danger': currentUser.allowOrdering, 'btn-secondary': !currentUser.allowOrdering })}
-                    onClick={this.onSubmit} disabled={!currentUser.allowOrdering}>提交订单
+                    className={classNames('btn', 'w-30', 'btn-danger')}
+                    onClick={this.onSubmit}>提交订单
                 </button>
             </div>
         </div>;
@@ -164,7 +164,7 @@ export class VCreateOrder extends VPage<COrder> {
                 divInvoiceContact = <div className="col-8 col-sm-10 offset-4 offset-sm-2 d-flex">
                     {/* {tv(orderData.invoiceContact, undefined, undefined, this.nullContact)} */}
                     <div>{tv(orderData.invoiceContact, (v) => <>{v.name}<span className='px-1'>{v.mobile}</span>{v.organizationName}</>)}</div>
-                    <div className='small'>{tv(orderData.invoiceContact.obj.address, undefined, undefined)}{tv(orderData.invoiceContact, (v) => v.addressString)}</div>
+                    <div className='small'>{(orderData.invoiceContact) ? (tv(orderData.invoiceContact.obj.address, undefined, undefined)) : <></>}{tv(orderData.invoiceContact, (v) => v.addressString)}</div>
                     <div>{chevronRight}</div>
                 </div>
             } else {
@@ -241,9 +241,9 @@ export class VCreateOrder extends VPage<COrder> {
                     <div className="col-4 col-sm-2 pb-2 text-muted">收货地址:</div>
                     <div className="col-8 col-sm-10">
                         <LMR className="w-100 align-items-center" right={chevronRight}>
-                            {/* {tv(orderData.shippingContact, (v) => <>{v.name}{v.organizationName}{v.mobile}{v.addressString}</>)} */}
+                            {/*  {tv(orderData.shippingContact, undefined, undefined, this.nullContact)} */}
                             <div>{tv(orderData.shippingContact, (v) => <>{v.name}<span className='px-1'>{v.mobile}</span>{v.organizationName}</>)}</div>
-                            <div className='small'>{tv(orderData.shippingContact.obj.address, undefined, undefined)}{tv(orderData.shippingContact, (v) => v.addressString)}</div>
+                            <div className='small'>{(orderData.shippingContact) ? (tv(orderData.shippingContact.obj.address, undefined, undefined)) : <></>}{tv(orderData.shippingContact, (v) => v.addressString)}</div>
                         </LMR>
                         {shippingAddressBlankTip}
                     </div>
