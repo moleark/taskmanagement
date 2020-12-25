@@ -117,34 +117,37 @@ export class COrder extends CUqBase {
         let { cApp, uqs } = this;
         let { currentUser, currentSalesRegion } = cApp;
 
-        let { webuser } = cApp.draftCustomer;
-        //获取客户的contact
-        let { webuser: webUserTuid } = this.uqs;
-        let { WebUser, WebUserContact, WebUserSetting } = webUserTuid;
-        let webUser = await WebUser.load(webuser.id);
-        let webUserSettings = await WebUserSetting.obj({ webUser: webuser.id }) || { webUser: webUser.id };
-
-        this.orderData.webUser = webuser.id; //客户webUser ID储存在订单中；
+        let { currentMyCustomer } = cApp;
+        let { webuser: currentWebUser } = currentMyCustomer;
+        this.orderData.webUser = currentWebUser.id; //客户webUser ID储存在订单中；
         this.orderData.salesRegion = currentSalesRegion.id;//销售区域
         this.orderData.orderMaker = currentUser;
         this.removeCoupon();
         // this.hasAnyCoupon = await this.hasCoupons();
 
-        let buyerAccountQResult = await uqs.webuser.WebUserBuyerAccount.query({ webUser: webuser.id })
+        let buyerAccountQResult = await uqs.webuser.WebUserBuyerAccount.query({ webUser: currentWebUser })
         if (buyerAccountQResult) {
             this.buyerAccounts = buyerAccountQResult.ret;
             if (this.buyerAccounts && this.buyerAccounts.length === 1) {
                 this.orderData.buyerAccount = this.buyerAccounts[0].buyerAccount;
             }
         }
-        //地址
-        this.orderData.shippingContact = webUserSettings.shippingContact;
-        //发票地址
-        this.orderData.invoiceContact = webUserSettings.shippingContact;
-        //发票类型
-        this.orderData.invoiceType = webUserSettings.invoiceType;
-        //发票信息
-        this.orderData.invoiceInfo = webUserSettings.invoiceInfo;
+
+        //获取客户的contact
+        let { webuser: webUserApis } = uqs;
+        let { WebUser: WebUserTuid, WebUserContact, WebUserSetting } = webUserApis;
+        let webUser = await WebUserTuid.load(currentWebUser);
+        let webUserSettings = await WebUserSetting.obj({ webUser: currentWebUser });
+        if (webUserSettings) {
+            //地址
+            this.orderData.shippingContact = webUserSettings.shippingContact;
+            //发票地址
+            this.orderData.invoiceContact = webUserSettings.shippingContact;
+            //发票类型
+            this.orderData.invoiceType = webUserSettings.invoiceType;
+            //发票信息
+            this.orderData.invoiceInfo = webUserSettings.invoiceInfo;
+        }
 
         if (cartItems !== undefined && cartItems.length > 0) {
             this.orderData.currency = cartItems[0].packs[0].currency;
@@ -166,9 +169,7 @@ export class COrder extends CUqBase {
                 this.orderData.freightFeeRemitted = 0;
         }
 
-
         this.openVPage(VCreateOrder);
-
     }
 
 
@@ -216,7 +217,7 @@ export class COrder extends CUqBase {
      * 获取客户地址列表
      */
     async getContacts(): Promise<any[]> {
-        let { webuser } = this.cApp.draftCustomer;
+        let { webuser } = this.cApp.currentMyCustomer;
         return await this.uqs.webuser.WebUserContacts.table({ webUser: webuser.id });
     }
 

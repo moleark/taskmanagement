@@ -38,12 +38,11 @@ export class OrderSuccess extends VPage<COrder> {
     }
     private page = (orderCreateResult: any) => {
         let { cApp } = this.controller;
-        let customer = cApp.draftCustomer;
         return <Page header="下单成功" back="close">
             <div className="py-4 px-3 bg-white mb-3 d-flex">
                 <FA name="list-alt" className="text-success mr-3" size="4x" />
                 <div>
-                    <p className="text-primary">代客户<span className="h4 px-1">{customer.name}</span>下单成功！</p>
+                    <p className="text-primary">代客户<span className="h4 px-1">{cApp.currentMyCustomer.name}</span>下单成功！</p>
                     <p className="">
                         订单: <span className="h5 text-info">{orderCreateResult.result.no}</span>
                     </p>

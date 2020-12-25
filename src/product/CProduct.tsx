@@ -64,14 +64,17 @@ export class CProduct extends CUqBase {
 
     //查询客户--通过名称
     searchByKey = async (par: any) => {
-        let { key, customer } = par;
+
+        let { key } = par;
         this.pageProduct = new QueryPager(this.uqs.product.SearchProduct, 15, 30);
         await this.pageProduct.first({ keyWord: key, salesRegion: 1 });
-        if (!customer)
+
+
+        if (!this.cApp.currentMyCustomer)
             return await this.openVPage(VProductList, key);
         else {
             this.closePage();
-            await this.onSelectProduct(customer)
+            await this.onSelectProduct();
         }
     }
 
@@ -151,8 +154,8 @@ export class CProduct extends CUqBase {
     }
 
     /**帮客户选择产品 */
-    onSelectProduct = async (myCustomer: any) => {
-        this.openVPage(VCustomerProductList, myCustomer)
+    onSelectProduct = async () => {
+        this.openVPage(VCustomerProductList);
     }
 
     /**产品详情 */

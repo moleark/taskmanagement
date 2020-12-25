@@ -128,8 +128,7 @@ export class VCustomerCart extends VPage<CCart> {
     }
 
     private page = observer((params: any): JSX.Element => {
-        let { cart, draftCustomer } = this.controller.cApp;
-        let { name } = draftCustomer;
+        let { cart, currentMyCustomer } = this.controller.cApp;
         let footer: any, content: any;
         if (cart.count.get() === 0 && cart.cartItems.length === 0) {
             content = this.empty();
@@ -142,7 +141,7 @@ export class VCustomerCart extends VPage<CCart> {
         let header = <div>购物车</div>
         return <Page header={header} footer={footer}>
             <div className="bg-white py-2 px-3 mb-1 small text-muted">客户<span className="px-1 text-success" >
-                {name}</span>的购物车</div>
+                {currentMyCustomer.name}</span>的购物车</div>
             {content}
         </Page>;
     })
