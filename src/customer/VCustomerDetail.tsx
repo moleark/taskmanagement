@@ -241,7 +241,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
         rows.push(this.geneCustomerPropertyComponent("bingding", "绑定状态", (IsBinded === 1 ? "已绑定" : "未绑定")));
 
         let { showCustomerEdit, cApp, activetasks, customerorders, pagePost, vipCardForWebUser,
-            showCreateVIPCardPage, showVIPCardDiscount, isBinded } = this.controller;
+            showCreateVIPCardPage, showVIPCardDiscount, isBinded, toRelationShopId, renderOrderDraftRule } = this.controller;
         let { onSelectProduct } = cApp.cProduct;
         let { name: customerName, webuser } = this.myCustomer;
         let header: any = <span>{customerName}</span>;
@@ -346,30 +346,50 @@ export class VCustomerDetail extends VPage<CCustomer> {
 
         let tipUi = <></>, flags: boolean;
         if (!webuser) {
-            tipUi = <span className='p-2 text-danger small'>*该客户尚未注册,不能制单,请推动注册</span>;
+            tipUi = <span className='mb-1 text-muted small align-self-end'>*该客户尚未注册,不能制单,请推动注册</span>;
             flags = true
         } else {
             if (IsBinded === 1 || IsBinded === 0) {
                 flags = false;
             } else {
-                tipUi = <span className='p-2 text-danger small'>*该客户与其他代理/销售绑定,无法制单</span>
+                tipUi = <span className='mb-1 text-muted small align-self-end'>*该客户与其他代理/销售绑定,无法制单</span>
                 flags = true
             }
         }
 
-        let footer: any;
-        footer = <div className='bg-light py-2 text-right pr-3' >
-            {tipUi}
-            <button type="button" className="btn btn-primary mx-1 my-1 px-3" disabled={flags}
-                onClick={() => onSelectProduct(this.myCustomer)}>代客下单</button>
-        </div>
+        //关联商城ID 
+        let customerShopIDShow: any, showCustomerShopId;
+        if (!webuser) {
+            showCustomerShopId = <span className="cursor-pointer" onClick={() => toRelationShopId(this.myCustomer)}>
+                未关联 <FA name="chevron-right" className="text-primary cursor-pointer pl-2" /></span>
+        } else {
+            showCustomerShopId = <span className='text-muted'>已关联<i className='text-success pl-2'>{webuser.id}</i></span>
+        }
+
+        customerShopIDShow = <div className='bg-white'>
+            <div className='px-3 py-2 d-flex justify-content-between mt-3'>
+                <div> <strong className="text-primary">关联百灵威商城ID</strong></div>
+                {showCustomerShopId}
+            </div>
+            <div className='py-1 d-flex justify-content-end' >
+                <div className='d-flex'>
+                    {tipUi}
+                    <button type="button" className="btn btn-primary my-1 px-2 ml-1" disabled={flags}
+                        onClick={() => onSelectProduct()}>代客下单
+                    </button>
+                    <span className="cursor-pointer p-2" onClick={() => renderOrderDraftRule()} >
+                        <FA name="question-circle text-warning" />
+                    </span>
+                </div>
+            </div >
+        </div>;
 
         return (
             <Page
                 header={header}
                 headerClassName={setting.pageHeaderCss}
                 right={editCustomerButton}
-                footer={footer}
+            // footer={footer}
             >
                 <PropGrid
                     rows={rows}
@@ -377,6 +397,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
                     alignValue="right"
                 />
                 {vipCardUI}
+                {customerShopIDShow}
                 {taskShowTitle}
                 {taskShow}
                 {orderShowTitle}

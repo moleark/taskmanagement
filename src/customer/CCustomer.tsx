@@ -18,6 +18,8 @@ import { VCreateNewCustomer } from "./VCreateNewCustomer";
 import { VNewCustomerList } from "./VNewCustomerList";
 import { VCustomerSearchByUnit } from "./VCustomerSearchByUnit";
 import { setting } from "appConfig";
+import { VRelationCustomerWebuserId } from "./VRelationCustomerWebuserId";
+import { VOrderDraftRule } from './VOrderDraftRule'
 
 /* eslint-disable */
 
@@ -149,8 +151,9 @@ export class CCustomer extends CUqBase {
                     this.vipCardForWebUser = undefined;
                 }
             }
+            cApp.currentMyCustomer = mycustomer;
         }
-        cApp.draftCustomer = mycustomer;
+
         this.openVPage(VCustomerDetail, mycustomer);
     };
 
@@ -172,6 +175,34 @@ export class CCustomer extends CUqBase {
             }
         );
     };
+
+    /**
+     * 关联商城账号ID
+    */
+    toRelationShopId = async (myCustomer: any) => {
+        this.openVPage(VRelationCustomerWebuserId, myCustomer)
+    }
+
+    addMycustomerRelationShopId = async (param: any) => {
+        this.closePage(2)
+        let { uqs } = this;
+        let { salesTask, webuser } = uqs;
+        let { customerShopId, myCustomer } = param;
+
+        let customer = undefined;
+        let customerResult = await webuser.WebUserCustomer.obj({ webUser: customerShopId });
+        if (customerResult) {
+            customer = customerResult.customer;
+        }
+        let { CustomerMyCustomerMap } = salesTask;
+        await CustomerMyCustomerMap.add({ mycustomer: myCustomer.id, customer: customer, webuser: customerShopId });
+        await this.showCustomerDetail(myCustomer)
+    }
+
+    getWebUserValidationResult = async (webuser: any) => {
+        let webUser = await this.uqs.webuser.WebUser.load(webuser);
+        return webUser;
+    }
 
     // 获取客户相关Post
     getCustomerContent = async (domain: any) => {
@@ -317,13 +348,19 @@ export class CCustomer extends CUqBase {
      * 查询MyCustomer是否可能被其他销售助手绑定
      */
     setIsBinded = async (customer: any) => {
-        let occupyResult = await this.uqs.salesTask.MyCustomerIsOccupy.obj({ _customer: customer.id });
-        if (occupyResult) {
-            return this.isBinded = occupyResult.code;
-        } else {
-            return this.isBinded = 0;
+        if (customer) {
+            let occupyResult = await this.uqs.salesTask.MyCustomerIsOccupy.obj({ _customer: customer.id });
+            if (occupyResult) {
+                return this.isBinded = occupyResult.code;
+            } else {
+                return this.isBinded = 0;
+            }
         }
     };
+
+    renderOrderDraftRule = async () => {
+        this.openVPage(VOrderDraftRule);
+    }
 
     pickAddress = async (
         context: Context,

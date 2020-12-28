@@ -13,6 +13,7 @@ export class OrderSuccess extends VPage<COrder> {
     private share = async (orderCreateResult: any) => {
         let { result } = orderCreateResult;
         let { id } = result;
+        this.controller.cApp.currentMyCustomer = null;
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
             this.controller.orderDraftAction(id)
             // @ts-ignore  屏蔽错误  
