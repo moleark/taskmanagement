@@ -276,6 +276,12 @@ export class VMe extends VPage<CMe> {
                             <small>历史任务</small>
                         </small>
                     </div>
+                    <div className="col text-center" onClick={orderMangement} >
+                        <div className="text-primary">
+                            <i style={{ fontSize: "25px" }} className="iconfont icon-kejian-zimulu"></i>
+                        </div>
+                        <div><small>订单管理</small></div>
+                    </div>
                     <div className="col text-center" onClick={showSet}>
                         <div>
                             <i className="iconfont icon-shezhi2" style={{ fontSize: "25px", color: "#0e6ff7" }}></i>
@@ -284,16 +290,11 @@ export class VMe extends VPage<CMe> {
                             <small>设置</small>
                         </small>
                     </div>
-                    <div className="col text-center" onClick={orderMangement} >
-                        <div className="text-primary">
-                            <i style={{ fontSize: "25px" }} className="iconfont icon-kejian-zimulu"></i>
-                        </div>
-                        <div><small>订单管理</small></div>
-
-                    </div>
                 </div>
                 <div className="row p-2 cursor-pointer mt-3">
                     {room}
+                    <div className="col text-center"  >
+                    </div>
                     <div className="col text-center"  >
                     </div>
                     <div className="col text-center"  >
