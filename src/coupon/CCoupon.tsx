@@ -1,7 +1,7 @@
 import { observable } from 'mobx';
 import { QueryPager, nav } from 'tonva';
 import { CUqBase } from '../CBase';
-import { VCouponList } from './VCouponList';
+import { VCouponList, VExpiredCouponList } from 'coupon/VCouponList';
 import { VCouponDetail } from './VCouponDetail';
 import { VCreateCouponEnd } from './VCreateCouponEnd';
 import { VCreateProductCouponEnd } from './VCreateProductCouponEnd';
@@ -205,5 +205,8 @@ export class CCoupon extends CUqBase {
         }
     }
 
+    openExpiredCouponHistory = async (types) => {
+        this.openVPage(VExpiredCouponList, types);
+    }
 }
 /* eslint-enable */
