@@ -58,8 +58,8 @@ export class CHome extends CUqBase {
         await this.openVPage(VHome);
     }
 
-    renderSearchHeader = (size?: string) => {
-        return this.renderView(VSearchHeader, size);
+    renderSearchHeader = (fromSearch?: string) => {
+        return this.renderView(VSearchHeader, fromSearch);
     }
 
     getSlideShow = async () => {

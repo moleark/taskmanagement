@@ -59,13 +59,7 @@ export class VCustomerProductList extends VPage<CProduct> {
 
     private page = observer(() => {
         let { pageProduct, cApp } = this.controller;
-        let search = <div className="w-100 d-flex">
-            {/* <span className="pt-1 text-white " style={{ width: '4rem' }}>{this.customer.name}</span> */}
-            <SearchBox className="w-100 mr-2"
-                size={"sm"}
-                onSearch={(key: string) => this.controller.searchByKey({ key })}
-                placeholder="搜索品名、编号、CAS、MDL等" />
-        </div>
+        let search = cApp.cHome.renderSearchHeader('fromOrderDraftSearch');
         let { cCart, currentMyCustomer } = cApp;
         let right = cCart.renderCartLabel();
         let none = <div className="my-3 mx-2 text-warning">无</div>;

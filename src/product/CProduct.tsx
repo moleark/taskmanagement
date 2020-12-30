@@ -64,14 +64,12 @@ export class CProduct extends CUqBase {
 
     //查询客户--通过名称
     searchByKey = async (par: any) => {
-
-        let { key } = par;
+        let { key, fromSearch } = par;
         this.pageProduct = new QueryPager(this.uqs.product.SearchProduct, 15, 30);
         await this.pageProduct.first({ keyWord: key, salesRegion: 1 });
 
-
-        if (!this.cApp.currentMyCustomer)
-            return await this.openVPage(VProductList, key);
+        if (fromSearch !== 'fromOrderDraftSearch')
+            await this.openVPage(VProductList, key);
         else {
             this.closePage();
             await this.onSelectProduct();
@@ -159,11 +157,11 @@ export class CProduct extends CUqBase {
     }
 
     /**产品详情 */
-    onProductDetail = async (productId: BoxId | any) => {
-        if (productId) {
-            let discount = 0, product = productId;
+    onProductDetail = async (product: any) => {
+        if (product) {
+            let discount = 0;
             let loader = new LoaderProductChemicalWithPrices(this.cApp);
-            let productData = await loader.load(productId);
+            let productData = await loader.load(product.id);
             this.openVPage(VProduct, { productData, product, discount });
         }
     }
