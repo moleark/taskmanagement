@@ -86,7 +86,7 @@ export class VCouponList extends VPage<CCoupon> {
         </Page >
     })
 
-    private onScrollBottom = async () => {
+    protected onScrollBottom = async () => {
         this.controller.pageCoupon.more();
     };
 }
@@ -106,7 +106,7 @@ export class VExpiredCouponList extends VCouponList {
             typename = "失效积分券";
         }
         let none = '无';
-        return <Page header={typename}>
+        return <Page header={typename} onScrollBottom={this.onScrollBottom} >
             <List before={''} none={none} items={pageCoupon} item={{ render: this.renderItem, onClick: null }} />
         </Page >
     })
