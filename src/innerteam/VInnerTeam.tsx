@@ -10,14 +10,11 @@ export class VInnerTeam extends VPage<CInnerTeam> {
     }
 
     private page = observer(() => {
-
-        return (
-            <Page header="我的团队" >
-                < this.personDailyAchieve />
-                < this.teamAchievementDay />
-                < this.teamAchievementMonth />
-            </Page>
-        );
+        return <Page header="团队" >
+            < this.personDailyAchieve />
+            < this.teamAchievementDay />
+            < this.teamAchievementMonth />
+        </Page>
     });
 
     private personDailyAchieve = observer(() => {
@@ -35,10 +32,20 @@ export class VInnerTeam extends VPage<CInnerTeam> {
                 </td>
             </tr >;
         });
-
+        let showZero = <tr className="col dec px-3 py-2 bg-white cursor-pointer" onClick={() => showUserDetail()}>
+            <td className="w-3">0</td>
+            <td className="w-3">0</td>
+            <td className="w-3">0</td>
+            <td className="w-3">0</td>
+            <td className="w-3">0</td>
+            <td className="w-3 text-primary">
+                <FA name="chevron-right small" />
+            </td>
+        </tr >
         return <div>
             <div className="bg-white px-3 py-2 text-primary strong">
-                <strong>个人日报表</strong>
+                <strong>我的工作</strong>
+                <span className='small pl-2'>(今日)</span>
             </div>
             <table className="table text-center small">
                 <thead className="text-primary">
@@ -52,7 +59,7 @@ export class VInnerTeam extends VPage<CInnerTeam> {
                     </tr>
                 </thead>
                 <tbody>
-                    {content}
+                    {content.length > 0 ? content : showZero}
                 </tbody>
             </table>
         </div>
@@ -76,7 +83,8 @@ export class VInnerTeam extends VPage<CInnerTeam> {
 
         return <div>
             <div className="bg-white px-3 py-2 text-primary strong">
-                <strong>  日报表</strong>
+                <strong> 团队工作</strong>
+                <span className='small pl-2 text-primary'>(今日)</span>
             </div>
             <table className="table text-center small">
                 <thead className="text-primary">
@@ -121,7 +129,8 @@ export class VInnerTeam extends VPage<CInnerTeam> {
 
         return <div>
             <div className="bg-white px-3 py-2 text-primary strong">
-                <strong>  月报表</strong>
+                <strong>团队工作</strong>
+                <span className='small pl-2'>( /月)</span>
             </div>
             <table className="table text-center small">
                 <thead className="text-primary">

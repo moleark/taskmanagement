@@ -150,7 +150,7 @@ export class VInnerPersonDetail extends VPage<CInnerTeam> {
     private personMonthAchieve = observer(() => {
         let { personMonthAchieve } = this.controller;
         let sumEndTaskCount = 0, sumSendCreditsCount = 0, sumSendPostCount = 0, sumOrderCount = 0, sumSaleVolume = 0;
-        let content = personMonthAchieve.map((v, index) => {
+        let content = personMonthAchieve.slice().reverse().map((v, index) => {
             let { date, endTaskCount, sendCreditsCount, sendPostCount, orderCount, saleVolume } = v;
             sumEndTaskCount += endTaskCount;
             sumSendCreditsCount += sendCreditsCount;
@@ -194,7 +194,7 @@ export class VInnerPersonDetail extends VPage<CInnerTeam> {
                 <tbody>
                     {content}
                     {sumEndTaskCount > 0 || sumSendCreditsCount > 0 || sumSendPostCount > 0 || sumOrderCount > 0 || sumSaleVolume > 0 ?
-                        <tr className="col dec px-3 py-2 bg-white cursor-pointer">
+                        <tr className="col dec px-3 py-2 bg-white cursor-pointer text-primary">
                             <td className="w-3">合计</td>
                             <td className="w-3">{sumEndTaskCount}</td>
                             <td className="w-3">{sumSendCreditsCount}</td>
@@ -209,7 +209,7 @@ export class VInnerPersonDetail extends VPage<CInnerTeam> {
     private personYearAchieve = observer(() => {
         let { personYearhAchieve } = this.controller;
         let sumEndTaskCount = 0, sumSendCreditsCount = 0, sumSendPostCount = 0, sumOrderCount = 0, sumSaleVolume = 0;
-        let content = personYearhAchieve.map((v, index) => {
+        let content = personYearhAchieve.slice().reverse().map((v, index) => {
             let { montha, endTaskCount, sendCreditsCount, sendPostCount, orderCount, saleVolume } = v;
             sumEndTaskCount += endTaskCount;
             sumSendCreditsCount += sendCreditsCount;
@@ -249,7 +249,7 @@ export class VInnerPersonDetail extends VPage<CInnerTeam> {
                 <tbody>
                     {content}
                     {sumEndTaskCount > 0 || sumSendCreditsCount > 0 || sumSendPostCount > 0 || sumOrderCount > 0 || sumSaleVolume > 0 ?
-                        <tr className="col dec px-3 py-2 bg-white cursor-pointer">
+                        <tr className="col dec px-3 py-2 bg-white cursor-pointer text-primary">
                             <td className="w-3">合计</td>
                             <td className="w-3">{sumEndTaskCount}</td>
                             <td className="w-3">{sumSendCreditsCount}</td>
@@ -263,7 +263,7 @@ export class VInnerPersonDetail extends VPage<CInnerTeam> {
     })
     private page = observer(() => {
         this.getTabs();
-        return <Page header={'个人业绩'} headerClassName={setting.pageHeaderCss}>
+        return <Page header={'我的工作'} headerClassName={setting.pageHeaderCss}>
             <Tabs tabs={this.tabs} tabPosition="top" />
         </Page>
     });
