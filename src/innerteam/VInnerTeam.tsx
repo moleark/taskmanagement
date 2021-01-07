@@ -11,13 +11,12 @@ export class VInnerTeam extends VPage<CInnerTeam> {
 
     private page = observer(() => {
 
-        return (
-            <Page header="我的团队" >
-                < this.teamAchievementDay />
-                < this.teamAchievementMonth />
-            </Page>
-        );
+        return <Page header="我的团队" >
+            <this.teamAchievementDay />
+            <this.teamAchievementMonth />
+        </Page>
     });
+
     private teamAchievementDay = observer(() => {
         let { teamAchievementDay, showTeamDetail } = this.controller;
         let content = teamAchievementDay.map((v, index) => {

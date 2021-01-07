@@ -27,7 +27,6 @@ export interface UqProduct {
     SearchProductByCategory: Query;
     GetFutureDeliveryTime: Query;
     ProductCategory: Tuid;
-
 }
 
 export interface UqCommon {
@@ -122,8 +121,10 @@ export interface UqSalesTask {
     searchNowMessage: Query;
     searchMessage: Query;
     SearchPosition: Query;
+
     SearchAchievement: Query;
     SearchAchievementHistory: Query;
+
     getCustomerOrganization: Query;
     SearchTaskProduct: Query;
     SearchTaskProductPack: Query;

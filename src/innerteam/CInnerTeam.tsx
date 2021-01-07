@@ -16,18 +16,31 @@ export class CInnerTeam extends CUqBase {
     @observable teamAchievementdayDetail: any[] = [{ month: "", year: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
     @observable teamAchievementMonDetail: any[] = [{ month: "", year: "", postPubSum: 0, postTranSum: 0, postHitSum: 0 }];
     @observable teamAchievementlist: any[] = [{ month: "", year: "", postPubSum: 0, postTranSum: 0, postHitSum: 0, name: '' }];
+
     protected async internalStart() {
         await this.searchTeamAchievement()
         await this.searchTeamAchievementPost();
         await this.openVPage(VInnerTeam);
     }
-    //搜索我的团队
+
+    /**
+     * 搜索团队Achievement 
+     */
     searchTeamAchievement = async () => {
+        let { salesTask } = this.uqs;
         this.year = moment().format('YYYY')
-        this.teamAchievementDay = await this.uqs.salesTask.SearchTeamAchievement.table({ _manage: 0, _year: this.year, _type: "day" });
-        this.teamAchievementMonth = await this.uqs.salesTask.SearchTeamAchievement.table({ _manage: 0, _year: this.year, _type: "month" });
+        // 团队当天Achievement汇总
+        this.teamAchievementDay = await salesTask.SearchTeamAchievement.table({ _manage: 0, _year: this.year, _type: "day" });
+        // 团队当年Achievement按月汇总
+        this.teamAchievementMonth = await salesTask.SearchTeamAchievement.table({ _manage: 0, _year: this.year, _type: "month" });
     };
 
+    /**
+     * 团队中当天每人的Achievement 
+     * @param manage 
+     * @param year 
+     * @param type 
+     */
     showTeamDetail = async (manage: any, year: any, type: any) => {
         this.teamAchievementDetail = new QueryPager(this.uqs.salesTask.SearchTeamAchievementDetail, 15, 30);
         this.teamAchievementDetail.setEachPageItem((item: any, results: { [name: string]: any[] }) => {

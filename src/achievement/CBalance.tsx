@@ -138,14 +138,15 @@ export class CBalance extends CUqBase {
 
     //显示提款明细
     showWithdrawalDetail = async (orderId: any) => {
-        let order = await this.uqs.salesTask.Withdrawal.getSheet(orderId);
-        let list = await this.uqs.salesTask.SearchWithdrawalStateQuery.query({
+        let { salesTask } = this.uqs;
+        let withDrawal = await salesTask.Withdrawal.getSheet(orderId);
+        let withDrawalState = await salesTask.SearchWithdrawalStateQuery.obj({
             withdrawal: orderId
         });
-        let { comments, state } = list.ret[0];
-        order.state = state;
-        order.comments = comments;
-        this.openVPage(VWithdrawalDetail, order);
+        let { comments, state } = withDrawalState;
+        // withDrawal.state = state;
+        // withDrawal.comments = comments;
+        this.openVPage(VWithdrawalDetail, withDrawal);
     };
 
     searchBalanceHistory = async (ordertype: string) => {
