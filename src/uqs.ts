@@ -92,7 +92,6 @@ export interface UqSalesTask {
     CreateMyCustomer: Action;
     UpateCustomerMyCustomerMap: Action;
     CreateMyCustomerUnit: Action;
-    ComputeAchievement: Action;
     UpdateNowMessage: Action;
     SavePeerAssigned: Action;
     AddTask: Action;
@@ -139,7 +138,12 @@ export interface UqSalesTask {
     SearchBalanceHistory: Query;
     WebUserAccountMap: Map;
     AddWebUserAccountMap: Action;
+
+    // 计算销量/提成
+    ComputeAchievement: Action;
+    // 根据回款情况计算“已到账”金额
     ComputeBalance: Action;
+
     SearchMyCustomerByPost: Query;
     SearchMyCustomerByDomain: Query;
     SearchMyCustomerByCategory: Query;

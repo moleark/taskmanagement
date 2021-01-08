@@ -22,6 +22,27 @@ export abstract class AppEnv {
     downloadAppurl: string;
     sharelogo: string;
     abstract achievement(achievement: any): JSX.Element;
+
+    divTag(title: string, achievement: number, status: number, showDetail: any) {
+        let onClick: any;
+        if (status === 1) {
+            onClick = async () => await showDetail(status);
+        } else {
+            onClick = async () => await this.cApp.cBalance.showBalance();
+        }
+        return <div className="cursor-pointer" onClick={onClick}>
+            {achievement <= 0.001 ?
+                <div className="h5"> - </div>
+                :
+                <div className="h5">
+                    <strong>{achievement.toFixed(2)}</strong>
+                    <span className="h6"><small>元</small></span>
+                </div>
+            }
+            <div className="h6"><small>{title}</small></div>
+        </div >
+    }
+
     shareTitle(type: string): string {
         return setting.couponType[type];
     }
@@ -81,45 +102,34 @@ export class AssistApp extends AppEnv {
     couponDefaultValue = 9.5;
     downloadAppurl = "http://agent.jkchemical.com/download/jk-assist.apk";
     sharelogo = "https://assist.jkchemical.com/assistlogo.png";
-    divTag(titel: string, achievement: number, status: number) {
-        let onClick: any;
-        if (status === 1) {
-            onClick = async () => await this.cApp.cBalance.showAssistAchievementDetail(status);
-        } else {
-            onClick = async () => await this.cApp.cBalance.showBalance();
-        }
-        return <div>
-            <div className="cursor-pointer" onClick={onClick}>
-                {achievement <= 0.001 ?
-                    <div className="h5"> - </div>
-                    :
-                    <div className="h5"><strong>{achievement.toFixed(2)}</strong> <span className="h6"><small>元</small></span></div>
-                }
-                <div className="h6"><small>{titel}</small></div>
-            </div >
 
-        </div>
-    }
+    /**
+     * “我的”界面上的绩效 
+     * @param salesAmont 
+     */
     achievement(salesAmont: any): JSX.Element {
+
+        let { cBalance } = this.cApp;
         let { oneAchievement, twoAchievement, threeAchievement, totalReceivableAmount, totalaWithdrawal } = salesAmont;
         let totalachievement = oneAchievement + twoAchievement + threeAchievement;
-        let achievement = oneAchievement + twoAchievement + threeAchievement - totalReceivableAmount;
+        let achievement = totalachievement - totalReceivableAmount;
         let balance = totalReceivableAmount - totalaWithdrawal;
-        return <div className="text-center text-white bg-primary pt-1 pb-5" style={{ borderRadius: '0  0 5rem 5rem', margin: ' 0 -2rem 0 -2rem ' }}>
+        return <div className="text-center text-white bg-primary pt-1 pb-5"
+            style={{ borderRadius: '0  0 5rem 5rem', margin: '0 -2rem 0 -2rem' }}>
             <div className="text-right mr-4 pr-4 pt-1 cursor-pointer"
                 onClick={async (e) => await this.cApp.cBalance.showexplanation(e)}>
-                <FA name="question-circle " className="text-warning" />
+                <FA name="question-circle" className="text-warning" />
             </div>
             <div className="pb-2 pt-4 cursor-pointer" >
-                <div className="text-warning pt-3" onClick={async () => await this.cApp.cBalance.showAssistAchievementDetail(0)}>
+                <div className="text-warning pt-3" onClick={async () => await cBalance.showAssistAchievementDetail(0)}>
                     <span className="h1">{totalachievement.toFixed(2)}</span>
                     <small> 元</small>
                 </div>
                 <h6 className="text-warning"><small>累计收益</small></h6>
-            </div >
+            </div>
             <div className="d-flex justify-content-around">
-                {this.divTag('待到款', achievement, 1)}
-                {this.divTag('余额', balance, 2)}
+                {this.divTag('待到账', achievement, 1, cBalance.showAssistAchievementDetail)}
+                {this.divTag('余额', balance, 2, cBalance.showAssistAchievementDetail)}
             </div>
             <div className="my-4"></div>
         </div>;
@@ -134,38 +144,26 @@ export class AgentApp extends AppEnv {
     couponDefaultValue = 9.5;
     downloadAppurl = "http://agent.jkchemical.com/download/jk-agent.apk";
     sharelogo = "https://assist.jkchemical.com/sharelogo.png";
-    divTag(titel: string, achievement: number, status: number) {
-        let onClick: any;
-        if (status === 1) {
-            onClick = async () => await this.cApp.cBalance.showAchievementDetail(status);
-        } else {
-            onClick = async () => await this.cApp.cBalance.showBalance();
-        }
-        return <div className="cursor-pointer" onClick={onClick}>
-            {achievement <= 0.001 ?
-                <div className="h5"> - </div>
-                :
-                <div className="h5"><strong>{achievement.toFixed(2)}</strong> <span className="h6"><small>元</small></span></div>
-            }
-            <div className="h6"><small>{titel}</small></div>
-        </div >
-    }
+
     achievement(salesAmont: any): JSX.Element {
-        let { oneAchievement, twoAchievement, threeAchievement, totalReceivableAmount, totalaWithdrawal } = salesAmont;
+        let { cBalance } = this.cApp;
+
+        let { oneAchievement, twoAchievement, threeAchievement, totalReceivableAmount, totalaWithdrawal, waitWithdrawal } = salesAmont;
         let totalachievement = oneAchievement + twoAchievement + threeAchievement;
-        let achievement = oneAchievement + twoAchievement + threeAchievement - totalReceivableAmount;
-        let balance = totalReceivableAmount - totalaWithdrawal;
-        return <div className="text-center text-white bg-primary pt-1 pb-5" style={{ borderRadius: '0  0 5rem 5rem', margin: ' 0 -2rem 0 -2rem ' }}>
+        let achievement = totalachievement - totalReceivableAmount;
+        let balance = totalReceivableAmount - totalaWithdrawal - waitWithdrawal;
+        return <div className="text-center text-white bg-primary pt-1 pb-5"
+            style={{ borderRadius: '0  0 5rem 5rem', margin: '0 -2rem 0 -2rem' }}>
             <div className="pb-2 pt-4 cursor-pointer" >
-                <div className="text-warning pt-4" onClick={async () => await this.cApp.cBalance.showAchievementDetail(0)}>
+                <div className="text-warning pt-4" onClick={async () => await cBalance.showAchievementDetail(0)}>
                     <span className="h1">{totalachievement.toFixed(2)}</span>
                     <small> 元</small>
                 </div>
                 <h6 className="text-warning"><small>累计收益</small></h6>
-            </div >
+            </div>
             <div className="d-flex justify-content-around">
-                {this.divTag('待到款', achievement, 1)}
-                {this.divTag('余额', balance, 2)}
+                {this.divTag('待到账', achievement, 1, cBalance.showAchievementDetail)}
+                {this.divTag('余额', balance, 2, cBalance.showAchievementDetail)}
             </div>
             <div className="my-4"></div>
         </div>;
