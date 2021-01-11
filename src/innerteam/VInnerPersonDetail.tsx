@@ -4,7 +4,7 @@ import { observer } from "mobx-react";
 import { setting } from "appConfig";
 import { CInnerTeam } from "./CInnerTeam";
 import { observable } from "mobx";
-import { divide } from "lodash";
+import { VShowDataTotal } from './VShowDataTotal';
 
 /* eslint-disable */
 export const color = (selected: boolean) => selected === true ? 'text-primary' : 'text-muted';
@@ -16,8 +16,8 @@ export class VInnerPersonDetail extends VPage<CInnerTeam> {
     @observable private year: any;
     @observable private showYear: any;
     @observable private oneDayTimes: number = 1000 * 60 * 60 * 24;
-    async open() {
-        this.date = new Date();
+    async open(date) {
+        this.date = date;
         this.month = this.date.getMonth() + 1
         this.year = this.date.getFullYear();
         this.showYear = this.date.getFullYear();
@@ -36,14 +36,14 @@ export class VInnerPersonDetail extends VPage<CInnerTeam> {
         if (type === 'prevDay') {
             let theNewDaysTimes = time - this.oneDayTimes;
             this.date = new Date(theNewDaysTimes);
-            let date = this.date.getFullYear() + '-' + (this.date.getMonth() + 1) + '-' + this.date.getDate()
-            await this.controller.getPersonAchievmentDay(date);
+            let date = dateFormat(this.date)
+            await this.controller.searchPersonAchievment(date);
         } else if (type === 'nextDay') {
             let theNewDaysTimes = time + this.oneDayTimes;
             if (theNewDaysTimes <= nowTimes) {
                 this.date = new Date(theNewDaysTimes);
-                let date = this.date.getFullYear() + '-' + (this.date.getMonth() + 1) + '-' + this.date.getDate()
-                await this.controller.getPersonAchievmentDay(date);
+                let date = dateFormat(this.date)
+                await this.controller.searchPersonAchievment(date);
             }
         }
     }
@@ -56,7 +56,7 @@ export class VInnerPersonDetail extends VPage<CInnerTeam> {
             this.month = 12;
             this.year = this.year - 1;
         }
-        await this.controller.getPersonAchievmentMonth({ month: this.month, year: this.year });
+        await this.controller.getPersonAchievmentMonth({ month: this.month.toString(), year: this.year.toString() });
     }
     private nextMonth = async () => {
         let nowYear = new Date().getFullYear();
@@ -71,20 +71,20 @@ export class VInnerPersonDetail extends VPage<CInnerTeam> {
                 this.month = 1;
                 this.year = this.year + 1;
             }
-            await this.controller.getPersonAchievmentMonth({ month: this.month, year: this.year });
+            await this.controller.getPersonAchievmentMonth({ month: this.month.toString(), year: this.year.toString() });
         }
     }
     private prevYear = async () => {
         let year = this.showYear;
         this.showYear = year - 1
-        await this.controller.getPersonAchievmentYear({ year: this.showYear });
+        await this.controller.getPersonAchievmentYear(this.showYear.toString());
     }
     private nextYear = async () => {
         let nowYear = new Date().getFullYear();
         let year = this.showYear;
         if (nowYear > year) {
             this.showYear = year + 1
-            await this.controller.getPersonAchievmentYear({ year: this.showYear });
+            await this.controller.getPersonAchievmentYear(this.showYear.toString());
         }
     }
 
@@ -193,15 +193,7 @@ export class VInnerPersonDetail extends VPage<CInnerTeam> {
                 </thead>
                 <tbody>
                     {content}
-                    {sumEndTaskCount > 0 || sumSendCreditsCount > 0 || sumSendPostCount > 0 || sumOrderCount > 0 || sumSaleVolume > 0 ?
-                        <tr className="col dec px-3 py-2 bg-white cursor-pointer text-primary">
-                            <td className="w-3">合计</td>
-                            <td className="w-3">{sumEndTaskCount}</td>
-                            <td className="w-3">{sumSendCreditsCount}</td>
-                            <td className="w-3">{sumSendPostCount}</td>
-                            <td className="w-3">{sumOrderCount}</td>
-                            <td className="w-3">{sumSaleVolume}</td>
-                        </tr > : null}
+                    {this.renderVm(VShowDataTotal, { sumEndTaskCount, sumSendCreditsCount, sumSendPostCount, sumOrderCount, sumSaleVolume })}
                 </tbody>
             </table>
         </div >
@@ -248,15 +240,7 @@ export class VInnerPersonDetail extends VPage<CInnerTeam> {
                 </thead>
                 <tbody>
                     {content}
-                    {sumEndTaskCount > 0 || sumSendCreditsCount > 0 || sumSendPostCount > 0 || sumOrderCount > 0 || sumSaleVolume > 0 ?
-                        <tr className="col dec px-3 py-2 bg-white cursor-pointer text-primary">
-                            <td className="w-3">合计</td>
-                            <td className="w-3">{sumEndTaskCount}</td>
-                            <td className="w-3">{sumSendCreditsCount}</td>
-                            <td className="w-3">{sumSendPostCount}</td>
-                            <td className="w-3">{sumOrderCount}</td>
-                            <td className="w-3">{sumSaleVolume}</td>
-                        </tr > : null}
+                    {this.renderVm(VShowDataTotal, { sumEndTaskCount, sumSendCreditsCount, sumSendPostCount, sumOrderCount, sumSaleVolume })}
                 </tbody>
             </table>
         </div >
@@ -268,25 +252,13 @@ export class VInnerPersonDetail extends VPage<CInnerTeam> {
         </Page>
     });
 }
-
-/**
- *     private prevDay = async () => {
-        let time = +this.date;
-        let oneDayTimes = 1000 * 60 * 60 * 24;;
-        let theNewDaysTimes = time - oneDayTimes;
-        this.date = new Date(theNewDaysTimes);
-        let date = this.date.getFullYear() + '-' + (this.date.getMonth() + 1) + '-' + this.date.getDate()
-        await this.controller.getPersonAchievmentDay(date);
-    }
-    private nextDay = async () => {
-        let time = +this.date;
-        let nowTimes = +new Date();
-        let oneDayTimes = 1000 * 60 * 60 * 24;;
-        let theNewDaysTimes = time + oneDayTimes;
-        if (theNewDaysTimes <= nowTimes) {
-            this.date = new Date(theNewDaysTimes);
-            let date = this.date.getFullYear() + '-' + (this.date.getMonth() + 1) + '-' + this.date.getDate()
-            await this.controller.getPersonAchievmentDay(date);
-        }
-    }
- */
+function dateFormat(dateData) {
+    let date = new Date(dateData)
+    let y = date.getFullYear()
+    let m = date.getMonth() + 1
+    let d = date.getDate()
+    let month = m < 10 ? ('0' + m) : m
+    let day = d < 10 ? ('0' + d) : d
+    const time = y + '-' + month + '-' + day
+    return time
+}
