@@ -1,122 +1,157 @@
 import { CUqBase } from "../CBase";
 import { VInnerTeam } from "./VInnerTeam";
-import { VInnerTeamDetail } from "./VInnerTeamDetail";
+import { VInnerTeamDetail, VInnerTeamMemberYearly } from "./VInnerTeamDetail";
 import { observable } from "mobx";
 import { QueryPager, nav } from "tonva";
 import moment from 'moment';
 import { VInnerPersonDetail } from "./VInnerPersonDetail";
+import { VInnerTeamDailyDetail } from "./VInnerTeamDailyDetail";
 
 export class CInnerTeam extends CUqBase {
 
     //初始化
+    @observable personDailyAchieve: any[];
+    @observable personDayAchieve: any[];
+    @observable personMonthAchieve: any[];
+    @observable personYearhAchieve: any[];
+    @observable teamAchievementDay: any[];
+    @observable teamAchievementYear: any[];
+
+    @observable teamDailyDetail: any[];
+    @observable teamAchievementMonthDetail: any[];
+    @observable teamMemberYearlyDetail: any[];
     private year: any;
-    private typeDate: any;
-    @observable current: any;
-    @observable personDailyAchieve: any[] = [{ date: "", user: "", endTaskCount: 0, sendCreditsCount: 0, sendPostCount: 0, orderCount: 0, saleVolume: 0 }];
-    @observable personDayAchieve: any[] = [{ date: "", user: "", endTaskCount: 0, sendCreditsCount: 0, sendPostCount: 0, orderCount: 0, saleVolume: 0 }];
-    @observable personMonthAchieve: any[] = [{ date: "", user: "", endTaskCount: 0, sendCreditsCount: 0, sendPostCount: 0, orderCount: 0, saleVolume: 0 }];
-    @observable personYearhAchieve: any[] = [{ montha: "", yeara: "", usera: "", endTaskCount: 0, sendCreditsCount: 0, sendPostCount: 0, orderCount: 0, saleVolume: 0 }];
-    @observable teamAchievementDay: any[] = [{ montha: "", yeara: "", endTaskCount: 0, sendCreditsCount: 0, sendPostCount: 0, orderCount: 0, saleVolume: 0 }];
-    @observable teamAchievementMonth: any[] = [{ montha: "", yeara: "", endTaskCount: 0, sendCreditsCount: 0, sendPostCount: 0, orderCount: 0, saleVolume: 0 }];
-    @observable teamAchievementDetail: QueryPager<any>;
+    private month: any;
+    private date: any;
     protected async internalStart() {
-        await this.searchPersonAchievment()
-        await this.searchTeamAchievement()
-        await this.searchTeamAchievementPost();
-        await this.openVPage(VInnerTeam);
+        this.year = moment().format('YYYY')
+        this.month = moment().format('M')
+        this.date = moment().format('YYYY-MM-DD');
+        await this.searchPersonAchievment('today');
+        await this.searchTeamAchievementDay({ team: 0, date: this.date });
+        await this.searchTeamAchievementYear(this.year);
+        await this.openVPage(VInnerTeam, this.year);
     }
 
-    /**
-     * 本人
-     */
-    searchPersonAchievment = async () => {
-        this.year = moment().format('YYYY');
-        this.typeDate = moment().format('YYYY-MM-DD');
-        let { uqs } = this;
-        let { id } = nav.user;
-        this.personDailyAchieve = await uqs.salesTask.getPersonDailyAchieve.table({ user: id, date: this.typeDate });
-    }
-
-    showUserDetail = async () => {
-        this.openVPage(VInnerPersonDetail);
+    showUserDetail = async (date) => {
+        this.openVPage(VInnerPersonDetail, date);
     }
 
     getPersonAchievment = async (type: any) => {
         switch (type) {
             case 'day':
-                await this.getPersonAchievmentDay('')
+                await this.searchPersonAchievment(this.date)
             case 'month':
-                await this.getPersonAchievmentMonth('')
+                await this.getPersonAchievmentMonth({ month: this.month, year: this.year })
             case 'year':
-                await this.getPersonAchievmentYear('')
+                await this.getPersonAchievmentYear(this.year)
             default:
                 break;
         }
     }
-    //搜索我的团队
-    searchTeamAchievement = async () => {
-        let { salesTask } = this.uqs;
-        this.year = moment().format('YYYY')
-        // 团队当天Achievement汇总
-        this.teamAchievementDay = await salesTask.SearchTeamAchievement.table({ _manage: 0, _year: this.year, _type: "day" });
-        // 团队当年Achievement按月汇总
-        this.teamAchievementMonth = await salesTask.SearchTeamAchievement.table({ _manage: 0, _year: this.year, _type: "month" });
-    };
-
     /**
-     * 团队中当天每人的Achievement 
-     * @param manage 
-     * @param year 
-     * @param type 
-     */
-    showTeamDetail = async (manage: any, year: any, type: any) => {
-        this.teamAchievementDetail = new QueryPager(this.uqs.salesTask.SearchTeamAchievementDetail, 15, 30);
-        this.teamAchievementDetail.setEachPageItem((item: any, results: { [name: string]: any[] }) => {
-            this.cApp.useUser(item.user);
-        });
-        this.teamAchievementDetail.first({ _manage: 0, _year: year, _type: type });
-        this.openVPage(VInnerTeamDetail, type);
-    };
-
-    /** 
-      * 团队
-    **/
-    searchTeamAchievementPost = async () => {
-        this.year = moment().format('YYYY')
-        this.teamAchievementDay = await this.uqs.salesTask.SearchTeamAchievement.table({ _manage: 0, _year: this.year, _type: "day" });
-        this.teamAchievementMonth = await this.uqs.salesTask.SearchTeamAchievement.table({ _manage: 0, _year: this.year, _type: "month" });
-    };
-
-    getPersonAchievmentDay = async (date: any) => {
+     * 我的每天工作量
+    */
+    searchPersonAchievment = async (date) => {
         let { uqs } = this;
         let { id } = nav.user;
-        if (date) {
+        if (date === 'today') {
+            this.personDailyAchieve = await uqs.salesTask.getPersonDailyAchieve.table({ user: id, date: this.date });
+        } else {
             this.personDayAchieve = await uqs.salesTask.getPersonDailyAchieve.table({ user: id, date: date });
-        } else
-            this.personDayAchieve = await uqs.salesTask.getPersonDailyAchieve.table({ user: id, date: this.typeDate });
+        }
     }
 
+    /**
+     * 我的每个月工作量
+    */
     getPersonAchievmentMonth = async (param: any) => {
         let { uqs } = this;
         let { id } = nav.user;
-        this.year = moment().format('YYYY')
-        let montha = moment().format('M')
-        let { month, year } = param
-        if (month && year)
-            this.personMonthAchieve = await uqs.salesTask.getPersonMonthlyAchieve.table({ user: id, year: year + '', month: month + '' });
-        else
-            this.personMonthAchieve = await uqs.salesTask.getPersonMonthlyAchieve.table({ user: id, year: this.year, month: montha });
+        let { month, year } = param;
+        this.personMonthAchieve = await uqs.salesTask.getPersonMonthlyAchieve.table({ user: id, year: year, month: month });
     }
 
-    getPersonAchievmentYear = async (param: any) => {
+    /**
+     * 我的每年的工作量
+    */
+    getPersonAchievmentYear = async (year: any) => {
         let { uqs } = this;
         let { id } = nav.user;
-        this.year = moment().format('YYYY')
-        let { year } = param
-        if (year)
-            this.personYearhAchieve = await uqs.salesTask.getPersonYearlyAchieve.table({ user: id, year: year + '' });
-        else
-            this.personYearhAchieve = await uqs.salesTask.getPersonYearlyAchieve.table({ user: id, year: this.year });
-
+        this.personYearhAchieve = await uqs.salesTask.getPersonYearlyAchieve.table({ user: id, year: year });
     }
+    /**
+     *团队所有人每天汇总
+    */
+    searchTeamAchievementDay = async (param) => {
+        let { uqs, cApp } = this;
+        let { team, date } = param
+        let nowDate = dateFormat(date);
+        if (date === this.date) {
+            this.teamAchievementDay = await uqs.salesTask.getTeamDailyAchieve.table({ team: team, date: this.date });
+            this.teamAchievementDay.forEach(e => {
+                cApp.useUser(e.user);
+            });
+        } else {
+            this.teamDailyDetail = await uqs.salesTask.getTeamDailyAchieve.table({ team: team, date: nowDate });
+            this.teamDailyDetail.forEach(e => {
+                cApp.useUser(e.user);
+            });
+        }
+    }
+
+    showTeamDailyDetail = async (param: any) => {
+        let { team, date } = param;
+        await this.searchTeamAchievementDay(param);
+        this.openVPage(VInnerTeamDailyDetail, date);
+    };
+    /**
+     * 团队某年按月汇总量
+    */
+    searchTeamAchievementYear = async (year: any) => {
+        this.teamAchievementYear = await this.uqs.salesTask.getTeamYearlyAchieve.table({ team: 0, year: year });
+    }
+
+    /**
+     * 团队某年某月每人汇总量
+    */
+    getTeamMonthDetail = async (param) => {
+        let { uqs, cApp } = this;
+        let { yeara, montha } = param;
+        this.teamAchievementMonthDetail = await uqs.salesTask.getTeamMonthlyAchieve.table({ team: 0, year: yeara, month: montha });
+        this.teamAchievementMonthDetail.forEach(e => {
+            cApp.useUser(e.usera);
+        });
+    }
+
+    showTeamDetail = async (yeara: any, montha: any) => {
+        await this.getTeamMonthDetail({ yeara, montha })
+        this.openVPage(VInnerTeamDetail, { montha, yeara });
+    };
+
+    /**
+     * 团队每年每人汇总
+    */
+    getTeamMemberYearlyAchieve = async (yeara: any) => {
+        let { uqs, cApp } = this;
+        this.teamMemberYearlyDetail = await uqs.salesTask.getTeamMemberYearlyAchieve.table({ team: 0, year: yeara });
+        this.teamMemberYearlyDetail.forEach(e => {
+            cApp.useUser(e.usera);
+        });
+    };
+
+    showTeamMemberYearlyAchieve = async (yeara: any) => {
+        await this.getTeamMemberYearlyAchieve(yeara)
+        this.openVPage(VInnerTeamMemberYearly, yeara);
+    };
+}
+function dateFormat(dateData) {
+    let date = new Date(dateData)
+    let y = date.getFullYear()
+    let m = date.getMonth() + 1
+    let d = date.getDate()
+    let month = m < 10 ? ('0' + m) : m
+    let day = d < 10 ? ('0' + d) : d
+    const time = y + '-' + month + '-' + day
+    return time
 }

@@ -160,9 +160,14 @@ export interface UqSalesTask {
     SearchTeamAchievementDetail: Query;
     AddCouponSendHistory: Action;
     SearchBottomDiscount: Query;
+
+    getTeamDailyAchieve: Query;
+    getTeamMonthlyAchieve: Query;
+    getTeamYearlyAchieve: Query;
     getPersonDailyAchieve: Query;
     getPersonMonthlyAchieve: Query;
-    getPersonYearlyAchieve: Query
+    getPersonYearlyAchieve: Query;
+    getTeamMemberYearlyAchieve: Query;
 
     VIPCardForWebUser: Map;
     VIPCardDiscount: Map;
