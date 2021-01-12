@@ -7,8 +7,8 @@ import { observable } from "mobx";
 export class VInnerTeam extends VPage<CInnerTeam> {
     @observable private year: any;
     @observable private date: any;
-    async open() {
-        this.year = new Date().getFullYear();
+    async open(param) {
+        this.year = param;
         this.openPage(this.page);
     }
 
@@ -75,6 +75,7 @@ export class VInnerTeam extends VPage<CInnerTeam> {
         let sumEndTaskCount = 0, sumSendCreditsCount = 0, sumSendPostCount = 0, sumOrderCount = 0, sumSaleVolume = 0;
         teamAchievementDay.map((v, index) => {
             let { date, endTaskCount, sendCreditsCount, sendPostCount, orderCount, saleVolume } = v;
+            this.date = date;
             sumEndTaskCount += endTaskCount;
             sumSendCreditsCount += sendCreditsCount;
             sumSendPostCount += sendPostCount;
@@ -150,8 +151,8 @@ export class VInnerTeam extends VPage<CInnerTeam> {
                 </td>
             </tr >;
         });
-        let totalContent = <tr className="col dec px-3 py-2 bg-white cursor-pointer text-primary" onClick={() => showTeamMemberYearlyAchieve(this.year)
-        }>
+        let totalContent = <tr className="col dec px-3 py-2 bg-white cursor-pointer text-primary"
+            onClick={() => showTeamMemberYearlyAchieve(this.year)}>
             <td className="w-3">{'合计'}</td>
             <td className="w-3">{sumEndTaskCount}</td>
             <td className="w-3">{sumSendCreditsCount}</td>

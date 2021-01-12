@@ -30,7 +30,7 @@ export class CInnerTeam extends CUqBase {
         await this.searchPersonAchievment('today');
         await this.searchTeamAchievementDay({ team: 0, date: this.date });
         await this.searchTeamAchievementYear(this.year);
-        await this.openVPage(VInnerTeam);
+        await this.openVPage(VInnerTeam, this.year);
     }
 
     showUserDetail = async (date) => {
