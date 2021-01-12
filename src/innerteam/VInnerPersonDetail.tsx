@@ -9,6 +9,7 @@ import { VShowDataTotal } from './VShowDataTotal';
 /* eslint-disable */
 export const color = (selected: boolean) => selected === true ? 'text-primary' : 'text-muted';
 export class VInnerPersonDetail extends VPage<CInnerTeam> {
+
     @observable private currentState: string;
     private tabs: TabProp[];
     @observable private month: any;
@@ -16,6 +17,7 @@ export class VInnerPersonDetail extends VPage<CInnerTeam> {
     @observable private year: any;
     @observable private showYear: any;
     @observable private oneDayTimes: number = 1000 * 60 * 60 * 24;
+
     async open(date) {
         this.date = date;
         this.month = this.date.getMonth() + 1
@@ -33,19 +35,20 @@ export class VInnerPersonDetail extends VPage<CInnerTeam> {
     private changeDay = async (type) => {
         var time = +this.date;
         let nowTimes = +new Date();
+
+        let date;
         if (type === 'prevDay') {
             let theNewDaysTimes = time - this.oneDayTimes;
             this.date = new Date(theNewDaysTimes);
-            let date = dateFormat(this.date)
-            await this.controller.searchPersonAchievment(date);
+            date = dateFormat(this.date)
         } else if (type === 'nextDay') {
             let theNewDaysTimes = time + this.oneDayTimes;
             if (theNewDaysTimes <= nowTimes) {
                 this.date = new Date(theNewDaysTimes);
-                let date = dateFormat(this.date)
-                await this.controller.searchPersonAchievment(date);
+                date = dateFormat(this.date)
             }
         }
+        await this.controller.searchPersonAchievment(date);
     }
 
     private prevMonth = async () => {
@@ -58,6 +61,7 @@ export class VInnerPersonDetail extends VPage<CInnerTeam> {
         }
         await this.controller.getPersonAchievmentMonth({ month: this.month.toString(), year: this.year.toString() });
     }
+
     private nextMonth = async () => {
         let nowYear = new Date().getFullYear();
         let nowMonth = new Date().getMonth() + 1;
@@ -111,9 +115,10 @@ export class VInnerPersonDetail extends VPage<CInnerTeam> {
             };
         });
     }
+
     private personDailyAchieve = observer(() => {
-        let { personDayAchieve } = this.controller;
-        let content = personDayAchieve.map((v, index) => {
+        let { myDailyAchievement } = this.controller;
+        let content = myDailyAchievement.map((v, index) => {
             let { date, endTaskCount, sendCreditsCount, sendPostCount, orderCount, saleVolume } = v;
             return <tr className="col dec px-3 py-2 bg-white cursor-pointer">
                 <td className="w-3">{endTaskCount}</td>
@@ -198,6 +203,7 @@ export class VInnerPersonDetail extends VPage<CInnerTeam> {
             </table>
         </div >
     })
+
     private personYearAchieve = observer(() => {
         let { personYearhAchieve } = this.controller;
         let sumEndTaskCount = 0, sumSendCreditsCount = 0, sumSendPostCount = 0, sumOrderCount = 0, sumSaleVolume = 0;

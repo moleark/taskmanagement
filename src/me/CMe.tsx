@@ -62,8 +62,8 @@ export class CMe extends CUqBase {
 
     //显示我的团队
     showTeam = async () => {
-        await this.cApp.cBalance.getComputeAchievement();
-        let { cTeam } = this.cApp;
+        let { cTeam, cBalance } = this.cApp;
+        await cBalance.getComputeAchievement();
         await cTeam.start();
     };
 

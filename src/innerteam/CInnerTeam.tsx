@@ -10,8 +10,8 @@ import { VInnerTeamDailyDetail } from "./VInnerTeamDailyDetail";
 export class CInnerTeam extends CUqBase {
 
     //初始化
-    @observable personDailyAchieve: any[];
-    @observable personDayAchieve: any[];
+    @observable myTodayAchievement: any[];
+    @observable myDailyAchievement: any[];
     @observable personMonthAchieve: any[];
     @observable personYearhAchieve: any[];
     @observable teamAchievementDay: any[];
@@ -20,46 +20,48 @@ export class CInnerTeam extends CUqBase {
     @observable teamDailyDetail: any[];
     @observable teamAchievementMonthDetail: any[];
     @observable teamMemberYearlyDetail: any[];
-    private year: any;
-    private month: any;
     private date: any;
+
     protected async internalStart() {
-        this.year = moment().format('YYYY')
-        this.month = moment().format('M')
+
         this.date = moment().format('YYYY-MM-DD');
-        await this.searchPersonAchievment('today');
+        this.myTodayAchievement = await this.searchPersonAchievment(moment().format('YYYY-MM-DD'));
+
         await this.searchTeamAchievementDay({ team: 0, date: this.date });
-        await this.searchTeamAchievementYear(this.year);
-        await this.openVPage(VInnerTeam, this.year);
+
+        let thisYear = moment().format('YYYY')
+        await this.searchTeamAchievementYear(thisYear);
+        await this.openVPage(VInnerTeam, thisYear);
     }
 
     showUserDetail = async (date) => {
         this.openVPage(VInnerPersonDetail, date);
     }
 
+    /**
+     * 
+     * @param type 
+     */
     getPersonAchievment = async (type: any) => {
         switch (type) {
             case 'day':
-                await this.searchPersonAchievment(this.date)
+                this.myDailyAchievement = await this.searchPersonAchievment(moment().format("YYYY-MM-DD"));
             case 'month':
-                await this.getPersonAchievmentMonth({ month: this.month, year: this.year })
+                await this.getPersonAchievmentMonth({ month: moment().format('M'), year: moment().format('YYYY') });
             case 'year':
-                await this.getPersonAchievmentYear(this.year)
+                await this.getPersonAchievmentYear(moment().format('YYYY'));
             default:
                 break;
         }
     }
+
     /**
      * 我的每天工作量
     */
     searchPersonAchievment = async (date) => {
         let { uqs } = this;
         let { id } = nav.user;
-        if (date === 'today') {
-            this.personDailyAchieve = await uqs.salesTask.getPersonDailyAchieve.table({ user: id, date: this.date });
-        } else {
-            this.personDayAchieve = await uqs.salesTask.getPersonDailyAchieve.table({ user: id, date: date });
-        }
+        return await uqs.salesTask.getPersonDailyAchieve.table({ user: id, date: date });
     }
 
     /**
@@ -80,6 +82,7 @@ export class CInnerTeam extends CUqBase {
         let { id } = nav.user;
         this.personYearhAchieve = await uqs.salesTask.getPersonYearlyAchieve.table({ user: id, year: year });
     }
+
     /**
      *团队所有人每天汇总
     */
@@ -105,6 +108,7 @@ export class CInnerTeam extends CUqBase {
         await this.searchTeamAchievementDay(param);
         this.openVPage(VInnerTeamDailyDetail, date);
     };
+
     /**
      * 团队某年按月汇总量
     */
@@ -145,6 +149,7 @@ export class CInnerTeam extends CUqBase {
         this.openVPage(VInnerTeamMemberYearly, yeara);
     };
 }
+
 function dateFormat(dateData) {
     let date = new Date(dateData)
     let y = date.getFullYear()
