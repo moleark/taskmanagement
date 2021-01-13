@@ -13,19 +13,22 @@ export class VInnerPersonDetail extends VPage<CInnerTeam> {
 
     @observable private currentState: string;
     private tabs: TabProp[];
-    @observable private month: any;
-    @observable private date: any;
-    @observable private year: any;
+
+    @observable private currentMonth: any;
+    @observable private currentDate: any;
+    @observable private currentYear: any;
     @observable private showYear: any;
     @observable private oneDayTimes: number = 1000 * 60 * 60 * 24;
+
     @observable myDailyAchievement: any[] = [];
-    @observable personMonthlyAchieve: any[] = [];
-    @observable personYearhAchieve: any[] = [];
-    async open(date) {
-        this.date = date;
-        this.month = this.date.getMonth() + 1
-        this.year = this.date.getFullYear();
-        this.showYear = this.date.getFullYear();
+    @observable myMonthlyAchievement: any[] = [];
+    @observable myYearlyAchievement: any[] = [];
+
+    async open() {
+        this.currentDate = new Date();
+        this.currentMonth = this.currentDate.getMonth() + 1
+        this.currentYear = this.currentDate.getFullYear();
+        this.showYear = this.currentDate.getFullYear();
         this.openPage(this.page);
     }
 
@@ -36,49 +39,50 @@ export class VInnerPersonDetail extends VPage<CInnerTeam> {
     ];
 
     private changeDay = async (type) => {
-        var time = +this.date;
+        var time = +this.currentDate;
         let theNewDaysTimes;
         if (type === 'prevDay') {
             theNewDaysTimes = time - this.oneDayTimes;
         } else if (type === 'nextDay') {
             theNewDaysTimes = time + this.oneDayTimes;
         }
-        this.date = new Date(theNewDaysTimes);
-        let date = dateFormat(this.date)
+        this.currentDate = new Date(theNewDaysTimes);
+        let date = dateFormat(this.currentDate)
         this.myDailyAchievement = await this.controller.searchPersonAchievment(date);
     }
 
     private prevMonth = async () => {
-        if (this.month - 1 === 0) {
-            this.month = 12;
-            this.year -= 1
+        if (this.currentMonth - 1 === 0) {
+            this.currentMonth = 12;
+            this.currentYear -= 1
         } else {
-            this.month -= 1
+            this.currentMonth -= 1
         }
-        this.personMonthlyAchieve = await this.controller.getPersonAchievmentMonth({ month: this.month, year: this.year });
+        this.myMonthlyAchievement = await this.controller.getPersonAchievmentMonth({ month: this.currentMonth, year: this.currentYear });
     }
 
     private nextMonth = async () => {
-        if (this.month + 1 === 13) {
-            this.month = 1;
-            this.year += 1;
+        if (this.currentMonth + 1 === 13) {
+            this.currentMonth = 1;
+            this.currentYear += 1;
         } else {
-            this.month += 1
+            this.currentMonth += 1
         }
-        this.personMonthlyAchieve = await this.controller.getPersonAchievmentMonth({ month: this.month, year: this.year });
+        this.myMonthlyAchievement = await this.controller.getPersonAchievmentMonth({ month: this.currentMonth, year: this.currentYear });
     }
 
     private prevYear = async () => {
         let year = this.showYear;
         this.showYear = year - 1
-        this.personYearhAchieve = await this.controller.getPersonAchievmentYear(this.showYear);
+        this.myYearlyAchievement = await this.controller.getPersonAchievmentYear(this.showYear);
     }
+
     private nextYear = async () => {
         let nowYear = new Date().getFullYear();
         let year = this.showYear;
         if (nowYear > year) {
             this.showYear = year + 1
-            this.personYearhAchieve = await this.controller.getPersonAchievmentYear(this.showYear);
+            this.myYearlyAchievement = await this.controller.getPersonAchievmentYear(this.showYear);
         }
     }
 
@@ -91,7 +95,7 @@ export class VInnerPersonDetail extends VPage<CInnerTeam> {
                 caption: (selected: boolean) => TabCaptionComponent(caption, icon, color(selected)),
                 content: () => {
                     if (this.currentState === 'day') {
-                        return <this.personDailyAchieve />
+                        return <this.myDailyAchieveUI />
                     } else if (this.currentState === 'month')
                         return <this.personMonthAchieve />
                     else if (this.currentState === 'year')
@@ -103,15 +107,15 @@ export class VInnerPersonDetail extends VPage<CInnerTeam> {
                     if (this.currentState === 'day') {
                         this.myDailyAchievement = await searchPersonAchievment(moment().format("YYYY-MM-DD"));
                     } else if (this.currentState === 'month')
-                        this.personMonthlyAchieve = await getPersonAchievmentMonth({ month: moment().format('M'), year: moment().format('YYYY') });
+                        this.myMonthlyAchievement = await getPersonAchievmentMonth({ month: moment().format('M'), year: moment().format('YYYY') });
                     else if (this.currentState === 'year')
-                        this.personYearhAchieve = await getPersonAchievmentYear(moment().format('YYYY'));
+                        this.myYearlyAchievement = await getPersonAchievmentYear(moment().format('YYYY'));
                 }
             };
         });
     }
 
-    private personDailyAchieve = observer(() => {
+    private myDailyAchieveUI = observer(() => {
         // let { myDailyAchievement } = this.controller;
         let content = this.myDailyAchievement.map((v, index) => {
             let { date, endTaskCount, sendCreditsCount, sendPostCount, orderCount, saleVolume } = v;
@@ -126,9 +130,11 @@ export class VInnerPersonDetail extends VPage<CInnerTeam> {
         return <div>
             <div className="bg-white py-2 d-flex justify-content-between px-3">
                 <div className=' text-primary small px-3' onClick={() => this.changeDay('prevDay')}><FA name="chevron-left small" /></div>
-                {this.date.getFullYear() + '年' + (this.date.getMonth() + 1) + '月' + this.date.getDate() + '日'}
-                {(+new Date() - +this.date > this.oneDayTimes) ? <div className=' text-primary small px-3' onClick={() => this.changeDay('nextDay')}>
-                    <FA name="chevron-right small" /></div> : <div className=' px-3' ></div>}
+                {this.currentDate.getFullYear() + '年' + (this.currentDate.getMonth() + 1) + '月' + this.currentDate.getDate() + '日'}
+                {(+new Date() - +this.currentDate > this.oneDayTimes) ?
+                    <div className=' text-primary small px-3' onClick={() => this.changeDay('nextDay')}>
+                        <FA name="chevron-right small" />
+                    </div> : <div className=' px-3'></div>}
             </div>
             <table className="table text-center small">
                 <thead className="text-primary">
@@ -150,7 +156,7 @@ export class VInnerPersonDetail extends VPage<CInnerTeam> {
     private personMonthAchieve = observer(() => {
         // let { personMonthAchieve } = this.controller;
         let sumEndTaskCount = 0, sumSendCreditsCount = 0, sumSendPostCount = 0, sumOrderCount = 0, sumSaleVolume = 0;
-        let content = this.personMonthlyAchieve.slice().reverse().map((v, index) => {
+        let content = this.myMonthlyAchievement.slice().reverse().map((v, index) => {
             let { date, endTaskCount, sendCreditsCount, sendPostCount, orderCount, saleVolume } = v;
             sumEndTaskCount += endTaskCount;
             sumSendCreditsCount += sendCreditsCount;
@@ -176,8 +182,8 @@ export class VInnerPersonDetail extends VPage<CInnerTeam> {
         return <div>
             <div className="bg-white py-2 d-flex justify-content-between px-3">
                 <div className=' text-primary small px-3' onClick={this.prevMonth}><FA name="chevron-left small" /></div>
-                {this.year + '年' + this.month + '月'}
-                {(this.year === new Date().getFullYear() && this.month < new Date().getMonth()) || (this.year < new Date().getFullYear())
+                {this.currentYear + '年' + this.currentMonth + '月'}
+                {(this.currentYear === new Date().getFullYear() && this.currentMonth < new Date().getMonth()) || (this.currentYear < new Date().getFullYear())
                     ? <div className=' text-primary small px-3' onClick={this.nextMonth}><FA name="chevron-right small" /></div> : <div className=' px-3' ></div>}
             </div>
             <table className="table text-center small">
@@ -202,7 +208,7 @@ export class VInnerPersonDetail extends VPage<CInnerTeam> {
     private personYearAchieve = observer(() => {
         // let { personYearhAchieve } = this.controller;
         let sumEndTaskCount = 0, sumSendCreditsCount = 0, sumSendPostCount = 0, sumOrderCount = 0, sumSaleVolume = 0;
-        let content = this.personYearhAchieve.slice().reverse().map((v, index) => {
+        let content = this.myYearlyAchievement.slice().reverse().map((v, index) => {
             let { montha, endTaskCount, sendCreditsCount, sendPostCount, orderCount, saleVolume } = v;
             sumEndTaskCount += endTaskCount;
             sumSendCreditsCount += sendCreditsCount;

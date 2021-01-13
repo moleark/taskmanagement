@@ -21,11 +21,11 @@ export class VInnerTeam extends VPage<CInnerTeam> {
     });
 
     private myTodayAchievement = observer(() => {
-        let { myTodayAchievement, showUserDetail } = this.controller;
+        let { myTodayAchievement, showMyAchievementDetail } = this.controller;
         let content = myTodayAchievement.map((v, index) => {
             let { date, user, endTaskCount, sendCreditsCount, sendPostCount, orderCount, saleVolume } = v;
             this.date = date;
-            return <tr className="col dec px-3 py-2 bg-white cursor-pointer" onClick={() => showUserDetail(this.date)}>
+            return <tr className="col dec px-3 py-2 bg-white cursor-pointer" onClick={() => showMyAchievementDetail()}>
                 <td className="w-3">{endTaskCount}</td>
                 <td className="w-3">{sendCreditsCount}</td>
                 <td className="w-3">{sendPostCount}</td>
@@ -37,7 +37,7 @@ export class VInnerTeam extends VPage<CInnerTeam> {
             </tr >;
         });
         if (myTodayAchievement.length === 0) { this.date = new Date() }
-        let showZero = <tr className="col dec px-3 py-2 bg-white cursor-pointer" onClick={() => showUserDetail(this.date)}>
+        let showZero = <tr className="col dec px-3 py-2 bg-white cursor-pointer" onClick={() => showMyAchievementDetail()}>
             <td className="w-3">0</td>
             <td className="w-3">0</td>
             <td className="w-3">0</td>

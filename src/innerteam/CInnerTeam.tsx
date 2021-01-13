@@ -15,16 +15,16 @@ export class CInnerTeam extends CUqBase {
     @observable teamAchievementYear: any[];
 
     protected async internalStart() {
-        let thisDate = moment().format('YYYY-MM-DD');
-        this.myTodayAchievement = await this.searchPersonAchievment(thisDate);
-        this.teamAchievementDay = await this.searchTeamAchievementDay({ team: 0, date: thisDate });
+        let today = moment().format('YYYY-MM-DD');
+        this.myTodayAchievement = await this.searchPersonAchievment(today);
+        this.teamAchievementDay = await this.searchTeamAchievementDay({ team: 0, date: today });
         let thisYear = moment().format('YYYY');
         await this.searchTeamAchievementYear(thisYear);
         await this.openVPage(VInnerTeam, thisYear);
     }
 
-    showUserDetail = async (date) => {
-        this.openVPage(VInnerPersonDetail, date);
+    showMyAchievementDetail = () => {
+        this.openVPage(VInnerPersonDetail);
     }
 
     /**
