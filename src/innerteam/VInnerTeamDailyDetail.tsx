@@ -2,7 +2,7 @@ import * as React from "react";
 import { VPage, Page, Loading, FA } from "tonva";
 import { observer } from "mobx-react";
 import { setting } from "appConfig";
-import { CInnerTeam } from "./CInnerTeam";
+import { CInnerTeam, dateFormat } from "./CInnerTeam";
 import { observable } from "mobx";
 
 /* eslint-disable */
@@ -10,32 +10,34 @@ import { observable } from "mobx";
 export class VInnerTeamDailyDetail extends VPage<CInnerTeam> {
     @observable private oneDayTimes: number = 1000 * 60 * 60 * 24;
     @observable private date: any;
+    @observable teamDailyDetail: any[];
     async open(param: any) {
-        this.date = param;
+        this.date = param.date;
+        this.teamDailyDetail = param.teamDailyDetail;
         this.openPage(this.page);
     }
 
     private changeDay = async (type) => {
         var time = +this.date;
-        let nowTimes = +new Date();
+        let theNewDaysTimes;
         if (type === 'prevDay') {
-            let theNewDaysTimes = time - this.oneDayTimes;
-            this.date = new Date(theNewDaysTimes);
-            await this.controller.searchTeamAchievementDay({ team: 0, date: this.date });
+            theNewDaysTimes = time - this.oneDayTimes;
         } else if (type === 'nextDay') {
-            let theNewDaysTimes = time + this.oneDayTimes;
-            if (theNewDaysTimes <= nowTimes) {
-                this.date = new Date(theNewDaysTimes);
-                await this.controller.searchTeamAchievementDay({ team: 0, date: this.date });
-            }
+            theNewDaysTimes = time + this.oneDayTimes;
         }
+        this.date = new Date(theNewDaysTimes);
+        let date = dateFormat(this.date)
+        this.teamDailyDetail = await this.controller.searchTeamAchievementDay({ team: 0, date: date });
     }
 
     private page = observer(() => {
-        let { teamDailyDetail } = this.controller;
-        let content = teamDailyDetail.map((v, index) => {
+        let { cApp } = this.controller;
+        this.teamDailyDetail.forEach(e => {
+            cApp.useUser(e.user);
+        });
+        let content = this.teamDailyDetail.map((v, index) => {
             let { user, endTaskCount, sendCreditsCount, sendPostCount, orderCount, saleVolume } = v;
-            let authorname = this.controller.cApp.renderUser(user.id);
+            let authorname = cApp.renderUser(user.id);
             return <tr className="col dec px-3 py-2 bg-white cursor-pointer">
                 <td className="w-3">{authorname}</td>
                 <td className="w-3">{endTaskCount}</td>

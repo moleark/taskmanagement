@@ -71,11 +71,13 @@ export class VInnerTeam extends VPage<CInnerTeam> {
     });
 
     private teamAchievementDay = observer(() => {
-        let { teamAchievementDay, showTeamDailyDetail } = this.controller;
+        let { teamAchievementDay, showTeamDailyDetail, cApp } = this.controller;
+        teamAchievementDay.forEach(e => {
+            cApp.useUser(e.user);
+        });
         let sumEndTaskCount = 0, sumSendCreditsCount = 0, sumSendPostCount = 0, sumOrderCount = 0, sumSaleVolume = 0;
         teamAchievementDay.map((v, index) => {
             let { date, endTaskCount, sendCreditsCount, sendPostCount, orderCount, saleVolume } = v;
-            this.date = date;
             sumEndTaskCount += endTaskCount;
             sumSendCreditsCount += sendCreditsCount;
             sumSendPostCount += sendPostCount;

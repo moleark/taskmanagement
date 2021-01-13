@@ -10,43 +10,41 @@ import { observable } from "mobx";
 export class VInnerTeamDetail extends VPage<CInnerTeam> {
     @observable year: any;
     @observable month: any;
+    @observable teamAchievementMonthDetail: any[];
     async open(param: any) {
         this.month = param.montha;
-        this.year = param.yeara
+        this.year = param.yeara;
+        this.teamAchievementMonthDetail = param.teamAchievementMonthDetail;
         this.openPage(this.page);
     }
 
     private prevMonth = async () => {
-        if (this.month > 0) {
-            this.month = this.month - 1;
-        }
-        if (this.month === 0) {
+        if (this.month - 1 === 0) {
             this.month = 12;
-            this.year = this.year - 1;
+            this.year -= 1
+        } else {
+            this.month -= 1
         }
-        await this.controller.getTeamMonthDetail({ montha: this.month.toString(), yeara: this.year.toString() });
+        this.teamAchievementMonthDetail = await this.controller.getTeamMonthDetail({ montha: this.month, yeara: this.year });
     }
     private nextMonth = async () => {
-        let nowYear = new Date().getFullYear();
-        let nowMonth = new Date().getMonth() + 1;
-        if (this.month <= 12) {
-            this.month = this.month + 1;
+        if (this.month + 1 === 13) {
+            this.month = 1;
+            this.year += 1;
+        } else {
+            this.month += 1
         }
-        if (nowYear === this.year && nowMonth >= this.month) {
-            await this.controller.getTeamMonthDetail({ montha: this.month.toString(), yeara: this.year.toString() });
-        } else if (nowYear > this.year) {
-            if (this.month === 13) {
-                this.month = 1;
-                this.year = this.year + 1;
-            }
-            await this.controller.getTeamMonthDetail({ montha: this.month.toString(), yeara: this.year.toString() });
-        }
+        this.teamAchievementMonthDetail = await this.controller.getTeamMonthDetail({ montha: this.month, yeara: this.year });
     }
+
     private page = observer(() => {
-        let { teamAchievementMonthDetail } = this.controller;
-        let content = teamAchievementMonthDetail.map((v, index) => {
+        let { cApp } = this.controller;
+        this.teamAchievementMonthDetail.forEach(e => {
+            cApp.useUser(e.usera);
+        });
+        let content = this.teamAchievementMonthDetail.map((v, index) => {
             let { usera, endTaskCount, sendCreditsCount, sendPostCount, orderCount, saleVolume } = v;
-            let authorname = this.controller.cApp.renderUser(usera.id);
+            let authorname = cApp.renderUser(usera.id);
             return <tr className="col dec px-3 py-2 bg-white cursor-pointer">
                 <td className="w-3">{authorname}</td>
                 <td className="w-3">{endTaskCount}</td>
@@ -88,15 +86,17 @@ export class VInnerTeamDetail extends VPage<CInnerTeam> {
 }
 export class VInnerTeamMemberYearly extends VPage<CInnerTeam> {
     @observable year: any;
-    async open(yeara: any) {
-        this.year = yeara
+    @observable teamMemberYearlyDetail: any[];
+    async open(param: any) {
+        this.year = param.yeara;
+        this.teamMemberYearlyDetail = param.teamMemberYearlyDetail;
         this.openPage(this.page);
     }
 
     private prevYear = async () => {
         let year = this.year;
         this.year = year - 1
-        await this.controller.getTeamMemberYearlyAchieve(this.year.toString());
+        this.teamMemberYearlyDetail = await this.controller.getTeamMemberYearlyAchieve(this.year);
     }
 
     private nextYear = async () => {
@@ -104,14 +104,17 @@ export class VInnerTeamMemberYearly extends VPage<CInnerTeam> {
         let year = this.year;
         if (nowYear > year) {
             this.year = year + 1
-            await this.controller.getTeamMemberYearlyAchieve(this.year.toString());
+            this.teamMemberYearlyDetail = await this.controller.getTeamMemberYearlyAchieve(this.year);
         }
     }
     private page = observer(() => {
-        let { teamMemberYearlyDetail } = this.controller;
-        let content = teamMemberYearlyDetail.map((v, index) => {
+        let { cApp } = this.controller;
+        this.teamMemberYearlyDetail.forEach(e => {
+            cApp.useUser(e.usera);
+        });
+        let content = this.teamMemberYearlyDetail.map((v, index) => {
             let { usera, endTaskCount, sendCreditsCount, sendPostCount, orderCount, saleVolume } = v;
-            let authorname = this.controller.cApp.renderUser(usera);
+            let authorname = cApp.renderUser(usera);
             return <tr className="col dec px-3 py-2 bg-white cursor-pointer">
                 <td className="w-3">{authorname}</td>
                 <td className="w-3">{endTaskCount}</td>

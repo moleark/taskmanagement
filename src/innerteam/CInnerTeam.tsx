@@ -11,25 +11,14 @@ export class CInnerTeam extends CUqBase {
 
     //初始化
     @observable myTodayAchievement: any[];
-    @observable myDailyAchievement: any[];
-    @observable personMonthAchieve: any[];
-    @observable personYearhAchieve: any[];
     @observable teamAchievementDay: any[];
     @observable teamAchievementYear: any[];
 
-    @observable teamDailyDetail: any[];
-    @observable teamAchievementMonthDetail: any[];
-    @observable teamMemberYearlyDetail: any[];
-    private date: any;
-
     protected async internalStart() {
-
-        this.date = moment().format('YYYY-MM-DD');
-        this.myTodayAchievement = await this.searchPersonAchievment(moment().format('YYYY-MM-DD'));
-
-        await this.searchTeamAchievementDay({ team: 0, date: this.date });
-
-        let thisYear = moment().format('YYYY')
+        let thisDate = moment().format('YYYY-MM-DD');
+        this.myTodayAchievement = await this.searchPersonAchievment(thisDate);
+        this.teamAchievementDay = await this.searchTeamAchievementDay({ team: 0, date: thisDate });
+        let thisYear = moment().format('YYYY');
         await this.searchTeamAchievementYear(thisYear);
         await this.openVPage(VInnerTeam, thisYear);
     }
@@ -39,26 +28,9 @@ export class CInnerTeam extends CUqBase {
     }
 
     /**
-     * 
-     * @param type 
-     */
-    getPersonAchievment = async (type: any) => {
-        switch (type) {
-            case 'day':
-                this.myDailyAchievement = await this.searchPersonAchievment(moment().format("YYYY-MM-DD"));
-            case 'month':
-                await this.getPersonAchievmentMonth({ month: moment().format('M'), year: moment().format('YYYY') });
-            case 'year':
-                await this.getPersonAchievmentYear(moment().format('YYYY'));
-            default:
-                break;
-        }
-    }
-
-    /**
      * 我的每天工作量
     */
-    searchPersonAchievment = async (date) => {
+    searchPersonAchievment = async (date: any) => {
         let { uqs } = this;
         let { id } = nav.user;
         return await uqs.salesTask.getPersonDailyAchieve.table({ user: id, date: date });
@@ -71,7 +43,7 @@ export class CInnerTeam extends CUqBase {
         let { uqs } = this;
         let { id } = nav.user;
         let { month, year } = param;
-        this.personMonthAchieve = await uqs.salesTask.getPersonMonthlyAchieve.table({ user: id, year: year, month: month });
+        return await uqs.salesTask.getPersonMonthlyAchieve.table({ user: id, year: year, month: month });
     }
 
     /**
@@ -80,77 +52,63 @@ export class CInnerTeam extends CUqBase {
     getPersonAchievmentYear = async (year: any) => {
         let { uqs } = this;
         let { id } = nav.user;
-        this.personYearhAchieve = await uqs.salesTask.getPersonYearlyAchieve.table({ user: id, year: year });
+        return await uqs.salesTask.getPersonYearlyAchieve.table({ user: id, year: year });
     }
 
     /**
      *团队所有人每天汇总
     */
-    searchTeamAchievementDay = async (param) => {
-        let { uqs, cApp } = this;
-        let { team, date } = param
-        let nowDate = dateFormat(date);
-        if (date === this.date) {
-            this.teamAchievementDay = await uqs.salesTask.getTeamDailyAchieve.table({ team: team, date: this.date });
-            this.teamAchievementDay.forEach(e => {
-                cApp.useUser(e.user);
-            });
-        } else {
-            this.teamDailyDetail = await uqs.salesTask.getTeamDailyAchieve.table({ team: team, date: nowDate });
-            this.teamDailyDetail.forEach(e => {
-                cApp.useUser(e.user);
-            });
-        }
+    searchTeamAchievementDay = async (param: any) => {
+        let { uqs } = this;
+        let { team, date } = param;
+        return await uqs.salesTask.getTeamDailyAchieve.table({ team: team, date: date });
     }
 
     showTeamDailyDetail = async (param: any) => {
         let { team, date } = param;
-        await this.searchTeamAchievementDay(param);
-        this.openVPage(VInnerTeamDailyDetail, date);
+        let nowDate = dateFormat(date);
+        let newParam = { team, date: nowDate };
+        let teamDailyDetail = await this.searchTeamAchievementDay(newParam);
+        this.openVPage(VInnerTeamDailyDetail, { date, teamDailyDetail });
     };
 
     /**
      * 团队某年按月汇总量
     */
     searchTeamAchievementYear = async (year: any) => {
+
         this.teamAchievementYear = await this.uqs.salesTask.getTeamYearlyAchieve.table({ team: 0, year: year });
     }
 
     /**
      * 团队某年某月每人汇总量
     */
-    getTeamMonthDetail = async (param) => {
+    getTeamMonthDetail = async (param: any) => {
         let { uqs, cApp } = this;
         let { yeara, montha } = param;
-        this.teamAchievementMonthDetail = await uqs.salesTask.getTeamMonthlyAchieve.table({ team: 0, year: yeara, month: montha });
-        this.teamAchievementMonthDetail.forEach(e => {
-            cApp.useUser(e.usera);
-        });
+        return await uqs.salesTask.getTeamMonthlyAchieve.table({ team: 0, year: yeara, month: montha });
     }
 
     showTeamDetail = async (yeara: any, montha: any) => {
-        await this.getTeamMonthDetail({ yeara, montha })
-        this.openVPage(VInnerTeamDetail, { montha, yeara });
+        let teamAchievementMonthDetail = await this.getTeamMonthDetail({ yeara, montha })
+        this.openVPage(VInnerTeamDetail, { montha, yeara, teamAchievementMonthDetail });
     };
 
     /**
      * 团队每年每人汇总
     */
     getTeamMemberYearlyAchieve = async (yeara: any) => {
-        let { uqs, cApp } = this;
-        this.teamMemberYearlyDetail = await uqs.salesTask.getTeamMemberYearlyAchieve.table({ team: 0, year: yeara });
-        this.teamMemberYearlyDetail.forEach(e => {
-            cApp.useUser(e.usera);
-        });
+        let { uqs } = this;
+        return await uqs.salesTask.getTeamMemberYearlyAchieve.table({ team: 0, year: yeara });
     };
 
     showTeamMemberYearlyAchieve = async (yeara: any) => {
-        await this.getTeamMemberYearlyAchieve(yeara)
-        this.openVPage(VInnerTeamMemberYearly, yeara);
+        let teamMemberYearlyDetail = await this.getTeamMemberYearlyAchieve(yeara)
+        this.openVPage(VInnerTeamMemberYearly, { yeara, teamMemberYearlyDetail });
     };
 }
 
-function dateFormat(dateData) {
+export function dateFormat(dateData) {
     let date = new Date(dateData)
     let y = date.getFullYear()
     let m = date.getMonth() + 1
