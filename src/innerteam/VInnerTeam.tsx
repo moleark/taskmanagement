@@ -142,26 +142,26 @@ export class VInnerTeam extends VPage<CInnerTeam> {
             sumSaleVolume += saleVolume;
             let typeshow = montha + "月";
             return <tr className="col dec px-3 py-2 bg-white cursor-pointer" onClick={() => showTeamDetail(yeara, montha)}>
-                <td className="w-3">{typeshow}</td>
-                <td className="w-3">{endTaskCount}</td>
-                <td className="w-3">{sendCreditsCount}</td>
-                <td className="w-3">{sendPostCount}</td>
-                <td className="w-3">{orderCount}</td>
-                <td className="w-3">{saleVolume}</td>
-                <td className="w-3 text-primary">
+                <td className="px-1">{typeshow}</td>
+                <td className="px-0">{endTaskCount}</td>
+                <td className="px-0">{sendCreditsCount}</td>
+                <td className="px-0">{sendPostCount}</td>
+                <td className="px-0">{orderCount}</td>
+                <td className="px-0">{saleVolume}</td>
+                <td className="pr-2 text-primary">
                     <FA name="chevron-right small" />
                 </td>
             </tr >;
         });
         let totalContent = <tr className="col dec px-3 py-2 bg-white cursor-pointer text-primary"
             onClick={() => showTeamMemberYearlyAchieve(this.year)}>
-            <td className="w-3">{'合计'}</td>
-            <td className="w-3">{sumEndTaskCount}</td>
-            <td className="w-3">{sumSendCreditsCount}</td>
-            <td className="w-3">{sumSendPostCount}</td>
-            <td className="w-3">{sumOrderCount}</td>
-            <td className="w-3">{sumSaleVolume}</td>
-            <td className="w-3 text-primary">
+            <td className="px-0">{'合计'}</td>
+            <td className="px-0">{sumEndTaskCount}</td>
+            <td className="px-0">{sumSendCreditsCount}</td>
+            <td className="px-0">{sumSendPostCount}</td>
+            <td className="px-0">{sumOrderCount}</td>
+            <td className="px-0">{sumSaleVolume.toFixed(2)}</td>
+            <td className="px-0 text-primary">
                 <FA name="chevron-right small" />
             </td>
         </tr >;
@@ -179,14 +179,14 @@ export class VInnerTeam extends VPage<CInnerTeam> {
             </div>
             <table className="table text-center small">
                 <thead className="text-primary">
-                    <tr className="bg-white small">
-                        <th></th>
-                        <th>任务</th>
-                        <th>发码</th>
-                        <th>发帖</th>
-                        <th>订单</th>
-                        <th>金额</th>
-                        <th></th>
+                    <tr className="bg-white">
+                        <th className="px-0"></th>
+                        <th className="px-0">任务</th>
+                        <th className="px-0">发码</th>
+                        <th className="px-0">发帖</th>
+                        <th className="px-0">订单</th>
+                        <th className="px-0">金额</th>
+                        <th className="px-0"></th>
                     </tr>
                 </thead>
                 <tbody>

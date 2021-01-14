@@ -46,12 +46,12 @@ export class VInnerTeamDetail extends VPage<CInnerTeam> {
             let { usera, endTaskCount, sendCreditsCount, sendPostCount, orderCount, saleVolume } = v;
             let authorname = cApp.renderUser(usera.id);
             return <tr className="col dec px-3 py-2 bg-white cursor-pointer">
-                <td className="w-3">{authorname}</td>
-                <td className="w-3">{endTaskCount}</td>
-                <td className="w-3">{sendCreditsCount}</td>
-                <td className="w-3">{sendPostCount}</td>
-                <td className="w-3">{orderCount}</td>
-                <td className="w-3">{saleVolume}</td>
+                <td className="px-0">{authorname}</td>
+                <td className="px-0">{endTaskCount}</td>
+                <td className="px-0">{sendCreditsCount}</td>
+                <td className="px-0">{sendPostCount}</td>
+                <td className="px-0">{orderCount}</td>
+                <td className="px-0">{saleVolume}</td>
             </tr >;
         });
 
@@ -116,12 +116,12 @@ export class VInnerTeamMemberYearly extends VPage<CInnerTeam> {
             let { usera, endTaskCount, sendCreditsCount, sendPostCount, orderCount, saleVolume } = v;
             let authorname = cApp.renderUser(usera);
             return <tr className="col dec px-3 py-2 bg-white cursor-pointer">
-                <td className="w-3">{authorname}</td>
-                <td className="w-3">{endTaskCount}</td>
-                <td className="w-3">{sendCreditsCount}</td>
-                <td className="w-3">{sendPostCount}</td>
-                <td className="w-3">{orderCount}</td>
-                <td className="w-3">{saleVolume}</td>
+                <td className="px-0">{authorname}</td>
+                <td className="px-0">{endTaskCount}</td>
+                <td className="px-0">{sendCreditsCount}</td>
+                <td className="px-0">{sendPostCount}</td>
+                <td className="px-0">{orderCount}</td>
+                <td className="pr-0">{saleVolume}</td>
             </tr >;
         });
 
