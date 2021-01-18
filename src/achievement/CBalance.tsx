@@ -37,6 +37,9 @@ export class CBalance extends CUqBase {
     }
 
     //计算更新业绩
+    /**
+     * 
+     */
     getComputeAchievement = async () => {
         let { salesTask } = this.uqs;
         await salesTask.ComputeAchievement.submit({});

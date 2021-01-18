@@ -71,7 +71,11 @@ export class CCoupon extends CUqBase {
         this.openVPage(VCouponList, types);
     }
 
-    //查询客户--通过名称
+    /**
+     * 
+     * @param key 
+     * @param types 
+     */
     searchByKey = async (key: string, types: string) => {
         this.pageCoupon = new QueryPager(this.uqs.salesTask.SearchCoupon, 15, 30);
         this.pageCoupon.first({ key: key, types: types });
@@ -100,7 +104,10 @@ export class CCoupon extends CUqBase {
         this.openVPage(VCouponDetail, coupon);
     }
 
-    //显示添加优惠券页面
+    /**
+     * 显示添加优惠券页面
+     * @param param 
+     */
     showCreateCoupon = async (param: any) => {
         let { promotionPrice, newCoupon } = param;
         let vipCardDiscountSetting = await this.uqs.salesTask.SearchBottomDiscount.query({});
@@ -116,7 +123,10 @@ export class CCoupon extends CUqBase {
         }
     }
 
-    //显示添加积分券页面
+    /**
+     * 显示添加积分券页面
+     * @param param 
+     */
     showCreateCredits = async (param: any) => {
         let validitydate = this.validDateFrom(2);
         let coupon: any = await this.createCoupon({ validitydate: validitydate, discount: 0 }, param);
@@ -152,7 +162,11 @@ export class CCoupon extends CUqBase {
     }
 
 
-    //添加优惠券
+    /**
+     * 创建优惠券或积分券 
+     * @param data 
+     * @param {object} param - type: coupon | credits 
+     */
     createCoupon = async (data: any, param: any) => {
         let { validitydate, discount, webUser } = data;
         let coupon: any = {
