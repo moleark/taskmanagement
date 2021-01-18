@@ -61,7 +61,8 @@ export class VCouponList extends VPage<CCoupon> {
         let expiredCoupon = <button type="button" className="btn btn-primary btn-sm p-0 mr-1" style={{ width: '5rem' }}
             onClick={() => this.controller.openExpiredCouponHistory(this.types)}>失效券</button>
 
-        let typename: string = "优惠券", right: any; if (this.types !== "coupon") {
+        let typename: string = "优惠券", right: any;
+        if (this.types !== "coupon") {
             typename = "积分券";
             right = < div className="cursor-pointer"
                 onClick={() => cApp.cCoupon.showCreateCredits({ type: this.types, product: undefined })} >

@@ -156,8 +156,6 @@ export interface UqSalesTask {
     TaskOrder: Map;
     SearchMyCustomerByUnit: Query;
     SearchTaskHistoryCount: Query;
-    SearchTeamAchievement: Query;
-    SearchTeamAchievementDetail: Query;
     AddCouponSendHistory: Action;
     SearchBottomDiscount: Query;
 
