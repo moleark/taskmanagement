@@ -58,15 +58,16 @@ export class VCouponList extends VPage<CCoupon> {
     }
 
     protected page = observer(() => {
-        let expiredCoupon = <button type="button" className="btn btn-primary btn-sm p-0 mr-1" style={{ width: '5rem' }}
-            onClick={() => this.controller.openExpiredCouponHistory(this.types)}>失效券</button>
-
+        let expiredCoupon = < div className="cursor-pointer px-2" style={{ fontSize: "20px", color: "#ffffff" }}
+            onClick={() => this.controller.openExpiredCouponHistory(this.types)}>
+            <FA name="bars" className="small" />
+        </div >
         let typename: string = "优惠券", right: any;
         if (this.types !== "coupon") {
             typename = "积分券";
             right = < div className="cursor-pointer"
                 onClick={() => cApp.cCoupon.showCreateCredits({ type: this.types, product: undefined })} >
-                <span className="iconfont ml-1 mr-1 icon-tianjia" style={{ fontSize: "20px", color: "#ffffff" }}></span>
+                <span className="iconfont ml-1 mr-2 icon-tianjia" style={{ fontSize: "20px", color: "#ffffff" }}></span>
             </div >;
         }
         let search = <div className='d-flex w-100'>
@@ -76,8 +77,8 @@ export class VCouponList extends VPage<CCoupon> {
                 onSearch={(key: string) => this.controller.searchByKey(key, this.types)}
                 placeholder={"搜索" + typename}
             />
-            {expiredCoupon}
             {right}
+            {expiredCoupon}
         </div>
         let { pageCoupon, cApp } = this.controller;
         let none = <div className="my-3 mx-2 text-warning">还没有{typename}哦！马上添加招揽客户吧！</div>;
