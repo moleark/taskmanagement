@@ -91,6 +91,10 @@ export abstract class AppEnv {
         }
         return url;
     };
+
+    onExplanation = <div className="text-right mr-4 pr-4 pt-1 cursor-pointer">
+        <span className='p-2' onClick={async (e) => await this.cApp.cBalance.showexplanation(e)}> <FA name="question-circle" className="text-warning" /></span>
+    </div>
 }
 
 export class AssistApp extends AppEnv {
@@ -116,10 +120,7 @@ export class AssistApp extends AppEnv {
         let balance = totalReceivableAmount - totalaWithdrawal;
         return <div className="text-center text-white bg-primary pt-1 pb-5"
             style={{ borderRadius: '0  0 5rem 5rem', margin: '0 -2rem 0 -2rem' }}>
-            <div className="text-right mr-4 pr-4 pt-1 cursor-pointer"
-                onClick={async (e) => await this.cApp.cBalance.showexplanation(e)}>
-                <FA name="question-circle" className="text-warning" />
-            </div>
+            {this.onExplanation}
             <div className="pb-2 pt-4 cursor-pointer" >
                 <div className="text-warning pt-3" onClick={async () => await cBalance.showAssistAchievementDetail(0)}>
                     <span className="h1">{totalachievement.toFixed(2)}</span>
@@ -154,6 +155,7 @@ export class AgentApp extends AppEnv {
         let balance = totalReceivableAmount - totalaWithdrawal - waitWithdrawal;
         return <div className="text-center text-white bg-primary pt-1 pb-5"
             style={{ borderRadius: '0  0 5rem 5rem', margin: '0 -2rem 0 -2rem' }}>
+            {this.onExplanation}
             <div className="pb-2 pt-4 cursor-pointer" >
                 <div className="text-warning pt-4" onClick={async () => await cBalance.showAchievementDetail(0)}>
                     <span className="h1">{totalachievement.toFixed(2)}</span>
