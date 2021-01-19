@@ -43,12 +43,13 @@ export class VInnerTeamDetail extends VPage<CInnerTeam> {
             cApp.useUser(e.usera);
         });
         let content = this.teamAchievementMonthDetail.map((v, index) => {
-            let { usera, endTaskCount, sendCreditsCount, sendPostCount, orderCount, saleVolume } = v;
+            let { usera, endTaskCount, sendPostCount, orderCount, saleVolume, couponsCreated, creditsCreated } = v;
             let authorname = cApp.renderUser(usera.id);
             return <tr className="col dec px-3 py-2 bg-white cursor-pointer">
                 <td className="px-0">{authorname}</td>
                 <td className="px-0">{endTaskCount}</td>
-                <td className="px-0">{sendCreditsCount}</td>
+                <td className="px-0">{couponsCreated}</td>
+                <td className="px-0">{creditsCreated}</td>
                 <td className="px-0">{sendPostCount}</td>
                 <td className="px-0">{orderCount}</td>
                 <td className="px-0">{saleVolume}</td>
@@ -69,7 +70,8 @@ export class VInnerTeamDetail extends VPage<CInnerTeam> {
                             <tr className="bg-white">
                                 <th>员工</th>
                                 <th>任务</th>
-                                <th>发码</th>
+                                <th>制优惠券</th>
+                                <th>制积分券</th>
                                 <th>发帖</th>
                                 <th>订单</th>
                                 <th>金额</th>
@@ -113,12 +115,13 @@ export class VInnerTeamMemberYearly extends VPage<CInnerTeam> {
             cApp.useUser(e.usera);
         });
         let content = this.teamMemberYearlyDetail.map((v, index) => {
-            let { usera, endTaskCount, sendCreditsCount, sendPostCount, orderCount, saleVolume } = v;
+            let { usera, endTaskCount, sendPostCount, orderCount, saleVolume, couponsCreated, creditsCreated } = v;
             let authorname = cApp.renderUser(usera);
             return <tr className="col dec px-3 py-2 bg-white cursor-pointer">
                 <td className="px-0">{authorname}</td>
                 <td className="px-0">{endTaskCount}</td>
-                <td className="px-0">{sendCreditsCount}</td>
+                <td className="px-0">{couponsCreated}</td>
+                <td className="px-0">{creditsCreated}</td>
                 <td className="px-0">{sendPostCount}</td>
                 <td className="px-0">{orderCount}</td>
                 <td className="pr-0">{saleVolume}</td>
@@ -139,7 +142,8 @@ export class VInnerTeamMemberYearly extends VPage<CInnerTeam> {
                             <tr className="bg-white">
                                 <th>员工</th>
                                 <th>任务</th>
-                                <th>发码</th>
+                                <th>制优惠券</th>
+                                <th>制积分券</th>
                                 <th>发帖</th>
                                 <th>订单</th>
                                 <th>金额</th>

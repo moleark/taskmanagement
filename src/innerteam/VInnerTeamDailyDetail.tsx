@@ -36,16 +36,17 @@ export class VInnerTeamDailyDetail extends VPage<CInnerTeam> {
             cApp.useUser(e.user);
         });
         let content = this.teamDailyDetail.map((v, index) => {
-            let { user, endTaskCount, sendCreditsCount, sendPostCount, orderCount, saleVolume } = v;
+            let { user, endTaskCount, sendPostCount, orderCount, saleVolume, couponsCreated, creditsCreated } = v;
             let authorname = cApp.renderUser(user.id);
-            return <tr className="col dec px-3 py-2 bg-white cursor-pointer">
-                <td className="w-3">{authorname}</td>
-                <td className="w-3">{endTaskCount}</td>
-                <td className="w-3">{sendCreditsCount}</td>
-                <td className="w-3">{sendPostCount}</td>
-                <td className="w-3">{orderCount}</td>
-                <td className="w-3">{saleVolume}</td>
-            </tr >;
+            return <div className="row mx-0 py-2 small text-center bg-white border-bottom">
+                <div className="col-w">{authorname}</div>
+                <div className="col-w">{endTaskCount}</div>
+                <div className="col-w">{couponsCreated}</div>
+                <div className="col-w">{creditsCreated}</div>
+                <div className="col-w">{sendPostCount}</div>
+                <div className="col-w">{orderCount}</div>
+                <div className="col-w">{saleVolume}</div>
+            </div>;
         });
 
         return (
@@ -57,21 +58,20 @@ export class VInnerTeamDailyDetail extends VPage<CInnerTeam> {
                         {(+new Date() - +this.date > this.oneDayTimes) ? <div className=' text-primary small px-3' onClick={() => this.changeDay('nextDay')}>
                             <FA name="chevron-right small" /></div> : <div className=' px-3' ></div>}
                     </div>
-                    <table className="table text-center small">
-                        <thead className="text-primary">
-                            <tr className="bg-white">
-                                <th>员工</th>
-                                <th>任务</th>
-                                <th>发码</th>
-                                <th>发帖</th>
-                                <th>订单</th>
-                                <th>金额</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <div>
+                        <div className="row mx-0 py-2 small text-center text-primary bg-white border-bottom">
+                            <div className="col-w"><strong>员工</strong></div>
+                            <div className="col-w"><strong>任务</strong></div>
+                            <div className="col-w"><strong>制优惠券</strong></div>
+                            <div className="col-w"><strong>制积分券</strong></div>
+                            <div className="col-w"><strong>发帖</strong></div>
+                            <div className="col-w"><strong>订单</strong></div>
+                            <div className="col-w"><strong>金额</strong></div>
+                        </div>
+                        <div>
                             {content}
-                        </tbody>
-                    </table>
+                        </div>
+                    </div>
                 </div>
             </Page>
         );
