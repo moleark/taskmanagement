@@ -45,7 +45,7 @@ export class VInnerTeamDetail extends VPage<CInnerTeam> {
         let content = this.teamAchievementMonthDetail.map((v, index) => {
             let { usera, endTaskCount, sendPostCount, orderCount, saleVolume, couponsCreated, creditsCreated } = v;
             let authorname = cApp.renderUser(usera.id);
-            return <div className="row mx-0 py-2 small text-center bg-white border-bottom">
+            return <div className="row mx-0 py-2 px-1 small text-center bg-white border-bottom">
                 <div className="col-w">{authorname}</div>
                 <div className="col-w">{endTaskCount}</div>
                 <div className="col-w">{couponsCreated}</div>
@@ -113,7 +113,7 @@ export class VInnerTeamMemberYearly extends VPage<CInnerTeam> {
         let content = this.teamMemberYearlyDetail.map((v, index) => {
             let { usera, endTaskCount, sendPostCount, orderCount, saleVolume, couponsCreated, creditsCreated } = v;
             let authorname = cApp.renderUser(usera);
-            return <div className="row mx-0 py-2 small text-center bg-white border-bottom">
+            return <div className="row mx-0 px-1 py-2 small text-center bg-white border-bottom">
                 <div className="col-w">{authorname}</div>
                 <div className="col-w">{endTaskCount}</div>
                 <div className="col-w">{couponsCreated}</div>

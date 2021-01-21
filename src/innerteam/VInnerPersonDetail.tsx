@@ -116,7 +116,7 @@ export class VInnerPersonDetail extends VPage<CInnerTeam> {
 
     private divContent(typeshow: any, endTaskCount: number, couponsCreated: number, creditsCreated: number, sendPostCount: number,
         orderCount: number, saleVolume: number) {
-        return <div className="row mx-0 py-2 small text-center bg-white border-bottom">
+        return <div className="row mx-0 px-1 py-2 small text-center bg-white border-bottom">
             <div className="col-w">{typeshow}</div>
             <div className="col-w">{endTaskCount}</div>
             <div className="col-w">{couponsCreated}</div>
@@ -187,7 +187,7 @@ export class VInnerPersonDetail extends VPage<CInnerTeam> {
                     ? <div className=' text-primary small px-3' onClick={this.nextMonth}><FA name="chevron-right small" /></div> : <div className=' px-3' ></div>}
             </div>
             <div>
-                <div className="row mx-0 py-2 small text-center text-primary bg-white border-bottom">
+                <div className="row mx-0 py-2 px-1 small text-center text-primary bg-white border-bottom">
                     <div className="col-w"></div>
                     <div className="col-w"><strong>任务</strong></div>
                     <div className="col-w"><strong>制优惠券</strong></div>

@@ -38,7 +38,7 @@ export class VInnerTeamDailyDetail extends VPage<CInnerTeam> {
         let content = this.teamDailyDetail.map((v, index) => {
             let { user, endTaskCount, sendPostCount, orderCount, saleVolume, couponsCreated, creditsCreated } = v;
             let authorname = cApp.renderUser(user.id);
-            return <div className="row mx-0 py-2 small text-center bg-white border-bottom">
+            return <div className="row mx-0 py-2 px-1 small text-center bg-white border-bottom">
                 <div className="col-w">{authorname}</div>
                 <div className="col-w">{endTaskCount}</div>
                 <div className="col-w">{couponsCreated}</div>
