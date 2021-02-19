@@ -183,7 +183,7 @@ export class VInnerPersonDetail extends VPage<CInnerTeam> {
             <div className="bg-white py-2 d-flex justify-content-between px-3">
                 <div className=' text-primary small px-3' onClick={this.prevMonth}><FA name="chevron-left small" /></div>
                 {this.currentYear + '年' + this.currentMonth + '月'}
-                {(this.currentYear === new Date().getFullYear() && this.currentMonth < new Date().getMonth()) || (this.currentYear < new Date().getFullYear())
+                {(this.currentYear === new Date().getFullYear() && this.currentMonth < new Date().getMonth() + 1) || (this.currentYear < new Date().getFullYear())
                     ? <div className=' text-primary small px-3' onClick={this.nextMonth}><FA name="chevron-right small" /></div> : <div className=' px-3' ></div>}
             </div>
             <div>
