@@ -51,26 +51,6 @@ export class VClassRoom extends VPage<CMe> {
         );
     };
 
-
-    private share = async (post: any) => {
-        let { caption, image, id, discription } = post;
-        if (navigator.userAgent.indexOf("Html5Plus") > -1) {
-            // @ts-ignore  屏蔽错误
-            window.plusShare(
-                {
-                    title: caption, //应用名字
-                    content: caption + "  " + discription,
-                    href: GLOABLE.posturl + "/" + id + "?sales=" + nav.user.id, //分享出去后，点击跳转地址
-                    //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片
-                    thumbs: [image.obj.path] //分享缩略图
-                },
-                function (result) {
-                    //分享回调
-                }
-            );
-        }
-    };
-
     private manue = () => {
         let { showClassRoomList } = this.controller;
         return < div className="d-flex cursor-pointer bg-white py-3 " >

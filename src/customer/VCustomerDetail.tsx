@@ -117,7 +117,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
             window.plusShare(
                 {
                     title: caption, //应用名字
-                    content: caption + "  " + discription,
+                    content: discription,
                     href: GLOABLE.posturl + "/" + id + "?sales=" + nav.user.id, //分享出去后，点击跳转地址
                     //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片
                     thumbs: [image.obj] //分享缩略图

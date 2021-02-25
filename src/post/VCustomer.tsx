@@ -41,13 +41,13 @@ export class VCustomer extends VPage<CPost> {
         return <Page header={search} onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss} >
             <div className="bg-warning text-white text-center w-100 small px-3">客户浏览高峰在8-9、11-13、15-18时</div>
             <LMR className="px-3 py-3 bg-white d-flex align-items-center"
-                onClick={() => this.share({ id: 0 }, "title")}
+                onClick={() => this.share()}
                 left={<FA name='chrome' className="text-warning mr-3 " size="lg" fixWidth={true} />}>
                 <span className="font-weight-bold">分享朋友圈</span>
             </LMR>
             <div className="sep-product-select" style={{ margin: "0 auto" }} />
             <LMR className="px-3 py-3 bg-white d-flex align-items-center"
-                onClick={() => this.share({ id: 0 }, "content")}
+                onClick={() => this.share()}
                 left={<FA name='wechat' className=" text-success mr-3" size="lg" fixWidth={true} />}>
                 <span className="font-weight-bold">分享其他人</span>
             </LMR>
@@ -90,8 +90,8 @@ export class VCustomer extends VPage<CPost> {
     );
     private renderCustomer = (customer: any, index: number) => {
         (customer as any)._source = "VCustomerList";
-        let { name, unit, webuser, sharingTimes, sharingCount } = customer;
-        let right = <div onClick={() => this.share(customer, "content")}><FA name='wechat text-success mx-3' /></div>;
+        let { id: customerId, name, unit, webuser, sharingTimes, sharingCount } = customer;
+        let right = <div onClick={() => this.share(customerId)}><FA name='wechat text-success mx-3' /></div>;
         let left = webuser ? <UserIcon className="mt-1 mx-2 w-3c h-3c" id={webuser.id} style={{ borderRadius: "8px" }} /> : this.imgSmile;
         let namev = (name && name.length < 3) ? <div className="cursor-pointer font-weight-bold pr-3" > {name}</div> : <div className="cursor-pointer font-weight-bold pr-1" > {name}</div>
         return (
@@ -120,7 +120,7 @@ export class VCustomer extends VPage<CPost> {
         }, GLOABLE.TIPDISPLAYTIME);
     }
 
-    private share = async (cusotmer: any, type: any) => {
+    private share = async (cusotmerId?: number) => {
         //let { caption, image, id, discription } = this.post;
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
 
@@ -128,7 +128,7 @@ export class VCustomer extends VPage<CPost> {
             window.plusShare(
                 {
                     title: this.caption, //应用名字
-                    content: type === "content" ? this.discription : this.caption,
+                    content: this.discription,
                     href: GLOABLE.posturl + "/" + this.post.id + "?sales=" + nav.user.id, //分享出去后，点击跳转地址
                     thumbs: [this.image] //分享缩略图
                 },
@@ -136,7 +136,7 @@ export class VCustomer extends VPage<CPost> {
                     //分享回调
                 }
             );
-            await this.controller.addMyCustomerPost(this.post, cusotmer.id);
+            await this.controller.addMyCustomerPost(this.post, cusotmerId || 0);
         } else {
             this.onTips();
         }

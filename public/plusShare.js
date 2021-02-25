@@ -64,12 +64,12 @@
         }
     }
     var open = function (msg, callback) {
-		/**
-		 *如下情况直接打开系统分享
-		 * 1、未配置微信分享通道
-		 * 2、用户手机未安装威胁你
-		 * 3、360浏览器下
-		 */
+        /**
+         *如下情况直接打开系统分享
+         * 1、未配置微信分享通道
+         * 2、用户手机未安装威胁你
+         * 3、360浏览器下
+         */
 
         if (shareServices.weixin && isWechatInstalled() && !/360\sAphone/.test(navigator.userAgent)) {
             plus.nativeUI.actionSheet({
@@ -92,7 +92,7 @@
                         share('weixin', msg, callback);
                         break;
                     case 2: //分享到微信朋友圈
-                        msg.title = msg.content;
+                        // msg.title = msg.content;
                         msg.extra = {
                             scene: 'WXSceneTimeline'
                         };
