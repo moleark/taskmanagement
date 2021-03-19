@@ -33,9 +33,9 @@ export class VSlider extends View<CHome> {
             return (
                 <div className="cursor-pointer" style={{ position: "relative" }} onClick={() => showPostDetail({ id: str })}>
                     <img src={banners[random].path} className="d-block w-100" alt="..." />
-                    <div className="" style={{ position: 'absolute', left: '30%', top: '45%', transform: 'translate(-50%, -50%)' }}>
-                        <p className="mb-2  text-white " style={{ fontSize: '1.4rem' }}>{banners[random].caption}</p>
-                        <p className="mb-2 text-white" style={{ fontSize: '.8rem' }}>{banners[random].description}</p>
+                    <div className="" style={{ position: 'absolute', left: '35%', top: '55%', transform: 'translate(-50%, -50%)' }}>
+                        <p className="mb-2" style={{ fontSize: '5vw' }} dangerouslySetInnerHTML={{ __html: banners[random].caption }}></p>
+                        <p className="mb-2" style={{ fontSize: '4vw' }} dangerouslySetInnerHTML={{ __html: banners[random].description }}></p>
                     </div>
                 </div>
 
