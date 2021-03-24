@@ -11,7 +11,7 @@ export interface UqOrder {
 }
 
 export interface UqHr {
-    SearchEmployeeByid: Query;
+    Employee: Tuid;
 }
 
 export interface UqProduct {
@@ -148,7 +148,6 @@ export interface UqSalesTask {
     SearchMyCustomerByDomain: Query;
     SearchMyCustomerByCategory: Query;
     AddMyCustomerPost: Action;
-    SearchSubordinate: Query;
     SearchCustomerOrder: Query;
     SearchMyCustomerDepartment: Query;
     SearchMyCustomerResearch: Query;

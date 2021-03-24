@@ -18,7 +18,9 @@ export class CTeam extends CUqBase {
         this.openVPage(VTeam, team);
     }
 
-    //搜索我的团队
+    /**
+     * 搜索请代理的团队
+     */
     searchTeam = async () => {
         let team = await this.uqs.salesTask.SearchTeam.table({});
         return team;
