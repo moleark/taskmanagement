@@ -1,5 +1,5 @@
 
-import { BoxId } from 'tonva';
+import { BoxId } from 'tonva-react';
 
 export interface Id {
     id: number;

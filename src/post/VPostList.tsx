@@ -1,7 +1,7 @@
 import * as React from "react";
 import classNames from "classnames";
 import { observer } from "mobx-react";
-import { VPage, Page, List, FA, tv, SearchBox, LMR, EasyTime } from "tonva";
+import { VPage, Page, List, FA, tv, SearchBox, LMR, EasyTime } from 'tonva-react';
 import { CPost } from "./CPost";
 import { setting } from "appConfig";
 import { observable } from "mobx";

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, ItemSchema, StringSchema, UiSchema, UiTextItem, Edit, LMR, FA, tv } from 'tonva';
+import { VPage, Page, ItemSchema, StringSchema, UiSchema, UiTextItem, Edit, LMR, FA, tv } from 'tonva-react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { CTeam } from './CTeam';

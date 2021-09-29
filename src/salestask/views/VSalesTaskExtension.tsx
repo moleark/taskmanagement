@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, Form, UiSchema, UiTextAreaItem, Context, UiCustom, Schema, Widget } from 'tonva';
+import { VPage, Page, Form, UiSchema, UiTextAreaItem, Context, UiCustom, Schema, Widget } from 'tonva-react';
 import { CSalesTask } from '../CSalesTask';
 import { observer } from 'mobx-react';
 import { Task } from '../model';

@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { FA } from 'tonva';
+import { FA } from 'tonva-react';
 import { TaskCommonType } from '../../taskCommonType';
-import { UiSchema, UiInputItem, UiRadio } from 'tonva';
+import { UiSchema, UiInputItem, UiRadio } from 'tonva-react';
 
 export const BagOrderCancel: TaskCommonType = {
     caption: '大额订单取消',

@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { FA } from 'tonva';
+import { FA } from 'tonva-react';
 import { TaskCommonType } from '../../taskCommonType';
-import { UiSchema, UiCheckItem, UiInputItem, UiRadio } from 'tonva';
+import { UiSchema, UiCheckItem, UiInputItem, UiRadio } from 'tonva-react';
 
 export const NewCustomer: TaskCommonType = {
     caption: '新客户开发',

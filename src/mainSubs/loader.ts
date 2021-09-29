@@ -1,5 +1,5 @@
-import { Entity } from 'tonva';
-import { CApp } from '../CApp';
+import { Entity } from 'tonva-react';
+import { CApp } from 'uq-app';
 //import { CSalesTaskApp } from 'CSalesTaskApp';
 
 export abstract class Loader<T> {
@@ -25,6 +25,6 @@ export abstract class Loader<T> {
         await this.loadToData(param, data);
         return data;
     }
-    protected abstract async loadToData(param: any, data: T): Promise<void>;
+    protected abstract loadToData(param: any, data: T): Promise<void>;
     protected abstract initData(): T;
 }

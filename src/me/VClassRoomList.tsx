@@ -1,5 +1,5 @@
 import * as React from "react";
-import { VPage, Page, List, tv, FA } from "tonva";
+import { VPage, Page, List, tv, FA } from 'tonva-react';
 import { CMe } from "./CMe";
 import { setting } from "appConfig";
 import { observer } from "mobx-react";

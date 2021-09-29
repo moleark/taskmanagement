@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { TaskCommonType } from '../../taskCommonType';
-import { UiSchema, UiInputItem, UiRadio, FA } from 'tonva';
+import { UiSchema, UiInputItem, UiRadio, FA } from 'tonva-react';
 
 export const NonReagent: TaskCommonType = {
     caption: '任务',

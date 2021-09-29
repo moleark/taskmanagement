@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { observable } from 'mobx';
 // import { observer } from 'mobx-react';
-import { tv, BoxId, QueryPager } from 'tonva';
-import { CUqBase } from '../CBase';
+import { tv, BoxId, QueryPager } from 'tonva-react';
 import { ProductImage } from '../tools/productImage';
 import { VProductSelect } from './VProductSelect';
 import { VProductDetail } from './VProductDetail';
@@ -19,6 +18,7 @@ import { VProductList } from './VProductList';
 import { observer } from 'mobx-react';
 import { VCustomerProductList } from './VCustomerProductList';
 import { VProduct } from './VProduct';
+import { CUqBase } from 'uq-app';
 
 /**
  *Query SearchPromotion( keyWord char(20), salesRegion ID SalesRegion, language ID Language )

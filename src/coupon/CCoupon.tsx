@@ -1,6 +1,6 @@
 import { observable } from 'mobx';
-import { QueryPager, nav } from 'tonva';
-import { CUqBase } from '../CBase';
+import { QueryPager, nav } from 'tonva-react';
+import { CUqBase } from 'uq-app';
 import { VCouponList, VExpiredCouponList } from 'coupon/VCouponList';
 import { VCouponDetail } from './VCouponDetail';
 import { VCreateCouponEnd } from './VCreateCouponEnd';

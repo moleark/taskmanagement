@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, LMR, FA } from 'tonva';
+import { VPage, Page, LMR, FA } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
 import { GLOABLE } from '../cartenv';

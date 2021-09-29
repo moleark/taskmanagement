@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { VPage, Page, Edit, Schema, UiSchema, UiInputItem, ItemSchema } from 'tonva';
+import { VPage, Page, Edit, Schema, UiSchema, UiInputItem, ItemSchema } from 'tonva-react';
 import { CCustomerUnit } from './CCustomerUnit';
 import { setting } from 'appConfig';
 

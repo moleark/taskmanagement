@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Page, VPage } from 'tonva';
+import { Page, VPage } from 'tonva-react';
 import { CCustomer } from './CCustomer'
 import { observer } from 'mobx-react';
 

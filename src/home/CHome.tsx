@@ -1,6 +1,6 @@
 import { observable } from 'mobx';
-import { QueryPager, PageItems, Tuid } from 'tonva';
-import { CUqBase } from '../CBase';
+import { QueryPager, PageItems, Tuid } from 'tonva-react';
+import { CUqBase } from 'uq-app';
 import { VHome } from './VHome';
 import { VSearchHeader } from './VSearchHeader';
 

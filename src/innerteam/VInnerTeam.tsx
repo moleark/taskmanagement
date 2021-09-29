@@ -1,5 +1,5 @@
 import * as React from "react";
-import { VPage, Page, FA, nav } from "tonva";
+import { VPage, Page, FA, nav } from 'tonva-react';
 import { CInnerTeam } from "./CInnerTeam";
 import { observer } from "mobx-react";
 import { observable } from "mobx";

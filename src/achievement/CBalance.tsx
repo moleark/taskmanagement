@@ -1,5 +1,4 @@
-import { nav, QueryPager } from "tonva";
-import { CUqBase } from "CBase";
+import { nav, QueryPager } from 'tonva-react';
 import { VBalance } from "./VBalance";
 import { VWithdrawal } from "./VWithdrawal";
 import { VWithdrawalEnd } from "./VWithdrawalEnd";
@@ -9,6 +8,7 @@ import { VAchievementDetail } from "./VAchievementDetail";
 import { VWithdrawalDetail } from "./VWithdrawalDetail";
 import { VAssistAchievementDetail } from "./VAssistAchievementDetail";
 import { VExplanation } from "./VExplanation";
+import { CApp, CUqBase } from 'uq-app';
 
 export class CBalance extends CUqBase {
     @observable pageBalanceHistory: QueryPager<any>;
@@ -30,6 +30,11 @@ export class CBalance extends CUqBase {
         waitWithdrawal: 0.0,
         level: 0
     };
+
+    constructor(cApp: CApp) {
+        super(cApp);
+
+    }
 
     //初始化
     protected async internalStart(param: any) {

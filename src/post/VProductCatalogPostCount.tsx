@@ -1,6 +1,6 @@
 import * as React from "react";
 import { observer } from "mobx-react";
-import { View } from "tonva";
+import { View } from 'tonva-react';
 import { observable } from "mobx";
 import { CPost } from "./CPost";
 export class VProductCatalogPostCount extends View<CPost> {

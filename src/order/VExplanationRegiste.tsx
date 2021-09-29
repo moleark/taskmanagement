@@ -1,7 +1,7 @@
 import * as React from "react";
 import { observable } from "mobx";
 import { observer } from "mobx-react";
-import { VPage, Page } from "tonva";
+import { VPage, Page } from 'tonva-react';
 import { COrder } from "./COrder";
 
 

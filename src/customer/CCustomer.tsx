@@ -1,8 +1,8 @@
 import * as React from "react";
 import { observable } from "mobx";
 import { observer } from "mobx-react";
-import { Context, QueryPager } from "tonva";
-import { CUqBase } from "../CBase";
+import { Context, QueryPager } from 'tonva-react';
+import { CUqBase } from 'uq-app';
 import { Task } from "../salestask/model";
 import { CAddress } from "../address/CAddress";
 import { VCustomerSelect } from "./VCustomerSelect";

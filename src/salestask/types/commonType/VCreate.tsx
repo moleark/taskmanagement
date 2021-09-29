@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, Form, Context } from 'tonva';
+import { VPage, Page, Form, Context } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { Task } from '../../model';
 import { CCommonType } from './CCommonType';

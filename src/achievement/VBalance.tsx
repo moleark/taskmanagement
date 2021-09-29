@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, FA, LMR } from 'tonva';
+import { VPage, Page, FA, LMR } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CBalance } from './CBalance';
 import { setting } from 'appConfig';

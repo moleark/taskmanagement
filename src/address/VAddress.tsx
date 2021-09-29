@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, FA } from 'tonva';
+import { VPage, Page, FA } from 'tonva-react';
 import { CAddress } from './CAddress';
 
 export class VAddress extends VPage<CAddress> {

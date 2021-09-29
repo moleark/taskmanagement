@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, TabProp, Tabs, TabCaptionComponent, List, EasyDate, nav, tv, LMR, Page } from 'tonva';
+import { VPage, TabProp, Tabs, TabCaptionComponent, List, EasyDate, nav, tv, LMR, Page } from 'tonva-react';
 import { COrder } from './COrder';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';

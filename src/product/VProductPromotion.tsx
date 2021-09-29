@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Page, VPage, List, tv, SearchBox, Scroller } from 'tonva';
+import { Page, VPage, List, tv, SearchBox, Scroller } from 'tonva-react';
 import { CProduct } from './CProduct';
 import { setting } from "appConfig";
 import { observer } from "mobx-react";

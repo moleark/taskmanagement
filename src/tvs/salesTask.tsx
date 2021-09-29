@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { tv } from 'tonva';
+import { tv } from 'tonva-react';
 
 const tvSalestask = (values: any) => {
     let { desciption, customer, type, sourceid } = values;

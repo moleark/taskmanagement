@@ -1,5 +1,5 @@
-import { QueryPager } from 'tonva';
-import { CUqBase } from '../CBase';
+import { QueryPager } from 'tonva-react';
+import { CUqBase } from 'uq-app';
 import { VMessage } from './VMessage';
 import { observable } from 'mobx';
 

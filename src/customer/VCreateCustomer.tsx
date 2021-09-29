@@ -2,7 +2,7 @@ import * as React from 'react';
 import {
     VPage, Page, Schema, Form, UiSchema, UiInputItem, Context,
     UiRadio, toUiSelectItems, LMR, FA, tv, BoxId
-} from 'tonva';
+} from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
 import { mobileValidation, nameValidation } from 'tools/inputValidations';

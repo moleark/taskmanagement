@@ -2,12 +2,12 @@ import { CSalesTask } from '../CSalesTask';
 import { VAi } from './VAi';
 import { VSelectBiz } from './VSelectBiz';
 import { TaskType, Task } from '../model';
-import { CUqSub } from '../../CBase';
+import { CApp, CUqSub, UQs } from 'uq-app';
 
 /**
  *
  */
-export class CSelectBiz extends CUqSub<CSalesTask> {
+export class CSelectBiz extends CUqSub<CApp, UQs, CSalesTask> {
     get owner(): CSalesTask { return this._owner as CSalesTask }
 
     taskBizs: any[];

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { CType } from '../CType';
-import { VPage } from 'tonva';
-import { FA } from 'tonva';
+import { VPage } from 'tonva-react';
+import { FA } from 'tonva-react';
 import { VDetail } from './VDetail';
 import { VCreate } from './VCreate';
 import { Task } from '../../model';

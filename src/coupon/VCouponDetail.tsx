@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, Prop, PropGrid, ComponentProp, LMR, EasyDate, User, FA } from 'tonva';
+import { VPage, Page, Prop, PropGrid, ComponentProp, LMR, EasyDate, User, FA } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CCoupon } from './CCoupon';
 import { setting } from 'appConfig';

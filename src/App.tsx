@@ -1,10 +1,10 @@
 import * as React from 'react';
 import './App.css';
-import { start, NavView, nav } from 'tonva';
+import { start, NavView, nav } from 'tonva-react';
 import { setting, appConfig } from './appConfig';
-import { CApp } from './CApp';
 import { GLOABLE } from 'ui';
 import { AssistApp, AgentApp } from 'model/sales';
+import { CApp } from 'uq-app';
 
 /*
 //启动前获取连接地址，判断是销售助手还是轻代理

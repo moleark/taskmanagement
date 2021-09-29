@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { CStart } from './CStart';
-import { VPage, Page, FA } from 'tonva';
+import { VPage, Page, FA } from 'tonva-react';
 import { setting } from 'appConfig';
 
 export class VError extends VPage<CStart> {

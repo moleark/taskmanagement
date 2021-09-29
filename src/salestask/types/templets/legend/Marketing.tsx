@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { FA, UiRadio } from 'tonva';
+import { FA, UiRadio } from 'tonva-react';
 import { TaskCommonType } from '../../taskCommonType';
-import { UiSchema, UiCheckItem, UiInputItem } from 'tonva';
+import { UiSchema, UiCheckItem, UiInputItem } from 'tonva-react';
 
 export const Marketing: TaskCommonType = {
     caption: '组合营销',

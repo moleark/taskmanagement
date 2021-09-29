@@ -1,9 +1,9 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import { View } from 'tonva';
+import { View } from 'tonva-react';
 import { CType } from '../CType';
-import { PropGrid, Prop, LMR, ComponentProp, FA, EasyDate } from 'tonva';
-import { tv } from 'tonva';
+import { PropGrid, Prop, LMR, ComponentProp, FA, EasyDate } from 'tonva-react';
+import { tv } from 'tonva-react';
 import { Task } from '../../model';
 /* eslint-disable */
 const cnRow = 'w-100 py-3';

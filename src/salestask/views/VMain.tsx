@@ -1,10 +1,10 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import { VPage, Page } from 'tonva';
+import { VPage, Page } from 'tonva-react';
 import { CSalesTask } from '../CSalesTask';
-import { List, LMR, EasyDate } from 'tonva';
+import { List, LMR, EasyDate } from 'tonva-react';
 import { observer } from 'mobx-react';
-import { tv } from 'tonva';
+import { tv } from 'tonva-react';
 import { setting } from 'appConfig';
 export class VMain extends VPage<CSalesTask> {
 

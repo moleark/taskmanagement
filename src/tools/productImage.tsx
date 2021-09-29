@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Image } from 'tonva';
+import { Image } from 'tonva-react';
 
 const imagePath = "http://www.jkchemical.com/static/Structure/";
 const altimagePath = "http://www.jkchemical.com/static/Structure/999.png";

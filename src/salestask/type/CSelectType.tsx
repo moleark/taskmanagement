@@ -1,11 +1,11 @@
-import { QueryPager } from 'tonva';
+import { QueryPager } from 'tonva-react';
 import { observable } from 'mobx';
-import { CUqSub } from '../../CBase';
 import { Task } from '../model';
 import { CSalesTask } from '../CSalesTask';
 import { VSelectType } from './VSelectType';
 import { VAi } from './VAi';
 import { VAiDetail } from './VAiDetail';
+import { CApp, CUqSub, UQs } from 'uq-app';
 
 /* eslint-disable */
 //页面类
@@ -13,7 +13,7 @@ import { VAiDetail } from './VAiDetail';
 /**
  *
  */
-export class CSelectType extends CUqSub<CSalesTask> {
+export class CSelectType extends CUqSub<CApp, UQs, CSalesTask> {
     private taskBook: any;
     private tasks: [];
     private customerid: number;

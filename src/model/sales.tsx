@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { CApp } from '../CApp';
+import { CApp } from 'uq-app';
 import { setting } from '../appConfig';
 import logo from 'images/logo.png';
 import assistlogo from 'images/assistlogo.png';
-import { nav, FA } from 'tonva';
+import { nav, FA } from 'tonva-react';
 import { GLOABLE } from 'ui';
 
 

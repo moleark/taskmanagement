@@ -1,4 +1,4 @@
-import { CUqBase } from "../CBase";
+import { CUqBase } from 'uq-app';
 
 export class CVIPCardType extends CUqBase {
 

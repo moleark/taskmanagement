@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { VPage, Page, tv, List, LMR, FA, EasyDate, Tabs, TabProp, TabCaptionComponent } from 'tonva';
+import { VPage, Page, tv, List, LMR, FA, EasyDate, Tabs, TabProp, TabCaptionComponent } from 'tonva-react';
 import { CCoupon } from './CCoupon';
 
 export class VCoupleAvailable extends VPage<CCoupon> {

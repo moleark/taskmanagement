@@ -1,7 +1,7 @@
 import * as React from "react";
 import { observable } from "mobx";
 import { observer } from "mobx-react";
-import { VPage, Page, tv, LMR, ComponentProp, Prop, PropGrid, FA, List, EasyDate, nav, EasyTime } from "tonva";
+import { VPage, Page, tv, LMR, ComponentProp, Prop, PropGrid, FA, List, EasyDate, nav, EasyTime } from 'tonva-react';
 import { CCustomer } from "./CCustomer";
 import { setting } from "appConfig";
 import { GLOABLE } from "ui";
@@ -147,21 +147,21 @@ export class VCustomerDetail extends VPage<CCustomer> {
                     {editIcon === "" ? (
                         undefined
                     ) : (
-                            <span
-                                className={iconeiditname}
-                                style={{ fontSize: "18px" }}
-                                onClick={editAction}
-                            ></span>
-                        )}
+                        <span
+                            className={iconeiditname}
+                            style={{ fontSize: "18px" }}
+                            onClick={editAction}
+                        ></span>
+                    )}
                     {otherIcon === "" ? (
                         undefined
                     ) : (
-                            <span
-                                className={iconeqitaname}
-                                style={{ fontSize: "18px" }}
-                                onClick={otherAction}
-                            ></span>
-                        )}
+                        <span
+                            className={iconeqitaname}
+                            style={{ fontSize: "18px" }}
+                            onClick={otherAction}
+                        ></span>
+                    )}
                 </div>
             </div>
         );
@@ -265,7 +265,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
                     if (!vipCardForWebUser) {
                         vipCardContent = <span className="small text-muted">
                             该客户无VIP卡，你可以
-                        <span className="text-primary cursor-pointer" onClick={() => showCreateVIPCardPage(webuser)}>去发卡</span>
+                            <span className="text-primary cursor-pointer" onClick={() => showCreateVIPCardPage(webuser)}>去发卡</span>
                         </span>;
                     } else {
                         let { vipCard, drawed } = vipCardForWebUser;

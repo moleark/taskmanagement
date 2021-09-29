@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, nav } from 'tonva';
+import { VPage, Page, nav } from 'tonva-react';
 import { CMe } from './CMe';
 import { setting, appConfig } from '../appConfig';
 

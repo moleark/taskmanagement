@@ -1,6 +1,6 @@
 import * as React from "react";
 import { observer } from "mobx-react";
-import { LMR, VPage, Image, FA } from "tonva";
+import { LMR, VPage, Image, FA } from 'tonva-react';
 import { CMe } from "./CMe";
 import classNames from "classnames";
 import copy from "copy-to-clipboard";
@@ -168,10 +168,10 @@ export class VMe extends VPage<CMe> {
         let right = setting.sales.isInner ? (
             <span></span>
         ) : (
-                <span onClick={onshowInvitationCode}>
-                    <FA className="h2" name="qrcode" />
-                </span>
-            );
+            <span onClick={onshowInvitationCode}>
+                <FA className="h2" name="qrcode" />
+            </span>
+        );
         let contener = (
             <div>
                 <div onClick={showMeDetail}>
@@ -180,19 +180,19 @@ export class VMe extends VPage<CMe> {
                 {setting.sales.isInner ? (
                     <></>
                 ) : (
-                        <div className="small mt-1">
-                            <span>邀请码:</span>
-                            <span className="px-1">{this.inviteCode}</span>
-                            <span
-                                style={{ border: "1px solid #999999" }}
-                                className="px-1 mx-1"
-                                onClick={this.copyClick}
-                            >
-                                <FA name="clone" className="mr-1" />
-                                复制
+                    <div className="small mt-1">
+                        <span>邀请码:</span>
+                        <span className="px-1">{this.inviteCode}</span>
+                        <span
+                            style={{ border: "1px solid #999999" }}
+                            className="px-1 mx-1"
+                            onClick={this.copyClick}
+                        >
+                            <FA name="clone" className="mr-1" />
+                            复制
                         </span>
-                        </div>
-                    )}
+                    </div>
+                )}
             </div>
         );
 

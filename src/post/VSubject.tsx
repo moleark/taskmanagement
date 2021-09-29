@@ -1,6 +1,6 @@
 import * as React from "react";
 import { observer } from "mobx-react";
-import { VPage, Page, List } from "tonva";
+import { VPage, Page, List } from 'tonva-react';
 import { CPost } from "./CPost";
 import { observable } from "mobx";
 import { setting } from "appConfig";

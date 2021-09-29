@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { CStart } from './CStart';
-import { VPage, Page, FA, nav } from 'tonva';
+import { VPage, Page, FA, nav } from 'tonva-react';
 import { consts } from '../consts';
 import { setting } from 'appConfig';
 

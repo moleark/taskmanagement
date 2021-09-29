@@ -1,5 +1,5 @@
 import * as React from "react";
-import { VPage, Page, Image, tv, nav } from "tonva";
+import { VPage, Page, Image, tv, nav } from 'tonva-react';
 import { observer } from "mobx-react";
 import { CStart } from "./CStart";
 import { setting } from "appConfig";
@@ -72,16 +72,16 @@ export class VConfirm extends VPage<CStart> {
         let footer: any = setting.sales.isInner ? (
             undefined
         ) : (
-                <div className="d-block">
-                    <button
-                        type="button"
-                        className="btn btn-primary w-100"
-                        onClick={onCreatePosition}
-                    >
-                        确认
+            <div className="d-block">
+                <button
+                    type="button"
+                    className="btn btn-primary w-100"
+                    onClick={onCreatePosition}
+                >
+                    确认
                 </button>
-                </div>
-            );
+            </div>
+        );
 
         let header = setting.sales.isInner ? "提示" : "邀请人";
         return (

@@ -1,4 +1,4 @@
-import { env } from "tonva";
+import { env } from 'tonva-react';
 
 export { jnkTop, assistjnkTop } from "./jnkTop";
 export { VMain } from './main';

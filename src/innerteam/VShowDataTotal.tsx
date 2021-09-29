@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'tonva';
+import { View } from 'tonva-react';
 import { CInnerTeam } from './CInnerTeam';
 
 export class VShowDataTotal extends View<CInnerTeam> {

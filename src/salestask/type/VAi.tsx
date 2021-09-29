@@ -1,6 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import { VPage, Page, tv, LMR, List, EasyDate } from 'tonva';
+import { VPage, Page, tv, LMR, List, EasyDate } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CSelectType } from './CSelectType';
 import { observable } from 'mobx';
@@ -23,7 +23,7 @@ export class VAi extends VPage<CSelectType> {
             'text-info': !(priorty > 0)
         })
 
-        let left = <div className={cnFlag}>{}</div>;
+        let left = <div className={cnFlag}>{ }</div>;
         let right = <div className="text-right">
             {deadline && <small className="text-muted">时限：<EasyDate date={deadline} /></small>}
         </div>

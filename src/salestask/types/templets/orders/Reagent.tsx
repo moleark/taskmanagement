@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { FA } from 'tonva';
+import { FA } from 'tonva-react';
 import { TaskCommonType } from '../../taskCommonType';
-import { UiSchema, UiInputItem, UiRadio } from 'tonva';
+import { UiSchema, UiInputItem, UiRadio } from 'tonva-react';
 
 export const Reagent: TaskCommonType = {
     caption: '试剂报价跟踪',

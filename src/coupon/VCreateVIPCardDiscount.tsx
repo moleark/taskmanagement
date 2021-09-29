@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, FA, List, tv } from 'tonva';
+import { VPage, Page, FA, List, tv } from 'tonva-react';
 import { CCoupon } from './CCoupon';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';

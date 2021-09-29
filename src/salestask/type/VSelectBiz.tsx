@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, LMR, List, tv } from 'tonva';
+import { VPage, Page, LMR, List, tv } from 'tonva-react';
 import { CSelectBiz } from './CSelectBiz';
 import { setting } from 'appConfig';
 

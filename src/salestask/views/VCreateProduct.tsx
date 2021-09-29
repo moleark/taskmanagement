@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, UiSchema, UiInputItem, Schema, Form, Context, tv } from 'tonva';
+import { VPage, Page, UiSchema, UiInputItem, Schema, Form, Context, tv } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { ProductImage } from '../../tools/productImage';
 import { CreateProduct } from '../model';

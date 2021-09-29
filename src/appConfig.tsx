@@ -1,11 +1,10 @@
 import _ from "lodash";
-import { AppConfig } from "tonva";
+import { AppConfig } from 'tonva-react';
 import { tvs } from "./tvs";
 import { jnkTop, assistjnkTop, GLOABLE } from "./ui";
 import { AppEnv } from "./model/sales";
 
 const appConfigBase: AppConfig = {
-    appName: "百灵威系统工程部/salestask",
     version: "1.2.99", // 版本变化，缓存的uqs才会重载
     tvs: tvs,
     loginTop: undefined,

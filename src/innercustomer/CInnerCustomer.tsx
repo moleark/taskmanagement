@@ -1,6 +1,6 @@
-import { QueryPager } from 'tonva';
+import { QueryPager } from 'tonva-react';
 import { observable } from 'mobx';
-import { CUqBase } from '../CBase';
+import { CUqBase } from 'uq-app';
 import { Task } from '../salestask/model';
 import { VInnerCustomerCall } from './VInnerCustomerCall';
 

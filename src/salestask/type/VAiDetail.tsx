@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { LMR, VPage, Page, EasyDate, ComponentProp, Prop, PropGrid, FA } from 'tonva';
-import { tv } from 'tonva';
+import { LMR, VPage, Page, EasyDate, ComponentProp, Prop, PropGrid, FA } from 'tonva-react';
+import { tv } from 'tonva-react';
 import classNames from 'classnames';
 import { observable } from 'mobx';
 import { CSelectType } from './CSelectType';

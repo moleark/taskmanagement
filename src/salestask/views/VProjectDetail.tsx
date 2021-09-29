@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { VPage, Page, List, tv } from 'tonva';
+import { VPage, Page, List, tv } from 'tonva-react';
 import { CSalesTask } from '../CSalesTask';
 
 export class VProjectDetail extends VPage<CSalesTask> {

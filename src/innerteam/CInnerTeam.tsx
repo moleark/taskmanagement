@@ -1,8 +1,8 @@
-import { CUqBase } from "../CBase";
+import { CUqBase } from 'uq-app';
 import { VInnerTeam } from "./VInnerTeam";
 import { VInnerTeamDetail, VInnerTeamMemberYearly } from "./VInnerTeamDetail";
 import { observable } from "mobx";
-import { QueryPager, nav } from "tonva";
+import { QueryPager, nav } from 'tonva-react';
 import moment from 'moment';
 import { VInnerPersonDetail } from "./VInnerPersonDetail";
 import { VInnerTeamDailyDetail } from "./VInnerTeamDailyDetail";

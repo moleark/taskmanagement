@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { View } from 'tonva';
+import { View } from 'tonva-react';
 import { CType } from '../CType';
-import { PropGrid, Prop, LMR, ComponentProp, FA } from 'tonva';
-import { tv } from 'tonva';
+import { PropGrid, Prop, LMR, ComponentProp, FA } from 'tonva-react';
+import { tv } from 'tonva-react';
 import { Task } from '../../model';
 
 export class VCreateTop extends View<CType> {

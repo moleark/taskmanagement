@@ -1,6 +1,6 @@
 import * as React from "react";
-import { nav, QueryPager } from "tonva";
-import { CUqBase } from "../CBase";
+import { nav, QueryPager } from 'tonva-react';
+import { CUqBase } from 'uq-app';
 import { VPostList } from "./VPostList";
 import { observable } from "mobx";
 import { VCustomer } from "./VCustomer";

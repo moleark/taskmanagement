@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { VPage, Page, PageItems, Schema, Form, Context, UiIdItem, UiCheckItem } from 'tonva';
+import { VPage, Page, PageItems, Schema, Form, Context, UiIdItem, UiCheckItem } from 'tonva-react';
 import { observer } from 'mobx-react';
-import { UiSchema, UiInputItem } from 'tonva';
+import { UiSchema, UiInputItem } from 'tonva-react';
 import { setting } from 'appConfig';
 import { CType } from '../CType';
 import { Task } from '../../model';

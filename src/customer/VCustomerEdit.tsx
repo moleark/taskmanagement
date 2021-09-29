@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { VPage, Page, Schema, UiSchema, UiInputItem, UiRadio, Edit, ItemSchema } from 'tonva';
+import { VPage, Page, Schema, UiSchema, UiInputItem, UiRadio, Edit, ItemSchema } from 'tonva-react';
 import { CCustomer } from './CCustomer';
 import { mobileValidation, nameValidation, emailValidation } from 'tools/inputValidations';
 import { setting } from 'appConfig';

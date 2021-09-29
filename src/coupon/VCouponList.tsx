@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, LMR, SearchBox, List, EasyDate, FA, DropdownActions, DropdownAction } from 'tonva';
+import { VPage, Page, LMR, SearchBox, List, EasyDate, FA, DropdownActions, DropdownAction } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CCoupon } from './CCoupon';
 import { setting } from 'appConfig';

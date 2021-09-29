@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { VPage, Page, Image } from 'tonva';
+import { VPage, Page, Image } from 'tonva-react';
 import QRCode from 'qrcode.react';
 import { setting } from 'appConfig';
 import { CMe } from './CMe';

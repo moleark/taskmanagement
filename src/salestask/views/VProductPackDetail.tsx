@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, tv, List } from 'tonva';
+import { VPage, Page, tv, List } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CSalesTask } from '../CSalesTask';
 import { ProductImage } from '../../tools/productImage';

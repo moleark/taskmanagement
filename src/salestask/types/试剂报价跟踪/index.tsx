@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FA } from 'tonva';
+import { FA } from 'tonva-react';
 import { CType } from '../CType';
 import { VDetail } from './VDetail';
 import { VCreate } from './VCreate';

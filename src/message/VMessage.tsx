@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, List, LMR, tv, EasyDate } from 'tonva';
+import { VPage, Page, List, LMR, tv, EasyDate } from 'tonva-react';
 import { CMessage } from './CMessage';
 import { setting } from 'appConfig';
 

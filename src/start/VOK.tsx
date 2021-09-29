@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { CStart } from './CStart';
-import { VPage, Page } from 'tonva';
+import { VPage, Page } from 'tonva-react';
 import { setting } from 'appConfig';
 
 export class VOK extends VPage<CStart> {

@@ -1,5 +1,5 @@
-import { nav } from 'tonva';
-import { CUqBase } from '../CBase';
+import { nav } from 'tonva-react';
+import { CUqBase } from 'uq-app';
 import { VStart } from './VStart';
 import { VOK } from './VOK';
 import { VError } from './VError';

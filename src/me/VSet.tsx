@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, nav, Prop, PropGrid } from 'tonva';
+import { VPage, Page, nav, Prop, PropGrid } from 'tonva-react';
 import { CMe } from './CMe';
 import { appConfig, setting } from '../appConfig';
 

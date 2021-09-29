@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { CProduct } from './CProduct';
-import { VPage, Page, SearchBox, Scroller, tv, List, Form } from 'tonva';
+import { VPage, Page, SearchBox, Scroller, tv, List, Form } from 'tonva-react';
 import { ProductImage } from 'tools/productImage';
 import { observer } from 'mobx-react';
 

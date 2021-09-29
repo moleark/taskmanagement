@@ -1,8 +1,8 @@
 import * as React from "react";
 // import { observer } from "mobx-react";
 import { observable } from "mobx";
-import { FA, QueryPager, nav } from "tonva";
-import { CUqBase } from "../CBase";
+import { FA, QueryPager, nav } from 'tonva-react';
+import { CUqBase } from 'uq-app';
 import { LoaderProductChemicalWithPrices } from "../product/item";
 import { VMain } from "./views/VMain";
 import { createTaskTypes } from "../salestask/types/createTypes";
@@ -487,7 +487,7 @@ export class CSalesTask extends CUqBase {
                         onClick={() => nav.showLogin(this.loginCallback, true)}
                     >
                         <FA name="sign-out" size="lg" /> 请登录
-                     </button>
+                    </button>
                     <div className="flex-fill" />
                     <div className="flex-fill" />
                 </div>

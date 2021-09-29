@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, LMR, List, tv, EasyDate, UserIcon } from 'tonva';
+import { VPage, Page, LMR, List, tv, EasyDate, UserIcon } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
 import { setting } from 'appConfig';

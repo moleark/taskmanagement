@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { VMe } from '../me/VMe';
 import { VTeam } from './VTeam';
 import { VTeamDetail } from './VTeamDetail';
-import { CUqBase } from '../CBase';
+import { CUqBase } from 'uq-app';
 import { observable } from 'mobx';
 
 /**

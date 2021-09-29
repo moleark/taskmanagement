@@ -1,4 +1,4 @@
-import { CUqBase } from '../CBase';
+import { CUqBase } from 'uq-app';
 import { VWebUserName } from './VWebUserName';
 
 export class CWebUser extends CUqBase {

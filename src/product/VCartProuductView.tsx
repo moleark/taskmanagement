@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, tv, FormField, ObjectSchema, NumSchema, UiSchema, UiCustom, RowContext, BoxId, Form, ItemSchema, ArrSchema, UiArr } from 'tonva';
+import { View, tv, FormField, ObjectSchema, NumSchema, UiSchema, UiCustom, RowContext, BoxId, Form, ItemSchema, ArrSchema, UiArr } from 'tonva-react';
 import { CProduct } from './CProduct';
 import { ProductImage } from 'tools/productImage';
 import { observer } from 'mobx-react';

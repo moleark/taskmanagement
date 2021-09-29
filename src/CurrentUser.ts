@@ -1,5 +1,5 @@
-import { User } from 'tonva';
-import { BoxId } from 'tonva';
+import { User } from 'tonva-react';
+import { BoxId } from 'tonva-react';
 import { observable, computed } from 'mobx';
 import { UQs } from './uqs';
 

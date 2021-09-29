@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { VPage, Page, LMR, SearchBox, FA, List, EasyDate, tv } from 'tonva';
+import { VPage, Page, LMR, SearchBox, FA, List, EasyDate, tv } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CCoupon } from './CCoupon';
 import { setting } from 'appConfig';

@@ -1,4 +1,4 @@
-import { Schema, UiSchema } from 'tonva';
+import { Schema, UiSchema } from 'tonva-react';
 
 export interface TaskCommonType {
     caption: string;

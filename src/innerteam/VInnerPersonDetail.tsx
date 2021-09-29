@@ -1,5 +1,5 @@
 import * as React from "react";
-import { VPage, Page, Loading, Tabs, TabProp, TabCaptionComponent, List, FA } from "tonva";
+import { VPage, Page, Loading, Tabs, TabProp, TabCaptionComponent, List, FA } from 'tonva-react';
 import { observer } from "mobx-react";
 import { setting } from "appConfig";
 import { CInnerTeam, dateFormat } from "./CInnerTeam";

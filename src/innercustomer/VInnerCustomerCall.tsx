@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { VPage, Page } from 'tonva';
+import { VPage, Page } from 'tonva-react';
 import { observer } from 'mobx-react';
-import { LMR, List, SearchBox, FA } from 'tonva';
+import { LMR, List, SearchBox, FA } from 'tonva-react';
 import { CInnerCustomer } from './CInnerCustomer';
 import { setting } from 'appConfig';
 

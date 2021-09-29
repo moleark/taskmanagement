@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, Form, UiSchema, UiInputItem, Schema, Context, Image } from 'tonva';
+import { VPage, Page, Form, UiSchema, UiInputItem, Schema, Context, Image } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CStart } from './CStart';
 import { setting } from 'appConfig';

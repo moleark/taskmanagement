@@ -1,9 +1,9 @@
 import { observable, autorun, IReactionDisposer } from 'mobx';
-import { Action, Query, TuidDiv, BoxId, Tuid } from 'tonva';
+import { Action, Query, TuidDiv, BoxId, Tuid } from 'tonva-react';
 //import { CCartApp } from '../CCartApp';
 import { PackRow } from 'product/product';
 import { groupByProduct } from 'tools/groupByProduct';
-import { CApp } from '../CApp';
+import { CApp } from 'uq-app';
 
 export interface CartItem2 {
     product: BoxId;

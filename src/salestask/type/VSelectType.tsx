@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, LMR, List, FA } from 'tonva';
+import { VPage, Page, LMR, List, FA } from 'tonva-react';
 import { CSelectType } from './CSelectType';
 import { setting } from 'appConfig';
 

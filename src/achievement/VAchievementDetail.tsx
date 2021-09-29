@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, LMR, List, EasyDate, TabCaption, Tabs, tv } from 'tonva';
+import { VPage, Page, LMR, List, EasyDate, TabCaption, Tabs, tv } from 'tonva-react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { CBalance } from './CBalance';

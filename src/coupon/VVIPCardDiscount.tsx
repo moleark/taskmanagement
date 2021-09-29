@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, List, Page, tv } from 'tonva';
+import { VPage, List, Page, tv } from 'tonva-react';
 import { CCoupon } from './CCoupon'
 
 export class VVIPCardDiscount extends VPage<CCoupon>{

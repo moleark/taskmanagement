@@ -1,6 +1,6 @@
-import { QueryPager } from 'tonva';
+import { QueryPager } from 'tonva-react';
 import { observable } from 'mobx';
-import { CUqBase } from '../CBase';
+import { CUqBase } from 'uq-app';
 import { VCustomerUnitSelect } from './VCustomerUnitSelect';
 import { VCreateCustomerUnit } from './VCreateCustomerUnit';
 import { VCustomerUnitDetail } from './VCustomerUnitDetail';

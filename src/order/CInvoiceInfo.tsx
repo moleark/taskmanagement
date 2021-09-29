@@ -1,4 +1,4 @@
-import { CUqBase } from '../CBase';
+import { CUqBase } from 'uq-app';
 import { VInvoiceInfo } from './VInvoiceInfo';
 
 export class CInvoiceInfo extends CUqBase {

@@ -1,4 +1,5 @@
-import { CAppBase, IConstructor, UserCache } from "tonva";
+import { CAppBase, IConstructor, UserCache } from 'tonva-react';
+/*
 import { CSalesTask } from "./salestask";
 import { CCustomer } from "./customer/CCustomer";
 import { CProduct } from "./product/CProduct";
@@ -28,7 +29,6 @@ import { COrder } from 'order/COrder';
 import { CCart } from 'cart/CCart';
 import { Cart } from 'cart/Cart'
 
-/* eslint-disable */
 
 export class CApp extends CAppBase {
     // topKey: any;
@@ -42,7 +42,6 @@ export class CApp extends CAppBase {
     productCart: ProductCart;
     postCustomer: PostCustomer;
     currentUser: WebUser;
-    /** 定义 Conctorlle*/
     cSalesTask: CSalesTask;
     cCustomer: CCustomer;
     cProduct: CProduct;
@@ -76,14 +75,6 @@ export class CApp extends CAppBase {
     }
     protected async internalStart() {
 
-        /*
-        //根据网址判断是什么APP
-        if (isAssist) {
-            setting.sales = new AssistSales(this);
-        } else {
-            setting.sales = new AgentSales(this);
-        }
-        */
         setting.sales.setCApp(this); // = IsAssistApp ? new AssistApp(this) : new AgentApp(this);
 
         let { SALESREGION_CN, CHINESE } = GLOABLE;
@@ -129,10 +120,8 @@ export class CApp extends CAppBase {
         this.cCart = this.newC(CCart);
 
         // this.cProduce = this.newC(CProduce);
-        /** 启动销售任务列表*/
         // this.cSalesTask.start();
 
-        /**计算业绩**/
         //await this.cMe.onComputeAchievement();
 
         //加载轮播图
@@ -177,3 +166,4 @@ export class CApp extends CAppBase {
         this.userCache.use(userId);
     }
 }
+*/

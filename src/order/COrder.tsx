@@ -1,6 +1,6 @@
 import * as React from "react";
-import { CUqBase } from "../CBase";
-import { BoxId, QueryPager } from "tonva";
+import { CUqBase } from 'uq-app';
+import { BoxId, QueryPager } from 'tonva-react';
 import { observable } from "mobx";
 import { VOrderStatus } from "./VOrderStatus";
 import { groupByProduct } from '../tools/groupByProduct';

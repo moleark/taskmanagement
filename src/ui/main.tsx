@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { VPage, TabCaptionComponent, Page, Image } from 'tonva';
+import { VPage, TabCaptionComponent, Page, Image } from 'tonva-react';
 import { observable } from 'mobx';
-import { CApp } from 'CApp';
+import { CApp } from 'uq-app';
 import { setting } from 'appConfig';
 import { browser } from 'tools/browser';
 /* eslint-disable */

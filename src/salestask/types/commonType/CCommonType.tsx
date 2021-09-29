@@ -7,7 +7,7 @@ import { VCreate } from './VCreate';
 export class CCommonType extends CType {
     taskCommonType: TaskCommonType;
     constructor(taskCommonType: TaskCommonType, res: any) {
-        super(res);
+        super();
         this.taskCommonType = taskCommonType;
         this.icon = taskCommonType.icon;
         this.caption = taskCommonType.caption;

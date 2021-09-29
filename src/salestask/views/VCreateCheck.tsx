@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, LMR, Prop, ComponentProp, FA, tv, PropGrid } from 'tonva';
+import { VPage, Page, LMR, Prop, ComponentProp, FA, tv, PropGrid } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { Task } from '../model';
 import { CSalesTask } from '../CSalesTask';

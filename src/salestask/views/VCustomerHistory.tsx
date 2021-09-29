@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, LMR, List, EasyDate, tv } from 'tonva';
+import { VPage, Page, LMR, List, EasyDate, tv } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CSalesTask } from '../CSalesTask';
 import { setting } from 'appConfig';

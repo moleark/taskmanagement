@@ -1,6 +1,6 @@
 import * as React from "react";
-import { CUqBase } from "../CBase";
-import { BoxId, RowContext } from "tonva";
+import { CUqBase } from 'uq-app';
+import { BoxId, RowContext } from 'tonva-react';
 import { VCartLabel } from './VCartLabel';
 import { CartPackRow, CartItem2 } from './Cart';
 import { VCustomerCart } from './VCustomerCart';

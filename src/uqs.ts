@@ -1,5 +1,4 @@
-import { Tuid, Map, Query, Action, Sheet, Book } from "tonva";
-import { Many } from "lodash";
+import { Tuid, Map, Query, Action, Sheet, Book } from 'tonva-react';
 
 export interface UqOrder {
     SetCart: Action;

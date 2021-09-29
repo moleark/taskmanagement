@@ -13,7 +13,7 @@ import {
     FA,
     tv,
     BoxId
-} from "tonva";
+} from 'tonva-react';
 import { observer } from "mobx-react";
 import { CCustomer } from "./CCustomer";
 import { mobileValidation, nameValidation } from "tools/inputValidations";

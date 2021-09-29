@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, List, LMR, FA, User, UserView } from 'tonva';
+import { VPage, Page, List, LMR, FA, User, UserView } from 'tonva-react';
 import { CTeam } from './CTeam';
 import { setting } from 'appConfig';
 

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, FA, UiSelectBase } from "tonva";
+import { View, FA, UiSelectBase } from 'tonva-react';
 import { CType } from "../CType";
 import { Task } from "../../model";
 

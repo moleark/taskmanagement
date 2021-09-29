@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, FA, EasyDate, nav } from 'tonva';
+import { VPage, Page, FA, EasyDate, nav } from 'tonva-react';
 import { COrder } from './COrder';
 import { observable } from 'mobx';
 import { GLOABLE } from "ui";

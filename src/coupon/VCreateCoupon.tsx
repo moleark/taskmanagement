@@ -2,7 +2,7 @@ import * as React from 'react';
 import _ from 'lodash';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { VPage, Page, Schema, Form, UiSchema, Context, Widget, UiCustom } from 'tonva';
+import { VPage, Page, Schema, Form, UiSchema, Context, Widget, UiCustom } from 'tonva-react';
 import { CCoupon } from './CCoupon';
 import { GLOABLE } from 'ui';
 import { setting } from 'appConfig';
