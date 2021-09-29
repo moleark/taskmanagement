@@ -24,7 +24,7 @@ import { COrder } from "order/COrder";
 import { CCart } from "cart/CCart";
 import { CVIPCardType } from "vipCardType/CVIPCardType";
 import { UserCache } from "tonva-react";
-import { setting } from "appConfig";
+import { setting, appSettings } from "appConfig";
 import { GLOABLE } from "ui";
 
 const gaps = [10, 3, 3, 3, 3, 3, 5, 5, 5, 5, 5, 5, 5, 5, 10, 10, 10, 10, 15, 15, 15, 30, 30, 60];
@@ -131,20 +131,7 @@ export class CApp extends CUqApp {
     }
 
     async showMain() {
-        let hasQualification: boolean = false;
-        let { salesTask } = this.uqs;
-        if (GLOABLE.IsAssistApp) {
-            let result = await salesTask.WebUserEmployeeMap.obj({ webuser: this.user.id });
-            if (result !== undefined) {
-                hasQualification = true;
-            }
-        } else {
-            let result = await salesTask.SearchPosition.obj({ position: undefined });
-            if (result !== undefined) {
-                hasQualification = true;
-            }
-        }
-
+        let hasQualification: boolean = await appSettings.userQualified();
         if (hasQualification) {
             this.openVPage(VMain);
         } else {

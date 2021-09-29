@@ -6,14 +6,11 @@ import './index.css';
 import 'assests/iconfont.css';
 import { App } from 'uq-app';
 import { GLOABLE } from 'ui';
-import { setting } from 'appConfig';
-import { AgentApp, AssistApp } from 'model/sales';
+import { setting, appSettings } from 'appConfig';
 
+setting.sales = appSettings;
 
-export const currentApp = GLOABLE.IsAssistApp ? new AssistApp() : new AgentApp();
-setting.sales = currentApp;
-
-let { title, logo } = currentApp;
+let { title, logo } = appSettings;
 document.title = title;
 let $favicon: any = document.querySelector('link[rel="shortcut icon"]');
 $favicon.attributes.href.value = logo;

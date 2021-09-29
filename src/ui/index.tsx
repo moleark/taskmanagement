@@ -4,7 +4,6 @@ export { jnkTop, assistjnkTop } from "./jnkTop";
 export { VMain } from './main';
 
 const GLOABLE_PRODUCTION = {
-    IsAssistApp: document.domain === "localhost",
     CHINA: 44,
     CHINESE: 196,
     SALESREGION_CN: 1,
@@ -15,7 +14,6 @@ const GLOABLE_PRODUCTION = {
 }
 
 const GLOABLE_TEST = {
-    IsAssistApp: window.location.pathname.search(/\/#test/) < 0,
     CHINA: 43,
     CHINESE: 197,
     SALESREGION_CN: 4,
