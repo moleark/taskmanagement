@@ -26,6 +26,7 @@ if (document.domain === setting.assistDomain) {
 }
 */
 
+/*
 export const currentApp = GLOABLE.IsAssistApp ? new AssistApp() : new AgentApp();
 setting.sales = currentApp
 
@@ -49,3 +50,4 @@ class App extends React.Component {
 }
 
 export default App;
+*/

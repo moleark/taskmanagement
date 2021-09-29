@@ -33,13 +33,13 @@ export class CApp extends CUqApp {
 
     currentMyCustomer: any;
     cHome: CHome;
-    cProduct: CProduct;
     cart: Cart;
     currentSalesRegion: any;
     currentLanguage: any;
     productCart: ProductCart;
     postCustomer: PostCustomer;
     currentUser: WebUser;
+
     /** 定义 Conctorlle*/
     cSalesTask: CSalesTask;
     cCustomer: CCustomer;
@@ -48,6 +48,7 @@ export class CApp extends CUqApp {
     cInnerTeam: CInnerTeam;
     cStart: CStart;
     cMessage: CMessage;
+    cProduct: CProduct;
     cCustomerUnit: CCustomerUnit;
     cCoupon: CCoupon;
     cInnerCustomer: CInnerCustomer;
@@ -62,7 +63,7 @@ export class CApp extends CUqApp {
     private userCache: UserCache<any>;
 
     private setUser() {
-        this.currentUser = new WebUser(this.uqs); //this.cUqWebUser, this.cUqCustomer);
+        this.currentUser = new WebUser(this.uqs);
         if (this.isLogined) {
             this.currentUser.setUser(this.user);
         }
@@ -70,9 +71,7 @@ export class CApp extends CUqApp {
 
     protected async internalStart(isUserLogin: boolean) {
         setUI(this.uqs);
-        this.cHome = this.newC(CHome);
-        this.cProduct = this.newC(CProduct);
-        setting.sales.setCApp(this); // = IsAssistApp ? new AssistApp(this) : new AgentApp(this);
+        setting.sales.setCApp(this);
 
         let { SALESREGION_CN, CHINESE } = GLOABLE;
         this.currentSalesRegion = await this.uqs.common.SalesRegion.load(
@@ -97,6 +96,9 @@ export class CApp extends CUqApp {
         this.productCart = new ProductCart();
         this.postCustomer = new PostCustomer();
 
+        this.cHome = this.newC(CHome);
+        this.cProduct = this.newC(CProduct);
+
         this.cCustomer = this.newC(CCustomer);
         this.cProduct = this.newC(CProduct);
         this.cSalesTask = this.newC(CSalesTask);
@@ -108,7 +110,7 @@ export class CApp extends CUqApp {
         this.cCustomerUnit = this.newC(CCustomerUnit);
         this.cCoupon = this.newC(CCoupon);
         this.cInnerCustomer = this.newC(CInnerCustomer);
-        // this.cBalance = this.newC(CBalance);
+        this.cBalance = this.newC(CBalance);
         this.cPost = this.newC(CPost);
         this.cVIPCardType = this.newC(CVIPCardType);
         this.cHome = this.newC(CHome);

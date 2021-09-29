@@ -15,13 +15,13 @@ export const appConfig: AppConfig = {
     version: '0.1.0',
     app: {
         dev: jk,
-        name: 'salestask'
+        name: 'salesTask'
     },
     uqs: [
         {
             dev: jk,
-            name: 'hr',
-            alias: 'hr',
+            name: 'salesTask',
+            alias: 'salesTask',
             version: '0.1.0',
         },
     ],

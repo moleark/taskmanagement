@@ -1,12 +1,11 @@
-//=== UqApp builder created on Tue Sep 28 2021 23:29:17 GMT+0800 (China Standard Time) ===//
-import * as JkHr from './JkHr';
+//=== UqApp builder created on Wed Sep 29 2021 16:29:57 GMT+0800 (China Standard Time) ===//
+import * as JkSalesTask from './JkSalesTask';
 import { UQs as AppUQs } from 'uqs';
 
 export interface UQs extends AppUQs {
-    JkHr: JkHr.UqExt;
+    JkSalesTask: JkSalesTask.UqExt;
 }
 
-
 export function setUI(uqs: UQs) {
-    JkHr.setUI(uqs.JkHr);
+    JkSalesTask.setUI(uqs.JkSalesTask);
 }
