@@ -24,16 +24,15 @@ export class VEmployeeHistory extends VPage<CSalesTask> {
         let right = (
             <div className="text-right">
                 {" "}
-                {tv(customer, v => (
-                    <small>{tv(v.unit)}</small>
-                ))}{" "}
+                {tv(customer, v => (<small>{tv(v.unit, u => u.name)}</small>))}
+                {" "}
             </div>
         );
         return (
             <LMR className="pl-2 pr-3 py-1" left={left}>
                 <LMR className="" right={right}>
                     <div className=" my-1 mr-3 font-weight-bold">
-                        {tv(customer)}
+                        {tv(customer, v => v.name)}
                     </div>
                 </LMR>
                 <LMR className="">

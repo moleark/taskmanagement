@@ -205,7 +205,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
 
         let rows: Prop[] = [];
         if (unit)
-            rows.push(this.geneCustomerPropertyComponent("customer", "单位", <>{tv(unit)}</>));
+            rows.push(this.geneCustomerPropertyComponent("customer", "单位", <>{tv(unit, v => v.name)}</>));
         rows.push(this.geneCustomerPropertyComponent("name", "姓名", name));
         if (salutation)
             rows.push(this.geneCustomerPropertyComponent("salutation", "称谓", salutation));
