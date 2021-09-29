@@ -22,7 +22,7 @@
         "aliyun-api-gateway": "^1.1.6",
         "baidu-aip-sdk": "^2.4.6",
         "bizcharts": "^4.1.11",
-        "bootstrap": "^5.1.1",
+        "bootstrap": "^4.6.0",
         "classnames": "^2.3.1",
         "copy-to-clipboard": "^3.3.1",
         "file-saver": "^2.0.5",

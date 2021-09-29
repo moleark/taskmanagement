@@ -1,6 +1,7 @@
 //=== UqApp builder created on Tue Jan 05 2021 18:41:24 GMT-0500 (GMT-05:00) ===//
 import { setting } from 'appConfig';
 import React from 'react';
+import { observable } from 'mobx';
 import { VPage, TabProp, TabCaptionComponent, t, TabsProps, PageWebNav, Image, Page } from 'tonva-react';
 import { browser } from 'tools/browser';
 import { CApp } from './CApp';
@@ -11,6 +12,11 @@ function caption(label: string | JSX.Element, icon: string) {
 }
 
 export class VMain extends VPage<CApp> {
+
+    async open(param?: any) {
+        this.calcSum();
+        this.openPage(this.render);
+    }
 
     opensrc = () => {
         window.open(setting.sales.downloadAppurl);
@@ -87,5 +93,10 @@ protected get tabsProps(): TabsProps {
             navHeader: <div>webNav header</div>,
             navFooter: <div>webNav footer</div>,
         };
+    }
+
+    count = observable.box<number>(0);
+    protected calcSum = () => {
+        this.count.set(0);
     }
 }

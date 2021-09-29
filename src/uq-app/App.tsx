@@ -3,12 +3,6 @@ import { NavView, start, nav } from 'tonva-react';
 import { CApp } from './CApp';
 import { appConfig } from './appConfig';
 import React from 'react';
-import { GLOABLE } from 'ui';
-import { setting } from 'appConfig';
-import { AgentApp, AssistApp } from 'model/sales';
-
-export const currentApp = GLOABLE.IsAssistApp ? new AssistApp() : new AgentApp();
-setting.sales = currentApp
 
 export const App: React.FC = () => {
     nav.setSettings(appConfig);
@@ -17,4 +11,3 @@ export const App: React.FC = () => {
     }
     return <NavView onLogined={onLogined} />;
 }
-
