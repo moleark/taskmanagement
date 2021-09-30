@@ -6,7 +6,7 @@ import { MainProductChemical } from '../../model/product';
 import { ViewMainSubs } from '../../mainSubs';
 import { renderBrand } from '../../product/CProduct';
 import { CSalesTask } from '../CSalesTask';
-import { setting } from 'appConfig';
+
 import { ProductPackRow } from 'product/product';
 /* eslint-disable */
 const schema: ItemSchema[] = [
@@ -151,7 +151,7 @@ export class VCreateProductPack extends VPage<CSalesTask> {
 
         let viewProduct = new ViewMainSubs<MainProductChemical, ProductPackRow>(this.renderProduct, this.renderPack);
         viewProduct.model = product;
-        return <Page header={"添加产品包装"} headerClassName={setting.pageHeaderCss}>
+        return <Page header={"添加产品包装"}  >
             <div className="px-2 py-2 bg-white mb-3">{viewProduct.render()}</div>
             <button type="button" className="btn btn-primary w-100" onClick={this.onCreateTaskProductPack} >添加</button>
         </Page>

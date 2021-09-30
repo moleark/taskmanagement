@@ -18,7 +18,7 @@ import { CUqBase } from "./CBase";
 import { VMain, GLOABLE } from "./ui";
 import { ProductCart } from "model/productcart";
 import { CBalance } from "achievement/CBalance";
-import { setting } from "appConfig";
+
 import { CPost } from "post/CPost";
 import { PostCustomer } from "post/postcustomer";
 import { CInnerTeam } from "innerteam/CInnerTeam";
@@ -75,7 +75,7 @@ export class CApp extends CAppBase {
     }
     protected async internalStart() {
 
-        setting.sales.setCApp(this); // = IsAssistApp ? new AssistApp(this) : new AgentApp(this);
+        appSettings.setCApp(this); // = IsAssistApp ? new AssistApp(this) : new AgentApp(this);
 
         let { SALESREGION_CN, CHINESE } = GLOABLE;
         this.currentSalesRegion = await this.uqs.common.SalesRegion.load(

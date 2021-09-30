@@ -2,7 +2,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
 import { VPage, Page, LMR, List, SearchBox, FA } from 'tonva-react';
-import { setting } from 'appConfig';
+
 
 
 export class VCustomerSelect extends VPage<CCustomer> {
@@ -31,7 +31,7 @@ export class VCustomerSelect extends VPage<CCustomer> {
 
         let right = <div onClick={onshowSelectCustomerUnit} className="cursor-pointer px-3 py-2"><FA name="plus" /></div>;
         let none = <div className="my-3 mx-2 text-warning">请搜索客户！</div>;
-        return <Page header="选择客户" headerClassName={setting.pageHeaderCss} onScrollBottom={this.onScrollBottom} right={right} >
+        return <Page header="选择客户" onScrollBottom={this.onScrollBottom} right={right} >
             <SearchBox className="px-1 w-100  mt-2 mr-2"
                 size='md'
                 onSearch={(key: string) => this.controller.searchByKey(key)}

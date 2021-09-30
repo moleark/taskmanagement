@@ -3,7 +3,7 @@ import { VPage, Page, UiSchema, UiInputItem, Schema, Form, Context } from 'tonva
 import { observer } from 'mobx-react';
 import { Task } from '../model';
 import { CSalesTask } from '../CSalesTask';
-import { setting } from 'appConfig';
+
 
 export class VCreateTaskOfCustomer extends VPage<CSalesTask> {
 
@@ -56,7 +56,7 @@ export class VCreateTaskOfCustomer extends VPage<CSalesTask> {
 
     private page = observer(() => {
 
-        return <Page header="添加任务" headerClassName={setting.pageHeaderCss} >
+        return <Page header="添加任务" >
             <div className="mx-3">
                 <Form ref={v => this.form = v} className="my-3"
                     schema={this.schema}

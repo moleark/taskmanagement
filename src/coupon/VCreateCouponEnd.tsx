@@ -5,7 +5,7 @@ import { CCoupon } from './CCoupon';
 import copy from 'copy-to-clipboard';
 import { observable } from 'mobx';
 import { GLOABLE } from 'ui';
-import { setting } from 'appConfig';
+import { appSettings } from 'appConfig';
 import QRCode from 'qrcode.react';
 
 export class VCreateCouponEnd extends VPage<CCoupon> {
@@ -31,7 +31,7 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
 
         let { productCart } = this.controller.cApp;
         let ids = productCart.getIds();
-        let url = setting.sales.shareUrl(type, code, ids, platform);
+        let url = appSettings.shareUrl(type, code, ids, platform);
         let onshare = () => this.share(url);
         let share = <div className="text-center" style={{ width: 'auto', height: '10%' }} >
         </div>;
@@ -40,10 +40,10 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
             share = <span className="text-info cursor-info mx-2" onClick={onshare} >分享</span>;
         }
 
-        let header = setting.couponType[type];
-        return <Page header={header} headerClassName={setting.pageHeaderCss}>
+        let header = appSettings.couponType[type];
+        return <Page header={header}>
             <div id="qrid" className="text-center" >
-                <Image src={setting.sales.logo} className="mt-4" style={{ width: '40%', height: '40%', margin: '2rem auto, 0 auto' }} />
+                <Image src={appSettings.logo} className="mt-4" style={{ width: '40%', height: '40%', margin: '2rem auto, 0 auto' }} />
                 <div>
                     < QRCode style={{ margin: '2rem 0 0 0' }}
                         value={url}  //value参数为生成二维码的链接
@@ -83,10 +83,10 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
             let { type, discount, code } = this.coupon;
             // @ts-ignore  屏蔽错误 
             window.plusShare({
-                title: setting.sales.shareTitle(type),//应用名字  
-                content: setting.sales.shareContent(type, discount),
+                title: appSettings.shareTitle(type),//应用名字  
+                content: appSettings.shareContent(type, discount),
                 href: url,//分享出去后，点击跳转地址 
-                thumbs: [setting.sales.sharelogo] //分享缩略图  
+                thumbs: [appSettings.sharelogo] //分享缩略图  
             }, function (result) {
             });
             let { cApp, addCouponSendHistory } = this.controller;

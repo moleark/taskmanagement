@@ -4,7 +4,7 @@ import { CSalesTask } from '../CSalesTask';
 import { observer } from 'mobx-react';
 import { Task } from '../model';
 import { observable } from 'mobx';
-import { setting } from 'appConfig';
+
 
 
 /* eslint-disable */
@@ -85,7 +85,7 @@ export class VSalesTaskExtension extends VPage<CSalesTask> {
     }
 
     private page = observer((product: any) => {
-        return <Page header="延迟" headerClassName={setting.pageHeaderCss} >
+        return <Page header="延迟" >
             <div className="App-container container text-left">
                 <Form ref={v => this.form = v} className="my-3"
                     schema={schema}

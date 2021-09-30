@@ -2,7 +2,6 @@ import * as React from 'react';
 import { VPage, Page, List, LMR, EasyTime } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CBalance } from './CBalance';
-import { setting } from 'appConfig';
 
 export class VBalanceHistory extends VPage<CBalance> {
 
@@ -24,7 +23,7 @@ export class VBalanceHistory extends VPage<CBalance> {
 
     private page = observer(() => {
 
-        return <Page header="历史记录" headerClassName={setting.pageHeaderCss}   >
+        return <Page header="历史记录">
             <List items={this.controller.balanceHistory} item={{ render: this.renderOrder }} none="" />
         </Page >
     });

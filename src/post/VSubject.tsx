@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 import { VPage, Page, List } from 'tonva-react';
 import { CPost } from "./CPost";
 import { observable } from "mobx";
-import { setting } from "appConfig";
+
 
 export class VSubject extends VPage<CPost> {
     @observable name: any;
@@ -16,7 +16,7 @@ export class VSubject extends VPage<CPost> {
 
     private page = observer(() => {
         return (
-            <Page header={this.name} headerClassName={setting.pageHeaderCss}>
+            <Page header={this.name}  >
                 <List before={""} none="无" items={this.pageSubject} item={{ render: this.renderItem }} />
             </Page>
         );

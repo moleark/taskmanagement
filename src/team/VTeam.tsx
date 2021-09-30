@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { VPage, Page, List, LMR, FA, User, UserView } from 'tonva-react';
 import { CTeam } from './CTeam';
-import { setting } from 'appConfig';
+
 
 export class VTeam extends VPage<CTeam> {
 
@@ -34,7 +34,7 @@ export class VTeam extends VPage<CTeam> {
 
     private page = () => {
         let none = <div className="my-3 mx-2 text-muted">还没有团队哦！马上发展团队吧！！</div>;
-        return <Page header='我的团队' headerClassName={setting.pageHeaderCss} >
+        return <Page header='我的团队' >
             <List before={''} none={none} items={this.team} item={{ render: this.renderItem }} />
         </Page>
     }

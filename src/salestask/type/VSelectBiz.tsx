@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { VPage, Page, LMR, List, tv } from 'tonva-react';
 import { CSelectBiz } from './CSelectBiz';
-import { setting } from 'appConfig';
+
 
 export class VSelectBiz extends VPage<CSelectBiz> {
 
@@ -25,7 +25,7 @@ export class VSelectBiz extends VPage<CSelectBiz> {
     private page = () => {
         let { taskType, taskBizs } = this.controller;
         let none = <div className="my-3 mx-2 text-warning">正在筹备中</div>;
-        return <Page header={taskType.description || taskType.name} headerClassName={setting.pageHeaderCss} >
+        return <Page header={taskType.description || taskType.name} >
             <List none={none} items={taskBizs} item={{ render: this.renderItem, onClick: this.onClickTaskBiz }} />
         </Page>
     };

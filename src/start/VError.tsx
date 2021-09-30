@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { CStart } from './CStart';
 import { VPage, Page, FA } from 'tonva-react';
-import { setting } from 'appConfig';
+
 
 export class VError extends VPage<CStart> {
     async open(position: any) {
@@ -10,7 +10,7 @@ export class VError extends VPage<CStart> {
 
 
     private page = (position: any) => {
-        return <Page header="无法通过" back="none" headerClassName={setting.pageHeaderCss}>
+        return <Page header="无法通过" back="none"  >
             <div className="p-5 text-center">
                 <p className="text-primary mb-5">
                     <FA name="minus-circle" size="2x" className="text-danger" />

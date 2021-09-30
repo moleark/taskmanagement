@@ -1,7 +1,7 @@
 import * as React from "react";
 import { observer } from "mobx-react";
 import { VPage, Page, List, tv, FA, EasyTime, SearchBox } from 'tonva-react';
-import { setting } from "appConfig";
+
 import { CPost } from "./CPost";
 
 export class VDomainPost extends VPage<CPost> {
@@ -24,7 +24,7 @@ export class VDomainPost extends VPage<CPost> {
             </div>
         );
         return (
-            <Page header={"研究领域"} headerClassName={setting.pageHeaderCss} right={right} onScrollBottom={this.onScrollBottom} >
+            <Page header={"研究领域"} right={right} onScrollBottom={this.onScrollBottom} >
                 <List before={""} none={none} items={pageDomainPost} item={{ render: this.renderItem }} />
             </Page>
         );

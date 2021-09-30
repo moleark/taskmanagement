@@ -3,7 +3,7 @@ import { VPage, Page, Form, Context } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { Task } from '../../model';
 import { CCommonType } from './CCommonType';
-import { setting } from 'appConfig';
+
 
 
 export class VCreate extends VPage<CCommonType> {
@@ -37,7 +37,7 @@ export class VCreate extends VPage<CCommonType> {
     render(param: any) {
         let { schema, uiSchema } = this.controller.taskCommonType;
         let footer = <button type="button" className="btn btn-primary w-100" onClick={this.onAddSalesTask}>保存</button>;
-        return <Page header={this.controller.caption} footer={footer} headerClassName={setting.pageHeaderCss} >
+        return <Page header={this.controller.caption} footer={footer} >
             <div className="App-container container text-left">
                 {this.controller.renderCreateTop(param)}
                 <Form ref={v => this.form = v} className="my-3"

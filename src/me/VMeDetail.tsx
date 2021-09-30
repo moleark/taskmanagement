@@ -2,7 +2,7 @@ import * as React from 'react';
 import { VPage, Page, ItemSchema, ImageSchema, StringSchema, UiSchema, UiTextItem, UiImageItem, Edit, nav, userApi, LMR, FA } from 'tonva-react';
 import { CMe } from './CMe';
 import { observable } from 'mobx';
-import { setting } from 'appConfig';
+
 
 export class VMeDetail extends VPage<CMe> {
 
@@ -48,7 +48,7 @@ export class VMeDetail extends VPage<CMe> {
             <FA className="fa-lg" name="qrcode" />
         </div>
         let { id } = nav.user;
-        return <Page header='个人信息' headerClassName={setting.pageHeaderCss} >
+        return <Page header='个人信息' >
             <Edit schema={this.schema} uiSchema={this.uiSchema}
                 data={this.data}
                 onItemChanged={this.onItemChanged}

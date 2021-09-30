@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { VPage, Page, ItemSchema, ImageSchema, StringSchema, UiSchema, UiTextItem, UiImageItem, Edit, FA } from 'tonva-react';
 import { CMe } from './CMe';
-import { setting } from '../appConfig';
 import { observable } from 'mobx';
 import { GLOABLE } from 'ui';
 import { observer } from 'mobx-react';
@@ -59,7 +58,7 @@ export class VAccount extends VPage<CMe> {
                 <button type="button" className="btn btn-primary mx-3" style={{ padding: "6px 40px 6px 40px" }} onClick={this.affirm}>确定</button>
             </div>
         </div>
-        return <Page header='账户' headerClassName={setting.pageHeaderCss} footer={footer} >
+        return <Page header='账户' footer={footer} >
             <div className="small mx-3 my-2">
                 <span className="pr-2 text-danger ">※</span> 首次开展业务前需要绑定银行账号和身份<FA className="px-2 text-danger " name="exclamation-circle"></FA>
             </div>

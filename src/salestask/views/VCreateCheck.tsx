@@ -3,7 +3,7 @@ import { VPage, Page, LMR, Prop, ComponentProp, FA, tv, PropGrid } from 'tonva-r
 import { observer } from 'mobx-react';
 import { Task } from '../model';
 import { CSalesTask } from '../CSalesTask';
-import { setting } from 'appConfig';
+
 
 
 export class VCreateCheck extends VPage<CSalesTask> {
@@ -64,7 +64,7 @@ export class VCreateCheck extends VPage<CSalesTask> {
 
         let header = <div>{this.task.biz.description}&nbsp;</div>;
 
-        return <Page header={header} footer={footer} headerClassName={setting.pageHeaderCss}>
+        return <Page header={header} footer={footer}  >
             <PropGrid className="my-2" rows={rows} values={task} />
         </Page>
     }

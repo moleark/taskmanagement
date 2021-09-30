@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { VPage, Page, nav } from 'tonva-react';
 import { CMe } from './CMe';
-import { setting, appConfig } from '../appConfig';
+import { appConfig, appSettings } from '../appConfig';
 
 export class VAbout extends VPage<CMe> {
 
@@ -11,10 +11,10 @@ export class VAbout extends VPage<CMe> {
         this.openPage(this.page);
     }
     private page = () => {
-        let { appName, logo } = setting.sales;
-        let header: any = <div>关于{appName}</div>
+        let { appName, logo } = appSettings;
+        let header: any = <div>关于{appName}gee</div>
         let links: any = <div className="sep-product-select" style={{ width: "80%", margin: " 0 auto 0 auto" }} />
-        return <Page header={header} headerClassName={setting.pageHeaderCss} >
+        return <Page header={header}>
             <div className="bg-white text-center" style={{ height: '100%' }} >
                 <div className="h3 flex-fill text-center">
                     <img src={logo} alt="" className="mt-5" style={{ width: '25%' }} />

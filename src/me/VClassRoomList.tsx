@@ -1,7 +1,7 @@
 import * as React from "react";
 import { VPage, Page, List, tv, FA } from 'tonva-react';
 import { CMe } from "./CMe";
-import { setting } from "appConfig";
+
 import { observer } from "mobx-react";
 import { observable } from "mobx";
 
@@ -22,7 +22,7 @@ export class VClassRoomList extends VPage<CMe> {
 
     private page = observer(() => {
         let { pagePost } = this.controller;
-        return <Page header={this.tite} headerClassName={setting.pageHeaderCss} onScrollBottom={this.onScrollBottom}>
+        return <Page header={this.tite} onScrollBottom={this.onScrollBottom}>
             < List className="" before={""} none="无" items={pagePost} item={{ render: this.renderContent }} />
         </Page >
     });

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { VPage, Page, Form, UiSchema, UiInputItem, Schema, Context, Image } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CStart } from './CStart';
-import { setting } from 'appConfig';
+import { appSettings } from 'appConfig';
 
 const schema: Schema = [
     { name: 'invitacode', type: 'number', required: true },
@@ -45,16 +45,16 @@ export class VStart extends VPage<CStart> {
     }
 
     private page = observer((position: any) => {
-
-        return <Page header={setting.sales.appName} headerClassName={setting.pageHeaderCss} logout={true}>
+        let { appName, logo } = appSettings;
+        return <Page header={appSettings.appName} logout={true}>
             <div className="text-center  bg-white" ref={this.refIframe}  >
                 <div className="pt-4">
                     <div className="h4 text-info">
-                        欢迎加入{setting.sales.appName}
+                        欢迎加入{appName}
                     </div>
                     <div className="text-muted">超越自我，实现共赢</div>
                 </div>
-                <Image src={setting.sales.logo} className="mt-4" style={{ width: 'auto', height: '30%', margin: '0 auto 0 auto' }} />
+                <Image src={logo} className="mt-4" style={{ width: 'auto', height: '30%', margin: '0 auto 0 auto' }} />
                 <div style={{ height: 'auto', margin: 'auto 5rem auto 5rem' }} >
                     <Form ref={v => this.form = v} className="m-3"
                         schema={schema}

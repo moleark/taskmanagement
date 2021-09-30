@@ -1,7 +1,7 @@
 import * as React from "react";
 import { VPage, Page, List, nav, tv, FA } from 'tonva-react';
 import { CMe } from "./CMe";
-import { setting } from "appConfig";
+
 import { observer } from "mobx-react";
 import { GLOABLE } from "ui";
 
@@ -15,7 +15,7 @@ export class VClassRoom extends VPage<CMe> {
 
     private page = observer(() => {
         let { RecommendPost } = this.controller;
-        return <Page header="空中课堂" headerClassName={setting.pageHeaderCss}>
+        return <Page header="空中课堂"  >
             <this.manue />
             <div className="bg-white px-3 mt-1 py-3">
                 <strong>推荐课程</strong>

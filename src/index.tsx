@@ -5,10 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 import 'assests/iconfont.css';
 import { App } from 'uq-app';
-import { GLOABLE } from 'ui';
-import { setting, appSettings } from 'appConfig';
-
-setting.sales = appSettings;
+import { appSettings } from 'appConfig';
 
 let { title, logo } = appSettings;
 document.title = title;

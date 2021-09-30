@@ -3,7 +3,7 @@ import { VPage, Page } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { LMR, List, SearchBox, FA } from 'tonva-react';
 import { CInnerCustomer } from './CInnerCustomer';
-import { setting } from 'appConfig';
+
 
 
 export class VInnerCustomerCall extends VPage<CInnerCustomer> {
@@ -28,7 +28,7 @@ export class VInnerCustomerCall extends VPage<CInnerCustomer> {
     private page = observer((customer: any) => {
         let { pageWebUser } = this.controller;
         let none = <div className="my-3 mx-2 text-warning">请搜索客户！</div>;
-        return <Page header="选择内部客户" headerClassName={setting.pageHeaderCss}>
+        return <Page header="选择内部客户"  >
             <SearchBox className="px-1 w-100  mt-2 mr-2"
                 size='md'
                 onSearch={(key: string) => this.controller.searchByKey(key)}

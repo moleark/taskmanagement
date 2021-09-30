@@ -2,7 +2,6 @@ import * as React from 'react';
 import { VPage, Page, Schema, UiSchema, Context, Form, Widget, UiCustom, FA } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CBalance } from './CBalance';
-import { setting } from 'appConfig';
 
 /* eslint-disable */
 
@@ -56,7 +55,7 @@ export class VWithdrawal extends VPage<CBalance> {
 
     private page = observer(() => {
 
-        return <Page header="余额提现" headerClassName={setting.pageHeaderCss}>
+        return <Page header="余额提现">
             <div className="bg-white" style={{ width: "90%", padding: "10px 10px 10px 10px", margin: '2rem auto 0 auto' }} >
                 <div className="my-3 mx-3" >转账到银行卡</div>
                 <Form className="my-3 mx-3"

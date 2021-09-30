@@ -2,7 +2,7 @@ import * as React from 'react';
 import { VPage, Page, Schema, Form, UiSchema, UiInputItem, Context } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CCustomerUnit } from './CCustomerUnit';
-import { setting } from 'appConfig';
+
 
 const schema: Schema = [
     { name: 'Name', type: 'string', required: true },
@@ -26,7 +26,7 @@ export class VCreateCustomerUnit extends VPage<CCustomerUnit> {
     }
 
     private page = observer((param: any) => {
-        return <Page header="新建单位" headerClassName={setting.pageHeaderCss} >
+        return <Page header="新建单位" >
             <Form className="my-3 mx-3"
                 schema={schema}
                 uiSchema={this.uiSchema}

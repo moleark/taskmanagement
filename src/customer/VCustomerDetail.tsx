@@ -3,7 +3,7 @@ import { observable } from "mobx";
 import { observer } from "mobx-react";
 import { VPage, Page, tv, LMR, ComponentProp, Prop, PropGrid, FA, List, EasyDate, nav, EasyTime } from 'tonva-react';
 import { CCustomer } from "./CCustomer";
-import { setting } from "appConfig";
+import { appSettings } from "appConfig";
 import { GLOABLE } from "ui";
 
 const potentialText: { [v: number]: string } = {
@@ -256,7 +256,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
 
         // VIP卡
         let vipCardUI: any, vipCardContent: any;
-        if (setting.sales.isInner) {
+        if (appSettings.isInner) {
             if (IsBinded === 1) {
                 if (!webuser) {
                     vipCardContent = "该用户尚未注册，请推动注册";
@@ -385,12 +385,7 @@ export class VCustomerDetail extends VPage<CCustomer> {
         </div>;
 
         return (
-            <Page
-                header={header}
-                headerClassName={setting.pageHeaderCss}
-                right={editCustomerButton}
-            // footer={footer}
-            >
+            <Page header={header} right={editCustomerButton}>
                 <PropGrid
                     rows={rows}
                     values={this.myCustomer}

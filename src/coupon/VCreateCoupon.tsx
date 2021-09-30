@@ -5,7 +5,7 @@ import { observer } from 'mobx-react';
 import { VPage, Page, Schema, Form, UiSchema, Context, Widget, UiCustom } from 'tonva-react';
 import { CCoupon } from './CCoupon';
 import { GLOABLE } from 'ui';
-import { setting } from 'appConfig';
+import { appSettings } from 'appConfig';
 
 const schema: Schema = [
     { name: 'discount', type: 'string', required: false },
@@ -97,7 +97,7 @@ export class VCreateCoupon extends VPage<CCoupon> {
                     widget: 'custom',
                     label: '折扣',
                     WidgetClass: Discount,
-                    defaultValue: setting.sales.couponDefaultValue,
+                    defaultValue: appSettings.couponDefaultValue,
                     visible: this.Coupon.type === "coupon" ? true : false
                 } as UiCustom,
                 businesstype: {
@@ -135,8 +135,8 @@ export class VCreateCoupon extends VPage<CCoupon> {
         let right = <div onClick={onshowCreateCoupon} className="cursor-pointer mx-3">
             <i className="iconfont icon-qita" style={{ fontSize: "20px" }}></i>
         </div>;
-        let header = setting.couponType[this.Coupon.type];
-        return <Page header={header} headerClassName={setting.pageHeaderCss} right={right} >
+        let header = appSettings.couponType[this.Coupon.type];
+        return <Page header={header} right={right}>
             <Form className="my-3 mx-3"
                 schema={schema}
                 uiSchema={this.uiSchema}

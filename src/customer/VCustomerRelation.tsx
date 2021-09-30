@@ -2,8 +2,6 @@ import * as React from 'react';
 import { VPage, Page, LMR } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
-import { setting } from 'appConfig';
-
 
 export class VCustomerRelation extends VPage<CCustomer> {
 
@@ -29,7 +27,7 @@ export class VCustomerRelation extends VPage<CCustomer> {
                 <button type="button" className="btn btn-primary ml-2 align-self-center" onClick={() => showCreateNewCustomer(this.model)} >新建客户</button>
             </div>
         </div>;;
-        return <Page header="新客户" headerClassName={setting.pageHeaderCss} footer={footer} >
+        return <Page header="新客户" footer={footer} >
             <LMR className="cursor-pointer w-100 py-3 px-3" left="账户" right={name}></LMR>
         </Page>
     })

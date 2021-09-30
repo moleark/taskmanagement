@@ -6,7 +6,7 @@ import { MainProductChemical } from '../model/product';
 import { CProduct, renderBrand, productPropItem } from './CProduct';
 import { ViewMainSubs } from '../mainSubs';
 import classNames from 'classnames';
-import { setting } from 'appConfig';
+import { appSettings } from 'appConfig';
 import { ProductPackRow } from './product';
 
 const schema: ItemSchema[] = [
@@ -141,7 +141,7 @@ export class VProductDetail extends VPage<CProduct> {
         let { cCoupon, cProduct, productCart } = cApp;
         let { showCreateCoupon, showCreateCredits } = cCoupon;
         let footer: any;
-        if (setting.sales.isInner) {
+        if (appSettings.isInner) {
             footer = <div className="d-block">
                 <div className="w-100 d-flex justify-content-center py-2" >
                     <button type="button" className="btn btn-primary mx-1 my-1 px-3"
@@ -182,7 +182,7 @@ export class VProductDetail extends VPage<CProduct> {
             </div>
         </div>;
 
-        return <Page header="产品明细" right={right} headerClassName={setting.pageHeaderCss} footer={footer}>
+        return <Page header="产品明细" right={right} footer={footer}>
             <div className="px-2 py-2 bg-white mb-3">{viewProduct.render()}</div>
         </Page>
     })

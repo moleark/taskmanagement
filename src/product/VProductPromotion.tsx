@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Page, VPage, List, tv, SearchBox, Scroller } from 'tonva-react';
 import { CProduct } from './CProduct';
-import { setting } from "appConfig";
+
 import { observer } from "mobx-react";
 import { ProductImage } from '../tools/productImage';
 import { observable } from 'mobx';
@@ -71,7 +71,7 @@ export class VProductPromotion extends VPage<CProduct> {
                 onSearch={(key: string) => this.onSearch(key)}
                 placeholder="特惠品名、编号、CAS、MDL等" />
         </div>
-        return <Page header={search} onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss}>
+        return <Page header={search} onScrollBottom={this.onScrollBottom}  >
             <List before={''} none={none} items={promotionPager} item={{ render: this.renderProduct, onClick: this.onSelectItem }} />
         </Page >
     })

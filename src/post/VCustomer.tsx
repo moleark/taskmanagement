@@ -2,7 +2,7 @@ import * as React from "react";
 import { VPage, Page, LMR, List, tv, UserIcon, SearchBox, FA, nav } from 'tonva-react';
 import { observer } from "mobx-react";
 import { CPost } from "./CPost";
-import { setting } from "appConfig";
+
 import { observable } from "mobx";
 import { GLOABLE } from "ui";
 import smile from '../images/smile-face.jpg';
@@ -38,7 +38,7 @@ export class VCustomer extends VPage<CPost> {
                 placeholder="搜索客户姓名、单位"
             />
         </div>
-        return <Page header={search} onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss} >
+        return <Page header={search} onScrollBottom={this.onScrollBottom} >
             <div className="bg-warning text-white text-center w-100 small px-3">客户浏览高峰在8-9、11-13、15-18时</div>
             <LMR className="px-3 py-3 bg-white d-flex align-items-center"
                 onClick={() => this.share()}

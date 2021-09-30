@@ -3,7 +3,7 @@ import { VPage, Page, tv, List } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CSalesTask } from '../CSalesTask';
 import { ProductImage } from '../../tools/productImage';
-import { setting } from 'appConfig';
+
 
 
 export class VProductPackDetail extends VPage<CSalesTask> {
@@ -69,7 +69,7 @@ export class VProductPackDetail extends VPage<CSalesTask> {
 
     render() {
         let none = <div className="my-3 mx-2 text-muted">无产品包装</div>;
-        return <Page header="产品包装详情" headerClassName={setting.pageHeaderCss}>
+        return <Page header="产品包装详情"  >
             <div>
                 <List before="" none={none} items={this.products} item={{ render: this.renderItem }} />
             </div>

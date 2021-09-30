@@ -2,7 +2,6 @@ import * as React from 'react';
 import { VPage, Page, EasyTime } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CBalance } from './CBalance';
-import { setting } from 'appConfig';
 
 export class VWithdrawalDetail extends VPage<CBalance> {
 
@@ -34,7 +33,7 @@ export class VWithdrawalDetail extends VPage<CBalance> {
             stateShow = "已驳回";
         }
 
-        return <Page header="详情" headerClassName={setting.pageHeaderCss}>
+        return <Page header="详情">
             <div className="text-center bg-white" >
                 <div className="pt-4 h6"> {discription}</div>
                 <div className="py-4 h4"><strong>{discriptions}{amount.toFixed(2)}</strong></div>

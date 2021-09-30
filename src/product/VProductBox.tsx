@@ -4,7 +4,7 @@ import { tv, FA } from 'tonva-react';
 import { VPage, Page, List } from 'tonva-react';
 import { CProduct } from './CProduct';
 import { ProductImage } from '../tools/productImage';
-import { setting } from 'appConfig';
+import { appSettings } from 'appConfig';
 
 export class VProductBox extends VPage<CProduct> {
 
@@ -68,7 +68,7 @@ export class VProductBox extends VPage<CProduct> {
     private page = observer((product: any) => {
         let { productCart, cCoupon } = this.controller.cApp;
         let footer: any;
-        if (setting.sales.isInner) {
+        if (appSettings.isInner) {
             footer = <div className="w-100  justify-content-end" >
                 <button type="button" className="btn btn-primary mx-1 my-1 px-4" onClick={() => cCoupon.showCreateCoupon({ type: "coupon", product: productCart.getIds() })}>分享折扣</button>
                 <button type="button" className="btn btn-primary mx-1 my-1 px-4" onClick={() => cCoupon.showCreateCredits({ type: "credits", product: productCart.getIds() })}>分享积分</button>
@@ -77,7 +77,7 @@ export class VProductBox extends VPage<CProduct> {
             footer = <button type="button" className="btn btn-primary mx-1 my-1 px-4" onClick={() => cCoupon.showCreateCoupon({ type: "coupon", product: productCart.getIds() })}>分享折扣</button>
         }
         let productlist = productCart.list;
-        return <Page header='产品框' onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss} footer={footer} >
+        return <Page header='产品框' onScrollBottom={this.onScrollBottom} footer={footer} >
             {
                 productlist && productlist && (productlist.length > 0) &&
                 <List before={''} none="无产品" items={productlist} item={{ render: this.renderProduct, onClick: null }} />

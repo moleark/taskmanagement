@@ -3,7 +3,7 @@ import { VPage, Page, ItemSchema, StringSchema, UiSchema, UiTextItem, Edit, LMR,
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { CTeam } from './CTeam';
-import { setting } from 'appConfig';
+
 
 export class VTeamDetail extends VPage<CTeam> {
 
@@ -39,7 +39,7 @@ export class VTeamDetail extends VPage<CTeam> {
         let { achievement } = this.controller;
         let { oneSaleVolume } = achievement;
         let right = <div className=" h5 px-3"><FA name="cny" className="text-warning small" /> {oneSaleVolume}</div>;
-        return <Page header={tv(this.peer, (v) => v.nick || v.name)} headerClassName={setting.pageHeaderCss}>
+        return <Page header={tv(this.peer, (v) => v.nick || v.name)}  >
             <Edit
                 schema={this.schema}
                 uiSchema={this.uiSchema}

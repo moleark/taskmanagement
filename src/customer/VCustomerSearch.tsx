@@ -2,7 +2,7 @@ import * as React from 'react';
 import { VPage, Page, LMR, List, SearchBox, tv, EasyDate, UserIcon } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
-import { setting } from 'appConfig';
+
 
 export class VCustomerSearch extends VPage<CCustomer> {
 
@@ -43,7 +43,7 @@ export class VCustomerSearch extends VPage<CCustomer> {
                 onSearch={(key: string) => this.controller.searchCustomerByKey(key)}
                 placeholder="搜索客户姓名、单位" />
         </div>
-        return <Page header={search} onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss}>
+        return <Page header={search} onScrollBottom={this.onScrollBottom}  >
             {/* <SearchBox className="px-1 w-100  mt-2 mr-2"
                 size='md'
                 onSearch={(key: string) => this.controller.searchCustomerByKey(key)}

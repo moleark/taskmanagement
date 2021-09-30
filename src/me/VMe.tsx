@@ -6,7 +6,7 @@ import classNames from "classnames";
 import copy from "copy-to-clipboard";
 import { observable } from "mobx";
 import { GLOABLE } from "ui";
-import { setting } from "appConfig";
+import { appSettings } from "appConfig";
 /* eslint-disable */
 export class VMe extends VPage<CMe> {
     private inviteCode: any;
@@ -70,7 +70,7 @@ export class VMe extends VPage<CMe> {
         let { teamCount, innerteamCount, customerCount, activeCustomerCount } = salesAmont;
         let onshowMyCustomer = async () => await showMyCustomer(1);
         let onshowMyCustomerActive = async () => await showMyCustomer(2);
-        if (setting.sales.isInner) {
+        if (appSettings.isInner) {
             return (
                 <div className="row mt-2">
                     <div
@@ -165,7 +165,7 @@ export class VMe extends VPage<CMe> {
                 <Image className="w-3c h-3c mr-3" src={icon} />{" "}
             </div>
         );
-        let right = setting.sales.isInner ? (
+        let right = appSettings.isInner ? (
             <span></span>
         ) : (
             <span onClick={onshowInvitationCode}>
@@ -177,7 +177,7 @@ export class VMe extends VPage<CMe> {
                 <div onClick={showMeDetail}>
                     {this.userSpan(name, nick, salesAmont.level)}
                 </div>
-                {setting.sales.isInner ? (
+                {appSettings.isInner ? (
                     <></>
                 ) : (
                     <div className="small mt-1">
@@ -214,7 +214,7 @@ export class VMe extends VPage<CMe> {
 
     private achievement = observer(() => {
         let { salesAmont } = this.controller.cApp.cBalance;
-        return setting.sales.achievement(salesAmont);
+        return appSettings.achievement(salesAmont);
     });
 
     private myService() {
@@ -256,8 +256,8 @@ export class VMe extends VPage<CMe> {
 
         </div>
 
-        let vsp = setting.sales.isInner ? vassist : null;
-        let room = setting.sales.isInner ? assistclassroom : agentclassroom;
+        let vsp = appSettings.isInner ? vassist : null;
+        let room = appSettings.isInner ? assistclassroom : agentclassroom;
 
         return (
             <>

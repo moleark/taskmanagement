@@ -1,7 +1,6 @@
 import * as React from "react";
 import { VPage, Page, Loading, FA } from 'tonva-react';
 import { observer } from "mobx-react";
-import { setting } from "appConfig";
 import { CInnerTeam, dateFormat } from "./CInnerTeam";
 import { observable } from "mobx";
 
@@ -50,7 +49,7 @@ export class VInnerTeamDailyDetail extends VPage<CInnerTeam> {
         });
 
         return (
-            <Page header={'日 报表明细'} headerClassName={setting.pageHeaderCss} >
+            <Page header={'日 报表明细'} >
                 <div>
                     <div className="bg-white py-2 d-flex justify-content-between px-3">
                         <div className=' text-primary small px-3' onClick={() => this.changeDay('prevDay')}><FA name="chevron-left small" /></div>

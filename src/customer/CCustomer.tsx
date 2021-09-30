@@ -17,7 +17,7 @@ import { VCustomerRelation } from "./VCustomerRelation";
 import { VCreateNewCustomer } from "./VCreateNewCustomer";
 import { VNewCustomerList } from "./VNewCustomerList";
 import { VCustomerSearchByUnit } from "./VCustomerSearchByUnit";
-import { setting } from "appConfig";
+import { appSettings } from "appConfig";
 import { VRelationCustomerWebuserId } from "./VRelationCustomerWebuserId";
 import { VOrderDraftRule } from './VOrderDraftRule'
 
@@ -206,15 +206,10 @@ export class CCustomer extends CUqBase {
 
     // 获取客户相关Post
     getCustomerContent = async (domain: any) => {
-        let publish = setting.sales.isInner ? 3 : 2;
+        let publish = appSettings.isInner ? 3 : 2;
         this.pagePost = new QueryPager(this.uqs.webBuilder.SearchPostPublish, 5, 5);
         this.pagePost.first({ key: "", domain: domain, publish: publish, language: this.language });
     };
-    // searchByKey = async (key: string, domain: string) => {
-    //     let publish = setting.sales.isInner ? 3 : 2;
-    //     this.pagePost = new QueryPager(this.uqs.webBuilder.SearchPostPublish, 15, 30);
-    //     this.pagePost.first({ key: key, domain: 0, publish: publish });
-    // };
 
     /**
      * 搜索客户——用在任务等要需要选择客户的界面？

@@ -6,32 +6,12 @@ import logo from 'images/logo.png';
 import assistlogo from 'images/assistlogo.png';
 import { CApp } from "uq-app";
 
-const appConfigBase: AppConfig = {
+export const appConfig: AppConfig = {
     version: "1.2.99", // 版本变化，缓存的uqs才会重载
     tvs: tvs,
     loginTop: undefined,
     oem: "百灵威"
 };
-
-const agentAppConfig: AppConfig = _.merge(_.clone(appConfigBase), {
-    loginTop: jnkTop
-});
-
-const assistAppConfig: AppConfig = _.merge(_.clone(appConfigBase), {
-    loginTop: assistjnkTop
-});
-
-const setting_agent = {
-    pageHeaderCss: "bg-primary",
-    sales: undefined as AppEnv,
-    couponType: { "coupon": "优惠券", "credits": "积分券", "vipcard": "VIP卡" }
-}
-
-const setting_assist = {
-    pageHeaderCss: "bg-primary",
-    sales: undefined as AppEnv,
-    couponType: { "coupon": "优惠券", "credits": "积分券", "vipcard": "VIP卡" }
-}
 
 export abstract class AppEnv {
     cApp: CApp;
@@ -48,6 +28,7 @@ export abstract class AppEnv {
     couponDefaultValue: number;
     downloadAppurl: string;
     sharelogo: string;
+    couponType: { "coupon": "优惠券", "credits": "积分券", "vipcard": "VIP卡" };
 
     abstract userQualified(): Promise<boolean>;
 
@@ -74,7 +55,7 @@ export abstract class AppEnv {
     }
 
     shareTitle(type: string): string {
-        return setting.couponType[type];
+        return this.couponType[type];
     }
 
     shareContent(type: string, isno: any): string {
@@ -215,7 +196,4 @@ export class AgentApp extends AppEnv {
 };
 
 let isAssist = document.location.href.search(/assist/) > 0;
-export const setting = isAssist ? setting_assist : setting_agent
-export const appConfig = isAssist ? assistAppConfig : agentAppConfig;
-
 export const appSettings = isAssist ? new AssistApp() : new AgentApp();

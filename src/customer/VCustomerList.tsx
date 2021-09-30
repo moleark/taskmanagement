@@ -2,7 +2,7 @@ import * as React from 'react';
 import { VPage, Page, LMR, List, tv, EasyDate, UserIcon } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
-import { setting } from 'appConfig';
+import { appSettings } from 'appConfig';
 import smile from '../images/smile-face.jpg';
 
 export class VCustomerList extends VPage<CCustomer> {
@@ -42,10 +42,10 @@ export class VCustomerList extends VPage<CCustomer> {
         </div>;
         let none = <div className="my-3 mx-2 text-warning">【无】</div>;
 
-        return <Page header="客户" onScrollBottom={onScrollBottom} headerClassName={setting.pageHeaderCss} right={right} >
+        return <Page header="客户" onScrollBottom={onScrollBottom} right={right} >
             {branch("单位", "icon-photo", () => cApp.cCustomerUnit.start(3))}
             {branch("新客户", "icon-xinyonghu", showNewCustomerList)}
-            {(setting.sales.isInner) ? null : branch("任务", "icon-renwuwancheng", () => cApp.cSalesTask.showTask())}
+            {(appSettings.isInner) ? null : branch("任务", "icon-renwuwancheng", () => cApp.cSalesTask.showTask())}
 
             {
                 (pageCustomer && pageCustomer.items && (pageCustomer.items.length > 0)) ?

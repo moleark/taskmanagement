@@ -5,7 +5,7 @@ import { tv } from 'tonva-react';
 import classNames from 'classnames';
 import { observable } from 'mobx';
 import { CSelectType } from './CSelectType';
-import { setting } from 'appConfig';
+
 
 const cnRow = 'w-100 py-3';
 const cnRowCustor = classNames(cnRow, 'cursor-pointer');
@@ -77,7 +77,7 @@ export class VAiDetail extends VPage<CSelectType> {
             <button type="button" className="btn btn-outline-info ml-2 align-self-center" onClick={this.onCancel} >取消</button>
         </div>;
 
-        return <Page header="任务详细" headerClassName={setting.pageHeaderCss}>
+        return <Page header="任务详细"  >
 
             <PropGrid className="my-2" rows={rows} values={this.task} />
             <LMR className=" mx-3 " left={left} right={rigth}></LMR>

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { VPage, Page, LMR } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CBalance } from './CBalance';
-import { setting } from 'appConfig';
 
 export class VWithdrawalEnd extends VPage<CBalance> {
 
@@ -19,7 +18,7 @@ export class VWithdrawalEnd extends VPage<CBalance> {
 
     private page = observer(() => {
 
-        return <Page header="余额提现" headerClassName={setting.pageHeaderCss}>
+        return <Page header="余额提现">
             <div className="text-center bg-white px-3 py-3" style={{ height: "100%" }} >
                 <LMR left="提现金额" className="small my-2" right={<div>￥{this.amount}</div>}></LMR>
                 <LMR left="转账到银行卡" className="small my-2" right="招商银行"></LMR>

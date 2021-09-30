@@ -5,7 +5,7 @@ import { CSalesTask } from '../CSalesTask';
 import { List, LMR, EasyDate } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { tv } from 'tonva-react';
-import { setting } from 'appConfig';
+import { appSettings } from 'appConfig';
 export class VMain extends VPage<CSalesTask> {
 
     async open(param: any) {
@@ -64,8 +64,8 @@ export class VMain extends VPage<CSalesTask> {
         let item = { render: this.renderSalesTask, onClick: this.onSalesTaskClick };
         let { tasksNow, dateTasksList } = tasks;
 
-        return <Page header="任务" onScrollBottom={this.onScrollBottom} right={right} headerClassName={setting.pageHeaderCss} >
-            {(setting.sales.isInner) ?
+        return <Page header="任务" onScrollBottom={this.onScrollBottom} right={right}>
+            {(appSettings.isInner) ?
                 <LMR
                     className="bg-white px-2 py-1"
                     left={<i className="iconfont icon-neirong " style={{ fontSize: "30px", color: "#efb336" }}></i>}

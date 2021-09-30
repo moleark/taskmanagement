@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { VPage, Page, nav, Prop, PropGrid } from 'tonva-react';
 import { CMe } from './CMe';
-import { appConfig, setting } from '../appConfig';
+import { appConfig, appSettings } from '../appConfig';
 
 export class VSet extends VPage<CMe> {
 
@@ -41,7 +41,7 @@ export class VSet extends VPage<CMe> {
                 type: 'component',
                 component: <div className="w-100 d-flex py-2 justify-content-between" onClick={() => this.controller.showAbout()}>
                     <div>
-                        <i className="iconfont icon-guanyu mr-2" style={{ fontSize: "20px", color: "#2aa515" }}></i>关于{setting.sales.appName}
+                        <i className="iconfont icon-guanyu mr-2" style={{ fontSize: "20px", color: "#2aa515" }}></i>关于{appSettings.appName}
                     </div>
                     <div className="py-2 small">V {appConfig.version}</div>
                 </div>,
@@ -67,7 +67,7 @@ export class VSet extends VPage<CMe> {
         ];
 
 
-        return <Page header='设置' headerClassName={setting.pageHeaderCss} >
+        return <Page header='设置'>
             <PropGrid rows={rows} values={{}} />
         </Page >
     }

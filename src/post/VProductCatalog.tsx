@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 import { VPage, Page, List } from 'tonva-react';
 import { observable } from "mobx";
 import { CPost } from "./CPost";
-import { setting } from "appConfig";
+
 
 export class VProductCatalog extends VPage<CPost> {
 
@@ -20,7 +20,7 @@ export class VProductCatalog extends VPage<CPost> {
 
     private page = observer(() => {
         return (
-            <Page header={this.caption} headerClassName={setting.pageHeaderCss} >
+            <Page header={this.caption} >
                 <List before={""} none="无" items={this.pageProductCatalog} item={{ render: this.renderItem }} />
             </Page>
         );

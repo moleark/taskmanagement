@@ -3,7 +3,7 @@ import { VPage, Page, Form, Schema, UiSchema, Context, UiTextAreaItem } from 'to
 import { CSalesTask } from '../CSalesTask';
 import { observer } from 'mobx-react';
 import { Task } from '../model';
-import { setting } from 'appConfig';
+
 
 
 const schema: Schema = [
@@ -40,7 +40,7 @@ export class VSalesTaskInvalid extends VPage<CSalesTask> {
     }
 
     private page = observer((salestask: any) => {
-        return <Page header="取消" headerClassName={setting.pageHeaderCss} >
+        return <Page header="取消" >
             <div className="App-container container text-left">
                 <Form ref={v => this.form = v} className="my-3"
                     schema={schema}

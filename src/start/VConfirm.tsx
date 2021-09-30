@@ -2,7 +2,7 @@ import * as React from "react";
 import { VPage, Page, Image, tv, nav } from 'tonva-react';
 import { observer } from "mobx-react";
 import { CStart } from "./CStart";
-import { setting } from "appConfig";
+import { appSettings } from "appConfig";
 
 export class VConfirm extends VPage<CStart> {
     async open(position: any) {
@@ -23,7 +23,7 @@ export class VConfirm extends VPage<CStart> {
                 style={{ width: "auto", height: "70%" }}
             >
                 <Image
-                    src={setting.sales.logo}
+                    src={appSettings.logo}
                     className="mt-4"
                     style={{
                         width: "50%",
@@ -34,7 +34,7 @@ export class VConfirm extends VPage<CStart> {
                 <div className="my-4">
                     <div>
                         {tv(user, v => v.name)}，邀请您加入
-                        {setting.sales.appName}。
+                        {appSettings.appName}。
                     </div>
                     <div>
                         邀请码：<span className="text-info">{code}</span>
@@ -52,7 +52,7 @@ export class VConfirm extends VPage<CStart> {
         code = p1 + " " + p2;
         return (
             <div id="qrid" className="text-center" style={{ width: "auto", height: "70%", padding: "100px 0 0 0 " }}>
-                <Image src={setting.sales.logo} style={{ width: "30%", height: "30%", margin: "10rem auto, 0 auto" }} />
+                <Image src={appSettings.logo} style={{ width: "30%", height: "30%", margin: "10rem auto, 0 auto" }} />
                 <div className="my-4">
                     <div className="text-info py-2">您还未被授权</div>
                     <div className="text-info py-2">
@@ -69,7 +69,7 @@ export class VConfirm extends VPage<CStart> {
         let onCreatePosition = async () =>
             await this.controller.createPosition({ invitacode: position.code + "" });
 
-        let footer: any = setting.sales.isInner ? (
+        let footer: any = appSettings.isInner ? (
             undefined
         ) : (
             <div className="d-block">
@@ -83,16 +83,15 @@ export class VConfirm extends VPage<CStart> {
             </div>
         );
 
-        let header = setting.sales.isInner ? "提示" : "邀请人";
+        let header = appSettings.isInner ? "提示" : "邀请人";
         return (
             <Page
                 header={header}
-                headerClassName={setting.pageHeaderCss}
                 logout={true}
                 back="none"
                 footer={footer}
             >
-                {setting.sales.isInner
+                {appSettings.isInner
                     ? this.meInfoAssist(position)
                     : this.meInfoAgent(position)}
             </Page>

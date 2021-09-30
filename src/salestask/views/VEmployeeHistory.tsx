@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { VPage, Page, LMR, List, tv } from 'tonva-react';
 import { observer } from "mobx-react";
 import { CSalesTask } from "../CSalesTask";
-import { setting } from "appConfig";
+
 /* eslint-disable */
 export class VEmployeeHistory extends VPage<CSalesTask> {
     async open() {
@@ -54,7 +54,7 @@ export class VEmployeeHistory extends VPage<CSalesTask> {
             <div className="m-3 text-muted small">【暂无历史任务！】</div>
         );
         return (
-            <Page header="历史任务" headerClassName={setting.pageHeaderCss}>
+            <Page header="历史任务"  >
                 <List
                     before={""}
                     none={none}

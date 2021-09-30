@@ -4,7 +4,7 @@ import { tv } from 'tonva-react';
 import { VPage, Page, List } from 'tonva-react';
 import { CProduct } from './CProduct';
 import { ProductImage } from '../tools/productImage';
-import { setting } from 'appConfig';
+
 import classNames from 'classnames';
 
 export class VProductList extends VPage<CProduct> {
@@ -82,7 +82,7 @@ export class VProductList extends VPage<CProduct> {
         </div>;
 
         let header = cHome.renderSearchHeader();
-        return <Page header={header} right={right} onScrollBottom={onScrollBottom} headerClassName={setting.pageHeaderCss} >
+        return <Page header={header} right={right} onScrollBottom={onScrollBottom} >
             {/* <div className="bg-white py-2 px-3 mb-1"><small className=" small text-muted">搜索: </small>{this.seachkey}</div> */}
             <List before={''} none={none} items={pageProduct} item={{ render: this.renderProduct, onClick: null }} />
         </Page>

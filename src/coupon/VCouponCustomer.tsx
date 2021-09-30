@@ -3,7 +3,6 @@ import * as _ from 'lodash';
 import { VPage, Page, LMR, SearchBox, FA, List, EasyDate, tv } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CCoupon } from './CCoupon';
-import { setting } from 'appConfig';
 
 /*
 export class VCouponCustomer extends VPage<CCoupon> {
@@ -31,7 +30,7 @@ export class VCouponCustomer extends VPage<CCoupon> {
         //let right = <div onClick={onshowAddCouponCustomer} className="cursor-pointer py-2"><FA name="plus" /></div>;
         let none = <div className="my-3 mx-2 text-warning">无客户</div>;
 
-        return <Page header='指定客户' headerClassName={setting.pageHeaderCss} right={null} >
+        return <Page header='指定客户' right={null} >
             <List before={''} none={none} items={customers} item={{ render: this.renderItem, onClick: null }} />
         </Page>
     })

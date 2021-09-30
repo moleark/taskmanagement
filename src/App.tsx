@@ -1,7 +1,6 @@
 import * as React from 'react';
 import './App.css';
 import { start, NavView, nav } from 'tonva-react';
-import { setting, appConfig } from './appConfig';
 import { GLOABLE } from 'ui';
 import { CApp } from 'uq-app';
 

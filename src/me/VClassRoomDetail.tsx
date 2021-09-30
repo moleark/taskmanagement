@@ -1,7 +1,7 @@
 import * as React from "react";
 import { VPage, Page } from 'tonva-react';
 import { CMe } from "./CMe";
-import { setting } from "appConfig";
+
 import { observer } from "mobx-react";
 
 /* eslint-disable */
@@ -13,7 +13,7 @@ export class VClassRoomDetail extends VPage<CMe> {
 
     private page = observer((param: any) => {
         let { id, caption } = param;
-        return <Page header={caption} headerClassName={setting.pageHeaderCss}>
+        return <Page header={caption}  >
             <iframe
                 ref={this.refIframe}
                 src={"https://web.jkchemical.com/post/" + id}

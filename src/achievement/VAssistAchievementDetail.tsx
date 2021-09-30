@@ -3,8 +3,6 @@ import { VPage, Page, LMR, List, EasyDate, tv } from 'tonva-react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { CBalance } from './CBalance';
-import { setting } from 'appConfig';
-
 
 export enum TabStatus { sum = 0, pending = 1 };
 export enum TabType { A = 1, B = 2, C = 3 };
@@ -73,7 +71,7 @@ export class VAssistAchievementDetail extends VPage<CBalance> {
 
     private page = observer(() => {
 
-        return <Page header={this.headers()} headerClassName={setting.pageHeaderCss} >
+        return <Page header={this.headers()}>
             <List items={this.achievements} item={{ render: this.renderItem }} none="无收益" />
         </Page >
     })

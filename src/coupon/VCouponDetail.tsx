@@ -2,7 +2,7 @@ import * as React from 'react';
 import { VPage, Page, Prop, PropGrid, ComponentProp, LMR, EasyDate, User, FA } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CCoupon } from './CCoupon';
-import { setting } from 'appConfig';
+
 
 export class VCouponDetail extends VPage<CCoupon> {
 
@@ -43,7 +43,7 @@ export class VCouponDetail extends VPage<CCoupon> {
             </div>;
         }
 
-        return <Page header="详情" headerClassName={setting.pageHeaderCss} footer={footer}>
+        return <Page header="详情" footer={footer}>
             <PropGrid className="my-2" rows={rows} values={this.coupon} alignValue="right" />
             {pageCouponReceiveUsed.length > 0 &&
                 <>

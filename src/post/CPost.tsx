@@ -6,7 +6,7 @@ import { observable } from "mobx";
 import { VCustomer } from "./VCustomer";
 import { VPostDetil } from "./VPostDetil";
 import { VProductCatalog } from "./VProductCatalog";
-import { setting } from "appConfig";
+import { appSettings } from "appConfig";
 import { VProductCatalogPost } from "./VProductCatalogPost";
 import { VSubject } from "./VSubject";
 import { VSubjectPost } from "./VSubjectPost";
@@ -36,7 +36,7 @@ export class CPost extends CUqBase {
 
     //查询客户--通过名称
     searchByKey = async (key: string, domain: string) => {
-        let publish = setting.sales.isInner ? 3 : 2;
+        let publish = appSettings.isInner ? 3 : 2;
         this.pagePost = new QueryPager(this.uqs.webBuilder.SearchPostPublish, 15, 30);
         this.pagePost.first({ key: key, domain: 0, publish: publish, language: this.language });
     };
@@ -74,7 +74,7 @@ export class CPost extends CUqBase {
     };
 
     showProductCatalogDetil = async (param: any) => {
-        let publish = setting.sales.isInner ? 3 : 2;
+        let publish = appSettings.isInner ? 3 : 2;
         this.pageProductCatalogPost = new QueryPager(this.uqs.webBuilder.SearchProductCategoryPost, 15, 30);
         this.pageProductCatalogPost.first({ author: 0, productCategory: param, publish: publish })
         return await this.vCall(VProductCatalogPost);
@@ -91,7 +91,7 @@ export class CPost extends CUqBase {
         this.openVPage(VSubject, sub);
     }
     showSubjectPost = async (param: any) => {
-        let publish = setting.sales.isInner ? 3 : 2;
+        let publish = appSettings.isInner ? 3 : 2;
         this.pageSubjectPost = new QueryPager(this.uqs.webBuilder.SearchSubjectPost, 15, 30);
         this.pageSubjectPost.first({ author: 0, subject: param.id, publish: publish })
         return await this.vCall(VSubjectPost);
@@ -110,7 +110,7 @@ export class CPost extends CUqBase {
         this.openVPage(VDomainPost, param);
     }
     showDomainPost_Search = async (param: any, key: any) => {
-        let publish = setting.sales.isInner ? 3 : 2;
+        let publish = appSettings.isInner ? 3 : 2;
         this.pageDomainPost = new QueryPager(this.uqs.webBuilder.SearchDomainPost, 15, 100);
         this.pageDomainPost.first({ key: key, author: 0, domain: param.id, publish: publish })
     }

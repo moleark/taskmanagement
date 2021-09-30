@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { VPage, Page } from 'tonva-react';
 import { LMR, List, SearchBox, FA } from 'tonva-react';
 import { CCustomerUnit } from './CCustomerUnit';
-import { setting } from 'appConfig';
+
 
 
 export class VCustomerUnitSelect extends VPage<CCustomerUnit> {
@@ -70,7 +70,7 @@ export class VCustomerUnitSelect extends VPage<CCustomerUnit> {
                 />
             </div>
         }
-        return <Page header={search} onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss}>
+        return <Page header={search} onScrollBottom={this.onScrollBottom}  >
             <List before={''} none={none} className="mt-2" items={pageUnit}
                 item={{ render: this.renderItem, onClick: this.onClickRow }} />
             {(!pageUnit) && text}

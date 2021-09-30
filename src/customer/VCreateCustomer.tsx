@@ -6,7 +6,6 @@ import {
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
 import { mobileValidation, nameValidation } from 'tools/inputValidations';
-import { setting } from 'appConfig';
 
 const schema: Schema = [
     { name: 'name', type: 'string', required: true },
@@ -45,7 +44,7 @@ export class VCreateCustomer extends VPage<CCustomer> {
     }
 
     private page = observer(() => {
-        return <Page header="新建客户" headerClassName={setting.pageHeaderCss} >
+        return <Page header="新建客户">
             <LMR className="cursor-pointer pm-3 py-2 bg-white"
                 left={<div className="pl-3"><FA name="university" className="text-info mr-2 pt-1" /></div>}>
                 {tv(this.customerunit, (v) => v.name)}

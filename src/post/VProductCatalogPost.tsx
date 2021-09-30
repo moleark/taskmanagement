@@ -2,8 +2,6 @@ import * as React from "react";
 import { observer } from "mobx-react";
 import { VPage, Page, List, tv, FA, EasyTime } from 'tonva-react';
 import { CPost } from "./CPost";
-import { setting } from "appConfig";
-
 
 export class VProductCatalogPost extends VPage<CPost> {
 
@@ -19,7 +17,7 @@ export class VProductCatalogPost extends VPage<CPost> {
             </div>
         );
         return (
-            <Page header={"产品目录树"} headerClassName={setting.pageHeaderCss} onScrollBottom={this.onScrollBottom} >
+            <Page header={"产品目录树"} onScrollBottom={this.onScrollBottom} >
                 <List before={""} none={none} items={pageProductCatalogPost} item={{ render: this.renderItem }} />
             </Page>
         );

@@ -3,7 +3,7 @@ import { VPage, Page, tv, UserIcon } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
 import { LMR, List, EasyDate } from 'tonva-react';
-import { setting } from 'appConfig';
+
 
 
 export class VMyCustomer extends VPage<CCustomer> {
@@ -36,7 +36,7 @@ export class VMyCustomer extends VPage<CCustomer> {
         if (this.temp === 2) {
             header = <>活跃客户</>;
         }
-        return <Page header={header} headerClassName={setting.pageHeaderCss} onScrollBottom={this.onScrollBottom}>
+        return <Page header={header} onScrollBottom={this.onScrollBottom}>
             <List before={''} none={none} items={pageMyCustomerActive} item={{ render: this.renderCustomer }} />
         </Page>
     })

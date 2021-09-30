@@ -5,7 +5,7 @@ import { CCoupon } from "./CCoupon";
 import copy from "copy-to-clipboard";
 import { observable } from "mobx";
 import { GLOABLE } from "ui";
-import { setting } from "appConfig";
+import { appSettings } from "appConfig";
 import QRCode from "qrcode.react";
 import { ViewMainSubs, MainProductChemical } from "mainSubs";
 import { ProductPackRow } from "model/product";
@@ -26,12 +26,12 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
             let p2 = code.substr(4);
             this.inviteCode = p1 + " " + p2;
         }
-        this.url = setting.sales.shareUrl(type, code, product.main.id, platform);
+        this.url = appSettings.shareUrl(type, code, product.main.id, platform);
         this.openPage(this.page, param);
     }
 
     comeBack = () => {
-        let c = setting.sales.isInner ? 1 : 2;
+        let c = appSettings.isInner ? 1 : 2;
         this.closePage(c);
     };
 
@@ -123,11 +123,11 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
             // @ts-ignore  屏蔽错误
             window.plusShare(
                 {
-                    title: setting.sales.shareTitle(type), //应用名字
-                    content: setting.sales.shareContent(type, isno),
+                    title: appSettings.shareTitle(type), //应用名字
+                    content: appSettings.shareContent(type, isno),
                     href: url, //分享出去后，点击跳转地址
                     //pictures: ["https://agent.jkchemical.com/logonew.png"],//分享的图片
-                    thumbs: [setting.sales.sharelogo] //分享缩略图
+                    thumbs: [appSettings.sharelogo] //分享缩略图
                 },
                 function (result) {
                     //分享回调
@@ -145,9 +145,9 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
 
         let { product, type } = this.coupon;
         viewProduct.model = product;
-        let header = setting.couponType[type];
+        let header = appSettings.couponType[type];
         return (
-            <Page header={header} headerClassName={setting.pageHeaderCss}>
+            <Page header={header}>
                 <div className="bg-white w-100" >
                     <div className="px-2 py-2">{viewProduct.render()}</div>
                     {this.showShare()}

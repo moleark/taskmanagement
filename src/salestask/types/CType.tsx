@@ -7,7 +7,7 @@ import { VActionsBottom } from './share/VActionsBottom';
 import { Task } from '../model';
 import { VDetailContent } from './share/VDetailContent';
 import { VFinish } from './commonType/VFinish';
-import { setting } from 'appConfig';
+
 
 export abstract class CType extends Controller {
     caption: string;
@@ -24,7 +24,7 @@ export abstract class CType extends Controller {
 
     private renderDetailValues = (task: Task): JSX.Element => {
         let { caption, renderDetailTop, renderDetailContent } = this;
-        return <Page header={caption} headerClassName={setting.pageHeaderCss} >
+        return <Page header={caption} >
             {renderDetailTop(task)}
             {renderDetailContent(task)}
         </Page >
@@ -41,7 +41,7 @@ export abstract class CType extends Controller {
 
     private renderDetailEdit = (task: Task): JSX.Element => {
         let { caption, renderDetailTop, renderActionsBottom, renderDetailContent } = this;
-        return <Page header={caption} headerClassName={setting.pageHeaderCss} footer={renderActionsBottom(task)}>
+        return <Page header={caption} footer={renderActionsBottom(task)}>
             {renderDetailTop(task)}
             {renderDetailContent(task)}
 
@@ -74,7 +74,7 @@ export abstract class CType extends Controller {
             <span className="px-3" onClick={() => this.cSalesTask.showCreateOrder(task, "order")}>订单</span>
             <span className="px-3" onClick={() => this.cSalesTask.showCreateOrder(task, "inquiry")}>询单</span>
         </div>;
-        return <Page header={caption} headerClassName={setting.pageHeaderCss} right={bin}>
+        return <Page header={caption} right={bin}>
             {this.renderCompletContent(task)}
         </Page >
     }

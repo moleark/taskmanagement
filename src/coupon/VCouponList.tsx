@@ -2,7 +2,6 @@ import * as React from 'react';
 import { VPage, Page, LMR, SearchBox, List, EasyDate, FA, DropdownActions, DropdownAction } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CCoupon } from './CCoupon';
-import { setting } from 'appConfig';
 import { observable } from 'mobx';
 
 export class VCouponList extends VPage<CCoupon> {
@@ -83,7 +82,7 @@ export class VCouponList extends VPage<CCoupon> {
         let { pageCoupon, cApp } = this.controller;
         let none = <div className="my-3 mx-2 text-warning">还没有{typename}哦！马上添加招揽客户吧！</div>;
 
-        return <Page header={search} onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss}>
+        return <Page header={search} onScrollBottom={this.onScrollBottom}>
             <List before={''} none={none} items={pageCoupon} item={{ render: this.renderItem, onClick: null }} />
         </Page >
     })

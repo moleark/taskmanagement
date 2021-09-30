@@ -1,7 +1,6 @@
 import * as React from "react";
 import { VPage, Page, Loading, FA } from 'tonva-react';
 import { observer } from "mobx-react";
-import { setting } from "appConfig";
 import { CInnerTeam } from "./CInnerTeam";
 import { observable } from "mobx";
 
@@ -57,7 +56,7 @@ export class VInnerTeamDetail extends VPage<CInnerTeam> {
         });
 
         return (
-            <Page header={'月报表明细'} headerClassName={setting.pageHeaderCss}>
+            <Page header={'月报表明细'}  >
                 <div>
                     <div className="bg-white py-2 d-flex justify-content-between px-3">
                         <div className=' text-primary small px-3' onClick={this.prevMonth}><FA name="chevron-left small" /></div>
@@ -125,7 +124,7 @@ export class VInnerTeamMemberYearly extends VPage<CInnerTeam> {
         });
 
         return (
-            <Page header={'年报表'} headerClassName={setting.pageHeaderCss}>
+            <Page header={'年报表'}  >
                 <div>
                     <div className="bg-white py-2 d-flex justify-content-between px-3">
                         <div className=' text-primary small px-3' onClick={this.prevYear}><FA name="chevron-left small" /></div>

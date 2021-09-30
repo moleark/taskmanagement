@@ -2,7 +2,6 @@ import * as React from 'react';
 import { VPage, Page, FA, LMR } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CBalance } from './CBalance';
-import { setting } from 'appConfig';
 import { observable } from 'mobx';
 import { GLOABLE } from 'ui';
 
@@ -148,7 +147,7 @@ export class VBalance extends VPage<CBalance> {
 
     private page = observer(() => {
         let right = <div className="w-100 text-center py-2 mx-3" onClick={this.controller.showBalanceHistory} >历史记录</div>;
-        return <Page header="余额" headerClassName={setting.pageHeaderCss} right={right}>
+        return <Page header="余额" right={right}>
             <div className="bg-white overflow-hidden">
                 <this.main />
                 <this.bankCard />

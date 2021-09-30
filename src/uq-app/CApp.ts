@@ -24,7 +24,7 @@ import { COrder } from "order/COrder";
 import { CCart } from "cart/CCart";
 import { CVIPCardType } from "vipCardType/CVIPCardType";
 import { UserCache } from "tonva-react";
-import { setting, appSettings } from "appConfig";
+import { appSettings } from "appConfig";
 import { GLOABLE } from "ui";
 
 const gaps = [10, 3, 3, 3, 3, 3, 5, 5, 5, 5, 5, 5, 5, 5, 10, 10, 10, 10, 15, 15, 15, 30, 30, 60];
@@ -71,7 +71,7 @@ export class CApp extends CUqApp {
 
     protected async internalStart(isUserLogin: boolean) {
         setUI(this.uqs);
-        setting.sales.setCApp(this);
+        appSettings.setCApp(this);
 
         let { SALESREGION_CN, CHINESE } = GLOABLE;
         this.currentSalesRegion = await this.uqs.common.SalesRegion.load(

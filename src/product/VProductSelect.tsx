@@ -3,7 +3,7 @@ import { VPage, Page, List, tv } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { ProductImage } from '../tools/productImage';
 import { CProduct } from './CProduct';
-import { setting } from 'appConfig';
+
 
 
 export class VProductSelect extends VPage<CProduct> {
@@ -71,7 +71,7 @@ export class VProductSelect extends VPage<CProduct> {
         let { cHome } = cApp;
         let none = <div className="my-3 mx-2 text-warning">未搜索到产品</div>;
 
-        return <Page header='添加产品' onScrollBottom={this.onScrollBottom} headerClassName={setting.pageHeaderCss}>
+        return <Page header='添加产品' onScrollBottom={this.onScrollBottom}  >
             {cHome.renderSearchHeader()}
             <List before={''} none={none} items={pageProduct} item={{ render: this.renderProduct, onClick: this.onSelectItem }} />
         </Page>

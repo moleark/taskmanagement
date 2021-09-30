@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { VPage, Page, List, LMR, tv, FA } from 'tonva-react';
 import { CMessage } from './CMessage';
-import { setting } from 'appConfig';
+
 
 export class VMessageDetail extends VPage<CMessage> {
 
@@ -20,7 +20,7 @@ export class VMessageDetail extends VPage<CMessage> {
 
     private page = () => {
         let none = <div className="my-3 mx-2 text-muted">无团队</div>;
-        return <Page header='我的团队' headerClassName={setting.pageHeaderCss} >
+        return <Page header='我的团队' >
             <List before={''} none={none} items={this.team} item={{ render: this.renderItem }} />
         </Page>
     }

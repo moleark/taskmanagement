@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { observer } from "mobx-react";
 import { VPage, Page, List, FA, tv, SearchBox, LMR, EasyTime } from 'tonva-react';
 import { CPost } from "./CPost";
-import { setting } from "appConfig";
+
 import { observable } from "mobx";
 /* eslint-disable */
 export class VPostList extends VPage<CPost> {
@@ -60,7 +60,7 @@ export class VPostList extends VPage<CPost> {
             />
         </div>
         return (
-            <Page header={search} onScrollBottom={this.onScrollBottoms} headerClassName={setting.pageHeaderCss}>
+            <Page header={search} onScrollBottom={this.onScrollBottoms}  >
                 <LMR className="bg-white py-2 my-1" right={<i className="px-2 iconfont icon-fangxiang1"></i>} onClick={showProductCatalog}>
                     <div className="mx-3 px-2 font-weight-bold">产品目录</div>
                 </LMR>

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { VPage, Page, UiSchema, UiInputItem, Schema, Form, Context } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CSalesTask } from '../CSalesTask';
-import { setting } from 'appConfig';
+
 
 const schema: Schema = [
     { name: 'order', type: 'string', required: false },
@@ -26,7 +26,7 @@ export class VCreateOrder extends VPage<CSalesTask> {
 
     private page = observer((param: any) => {
         let header = param.type === "order" ? "添加订单" : "添加询单";
-        return <Page header={header} footer={null} headerClassName={setting.pageHeaderCss}>
+        return <Page header={header} footer={null}  >
             <div className="mx-3">
                 <Form ref={v => this.form = v}
                     schema={schema}

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { VPage, Page, Loading, Tabs, TabProp, TabCaptionComponent, List, FA } from 'tonva-react';
 import { observer } from "mobx-react";
-import { setting } from "appConfig";
 import { CInnerTeam, dateFormat } from "./CInnerTeam";
 import { observable } from "mobx";
 import moment from "moment";
@@ -251,7 +250,7 @@ export class VInnerPersonDetail extends VPage<CInnerTeam> {
     })
     private page = observer(() => {
         this.getTabs();
-        return <Page header={'我的工作'} headerClassName={setting.pageHeaderCss}>
+        return <Page header={'我的工作'}  >
             <Tabs tabs={this.tabs} tabPosition="top" />
         </Page>
     });

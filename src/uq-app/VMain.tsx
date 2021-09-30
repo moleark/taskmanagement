@@ -1,5 +1,5 @@
 //=== UqApp builder created on Tue Jan 05 2021 18:41:24 GMT-0500 (GMT-05:00) ===//
-import { setting } from 'appConfig';
+import { appSettings } from 'appConfig';
 import React from 'react';
 import { observable } from 'mobx';
 import { VPage, TabProp, TabCaptionComponent, t, TabsProps, PageWebNav, Image, Page } from 'tonva-react';
@@ -19,13 +19,13 @@ export class VMain extends VPage<CApp> {
     }
 
     opensrc = () => {
-        window.open(setting.sales.downloadAppurl);
+        window.open(appSettings.downloadAppurl);
     }
 
     render = (param?: any): JSX.Element => {
         let { cCustomer, cProduct, cMe, cMessage, cBalance, cPost, cHome, cSalesTask } = this.controller;
         let faceTabs: any[];
-        if (setting.sales.isInner) {
+        if (appSettings.isInner) {
             faceTabs = [
                 { name: 'home', label: '任务', content: cSalesTask.tab, icon: 'tasks', onShown: cSalesTask.init, notify: undefined/*store.homeCount*/ },
                 { name: 'member', label: '客户', content: cCustomer.tab, icon: 'vcard', onScrollBottom: cCustomer.onScrollBottom },
@@ -67,8 +67,8 @@ export class VMain extends VPage<CApp> {
         if (!browser.versions.html5Plus && browser.versions.android) {
             header = <div className="w-100 mx-3 d-flex  justify-content-between">
                 <div>
-                    <Image src={setting.sales.logo} style={{ width: "25px", height: "25px" }} ></Image>
-                    <span className="small mx-2" >{setting.sales.appName}APP</span>
+                    <Image src={appSettings.logo} style={{ width: "25px", height: "25px" }} ></Image>
+                    <span className="small mx-2" >{appSettings.appName}APP</span>
                 </div >
                 <div>  <a download onClick={this.opensrc} className="small">立即打开</a></div>
             </div >;
