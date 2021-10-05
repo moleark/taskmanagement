@@ -1,11 +1,15 @@
-//=== UqApp builder created on Wed Sep 29 2021 16:29:57 GMT+0800 (China Standard Time) ===//
-import * as JkSalesTask from './JkSalesTask';
+///+++import AppUQs+++///
 import { UQs as AppUQs } from 'uqs';
+///###import AppUQs###///
+//=== UqApp builder created on Sat Oct 02 2021 22:23:04 GMT+0800 (China Standard Time) ===//
+import * as JkSalesTask from './JkSalesTask';
 
 export interface UQs extends AppUQs {
-    JkSalesTask: JkSalesTask.UqExt;
+	JkSalesTask: JkSalesTask.UqExt;
 }
 
-export function setUI(uqs: UQs) {
-    JkSalesTask.setUI(uqs.JkSalesTask);
+export * as JkSalesTask from './JkSalesTask';
+
+export function setUI(uqs:UQs) {
+	JkSalesTask.setUI(uqs.JkSalesTask);
 }
