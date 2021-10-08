@@ -1,11 +1,19 @@
 
-import { observable, computed } from 'mobx';
+import { observable, computed, makeObservable } from 'mobx';
 
 export class ProductCart {
 
-    @observable list: any[] = [];
-    @observable listid: any[] = [];
-    @computed get count(): number {
+    list: any[] = [];
+    listid: any[] = [];
+    constructor() {
+        makeObservable(this, {
+            list: observable,
+            listid: observable,
+            count: computed,
+        })
+    }
+
+    get count(): number {
 
         return this.list.length;
     }

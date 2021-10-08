@@ -1,8 +1,8 @@
 import * as React from "react";
-import { observable } from "mobx";
+import { makeObservable, observable } from "mobx";
 import { observer } from "mobx-react";
 import { Context, QueryPager } from 'tonva-react';
-import { CUqBase } from 'uq-app';
+import { CApp, CUqBase } from 'uq-app';
 import { Task } from "../salestask/model";
 import { CAddress } from "../address/CAddress";
 import { VCustomerSelect } from "./VCustomerSelect";
@@ -24,20 +24,37 @@ import { VOrderDraftRule } from './VOrderDraftRule'
 /* eslint-disable */
 
 export class CCustomer extends CUqBase {
-    @observable pageCustomer: QueryPager<any>;
-    @observable pageCustomerSearch: QueryPager<any>;
-    @observable pageCustomerSearchByUnit: QueryPager<any>;
-    @observable pageCustomerActive: QueryPager<any>;
+    pageCustomer: QueryPager<any>;
+    pageCustomerSearch: QueryPager<any>;
+    pageCustomerSearchByUnit: QueryPager<any>;
+    pageCustomerActive: QueryPager<any>;
 
-    @observable newMyCustomerList: any[];
-    @observable activetasks: any;
-    @observable customerorders: any;
-    @observable pagePost: QueryPager<any>;
-    @observable vipCardForWebUser: any;
-    @observable language: number = 0;
+    newMyCustomerList: any[];
+    activetasks: any;
+    customerorders: any;
+    pagePost: QueryPager<any>;
+    vipCardForWebUser: any;
+    language: number = 0;
     private task: Task;
 
-    @observable isBinded: any;
+    isBinded: any;
+
+    constructor(cApp: CApp) {
+        super(cApp);
+        makeObservable(this, {
+            pageCustomer: observable,
+            pageCustomerSearch: observable,
+            pageCustomerSearchByUnit: observable,
+            pageCustomerActive: observable,
+            newMyCustomerList: observable,
+            activetasks: observable,
+            customerorders: observable,
+            pagePost: observable,
+            vipCardForWebUser: observable,
+            language: observable,
+            isBinded: observable
+        })
+    }
 
     //初始化
     protected async internalStart(task: Task) {

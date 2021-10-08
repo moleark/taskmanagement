@@ -35,7 +35,7 @@ export class CSalesTask extends CUqBase {
     //cApp: CApp;
     cSelectType: CSelectType;
     cSalesTaskBiz: CSelectBiz;
-    orderids: any;
+    orderOwnToTask: any;
     tasks: Tasks;
     createproduct: CreateProduct;
     pageEmployeeTaskHistory: QueryPager<any>;
@@ -43,7 +43,7 @@ export class CSalesTask extends CUqBase {
     constructor(cApp: CApp) {
         super(cApp);
         makeObservable(this, {
-            orderids: observable,
+            orderOwnToTask: observable,
             tasks: observable,
             createproduct: observable,
             pageEmployeeTaskHistory: observable
@@ -164,7 +164,7 @@ export class CSalesTask extends CUqBase {
     //显示任务完结页面
     showTaskComplet = async (task: Task) => {
         let model = await this.uqs.salesTask.TaskOrder.query({ task: task.id });
-        this.orderids = model.ret;
+        this.orderOwnToTask = model.ret;
         let name = task.biz.obj ? task.biz.obj.name : task.biz.name;
         this.getCTaskType(name).showComplet(task);
     };
@@ -358,7 +358,7 @@ export class CSalesTask extends CUqBase {
         let { id, ordertype, orderid } = model;
         await this.uqs.salesTask.TaskOrder.add({ task: id, arr1: [{ ordertype: ordertype, orderid: orderid }] });
         let order = await this.uqs.salesTask.TaskOrder.query({ task: id });
-        this.orderids = order.ret;
+        this.orderOwnToTask = order.ret;
     };
 
 

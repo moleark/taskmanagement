@@ -1,11 +1,18 @@
 import * as React from 'react';
 import { VPage, Page, FA, EasyDate, nav } from 'tonva-react';
 import { COrder } from './COrder';
-import { observable } from 'mobx';
+import { makeObservable, observable } from 'mobx';
 import { GLOABLE } from "ui";
 
 export class OrderSuccess extends VPage<COrder> {
-    @observable showTips: any = "none"
+    showTips: any = "none";
+    constructor(cOrder: COrder) {
+        super(cOrder);
+        makeObservable(this, {
+            showTips: observable
+        })
+    }
+
     async open(orderCreateResult: any) {
         this.openPage(this.page, orderCreateResult);
     }

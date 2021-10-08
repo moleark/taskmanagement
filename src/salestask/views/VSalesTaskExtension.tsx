@@ -1,11 +1,9 @@
 import * as React from 'react';
-import { VPage, Page, Form, UiSchema, UiTextAreaItem, Context, UiCustom, Schema, Widget } from 'tonva-react';
+import { VPage, Page, Form, UiSchema, UiTextAreaItem, Context, UiCustom, Schema, Widget, ItemSchema, FieldProps } from 'tonva-react';
 import { CSalesTask } from '../CSalesTask';
 import { observer } from 'mobx-react';
 import { Task } from '../model';
-import { observable } from 'mobx';
-
-
+import { makeObservable, observable } from 'mobx';
 
 /* eslint-disable */
 const schema: Schema = [
@@ -15,7 +13,15 @@ const schema: Schema = [
 ];
 
 class SomeDay extends Widget {
-    @observable dateVisible = false;
+
+    constructor(context: Context, itemSchema: ItemSchema, fieldProps: FieldProps, children: React.ReactNode) {
+        super(context, itemSchema, fieldProps, children);
+        makeObservable(this, {
+            dateVisible: observable
+        })
+    }
+
+    dateVisible = false;
     private list = [{ value: 1, title: '明天' }, { value: 2, title: '后天' }];
 
     private onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {

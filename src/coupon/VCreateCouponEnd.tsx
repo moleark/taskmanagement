@@ -3,15 +3,23 @@ import { observer } from 'mobx-react';
 import { VPage, Page, Image } from 'tonva-react';
 import { CCoupon } from './CCoupon';
 import copy from 'copy-to-clipboard';
-import { observable } from 'mobx';
+import { action, makeObservable, observable } from 'mobx';
 import { GLOABLE } from 'ui';
 import { appSettings } from 'appConfig';
 import QRCode from 'qrcode.react';
 
 export class VCreateCouponEnd extends VPage<CCoupon> {
 
-    @observable showTips: any = "none"
+    showTips: any = "none"
     private coupon: any;
+
+    constructor(cCoupon: CCoupon) {
+        super(cCoupon);
+        makeObservable(this, {
+            showTips: observable,
+            copyClick: action,
+        })
+    }
 
     async open(param: any) {
         this.coupon = param;
@@ -37,7 +45,7 @@ export class VCreateCouponEnd extends VPage<CCoupon> {
         </div>;
 
         if (navigator.userAgent.indexOf("Html5Plus") > -1) {
-            share = <span className="text-info cursor-info mx-2" onClick={onshare} >分享</span>;
+            share = <span className="text-info cursor-info mx-2" onClick={onshare}>分享</span>;
         }
 
         let header = appSettings.couponType[type];

@@ -10,9 +10,9 @@ import { VInnerTeamDailyDetail } from "./VInnerTeamDailyDetail";
 export class CInnerTeam extends CUqBase {
 
     //初始化
-    @observable myTodayAchievement: any[];
-    @observable teamAchievementDay: any[];
-    @observable teamAchievementYear: any[];
+    myTodayAchievement: any[];
+    teamAchievementDay: any[];
+    teamAchievementYear: any[];
 
     protected async internalStart() {
         let today = moment().format('YYYY-MM-DD');

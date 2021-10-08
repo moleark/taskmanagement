@@ -8,8 +8,8 @@ interface DateTasks {
 }
 
 export class Tasks {
-    @observable tasksNow: Task[];
-    @observable dateTasksList: DateTasks[];
+    tasksNow: Task[];
+    dateTasksList: DateTasks[];
 
     constructor(taskArr: Task[]) {
         this.tasksNow = observable.array([], { deep: true });

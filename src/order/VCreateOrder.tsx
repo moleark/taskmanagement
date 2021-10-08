@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { observable } from 'mobx';
+import { makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { VPage, Page, tv, List, LMR, FA } from 'tonva-react';
 import { COrder } from './COrder';
@@ -10,10 +10,19 @@ import { GLOABLE } from 'cartenv';
 
 export class VCreateOrder extends VPage<COrder> {
 
-    @observable private useShippingAddress: boolean = true;
-    @observable private shippingAddressIsBlank: boolean = false;
-    @observable private invoiceAddressIsBlank: boolean = false;
-    @observable private invoiceIsBlank: boolean = false;
+    useShippingAddress: boolean = true;
+    shippingAddressIsBlank: boolean = false;
+    invoiceAddressIsBlank: boolean = false;
+    invoiceIsBlank: boolean = false;
+    constructor(cOrder: COrder) {
+        super(cOrder);
+        makeObservable(this, {
+            useShippingAddress: observable,
+            shippingAddressIsBlank: observable,
+            invoiceAddressIsBlank: observable,
+            invoiceIsBlank: observable
+        })
+    }
 
     async open(param: any) {
         this.openPage(this.page);

@@ -1,13 +1,13 @@
 import * as React from "react";
 import { nav, QueryPager } from 'tonva-react';
-import { CUqBase } from 'uq-app';
+import { CApp, CUqBase } from 'uq-app';
 import { VMe } from "./VMe";
 import { VMeDetail } from "./VMeDetail";
 import { VSet } from "./VSet";
 import { VInvitationCode } from "./VInvitationCode";
 import { VAccount } from "./VAccount";
 import { VAbout } from "./VAbout";
-import { observable } from "mobx";
+import { makeObservable, observable } from "mobx";
 import { VClassRoom } from "./VClassRoom";
 import { VClassRoomDetail } from "./VClassRoomDetail";
 import { VClassRoomList } from "./VClassRoomList";
@@ -15,9 +15,21 @@ import { VClassRoomList } from "./VClassRoomList";
 export class CMe extends CUqBase {
     inviteCode: string;
     position: any;
-    @observable account: any;
-    @observable pagePost: QueryPager<any>;
-    @observable RecommendPost: QueryPager<any>;
+    account: any;
+    pagePost: QueryPager<any>;
+    RecommendPost: QueryPager<any>;
+    constructor(cApp: CApp) {
+        super(cApp);
+        makeObservable(this, {
+            account: observable,
+            pagePost: observable,
+            RecommendPost: observable
+        })
+    }
+
+    async open(param: any) {
+        let { nick, icon } = nav.user;
+    }
 
     //初始化
     protected async internalStart(param: any) {

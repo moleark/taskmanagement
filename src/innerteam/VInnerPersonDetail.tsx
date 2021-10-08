@@ -2,25 +2,38 @@ import * as React from "react";
 import { VPage, Page, Loading, Tabs, TabProp, TabCaptionComponent, List, FA } from 'tonva-react';
 import { observer } from "mobx-react";
 import { CInnerTeam, dateFormat } from "./CInnerTeam";
-import { observable } from "mobx";
+import { makeObservable, observable } from "mobx";
 import moment from "moment";
 
 /* eslint-disable */
 export const color = (selected: boolean) => selected === true ? 'text-primary' : 'text-muted';
 export class VInnerPersonDetail extends VPage<CInnerTeam> {
 
-    @observable private currentState: string;
+    currentState: string;
     private tabs: TabProp[];
 
-    @observable private currentMonth: any;
-    @observable private currentDate: any;
-    @observable private currentYear: any;
-    @observable private showYear: any;
-    @observable private oneDayTimes: number = 1000 * 60 * 60 * 24;
+    currentMonth: any;
+    currentDate: any;
+    currentYear: any;
+    showYear: any;
+    oneDayTimes: number = 1000 * 60 * 60 * 24;
 
-    @observable myDailyAchievement: any[] = [];
-    @observable myMonthlyAchievement: any[] = [];
-    @observable myYearlyAchievement: any[] = [];
+    myDailyAchievement: any[] = [];
+    myMonthlyAchievement: any[] = [];
+    myYearlyAchievement: any[] = [];
+    constructor(cInnerTeam: CInnerTeam) {
+        super(cInnerTeam);
+        makeObservable(this, {
+            currentDate: observable,
+            currentMonth: observable,
+            currentState: observable,
+            currentYear: observable,
+            showYear: observable,
+            myDailyAchievement: observable,
+            myMonthlyAchievement: observable,
+            myYearlyAchievement: observable
+        })
+    }
 
     async open() {
         this.currentDate = new Date();

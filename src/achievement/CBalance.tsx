@@ -3,7 +3,7 @@ import { VBalance } from "./VBalance";
 import { VWithdrawal } from "./VWithdrawal";
 import { VWithdrawalEnd } from "./VWithdrawalEnd";
 import { VBalanceHistory } from "./VBalanceHistory";
-import { observable } from "mobx";
+import { makeObservable, observable } from "mobx";
 import { VAchievementDetail } from "./VAchievementDetail";
 import { VWithdrawalDetail } from "./VWithdrawalDetail";
 import { VAssistAchievementDetail } from "./VAssistAchievementDetail";
@@ -11,9 +11,9 @@ import { VExplanation } from "./VExplanation";
 import { CApp, CUqBase } from 'uq-app';
 
 export class CBalance extends CUqBase {
-    @observable pageBalanceHistory: QueryPager<any>;
-    @observable balanceHistory: any;
-    @observable salesAmont: any = {
+    pageBalanceHistory: QueryPager<any>;
+    balanceHistory: any;
+    salesAmont: any = {
         oneSaleVolume: 0.0,
         twoSaleVolume: 0.0,
         threeSaleVolume: 0.0,
@@ -33,7 +33,11 @@ export class CBalance extends CUqBase {
 
     constructor(cApp: CApp) {
         super(cApp);
-
+        makeObservable(this, {
+            pageBalanceHistory: observable,
+            balanceHistory: observable,
+            salesAmont: observable
+        })
     }
 
     //初始化

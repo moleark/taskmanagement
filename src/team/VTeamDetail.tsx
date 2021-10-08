@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { VPage, Page, ItemSchema, StringSchema, UiSchema, UiTextItem, Edit, LMR, FA, tv } from 'tonva-react';
-import { observable } from 'mobx';
+import { makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { CTeam } from './CTeam';
 
@@ -17,7 +17,14 @@ export class VTeamDetail extends VPage<CTeam> {
         }
     }
 
-    @observable private data: any;
+    data: any;
+    constructor(cTeam: CTeam) {
+        super(cTeam);
+        makeObservable(this, {
+            data: observable
+        })
+    }
+
     private peer: any;
     async open(param: any) {
         let { assigned, children } = param;

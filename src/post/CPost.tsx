@@ -1,8 +1,8 @@
 import * as React from "react";
 import { nav, QueryPager } from 'tonva-react';
-import { CUqBase } from 'uq-app';
+import { CApp, CUqBase } from 'uq-app';
 import { VPostList } from "./VPostList";
-import { observable } from "mobx";
+import { makeObservable, observable } from "mobx";
 import { VCustomer } from "./VCustomer";
 import { VPostDetil } from "./VPostDetil";
 import { VProductCatalog } from "./VProductCatalog";
@@ -17,17 +17,26 @@ import { GLOABLE } from "ui";
 import { VDomainPostCount } from "./VDomainPostCount";
 import { VProductCatalogPostCount } from "./VProductCatalogPostCount";
 
-//页面类
 /* eslint-disable */
-
-
 export class CPost extends CUqBase {
-    @observable pagePost: QueryPager<any>;
-    @observable pageCustomer: QueryPager<any>;
-    @observable pageProductCatalogPost: QueryPager<any>;
-    @observable pageSubjectPost: QueryPager<any>;
-    @observable pageDomainPost: QueryPager<any>;
-    @observable language: number = 0;
+    pagePost: QueryPager<any>;
+    pageCustomer: QueryPager<any>;
+    pageProductCatalogPost: QueryPager<any>;
+    pageSubjectPost: QueryPager<any>;
+    pageDomainPost: QueryPager<any>;
+    language: number = 0;
+
+    constructor(cApp: CApp) {
+        super(cApp);
+        makeObservable(this, {
+            pagePost: observable,
+            pageCustomer: observable,
+            pageProductCatalogPost: observable,
+            pageSubjectPost: observable,
+            pageDomainPost: observable,
+            language: observable
+        })
+    }
 
     //初始化
     protected async internalStart() {
@@ -59,9 +68,11 @@ export class CPost extends CUqBase {
         let param = { data: results.first, name: "产品目录" };
         this.openVPage(VProductCatalog, param);
     }
+
     renderProductCatalogPostCount = (productcatolg: any) => {
         return this.renderView(VProductCatalogPostCount, productcatolg);
     }
+
     searchProductCatalogPostCount = async (productcategory: any) => {
         let list = await this.uqs.webBuilder.SearchProductCategoryPostCount.obj({ productCategory: productcategory });
         return list.postcounts;

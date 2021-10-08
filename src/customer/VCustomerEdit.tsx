@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { observable } from 'mobx';
+import { makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { VPage, Page, Schema, UiSchema, UiInputItem, UiRadio, Edit, ItemSchema } from 'tonva-react';
 import { CCustomer } from './CCustomer';
@@ -43,9 +43,13 @@ export const myCustomerUISchema: UiSchema = {
 
 export class VCustomerEdit extends VPage<CCustomer> {
 
-    @observable private customer: any;
-    @observable isBinded: boolean = false;
-    @observable bindTip: any = "";
+    customer: any;
+    constructor(cCustomer: CCustomer) {
+        super(cCustomer);
+        makeObservable(this, {
+            customer: observable
+        })
+    }
 
     async open(customer: any) {
         this.customer = customer;

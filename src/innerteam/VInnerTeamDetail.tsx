@@ -2,14 +2,23 @@ import * as React from "react";
 import { VPage, Page, Loading, FA } from 'tonva-react';
 import { observer } from "mobx-react";
 import { CInnerTeam } from "./CInnerTeam";
-import { observable } from "mobx";
+import { makeObservable, observable } from "mobx";
 
 /* eslint-disable */
 
 export class VInnerTeamDetail extends VPage<CInnerTeam> {
-    @observable year: any;
-    @observable month: any;
-    @observable teamAchievementMonthDetail: any[];
+    year: any;
+    month: any;
+    teamAchievementMonthDetail: any[];
+    constructor(cInnerTeam: CInnerTeam) {
+        super(cInnerTeam);
+        makeObservable(this, {
+            year: observable,
+            month: observable,
+            teamAchievementMonthDetail: observable
+        })
+    }
+
     async open(param: any) {
         this.month = param.montha;
         this.year = param.yeara;
@@ -81,9 +90,18 @@ export class VInnerTeamDetail extends VPage<CInnerTeam> {
         );
     });
 }
+
 export class VInnerTeamMemberYearly extends VPage<CInnerTeam> {
-    @observable year: any;
-    @observable teamMemberYearlyDetail: any[];
+    year: any;
+    teamMemberYearlyDetail: any[];
+    constructor(cInnerTeam: CInnerTeam) {
+        super(cInnerTeam);
+        makeObservable(this, {
+            year: observable,
+            teamMemberYearlyDetail: observable,
+        })
+    }
+
     async open(param: any) {
         this.year = param.yeara;
         this.teamMemberYearlyDetail = param.teamMemberYearlyDetail;

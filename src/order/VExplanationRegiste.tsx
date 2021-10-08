@@ -6,9 +6,7 @@ import { COrder } from "./COrder";
 
 
 export class VExplanationRegiste extends VPage<COrder> {
-    @observable private customer: any;
     async open(param: any) {
-        this.customer = param;
         this.openPage(this.page, param);
     }
 
@@ -22,9 +20,7 @@ export class VExplanationRegiste extends VPage<COrder> {
     });
 }
 export class VExplanationRegiste1 extends VPage<COrder> {
-    @observable private customer: any;
     async open(param: any) {
-        this.customer = param;
         this.openPage(this.page, param);
     }
 

@@ -1,14 +1,12 @@
 import * as React from "react";
 import { observer } from "mobx-react";
 import { VPage, Page, List } from 'tonva-react';
-import { observable } from "mobx";
 import { CPost } from "./CPost";
-
 
 export class VDomain extends VPage<CPost> {
 
-    @observable name: any;
-    @observable pageDomain: any;
+    name: any;
+    pageDomain: any;
     async open(param: any) {
         this.pageDomain = param.domain;
         this.name = param.name;

@@ -2,17 +2,24 @@ import * as React from 'react';
 import { VPage, TabProp, Tabs, TabCaptionComponent, List, EasyDate, nav, tv, LMR, Page } from 'tonva-react';
 import { COrder } from './COrder';
 import { observer } from 'mobx-react';
-import { observable } from 'mobx';
+import { makeObservable, observable } from 'mobx';
 import { GLOABLE } from "ui";
 
 export const color = (selected: boolean) => selected === true ? 'text-primary' : 'text-muted';
 export class VOrderStatus extends VPage<COrder> {
 
-    @observable private list: any[];
+    list: any[];
     private currentState: string;
 
     private tabs: TabProp[];
-    @observable showTips: any = "none"
+    showTips: any = "none"
+    constructor(cOrder: COrder) {
+        super(cOrder);
+        makeObservable(this, {
+            list: observable,
+            showTips: observable
+        })
+    }
 
     async open() {
         this.openPage(this.page);

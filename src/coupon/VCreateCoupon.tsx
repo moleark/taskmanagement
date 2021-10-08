@@ -1,8 +1,8 @@
 import * as React from 'react';
 import _ from 'lodash';
-import { observable } from 'mobx';
+import { makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { VPage, Page, Schema, Form, UiSchema, Context, Widget, UiCustom } from 'tonva-react';
+import { VPage, Page, Schema, Form, UiSchema, Context, Widget, UiCustom, ItemSchema, FieldProps } from 'tonva-react';
 import { CCoupon } from './CCoupon';
 import { GLOABLE } from 'ui';
 import { appSettings } from 'appConfig';
@@ -14,7 +14,6 @@ const schema: Schema = [
 ];
 
 class BusinessType extends Widget {
-    @observable dateVisible = false;
     private list = [
         { value: "notplatform", title: '非平台', name: 'b', checked: true },
         { value: "platform", title: '平台', name: 'b', checked: undefined }
@@ -38,7 +37,15 @@ class BusinessType extends Widget {
 }
 
 class Discount extends Widget {
-    @observable dateVisible = false;
+    dateVisible = false;
+
+    constructor(context: Context, itemSchema: ItemSchema, fieldProps: FieldProps, children: React.ReactNode) {
+        super(context, itemSchema, fieldProps, children);
+        makeObservable(this, {
+            dateVisible: observable
+        })
+    }
+
     private list = [
         { value: 9.5, title: '9.5折', name: 'a', checked: true },
         { value: 9, title: '9.0折', name: 'a', checked: undefined },
@@ -84,7 +91,14 @@ class Discount extends Widget {
 
 export class VCreateCoupon extends VPage<CCoupon> {
 
-    @observable showTip: boolean = false;
+    showTip: boolean = false;
+    constructor(cCoupon: CCoupon) {
+        super(cCoupon);
+        makeObservable(this, {
+            showTip: observable
+        })
+    }
+
     private tip: string = "";
     private uiSchema: UiSchema
     private Coupon: any;

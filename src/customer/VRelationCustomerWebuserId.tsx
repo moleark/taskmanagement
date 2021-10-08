@@ -3,14 +3,22 @@ import { VPage, Page, LMR, FA } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CCustomer } from './CCustomer';
 import { GLOABLE } from '../cartenv';
-import { observable } from 'mobx';
+import { makeObservable, observable } from 'mobx';
 
 export class VRelationCustomerWebuserId extends VPage<CCustomer> {
     private shopIdInput: HTMLInputElement;
-    @observable tips: string;
-    @observable webUser: any;
-    @observable customerShopId: number;
+    tips: string;
+    webUser: any;
+    customerShopId: number;
     private myCustomer: any;
+    constructor(cCustomer: CCustomer) {
+        super(cCustomer);
+        makeObservable(this, {
+            tips: observable,
+            webUser: observable
+        })
+    }
+
     async open(myCustomer) {
         this.myCustomer = myCustomer;
         this.openPage(this.page);

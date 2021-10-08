@@ -44,7 +44,6 @@ export abstract class CType extends Controller {
         return <Page header={caption} footer={renderActionsBottom(task)}>
             {renderDetailTop(task)}
             {renderDetailContent(task)}
-
         </Page >
     }
 

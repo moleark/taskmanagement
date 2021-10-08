@@ -4,10 +4,8 @@ import { CHome } from './CHome';
 import { VSiteHeader } from './VSiteHeader';
 import { VSlider } from './VSlider';
 import { observer } from "mobx-react";
-import { observable } from 'mobx';
 
 export class VHome extends VPage<CHome> {
-    @observable showTips: any = "";
 
     async open(param?: any) {
         this.openPage(this.page);

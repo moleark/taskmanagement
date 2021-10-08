@@ -6,12 +6,19 @@ import { appSettings } from 'appConfig';
 import { CMe } from './CMe';
 import { scaleToImage_text } from './scaleToImage';
 import copy from 'copy-to-clipboard';
-import { observable } from 'mobx';
+import { makeObservable, observable } from 'mobx';
 import { GLOABLE } from 'ui';
 
 export class VInvitationCode extends VPage<CMe> {
 
-    @observable showTips: any = "none"
+    showTips: any = "none"
+    constructor(cMe: CMe) {
+        super(cMe);
+        makeObservable(this, {
+            showTips: observable
+        })
+    }
+
     async open(code: string) {
 
         this.openPage(this.page, { code: code });

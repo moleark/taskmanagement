@@ -59,7 +59,7 @@ export class VFinish extends VPage<CCommonType> {
         let { completSchema, completuiSchema } = this.controller.taskCommonType;
         return (
             <div className="mx-3">
-                <List className="my-2" before={''} none="" items={this.controller.cSalesTask.orderids} item={{ render: this.renderOrder, onClick: null }} />
+                <List className="my-2" before={''} none="" items={this.controller.cSalesTask.orderOwnToTask} item={{ render: this.renderOrder, onClick: null }} />
                 <Form
                     ref={v => (this.form = v)}
                     schema={completSchema}

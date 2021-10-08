@@ -2,14 +2,22 @@ import * as React from "react";
 import { VPage, Page, Loading, FA } from 'tonva-react';
 import { observer } from "mobx-react";
 import { CInnerTeam, dateFormat } from "./CInnerTeam";
-import { observable } from "mobx";
+import { makeObservable, observable } from "mobx";
 
 /* eslint-disable */
 
 export class VInnerTeamDailyDetail extends VPage<CInnerTeam> {
-    @observable private oneDayTimes: number = 1000 * 60 * 60 * 24;
-    @observable private date: any;
-    @observable teamDailyDetail: any[];
+    private oneDayTimes: number = 1000 * 60 * 60 * 24;
+    date: any;
+    teamDailyDetail: any[];
+    constructor(cInnerTeam: CInnerTeam) {
+        super(cInnerTeam);
+        makeObservable(this, {
+            date: observable,
+            teamDailyDetail: observable,
+        })
+    }
+
     async open(param: any) {
         this.date = param.date;
         this.teamDailyDetail = param.teamDailyDetail;

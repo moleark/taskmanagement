@@ -1,6 +1,6 @@
 import { QueryPager } from 'tonva-react';
-import { observable } from 'mobx';
-import { CUqBase } from 'uq-app';
+import { makeObservable, observable } from 'mobx';
+import { CApp, CUqBase } from 'uq-app';
 import { Task } from '../salestask/model';
 import { VInnerCustomerCall } from './VInnerCustomerCall';
 
@@ -8,8 +8,13 @@ import { VInnerCustomerCall } from './VInnerCustomerCall';
  *
  */
 export class CInnerCustomer extends CUqBase {
-    @observable pageWebUser: QueryPager<any>;
-
+    pageWebUser: QueryPager<any>;
+    constructor(cApp: CApp) {
+        super(cApp);
+        makeObservable(this, {
+            pageWebUser: observable
+        })
+    }
 
     //初始化
     protected async internalStart(task: Task) {
@@ -26,7 +31,4 @@ export class CInnerCustomer extends CUqBase {
     returnWebUser = async (webuser: any): Promise<any> => {
         this.returnCall(webuser);
     }
-
-
-
 }

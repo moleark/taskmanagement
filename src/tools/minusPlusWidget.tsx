@@ -7,9 +7,6 @@ import { UpdownWidget } from 'tonva-react';
 const keys = [107, 109, 110, 187, 189];
 
 export class MinusPlusWidget extends UpdownWidget {
-    // @observable protected value: any;
-    // @observable disabled: boolean;
-    // @observable protected hasFocus: boolean;
 
     protected isValidKey(key: number): boolean {
         if (keys.find(v => v === key) !== undefined) return false;

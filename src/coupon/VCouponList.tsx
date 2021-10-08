@@ -2,11 +2,10 @@ import * as React from 'react';
 import { VPage, Page, LMR, SearchBox, List, EasyDate, FA, DropdownActions, DropdownAction } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CCoupon } from './CCoupon';
-import { observable } from 'mobx';
 
 export class VCouponList extends VPage<CCoupon> {
-    @observable protected isShowCoupon: boolean = false;
-    @observable types: any;
+    protected isShowCoupon: boolean = false;
+    types: any;
     async open(param: any) {
         this.types = param
         this.openPage(this.page);

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { VPage, Page, FA, LMR } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CBalance } from './CBalance';
-import { observable } from 'mobx';
+import { makeObservable, observable } from 'mobx';
 import { GLOABLE } from 'ui';
 
 export class VBalance extends VPage<CBalance> {
@@ -10,7 +10,13 @@ export class VBalance extends VPage<CBalance> {
     private balance: number;
     private waitWithdrawal: number;
     private amount: number = 0;
-    @observable tips: string = "";
+    tips: string = "";
+    constructor(cBalance: CBalance) {
+        super(cBalance);
+        makeObservable(this, {
+            tips: observable
+        })
+    }
 
     async open() {
         /**

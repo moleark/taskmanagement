@@ -1,13 +1,21 @@
 import { QueryPager } from 'tonva-react';
-import { observable } from 'mobx';
-import { CUqBase } from 'uq-app';
+import { makeObservable, observable } from 'mobx';
+import { CApp, CUqBase } from 'uq-app';
 import { VCustomerUnitSelect } from './VCustomerUnitSelect';
 import { VCreateCustomerUnit } from './VCreateCustomerUnit';
 import { VCustomerUnitDetail } from './VCustomerUnitDetail';
 /* eslint-disable */
 
 export class CCustomerUnit extends CUqBase {
-    @observable pageUnit: QueryPager<any>;
+
+    pageUnit: QueryPager<any>;
+
+    constructor(cApp: CApp) {
+        super(cApp);
+        makeObservable(this, {
+            pageUnit: observable
+        })
+    }
 
     //初始化
     protected async internalStart(type: any) {

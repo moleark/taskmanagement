@@ -8,7 +8,6 @@ import { observable } from 'mobx';
 
 export class VAi extends VPage<CSelectType> {
 
-    @observable private finished: boolean;
     async open(param: any) {
         this.openPage(this.page);
     }

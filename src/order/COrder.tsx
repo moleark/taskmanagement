@@ -1,7 +1,7 @@
 import * as React from "react";
-import { CUqBase } from 'uq-app';
+import { CApp, CUqBase } from 'uq-app';
 import { BoxId, QueryPager } from 'tonva-react';
-import { observable } from "mobx";
+import { makeObservable, observable } from "mobx";
 import { VOrderStatus } from "./VOrderStatus";
 import { groupByProduct } from '../tools/groupByProduct';
 import { VOrderDetail } from './VOrderDetail';
@@ -15,20 +15,31 @@ import { createOrderPriceStrategy, OrderPriceStrategy } from 'coupon/Coupon';
 
 const FREIGHTFEEFIXED = 12;
 const FREIGHTFEEREMITTEDSTARTPOINT = 100;
+
 /* eslint-disable */
 export class COrder extends CUqBase {
-    @observable pageShareCustomer: QueryPager<any>;
-    @observable orderData: Order = new Order();
+    pageShareCustomer: QueryPager<any>;
+    orderData: Order = new Order();
     /**
      * 存储已经被应用的卡券，以便在使用后（下单后）将其删除
      */
-    @observable couponAppliedData: any = {};
+    couponAppliedData: any = {};
     hasAnyCoupon: boolean;
-    @observable couponNo: any;
+    couponNo: any;
     /**
      * 当前webuser对应的buyeraccount，用来设置订单中的buyeraccount
      */
-    @observable buyerAccounts: any[] = [];
+    buyerAccounts: any[] = [];
+    constructor(cApp: CApp) {
+        super(cApp);
+        makeObservable(this, {
+            pageShareCustomer: observable,
+            orderData: observable,
+            couponAppliedData: observable,
+            couponNo: observable
+        })
+    }
+
     protected async internalStart() {
 
     }

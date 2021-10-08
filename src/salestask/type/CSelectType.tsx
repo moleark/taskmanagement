@@ -1,5 +1,5 @@
 import { QueryPager } from 'tonva-react';
-import { observable } from 'mobx';
+import { makeObservable, observable } from 'mobx';
 import { Task } from '../model';
 import { CSalesTask } from '../CSalesTask';
 import { VSelectType } from './VSelectType';
@@ -14,45 +14,28 @@ import { CApp, CUqSub, UQs } from 'uq-app';
  *
  */
 export class CSelectType extends CUqSub<CApp, UQs, CSalesTask> {
-    private taskBook: any;
-    private tasks: [];
-    private customerid: number;
+
     private task: Task;
-    @observable tasktypelist: any;
-    @observable pageMyJKTask: QueryPager<any>;
-    @observable organization: any;
+    tasktypelist: any;
+    pageMyJKTask: QueryPager<any>;
+    organization: any;
+
+    constructor(owner: CSalesTask) {
+        super(owner);
+        makeObservable(this, {
+            tasktypelist: observable,
+            pageMyJKTask: observable,
+            organization: observable
+        })
+    }
 
     //cApp: CApp;
     get owner(): CSalesTask { return this._owner as CSalesTask };
-
-    /*
-    cSalesTask: CSalesTask;
-    private tuidTaskType: Tuid;
-    private tuidOrganization: Tuid;
-    private querySearchJKTask: Query;
-    private querygetCustomerOrganization: Query;
-    private actionImportTask: Action;
-
-    //构造函数
-    constructor(cSalesTask: CSalesTask, res: any) {
-        super(res);
-        this.cSalesTask = cSalesTask;
-        this.pageMyJKTask = null;
-
-        let { cUqSalesTask, cUqCustomer } = this.cSalesTask.cApp;
-        this.tuidTaskType = cUqSalesTask.tuid("tasktype");
-        this.tuidOrganization = cUqSalesTask.tuid("Organization");
-        this.querySearchJKTask = cUqSalesTask.query("SearchJKTask");
-        this.querygetCustomerOrganization = cUqCustomer.query("getCustomerOrganization");
-        this.actionImportTask = cUqSalesTask.action("ImportTask");
-    }
-    */
 
     //初始化
     protected async internalStart(param: any) {
         this.pageMyJKTask = null;
 
-        this.customerid = param;
         await this.searchByKey('');
         this.openVPage(VSelectType, param);
     }

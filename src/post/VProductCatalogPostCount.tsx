@@ -1,12 +1,18 @@
 import * as React from "react";
 import { observer } from "mobx-react";
 import { View } from 'tonva-react';
-import { observable } from "mobx";
+import { makeObservable, observable } from "mobx";
 import { CPost } from "./CPost";
+
 export class VProductCatalogPostCount extends View<CPost> {
 
-
-    @observable private postCount: any;
+    postCount: any;
+    constructor(cPost: CPost) {
+        super(cPost);
+        makeObservable(this, {
+            postCount: observable
+        })
+    }
 
     render(param: any): JSX.Element {
         return <this.content list={param} />;
@@ -23,6 +29,4 @@ export class VProductCatalogPostCount extends View<CPost> {
             return null;
         return <span className="d-block small p-1" style={{ width: '3rem', background: '#E6E6FA', borderRadius: "50%" }}>{this.postCount}</span>;
     })
-
-
 }

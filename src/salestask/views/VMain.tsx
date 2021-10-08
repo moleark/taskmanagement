@@ -56,7 +56,7 @@ export class VMain extends VPage<CSalesTask> {
     private page = observer(() => {
         let { tasks, showPost } = this.controller;
         if (tasks === undefined) return null;
-        let none = <div className="py-2 text-warning text-center" style={{ background: 'white' }}> 您还未创建任务呢</div>;
+        let none = <div className="py-2 text-warning text-center" style={{ background: 'white' }}>当前无未完成的任务</div>;
         let right = <div className="cursor-pointer py-1" onClick={async () => this.controller.showSelectTaskType(undefined)} >
             <span className="iconfont mx-3 icon-tianjia" style={{ fontSize: "20px", color: "#ffffff" }}></span>
         </div>;

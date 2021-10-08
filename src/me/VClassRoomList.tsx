@@ -7,7 +7,7 @@ import { observable } from "mobx";
 
 export class VClassRoomList extends VPage<CMe> {
 
-    @observable tite: any;
+    private tite: any;
     async open(type: number) {
         if (type === 1) {
             this.tite = "入门课程";
@@ -56,5 +56,4 @@ export class VClassRoomList extends VPage<CMe> {
             </div>
         );
     };
-
 }

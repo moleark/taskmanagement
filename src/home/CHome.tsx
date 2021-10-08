@@ -37,16 +37,6 @@ class HomeSections extends PageItems<any> {
 }
 
 export class CHome extends CUqBase {
-    //cApp: CApp;
-    @observable pageProduct: QueryPager<any>;
-    @observable customerlist: any;
-    // @observable bannercaption: any;
-    // @observable bannerdescription: any;
-    @observable promotionPager: QueryPager<any>;
-
-    @observable inventoryAllocationContainer: { [packId: number]: any[] } = {};
-    @observable futureDeliveryTimeDescriptionContainer: { [productId: number]: string } = {};
-    @observable chemicalInfoContainer: { [productId: number]: any } = {};
 
     //初始化
     homeSections: HomeSections;
@@ -72,10 +62,6 @@ export class CHome extends CUqBase {
     }
 
     tab = () => this.renderView(VHome);
-
-    onScrollBottom = async () => {
-        await this.pageProduct.more();
-    }
 
     //选择客户--给调用页面返回客户id
     returnProduct = async (product: any): Promise<any> => {

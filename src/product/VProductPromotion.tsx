@@ -4,9 +4,10 @@ import { CProduct } from './CProduct';
 
 import { observer } from "mobx-react";
 import { ProductImage } from '../tools/productImage';
-import { observable } from 'mobx';
+
 export class VProductPromotion extends VPage<CProduct> {
-    @observable promotion: any;
+
+    private promotion: any;
     async open(promotion: any) {
         this.promotion = promotion
         this.openPage(this.page);

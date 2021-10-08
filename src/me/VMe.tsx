@@ -4,13 +4,19 @@ import { LMR, VPage, Image, FA } from 'tonva-react';
 import { CMe } from "./CMe";
 import classNames from "classnames";
 import copy from "copy-to-clipboard";
-import { observable } from "mobx";
+import { makeObservable, observable } from "mobx";
 import { GLOABLE } from "ui";
 import { appSettings } from "appConfig";
 /* eslint-disable */
 export class VMe extends VPage<CMe> {
     private inviteCode: any;
-    @observable showTips: any = "none";
+    showTips: any = "none";
+    constructor(cMe: CMe) {
+        super(cMe);
+        makeObservable(this, {
+            showTips: observable
+        })
+    }
 
     async open() {
         this.openPage(this.page);
@@ -226,7 +232,7 @@ export class VMe extends VPage<CMe> {
 
         let vcoupon = <div className="col text-center" onClick={() => cCoupon.showCreateCoupon({ type: "coupon", product: undefined })} >
             <div>
-                <i className="iconfont icon-youhuiquantuangou" style={{ fontSize: "25px", color: "#f6ad15" }} ></i>
+                <i className="iconfont icon-youhuiquantuangou" style={{ fontSize: "25px", color: "#f6ad15" }}></i>
             </div>
             <small>
                 <small>优惠券</small>
@@ -262,7 +268,6 @@ export class VMe extends VPage<CMe> {
         return (
             <>
                 <div className="text-left h6 mx-4">
-                    {" "}
                     <strong>我的服务</strong>
                 </div>
                 <div className="row p-2 cursor-pointer">
@@ -293,11 +298,11 @@ export class VMe extends VPage<CMe> {
                 </div>
                 <div className="row p-2 cursor-pointer mt-3">
                     {room}
-                    <div className="col text-center"  >
+                    <div className="col text-center">
                     </div>
-                    <div className="col text-center"  >
+                    <div className="col text-center">
                     </div>
-                    <div className="col text-center"  >
+                    <div className="col text-center">
                     </div>
                 </div>
             </>

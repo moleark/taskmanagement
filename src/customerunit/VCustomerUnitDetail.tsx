@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { observable } from 'mobx';
+import { makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { VPage, Page, Edit, Schema, UiSchema, UiInputItem, ItemSchema } from 'tonva-react';
 import { CCustomerUnit } from './CCustomerUnit';
@@ -11,7 +11,14 @@ const schema: Schema = [
 
 export class VCustomerUnitDetail extends VPage<CCustomerUnit> {
 
-    @observable private unit: any;
+    unit: any;
+    constructor(cCustomerUnit: CCustomerUnit) {
+        super(cCustomerUnit);
+        makeObservable(this, {
+            unit: observable
+        })
+    }
+
     private uiSchema: UiSchema = {
         items: {
             name: { widget: 'text', label: '单位名称', placeholder: '请输入单位名称' } as UiInputItem,
@@ -27,7 +34,6 @@ export class VCustomerUnitDetail extends VPage<CCustomerUnit> {
         let { name } = itemSchema;
         this.unit[name] = newValue;
         await this.controller.updateMyCustomerUnit(this.unit);
-
     }
 
     private page = observer(() => {

@@ -2,11 +2,19 @@ import * as React from "react";
 import { VPage, Page, FA, nav } from 'tonva-react';
 import { CInnerTeam } from "./CInnerTeam";
 import { observer } from "mobx-react";
-import { observable } from "mobx";
+import { makeObservable, observable } from "mobx";
 
 export class VInnerTeam extends VPage<CInnerTeam> {
-    @observable private year: any;
-    @observable private date: any;
+    year: any;
+    date: any;
+    constructor(cInnerTeam: CInnerTeam) {
+        super(cInnerTeam);
+        makeObservable(this, {
+            year: observable,
+            date: observable,
+        })
+    }
+
     async open(param) {
         this.year = param;
         this.openPage(this.page);

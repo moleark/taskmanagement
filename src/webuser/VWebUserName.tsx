@@ -1,11 +1,17 @@
 import * as React from 'react';
 import { View } from 'tonva-react';
 import { observer } from 'mobx-react';
-import { observable } from 'mobx';
+import { makeObservable, observable } from 'mobx';
 import { CWebUser } from './CWebUser';
 export class VWebUserName extends View<CWebUser> {
 
-    @observable private webuser: any;
+    webuser: any;
+    constructor(cWebUser: CWebUser) {
+        super(cWebUser);
+        makeObservable(this, {
+            webuser: observable
+        })
+    }
 
     render(param: any): JSX.Element {
         return <this.content id={param} />;
@@ -22,5 +28,4 @@ export class VWebUserName extends View<CWebUser> {
             return null;
         return this.webuser.firstName;
     })
-
 }

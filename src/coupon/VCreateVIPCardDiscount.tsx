@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { VPage, Page, FA, List, tv } from 'tonva-react';
 import { CCoupon } from './CCoupon';
-import { observable } from 'mobx';
-import { observer } from 'mobx-react';
 import Grid from '@material-ui/core/Grid';
 import Slider from '@material-ui/core/Slider';
 import Input from '@material-ui/core/Input';
@@ -15,7 +13,6 @@ export class VCreateVIPCardDiscount extends VPage<CCoupon> {
     private product: any;
     private newCoupon: any;
     private changeVipCardDiscount: any[];
-    @observable tips: string;
 
     async open(param: any) {
         let { webUser, vipCardLevel, vipCardType, product, vipCardLevelDiscountSetting, newCoupon } = param;
@@ -27,7 +24,6 @@ export class VCreateVIPCardDiscount extends VPage<CCoupon> {
         for (let i = 0; i < vipCardLevelDiscountSetting.length; i++) {
             this.vipCardDiscountSetting.push(vipCardLevelDiscountSetting[i]);
         }
-        this.vipCardDiscountSetting.sort((a: any, b: any) => { return a.brand.name > b.brand.name ? 0 : 1 });
         this.openPage(this.page);
     }
 
@@ -68,25 +64,14 @@ export class VCreateVIPCardDiscount extends VPage<CCoupon> {
             , vipCardDiscountSettingCopy, "0", this.newCoupon);
     }
 
-    private tipsUi = observer(() => {
-        if (this.tips) {
-            return <div className="alert alert-primary" role="alert">
-                <FA name="exclamatin-circle" className="text-warning float-left mr-3" size="2x" />
-                {this.tips}
-            </div>
-        }
-        return null;
-    })
-
     private page = () => {
-        let footer = (this.newCoupon && this.newCoupon === 1) ? < button type="button" className="btn btn-primary w-100 " onClick={this.onSubmit} >使用</button>
-            : < button type="button" className="btn btn-primary w-100 " onClick={this.onSubmit} > 一键分享</button>;
+        let footerText = (this.newCoupon && this.newCoupon === 1) ? "使用" : "一键分享";
+        let footer = <button type="button" className="btn btn-primary w-100 " onClick={this.onSubmit}>{footerText}</button>;
         let right = <div className="cursor-pointer mx-3 small text-warning" onClick={() => this.controller.cApp.cCoupon.showCouponList("coupon")} >
             <FA name="list-ol" className="pl-1 mr-1 fa-lg" />
         </div>;
         return <Page header="设置品牌折扣" right={right} footer={footer} >
             <List items={this.vipCardDiscountSetting} item={{ render: this.renderVIPCardDiscountSetting, className: "px-3 py-2" }}></List>
-            {React.createElement(this.tipsUi)}
         </Page>
     }
 }

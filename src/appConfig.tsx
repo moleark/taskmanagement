@@ -28,7 +28,7 @@ export abstract class AppEnv {
     couponDefaultValue: number;
     downloadAppurl: string;
     sharelogo: string;
-    couponType: { "coupon": "优惠券", "credits": "积分券", "vipcard": "VIP卡" };
+    couponType: object = { "coupon": "优惠券", "credits": "积分券", "vipcard": "VIP卡" };
 
     abstract userQualified(): Promise<boolean>;
 

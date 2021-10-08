@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { LMR, VPage, Page, EasyDate, ComponentProp, Prop, PropGrid, FA } from 'tonva-react';
 import { tv } from 'tonva-react';
 import classNames from 'classnames';
-import { observable } from 'mobx';
+import { makeObservable, observable } from 'mobx';
 import { CSelectType } from './CSelectType';
 
 
@@ -12,7 +12,13 @@ const cnRowCustor = classNames(cnRow, 'cursor-pointer');
 
 export class VAiDetail extends VPage<CSelectType> {
 
-    @observable private task: any;
+    task: any;
+    constructor(cSelectType: CSelectType) {
+        super(cSelectType);
+        makeObservable(this, {
+            task: observable
+        })
+    }
 
     async open(task: any) {
         this.task = task;

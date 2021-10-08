@@ -3,14 +3,20 @@ import { observer } from 'mobx-react';
 import { VMe } from '../me/VMe';
 import { VTeam } from './VTeam';
 import { VTeamDetail } from './VTeamDetail';
-import { CUqBase } from 'uq-app';
-import { observable } from 'mobx';
+import { CApp, CUqBase } from 'uq-app';
+import { makeObservable, observable } from 'mobx';
 
 /**
  *
  */
 export class CTeam extends CUqBase {
-    @observable achievement: any;
+    achievement: any;
+    constructor(cApp: CApp) {
+        super(cApp);
+        makeObservable(this, {
+            achievement: observable
+        })
+    }
 
     //初始化
     protected async internalStart() {

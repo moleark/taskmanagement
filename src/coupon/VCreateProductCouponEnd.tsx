@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 import { VPage, Page } from 'tonva-react';
 import { CCoupon } from "./CCoupon";
 import copy from "copy-to-clipboard";
-import { observable } from "mobx";
+import { makeObservable, observable } from "mobx";
 import { GLOABLE } from "ui";
 import { appSettings } from "appConfig";
 import QRCode from "qrcode.react";
@@ -12,10 +12,16 @@ import { ProductPackRow } from "model/product";
 import { ProductImage } from "tools/productImage";
 
 export class VCreateProductCouponEnd extends VPage<CCoupon> {
-    @observable showTips: any = "none";
+    showTips: any = "none";
     private inviteCode: string;
     private url: string;
     private coupon: any;
+    constructor(cCoupon: CCoupon) {
+        super(cCoupon);
+        makeObservable(this, {
+            showTips: observable
+        })
+    }
 
     async open(param: any) {
         this.coupon = param;

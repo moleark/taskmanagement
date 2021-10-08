@@ -1,12 +1,19 @@
 import * as React from 'react';
 import { VPage, Page, ItemSchema, ImageSchema, StringSchema, UiSchema, UiTextItem, UiImageItem, Edit, FA } from 'tonva-react';
 import { CMe } from './CMe';
-import { observable } from 'mobx';
+import { makeObservable, observable } from 'mobx';
 import { GLOABLE } from 'ui';
 import { observer } from 'mobx-react';
 
-
 export class VAccount extends VPage<CMe> {
+
+    constructor(cMe: CMe) {
+        super(cMe);
+        makeObservable(this, {
+            showTips: observable,
+            data: observable
+        })
+    }
 
     private schema: ItemSchema[] = [
         { name: 'telephone', type: 'string' } as StringSchema,
@@ -27,8 +34,8 @@ export class VAccount extends VPage<CMe> {
         }
     }
 
-    @observable showTipss: any = "none"
-    @observable private data: any;
+    showTips: any = "none"
+    data: any;
     async open(param: any) {
         this.data = param;
         this.openPage(this.page);
@@ -45,9 +52,9 @@ export class VAccount extends VPage<CMe> {
         if (telephone && identityname && identitycard && identityicon && subbranchbank && bankaccountnumber) {
             this.closePage();
         } else {
-            this.showTipss = "";
+            this.showTips = "";
             setTimeout(() => {
-                this.showTipss = "none";
+                this.showTips = "none";
             }, GLOABLE.TIPDISPLAYTIME);
         }
     }
@@ -66,7 +73,7 @@ export class VAccount extends VPage<CMe> {
                 data={this.data}
                 onItemChanged={this.onItemChanged}
             />
-            <div className="text-center text-white small px-2" style={{ width: '40%', margin: '10px auto 0 auto', padding: '4px', borderRadius: '3px', backgroundColor: '#505050', display: this.showTipss }}>信息还没有补充完整</div>
+            <div className="text-center text-white small px-2" style={{ width: '40%', margin: '10px auto 0 auto', padding: '4px', borderRadius: '3px', backgroundColor: '#505050', display: this.showTips }}>信息还没有补充完整</div>
         </Page >
 
     })

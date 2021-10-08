@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { VPage, Page, LMR, List, EasyDate, tv } from 'tonva-react';
-import { observable } from 'mobx';
+import { makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { CBalance } from './CBalance';
 
@@ -9,10 +9,15 @@ export enum TabType { A = 1, B = 2, C = 3 };
 
 export class VAssistAchievementDetail extends VPage<CBalance> {
 
-    @observable private achievements: any[] = [];
-    @observable private tab_Status: TabStatus = TabStatus.sum;
-    @observable private type: TabType = TabType.A;
-
+    private achievements: any[] = [];
+    tab_Status: TabStatus = TabStatus.sum;
+    private type: TabType = TabType.A;
+    constructor(cBalance: CBalance) {
+        super(cBalance);
+        makeObservable(this, {
+            tab_Status: observable,
+        })
+    }
 
     async open(param: TabStatus) {
         this.tab_Status = param;

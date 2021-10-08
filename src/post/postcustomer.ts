@@ -1,10 +1,7 @@
-
-import { observable } from 'mobx';
-
 export class PostCustomer {
 
-    @observable customerlist: any[] = [];
-    @observable post: any;
+    customerlist: any[] = [];
+    post: any;
 
     add(customerid: any, post: any) {
         let index = this.customerlist.indexOf(customerid);

@@ -3,7 +3,7 @@ import { VPage, Page, LMR, List, tv, UserIcon, SearchBox, FA, nav } from 'tonva-
 import { observer } from "mobx-react";
 import { CPost } from "./CPost";
 
-import { observable } from "mobx";
+import { makeObservable, observable } from "mobx";
 import { GLOABLE } from "ui";
 import smile from '../images/smile-face.jpg';
 
@@ -15,7 +15,15 @@ export class VCustomer extends VPage<CPost> {
     private domain: any[];
     private catalog: any[];
 
-    @observable showTips: any = "none"
+    showTips: any = "none"
+
+    constructor(cPost: CPost) {
+        super(cPost);
+        makeObservable(this, {
+            showTips: observable
+        })
+    }
+
     async open(param: any) {
         let { caption, image, post, discription, domain, catalog } = param;
         this.caption = caption;

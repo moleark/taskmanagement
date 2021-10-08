@@ -7,9 +7,9 @@ import { CPost } from "./CPost";
 
 export class VProductCatalog extends VPage<CPost> {
 
-    @observable caption: any;
-    @observable pageProductCatalog: any;
-    @observable pageChildProductCatalog: any[];
+    caption: any;
+    pageProductCatalog: any;
+    pageChildProductCatalog: any[];
 
     async open(param: any) {
         this.pageProductCatalog = param.data;

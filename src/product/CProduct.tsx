@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { observable } from 'mobx';
+import { makeObservable, observable } from 'mobx';
 // import { observer } from 'mobx-react';
 import { tv, BoxId, QueryPager } from 'tonva-react';
 import { ProductImage } from '../tools/productImage';
@@ -18,27 +18,32 @@ import { VProductList } from './VProductList';
 import { observer } from 'mobx-react';
 import { VCustomerProductList } from './VCustomerProductList';
 import { VProduct } from './VProduct';
-import { CUqBase } from 'uq-app';
-
-/**
- *Query SearchPromotion( keyWord char(20), salesRegion ID SalesRegion, language ID Language )
-  Query SearchPromotion( salesRegion ID SalesRegion, language ID Language )
-
- */
+import { CApp, CUqBase } from 'uq-app';
 
 export class CProduct extends CUqBase {
-    //cApp: CApp;
-    @observable pageProduct: QueryPager<any>;
-    @observable pageProduct1: QueryPager<any>;
-    @observable customerlist: any;
-    // @observable bannercaption: any;
-    // @observable bannerdescription: any;
-    @observable promotionPager: QueryPager<any>;
-    @observable searcdpPromotionPager: QueryPager<any>;
+    pageProduct: QueryPager<any>;
+    pageProduct1: QueryPager<any>;
+    customerlist: any;
+    promotionPager: QueryPager<any>;
+    searcdpPromotionPager: QueryPager<any>;
 
-    @observable inventoryAllocationContainer: { [packId: number]: any[] } = {};
-    @observable futureDeliveryTimeDescriptionContainer: { [productId: number]: string } = {};
-    @observable chemicalInfoContainer: { [productId: number]: any } = {};
+    inventoryAllocationContainer: { [packId: number]: any[] } = {};
+    futureDeliveryTimeDescriptionContainer: { [productId: number]: string } = {};
+    chemicalInfoContainer: { [productId: number]: any } = {};
+
+    constructor(cApp: CApp) {
+        super(cApp);
+        makeObservable(this, {
+            pageProduct: observable,
+            pageProduct1: observable,
+            customerlist: observable,
+            promotionPager: observable,
+            searcdpPromotionPager: observable,
+            inventoryAllocationContainer: observable,
+            futureDeliveryTimeDescriptionContainer: observable,
+            chemicalInfoContainer: observable
+        })
+    }
 
     //初始化
     protected async internalStart(param: any) {
@@ -121,7 +126,6 @@ export class CProduct extends CUqBase {
     }
 
     //显示产品框
-
     showProductBox = () => {
         this.openVPage(VProductBox);
     }

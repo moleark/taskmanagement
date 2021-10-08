@@ -1,5 +1,5 @@
 import * as React from "react";
-import { observable } from "mobx";
+import { makeObservable, observable } from "mobx";
 import { observer } from "mobx-react";
 import { VPage, Page, tv, LMR, ComponentProp, Prop, PropGrid, FA, List, EasyDate, nav, EasyTime } from 'tonva-react';
 import { CCustomer } from "./CCustomer";
@@ -19,7 +19,13 @@ const genderText: { [v: number]: string } = {
 
 export class VCustomerDetail extends VPage<CCustomer> {
 
-    @observable private myCustomer: any;
+    myCustomer: any;
+    constructor(cCustomer: CCustomer) {
+        super(cCustomer);
+        makeObservable(this, {
+            myCustomer: observable
+        })
+    }
 
     async open(param: any) {
         this.myCustomer = param;

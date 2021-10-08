@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { VPage, Page, ItemSchema, ImageSchema, StringSchema, UiSchema, UiTextItem, UiImageItem, Edit, nav, userApi, LMR, FA } from 'tonva-react';
 import { CMe } from './CMe';
-import { observable } from 'mobx';
+import { makeObservable, observable } from 'mobx';
 
 
 export class VMeDetail extends VPage<CMe> {
@@ -18,7 +18,13 @@ export class VMeDetail extends VPage<CMe> {
         }
     }
 
-    @observable private data: any;
+    data: any;
+    constructor(cMe: CMe) {
+        super(cMe);
+        makeObservable(this, {
+            data: observable
+        })
+    }
     async open(param: any) {
         let { nick, icon } = nav.user;
         this.data = {

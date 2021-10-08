@@ -1,6 +1,6 @@
-import { observable } from 'mobx';
+import { action, makeObservable, observable } from 'mobx';
 import { QueryPager, nav } from 'tonva-react';
-import { CUqBase } from 'uq-app';
+import { CApp, CUqBase } from 'uq-app';
 import { VCouponList, VExpiredCouponList } from 'coupon/VCouponList';
 import { VCouponDetail } from './VCouponDetail';
 import { VCreateCouponEnd } from './VCreateCouponEnd';
@@ -12,13 +12,24 @@ import { VCoupleAvailable } from './VCoupleAvailable';
  *
  */
 export class CCoupon extends CUqBase {
-    @observable pageCoupon: QueryPager<any>;
-    @observable pageCredits: QueryPager<any>;
-    @observable pageCouponReceiveUsed: any[] = [];
-    @observable ifCheck: any;
+    pageCoupon: QueryPager<any>;
+    pageCouponReceiveUsed: any[] = [];
+    ifCheck: any;
 
     oneWeek = new Date(Date.now() + 7 * 24 * 3600 * 1000);
     twoWeeks = new Date(Date.now() + 14 * 24 * 3600 * 1000);
+
+    constructor(cApp: CApp) {
+        super(cApp);
+        makeObservable(this, {
+            pageCoupon: observable,
+            pageCouponReceiveUsed: observable,
+            ifCheck: observable,
+            showCouponList: action,
+            searchByKey: action,
+            showCouponDetail: action
+        })
+    }
 
     // 创建VIPCardDiscount 
     protected async internalStart(param: any) {
@@ -47,7 +58,7 @@ export class CCoupon extends CUqBase {
         let newVIPCard = await this.createCoupon(vipCardParam, { type: cardType });
         let { id, code } = newVIPCard;
         let { salesTask } = this.uqs;
-        await this.uqs.salesTask.VIPCardDiscount.add({ coupon: id, arr1: vipCardDiscountSetting });
+        await salesTask.VIPCardDiscount.add({ coupon: id, arr1: vipCardDiscountSetting });
         if (cardType === "vipcard") {
             await salesTask.VIPCardForWebUser.add({
                 webuser: webUser, sales: nav.user.id, vipCard: id,

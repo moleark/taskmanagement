@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { observable } from 'mobx';
+import { makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { VPage, Page, UiSchema, UiInputItem, Form, Context, tv, BoxId, FA } from 'tonva-react';
 import { Schema } from 'tonva-react';
@@ -119,9 +119,17 @@ const valueAddedVisible = {
 
 export class VInvoiceInfo extends VPage<CInvoiceInfo> {
     private form: Form;
-    @observable showTip: boolean = false;
+    showTip: boolean = false;
     saveTip: string = "";
     private invoiceInfoData: any;
+    invoiceType: number;
+    constructor(cInvoiceInfo: CInvoiceInfo) {
+        super(cInvoiceInfo);
+        makeObservable(this, {
+            showTip: observable,
+            invoiceType: observable
+        })
+    }
 
     async open(origInvoice?: any) {
         let { invoiceType, invoiceInfo } = origInvoice;
@@ -158,8 +166,6 @@ export class VInvoiceInfo extends VPage<CInvoiceInfo> {
         if (!this.form) return;
         await this.form.buttonClick("submit");
     }
-
-    @observable invoiceType: number;
 
     private buildForm(): JSX.Element {
         let requiredFields: any = this.invoiceType === 1 ? commonRequired : valueAddedRequired;

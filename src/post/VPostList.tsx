@@ -4,11 +4,17 @@ import { observer } from "mobx-react";
 import { VPage, Page, List, FA, tv, SearchBox, LMR, EasyTime } from 'tonva-react';
 import { CPost } from "./CPost";
 
-import { observable } from "mobx";
+import { makeObservable, observable } from "mobx";
 /* eslint-disable */
 export class VPostList extends VPage<CPost> {
-    @observable private isMes: boolean = false;
 
+    isMes: boolean = false;
+    constructor(cPost: CPost) {
+        super(cPost);
+        makeObservable(this, {
+            isMes: observable
+        })
+    }
 
     async open(customer: any) {
         this.openPage(this.page, customer);
