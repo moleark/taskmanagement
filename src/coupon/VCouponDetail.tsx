@@ -2,6 +2,8 @@ import * as React from 'react';
 import { VPage, Page, Prop, PropGrid, ComponentProp, LMR, EasyDate, User, FA } from 'tonva-react';
 import { observer } from 'mobx-react';
 import { CCoupon } from './CCoupon';
+import { EnumCouponType } from 'uq-app/uqs/JkCoupon';
+import { appSettings } from 'appConfig';
 
 
 export class VCouponDetail extends VPage<CCoupon> {
@@ -25,9 +27,9 @@ export class VCouponDetail extends VPage<CCoupon> {
             bright = <span className=" text-danger" >失效</span>;
         }
         let rows: Prop[] = [];
-        rows.push(this.renderGridItem(types === "coupon" ? " 优 惠 券 ：" : "积 分 券：", code, "", "", undefined));
+        rows.push(this.renderGridItem(appSettings.couponType[types], code, "", "", undefined));
         rows.push(this.renderGridItem(" 有 效 期 ：", validitydate, "date", "", undefined));
-        if (types === "coupon") {
+        if (types === EnumCouponType.Coupon) {
             if (ifCheck !== 0) {
                 rows.push(this.renderGridItem("品牌折扣：", "", "", "查看", () => showVIPCardDiscount(id)));
             }
@@ -39,7 +41,7 @@ export class VCouponDetail extends VPage<CCoupon> {
         if ((nowValue < endValue && isValid === 1)) {
             footer = <div className="py-2 d-flex justify-content-center">
                 <button onClick={() => invalidCoupon(this.coupon)} type="submit" className="btn btn-danger mx-3">&nbsp; &nbsp; 作废&nbsp; &nbsp; </button>
-                <button onClick={() => showShareCoupon({ code: code, type: types, product: undefined })} type="submit" className="btn btn-primary  px-3">&nbsp; &nbsp; 分享&nbsp; &nbsp; </button>
+                <button onClick={() => showShareCoupon(this.coupon)} type="submit" className="btn btn-primary  px-3">&nbsp; &nbsp; 分享&nbsp; &nbsp; </button>
             </div>;
         }
 

@@ -15,6 +15,7 @@ import { VChemicalInfoInCart } from './VChemicalInfoInCart';
 import { VCartProuductView } from './VCartProuductView';
 import { VProductPromotion } from './VProductPromotion';
 import { VProductList } from './VProductList';
+import { VShareCoupon } from './VShareCoupon';
 import { observer } from 'mobx-react';
 import { VCustomerProductList } from './VCustomerProductList';
 import { VProduct } from './VProduct';
@@ -168,6 +169,18 @@ export class CProduct extends CUqBase {
             let productData = await loader.load(product.id);
             this.openVPage(VProduct, { productData, product, discount });
         }
+    }
+
+    /**
+     * 创建积分券（带有分享的产品) 
+     * @param product 
+     */
+    createCredits = async (product: any) => {
+        let twoWeeks = new Date(Date.now() + 14 * 24 * 3600 * 1000);
+        let validityDate = `${twoWeeks.getFullYear()}-${(twoWeeks.getMonth() + 1)}-${twoWeeks.getDate()}`;
+        let creditsCreated = await this.uqs.JkCoupon.CreateCoupon.submit({ type: 2, validityDate: validityDate });
+        let { coupon: newCouponId, code } = creditsCreated;
+        this.openVPage(VShareCoupon, { coupon: { id: newCouponId, code: code, type: 2, ValidityDate: validityDate }, product })
     }
 }
 

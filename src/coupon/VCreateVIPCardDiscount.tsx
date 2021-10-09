@@ -4,11 +4,12 @@ import { CCoupon } from './CCoupon';
 import Grid from '@material-ui/core/Grid';
 import Slider from '@material-ui/core/Slider';
 import Input from '@material-ui/core/Input';
+import { EnumCouponType } from 'uq-app/uqs/JkCoupon';
 
 export class VCreateVIPCardDiscount extends VPage<CCoupon> {
     private vipCardDiscountSetting: any[] = [];
     private vipCardLevel: any;
-    private vipCardType: any;
+    private vipCardType: EnumCouponType;
     private webUser: any;
     private product: any;
     private newCoupon: any;
@@ -67,7 +68,8 @@ export class VCreateVIPCardDiscount extends VPage<CCoupon> {
     private page = () => {
         let footerText = (this.newCoupon && this.newCoupon === 1) ? "使用" : "一键分享";
         let footer = <button type="button" className="btn btn-primary w-100 " onClick={this.onSubmit}>{footerText}</button>;
-        let right = <div className="cursor-pointer mx-3 small text-warning" onClick={() => this.controller.cApp.cCoupon.showCouponList("coupon")} >
+        let right = <div className="cursor-pointer mx-3 small text-warning"
+            onClick={() => this.controller.cApp.cCoupon.showCouponList(EnumCouponType.Coupon)} >
             <FA name="list-ol" className="pl-1 mr-1 fa-lg" />
         </div>;
         return <Page header="设置品牌折扣" right={right} footer={footer} >

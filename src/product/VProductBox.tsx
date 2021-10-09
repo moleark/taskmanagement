@@ -70,11 +70,13 @@ export class VProductBox extends VPage<CProduct> {
         let footer: any;
         if (appSettings.isInner) {
             footer = <div className="w-100  justify-content-end" >
-                <button type="button" className="btn btn-primary mx-1 my-1 px-4" onClick={() => cCoupon.showCreateCoupon({ type: "coupon", product: productCart.getIds() })}>分享折扣</button>
-                <button type="button" className="btn btn-primary mx-1 my-1 px-4" onClick={() => cCoupon.showCreateCredits({ type: "credits", product: productCart.getIds() })}>分享积分</button>
-            </div>
+                <button type="button" className="btn btn-primary mx-1 my-1 px-4"
+                    onClick={() => cCoupon.showCreateCoupon({ product: productCart.getIds() })}>分享折扣</button>
+                <button type="button" className="btn btn-primary mx-1 my-1 px-4"
+                    onClick={() => cCoupon.showCreateCredits(productCart.getIds())}>分享积分</button>
+            </div >
         } else {
-            footer = <button type="button" className="btn btn-primary mx-1 my-1 px-4" onClick={() => cCoupon.showCreateCoupon({ type: "coupon", product: productCart.getIds() })}>分享折扣</button>
+            footer = <button type="button" className="btn btn-primary mx-1 my-1 px-4" onClick={() => cCoupon.showCreateCoupon({ product: productCart.getIds() })}>分享折扣</button>
         }
         let productlist = productCart.list;
         return <Page header='产品框' onScrollBottom={this.onScrollBottom} footer={footer} >

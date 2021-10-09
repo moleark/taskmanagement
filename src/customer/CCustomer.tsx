@@ -20,6 +20,7 @@ import { VCustomerSearchByUnit } from "./VCustomerSearchByUnit";
 import { appSettings } from "appConfig";
 import { VRelationCustomerWebuserId } from "./VRelationCustomerWebuserId";
 import { VOrderDraftRule } from './VOrderDraftRule'
+import { EnumCouponType } from "uq-app/uqs/JkCoupon";
 
 /* eslint-disable */
 
@@ -399,7 +400,10 @@ export class CCustomer extends CUqBase {
     }
 
     private getVIPCardDrawing = async (webuser: any, coupon: any) => {
-        let result = await this.uqs.webuser.WebUserVipCard.obj({ webuser: webuser, arr1: [{ vipCard: coupon, vipCardType: "vipcard" }] })
+        let result = await this.uqs.webuser.WebUserVipCard.obj({
+            webuser: webuser,
+            arr1: [{ vipCard: coupon, vipCardType: EnumCouponType.VipCard }]
+        })
         return result ? true : false;
     }
 

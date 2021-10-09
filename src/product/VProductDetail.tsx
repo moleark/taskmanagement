@@ -137,25 +137,25 @@ export class VProductDetail extends VPage<CProduct> {
     }
 
     private page = observer((product: any) => {
-        let { cApp } = this.controller;
+        let { cApp, createCredits } = this.controller;
         let { cCoupon, cProduct, productCart } = cApp;
-        let { showCreateCoupon, showCreateCredits } = cCoupon;
+        let { showCreateCoupon } = cCoupon;
         let footer: any;
         if (appSettings.isInner) {
             footer = <div className="d-block">
                 <div className="w-100 d-flex justify-content-center py-2" >
                     <button type="button" className="btn btn-primary mx-1 my-1 px-3"
-                        onClick={() => showCreateCredits({ type: "credits", product: this.product })}>分享积分</button>
+                        onClick={() => createCredits(this.product)}>分享积分</button>
                     <button type="button" className="btn btn-primary mx-1 my-1 px-3"
-                        onClick={() => showCreateCoupon({ type: "coupon", product: this.product, promotionPrice: this.promotionPrice })}>分享折扣</button>
+                        onClick={() => showCreateCoupon({ product: this.product, promotionPrice: this.promotionPrice })}>分享折扣</button>
                     <button type="button" className="btn btn-primary mx-1 my-1 px-3" onClick={this.onAddPack}>打包分享</button>
                 </div>
-            </div>
+            </div >
         } else {
             footer = <div className="d-block">
                 <div className="w-100  d-flex justify-content-center py-2" >
                     <button type="button" className="btn btn-primary mx-1 my-1 px-3"
-                        onClick={() => showCreateCoupon({ type: "coupon", product: this.product, promotionPrice: this.promotionPrice })}>分享折扣</button>
+                        onClick={() => showCreateCoupon({ product: this.product, promotionPrice: this.promotionPrice })}>分享折扣</button>
                     <button type="button" className="btn btn-primary mx-1 my-1 px-3" onClick={this.onAddPack}>打包分享</button>
                 </div>
             </div>

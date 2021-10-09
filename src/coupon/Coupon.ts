@@ -2,6 +2,7 @@ import { UQs } from '../uqs';
 import { Tuid, BoxId } from 'tonva-react';
 import { Order } from 'order/Order';
 import moment from 'moment';
+import { EnumCouponType } from 'uq-app/uqs/JkCoupon';
 
 export const activityTime = {
     startDate: '2020-09-01',
@@ -36,7 +37,7 @@ export interface OrderPriceStrategy {
 export function createOrderPriceStrategy(couponData: any): OrderPriceStrategy {
     let { id, code, discount, preferential, validitydate, isValid, types, discountSetting } = couponData;
     switch (types) {
-        case "coupon":
+        case EnumCouponType.Coupon:
             if (discountSetting && discountSetting.length > 0)
                 return new VIPCard(id, code, validitydate, isValid, discountSetting);
             else
@@ -45,10 +46,10 @@ export function createOrderPriceStrategy(couponData: any): OrderPriceStrategy {
         case "coupon_sale":
             return new CouponSale(id, code, validitydate, isValid, discount, preferential);
             break;
-        case "vipcard":
+        case EnumCouponType.VipCard:
             return new VIPCard(id, code, validitydate, isValid, discountSetting);
             break;
-        case "credits":
+        case EnumCouponType.Credits:
             return new Credits(id, code, validitydate, isValid);
             break;
         default:

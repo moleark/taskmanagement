@@ -89,6 +89,7 @@ class Discount extends Widget {
     };
 }
 
+/*
 export class VCreateCoupon extends VPage<CCoupon> {
 
     showTip: boolean = false;
@@ -102,6 +103,7 @@ export class VCreateCoupon extends VPage<CCoupon> {
     private tip: string = "";
     private uiSchema: UiSchema
     private Coupon: any;
+
     async open(param: any) {
         this.Coupon = param;
         this.openPage(this.page);
@@ -140,7 +142,7 @@ export class VCreateCoupon extends VPage<CCoupon> {
         data.validitydate = this.controller.validDateFrom(2);
         data.discount = _.round(1 - disc * 0.1, 2);
         let { createCoupon, showShareCoupon } = this.controller;
-        let coupon: any = await createCoupon(data, this.Coupon);
+        let coupon: any = await createCoupon(data, this.Coupon.type);
         showShareCoupon(coupon);
     }
 
@@ -160,3 +162,4 @@ export class VCreateCoupon extends VPage<CCoupon> {
         </Page >
     })
 }
+*/

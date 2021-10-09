@@ -1,4 +1,4 @@
-//=== UqApp builder created on Wed Sep 29 2021 16:29:57 GMT+0800 (China Standard Time) ===//
+//=== UqApp builder created on Sat Oct 09 2021 15:26:34 GMT+0800 (China Standard Time) ===//
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { IDXValue, Uq, UqTuid, UqAction, UqSheet, UqBook, UqQuery, UqMap, UqHistory, UqPending } from "tonva-react";
 
@@ -1378,10 +1378,10 @@ export interface ReturnSalesAchievementBook$page {
 	oneAchievement: number;
 	twoAchievement: number;
 	threeAchievement: number;
-	totalOrderCount: number;
 	totalAchievement: number;
-	totalReceivableAmount: number;
+	totalOrderCount: number;
 	totalaWithdrawal: number;
+	totalReceivableAmount: number;
 	waitWithdrawal: number;
 }
 export interface ResultSalesAchievementBook {

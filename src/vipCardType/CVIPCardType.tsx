@@ -1,4 +1,5 @@
 import { CUqBase } from 'uq-app';
+import { EnumCouponType } from 'uq-app/uqs/JkCoupon';
 
 export class CVIPCardType extends CUqBase {
 
@@ -52,7 +53,10 @@ export class CVIPCardType extends CUqBase {
         let { cCoupon } = cApp;
         let { vipCardType } = uqs;
         let vipCardLevelDiscountSetting = await vipCardType.VIPCardTypeDiscount.table({ vipCard: vipCardLevel.id });
-        let newVIPCard = await cCoupon.call<any>({ webUser: this.targetWebUser, vipCardLevel, vipCardType: "vipcard", vipCardLevelDiscountSetting });
+        let newVIPCard = await cCoupon.call<any>({
+            webUser: this.targetWebUser, vipCardLevel,
+            vipCardType: EnumCouponType.VipCard, vipCardLevelDiscountSetting
+        });
 
         this.returnCall(newVIPCard);
         // 跳转到分享界面

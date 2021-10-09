@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { VPage, Page, tv, List, LMR, FA, EasyDate, Tabs, TabProp, TabCaptionComponent } from 'tonva-react';
 import { CCoupon } from './CCoupon';
+import { EnumCouponType } from 'uq-app/uqs/JkCoupon';
 
 export class VCoupleAvailable extends VPage<CCoupon> {
 
@@ -21,7 +21,7 @@ export class VCoupleAvailable extends VPage<CCoupon> {
     private renderItem = (coupon: any, index: number) => {
         var inviteCode = "";
         let { code, validitydate, isValid, couponCount } = coupon;
-        coupon.types = 'coupon';
+        coupon.types = EnumCouponType.Coupon;
 
         if (code) {
             code = String(code);
@@ -49,9 +49,9 @@ export class VCoupleAvailable extends VPage<CCoupon> {
         let none = <div className="my-3 mx-2 text-warning">无优惠券</div>;
         let footer = <div className="w-100 d-flex justify-content-center py-2" >
             <button type="button" className="btn btn-primary mx-1 my-1 px-3"
-                onClick={() => this.controller.showCreateCoupon({ type: "coupon", product: undefined, newCoupon: 1 })}>创建优惠券</button>
+                onClick={() => this.controller.showCreateCoupon({ newCoupon: 1 })}>创建优惠券</button>
             <button type="button" className="btn btn-primary mx-1 my-1 px-3"
-                onClick={() => this.controller.showCreateCredits({ type: 'credits', product: undefined, newCoupon: 1 })}>使用积分券</button>
+                onClick={() => this.controller.createCreditsWhenOrder()}>使用积分券</button>
         </div>
 
         return <Page header="选用卡券" footer={footer}>

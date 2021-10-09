@@ -24,6 +24,12 @@ export const appConfig: AppConfig = {
             alias: 'salesTask',
             version: '0.1.0',
         },
+        {
+            dev: jk,
+            name: 'coupon',
+            alias: 'coupon',
+            version: '0.1.0',
+        },
     ],
     noUnit: true,
     tvs: {},

@@ -7,6 +7,7 @@ import { OrderItem } from './Order';
 import { CartPackRow } from '../cart/Cart';
 import classNames from 'classnames';
 import { GLOABLE } from 'cartenv';
+import { EnumCouponType } from 'uq-app/uqs/JkCoupon';
 
 export class VCreateOrder extends VPage<COrder> {
 
@@ -85,7 +86,7 @@ export class VCreateOrder extends VPage<COrder> {
                 style={{ border: 1, cursor: 'pointer', width: 19, height: 19, lineHeight: 1, top: 5, right: 5 }}
                 onClick={(e) => { e.stopPropagation(); removeCoupon(); }}
             >&times;</div>
-            if (types === "credits") {
+            if (types === EnumCouponType.Credits) {
                 offsetUI = <div className="d-flex flex-row justify-content-between">
                     <div className="text-muted">积分:</div>
                     <div className="text-right text-danger">{point}<small>分</small></div>

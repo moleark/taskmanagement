@@ -11,6 +11,7 @@ import { ViewMainSubs, MainProductChemical } from "mainSubs";
 import { ProductPackRow } from "model/product";
 import { ProductImage } from "tools/productImage";
 
+/*
 export class VCreateProductCouponEnd extends VPage<CCoupon> {
     showTips: any = "none";
     private inviteCode: string;
@@ -104,7 +105,11 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
         } else {
             share = <div className="w-100 text-center py-3" >
                 <button className="btn btn-info mx-1 px-4" onClick={() => this.copyClick(code)}> 复制 </button>
-                <div className="text-center text-white small px-2" style={{ width: '30%', margin: '-80px auto 0 auto', padding: '4px', borderRadius: '3px', backgroundColor: '#505050', display: this.showTips }}>已复制到剪切板</div>
+                <div className="text-center text-white small px-2"
+                    style={{
+                        width: '30%', margin: '-80px auto 0 auto', padding: '4px', borderRadius: '3px',
+                        backgroundColor: '#505050', display: this.showTips
+                    }}>已复制到剪切板</div>
             </div>
         }
 
@@ -119,7 +124,7 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
                     {isno === "1" ? "活动产品直接分享用户获客" : ""}
                 </div>
             </div>
-            <div >{share}</div>
+            <div>{share}</div>
         </>
     };
 
@@ -162,3 +167,4 @@ export class VCreateProductCouponEnd extends VPage<CCoupon> {
         );
     });
 }
+*/

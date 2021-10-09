@@ -7,6 +7,8 @@ import copy from "copy-to-clipboard";
 import { makeObservable, observable } from "mobx";
 import { GLOABLE } from "ui";
 import { appSettings } from "appConfig";
+import { EnumCouponType } from "uq-app/uqs/JkCoupon";
+
 /* eslint-disable */
 export class VMe extends VPage<CMe> {
     private inviteCode: any;
@@ -224,13 +226,13 @@ export class VMe extends VPage<CMe> {
     });
 
     private myService() {
-        let { cSalesTask, cCoupon } = this.controller.cApp;
-        let { showMyTasksCompleted } = cSalesTask;
         let { showSet, showClassRoom, cApp } = this.controller;
-        let { orderMangement } = cApp.cOrder
+        let { cSalesTask, cCoupon, cOrder } = cApp;
+        let { showMyTasksCompleted } = cSalesTask;
+        let { orderMangement } = cOrder
         let onShowMyTasksCompleted = async () => await showMyTasksCompleted();
 
-        let vcoupon = <div className="col text-center" onClick={() => cCoupon.showCreateCoupon({ type: "coupon", product: undefined })} >
+        let vcoupon = <div className="col text-center" onClick={() => cCoupon.showCreateCoupon({})} >
             <div>
                 <i className="iconfont icon-youhuiquantuangou" style={{ fontSize: "25px", color: "#f6ad15" }}></i>
             </div>
@@ -239,7 +241,7 @@ export class VMe extends VPage<CMe> {
             </small>
         </div>;
 
-        let vassist = <div className="col text-center" onClick={() => cCoupon.showCouponList("credits")} >
+        let vassist = <div className="col text-center" onClick={() => cCoupon.showCouponList(EnumCouponType.Credits)} >
             <div>
                 <i className="iconfont icon-youhuiquantuangou" style={{ fontSize: "25px", color: "#f6ad15" }} ></i>
             </div>

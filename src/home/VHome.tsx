@@ -37,7 +37,7 @@ export class VHome extends VPage<CHome> {
         let commonfuncs = <div className="mt-1 mb-2 bg-white">
             <div className="d-flex py-2 pl-2" style={{ borderBottom: '1px solid #ccc' }}>常用功能</div>
             <div className="d-flex justify-content-around small text-center">
-                <div className="m-1 p-3 cursor-pointer" onClick={() => cCoupon.showCreateCoupon({ type: "coupon", product: undefined })}>
+                <div className="m-1 p-3 cursor-pointer" onClick={() => cCoupon.showCreateCoupon({})}>
                     <div className="py-3 my-1">
                         <div className="mb-2"><i style={{ fontSize: '2rem', color: "#f6ad15" }} className="iconfont icon-youhuiquantuangou"></i></div>
                         <div className="mx-3 p-2 font-weight-bold">优惠券</div>

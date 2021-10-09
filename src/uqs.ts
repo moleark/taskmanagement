@@ -105,7 +105,6 @@ export interface UqSalesTask {
     CustomerMyCustomerMap: Map;
     Position: Map;
     TaskBiz: Map;
-    SearchCoupon: Query;
     SearchTask: Query;
     SearchJKTask: Query;
     SearchTaskCompletion: Query;

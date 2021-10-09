@@ -5,6 +5,7 @@ import { jnkTop, assistjnkTop, GLOABLE } from "./ui";
 import logo from 'images/logo.png';
 import assistlogo from 'images/assistlogo.png';
 import { CApp } from "uq-app";
+import { EnumCouponType } from "uq-app/uqs/JkCoupon";
 
 export const appConfig: AppConfig = {
     version: "1.2.99", // 版本变化，缓存的uqs才会重载
@@ -28,7 +29,7 @@ export abstract class AppEnv {
     couponDefaultValue: number;
     downloadAppurl: string;
     sharelogo: string;
-    couponType: object = { "coupon": "优惠券", "credits": "积分券", "vipcard": "VIP卡" };
+    couponType: object = { 1: "优惠券", 2: "积分券", 3: "VIP卡" };
 
     abstract userQualified(): Promise<boolean>;
 
@@ -58,16 +59,16 @@ export abstract class AppEnv {
         return this.couponType[type];
     }
 
-    shareContent(type: string, isno: any): string {
+    shareContent(type: EnumCouponType, isno: any): string {
         let content: string;
         switch (type) {
-            case "coupon":
+            case EnumCouponType.Coupon:
                 content = "下单即可享受品牌折扣!";
                 break;
-            case "credits":
+            case EnumCouponType.Credits:
                 content = "可享双倍积分!";
                 break;
-            case "vipcard":
+            case EnumCouponType.VipCard:
                 content = "";
                 break;
             default:
@@ -83,19 +84,19 @@ export abstract class AppEnv {
      * @param product 
      * @param platform 
      */
-    shareUrl(type: string, coupon: string, product: any, platform: string): string {
+    shareUrl(type: EnumCouponType, coupon: string, product: number[], platform: string): string {
         let url = `${GLOABLE.carturl}?type=${type}&${type}=${coupon}&sales=${nav.user.id}`;
         switch (type) {
-            case "coupon":
-                if (product)
-                    url = url + "&productids=" + product;
+            case EnumCouponType.Coupon:
+                if (product && product.length > 0)
+                    url = url + "&productids=" + product.join('-');
                 break;
-            case "credits":
+            case EnumCouponType.Credits:
                 url = url + "&platform=" + platform;
-                if (product)
-                    url = url + "&productids=" + product;
+                if (product && product.length > 0)
+                    url = url + "&productids=" + product.join('-');
                 break;
-            case "vipcard":
+            case EnumCouponType.VipCard:
                 break;
             default:
                 break;
