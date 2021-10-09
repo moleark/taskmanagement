@@ -46,7 +46,7 @@
         "react-loadable": "^5.5.0",
         "react-scripts": "^4.0.3",
         "slick-carousel": "^1.8.1",
-        "tonva-react": "^2.0.55",
+        "tonva-react": "^2.0.70",
         "tsc": "^1.20150623.0",
         "tslib": "^1.14.1",
         "typescript": "^4.4.3"
