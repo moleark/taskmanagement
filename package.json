@@ -32,7 +32,7 @@
         "jsx-loader": "^0.13.2",
         "jwt-decode": "^2.2.0",
         "lodash": "^4.17.15",
-        "marked": "^0.8.0",
+        "marked": "^4.0.10",
         "mobx": "^5.15.4",
         "mobx-react": "^5.4.4",
         "moment": "^2.24.0",
